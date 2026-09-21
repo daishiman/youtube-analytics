@@ -1,0 +1,79 @@
+{
+  "purpose": "YouTubeの実績データを再現可能な数値分析とClaude Code上の分析成果へ変換し、改善施策の判断・実行・効果検証をマルチテナントのWebシステムで支援する。",
+  "scope": {
+    "in_scope": [
+      "AIDDエージェントキットの編集原本とproject runtime配置",
+      "dev-graphの状態・公開パッケージ・派生表示・handoff",
+      "UIモック画像・生成プロンプト・分析カタログ",
+      "アーキテクチャ、仕様、feature、task、評価ログ",
+      "リポジトリ直下の文書・設定と現在のGitワークツリー"
+    ],
+    "out_of_scope": [
+      ".git内部データ",
+      "外部サービス上の実状態確認",
+      "既存rubric・思考法・条件による採点",
+      "秘密情報・PIIの値",
+      "ファイルの編集・生成・削除",
+      "改善案の作成"
+    ]
+  },
+  "stakeholders": [
+    "Cloudflare・GitHubを用いる構築運用担当",
+    "Google・YouTube API提供者",
+    "owner・editor・viewerとして参加するテナントメンバー",
+    "リポジトリとエージェントキットの保守担当",
+    "各利用者のClaude Code分析環境",
+    "他のYouTubeクリエイター",
+    "運営者兼利用者"
+  ],
+  "first_impressions": [
+    "アプリ実装より先に、要件確定、仕様集約、機能分解、13段階のtask計画、UIモック作成が蓄積されている。",
+    "編集原本、runtimeコピー、生成済み計画、状態ファイル、評価ログが同一リポジトリに同居している。",
+    "仕様からfeature、task、公開パッケージへ進むsource_lineageが複数のJSON・frontmatterに記録されている。",
+    "現在の作業焦点は基盤・Googleログイン・マルチテナントfeatureである。",
+    "同じ情報の詳細版、要約版、機械可読sidecar、公開用派生物が並存している。",
+    "製品コード用のルート構成はまだ出現していない。"
+  ],
+  "facts_vs_assumptions": {
+    "facts": [
+      "[F01] Git追跡対象はREADME.mdと.gitignoreの2件で、それ以外の対象領域は現在未追跡である。",
+      "[F02] README.mdはステータスを『リポジトリ作成直後。要件定義・技術選定はこれから』と記述している。",
+      "[F03] ルートにpackage.json、pnpm-lock.yaml、src、migrations、wrangler設定、tsconfig、Vite設定、GitHub Actionsは存在しない。",
+      "[F04] system-spec/は上位要件1件、8技術章、index、状態JSON、参照JSON、集約結果JSONで構成され、各章を確定状態として列挙している。",
+      "[F05] system-spec/00-requirements-definition.mdはspec-state.jsonのrequirements_foundationを正本と記述している。",
+      "[F06] specs/とarchitecture/の各文書はsystem-spec/を正本とする要約・参照ノードであると明記し、source_lineageを持つ。",
+      "[F07] features/には6 featureのMarkdownとcontext JSONが1対1で存在し、依存順は基盤・認証から収集・取込、分析、画面・運用へ進む。",
+      "[F08] 現在公開されているfeature packageはfeat-platform-tenant-authで、13 taskと前向き依存列を持つ。",
+      "[F09] 13 taskのfrontmatterは全てactiveかつcompletion_evidence.status=in_progressで、scheduleのready taskはSYS-PTA-P01である。",
+      "[F10] tasks/配下13文書の本文は、公開package内の13 task-spec本文と全件一致し、tasks側には登録用frontmatterが追加されている。",
+      "[F11] dev-graph本体はrevision 3・21 nodeで、最新render receiptはfeature進捗を0/13と記録している。",
+      "[F12] docs/screens/には現行6画面、旧版7画像、6プロンプト、生成スクリプトがあり、現行5画面はいずれも対応する旧版画像と異なる。",
+      "[F13] 6画面プロンプトの先頭には同一の共通デザイン記述が置かれている。",
+      "[F14] aidd-agent-kit/はversion 1.11.0の編集原本で、245 skillファイルが.claude/skillsへ同一内容で配置され、共通skill群も.agents/skillsへ同一内容で配置されている。",
+      "[F15] eval-log/には仕様評価の複数反復、dev-graph取込・分解・計画・検証・schedule・renderの履歴が保存されている。",
+      "[F16] 内容ファイルは.gitポインタを除いて969件で、シンボリックリンクは存在しない。"
+    ],
+    "assumptions": [
+      "[A01] 現在は仕様・計画工程から最初の実装taskへ移る直前の状態である。",
+      "[A02] aidd-agent-kit/と各runtime配置の並存は、編集原本と配布先を分ける運用を表している。",
+      "[A03] docs/screens/_prev-5screens/は画面モックの改訂履歴を保持する領域である。"
+    ]
+  },
+  "concrete_values_to_abstract": [
+    {"value": ".dev-graph/published/feature-package-feat-platform-tenant-auth", "kind": "fixed-path"},
+    {"value": ".dev-graph/state/graph.json", "kind": "fixed-path"},
+    {"value": "0 18 * * *", "kind": "other"},
+    {"value": "/api/skill/", "kind": "fixed-url"},
+    {"value": "aidd-agent-kit", "kind": "proper-noun"},
+    {"value": "Channel Insight", "kind": "proper-noun"},
+    {"value": "Claude Code", "kind": "proper-noun"},
+    {"value": "Cloudflare Workers/D1/R2/Queues", "kind": "proper-noun"},
+    {"value": "docs/screens/*.png", "kind": "fixed-path"},
+    {"value": "feat-platform-tenant-auth", "kind": "other"},
+    {"value": "Google OAuth 2.0", "kind": "proper-noun"},
+    {"value": "MAX_TENANTS=100", "kind": "other"},
+    {"value": "report-design-system", "kind": "proper-noun"},
+    {"value": "SYS-PTA-P01", "kind": "other"},
+    {"value": "system-spec/", "kind": "fixed-path"}
+  ]
+}

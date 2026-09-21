@@ -1,0 +1,22 @@
+{
+  "status": "required_before_affected_feature_planning",
+  "recorded_at": "2026-09-21T15:57:50Z",
+  "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
+  "canonical_source": "specs/youtube-analytics-system.md",
+  "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
+  "current_source_digest": "3d02f48f10ce31fcb7eb8b181f84c7d28e7a7942c9126fef7e01834ca64b1f53",
+  "current_architecture_digest": "062eb42ec3d7fade6e61ad9847144648b64b6044614d3ee84a9123c96d60c062",
+  "affected_features": [
+    "feat-csv-media-ingest",
+    "feat-skill-analysis-reports",
+    "feat-web-screens-actions"
+  ],
+  "affected_projections": [
+    "architecture/youtube-analytics-system.md",
+    "architecture/graph.json",
+    ".dev-graph/state/graph.json"
+  ],
+  "unaffected_current_package": "feat-platform-tenant-auth",
+  "gate": "上記3 featureのtask計画を生成する前にsystem-spec compile/evaluateとdev-graph compile/decomposeを実行し、architecture projection、source_lineage digest、state graphを正本から再生成する",
+  "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。"
+}

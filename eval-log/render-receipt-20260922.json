@@ -1,0 +1,16 @@
+{
+  "verb": "render",
+  "scope": "whole-dag",
+  "input": ".dev-graph/state/graph.json",
+  "input_sha256": "ec2d434e6be2316d11b4c348c6685480b388b63f0d6745c9b0baa87ee2fee592",
+  "output": ".dev-graph/render/index.html",
+  "output_sha256": "4fed01b5cbc97290a0c5dbbe83ff93d01efa26120b9790f3fd6a3523e0cd63b0",
+  "nodes": 21,
+  "edges": 21,
+  "feature_progress": {
+    "feat-platform-tenant-auth": "0/13",
+    "others": "0/0 (package 未作成)"
+  },
+  "external_refs": 0,
+  "graph_mutated": false
+}

@@ -24,3 +24,6 @@ credentials*.json
 
 # ログ
 *.log
+
+# 端末ローカルの外部操作ガード状態（署名鍵を含む）
+.artifact-delivery/

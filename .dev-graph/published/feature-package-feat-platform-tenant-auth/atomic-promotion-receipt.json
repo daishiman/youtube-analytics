@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "status": "promoted",
+  "promoted_at": "2026-09-21T14:53:23Z",
+  "repo_identity": "github:daishiman/youtube-analytics",
+  "staging_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "evaluated_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "published_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "implementation_readiness": "complete",
+  "quality_conditions": {
+    "no_contradiction": "PASS",
+    "no_missing": "PASS",
+    "consistent": "PASS",
+    "dependency_integrity": "PASS"
+  },
+  "promotion_method": "same-filesystem-atomic-rename",
+  "registration_manifest": ".dev-graph/published/feature-package-feat-platform-tenant-auth/dev-graph-registration.json"
+}

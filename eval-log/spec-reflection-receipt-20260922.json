@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_kind": "spec-reflection",
+  "recorded_at": "2026-09-22T00:00:00Z",
+  "branch": "devgraph/feat-platform-tenant-auth",
+  "graph_node_id": "feat-platform-tenant-auth",
+  "beads_ids": ["yta-c8g", "yta-c8g.1", "yta-c8g.2", "yta-c8g.3", "yta-c8g.4", "yta-c8g.5", "yta-c8g.6", "yta-c8g.7", "yta-c8g.8", "yta-c8g.9", "yta-c8g.10", "yta-c8g.11", "yta-c8g.12", "yta-c8g.13"],
+  "scope": "初期設定一式（system-spec 確定章、specs/architecture/features 投影、feat-platform-tenant-auth の exact-13 公開 package と tasks 投影、AIDD agent kit と runtime 配置、評価証跡）",
+  "spec_impact": "none_additional",
+  "decision": "本変更分は仕様そのものの初回登録であり、追加の仕様・設計変更は含まない。ユーザー追加要件 qa-060（週次売上ファネル）と psc-001（分析履歴）は既に system-spec/ から specs/・architecture/・features/・docs/ へ正規フローで適用済み（eval-log/pending-spec-change-analysis-history.json status=applied）。",
+  "why_no_further_edit": [
+    "system-spec/ は C01/C03 単一 writer 保護下にあり、根拠となる新規要件が無い状態での改訂は不要かつ不正",
+    "specs/ と architecture/ の md は digest が eval-log/dev-graph-resync-required-20260922.json に固定されており、手編集は lineage を偽装する",
+    "features/ と tasks/ は公開 package からの生成投影で、直接編集しない（README の方針）",
+    "影響3 feature（feat-csv-media-ingest / feat-skill-analysis-reports / feat-web-screens-actions）の lineage 再同期は、各 feature の task 計画前に dev-graph compile/decompose で行う gate として記録済み"
+  ],
+  "digests_at_review": {
+    "specs/youtube-analytics-system.md": "3d02f48f10ce31fcb7eb8b181f84c7d28e7a7942c9126fef7e01834ca64b1f53",
+    "architecture/youtube-analytics-system.md": "062eb42ec3d7fade6e61ad9847144648b64b6044614d3ee84a9123c96d60c062",
+    "system-spec/spec-state.json": "0f57eb56a26c486faf5c6c35460d20e2b08c1848be6f61bca635283605ff6da4",
+    ".dev-graph/state/graph.json": "ec2d434e6be2316d11b4c348c6685480b388b63f0d6745c9b0baa87ee2fee592",
+    "published_package": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+  },
+  "quality_gates": {
+    "scripts/validate-repository-consistency.py": "OK",
+    "system-dev-planner validate-system-plan (published package)": "pass, violations=0, phases P01-P13",
+    "system-dev-planner check-implementation-readiness (r6 completeness report)": "complete",
+    "dev-graph validate-graph-schema (.dev-graph/state/graph.json)": "valid, violations=0"
+  },
+  "reflected_to": [
+    "docs/delivery/20260922-initial-setup.md",
+    "README.md",
+    "Beads yta-c8g（コメント追記）"
+  ]
+}

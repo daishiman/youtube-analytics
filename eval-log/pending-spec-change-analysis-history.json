@@ -1,0 +1,36 @@
+{
+  "id": "psc-001-analysis-history",
+  "status": "applied",
+  "applied_at": "2026-09-21T15:49:18Z",
+  "requested_at": "2026-09-21T14:55:00Z",
+  "requested_by": "user",
+  "request_verbatim": "AIによって分析・解析するときは、前回の分析結果や今までの分析結果の内容も元に新しく分析を行うというところも追記しておいてください。過去の分析結果も関係なしで新しく分析しているようであれば、積み立てる意味があまりないからです。",
+  "decisions": {
+    "timing": "11 verb 完了後に反映 (現行 run は承認済み仕様スナップショットで完走)",
+    "history_scope": "直近5回分の分析結果の内容を次回分析へ反映する"
+  },
+  "proposed_requirement": "/yt-analyze 実行時、システムはデータCSVに加えて同一テナント・同一チャンネルの直近5回分の分析結果(結論・要因の要約・改善アクション・実施した施策の効果比較)を分析履歴パックとして提供し、report-design-system による新しい分析は前回仮説の当否検証と施策効果の評価を含めて、過去5回分を踏まえた差分・継続分析として作成する。",
+  "affected": {
+    "goal": "G2",
+    "item": "I4",
+    "chapters": ["system-spec/00-requirements-definition.md", "system-spec/backend.md", "system-spec/database.md", "system-spec/frontend.md"],
+    "feature": "feat-skill-analysis-reports"
+  },
+  "apply_route": [
+    "run-system-spec-elicit R4-reopen (apply-spec-transition.py) で該当セルを reopen し新 qa entry で confirm",
+    "run-system-spec-compile で章を再生成",
+    "assign-system-spec-completeness-evaluator で再評価",
+    "dev-graph spec ノードの digest/lineage 更新",
+    "features/feat-skill-analysis-reports.context.json の scope_in/acceptance へ追記 (plan 前)"
+  ],
+  "why_deferred": "確定章を今改訂すると feat-platform-tenant-auth パッケージの source_lineage digest が stale になり requirements 以降のゲートが失敗するため",
+  "apply_evidence": [
+    "system-spec/spec-state.json#requirements_foundation",
+    "system-spec/00-requirements-definition.md#U9",
+    "system-spec/backend.md#分析履歴パック契約保留要件-psc-001-の適用",
+    "system-spec/database.md#週次売上ファネル追補ユーザー追加要件",
+    "system-spec/frontend.md#週次売上ファネル画面契約ユーザー追加要件",
+    "docs/analysis/dashboard-analysis-catalog.md#6-AI分析の入出力Claude-Code-skill-との受け渡し",
+    "specs/youtube-analytics-system.md"
+  ]
+}

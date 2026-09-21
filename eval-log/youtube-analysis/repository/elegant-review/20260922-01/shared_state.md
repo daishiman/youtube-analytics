@@ -1,0 +1,1 @@
+対象はYouTube分析Webシステムの設計・UIモック・dev-graph計画・AIDD配布キットが同居するrepo。正本はsystem-spec/、spec・architecture・feature・taskは系譜付き派生。アプリ実装ファイルは未出現で、現在は基盤・認証featureの13タスク分解と投影まで進行。

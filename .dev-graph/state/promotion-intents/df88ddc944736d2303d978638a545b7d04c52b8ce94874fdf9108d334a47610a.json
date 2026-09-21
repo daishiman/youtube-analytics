@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "staging": ".dev-graph/staging/sdp-feat-platform-tenant-auth-r1",
+  "destination": ".dev-graph/published/feature-package-feat-platform-tenant-auth",
+  "digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "feature_package_id": "feature-package/feat-platform-tenant-auth",
+  "receipt": ".dev-graph/published/feature-package-feat-platform-tenant-auth/atomic-promotion-receipt.json",
+  "completed_at": "2026-09-21T14:53:23Z"
+}

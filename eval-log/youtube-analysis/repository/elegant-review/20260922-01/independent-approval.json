@@ -1,0 +1,20 @@
+{
+  "run_id": "20260922-01",
+  "approver": "/root/independent_approver",
+  "independence": "read-only fresh context; not an implementation agent",
+  "approved_at": "2026-09-21T16:10:07Z",
+  "verdict": {
+    "C1": "PASS",
+    "C2": "PASS",
+    "C3": "PASS",
+    "C4": "PASS"
+  },
+  "evidence": {
+    "C1": "5原因指標、登録者数の参考扱い、非因果の改善候補、直近5版履歴、複合由来のLINE誘導率が正本・仕様・prompt・architectureで一致",
+    "C2": "target_gap、判定保留、週次事業CSV、テナント/メンバー、対象ファネル段と下流結果、履歴0〜5版、history_versions_usedまで追跡",
+    "C3": "source=api|studio_csv|business_csv、AI分析JSONキー、週次事業CSV名称、指標ID・式・主キー・履歴構造が一致",
+    "C4": "13 node/13 edge DAG、architecture SHA、spec digest、projection/state/feature再同期gateが一致"
+  },
+  "blocking_findings": [],
+  "score": null
+}

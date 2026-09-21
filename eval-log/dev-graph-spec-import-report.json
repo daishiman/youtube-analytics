@@ -1,0 +1,24 @@
+{
+ "index": "system-spec/index.md",
+ "imported_nodes": [
+  {
+   "graph_node_id": "spec-youtube-analytics-system",
+   "artifact_kind": "specification",
+   "file_path": "specs/youtube-analytics-system.md",
+   "source_path": "system-spec/00-requirements-definition.md"
+  },
+  {
+   "graph_node_id": "arch-youtube-analytics-system",
+   "artifact_kind": "architecture",
+   "file_path": "architecture/youtube-analytics-system.md",
+   "source_path": "system-spec/index.md"
+  }
+ ],
+ "source_version": "0.1.14",
+ "evaluated_digest": "513945ca4d1a83bbc4f49ce1a6630c491e2fa5cbe96b2ffdf9bcebe21a754f31",
+ "confirmation_status": "confirmed",
+ "evaluation_status": "pass",
+ "readiness": "complete",
+ "graph_revision": 1,
+ "imported_at": "2026-09-21T14:36:15Z"
+}

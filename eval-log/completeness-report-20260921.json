@@ -1,0 +1,87 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/初期設定/system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "U1-U9は全て値ありで確定(appr-001)、--require-foundation exit0。しかしobjectives(O1-O5)がgoalへの紐づけ(serves)を持たず、全8技術章のTo-Be/Delta『受入条件』が『目標U4が無い。受入条件が未定義』となっておりgoal→objective→chapterのトレースが断絶している。加えてI3(日次取得)と確定インフラ(週1回Cron)の不整合、15ユーザー/回の分割実行の後続実行が未定義。",
+      "evidence": ["validate-coverage-matrix.py --require-foundation exit0", "spec-state.json requirements_foundation.objectives[] に serves 無し", "全章 '### 受入条件 (Delta の判定点)' = '(本章ゴールに紐づく目標 U4 が無い。受入条件が未定義である)'", "compile-spec-doc.py L957-965 は objectives[].serves で章ゴールと突合"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "D-ai-engine/D-db/D-auth/D-cron/D-deployの5件全てが2-3案・無料案・cost_model/TCO・goal_fit・security・ops・lock-in・公式evidence・推奨理由・caveatsを持ち、qa-007/qa-014のユーザー選択でconfirmed(AI推奨のみの確定なし)。user_decisionのqa_ref欠落等は低〜中程度。",
+      "evidence": ["decisions[] 5件 status=confirmed, user_decision あり", "qa-014 AskUserQuestion 選択肢提示あり(公式根拠付き比較)"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "C07: 決定論ゲートloop/--require-complete/--require-basisすべてexit0、48セル(確定26/対象外22/未収集0)、集約・canonical行・C16 block item被覆に問題なしでPASS(medium 2件)。ただしsub-input C06がFAIL: qa-015が約10論点を1問に束ねた一括confirmで、design_applications/doctrine_applications全件がqa参照なし・qa_logに無い時刻(09:55:16Z)でbasis=user-decisionと記録されている。確定セルの実体が誘導なく漏れなくQ&Aへ遡れる裏付けが崩れるためfail-closedでFAIL。",
+      "evidence": ["G-matrix exit0", "G-knowledge-graph(required-info) exit0", "C07 verdict PASS (medium: database desktop-* qa_ref弱い / ui-ux desktop-* 確定とfrontend desktop-* 対象外の不整合)", "C06 overall FAIL (leading_question FAIL, traceability FAIL; high: F-LQ-02, F-TR-01)"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層: C13/C14/C15の知識グラフゲート4 profile exit0、7/8章に設計知識cardあり。意味層: doctrine anchor(Clean Architecture/OWASP ASVS/Google SRE/Apple HIG)は全8章で確定内容へ具体反映されている一方、DDD(database/backend)・API Design Patterns(backend)・Clean Code(maintenance-ops)はカタログ汎用文の転載のみで章固有の適用(集約・不変条件・APIエラー/冪等設計等)が無い。infrastructureはcard 0件で『理由を述べた上での確定』と記すが理由が記載されていない。存在確認のみでPASSにしない原則によりFAIL。",
+      "evidence": ["G-knowledge-graph knowledge/doctrine/required-info/cross exit0", "database.md L160-199 / backend.md L227-350 / maintenance-ops.md L180-219 は汎用card", "infrastructure.md '本章へ引く card は 0 件…理由を述べた上での確定' に対応する理由記述なし", "doctrine 反映列は全章記入済み(未記入0)"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "target 12件/参照12件、validate-source-citation.py exit0。公式サイト再照合で11件のversion/last_updatedが現行版と一致、非公式host・世代落ち・確認時刻欠落0。claude-codeのlast_updatedのみ公式ページ上で日付を独立確認できず(info)。",
+      "evidence": ["G-source-citation exit0", "C08 verdict PASS"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harnessの全18 promptがprompt-creatorのverify-completeness.pyとvalidate-prompt.pyを両方exit0で通過。7層構造・客観的停止条件を保持。ただしR0-foundation/spec-state-contractのobjectives形状{id,text,measure}とcompileが要求するobjectives[].servesが不一致(medium)。",
+      "evidence": ["G-prompt: 18/18 verify-completeness.py exit0, validate-prompt.py exit0"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis (C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompts)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "foundation_trace", "observation": "requirements_foundation.objectives(O1-O5)にgoalへの紐づけ(serves)が無く、compileが章ゴールと突合できないため全8技術章の『受入条件 (Delta の判定点)』が『受入条件が未定義』になっている。各章の規範(To-Be/Delta)に到達判定の観測点が1件も無い。", "suggested_fix": "elicit(R0-foundation)でO1-O5に serves:[G*] を付与(例: O1→G1, O2→G2, O3→G3, O4→G4, O5→G5)し再承認後にcompileを再実行。併せてspec-state-contract.md/R0-foundationのobjectives形状へservesを追加し、validate-coverage-matrix --require-foundationでobjective→goalの未接続を検出させる。", "evidence": ["spec-state.json requirements_foundation.objectives", "compile-spec-doc.py L957-965"]},
+    {"severity": "high", "bucket": "matrix_coverage/hearing(C06 F-LQ-02)", "observation": "qa-015が永続化・認証・画面数・暗号化方式・CSP・API構成・フロント構成・デプロイ等約10論点を1問に束ね『この内容で確定する』の一括confirmで全カテゴリ確定セルの主たる根拠になっている。", "suggested_fix": "elicit R3-reask/R4-reopenで、qa-014で個別比較済みの論点以外(暗号化方式・CSP・セッション方式・Cron分割・API設計等)を個別の中立質問へ切り出して再確認する。"},
+    {"severity": "high", "bucket": "matrix_coverage/hearing(C06 F-TR-01)", "observation": "design_applications(8件)とdoctrine_applications(12件)が全件basis=user-decisionだがqa参照を持たず、recorded_at=09:55:16Zはqa-015(09:49:06Z)/qa-016(09:52:46Z)の承認後でqa_logのどの回答とも一致しない。テーブル定義・AES-256-GCM・CSP値・Cron 15ユーザー分割・指数バックオフ3回等のAI詳細化がユーザー確定として章に『利用者が代替案を見たうえで明示選択した決定』と表示されている。", "suggested_fix": "elicitでbasisをagent-inferenceへ再分類しqa_refを付与、承認範囲外の詳細は利用者に再提示して確定させてからcompileを再実行。"},
+    {"severity": "medium", "bucket": "foundation_trace", "observation": "I3『Cronで日次に指標を取得し週次集計』・O1『日次/週次の定期集計』に対し、確定インフラはCron `0 19 * * 0` の週1回のみで日次取得が存在しない。doctrine反映のSLOも『週次収集が月曜中に完了』のみ。", "suggested_fix": "elicitで日次取得の要否を再確認し、I3/O1かinfrastructureの確定内容のどちらかに揃える。"},
+    {"severity": "medium", "bucket": "foundation_trace/infrastructure", "observation": "Cronは1実行あたり最大15ユーザーで『残りは次の分割実行へ回す』とあるが、週1回のCronしか定義されておらず次の実行が存在しない。未検証OAuthの上限100ユーザーに対し16人目以降は収集されず、O1『全利用者の定期集計』を満たせない。", "suggested_fix": "elicit/compileで分割実行の仕組み(複数Cronスケジュール(Free上限5個)、Queues、実行毎の続き位置保存等)を明記し無料枠内で100ユーザーを処理できる根拠を示す。"},
+    {"severity": "medium", "bucket": "design_knowledge_reflection", "observation": "database/backendのDDD card、backendのAPI Design Patterns card、maintenance-opsのClean Code cardがカタログの汎用文の転載のみで、章の確定内容への具体適用(例: actionsの状態遷移の不変条件・reportsの版管理の集約境界、APIのエラー形式・/api/skill/reportsの冪等性・版管理、保守手順での命名/テスト方針)が記述されていない。", "suggested_fix": "compile(R2-render)で各cardに『本章での適用』として確定セル要件への具体的写像を記述する。適用できないcardは章から外すか非適用理由を記載する。"},
+    {"severity": "medium", "bucket": "design_knowledge_reflection", "observation": "infrastructure.mdは設計知識card 0件で『上の適用記述で0件である理由を述べた上での確定である』と記すが、適用記述に0件の理由が書かれていない(自己申告と実体の不一致)。", "suggested_fix": "compileでinfrastructureに該当card(信頼性/運用系)を割り当てるか、0件の具体的理由を記述する。"},
+    {"severity": "medium", "bucket": "matrix_coverage(C07)", "observation": "ui-uxのdesktop-*が確定(qa-015のみ)である一方、frontendのdesktop-*は『デスクトップ用画面を作らない』で対象外。qa-015も『Claude Code側: DB/画面なし』と明記しており、ui-ux desktop確定の実質的裏付けが薄い。", "suggested_fix": "elicit R4-reopenでui-ux desktop-*を対象外に揃えるか、CLI対話UXなど別軸の確定内容をdesign_applicationsに追記する。"},
+    {"severity": "medium", "bucket": "matrix_coverage(C07)", "observation": "database desktop-*の対象外理由『ローカルDBを持たない』の根拠qa_refがqa-013(platform範囲)で、直接の根拠qa-015『DB/画面なし』が未参照。", "suggested_fix": "elicitでqa_refsにqa-015を追加する(再質問不要)。"},
+    {"severity": "medium", "bucket": "matrix_coverage/hearing(C06)", "observation": "decisions[].user_decisionにqa_refが無く、D-db/D-auth/D-cron/D-deployはconfirmed_atとqa-014のanswered_atの時刻一致でしか遡れない。security等の多数の確定セルがqa-015のみを根拠とし論点粒度のトレースができない(F-TR-02/F-TR-03)。qa-013は環境構成を括弧内で先出ししたフレーミング質問(F-LQ-01)。", "suggested_fix": "elicitでuser_decisionにqa_ref(qa-014/qa-007)を構造化付与し、論点別の補助qa_refsを追加する。"},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract", "observation": "spec-state-contract.mdとR0-foundationはobjectivesを{id,text,measure}と定義しservesを要求しないが、compile-spec-doc.pyはobjectives[].servesで受入条件を導出するため、契約どおりに作ると必ず受入条件が未定義になる(本件高severity findingの構造的原因)。", "suggested_fix": "harness側で契約・R0 prompt・validate-coverage-matrix --require-foundationにobjectives[].servesを追加して整合させる(本仕様書の差し戻しとは別のplugin修正)。"},
+    {"severity": "low", "bucket": "foundation_trace", "observation": "U7/U8にR2(『Workers + D1 (+R2)』『Cloudflare/D1/R2/…の設定手順』)が残るが、D-dbはd1-only(HTMLもD1)を採択しておりR2は不使用。I6の状態は3値(未着手/実施中/完了)だがDB設計は4値(効果測定中を追加)。", "suggested_fix": "elicitでU7/U8からR2を外すかR2の用途を明記し、I6の状態定義をDB設計と揃える。"},
+    {"severity": "low", "bucket": "decision_guidance", "observation": "D-ai-engineのuser_decision.confirmed_at(09:30:09Z)がrecommendation.latest_checked_at(09:40:00Z)より前で、推奨根拠が決定後に更新されている。D-authはU8『他者提供には同意画面の検証が必要』に対し未検証公開(100ユーザー上限)を採用しており、上限到達前の検証申請の時期と判断者がcaveatにとどまる。", "suggested_fix": "elicit R5-decision-guideで推奨の確認時刻と決定時刻の順序を記録し直し、D-authに検証申請の発動条件(例: 累計80ユーザー)を確定事項として追加する。"},
+    {"severity": "low", "bucket": "matrix_coverage(C07)", "observation": "database.tabletの対象外理由が『スマホからも…』とmobile行のコピペ表記。", "suggested_fix": "elicitでtablet向けの文言へ修正する。"},
+    {"severity": "info", "bucket": "doc_freshness(C08)", "observation": "12 targetすべて公式host・現行版と一致。claude-codeのlast_updated(2026-09-18)のみ公式ページに日付表示がなく独立確認できない。", "suggested_fix": "次回doc-fetchで日付が明示される一次情報(リリースノート等)で根拠を補強する。"},
+    {"severity": "info", "bucket": "prompt_quality", "observation": "system-spec-harnessの18 promptがverify-completeness.py/validate-prompt.pyを全件exit0で通過した。"},
+    {"severity": "info", "bucket": "design_knowledge_reflection", "observation": "C13/C14/C15の機械層(validate-knowledge-graph knowledge/doctrine/required-info/cross)は全exit0。doctrine anchorの反映列は全8章で具体記述あり(未記入0)。章本文から位相順違反(下位技術の先行確定)は観測されなかった。"}
+  ],
+  "gaps": [
+    "[elicit/R0-foundation] objectives O1-O5 に serves(goal ID) を付与して再承認し、compile を再実行して全8章の受入条件を生成する (high)",
+    "[elicit/R3-reask・R4-reopen] qa-015 の一括確定を論点別の中立質問へ分解し、design_applications/doctrine_applications の AI 詳細化を agent-inference へ再分類・qa_ref を付与してユーザー再確認する (high)",
+    "[elicit] I3/O1 の日次取得と週1回 Cron の不整合、および 15ユーザー/回分割の後続実行方式を確定する (medium)",
+    "[elicit/R4-reopen] ui-ux desktop-* の確定根拠を見直し、database desktop-* に qa-015 を補助根拠として追加、decisions[].user_decision に qa_ref を付与する (medium)",
+    "[compile/R2-render] DDD・API Design Patterns・Clean Code card を章固有の具体適用付きにし、infrastructure の card 0件理由を記述する (medium)",
+    "[harness 修正] spec-state-contract.md / R0-foundation / validate-coverage-matrix --require-foundation に objectives[].serves を追加し compile と整合させる (medium)",
+    "[elicit] U7/U8 の R2 記述と I6 の状態値、D-auth の検証申請発動条件、database.tablet 理由文言を修正する (low)"
+  ]
+}

@@ -1,0 +1,616 @@
+{
+  "paradigm_findings": [
+    {
+      "paradigm_id": 1,
+      "paradigm_name": "critical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "other",
+          "description": "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。",
+          "recommended_intervention": "結果指標中心のKPI構成を原因指標中心へ改める。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/analysis/dashboard-analysis-catalog.md"
+          },
+          "root_cause": "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 2,
+      "paradigm_name": "deduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "other",
+          "description": "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。",
+          "recommended_intervention": "収集表示を正本の日次JST 3:00へ同期する。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/screens/prompts/02-dashboard.prompt.txt"
+          },
+          "root_cause": "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 3,
+      "paradigm_name": "induction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "medium",
+          "bucket": "doc",
+          "description": "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。",
+          "recommended_intervention": "READMEを現在の仕様確定・実装未着手状態へ更新する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "README.md"
+          },
+          "root_cause": "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。"
+        }
+      ],
+      "score": 0.6
+    },
+    {
+      "paradigm_id": 4,
+      "paradigm_name": "abduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "派生物のfreshness gate不足が旧仕様残存の最尤原因である。",
+          "recommended_intervention": "正本revisionと派生物のstale判定を追加する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "architecture/graph.json"
+          },
+          "root_cause": "派生物のfreshness gate不足が旧仕様残存の最尤原因である。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 5,
+      "paradigm_name": "vertical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "表層のKPI差替えではなく目的・データ契約まで変更が必要である。",
+          "recommended_intervention": "週次売上ボトルネックを本質目的と成功基準へ追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "system-spec/00-requirements-definition.md"
+          },
+          "root_cause": "表層のKPI差替えではなく目的・データ契約まで変更が必要である。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 6,
+      "paradigm_name": "decomposition",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。",
+          "recommended_intervention": "producer→storage→aggregation→API→UIの対応を定義する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "specs/youtube-analytics-system.md"
+          },
+          "root_cause": "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 7,
+      "paradigm_name": "mece",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "ファネルは登録で終わり、事業成果までMECEになっていない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "ファネルは登録で終わり、事業成果までMECEになっていない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "ファネルは登録で終わり、事業成果までMECEになっていない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "ファネルは登録で終わり、事業成果までMECEになっていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "ファネルは登録で終わり、事業成果までMECEになっていない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "ファネルは登録で終わり、事業成果までMECEになっていない。",
+          "recommended_intervention": "LINE誘導、問い合わせ、成約を追加し登録者数を結果指標へ分離する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "docs/analysis/dashboard-analysis-catalog.md"
+          },
+          "root_cause": "ファネルは登録で終わり、事業成果までMECEになっていない。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 8,
+      "paradigm_name": "two-axis",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "other",
+          "description": "原因×結果で見ると現行トップKPIの優先順位が逆である。",
+          "recommended_intervention": "原因指標を主表示し、結果指標を従属表示にする。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "system-spec/ui-ux.md"
+          },
+          "root_cause": "原因×結果で見ると現行トップKPIの優先順位が逆である。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 9,
+      "paradigm_name": "process",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "追加要件がrequirements foundationに無く後続投影へ到達しない。",
+          "recommended_intervention": "正本からcatalog・feature・promptまで順に再投影する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "system-spec/00-requirements-definition.md"
+          },
+          "root_cause": "追加要件がrequirements foundationに無く後続投影へ到達しない。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 26,
+      "paradigm_name": "why",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "本質課題は目的関数と観測可能な売上ファネルの未接続である。",
+          "recommended_intervention": "主要問いを週次の最大制約と次介入へ改訂する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "docs/analysis/dashboard-analysis-catalog.md"
+          },
+          "root_cause": "本質課題は目的関数と観測可能な売上ファネルの未接続である。"
+        }
+      ],
+      "score": 0.45
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "登録者数の扱い、収集周期、README現況、task依存表示に矛盾がある。"
+      ],
+      "violation_count": 4
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "売上ファネル後半、週次判定、共通prompt、repo入口が欠落する。"
+      ],
+      "violation_count": 4
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "新要件と仕様・feature・prompt・派生表示が一致しない。"
+      ],
+      "violation_count": 3
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "事業データのproducer→UI依存、prompt参照、task表示依存が破綻する。"
+      ],
+      "violation_count": 3
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "docs/screens/prompts/*.prompt.txt の共通デザイン",
+      "variable_name": "{{UI_PROMPT_COMMON}}",
+      "default_value": "docs/screens/prompts/_shared.prompt.txt",
+      "source_trace": "docs/screens/prompts/*.prompt.txt:1"
+    },
+    {
+      "concrete_value": "インプレッション、CTR、視聴継続率、LINE誘導率、問い合わせ→成約率",
+      "variable_name": "{{FUNNEL_METRIC_SET}}",
+      "default_value": "impressions,ctr,retention_rate,line_conversion_rate,inquiry_close_rate",
+      "source_trace": "追加ユーザー要件"
+    },
+    {
+      "concrete_value": "週次CSV手動取込",
+      "variable_name": "{{BUSINESS_DATA_PROVIDER}}",
+      "default_value": "manual_csv",
+      "source_trace": "Phase2収束案"
+    },
+    {
+      "concrete_value": "毎日JST 3:00",
+      "variable_name": "{{COLLECTION_SCHEDULE_LABEL}}",
+      "default_value": "毎日 3:00",
+      "source_trace": "system-spec/00-requirements-definition.md:O1"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "critical",
+      "deduction",
+      "induction",
+      "abduction",
+      "vertical",
+      "decomposition",
+      "mece",
+      "two-axis",
+      "process",
+      "why"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  }
+}

@@ -1,0 +1,561 @@
+{
+  "paradigm_findings": [
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "doc",
+          "description": "repo内の正本・投影・runtime・履歴の区分が入口で見えない。",
+          "recommended_intervention": "正本と生成物のrepository mapを追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "README.md"
+          },
+          "root_cause": "repo内の正本・投影・runtime・履歴の区分が入口で見えない。"
+        }
+      ],
+      "score": 0.6
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "6画面promptの共通shellが手動複製されている。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "6画面promptの共通shellが手動複製されている。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "6画面promptの共通shellが手動複製されている。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "6画面promptの共通shellが手動複製されている。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "6画面promptの共通shellが手動複製されている。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "6画面promptの共通shellが手動複製されている。",
+          "recommended_intervention": "共通promptを正本化し生成時に画面固有bodyと合成する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "docs/screens/prompts/02-dashboard.prompt.txt"
+          },
+          "root_cause": "6画面promptの共通shellが手動複製されている。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "目的変更がfoundation再監査として扱われていない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "目的変更がfoundation再監査として扱われていない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "目的変更がfoundation再監査として扱われていない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "目的変更がfoundation再監査として扱われていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "目的変更がfoundation再監査として扱われていない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "critical",
+          "bucket": "doc",
+          "description": "目的変更がfoundation再監査として扱われていない。",
+          "recommended_intervention": "主要KPI変更を全投影の再監査triggerにする。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "system-spec/completeness-findings.json"
+          },
+          "root_cause": "目的変更がfoundation再監査として扱われていない。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。",
+          "recommended_intervention": "manual CSVの週次business funnel snapshotを追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "system-spec/database.md"
+          },
+          "root_cause": "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "制約理論に類推すると主役は総量ではなく目標差最大の工程である。",
+          "recommended_intervention": "目標差・欠損・分母0を含む判定規則を定義する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "docs/analysis/dashboard-analysis-catalog.md"
+          },
+          "root_cause": "制約理論に類推すると主役は総量ではなく目標差最大の工程である。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "other",
+          "description": "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。",
+          "recommended_intervention": "旧KPIと旧収集周期を主表示から除く。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/screens/prompts/02-dashboard.prompt.txt"
+          },
+          "root_cause": "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "critical",
+          "bucket": "dependency-loop",
+          "description": "plan-structureの0 edge表示がcanonical DAGと矛盾する。",
+          "recommended_intervention": "ready setをscheduler正本から投影し意味差分を検査する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-structure.md"
+          },
+          "root_cause": "plan-structureの0 edge表示がcanonical DAGと矛盾する。"
+        }
+      ],
+      "score": 0.3
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "10倍規模では重複promptと入口不在の探索コストが支配的になる。",
+          "recommended_intervention": "現在地・正本・次行動を一入口に集約する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "README.md"
+          },
+          "root_cause": "10倍規模では重複promptと入口不在の探索コストが支配的になる。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "other",
+          "description": "初見ではREADMEから現在地も売上の詰まりも判断できない。",
+          "recommended_intervention": "現況と正本への最短導線を提示する。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "README.md"
+          },
+          "root_cause": "初見ではREADMEから現在地も売上の詰まりも判断できない。"
+        }
+      ],
+      "score": 0.3
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "登録者数の扱い、収集周期、README現況、task依存表示に矛盾がある。"
+      ],
+      "violation_count": 4
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "売上ファネル後半、週次判定、共通prompt、repo入口が欠落する。"
+      ],
+      "violation_count": 4
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "新要件と仕様・feature・prompt・派生表示が一致しない。"
+      ],
+      "violation_count": 3
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "事業データのproducer→UI依存、prompt参照、task表示依存が破綻する。"
+      ],
+      "violation_count": 3
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "docs/screens/prompts/*.prompt.txt の共通デザイン",
+      "variable_name": "{{UI_PROMPT_COMMON}}",
+      "default_value": "docs/screens/prompts/_shared.prompt.txt",
+      "source_trace": "docs/screens/prompts/*.prompt.txt:1"
+    },
+    {
+      "concrete_value": "インプレッション、CTR、視聴継続率、LINE誘導率、問い合わせ→成約率",
+      "variable_name": "{{FUNNEL_METRIC_SET}}",
+      "default_value": "impressions,ctr,retention_rate,line_conversion_rate,inquiry_close_rate",
+      "source_trace": "追加ユーザー要件"
+    },
+    {
+      "concrete_value": "週次CSV手動取込",
+      "variable_name": "{{BUSINESS_DATA_PROVIDER}}",
+      "default_value": "manual_csv",
+      "source_trace": "Phase2収束案"
+    },
+    {
+      "concrete_value": "毎日JST 3:00",
+      "variable_name": "{{COLLECTION_SCHEDULE_LABEL}}",
+      "default_value": "毎日 3:00",
+      "source_trace": "system-spec/00-requirements-definition.md:O1"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "meta",
+      "abstraction",
+      "double-loop",
+      "brainstorming",
+      "lateral",
+      "paradox",
+      "analogy",
+      "if",
+      "naive"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  }
+}

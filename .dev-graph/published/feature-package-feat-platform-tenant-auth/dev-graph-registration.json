@@ -1,0 +1,1178 @@
+{
+  "schema_version": "1.0.0",
+  "source_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "promotion_receipt": ".dev-graph/published/feature-package-feat-platform-tenant-auth/atomic-promotion-receipt.json",
+  "feature_package_id": "feature-package/feat-platform-tenant-auth",
+  "parent_feature": "feat-platform-tenant-auth",
+  "expected_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "binding_intents": {
+    "SYS-PTA-P01": "beads",
+    "SYS-PTA-P02": "beads",
+    "SYS-PTA-P03": "beads",
+    "SYS-PTA-P04": "beads",
+    "SYS-PTA-P05": "beads",
+    "SYS-PTA-P06": "beads",
+    "SYS-PTA-P07": "beads",
+    "SYS-PTA-P08": "beads",
+    "SYS-PTA-P09": "beads",
+    "SYS-PTA-P10": "beads",
+    "SYS-PTA-P11": "beads",
+    "SYS-PTA-P12": "beads",
+    "SYS-PTA-P13": "beads"
+  },
+  "nodes": [
+    {
+      "graph_node_id": "SYS-PTA-P01",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "要件の実装単位への確定",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/requirements.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P01",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P01.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P01.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P02",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "Workers/D1/R2 構成とテナント分離の設計",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "infrastructure",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P01"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/architecture.md",
+        "wrangler.toml"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P02",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P02.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P02.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P03",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "認証・越境防止の設計レビュー",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P02"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/design-review.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P03",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P03.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P03.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P04",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入テストと越境テストの設計",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P03"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "tests/platform/",
+        "docs/feat-platform-tenant-auth/test-design.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P04",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P04.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P04.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P05",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "基盤・ログイン・テナント・招待の実装",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "backend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "backend",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P04"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/0001_platform.sql",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P05",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P05.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P05.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P06",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テスト実行と不具合修正",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P05"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "tests/platform/",
+        "src/"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P06",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P06.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P06.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P07",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入確認",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P06"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/acceptance.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P07",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P07.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P07.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P08",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "リファクタリングとマイグレーション整理",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "data",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P07"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P08",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P08.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P08.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P09",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "セキュリティと品質の保証",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P08"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/qa-report.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P09",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P09.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P09.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P10",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "最終レビュー",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P09"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/final-review.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P10",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P10.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P10.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P11",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "証跡の集約",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "evidence/feat-platform-tenant-auth/"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P11",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P11.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P11.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P12",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "運用手順とドキュメント",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "operations",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        "docs/feat-platform-tenant-auth/runbook.md",
+        "README.md"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P12",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P12.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P12.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-PTA-P13",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "CI/CD とリリース",
+      "project_id": "feature-package-feat-platform-tenant-auth",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "platform-tenant-auth"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-21T14:53:23Z",
+      "updated_at": "2026-09-21T14:53:23Z",
+      "depends_on": [
+        "SYS-PTA-P11",
+        "SYS-PTA-P12"
+      ],
+      "related_nodes": [
+        "feat-platform-tenant-auth"
+      ],
+      "resource_scope": [
+        ".github/workflows/"
+      ],
+      "parent_feature": "feat-platform-tenant-auth",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "phase_ref": "P13",
+      "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P13.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-platform-tenant-auth/plan-findings.json",
+        "evaluated_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+        "imported_at": "2026-09-21T14:53:23Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P13.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-21T14:52:00Z"
+      }
+    }
+  ]
+}

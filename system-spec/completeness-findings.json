@@ -1,0 +1,78 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/初期設定/system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。上位概念の改訂は qa-047(マルチテナント)、qa-057(毎日収集)、qa-059(JST 3:00 の Cron 1本と Queues)の3回で、いずれもプレビューで内容を見せたうえで承認され、appr-006/008/010 に記録されている。O1 は『毎日1回 JST 3:00。Analytics API は直近7日を取り直し、インプレッション・CTR は Reporting API から取得』に、measure は『28日連続で毎日09:00 JST 時点に収集が終わっていないテナント0件』になった。scope.in には Reporting API、CSV 併存、Cron+Queues が入った。scope.out には『API データからの派生指標(III.E.4)』と『画面の自動操作による Studio からの取得(YouTube 利用規約)』が加わった。success_criteria にも『出典バッジ付きで並び、派生指標は CSV 由来だけ』が加わった。O1〜O5 はすべて serves でゴールにつながっており、宙に浮いた改訂は見つからなかった。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "requirements_foundation.objectives[O1].text/measure", "requirements_foundation.scope.out 末尾2項目", "approval_log appr-006/appr-008/appr-010"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions 6件は、どれも比較案、無料案、TCO、fit、pros/cons、lock-in、公式 evidence、推奨理由、user_decision を保っている。D-cron の evidence には Reporting API と Queues limits の公式 URL が加わった。caveats には変更の経緯が残っている(当初は `0 * * * 0` で週360人分 → 削除用 Cron を足して計2本 → qa-058 で `0 18 * * *` の1本にまとめ、Queues の consumer を max_batch_size=1 にして1通=1テナントで処理)。今回の新しい論点(収集頻度 qa-049、インプレッション・CTR の取得元 qa-050、CSV の位置づけ qa-051、D1 の枠を超えそうなときの方針 qa-052、派生指標 qa-053、API と CSV の値の重複 qa-054、画面の自動操作 qa-055、起動時刻 qa-058)は、どれも推奨表示なしの3択か自由記述で利用者が決めた。AI の推奨だけで確定した件はない。",
+      "evidence": ["G-foundation exit0 (decisions 契約含む)", "00-requirements-definition.md L112 D-cron 行(evidence に reporting/v1/reports・queues/platform/limits)", "qa_log qa-049〜qa-055/qa-058 provenance『推奨表示なし』"]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。48セルの内訳は確定26・対象外22・未収集0。C07 は loop_pass・final_ready ともに PASS で、所見は0件。qa-048〜059 は変更が及ぶ web セル(database/ui-ux/security/infrastructure/backend/frontend/maintenance-ops)の qa_refs に入っている。各セルの主根拠は、最後の reopen の主根拠と一致する(database/ui-ux/frontend=qa-054、infrastructure=qa-058、backend=qa-049、security=qa-053、maintenance-ops=qa-052)。旧 Cron 案(`*/5 19-23`・週1回)の記述が残るのは、qa-018/qa-056 の履歴だけである。前回 low の frontend.desktop-* は、主根拠が qa-015 になって解消した。sub-input の C06 も PASS(4軸すべて検出0)。前回 FAIL の唯一の原因だった F-LQ-06(qa-033 が2論点を1問で聞いていた件)は、qa-039(静的ページの置き場所)と qa-040(削除依頼の受け方)の中立な3択2問で聞き直され、解消した。聞き漏れの懸念4点(Reporting のスコープ・ジョブ作成から約48時間の遅延・Queues の再試行と最終失敗・テナント上限に達したときの挙動)も、いずれも接地していた。",
+      "evidence": ["G-matrix / G-matrix-loop / G-matrix-basis / G-foundation exit0", "G-required-info-state exit0: ungrounded_blocking_items=[]", "C07 loop_pass=PASS / final_ready=PASS (所見0件)", "C06 overall PASS (聞き漏れ0 / 誘導質問0(qa-058 は要観察) / 早期停止0 / トレーサビリティ0)", "qa_log qa-039/qa-040 provenance『qa-033 が2論点を1問で聞いていたため中立な2問に分けて聞き直し』", "matrix.frontend.desktop-macos.qa_ref=qa-015"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層: validate-knowledge-graph の knowledge/doctrine/required-info/cross の4 profile はすべて exit0。意味層: 新しい決定が、確定セルの要件に具体的に当てはめられている。SRE(infrastructure/database): Cron は `0 18 * * *` の1本で、テナントごとの通を Queues へ入れるだけにしている。consumer は max_batch_size=1 で、1テナント約16件のサブリクエストを1実行の上限50件に収める。失敗は msg.retry(max_retries=3・retry_delay=600秒)で再試行し、最後も失敗したら collection_status=failed を書く。Queues の操作数は約300回/日で無料枠1万回/日の範囲内、保持は24時間、MAX_TENANTS=100。OWASP/規約(security・backend): /api/skill/export は行ごとに source を付け、M1〜M10 は CSV 由来の行からだけ計算する。上限に達したら『現在新規の受付を停止しています』を返し、招待でのメンバー追加は上限の対象外。Apple HIG/情報設計(ui-ux): KPI カードには API の公式値にバッジ API、M1 にバッジ CSV を付け、動画別の表の CTR は Reporting 由来と明示する。CPU 10ms への対策として、Reporting の CSV は必要な4列(date・video_id・impressions・ctr)だけを読み、大きいレポートは使わない。汎用ポインタだけで具体的な適用がない章はない。ポインタの存在確認だけで PASS にしたのではない。",
+      "evidence": ["G-knowledge-graph 4 profile exit0", "infrastructure.md L579 design_applications(Queues・max_retries=3・retry_delay=600・MAX_TENANTS=100・操作数約300回/日)", "database.md L40 doctrine reliability 行", "backend.md L629『MAX_TENANTS に達していたら作成せず…』『M1〜M10 は CSV 由来の行からだけ計算』", "ui-ux.md L650 出典バッジ(API/CSV)の割付"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "target と参照はどちらも22件で、1対1で対応している(前回は19件)。新しく入ったのは cloudflare-queues、youtube-reporting-api、youtube-api-developer-policies、youtube-terms-of-service の4件で、targets と fetched-references の両方にある。validate-source-citation.py(--state 付き)は exit0。公式サイトとの再照合でも、非公式 host・世代落ち・確認時刻の欠落はどれも0件だった。Queues の Free プランの条件(保持24時間・再試行最大100)と、Reporting API の channel_reach_basic_a1 の列(impressions/ctr)は、現行のドキュメントと一致した。検出には数えないが、申し送りが1件ある。developer-policies の summary は、III.E.4 本文(派生指標の禁止)と III.L の例外に触れていない。",
+      "evidence": ["G-source-citation exit0", "C08 verdict PASS (target 22 / 欠落0 / 非公式host0 / 世代落ち0 / 確認時刻欠落0)"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが、verify-completeness.py --input と validate-prompt.py --input の両方を exit0 で通った。R0-foundation の objectives 形状 {id,text,measure} に serves が無い問題(L41)は、plugin 側で今も直っていない。報告だけにし、この仕様書への差し戻しには含めない。",
+      "evidence": ["G-prompt: 18/18 exit0", "R0-foundation.md L41 `objectives [{id,text,measure}]`"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "ungrounded_blocking_items: []"},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation --state (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompts, --input)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)", "observation": "前回から直っていない。R0-foundation.md(L41)は objectives を {id,text,measure} と定義しているが、compile が受入条件を導くときに使う objectives[].serves を要求していない。この仕様書は serves を手で付けて回避している。", "suggested_fix": "harness 側で、R0-foundation・spec-state-contract の objectives 形状と validate-coverage-matrix --require-foundation に serves を加える。この仕様書への差し戻しには含めない。", "evidence": ["R0-foundation.md L41"]},
+    {"severity": "low", "bucket": "matrix_coverage/根拠の新旧(qa-018・qa-056 が置き換え済みと示されていない)", "observation": "qa-018(日曜に毎時 `0 * * * 0`・週360人分)は qa-049/qa-058 で、qa-056 がプレビューした `*/5 19-23 * * *` の案は qa-058/qa-059 で置き換えられた。それでも両方が infrastructure.web と infrastructure.desktop-* の qa_refs に裏付けとして残っている。infrastructure.md L112 の『裏付け質疑 qa-018』にも、置き換え済みの注記が無い。D-cron の caveats では経緯が追えるが、章だけを読む実装者が旧 Cron 案を今の仕様と取り違えるおそれがある。", "suggested_fix": "elicit で、qa-018 と qa-056 に『Cron 構成は qa-058/qa-059 で置き換え済み』と注記する(追記だけで既存キーは書き換えない)。そのうえで compile を再実行し、章の裏付け質疑に置き換え済みと出るようにする。再質問は不要。", "evidence": ["infrastructure.md L18/L21-23 qa_refs に qa-018・qa-056", "infrastructure.md L112-120 qa-018 本文"]},
+    {"severity": "low", "bucket": "decision_guidance/D-cron caveats の読みやすさ", "observation": "D-cron の caveats には『削除用 Cron を追加し計2本』と『qa-058 で…Cron Trigger は計1本』が、同じ段落に時系列で並んでいる。最終状態は『計1本』で正しいが、先頭から読むと2本と1本のどちらが今の仕様か迷う。", "suggested_fix": "compile(または elicit の decisions 更新)で、caveats の先頭に今の構成(`0 18 * * *` の1本 + Queues)を書き、経緯は『履歴:』として後ろに分ける。", "evidence": ["00-requirements-definition.md L112 D-cron caveats"]},
+    {"severity": "low", "bucket": "doc_freshness/出典 summary の範囲(C08 の申し送り)", "observation": "youtube-api-developer-policies の summary は III.A.2 / III.D.2.3 / III.E.4.g だけを引用している。qa-053 と scope.out の根拠になった III.E.4 本文(派生指標の禁止)と III.L の例外が、summary に入っていない。原文は qa-048 に逐語で残っているので判断には影響しないが、出典の記録としては範囲が足りない。", "suggested_fix": "doc-fetch R3-record で、youtube-api-developer-policies の summary に III.E.4 本文(i)(ii)と III.L の例外を追記する。", "evidence": ["C08 所見", "qa_log[qa-048].answer の III.E.4 引用"]},
+    {"severity": "low", "bucket": "matrix_coverage/hearing(r5 low の持ち越し)", "observation": "r5 の low 2件が、まだ直っていない。(1) approval_log appr-005 の note が、明細の qa-038 を指していない。(2) 分割元の qa-030 に『qa-032/033/034 に分割済み』の注記が無い(spec-state 内の『分割済み』は0件)。あわせて、qa-048(観察事実のまとめ・answered_at 14:03:14Z)は、それを示したうえで聞いた qa-049(13:59:04Z)より後の時刻で記録されている。provenance は『まとめた観察事実』なので矛盾ではないが、時刻の順番だけを見ると取り違えやすい。", "suggested_fix": "elicit で、appr-005 に『明細は qa-038』を、qa-030 に『qa-032/033/034 に分割済み、qa-033 はさらに qa-039/040 へ』を追記する。qa-048 の provenance には『調査は 13:43〜13:48Z、記録は 14:03Z』と書く。", "evidence": ["approval_log[appr-005].note", "qa_log[qa-048].answered_at / qa_log[qa-049].answered_at"]},
+    {"severity": "low", "bucket": "design_knowledge_reflection/根拠ラベル(plugin 側の enum・持ち越し)", "observation": "章に出る根拠ラベルが、basis=user-decision から機械的に作られた『利用者が代替案を見たうえで明示選択した決定』のままである。このため、一括承認の qa-037 と、内容を見たうえで承認した qa-046/056/059 が同じラベルで並ぶ。本文の冒頭では区別されている。", "suggested_fix": "plugin 側で、basis enum に一括承認を表す区分を足すか、compile のラベルで provenance を反映する。"},
+    {"severity": "info", "bucket": "matrix_coverage/hearing・前回 FAIL の是正確認", "observation": "r5 で総合 FAIL の唯一の原因だった C06 F-LQ-06(qa-033 が2論点を1問で聞いていた件)は、qa-039・qa-040 の中立な3択(推奨表示なし)で聞き直され、解消した。C06 は4軸とも PASS。qa-058 は1文で『方式を変えるか』と『起動時刻』を聞いている。ただし2つは従属する論点で、回答も提示外の自由記述なので、誘導とはしない(C06 の要観察)。"},
+    {"severity": "info", "bucket": "design_knowledge_reflection・r6 の新しい決定の反映確認", "observation": "毎日 JST 3:00 の Cron 1本+Queues によるテナントごとの実行、Reporting API によるインプレッション・CTR の取得(jobs.create・修正版の置き換え・最初の約48時間は CSV で補う)、CSV の併存と出典バッジ、派生指標は CSV 由来だけで計算すること(III.E.4)、テナント上限100と上限に達したときの応答、画面の自動操作を使わないこと(scope.out)。これらが、infrastructure/database/backend/security/ui-ux/maintenance-ops の各章に具体的に反映されていることを確認した。"},
+    {"severity": "info", "bucket": "doc_freshness(C08)", "observation": "22 target(新しく入った Queues・Reporting API・Developer Policies・YouTube 利用規約を含む)すべてで、公式 host・現行版と一致した。"},
+    {"severity": "info", "bucket": "prompt_quality", "observation": "system-spec-harness の18 prompt が、verify-completeness.py/validate-prompt.py をすべて exit0 で通った。"}
+  ],
+  "gaps": [
+    "[elicit・任意/low] qa-018 と qa-056 に『Cron 構成は qa-058/qa-059 で置き換え済み』と注記し、appr-005 に『明細は qa-038』を、qa-030 に分割済みの注記を追記する",
+    "[compile・任意/low] D-cron の caveats の先頭に今の構成(`0 18 * * *` の1本 + Queues)を書き、経緯は後ろに分ける",
+    "[doc-fetch・任意/low] youtube-api-developer-policies の summary に III.E.4 本文と III.L の例外を追記する",
+    "[harness 修正・報告のみ] R0-foundation と --require-foundation に objectives[].serves を加える。一括承認を区別する根拠ラベルを設ける (この仕様書への差し戻しには含めない)"
+  ]
+}

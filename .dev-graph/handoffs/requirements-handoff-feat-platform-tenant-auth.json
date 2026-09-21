@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "handoff_target": "task-graph",
+  "feature_id": "feat-platform-tenant-auth",
+  "generated_at": "2026-09-21T14:58:00Z",
+  "graph_snapshot": {
+    "path": ".dev-graph/state/graph.json",
+    "graph_revision": 2,
+    "digest": "sha256:5904515cc872f8246ded393c4f422cb4701c832e33a02eabb9779b36e78c8497"
+  },
+  "requirements_document": {
+    "path": ".dev-graph/handoffs/requirements-feat-platform-tenant-auth.md",
+    "digest": "sha256:ff26633a8b5c16a3e24d647a8033a60646d4b4a45bc094a6ff68ad5349a3827a"
+  },
+  "package": {
+    "path": ".dev-graph/published/feature-package-feat-platform-tenant-auth",
+    "published_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+    "promotion_receipt": {
+      "path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/atomic-promotion-receipt.json",
+      "digest": "sha256:f3439aeec299600c2341bd46df762ef77cb36565983b797ea7765093742a25b4"
+    },
+    "system_build_handoff": {
+      "path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/system-build-handoff.json",
+      "digest": "sha256:47a4ed967af275a1669c8c394f0813fe5e0502b229b3368ac1bfc432a875ece6"
+    },
+    "registration_manifest": {
+      "path": ".dev-graph/published/feature-package-feat-platform-tenant-auth/dev-graph-registration.json",
+      "digest": "sha256:aa0e68e07a9ff66dbb0d1f973559dd97fcecc21ed0e0ed21423fadc4a1994faa"
+    }
+  },
+  "feature_context": {
+    "path": "features/feat-platform-tenant-auth.context.json",
+    "digest": "sha256:921630778ada9cc013965d562f034a336daa25039ccf23ff43a059c7773f9f16"
+  },
+  "gates": {
+    "c11_graph_schema": "pass",
+    "c02_saved_state": "pass",
+    "validate_system_plan": "pass",
+    "plan_evaluator": "PASS"
+  },
+  "missing_sections": [],
+  "self_generated_code_files": 0,
+  "note": "task node 登録 (node verb) 前の handoff。build 着手は register-package 後の graph を正本とする"
+}

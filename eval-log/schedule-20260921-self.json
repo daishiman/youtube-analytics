@@ -1,0 +1,46 @@
+{
+  "assignment_hints": [
+    {
+      "claim_command": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>",
+      "graph_node_id": "SYS-PTA-P01",
+      "suggested_branch": "devgraph/SYS-PTA-P01"
+    },
+    {
+      "claim_command": "/dev-graph worktree claim arch-youtube-analytics-system --branch devgraph/arch-youtube-analytics-system --session-id <session>",
+      "graph_node_id": "arch-youtube-analytics-system",
+      "suggested_branch": "devgraph/arch-youtube-analytics-system"
+    },
+    {
+      "claim_command": "/dev-graph worktree claim spec-youtube-analytics-system --branch devgraph/spec-youtube-analytics-system --session-id <session>",
+      "graph_node_id": "spec-youtube-analytics-system",
+      "suggested_branch": "devgraph/spec-youtube-analytics-system"
+    }
+  ],
+  "batches": {
+    "features": [
+      [
+        "feat-platform-tenant-auth"
+      ]
+    ],
+    "tasks": [
+      [
+        "SYS-PTA-P01",
+        "arch-youtube-analytics-system",
+        "spec-youtube-analytics-system"
+      ]
+    ]
+  },
+  "conflicts": [],
+  "ready_set": {
+    "features": [
+      "feat-platform-tenant-auth"
+    ],
+    "tasks": [
+      "SYS-PTA-P01",
+      "arch-youtube-analytics-system",
+      "spec-youtube-analytics-system"
+    ]
+  },
+  "ready_source": "self",
+  "unmapped": []
+}

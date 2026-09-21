@@ -1,0 +1,1 @@
+# git diff --binary は対象が未追跡のため空。復元基準は pre-phase3-manifest.sha256 を使用する。

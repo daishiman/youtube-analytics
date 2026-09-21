@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-node",
+ "checklist": [
+  {
+   "item": "realpath containment/repository_id",
+   "status": "pass",
+   "evidence": "resolve-repo-context receipt github:daishiman/youtube-analytics"
+  },
+  {
+   "item": "classification decision",
+   "status": "pass",
+   "evidence": "confidence 0.97, margin>=0.52 で自動確定"
+  },
+  {
+   "item": "frontmatter/body/path/template metadata",
+   "status": "pass",
+   "evidence": "validate-graph-schema.py exit0 (valid=true, violations=[])"
+  },
+  {
+   "item": "exact-13 package",
+   "status": "not_applicable",
+   "evidence": "通常 artifact 2件の登録のみ"
+  },
+  {
+   "item": "graph_revision/registered_node_ids",
+   "status": "pass",
+   "evidence": "graph_revision=1, [spec-youtube-analytics-system, arch-youtube-analytics-system]"
+  }
+ ],
+ "recorded_at": "2026-09-21T14:36:15Z"
+}

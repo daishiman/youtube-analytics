@@ -1,0 +1,44 @@
+{
+  "run_id": "20260922-01",
+  "scope": "repo",
+  "phase_order": [
+    {
+      "phase": 1,
+      "agent": "/root/phase1_reset_observer",
+      "mode": "read-only",
+      "output": ["shared_state.md", "raw_observations.json"]
+    },
+    {
+      "phase": 2,
+      "mode": "read-only-parallel",
+      "agents": [
+        "/root/phase2_logical_structural",
+        "/root/phase2_meta_divergent",
+        "/root/phase1_reset_observer"
+      ],
+      "output": [
+        "findings-phase2-logical-structural.json",
+        "findings-phase2-meta-divergent.json",
+        "findings-phase2-system-strategic.json",
+        "findings-phase2-aggregate.json",
+        "paradigm-scorecard.csv"
+      ],
+      "thought_methods": 30
+    },
+    {
+      "phase": 3,
+      "mode": "write",
+      "iterations": 3,
+      "output": ["findings.json", "phase3-execute.json", "verdict.json", "review-repo.md"]
+    }
+  ],
+  "independent_approval": {
+    "agent": "/root/independent_approver",
+    "implementation_role": false,
+    "attempts": 3,
+    "final": "PASS",
+    "artifact": "independent-approval.json"
+  },
+  "force_pass": false,
+  "physical_deletion": false
+}
