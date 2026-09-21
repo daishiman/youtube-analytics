@@ -1,0 +1,39 @@
+{
+ "graph_node_id": "feat-youtube-daily-collection",
+ "artifact_kind": "feature",
+ "purpose": "YouTube Analytics/Reporting/Data API の公式値をテナントごとに毎日自動で集め、分析とダッシュボードが常に最新の実績を使えるようにする",
+ "goal": "owner が YouTube を読取専用で連携すると、毎日 JST 3:00 の Cron が Queues 経由で全テナントを1テナント1実行で収集し、API 由来の表へ出典 api 付きで保存される",
+ "scope_in": [
+  "owner による YouTube 読取連携(youtube.readonly yt-analytics.readonly, offline)と refresh token の AES-256-GCM 暗号化保存・連携解除の revoke",
+  "連携完了時の Reporting API jobs.create(channel_reach_basic_a1)と job_id 保存",
+  "Cron `0 18 * * *` から collect-queue へ tenant ごとの collect 通と cleanup 1通を sendBatch",
+  "consumer(max_batch_size=1)の collectTenantDaily: Analytics D-7〜D-1 再取得・動画別 D-3 単日・流入元・属性・維持率",
+  "Reporting reports.list の差分取得と修正版の置換、Data API の動画一覧差分",
+  "msg.retry(max_retries=3・600秒)と最終失敗時の collection_status=failed",
+  "API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at"
+ ],
+ "scope_out": [
+  "CSV 取込と派生指標(feat-csv-media-ingest)",
+  "cleanup 通の処理内容(feat-retention-ops)",
+  "収集結果の画面表示(feat-web-screens-actions)",
+  "captions.download(youtube.force-ssl)の追加同意"
+ ],
+ "acceptance": [
+  "Cron 1回で対象テナント数+1通が collect-queue に入る",
+  "1テナントの収集が1回の consumer 実行でサブリクエスト50件以内に収まる",
+  "3回再試行しても失敗したテナントは collection_status=failed になり、翌日の実行で直近7日が埋まる",
+  "保存した行は全て source=api と tenant_id を持つ",
+  "API 由来の値から新しい指標を計算するコードが無い"
+ ],
+ "architecture_refs": [
+  "architecture/youtube-analytics-system.md",
+  "specs/youtube-analytics-system.md",
+  "system-spec/index.md",
+  "system-spec/00-requirements-definition.md",
+  "system-spec/infrastructure.md",
+  "system-spec/backend.md",
+  "system-spec/auth.md",
+  "system-spec/database.md"
+ ],
+ "updated_at": "2026-09-21T15:15:00Z"
+}

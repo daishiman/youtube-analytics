@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-PTA-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-PTA-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P01"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P02"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P03"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P04"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P05"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P06"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P07"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P08"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P09"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ]
+    },
+    {
+      "id": "SYS-PTA-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-platform-tenant-auth",
+      "parent_feature": "feat-platform-tenant-auth",
+      "depends_on": [
+        "SYS-PTA-P11",
+        "SYS-PTA-P12"
+      ]
+    }
+  ]
+}

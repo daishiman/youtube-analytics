@@ -1,0 +1,138 @@
+{
+  "children": [
+    {
+      "depends_on": [],
+      "description": "dev-graph task SYS-PTA-P01 (tasks/feat-platform-tenant-auth/SYS-PTA-P01.md)",
+      "graph_node_id": "SYS-PTA-P01",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P01",
+      "title": "P01 要件の実装単位への確定"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P01"
+      ],
+      "description": "dev-graph task SYS-PTA-P02 (tasks/feat-platform-tenant-auth/SYS-PTA-P02.md)",
+      "graph_node_id": "SYS-PTA-P02",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P02",
+      "title": "P02 Workers/D1/R2 構成とテナント分離の設計"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P02"
+      ],
+      "description": "dev-graph task SYS-PTA-P03 (tasks/feat-platform-tenant-auth/SYS-PTA-P03.md)",
+      "graph_node_id": "SYS-PTA-P03",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P03",
+      "title": "P03 認証・越境防止の設計レビュー"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P03"
+      ],
+      "description": "dev-graph task SYS-PTA-P04 (tasks/feat-platform-tenant-auth/SYS-PTA-P04.md)",
+      "graph_node_id": "SYS-PTA-P04",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P04",
+      "title": "P04 受入テストと越境テストの設計"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P04"
+      ],
+      "description": "dev-graph task SYS-PTA-P05 (tasks/feat-platform-tenant-auth/SYS-PTA-P05.md)",
+      "graph_node_id": "SYS-PTA-P05",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P05",
+      "title": "P05 基盤・ログイン・テナント・招待の実装"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P05"
+      ],
+      "description": "dev-graph task SYS-PTA-P06 (tasks/feat-platform-tenant-auth/SYS-PTA-P06.md)",
+      "graph_node_id": "SYS-PTA-P06",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P06",
+      "title": "P06 テスト実行と不具合修正"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P06"
+      ],
+      "description": "dev-graph task SYS-PTA-P07 (tasks/feat-platform-tenant-auth/SYS-PTA-P07.md)",
+      "graph_node_id": "SYS-PTA-P07",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P07",
+      "title": "P07 受入確認"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P07"
+      ],
+      "description": "dev-graph task SYS-PTA-P08 (tasks/feat-platform-tenant-auth/SYS-PTA-P08.md)",
+      "graph_node_id": "SYS-PTA-P08",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P08",
+      "title": "P08 リファクタリングとマイグレーション整理"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P08"
+      ],
+      "description": "dev-graph task SYS-PTA-P09 (tasks/feat-platform-tenant-auth/SYS-PTA-P09.md)",
+      "graph_node_id": "SYS-PTA-P09",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P09",
+      "title": "P09 セキュリティと品質の保証"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P09"
+      ],
+      "description": "dev-graph task SYS-PTA-P10 (tasks/feat-platform-tenant-auth/SYS-PTA-P10.md)",
+      "graph_node_id": "SYS-PTA-P10",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P10",
+      "title": "P10 最終レビュー"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "description": "dev-graph task SYS-PTA-P11 (tasks/feat-platform-tenant-auth/SYS-PTA-P11.md)",
+      "graph_node_id": "SYS-PTA-P11",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P11",
+      "title": "P11 証跡の集約"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "description": "dev-graph task SYS-PTA-P12 (tasks/feat-platform-tenant-auth/SYS-PTA-P12.md)",
+      "graph_node_id": "SYS-PTA-P12",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P12",
+      "title": "P12 運用手順とドキュメント"
+    },
+    {
+      "depends_on": [
+        "SYS-PTA-P11",
+        "SYS-PTA-P12"
+      ],
+      "description": "dev-graph task SYS-PTA-P13 (tasks/feat-platform-tenant-auth/SYS-PTA-P13.md)",
+      "graph_node_id": "SYS-PTA-P13",
+      "parent_feature": "feat-platform-tenant-auth",
+      "phase_ref": "P13",
+      "title": "P13 CI/CD とリリース"
+    }
+  ],
+  "feature": {
+    "description": "dev-graph feature feat-platform-tenant-auth",
+    "graph_node_id": "feat-platform-tenant-auth",
+    "title": "基盤・Googleログイン・マルチテナント"
+  }
+}

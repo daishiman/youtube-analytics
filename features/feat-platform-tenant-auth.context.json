@@ -1,0 +1,43 @@
+{
+ "graph_node_id": "feat-platform-tenant-auth",
+ "artifact_kind": "feature",
+ "purpose": "全機能が載る Cloudflare Workers/D1/R2 の土台と、Googleログインでテナント単位に安全に分離されたアクセスを先に用意し、後続機能が tenant_id と役割を前提に作れるようにする",
+ "goal": "Googleでログインすると初回はテナントが作られ、招待リンクで追加したメンバーが owner/editor/viewer の権限の範囲でだけ操作でき、他テナントの資源には到達できない状態が、main への push で自動デプロイされる",
+ "scope_in": [
+  "Workers 1本(Hono v4)+D1(binding DB)+R2 1バケットの wrangler 構成と MAX_TENANTS=100",
+  "D1 マイグレーション(users, tenants, tenant_members, tenant_invites, skill_tokens の土台)と TenantScopedRepository",
+  "Google OAuth 2.0 Authorization Code+PKCE によるログイン(openid email)とセッションCookie(256bit・30日)",
+  "初回ログイン時のテナント自動作成と上限到達時の受付停止",
+  "招待リンク(ハッシュ保存・7日・1回限り・メール一致・取消)とメンバーの役割変更・削除・脱退",
+  "TenantContext による usecase 入口での役割検査とエラー形式 {error:{code,message,hint}}",
+  "プライバシーポリシー・利用規約の静的ページとログイン前同意",
+  "GitHub Actions(PR で lint/test/dry-run、main で migrations→deploy)と Workers Secrets"
+ ],
+ "scope_out": [
+  "YouTube API の読取連携と収集(feat-youtube-daily-collection)",
+  "CSV・字幕・画像の取込(feat-csv-media-ingest)",
+  "Claude Code 連携API とレポート(feat-skill-analysis-reports)",
+  "ダッシュボード等の業務画面(feat-web-screens-actions)",
+  "保持期間の掃除と無料枠メーター(feat-retention-ops)"
+ ],
+ "acceptance": [
+  "未ログインで /api/* を呼ぶと 401 になる",
+  "初回ログインで tenants と owner の tenant_members が1組だけ作られる",
+  "閲覧者の書込APIは 403、他テナントの資源IDは 404 になる(越境成功0件)",
+  "招待リンクを別の Google アカウントで開くと参加できない",
+  "テナント数が MAX_TENANTS に達すると新規テナントを作らず受付停止メッセージを返す",
+  "main への push で D1 マイグレーションと deploy が完了する"
+ ],
+ "architecture_refs": [
+  "architecture/youtube-analytics-system.md",
+  "specs/youtube-analytics-system.md",
+  "system-spec/index.md",
+  "system-spec/00-requirements-definition.md",
+  "system-spec/infrastructure.md",
+  "system-spec/auth.md",
+  "system-spec/security.md",
+  "system-spec/database.md",
+  "system-spec/maintenance-ops.md"
+ ],
+ "updated_at": "2026-09-21T15:15:00Z"
+}

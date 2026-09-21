@@ -1,0 +1,1358 @@
+{
+  "version": 1,
+  "target": {
+    "type": "custom",
+    "path": "/Users/dm/orca/workspaces/YouTube分析/初期設定",
+    "reviewed_at": "2026-09-21T16:10:07Z"
+  },
+  "loop_count": 3,
+  "paradigm_findings": [
+    {
+      "paradigm_id": 1,
+      "paradigm_name": "critical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "登録者増が原因KPIと同列で、売上ファネルの後半が欠落する。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 2,
+      "paradigm_name": "deduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "確定仕様の日次収集と画面promptの毎週・毎時表示が矛盾する。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 3,
+      "paradigm_name": "induction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "複数成果物で売上ファネル欠落とREADMEの状態遅延が反復する。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 4,
+      "paradigm_name": "abduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "派生物のfreshness gate不足が旧仕様残存の最尤原因である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 5,
+      "paradigm_name": "vertical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "表層のKPI差替えではなく目的・データ契約まで変更が必要である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 6,
+      "paradigm_name": "decomposition",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "LINE・問い合わせ・成約のproducerからUIまでの縦断要素がない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 7,
+      "paradigm_name": "mece",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "ファネルは登録で終わり、事業成果までMECEになっていない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 8,
+      "paradigm_name": "two-axis",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "原因×結果で見ると現行トップKPIの優先順位が逆である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 9,
+      "paradigm_name": "process",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "追加要件がrequirements foundationに無く後続投影へ到達しない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 26,
+      "paradigm_name": "why",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "本質課題は目的関数と観測可能な売上ファネルの未接続である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "repo内の正本・投影・runtime・履歴の区分が入口で見えない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "6画面promptの共通shellが手動複製されている。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96,
+      "reusable_abstraction": "正本を一つに定め、派生物はthin projectionまたは再同期gate付きにする。",
+      "template_variables": [
+        "{{UI_PROMPT_COMMON}}",
+        "{{FUNNEL_METRIC_SET}}",
+        "{{ANALYSIS_HISTORY_LIMIT}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "生成を実行せずsource_digestだけを現在値へ置換する",
+        "履歴HTML本体を毎回exportして重複させる"
+      ],
+      "re_audit_trigger": "dev-graph compile/decompose後または画面PNG再生成後"
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "目的変更がfoundation再監査として扱われていない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "代替7案では、現行画面置換と週次CSV取込の組合せが最小で本質的である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "制約理論に類推すると主役は総量ではなく目標差最大の工程である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "情報追加より結果KPI降格と共通固定値削減が明瞭さを上げる。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "plan-structureの0 edge表示がcanonical DAGと矛盾する。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "10倍規模では重複promptと入口不在の探索コストが支配的になる。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見ではREADMEから現在地も売上の詰まりも判断できない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 19,
+      "paradigm_name": "systems",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "YouTube内ファネルからLINE・問い合わせ・成約へつながる依存列がない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 20,
+      "paradigm_name": "causal",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "売上終点の原因分解と週次ボトルネック規則がない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 21,
+      "paradigm_name": "causal-loop",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "改善ループがCTRと視聴維持率までで閉じている。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 22,
+      "paradigm_name": "trade-on",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "簡潔さ・規約適合・売上診断を同時に満たす情報設計がない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 23,
+      "paradigm_name": "plus-sum",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "LINEを使わないテナントを吸収するstage contractがない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 24,
+      "paradigm_name": "value-proposition",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "登録者増をトップKPIに置く現行価値提案が新要件と不整合である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 25,
+      "paradigm_name": "strategic",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "事業ファネル入力を所有するfeatureがない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 27,
+      "paradigm_name": "kaizen",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "画面promptに旧収集周期が残っている。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 28,
+      "paradigm_name": "hypothesis",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "段階別の反証可能な週次仮説がない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 29,
+      "paradigm_name": "issue",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "中心論点は外部事業データの事実源と結合単位である。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 30,
+      "paradigm_name": "kj",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "KPI変更が複数階層へ散在し単一契約から同期されない。 改善後は正本・共通部品・検証gateへ収束し、当該思考法で再確認済み。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "critical",
+      "deduction",
+      "induction",
+      "abduction",
+      "vertical",
+      "decomposition",
+      "mece",
+      "two-axis",
+      "process",
+      "why",
+      "meta",
+      "abstraction",
+      "double-loop",
+      "brainstorming",
+      "lateral",
+      "paradox",
+      "analogy",
+      "if",
+      "naive",
+      "systems",
+      "causal",
+      "causal-loop",
+      "trade-on",
+      "plus-sum",
+      "value-proposition",
+      "strategic",
+      "kaizen",
+      "hypothesis",
+      "issue",
+      "kj"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  },
+  "four_conditions": {
+    "C1": {
+      "verdict": "PASS",
+      "evidence": [
+        "原因指標/結果指標、毎日3:00、現況、依存グラフの相反記述を正本・prompt・thin indexで解消し、repository consistency検査が通過。"
+      ],
+      "violation_count": 0
+    },
+    "C2": {
+      "verdict": "PASS",
+      "evidence": [
+        "週次事業CSV、率・目標差・標本・鮮度・保留・全指標目標達成・直近5回履歴の契約と受入条件を正本からfeature contextまで反映。"
+      ],
+      "violation_count": 0
+    },
+    "C3": {
+      "verdict": "PASS",
+      "evidence": [
+        "metric id、週境界、source、null/0、同週スナップショット、画面4ブロックを統一し、JSON/YAML/context同期検査が通過。"
+      ],
+      "violation_count": 0
+    },
+    "C4": {
+      "verdict": "PASS",
+      "evidence": [
+        "canonical spec→feature→taskの依存、prompt shared→screen body、task graph 13 edge、stale lineageの再同期gateを明示し機械検査が通過。"
+      ],
+      "violation_count": 0
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "6画面の共通デザイン契約",
+      "variable_name": "{{UI_PROMPT_COMMON}}",
+      "default_value": "docs/screens/prompts/_shared.prompt.txt",
+      "source_trace": "docs/screens/README.md"
+    },
+    {
+      "concrete_value": "インプレッション、CTR、加重平均視聴率M1、導線誘導率、問い合わせ→成約率",
+      "variable_name": "{{FUNNEL_METRIC_SET}}",
+      "default_value": "impressions,ctr,weighted_retention_m1,lead_route_rate,inquiry_close_rate",
+      "source_trace": "system-spec/database.md#週次売上ファネル追補ユーザー追加要件"
+    },
+    {
+      "concrete_value": "週次事業CSV手動取込",
+      "variable_name": "{{BUSINESS_DATA_PROVIDER}}",
+      "default_value": "manual_weekly_csv",
+      "source_trace": "docs/analysis/dashboard-analysis-catalog.md#1-取り込むCSVと列"
+    },
+    {
+      "concrete_value": "JST月曜00:00〜翌月曜00:00",
+      "variable_name": "{{FUNNEL_WEEK_BOUNDARY}}",
+      "default_value": "Asia/Tokyo Monday 00:00",
+      "source_trace": "docs/analysis/dashboard-analysis-catalog.md#21-週次売上ファネル"
+    },
+    {
+      "concrete_value": "直近5回の完了済み分析",
+      "variable_name": "{{ANALYSIS_HISTORY_LIMIT}}",
+      "default_value": "5",
+      "source_trace": "system-spec/backend.md#分析履歴パック契約保留要件-psc-001-の適用"
+    },
+    {
+      "concrete_value": "毎日JST 3:00",
+      "variable_name": "{{COLLECTION_SCHEDULE_LABEL}}",
+      "default_value": "毎日 3:00",
+      "source_trace": "system-spec/00-requirements-definition.md#U4-目標-objectives"
+    }
+  ],
+  "total_score": 0.96
+}

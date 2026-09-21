@@ -1,0 +1,84 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/初期設定/system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。前回medium(frontend 章の doctrine 反映列に残っていた『pages/*(5つ)』)は是正済みで、『pages/*(6つ: login・dashboard・videos・ai-analysis・actions・settings)+静的ページ2枚』になり、I8/O5(qa-030/appr-004)と一致した。章に残る『画面5つ』『5画面』は qa-015/qa-024 の逐語引用だけで、確定内容の矛盾ではない。新しく見つかった章間の不整合が1件ある(medium)。security の保持ルールは『fetched_at が30日を超えた行を毎日1回の Cron 掃除で削除』『削除失敗分は次の毎時 Cron で再試行』としているが、infrastructure 章の Cron は `0 * * * 0`(UTC 日曜の毎時)だけで、毎日動く掃除用 Cron は定義されていない。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "00-requirements-definition.md L40 O5 / L81 I8 (6枚+静的2枚)", "spec-state.json doctrine_applications.frontend.application-architecture『pages/*(6つ…)+静的ページ2枚』", "design_applications.security『毎日1回のCron掃除で削除』 vs design_applications.infrastructure / infrastructure.md L120『Cron `0 * * * 0`』のみ"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions は6件(D-ai-engine/D-db/D-auth/D-cron/D-deploy/D-transcript)で、前回から変更なし。すべて2〜3案の比較、無料案、TCO、goal_fit、security、運用、lock-in、公式evidence、推奨理由と注意点がそろっている。user_decision.qa_ref も全件ある。D-db(d1-r2)と D-transcript(hybrid)は、利用者が AI 推奨とは別の案を明示的に選んだもの。今回の追加(qa-032〜034)も推奨以外の代替案を併記した選択式で、動画画面では AI 推奨(詳細パネル)を利用者が採らなかった。AI 推奨だけで確定した件は無い。",
+      "evidence": ["G-foundation exit0 (decisions 契約含む)", "qa_log qa-032 provenance『AskUserQuestion 3択』・answer『提示した他の案: 詳細パネル(AI推奨)』"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info)。48セル=確定26/対象外22/未収集0で、block item 6件はすべて grounded。前回の主因(reopen_log が空で、主根拠が上書き済みの qa-015 のまま)は大きく改善し、6件の reopen が記録され、database/infrastructure/ui-ux/frontend の4セルは記載どおり主 qa_ref が変更後の回答(qa-026/qa-032)に付け替わった。一方、C07 は FAIL(medium 2件)。backend.web と security.web の reopen_log には『主根拠を変更の根拠になった回答(qa-032/qa-033、qa-033/qa-035)へ付け替える』と書かれているが、実際の qa_ref は qa-023/qa-022 のままで、ログの記載と状態が食い違う。sub-input の C06 も FAIL(誘導質問・トレーサビリティ)。qa-013(結論を括弧内に先に書いた質問)が mobile/tablet 対象外セルのただ一つの根拠のまま残り、前回の是正依頼が実施されていない。fail-closed で FAIL とした。",
+      "evidence": ["G-matrix / G-matrix-loop / G-matrix-basis / G-foundation exit0", "validate-knowledge-graph --profile required-info --state: ungrounded_blocking_items=[]", "C07 verdict FAIL (medium 2: backend.web / security.web の reopen_log と qa_ref の不一致, low 1, info 4)", "C06 overall FAIL (聞き漏れ PASS / 誘導質問 FAIL: F-LQ-05 medium, F-LQ-06 low / 早期停止 PASS / トレーサビリティ FAIL: F-TR-05 medium, F-TR-06 low, F-TR-04 low)", "spec-state.json reopen_log 6件 / matrix.backend.web.qa_ref=qa-023 / matrix.security.web.qa_ref=qa-022"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層: validate-knowledge-graph の knowledge/doctrine/required-info/cross 4 profile はすべて exit0。意味層: 前回medium(AI が設計した適用記述が『利用者の明示選択』と表示されていた)は是正済み。design_applications 8件は basis=agent-inference に再分類され、本文の冒頭に『[根拠の区分] 骨格=利用者確定 qa-… / 詳細=アシスタントが詳しくしたもので個別承認は未取得』と書かれ、章でも『アシスタントの推定』と表示される。前回low(backend に DDD の章固有の適用が無い)も是正済みで、usecase と集約の1対1対応、ingestReport は追記だけ、updateAction は集約内で状態遷移を検査、2集約を同一トランザクションで書き換えない、が入った。doctrine の frontend/security も更新され(6画面+静的2枚 / 脅威5つ+30日保持)、上流指針が具体的な要件に落ちている。残りは、doctrine security.security が observed-fact(qa-035)由来の適用を含むのに basis=user-decision のままである点(low)と、AI 詳細化部分をまとめて承認してもらう作業がまだ残る点(info)。存在確認だけの PASS ではなく、具体的な適用が成り立っていると判断した。",
+      "evidence": ["G-knowledge-graph 4 profile exit0", "backend.md L320『設計知識(DDD)の適用: usecaseと集約を1対1で対応…』", "backend.md L322『根拠の性質: アシスタントの推定』", "spec-state.json design_applications.*.basis=agent-inference (8件)", "doctrine_applications.frontend.application-architecture basis=agent-inference / security.security basis=user-decision"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "target 19件・参照19件。validate-source-citation.py は exit0。公式サイトとの再照合で、非公式host・世代落ち・確認時刻の欠落はいずれも0件。YouTube API Developer Policies III.E.4(Last updated 2026-09-14)の本文を逐語で確認し、security.md/database.md の引用(30暦日・7暦日・指標の30日ごとの認可確認)と一致した。youtube-analytics-retention-report は公式ページに日付表示が無く独立確認できないため info とした。",
+      "evidence": ["G-source-citation exit0", "C08 verdict PASS (info 3件)", "III.E.4 逐語照合: security.md L107 / database.md L144"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の全18 prompt が verify-completeness.py --input と validate-prompt.py --input を両方 exit0 で通過した。前回medium(R0-foundation の objectives 形状が {id,text,measure} のままで、serves が無い)は harness 側で今回も未修正(R0-foundation.md L41)。本仕様書は serves を手で付けて回避している。",
+      "evidence": ["G-prompt: 18/18 exit0", "R0-foundation.md L41 `objectives [{id,text,measure}]`"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop, C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state (C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "ungrounded_blocking_items: []"},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompts, --input)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "medium", "bucket": "matrix_coverage/reopen(C07 medium-1/2・C06 F-TR-05)", "observation": "reopen_log の backend.web と security.web には『主根拠を変更の根拠になった回答へ付け替える』(backend=qa-032/qa-033、security=qa-033/qa-035)と書かれているが、実際の matrix.backend.web.qa_ref は qa-023、matrix.security.web.qa_ref は qa-022 のまま。どちらも 12:29:59Z の詳細案一括確定で、変更点(動画API・データ削除API/規約対応・30日保持)を裏付けていない。ほかの4セル(database/infrastructure/ui-ux/frontend)はログどおりに付け替わっている。『カテゴリ別の主根拠』として qa-023/qa-022 を選んだのであれば、その方針自体は成り立つが、ログの記載と食い違っている。", "suggested_fix": "elicit(R4-reopen の記録修正)で次のどちらかにそろえる。(a) backend.web.qa_ref を qa-032、security.web.qa_ref を qa-033 に付け替える。(b) reopen_log の2件の reason を『主根拠はカテゴリ詳細確定の qa-023/qa-022 を維持し、変更点は qa_refs(qa-032/033/035)で裏付ける』に直す。そのあと compile を再実行する。", "evidence": ["spec-state.json reopen_log[category=backend|security].reason", "matrix.backend.web.qa_ref=qa-023", "matrix.security.web.qa_ref=qa-022"]},
+    {"severity": "medium", "bucket": "matrix_coverage/hearing(C06 F-LQ-05)", "observation": "qa-013『どの環境で使えるようにするか(画面はWebアプリ、AI分析はClaude Codeを動かすPC側)』は結論を括弧内に先に書いたままで、mobile/tablet の対象外セルは今もこの qa-013 だけを根拠にしている。前回 gaps の『mobile/tablet 対象外の方針を中立形式で1問確認』は実施されていない(承認記録 appr-002 はあるが、問いの形は変わっていない)。", "suggested_fix": "elicit R3-reask で『スマホ・タブレット向けの専用アプリは必要ですか?(Web のレスポンシブ表示で足りる / 専用アプリが要る)』のように結論を含まない中立の1問で確かめ、mobile/tablet セルの qa_ref を新しい qa に付け替える。回答が同じなら、内容は変えずに参照先を変えるだけでよい。", "evidence": ["qa_log qa-013.question", "matrix.*.mobile/tablet.qa_ref=qa-013"]},
+    {"severity": "medium", "bucket": "foundation_trace/consistency", "observation": "security の保持ルール(design_applications.security)は『fetched_at が30日を超えた行は毎日1回の Cron 掃除で削除』『削除失敗分は次の毎時 Cron で再試行』としている。しかし infrastructure 章と design_applications.infrastructure で定義している Cron は `0 * * * 0`(UTC 日曜の毎時)だけで、毎日動く掃除用 Cron も平日の毎時 Cron も無い。このままでは、月曜に削除が失敗すると再試行は次の日曜になり、7暦日以内の削除(III.E.4.g)がぎりぎりになる。", "suggested_fix": "elicit で掃除と再試行のスケジュールを決め(例: Cron Triggers に毎日の `0 18 * * *` を追加して掃除と削除再試行を行う)、infrastructure の Cron 定義と security の記述をそろえてから compile を再実行する。Workers Free の Cron Trigger 数の上限も確認する。", "evidence": ["spec-state.json design_applications.security『毎日1回のCron掃除で削除』『次の毎時Cronで再試行』", "infrastructure.md L120 / design_applications.infrastructure『Cron Triggers `0 * * * 0`』"]},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract", "observation": "前回から未修正。R0-foundation.md(L41)は objectives を {id,text,measure} と定義しており、compile が受入条件の導出に使う objectives[].serves を要求していない。本仕様書は serves を手で付けて回避したが、契約どおりに作れば再発する。", "suggested_fix": "harness 側で R0-foundation・spec-state-contract の objectives 形状と validate-coverage-matrix --require-foundation に serves を加える(本仕様書への差し戻しとは別の plugin 修正)。", "evidence": ["R0-foundation.md L41"]},
+    {"severity": "low", "bucket": "matrix_coverage/hearing(C06 F-TR-04)", "observation": "qa-029(分析カタログの中身をエージェントに委任)について、カタログの中身を利用者が承認した記録は今回も approval_log に無い(appr-001〜004 は別の論点)。前回 gaps の依頼は実施されていない。", "suggested_fix": "elicit でカタログの要点(M1〜M10・9区画・心理分析の解釈表)を利用者に示して承認を取り、approval_log に登録する。design_applications の AI 詳細化部分とまとめて1回で承認を取ってもよい。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/provenance(C06 F-TR-06)", "observation": "doctrine_applications.security.security は qa-022/qa-033/qa-035 を引用して basis=user-decision としている。しかし qa-035 は observed-fact(規約の裏取り)で、『30日で削除または再取得』という対策の当てはめ方はエージェントが導いたもの。利用者が選んだ内容と、事実確認やエージェント推定による内容が、1つの basis 表示に混ざっている。", "suggested_fix": "elicit で、qa-035 由来の保持ルール部分に根拠区分の注記([qa-035 observed-fact / 当てはめはエージェント])を付けるか、その部分を分けて agent-inference にする。"},
+    {"severity": "low", "bucket": "matrix_coverage/hearing(C06 F-LQ-06・C07 low)", "observation": "qa-030 の4論点は qa-032/033/034 に分けて記録され、大きく改善した。ただし qa-033 は『静的ページの置き方』と『データ削除の置き方』の2論点を今も1問で聞いている。また、元の qa-030 は分割後も qa_log と ui-ux/frontend/backend/security の qa_refs に残っていて、同じ決定に根拠の経路が2つある。", "suggested_fix": "再質問は必須ではない。qa-030 に『qa-032/033/034 に分割済み(以後はこちらを参照)』と注記し、qa_refs からは qa-030 を外すか補助扱いにする。"},
+    {"severity": "info", "bucket": "design_knowledge_reflection/approval-pending", "observation": "design_applications 8件はすべて『AI 詳細化部分は利用者の個別承認が未取得(agent-inference)』と明記された。根拠表示としては正しい。ただし、列名・エンドポイント・集約・不変条件・テスト値など実装に直結する内容の大部分が未承認のまま。", "suggested_fix": "実装着手(dev-graph など)の前に、AI 詳細化部分をまとめて提示して承認を取り、basis を user-decision に上げる。"},
+    {"severity": "info", "bucket": "ui-ux/artifact", "observation": "docs/screens/*.png は6枚(01-login/02-dashboard/03-ai-analysis/04-actions/05-settings/06-videos)すべて PNG 署名が正常。02-dashboard は qa-031/qa-034 と一致している(KPI カード4枚+推移線、日次推移の折れ線(前期点線・公開日マーカー)、行内横棒つきの動画別の表、AI 要約と実施中アクション、『詳しく見る』、フッターのプライバシーポリシー・利用規約リンク)。静的ページ2枚をモックの対象外とすることは ui-ux 章(design_applications.ui-ux の末尾)に明記された。前回low は是正済み。"},
+    {"severity": "info", "bucket": "security/compliance", "observation": "前回low(コメントやサムネイルの保持期間)は是正済み。qa-035 で III.E.4 を公式に確認し(C08 も逐語一致を確認)、security と database に、指標以外の API データへの fetched_at 付与と30日での削除または再取得、レポートにコメント本文を複製しないこと(comment_id で参照)、手元の素材は対象外であること、指標は認可の有効性確認が続く間だけ保持すること、を反映した。"},
+    {"severity": "info", "bucket": "matrix_coverage(C07)", "observation": "決定論ゲート5種はすべて exit0。reopen_log 6件のうち4件(database/infrastructure/ui-ux/frontend の web)は、主 qa_ref を変更の根拠となった回答(qa-026/qa-032)へ付け替えており、dangling も無い。前回の主因は大部分が是正された。"},
+    {"severity": "info", "bucket": "doc_freshness(C08)", "observation": "19 target すべてで、公式 host・現行版と一致した。youtube-analytics-retention-report は公式ページに日付表示が無く、独立確認はできない(内容の乖離は無い)。"},
+    {"severity": "info", "bucket": "prompt_quality", "observation": "system-spec-harness の18 prompt が verify-completeness.py/validate-prompt.py を全件 exit0 で通過した。"}
+  ],
+  "gaps": [
+    "[elicit/R4-reopen の記録修正] backend.web と security.web について、reopen_log の reason と matrix の qa_ref をそろえる(qa-032/qa-033 に付け替えるか、reason を『カテゴリ詳細確定 qa-023/qa-022 を主根拠として維持』に直す) (medium・C07 FAIL の主因)",
+    "[elicit/R3-reask] mobile/tablet 対象外の方針を結論を含まない中立の1問で確認し、qa-013 を根拠にしている mobile/tablet セルの qa_ref を付け替える (medium・C06 誘導質問 FAIL の主因。前回から未実施)",
+    "[elicit→compile] 30日保持の掃除と削除再試行のスケジュールを決め、infrastructure の Cron 定義(現在は `0 * * * 0` のみ)と security の『毎日1回の Cron 掃除』『次の毎時 Cron で再試行』をそろえる (medium)",
+    "[elicit] qa-029 の分析カタログの中身と、design_applications の AI 詳細化部分をまとめて利用者に承認してもらい、approval_log に登録して basis を user-decision に上げる (low/info)",
+    "[elicit] doctrine security.security の qa-035(observed-fact)由来部分に根拠区分を注記する。qa-030 に『分割済み』と注記し、qa_refs での扱いを整理する (low)",
+    "[compile] 上記の是正を spec-state.json に反映したあと、全章を再コンパイルし、C05 の再評価(r4)を行う",
+    "[harness 修正] R0-foundation・spec-state-contract・--require-foundation に objectives[].serves を加える (medium・本仕様書とは別の plugin 修正)"
+  ]
+}

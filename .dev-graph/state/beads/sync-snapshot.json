@@ -1,0 +1,179 @@
+{
+  "graph_revision": null,
+  "issue_prefix": "yta",
+  "nodes": [
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-c8g",
+      "depends_on": [],
+      "graph_node_id": "feat-platform-tenant-auth",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-04l",
+      "depends_on": [
+        "feat-platform-tenant-auth"
+      ],
+      "graph_node_id": "feat-youtube-daily-collection",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-9tm",
+      "depends_on": [
+        "feat-platform-tenant-auth"
+      ],
+      "graph_node_id": "feat-csv-media-ingest",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-ufd",
+      "depends_on": [
+        "feat-youtube-daily-collection",
+        "feat-csv-media-ingest"
+      ],
+      "graph_node_id": "feat-skill-analysis-reports",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-7o5",
+      "depends_on": [
+        "feat-youtube-daily-collection",
+        "feat-csv-media-ingest",
+        "feat-skill-analysis-reports"
+      ],
+      "graph_node_id": "feat-web-screens-actions",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-sjb",
+      "depends_on": [
+        "feat-youtube-daily-collection"
+      ],
+      "graph_node_id": "feat-retention-ops",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.1",
+      "depends_on": [],
+      "graph_node_id": "SYS-PTA-P01",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.2",
+      "depends_on": [
+        "SYS-PTA-P01"
+      ],
+      "graph_node_id": "SYS-PTA-P02",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.3",
+      "depends_on": [
+        "SYS-PTA-P02"
+      ],
+      "graph_node_id": "SYS-PTA-P03",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.4",
+      "depends_on": [
+        "SYS-PTA-P03"
+      ],
+      "graph_node_id": "SYS-PTA-P04",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.5",
+      "depends_on": [
+        "SYS-PTA-P04"
+      ],
+      "graph_node_id": "SYS-PTA-P05",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.6",
+      "depends_on": [
+        "SYS-PTA-P05"
+      ],
+      "graph_node_id": "SYS-PTA-P06",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.7",
+      "depends_on": [
+        "SYS-PTA-P06"
+      ],
+      "graph_node_id": "SYS-PTA-P07",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.8",
+      "depends_on": [
+        "SYS-PTA-P07"
+      ],
+      "graph_node_id": "SYS-PTA-P08",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.9",
+      "depends_on": [
+        "SYS-PTA-P08"
+      ],
+      "graph_node_id": "SYS-PTA-P09",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.10",
+      "depends_on": [
+        "SYS-PTA-P09"
+      ],
+      "graph_node_id": "SYS-PTA-P10",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.11",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "graph_node_id": "SYS-PTA-P11",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.12",
+      "depends_on": [
+        "SYS-PTA-P10"
+      ],
+      "graph_node_id": "SYS-PTA-P12",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-c8g.13",
+      "depends_on": [
+        "SYS-PTA-P11",
+        "SYS-PTA-P12"
+      ],
+      "graph_node_id": "SYS-PTA-P13",
+      "graph_status": "active"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "synced_at": "2026-09-21T15:09:50Z"
+}

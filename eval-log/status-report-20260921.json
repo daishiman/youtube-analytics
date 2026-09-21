@@ -1,0 +1,502 @@
+{
+ "graph_revision": 3,
+ "query": {
+  "filters": {},
+  "tag_match": "all"
+ },
+ "count": 21,
+ "dangling": [],
+ "results": [
+  {
+   "graph_node_id": "spec-youtube-analytics-system",
+   "artifact_kind": "specification",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "system-spec",
+    "youtube",
+    "cloudflare",
+    "multi-tenant"
+   ],
+   "file_path": "specs/youtube-analytics-system.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "none",
+   "beads_linkage": null,
+   "dependents": []
+  },
+  {
+   "graph_node_id": "arch-youtube-analytics-system",
+   "artifact_kind": "architecture",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "system-spec",
+    "youtube",
+    "cloudflare",
+    "multi-tenant"
+   ],
+   "file_path": "architecture/youtube-analytics-system.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "none",
+   "beads_linkage": null,
+   "dependents": []
+  },
+  {
+   "graph_node_id": "feat-platform-tenant-auth",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-platform-tenant-auth.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "feat-csv-media-ingest",
+    "feat-youtube-daily-collection"
+   ]
+  },
+  {
+   "graph_node_id": "feat-youtube-daily-collection",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-youtube-daily-collection.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-platform-tenant-auth"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "feat-retention-ops",
+    "feat-skill-analysis-reports",
+    "feat-web-screens-actions"
+   ]
+  },
+  {
+   "graph_node_id": "feat-csv-media-ingest",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-csv-media-ingest.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-platform-tenant-auth"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "feat-skill-analysis-reports",
+    "feat-web-screens-actions"
+   ]
+  },
+  {
+   "graph_node_id": "feat-skill-analysis-reports",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-skill-analysis-reports.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-youtube-daily-collection",
+    "feat-csv-media-ingest"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "feat-web-screens-actions"
+   ]
+  },
+  {
+   "graph_node_id": "feat-web-screens-actions",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-web-screens-actions.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-youtube-daily-collection",
+    "feat-csv-media-ingest",
+    "feat-skill-analysis-reports"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": []
+  },
+  {
+   "graph_node_id": "feat-retention-ops",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics"
+   ],
+   "file_path": "features/feat-retention-ops.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-youtube-daily-collection"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": []
+  },
+  {
+   "graph_node_id": "SYS-PTA-P01",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "documentation",
+   "tags": [
+    "p01",
+    "documentation",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P01.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P02"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P02",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "infrastructure",
+   "tags": [
+    "p02",
+    "infrastructure",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P02.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P01"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P03"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P03",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "security",
+   "tags": [
+    "p03",
+    "security",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P03.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P02"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P04"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P04",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "quality",
+   "tags": [
+    "p04",
+    "quality",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P04.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P03"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P05"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P05",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "backend",
+   "tags": [
+    "p05",
+    "backend",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P05.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P04"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P06"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P06",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "quality",
+   "tags": [
+    "p06",
+    "quality",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P06.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P05"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P07"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P07",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "quality",
+   "tags": [
+    "p07",
+    "quality",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P07.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P06"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P08"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P08",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "data",
+   "tags": [
+    "p08",
+    "data",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P08.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P07"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P09"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P09",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "security",
+   "tags": [
+    "p09",
+    "security",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P09.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P08"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P10"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P10",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "quality",
+   "tags": [
+    "p10",
+    "quality",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P10.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P09"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P11",
+    "SYS-PTA-P12"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P11",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "documentation",
+   "tags": [
+    "p11",
+    "documentation",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P11.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P10"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P13"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P12",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "operations",
+   "tags": [
+    "p12",
+    "operations",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P12.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P10"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-PTA-P13"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-PTA-P13",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-platform-tenant-auth",
+   "domain": "infrastructure",
+   "tags": [
+    "p13",
+    "infrastructure",
+    "platform-tenant-auth"
+   ],
+   "file_path": "tasks/feat-platform-tenant-auth/SYS-PTA-P13.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-PTA-P11",
+    "SYS-PTA-P12"
+   ],
+   "parent_feature": "feat-platform-tenant-auth",
+   "feature_package_id": "feature-package/feat-platform-tenant-auth",
+   "tracker_binding": "beads",
+   "beads_linkage": null,
+   "dependents": []
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "derived_from": ".dev-graph/state/graph.json",
+  "derived_graph_revision": 3,
+  "nodes": [
+    {
+      "id": "arch-youtube-analytics-system",
+      "kind": "architecture",
+      "file_path": "architecture/youtube-analytics-system.md",
+      "sha256": "062eb42ec3d7fade6e61ad9847144648b64b6044614d3ee84a9123c96d60c062",
+      "evaluation_status": "pass"
+    },
+    {
+      "id": "arch-youtube-analytics-system#frontend",
+      "kind": "architecture-subtype",
+      "subtype": "frontend",
+      "parent": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md"
+    },
+    {
+      "id": "arch-youtube-analytics-system#backend",
+      "kind": "architecture-subtype",
+      "subtype": "backend",
+      "parent": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md"
+    },
+    {
+      "id": "arch-youtube-analytics-system#infrastructure",
+      "kind": "architecture-subtype",
+      "subtype": "infrastructure",
+      "parent": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md"
+    },
+    {
+      "id": "arch-youtube-analytics-system#data",
+      "kind": "architecture-subtype",
+      "subtype": "data",
+      "parent": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md"
+    },
+    {
+      "id": "arch-youtube-analytics-system#security",
+      "kind": "architecture-subtype",
+      "subtype": "security",
+      "parent": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md"
+    }
+  ]
+}

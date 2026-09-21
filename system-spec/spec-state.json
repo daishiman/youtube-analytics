@@ -1,0 +1,2856 @@
+{
+  "schema_version": "1.0",
+  "categories": [
+    {
+      "id": "database",
+      "label": "データベース"
+    },
+    {
+      "id": "auth",
+      "label": "認証(ログイン)"
+    },
+    {
+      "id": "ui-ux",
+      "label": "UI-UX"
+    },
+    {
+      "id": "security",
+      "label": "セキュリティ"
+    },
+    {
+      "id": "infrastructure",
+      "label": "インフラ"
+    },
+    {
+      "id": "backend",
+      "label": "バックエンド"
+    },
+    {
+      "id": "frontend",
+      "label": "フロントエンド"
+    },
+    {
+      "id": "maintenance-ops",
+      "label": "保守運用管理"
+    }
+  ],
+  "platforms": [
+    "web",
+    "mobile",
+    "tablet",
+    "desktop-windows",
+    "desktop-linux",
+    "desktop-macos"
+  ],
+  "matrix": {
+    "database": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-054",
+        "serves_goals": [
+          "G1",
+          "G2",
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-003",
+          "qa-010",
+          "qa-014",
+          "qa-016",
+          "qa-020",
+          "qa-015",
+          "qa-035",
+          "qa-037",
+          "qa-038",
+          "qa-026",
+          "qa-042",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-041",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-053",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: 端末内にデータを保存しない。スマホ・タブレットのブラウザからWeb経由でD1/R2を読み書きする(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: 端末内にデータを保存しない。スマホ・タブレットのブラウザからWeb経由でD1/R2を読み書きする(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "対象外",
+        "reason": "desktop-windows: Claude Code連携スキルは一時ファイル(書き出しCSV・字幕・切り出し画像)のみ扱い、永続データはWeb側D1/R2だけに置くためローカルDBを持たない(qa-015『DB/画面なし』・qa-026)",
+        "qa_ref": "qa-015"
+      },
+      "desktop-linux": {
+        "state": "対象外",
+        "reason": "desktop-linux: Claude Code連携スキルは一時ファイル(書き出しCSV・字幕・切り出し画像)のみ扱い、永続データはWeb側D1/R2だけに置くためローカルDBを持たない(qa-015『DB/画面なし』・qa-026)",
+        "qa_ref": "qa-015"
+      },
+      "desktop-macos": {
+        "state": "対象外",
+        "reason": "desktop-macos: Claude Code連携スキルは一時ファイル(書き出しCSV・字幕・切り出し画像)のみ扱い、永続データはWeb側D1/R2だけに置くためローカルDBを持たない(qa-015『DB/画面なし』・qa-026)",
+        "qa_ref": "qa-015"
+      }
+    },
+    "auth": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-044",
+        "serves_goals": [
+          "G1",
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-004",
+          "qa-008",
+          "qa-014",
+          "qa-021",
+          "qa-025",
+          "qa-037",
+          "qa-038",
+          "qa-015",
+          "qa-041",
+          "qa-042",
+          "qa-043",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-048",
+          "qa-050",
+          "qa-055",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: 専用アプリのログインは作らず、スマホ・タブレットのブラウザでも同じGoogleログインを使う(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: 専用アプリのログインは作らず、スマホ・タブレットのブラウザでも同じGoogleログインを使う(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4",
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-021",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4",
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-021",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4",
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-021",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    },
+    "ui-ux": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-054",
+        "serves_goals": [
+          "G2",
+          "G4",
+          "G5"
+        ],
+        "qa_refs": [
+          "qa-001",
+          "qa-011",
+          "qa-012",
+          "qa-013",
+          "qa-014",
+          "qa-016",
+          "qa-027",
+          "qa-029",
+          "qa-030",
+          "qa-031",
+          "qa-015",
+          "qa-032",
+          "qa-033",
+          "qa-034",
+          "qa-037",
+          "qa-038",
+          "qa-039",
+          "qa-040",
+          "qa-036",
+          "qa-041",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-042",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-053",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: 専用UIは作らず、Webのレスポンシブ表示で全操作を担保する(ui-ux.web に記載)(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: 専用UIは作らず、Webのレスポンシブ表示で全操作を担保する(ui-ux.web に記載)(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-019",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-019",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-019",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    },
+    "security": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-053",
+        "serves_goals": [
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-030",
+          "qa-015",
+          "qa-033",
+          "qa-035",
+          "qa-037",
+          "qa-038",
+          "qa-039",
+          "qa-040",
+          "qa-022",
+          "qa-041",
+          "qa-042",
+          "qa-043",
+          "qa-044",
+          "qa-046",
+          "qa-047",
+          "qa-045",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-054",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: 端末側に秘密情報やトークンを置かず(HttpOnly Cookieのみ)、端末固有の対策が発生しない(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: 端末側に秘密情報やトークンを置かず(HttpOnly Cookieのみ)、端末固有の対策が発生しない(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-022",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-022",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-022",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    },
+    "infrastructure": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-058",
+        "serves_goals": [
+          "G1",
+          "G3",
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-002",
+          "qa-005",
+          "qa-009",
+          "qa-014",
+          "qa-018",
+          "qa-015",
+          "qa-037",
+          "qa-033",
+          "qa-035",
+          "qa-038",
+          "qa-039",
+          "qa-040",
+          "qa-026",
+          "qa-042",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-041",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-053",
+          "qa-054",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: ストア配信や端末向け配信基盤を用意せず、同じWorkerがスマホ・タブレットにも配信する(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: ストア配信や端末向け配信基盤を用意せず、同じWorkerがスマホ・タブレットにも配信する(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2",
+          "G3"
+        ],
+        "qa_refs": [
+          "qa-018",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2",
+          "G3"
+        ],
+        "qa_refs": [
+          "qa-018",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2",
+          "G3"
+        ],
+        "qa_refs": [
+          "qa-018",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    },
+    "backend": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-049",
+        "serves_goals": [
+          "G1",
+          "G2",
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-003",
+          "qa-007",
+          "qa-010",
+          "qa-016",
+          "qa-025",
+          "qa-027",
+          "qa-030",
+          "qa-015",
+          "qa-032",
+          "qa-033",
+          "qa-037",
+          "qa-038",
+          "qa-039",
+          "qa-040",
+          "qa-023",
+          "qa-041",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-042",
+          "qa-048",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-053",
+          "qa-054",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: 端末専用APIを設けず、Web用APIをそのまま使う(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: 端末専用APIを設けず、Web用APIをそのまま使う(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-016",
+          "qa-023",
+          "qa-025",
+          "qa-027",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-016",
+          "qa-023",
+          "qa-025",
+          "qa-027",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-007",
+          "qa-008",
+          "qa-016",
+          "qa-023",
+          "qa-025",
+          "qa-027",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    },
+    "frontend": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-054",
+        "serves_goals": [
+          "G2",
+          "G4",
+          "G5"
+        ],
+        "qa_refs": [
+          "qa-016",
+          "qa-024",
+          "qa-029",
+          "qa-030",
+          "qa-031",
+          "qa-015",
+          "qa-032",
+          "qa-033",
+          "qa-034",
+          "qa-037",
+          "qa-038",
+          "qa-039",
+          "qa-040",
+          "qa-036",
+          "qa-041",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-042",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-052",
+          "qa-053",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: ネイティブアプリを実装しない。スマホ・タブレットは frontend.web のレスポンシブSPAで全操作する(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: ネイティブアプリを実装しない。スマホ・タブレットは frontend.web のレスポンシブSPAで全操作する(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "対象外",
+        "reason": "desktop-windows: Claude Code側はDBも画面も持たない(qa-015)。PCでもブラウザのWeb版を使い(qa-036『専用アプリは作らない』)、Claude CodeはCLIで動かすためデスクトップ用画面を作らない",
+        "qa_ref": "qa-015"
+      },
+      "desktop-linux": {
+        "state": "対象外",
+        "reason": "desktop-linux: Claude Code側はDBも画面も持たない(qa-015)。PCでもブラウザのWeb版を使い(qa-036『専用アプリは作らない』)、Claude CodeはCLIで動かすためデスクトップ用画面を作らない",
+        "qa_ref": "qa-015"
+      },
+      "desktop-macos": {
+        "state": "対象外",
+        "reason": "desktop-macos: Claude Code側はDBも画面も持たない(qa-015)。PCでもブラウザのWeb版を使い(qa-036『専用アプリは作らない』)、Claude CodeはCLIで動かすためデスクトップ用画面を作らない",
+        "qa_ref": "qa-015"
+      }
+    },
+    "maintenance-ops": {
+      "web": {
+        "state": "確定",
+        "qa_ref": "qa-052",
+        "serves_goals": [
+          "G3",
+          "G4"
+        ],
+        "qa_refs": [
+          "qa-014",
+          "qa-028",
+          "qa-037",
+          "qa-038",
+          "qa-015",
+          "qa-042",
+          "qa-043",
+          "qa-044",
+          "qa-045",
+          "qa-046",
+          "qa-047",
+          "qa-041",
+          "qa-048",
+          "qa-049",
+          "qa-050",
+          "qa-051",
+          "qa-053",
+          "qa-054",
+          "qa-055",
+          "qa-056",
+          "qa-057",
+          "qa-058",
+          "qa-059"
+        ]
+      },
+      "mobile": {
+        "state": "対象外",
+        "reason": "mobile: アプリ審査・ストア更新の運用が発生しない(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "tablet": {
+        "state": "対象外",
+        "reason": "tablet: アプリ審査・ストア更新の運用が発生しない(qa-036で中立に再確認)",
+        "qa_ref": "qa-036"
+      },
+      "desktop-windows": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-028",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-linux": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-028",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      },
+      "desktop-macos": {
+        "state": "確定",
+        "qa_ref": "qa-015",
+        "serves_goals": [
+          "G2"
+        ],
+        "qa_refs": [
+          "qa-009",
+          "qa-028",
+          "qa-037",
+          "qa-038",
+          "qa-046",
+          "qa-056",
+          "qa-059"
+        ]
+      }
+    }
+  },
+  "qa_log": [
+    {
+      "id": "qa-001",
+      "question": "対象の新機能は何か(依頼原文)",
+      "answer": "Google StudioのAPIは無料で使えるか、無料で使える範囲はどこまでか。自分自身のGoogle StudioでGoogle Analyticsなどを分析・解析し、どのようにしたらより良くできるかという分析・解析ができるような仕組みを整えたい。そのために必要なもの、API、外部情報、仕様などを整えたい。まずは要件定義を行いたい。画面ごとにCodexで画像を作成し、仕様と画面を合わせて構築できるようにしたい。",
+      "provenance": "ユーザー依頼文(チャット原文)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-002",
+      "question": "必要な基盤の設定範囲はどこまでか",
+      "answer": "これに伴って必要なCloudflare、データベースバックエンド、GitHubの設定、Google系の設定など、この辺をどうしたらいいか整えてほしい。",
+      "provenance": "ユーザー追加指示(チャット原文)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "infra-topology"
+      ]
+    },
+    {
+      "id": "qa-003",
+      "question": "分析の対象にするデータ元はどれか",
+      "answer": "YouTube Analytics, CSVの手動取込 (GA4・Search Consoleは選択せず)",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-004",
+      "question": "この仕組みを使う人は誰か",
+      "answer": "他の人にも提供したい",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "auth-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-005",
+      "question": "費用の方針",
+      "answer": "完全無料の範囲で",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "infra-topology"
+      ]
+    },
+    {
+      "id": "qa-006",
+      "question": "分析の実行タイミング",
+      "answer": "定期レポート＋手動分析",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "context-of-use"
+      ]
+    },
+    {
+      "id": "qa-007",
+      "question": "AIによる分析解析の方法",
+      "answer": "分析解析を行うには、AIを使って分析解析を行いたい。AIによる分析解析は report-design-system スキル(.claude/skills/report-design-system)を使えるようにしてほしい。Claude Code上でプロンプトを実行し、そのプロンプトで実行したものがこのシステムの方に反映される仕組みにしてほしい。",
+      "provenance": "ユーザー追加指示(チャット原文)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "api-contract",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-008",
+      "question": "他の利用者はAI分析をどう使うか",
+      "answer": "各自がClaude Codeで実行",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "auth-model",
+        "context-of-use"
+      ]
+    },
+    {
+      "id": "qa-009",
+      "question": "定期レポートのAI分析部分をどう動かすか",
+      "answer": "自分自身に関しては2番(自分のPCでClaude Codeを定期実行)を行う。ただし、不特定多数の方が使う場合は1番(定期は集計のみ、AIは手動)を使うという形に切り分けてください。",
+      "provenance": "AskUserQuestion / その他自由記述",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "context-of-use",
+        "infra-topology"
+      ]
+    },
+    {
+      "id": "qa-010",
+      "question": "スキルの実行結果はシステムに何を反映するか",
+      "answer": "HTMLレポート本体, 結論・要因の要約, 改善アクションの管理",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-011",
+      "question": "画面の方針",
+      "answer": "複雑な、非常にたくさんの画面は不要です。シンプルな画面にしておいてください。ただし、管理がしやすいようにはしておいてください。",
+      "provenance": "ユーザー追加指示(チャット原文)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:30:09Z",
+      "required_info_items": [
+        "context-of-use",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-012",
+      "question": "上位概念(U1-U9)要約をこの内容で確定してよいか",
+      "answer": "この内容で承認する",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:34:28Z",
+      "required_info_items": [
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-013",
+      "question": "どの環境で使えるようにするか(画面はWebアプリ、AI分析はClaude Codeを動かすPC側)",
+      "answer": "Web（PC中心・スマホ閲覧可）＋Claude CodeはMac/Win/Linux。定期自動実行は自分のMacのみ。スマホ/タブレット専用アプリは作らない",
+      "provenance": "AskUserQuestion / 選択肢提示あり",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:37:58Z",
+      "required_info_items": [
+        "context-of-use",
+        "target-platforms"
+      ]
+    },
+    {
+      "id": "qa-014",
+      "question": "技術選定4点(保存先/認証/定期収集/デプロイ)をどれにするか",
+      "answer": "Cloudflare D1に一本化 / Googleログイン一本(本番公開・未検証) / Cloudflare Cron Triggers / GitHub Actions + wrangler",
+      "provenance": "AskUserQuestion / 選択肢提示あり(公式根拠付き比較)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:46:41Z",
+      "required_info_items": [
+        "auth-model",
+        "data-persistence",
+        "infra-topology",
+        "ops-runbook"
+      ]
+    },
+    {
+      "id": "qa-015",
+      "question": "カテゴリ別の技術仕様をこの内容で確定してよいか(Web: D1一本化/Google OAuth一本/画面5つ/refresh token AES-GCM暗号化+Workers Secrets/sandbox iframe+CSP/Workers+D1+Cron/Hono REST+スキル連携API/軽量SPA/GitHub Actions+wrangler。Claude Code側: export→report-design-system→upload、個人トークン、自分のMacのみlaunchd週1、DB/画面なし)",
+      "answer": "この内容で確定する",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:49:06Z",
+      "required_info_items": [
+        "api-contract",
+        "auth-model",
+        "context-of-use",
+        "data-persistence",
+        "domain-model",
+        "frontend-arch",
+        "information-priority",
+        "infra-topology",
+        "ops-runbook",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-016",
+      "question": "AI分析(プロンプト実行結果・情報取得結果からの分析結果)をどの粒度の画面で扱うか",
+      "answer": "参照画像(FINAL-UI 12-ai.png相当)のように、プロンプトで分析した内容や情報取得した内容から分析結果を出せるようにしておいてください。これぐらいの粒度で画面も作成してほしい。画像を作成してください。→ AI分析画面を①依頼(対象期間・補足指示・使用データ確認・Claude Code用プロンプトをコピー)②実行状況(タスクID・ステータス・進捗)③レポート(一覧・版・結果JSON取込とエラー表示・要約/主な発見/次に取るべきアクション/根拠データ・版履歴と2版比較)の3区画で構成する",
+      "provenance": "ユーザー追加指示(チャット原文+参照画像)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T09:52:46Z",
+      "required_info_items": [
+        "api-contract",
+        "context-of-use",
+        "domain-model",
+        "frontend-arch",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-017",
+      "question": "上位概念の目標(O1〜O5)に資するゴールを紐づけ、日次/週次の表現を実態(週1回まとめて取得)に揃えた修正版で再承認するか",
+      "answer": "修正版で再承認する(O1→G1, O2→G2, O3→G3, O4→G4, O5→G5。O1=全利用者の定期収集(前週分の日別データを週1回まとめて取得)がCron Triggersで自動実行される。I3=Cronで週1回、前週分の日別指標を取得し保存する。I6=未着手/実施中/効果測定中/完了)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:26:05Z",
+      "required_info_items": [
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-018",
+      "question": "定期収集は1回15ユーザーまで(無料プランCPU/サブリクエスト上限)。16人目以降をどう収集するか",
+      "answer": "日曜に毎時実行(推奨): Cron `0 * * * 0`(UTC日曜の毎時=JST日曜9:00〜月曜8:00)。各実行でlast_collected_atが6日以上前の利用者をオーナー優先→古い順に最大15人。週360人分の処理枠。失敗は次の毎時実行で再試行",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:26:05Z",
+      "required_info_items": [
+        "infra-topology",
+        "ops-runbook"
+      ]
+    },
+    {
+      "id": "qa-019",
+      "question": "ui-uxのデスクトップ(Mac/Windows/Linux)は画面を持たずClaude Codeでスキルを実行する環境。ui-uxをどう扱うか",
+      "answer": "CLI体験として定義(推奨): [1/3] データ取得中…(A-0004) → [2/3] 分析・HTML生成中… → [3/3] 反映完了 → レポートURL表示。失敗時は原因1行+対処1行",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:26:05Z",
+      "required_info_items": [
+        "context-of-use",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-020",
+      "question": "データベース(D1)の設計案(11テーブル・全テーブルuser_id・日別指標は同日上書きで再収集しても重複しない)で確定するか",
+      "answer": "この設計で確定",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:26:05Z",
+      "required_info_items": [
+        "data-persistence",
+        "domain-model"
+      ]
+    },
+    {
+      "id": "qa-021",
+      "question": "認証(auth)の詳細案(Google OAuth2+PKCE・scope readonly2種・offline・同意画面は本番公開未検証・セッションCookie30日・Claude Code用個人トークン(平文は1回表示・DBはハッシュ)・利用者80人超で検証申請)で確定するか",
+      "answer": "この内容で確定(代替案: セッション7日+トークン90日期限 は不採用)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:29:59Z",
+      "required_info_items": [
+        "auth-model"
+      ]
+    },
+    {
+      "id": "qa-022",
+      "question": "セキュリティの詳細案(refresh token AES-256-GCM暗号化・鍵はWorkers Secretsのみ・user_idはセッション/トークンから導出し全クエリWHERE user_id=?・レポートHTMLはスクリプト不可sandbox iframe+CSP default-src 'none'・結果JSON形式/サイズ検証・書込スコープ不要求・連携解除時revoke)で確定するか",
+      "answer": "この内容で確定(代替案: レポートでJS許可 は不採用)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:29:59Z",
+      "required_info_items": [
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-023",
+      "question": "バックエンド(API)の詳細案(Hono v4 on Workers・画面用REST・スキル連携API3本・YouTube API失敗は指数バックオフ最大3回→次の毎時実行で拾い直し)で確定するか",
+      "answer": "この内容で確定(代替案: 再試行しない は不採用)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:29:59Z",
+      "required_info_items": [
+        "api-contract"
+      ]
+    },
+    {
+      "id": "qa-024",
+      "question": "フロントエンドの詳細案(Workers静的アセット配信・Vite+素のTypeScript・5画面・グラフ軽量ライブラリ1つ・スマホ幅は下部タブ・レポートはsandbox iframe・docs/screens/*.pngを正)で確定するか",
+      "answer": "この内容で確定(代替案: React は不採用)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:29:59Z",
+      "required_info_items": [
+        "frontend-arch"
+      ]
+    },
+    {
+      "id": "qa-025",
+      "question": "(ユーザー追加要望『文字起こしやスクリーンショットなどの情報も取得した上で分析解析できるように』を受けて)動画の文字起こし(字幕)をどう取得するか",
+      "answer": "両方に対応: 基本は手元取込(YouTube Studioの字幕SRT/VTT、または手元動画をWhisperで文字起こし。youtube.readonlyのまま・0円)、希望者だけ追加同意でcaptions.download(youtube.force-ssl・1本200 units)による自動取得",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記) / 起点はユーザー追加指示(チャット原文 2026-09-21T12:26:19Z)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:35:35Z",
+      "required_info_items": [
+        "api-contract",
+        "auth-model",
+        "data-persistence"
+      ]
+    },
+    {
+      "id": "qa-026",
+      "question": "スクリーンショット(画像)はどう扱うか",
+      "answer": "画像もシステムに保存: R2(無料10GB)を追加し縮小画像を保存してレポート画面で見られるようにする(保存先の決定をD1のみ→D1+R2へ変更)。サムネイルはData APIのsnippet.thumbnails、場面画像は手元動画からffmpegで切り出しまたは利用者のスクショ",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:35:35Z",
+      "required_info_items": [
+        "data-persistence",
+        "infra-topology"
+      ]
+    },
+    {
+      "id": "qa-027",
+      "question": "(ユーザー追加要望『人・心理学・心理的側面・様々な感情を分析できる情報を交えて分析解析できる仕組みに』を受けて)人・心理・感情の分析として何を含めるか(複数選択)",
+      "answer": "コメントの感情分析 / 離脱場面の心理分析 / 台本・話し方の心理分析 / サムネ・タイトルの心理訴求 の全部。加えて自由記述『上記以外にもアナリティクスで取得した情報の内容をもとに、分析や解析、心理分析をしてほしい。人が何を考えて、何を思って、どう行動するのかを踏まえて分析し、どういう心理によってこの結果になっているのかを想定し、その結果をまとめてレポートにしてほしい』",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記) / 起点はユーザー追加指示(チャット原文 2026-09-21T12:26:40Z)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:35:35Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-028",
+      "question": "運用(maintenance-ops)の詳細案(PRでlint/test/dry-run・mainでmigrations→deploy・最小権限APIトークンはリポジトリSecrets・オーナーMacはlaunchd毎週月曜09:00 JST(毎時収集完了後)・一般利用者は手動・無料枠メーター+Workers Logs監視)で確定するか",
+      "answer": "この内容で確定(代替案: 自動分析も毎日 は不採用)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:35:35Z",
+      "required_info_items": [
+        "ops-runbook"
+      ]
+    },
+    {
+      "id": "qa-029",
+      "question": "(ユーザー追加指示)YouTube StudioのCSV(yt-report/2026-09-manju-youtube-start と元CSV)を基に、ダッシュボードと分析解析の内容をあらかじめ決めておく",
+      "answer": "ユーザー指示『次のCSVデータを使って分析解析を行いたいので、これを基に取得できるような情報を基に、ダッシュボードと分析解析するような内容をあらかじめ決めておいてほしい』。内容の決定はエージェントへ委任され、docs/analysis/dashboard-analysis-catalog.md(CSV3種の列と取込規則・派生指標M1〜M10・ダッシュボード9区画・切り口分類・定量仮説テンプレート5枝・心理分析(考え→感情→行動)の解釈表・レポート6段構成・skill入出力JSON)として定義した",
+      "provenance": "ユーザー追加指示(チャット原文 2026-09-21T12:30:35Z) / 内容はエージェントが既存成果物から導出(委任)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:30:35Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-030",
+      "question": "(ユーザー追加指示『画面は本当にこれだけで必要十分か確認してほしい。ただし情報が多すぎると混乱するのでシンプルな構成は変えない』を受けて)利用者タスク×画面の点検で見つかった不足(動画1本ごとの詳細の置き場所・YouTube API規約III.A.2のプライバシーポリシー・III.E.4.gのデータ削除依頼・ダッシュボード9区画の情報過多)をどう解消するか",
+      "answer": "動画詳細=6枚目の画面『動画』を追加(代替案: ダッシュボードの詳細パネル[AI推奨]/レポート内だけ は不採用)。規約対応=メニュー外の静的ページ2枚(プライバシーポリシー・利用規約。ログイン画面とフッターからリンク)+設定に『データを削除』(7日以内削除)。ダッシュボード=要点だけ先に表示(問い→KPI4枚→最新AI分析の要約→実施中アクション。ファネル/切り口/視聴者/Shorts/品質は『詳しく見る』で開く)",
+      "provenance": "AskUserQuestion / 選択肢提示あり(プレビュー付き・推奨以外の代替案併記) / 起点はユーザー追加指示(チャット原文 2026-09-21T12:45:15Z)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:48:30Z",
+      "required_info_items": [
+        "information-priority",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-031",
+      "question": "(ユーザー追加指示)ダッシュボードの表示内容",
+      "answer": "ユーザー指示『ダッシュボードには、グラフや表など、視覚的にわかるものを表示しておいてほしい』。qa-030の『要点だけ先に表示』は維持し、最初に見える4ブロック(KPIカード+推移線/日次推移の折れ線/動画別の表(行内横棒)/AI要約とアクション)をすべてグラフか表で表す形にした(図の型は折れ線・横棒・行内横棒・推移線の4種)",
+      "provenance": "ユーザー追加指示(チャット原文 2026-09-21T12:55:17Z) / 図の割付はエージェントがqa-030の構成を保ったまま導出",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:55:17Z",
+      "required_info_items": [
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-032",
+      "question": "動画1本ごとの詳細(文字起こし・場面画像・コメント感情・離脱曲線・切り口の確定)はどこで見ますか?",
+      "answer": "6枚目の画面を追加(メニューに『動画』を足して専用画面にする)。提示した他の案: 詳細パネル(AI推奨) / レポート内だけ",
+      "provenance": "AskUserQuestion 3択(2026-09-21T12:46:46Z提示)。qa-030で他2問と束ねて記録していたものを1問1答へ分割",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:48:30Z",
+      "required_info_items": [
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-033",
+      "question": "プライバシーポリシーとデータ削除の依頼(YouTube API の規約で必須)はどう置きますか?",
+      "answer": "静的ページ＋設定: メニュー外にプライバシーポリシーと利用規約の2ページ(ログイン画面とフッターからリンク)、設定に『データを削除』ボタン(7日以内に削除)。提示した他の案: ログイン画面に集約(削除依頼はメール窓口)",
+      "provenance": "AskUserQuestion 2択(2026-09-21T12:46:46Z提示)。qa-030から分割",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:48:30Z",
+      "required_info_items": [
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-034",
+      "question": "ダッシュボードの情報量はどうしますか?",
+      "answer": "要点だけ先に表示: 最初に見えるのは問い→KPI4枚→最新AI分析の要約→実施中アクション。ファネル・切り口別比較・視聴者の形・Shorts・データ品質は『詳しく見る』で開く。提示した他の案: 9区画を全部並べる",
+      "provenance": "AskUserQuestion 2択(2026-09-21T12:46:46Z提示)。qa-030から分割",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T12:48:30Z",
+      "required_info_items": [
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-035",
+      "question": "YouTube API Developer Policies III.E.4 は、分析指標以外のAPIデータ(コメント本文・タイトル・サムネイルURL・字幕)の保存期間をどう定めているか(completeness evaluator r2 の要確認指摘の裏取り)",
+      "answer": "III.E.4(Last updated 2026-09-14): 認可トークンは同意が有効な間は保存可。YouTube Analytics/Reporting API由来の指標と統計値は30日ごとに認可の有効性を確認すれば無期限に保存可。それ以外のAuthorized Data(タイトル・コメント本文など)は30暦日以内に削除または再取得が必要。Non-Authorized Dataは限られた量を30日まで。利用者の削除依頼は7暦日以内に対応。",
+      "provenance": "公式文書の確認(WebFetch https://developers.google.com/youtube/terms/developer-policies)。仕様への当てはめ方はエージェントが導出",
+      "basis": "observed-fact",
+      "answered_at": "2026-09-21T13:01:57Z",
+      "required_info_items": [
+        "data-persistence",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-036",
+      "question": "スマートフォンとタブレットでは、このシステムをどう使えるようにしますか?(qa-013 は結論を括弧内に先に書いた誘導的な形だったため、中立な4択で聞き直し)",
+      "answer": "Webで全部使える: 専用アプリは作らない。スマホ・タブレットのブラウザからCSV取込・分析依頼・アクション更新まで全操作できるようにする。提示した他の案: Webで閲覧だけ / 専用アプリも作る / PCだけ",
+      "provenance": "AskUserQuestion 4択(推奨表示なし)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:13:00Z",
+      "required_info_items": [
+        "context-of-use",
+        "target-platforms"
+      ]
+    },
+    {
+      "id": "qa-037",
+      "question": "仕様のうちAIが詳しく決めた部分(DBの列名、APIのエンドポイント名、データの不変条件、30日保持のやり方、削除用の毎日Cronなど)と、分析カタログ(docs/analysis/dashboard-analysis-catalog.md)をどう扱いますか?",
+      "answer": "このまま承認: 内容を利用者の決定として扱い、実装で気づいた点は後で個別に直す。提示した他の案: 未承認のまま進める / 先に内容を見たい",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:13:00Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-038",
+      "question": "qa-037/appr-005 で一括承認した範囲は具体的にどの項目か(completeness evaluator r4 の指摘により明細を残す)",
+      "answer": "承認時点(2026-09-21T13:13:00Z)の対象は次の3群。(1) design_applications 8章(database・auth・ui-ux・security・infrastructure・backend・frontend・maintenance-ops)のうち、各[利用者確定 qa-…]の骨格をアシスタントが詳しくした部分: database=11テーブルの列名・主キー・fetched_at列とcomment_id参照 / auth=OAuthスコープ・同意画面の公開方針・セッションCookie・Claude Code用個人トークン / ui-ux=6画面の区画と2段表示・スマホ幅の下部タブとカード化 / security=5脅威と対策・30日保持・7日以内削除 / infrastructure=Workers・D1・R2の構成とCron2本(`0 * * * 0` 収集・`0 18 * * *` 削除と再試行) / backend=エンドポイント名・usecaseと集約・状態遷移 / frontend=ルート構成・api client層・Playwright 3サイズE2E / maintenance-ops=launchdの週次実行・無料枠メーター・派生指標M1〜M10のモジュールと検算テスト・runbook4本。(2) doctrine_applications(frontend/application-architecture・frontend/presentation・security/security ほか全件)。(3) docs/analysis/dashboard-analysis-catalog.md(sha256 fa5487b8084452d1ede6c400ae3e7b7f70faaa57fc4d4def153fa2faa157ce47)。いずれも内容を一件ずつ見せたうえでの承認ではない。",
+      "provenance": "spec-state.json と分析カタログから、承認対象をアシスタントが列挙した記録。新たな質問・承認ではない",
+      "basis": "observed-fact",
+      "answered_at": "2026-09-21T13:25:30Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-039",
+      "question": "プライバシーポリシーと利用規約(YouTube APIの規約で掲示が必須)は、どこに置きますか?",
+      "answer": "独立した静的ページ: 2ページに分け、ログイン画面とフッターからリンクする。メニューには出さない。提示した他の案: ログイン画面に集約 / 外部ページに置く",
+      "provenance": "AskUserQuestion 3択(推奨表示なし・13:31Z頃提示)。qa-033 が2論点を1問で聞いていたため中立な2問に分けて聞き直し",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:33:00Z",
+      "required_info_items": [
+        "information-priority",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-040",
+      "question": "利用者からのデータ削除の依頼(規約上、7日以内の対応が必須)は、どう受け付けますか?",
+      "answer": "設定画面のボタン: 『データを削除』を押すとすぐに削除を実行し、失敗分は自動で再試行する。提示した他の案: メール窓口 / ボタンとメールの両方",
+      "provenance": "AskUserQuestion 3択(推奨表示なし・13:31Z頃提示)。qa-033 が2論点を1問で聞いていたため中立な2問に分けて聞き直し",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:33:00Z",
+      "required_info_items": [
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-041",
+      "question": "テナントごとのデータは、どのように分けて保存しますか?",
+      "answer": "行で分け、将来DB分割できる形に: 今は1つのD1で全行にtenant_idを持たせて分け、テナント→DBの対応表を持って特定テナントだけ別DBへ移せるようにする。提示した他の案: 1つのDBで行ごとに分ける(対応表なし) / テナントごとにDBを1つ(無料はD1が10個まで)",
+      "provenance": "利用者の要望『ユーザーごとにテナントを作成できるように』を受けたAskUserQuestion 3択(推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "domain-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-042",
+      "question": "1つのテナントには誰が入れますか?",
+      "answer": "招待で複数人: 作成者がオーナー。編集者・閲覧者を招待できる(設定画面にメンバー欄)。提示した他の案: 本人1人だけ / 今は1人・後で拡張可",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "auth-model",
+        "domain-model"
+      ]
+    },
+    {
+      "id": "qa-043",
+      "question": "テナントごとに取り込める分析データの入手元を、すべて選んでください。",
+      "answer": "YouTube API(自動収集)・YouTube StudioのCSV・字幕/画像ファイルの3系統。GA4(Google Analytics)APIは選ばなかった",
+      "provenance": "利用者の要望『ユーザーごとに分析する情報をAPI、CSVなどから取得』を受けたAskUserQuestion 複数選択(4候補・推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-044",
+      "question": "テナントへの招待は、どう届けますか?",
+      "answer": "招待リンクをコピーして渡す: 招待先Googleアカウントのメールを登録し、発行されたリンク(7日有効)を自分で送る。そのアドレスでログインした人だけが参加できる。追加費用0円。提示した他の案: システムからメール送信(外部送信サービスの契約が必要)",
+      "provenance": "AskUserQuestion 2択(推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "auth-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-045",
+      "question": "招待した人には、どこまで操作を許しますか?",
+      "answer": "オーナー/編集者/閲覧者の3段階: オーナー=連携・招待・削除まで全部、編集者=CSV取込・分析依頼・アクション更新、閲覧者=見るだけ。提示した他の案: オーナー/メンバーの2段階 / 招待者は閲覧のみ",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "auth-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-046",
+      "question": "マルチテナントの詳細設計(DBの3テーブルと全業務テーブルのtenant_id、権限表、招待の検証条件、削除の範囲、画面の変更点、収集Cronの単位)を各章に反映してよいですか?",
+      "answer": "この内容で承認: プレビューで詳細を表示したうえで承認。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 2択(詳細をプレビュー表示・推奨表示なし)。qa-037の一括承認と違い、内容を見たうえでの承認。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "auth-model",
+        "domain-model",
+        "information-priority",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-047",
+      "question": "マルチテナント対応に合わせた上位概念の改訂(G1『テナントごと』、G4『テナント単位で分けメンバーが権限の範囲でアクセス』、O1/O4、scope.in、I10追加、成功基準追加)で確定してよいですか?",
+      "answer": "この内容で承認(改訂案をプレビュー表示)。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 2択(改訂案をプレビュー表示・推奨表示なし)。回答直後の記録時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:42:00Z",
+      "required_info_items": [
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-048",
+      "question": "YouTube Studio のCSVの各列は、YouTube Analytics API / Reporting API / Data API のどれで自動取得できるか。1日1回収集の無料枠内の構成は(利用者の要望『1日に1回取得』『CSVも自動でAPIから取得可能か』の裏取り)",
+      "answer": "公式ドキュメント(2026-09-21 13:43〜13:48Z 確認)による。視聴回数・総再生時間・平均視聴時間・平均再生率・登録者増減・高評価・コメント・共有・カード・トラフィックソース・視聴者属性・Shorts区別(creatorContentType)・視聴者維持率=Analytics API(reports.query)。インプレッション数・インプレッションCTR=Reporting API の channel_reach_basic_a1 のみ(2026-01-15提供開始・Analytics APIには無い)。終了画面=Reporting API のみ。ユニーク視聴者数=どのAPIでも取得不可(uniques は2016-10-31廃止)。Reporting API はジョブ作成から約48時間で日次CSVが出始め、作成前30日分の過去分を生成し、それより前は取得不可。通常レポートは60日・過去分は30日で取得不能になり、YouTubeがデータを直すと同じ期間の修正版が新しいIDで出る。Analytics の数値は通常48〜72時間の処理遅延があり、後から値が変わりうる。Analytics/Reporting API のクォータ数値は非公開(Cloud Consoleで確認)。Data API は10,000 units/日、captions.download は200 units かつ youtube.force-ssl と動画の編集権限が必要。Workers Free は1実行サブリクエスト50(D1呼出しも含む)・CPU 10ms・Cron Trigger 5本、D1 Free は書込10万行/日(索引更新も数える)。規約 III.E.4(https://developers.google.com/youtube/terms/developer-policies, 2026-09-14更新): 『Your API Clients must not (i) replace API Data with similar, independently calculated data, or (ii) access or use API Data to create new or derived data or metrics.』。例外はIII.Lの監査済み開発者のみ。YouTube利用規約(https://www.youtube.com/t/terms, 2023-06-01発効)は、検索エンジンと事前の書面許可を除き自動化された手段でのアクセスを禁じる。",
+      "provenance": "バックグラウンド調査(公式ドキュメントのみ)と、保存済み開発者ポリシー本文・YouTube利用規約の原文確認をアシスタントがまとめた観察事実。利用者への質問ではない",
+      "basis": "observed-fact",
+      "answered_at": "2026-09-21T14:03:14Z",
+      "required_info_items": [
+        "domain-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-049",
+      "question": "API からの自動収集は、どの頻度にしますか?",
+      "answer": "毎日1回: すべての数値を毎日取得し、直近7日を取り直して修正も反映する。提示した他の案: 毎日+一部(視聴者属性・維持率)は週1回 / 週1回のまま",
+      "provenance": "利用者の提案『APIやCSVは1日に1回取得する形に』を受け、qa-048の調査結果を示したうえでのAskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-050",
+      "question": "インプレッション数と CTR はどこから取りますか?",
+      "answer": "Reporting API で自動取得: テナント登録時に取得の設定(ジョブ作成)をし、毎日自動で取り込む。設定日から30日より前の分は CSV の手動取込で補う。提示した他の案: CSV の手動取込だけ / 扱わない",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model"
+      ]
+    },
+    {
+      "id": "qa-051",
+      "question": "Studio CSV の手動取込は、今後どう位置づけますか?",
+      "answer": "主な取得手段として残す: API と CSV のどちらでも同じように取り込めるようにする。提示した他の案: 補完用に残す(ユニーク視聴者数・過去分だけ) / やめる",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-052",
+      "question": "D1 の無料枠(書き込み10万行/日)を超えそうなときは、どうしますか?",
+      "answer": "テナント数に上限を設ける: 無料枠に収まる数(目安100テナント程度)で新規作成を止める。提示した他の案: 有料プランへ切り替える / 収集を遅らせて分散する",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-053",
+      "question": "派生指標 M1〜M10(加重平均視聴率など)の計算を、規約に合わせてどう扱いますか?",
+      "answer": "CSV由来のデータだけで計算: M1〜M10 と統計分析は Studio CSV から取り込んだデータだけで計算し、API のデータは公式の値をそのまま表示するだけにする。提示した他の案: API公式指標に置き換える / Googleの個別許可(III.L)を前提にする",
+      "provenance": "qa-048 の規約 III.E.4 原文(派生指標の禁止)を示し、既存仕様に抵触のおそれがあると説明したうえでのAskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-054",
+      "question": "API と CSV の両方に、同じ日・同じ動画・同じ指標の値があるときは、どう扱いますか?",
+      "answer": "両方保存し出典を表示: API 由来と CSV 由来を別々に保存し、画面では出典(API/CSV)のバッジを付けて表示する。提示した他の案: API の値を優先 / 後から取り込んだ方を優先",
+      "provenance": "AskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T13:59:04Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-055",
+      "question": "Codex などの画面操作による Studio CSV の自動ダウンロードを、仕様ではどう扱いますか?",
+      "answer": "使わない(通知もなし): CSV は必要なときに手動で取り込むだけにする。提示した他の案: 使わない(取込の催促通知だけ出す) / 運営者本人だけ試す(規約リスクを記録)",
+      "provenance": "利用者の質問『Codexのコンピュータユースで自動取得できないか』に、YouTube利用規約の自動アクセス禁止条項(qa-048)を示したうえでのAskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T14:03:14Z",
+      "required_info_items": [
+        "product-goal",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-056",
+      "question": "毎日収集の詳細設計(Cron `*/5 19-23 * * *`・1回2テナント、呼出しの内訳、出典別の表と出典バッジ、派生指標はCSV由来のみと開示文、Reportingのジョブと修正版の置換、テナント上限100、コメント感情の件数指標の廃止、runbook追加)を各章に反映してよいですか?",
+      "answer": "この内容で承認: 詳細設計(Cron・呼出し内訳・出典別の表とバッジ・派生指標はCSV由来のみと開示文・Reporting・上限100・コメント件数指標の廃止・runbook追加)をプレビューで表示したうえで承認。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 2択(詳細をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T14:10:14Z",
+      "required_info_items": [
+        "domain-model",
+        "information-priority",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-057",
+      "question": "毎日収集に合わせた上位概念の改訂(O1『毎日1回』と指標、I2/I3、scope.in の API と CSV と Cron、scope.out の2項目追加、制約2項目追加、成功基準の追加)で確定してよいですか?",
+      "answer": "この内容で承認(改訂案をプレビュー表示)。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 2択(改訂案をプレビュー表示・推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T14:10:14Z",
+      "required_info_items": [
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-058",
+      "question": "収集を『Cronは1日1回だけ+Cloudflare Queuesでテナントごとに別の実行』に変えますか? 変える場合、起動時刻はいつにしますか?",
+      "answer": "1日1回で、朝の3時(JST 3:00)に行う。提示した選択肢: Queues・1日1回 JST 5:00 / Queues・1日1回 JST 0:00 / Queuesを使わず現案のまま(朝5時間の5分おき)。利用者は自由記述で『1日1回で、朝の3時に行うようにしてください』と回答",
+      "provenance": "利用者の質問『24時間に1回取得するでいいのでは。15分・30分おきに取得する意味はあるのか』に、5分おきは Workers Free の1実行サブリクエスト50件(1実行2テナント)を回避するためだけだったと説明し、Queues(無料プラン可・1バッチ=1実行)による1日1回案を示したうえでのAskUserQuestion 3択(推奨表示なし)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T14:22:18Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-059",
+      "question": "qa-058 に合わせた改訂(収集を毎日JST 3:00の Cron 1回+Cloudflare Queuesでテナントごとに実行、削除処理を同じCronに統合してCron Triggerは1本、再試行は Queues の max_retries=3・10分間隔、上位概念の O1 と scope.in[3] の文言)で確定してよいですか?",
+      "answer": "この内容で承認(改訂箇所をプレビュー表示)。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 2択(改訂箇所をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T14:24:26Z",
+      "required_info_items": [
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-060",
+      "question": "YouTubeで毎週見るべき数字を、登録者数・再生数・抽象的なチャンネル評価ではなく、売上分解の原因指標(インプレッション、CTR、視聴継続率、LINE誘導率、問い合わせ→成約率)へ変更し、ダッシュボードと分析へ反映するか?",
+      "answer": "利用者の追加指示により反映する。登録者数は結果・参考指標として原因指標から分離し、売上につながらない動画本数の積み上げを避けるため週次で原因指標を診断する。",
+      "provenance": "利用者のチャット原文による直接指示。30思考法のelegant reviewで、非因果の目標差診断、週次事業CSV、判定保留条件まで具体化した。",
+      "basis": "user-decision",
+      "answered_at": "2026-09-21T15:49:18Z",
+      "required_info_items": [
+        "product-goal",
+        "domain-model",
+        "information-priority"
+      ]
+    }
+  ],
+  "approval_log": [
+    {
+      "id": "appr-001",
+      "note": "U1-U9要約をAskUserQuestionで提示しユーザーが承認(2026-09-21T09:34:28Z)"
+    },
+    {
+      "id": "appr-002",
+      "note": "対象platformはweb(レスポンシブ)とClaude Code実行用desktop(macOS/Windows/Linux)。mobile/tabletのネイティブアプリは作らないことをユーザーが選択(2026-09-21T09:37:58Z)"
+    },
+    {
+      "id": "appr-003",
+      "note": "qa-017: 修正版上位概念(O1-O5のserves・I3週次・I6四状態)を再承認"
+    },
+    {
+      "id": "appr-004",
+      "note": "qa-030: 上位概念I8/O5を『主要画面6枚(ログイン含む)+規約の静的ページ2枚』へ改訂することを利用者が選択"
+    },
+    {
+      "id": "appr-005",
+      "note": "qa-037: design_applications 8章のAI詳細化部分・doctrine適用・docs/analysis/dashboard-analysis-catalog.md を利用者が一括承認"
+    },
+    {
+      "id": "appr-007",
+      "note": "qa-046: マルチテナント詳細設計(tenants/tenant_members/tenant_invites・全業務テーブルのtenant_id・3権限・招待7日/1回/メール一致・削除範囲・テナント切替とメンバー欄・15テナント/回)をプレビューで内容を見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-006",
+      "note": "qa-047: マルチテナント対応に伴う上位概念の改訂(G1/G4/O1/O4/scope.in/I10/成功基準)を改訂案のプレビューを見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-009",
+      "note": "qa-056: 毎日収集の詳細設計(Cron・呼出し内訳・出典別の表とバッジ・派生指標はCSV由来のみ・Reporting・上限100・コメント件数指標の廃止)をプレビューで内容を見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-008",
+      "note": "qa-057: 毎日収集・Reporting API・CSV併存・派生指標の規約対応・テナント上限100に伴う上位概念の改訂(O1/I2/I3/scope.in・out/constraints/成功基準)を改訂案のプレビューを見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-010",
+      "note": "qa-059: 収集を毎日JST 3:00の1回+Cloudflare Queues に変えた詳細設計(Cron1本に統合・Queues設定・再試行)と上位概念(O1・scope.in[3])の改訂を、プレビューで内容を見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-011",
+      "note": "qa-060: 利用者の直接指示により、週次売上ファネルの5原因指標をダッシュボードと分析の主軸にし、登録者数を参考の結果指標へ分離した"
+    }
+  ],
+  "reopen_log": [
+    {
+      "category": "database",
+      "platform": "web",
+      "reason": "確定内容の変更(D1のみ→D1+R2、保持期間の列追加)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-026(12:35:35Z)・qa-035の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z"
+    },
+    {
+      "category": "infrastructure",
+      "platform": "web",
+      "reason": "確定内容の変更(R2バインディングの追加)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-026(12:35:35Z)の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z"
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "確定内容の変更(画面5つ→6つ+静的ページ2枚、ダッシュボードの2段表示)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-032/qa-033/qa-034(12:48:30Z)の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z"
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "確定内容の変更(ルート5画面→6画面+静的ページ2枚)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-032/qa-033(12:48:30Z)の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z"
+    },
+    {
+      "category": "backend",
+      "platform": "web",
+      "reason": "確定内容の変更(動画画面API・データ削除APIの追加)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-032/qa-033(12:48:30Z)の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-21T13:09:39Z",
+          "note": "reason の後半『主根拠を変更の根拠になった回答へ付け替える』は実際の処理と違う。backend.web は変更の根拠(qa-032/qa-033)をqa_refsへ追記し、主根拠はカテゴリ別の詳細案を利用者が確定したqa-023を選んだ(変更前後を通じてこのカテゴリの骨格を定める回答のため)。reopen_logの既存キーは書き換えず、この補記で説明をそろえる。"
+        }
+      ]
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "確定内容の変更(規約対応(同意・7日以内削除)と30日保持の追加)をreopenを経ずにadd-qa-refだけで反映しており、主たる接地根拠が一括確定qa-015のままだった(evaluator r2指摘)。変更はqa-033(12:48:30Z)・qa-035の回答時点で起きたものを、この時刻に遡って記録し、主根拠を変更の根拠になった回答へ付け替える",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:03:39Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-21T13:09:39Z",
+          "note": "reason の後半『主根拠を変更の根拠になった回答へ付け替える』は実際の処理と違う。security.web は変更の根拠(qa-033/qa-035)をqa_refsへ追記し、主根拠はカテゴリ別の詳細案を利用者が確定したqa-022を選んだ(変更前後を通じてこのカテゴリの骨格を定める回答のため)。reopen_logの既存キーは書き換えず、この補記で説明をそろえる。"
+        }
+      ]
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "qa-036でスマホ・タブレット幅の扱いが『閲覧中心』から『全操作』に変わったため、確定内容を取り直す",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:14:06Z"
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "qa-036でスマホ・タブレット幅の扱いが『閲覧中心』から『全操作』に変わったため、確定内容を取り直す",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:14:06Z"
+    },
+    {
+      "category": "database",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-041",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "infrastructure",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-041",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "maintenance-ops",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-041",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "auth",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-044",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-045",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "backend",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-042",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-042",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "利用者の新規要望(マルチテナント・テナント単位のデータ取得)により、利用者単位の分離からテナント単位の分離・招待・3権限へ確定内容が変わるため取り直す。主根拠はqa-042",
+      "from": "確定",
+      "reopened_at": "2026-09-21T13:43:49Z"
+    },
+    {
+      "category": "infrastructure",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-058",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "backend",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-049",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "database",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-054",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-054",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-054",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-053",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    },
+    {
+      "category": "maintenance-ops",
+      "platform": "web",
+      "reason": "利用者の提案(API・CSVを1日1回取得、CSV相当をAPIで自動取得)と規約III.E.4の派生指標禁止の発見により、週1回収集・CSV起点の派生指標から、毎日収集・出典別保存・CSV由来のみの派生指標へ確定内容が変わるため取り直す。主根拠はqa-052",
+      "from": "確定",
+      "reopened_at": "2026-09-21T14:10:14Z"
+    }
+  ],
+  "category_aggregate": {
+    "database": "確定",
+    "auth": "確定",
+    "ui-ux": "確定",
+    "security": "確定",
+    "infrastructure": "確定",
+    "backend": "確定",
+    "frontend": "確定",
+    "maintenance-ops": "確定"
+  },
+  "targets": [
+    {
+      "target_id": "cloudflare-workers",
+      "category": "infrastructure"
+    },
+    {
+      "target_id": "cloudflare-d1",
+      "category": "database"
+    },
+    {
+      "target_id": "cloudflare-cron-triggers",
+      "category": "backend"
+    },
+    {
+      "target_id": "cloudflare-workers-secrets",
+      "category": "security"
+    },
+    {
+      "target_id": "google-oauth2",
+      "category": "auth"
+    },
+    {
+      "target_id": "youtube-data-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "youtube-analytics-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "github-actions",
+      "category": "maintenance-ops"
+    },
+    {
+      "target_id": "github-actions-secrets",
+      "category": "maintenance-ops"
+    },
+    {
+      "target_id": "gemini-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "claude-code",
+      "category": "backend"
+    },
+    {
+      "target_id": "hono",
+      "category": "backend"
+    },
+    {
+      "target_id": "cloudflare-r2",
+      "category": "database"
+    },
+    {
+      "target_id": "youtube-captions-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "youtube-comment-threads-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "youtube-analytics-retention-report",
+      "category": "backend"
+    },
+    {
+      "target_id": "openai-whisper",
+      "category": "backend"
+    },
+    {
+      "target_id": "ffmpeg",
+      "category": "backend"
+    },
+    {
+      "target_id": "youtube-api-developer-policies",
+      "category": "security"
+    },
+    {
+      "target_id": "youtube-reporting-api",
+      "category": "backend"
+    },
+    {
+      "target_id": "youtube-terms-of-service",
+      "category": "security"
+    },
+    {
+      "target_id": "cloudflare-queues",
+      "category": "infrastructure"
+    }
+  ],
+  "requirements_foundation": {
+    "essential_purpose": "YouTubeチャンネルの実績データと週次の事業CSVを、再現可能な数値分析とAI(Claude Code上のreport-design-systemスキル)による改善提案へ変換する。インプレッション、CTR、加重平均視聴率M1、導線誘導率(既定表示はLINE誘導率)、問い合わせ→成約率を原因指標、売上・成約数を結果指標、登録者数を参考の結果指標として分け、目標未達の最大候補と『次に何をすべきか』を根拠付きで判断・実行・効果検証できる状態を、費用0円で自分と他のクリエイターに提供する。改善候補は因果推論ではなく週次実績と設定目標の比較である。",
+    "background": "YouTube Studioでは数値は見られるが、伸びた/落ちた要因と次の打ち手を根拠付きで出すのに手間がかかる。Google AI Studio(Gemini API)が無料で使えるか・範囲が不明で、AI分析の手段と費用範囲を明確にしたい。一方で数値をコードで再現し結論→要因→打ち手のHTMLを作るClaude Codeスキル(report-design-system)という既存資産があり、これをシステムと接続したい。",
+    "goals": [
+      {
+        "id": "G1",
+        "text": "YouTube Analyticsの実績データ(API連携+CSV取込+字幕・画像ファイル)をテナントごとに継続的に収集・集計できる"
+      },
+      {
+        "id": "G2",
+        "text": "Claude Code上で実行したreport-design-systemの分析結果(HTML・結論/要因の要約・改善アクション)がシステムへ反映され、直近5回の分析履歴を踏まえながら週次の5段階原因指標と下流の結果指標を分けて閲覧し、目標未達の最大候補を管理・効果比較できる"
+      },
+      {
+        "id": "G3",
+        "text": "Gemini API/YouTube API/Cloudflare/GitHub/Google Cloudの無料範囲と必要設定が公式根拠付きで明確になり、完全無料で構築・運用できる"
+      },
+      {
+        "id": "G4",
+        "text": "他の利用者にも提供でき、利用者ごとに作られるテナントの単位でデータを分け、そのテナントのメンバー(オーナー/編集者/閲覧者)だけが権限の範囲でアクセスできる"
+      },
+      {
+        "id": "G5",
+        "text": "画面はシンプルな少数構成で、改善アクションとレポートを迷わず管理できる"
+      }
+    ],
+    "objectives": [
+      {
+        "id": "O1",
+        "text": "全テナントの定期収集(毎日1回JST 3:00。Analytics APIは直近7日を取り直し、インプレッション・CTRはReporting APIから取得)がCloudflare Cron Triggersで自動実行される",
+        "measure": "28日連続で、毎日09:00 JST時点で当日の収集が終わっていないテナント0件",
+        "serves": [
+          "G1"
+        ]
+      },
+      {
+        "id": "O2",
+        "text": "Claude Codeからの1回のスキル実行でデータ取得→分析(数値・心理・週次ファネル)→システム反映まで完了する",
+        "measure": "初期設定後、反映までの手作業ステップ0。判定可能な週は5原因指標のactual/target/target_gapと目標未達の改善候補1件を表示し、判定不能または全指標目標達成の週はその理由を表示する",
+        "serves": [
+          "G2"
+        ]
+      },
+      {
+        "id": "O3",
+        "text": "運用費を0円に保つ",
+        "measure": "Cloudflare/Google Cloud/GitHubの月次請求額0円、無料枠使用率80%超でアラート",
+        "serves": [
+          "G3"
+        ]
+      },
+      {
+        "id": "O4",
+        "text": "テナント間のデータ越境と権限外の操作をなくす",
+        "measure": "認可テストで他テナントのデータ(D1行・R2画像)取得成功0件、閲覧者の書込操作成功0件",
+        "serves": [
+          "G4"
+        ]
+      },
+      {
+        "id": "O5",
+        "text": "画面数を最小限に保つ",
+        "measure": "主要画面6枚以内(ログイン含む・qa-030)+規約の静的ページ2枚。各画面で最初に見える情報ブロックは4つ以内",
+        "serves": [
+          "G5"
+        ]
+      }
+    ],
+    "success_criteria": [
+      "自分のチャンネルで週次レポートが自動生成されシステムで閲覧できる",
+      "改善アクションを登録→実施→次回レポートで前後比較できる",
+      "第三者アカウントでYouTube連携→CSV取込→Claude Codeスキル実行→反映が手順書どおりに完了する",
+      "月次請求額0円",
+      "Gemini APIの無料範囲・制約が出典付きで文書化されている",
+      "招待した閲覧者が同じテナントのダッシュボードを見られ、他テナントのデータには到達できない",
+      "同じ日のAPI由来とCSV由来の値が出典バッジ付きで並び、派生指標がCSV由来のデータだけから計算されている",
+      "週次の原因指標(インプレッション、CTR、M1、導線誘導率、問い合わせ→成約率)と結果指標(売上、成約数、登録者数は参考)が分離され、目標未達の最大候補、全指標目標達成、または判定保留理由が表示される",
+      "新しい分析が同一テナント・同一チャンネルの直近5回の結論・要因・改善アクション・効果比較を踏まえ、前回仮説の当否と施策効果の差分を示す"
+    ],
+    "stakeholders": [
+      "運営者兼利用者(本人): 自分のチャンネルの売上ファネルで目標差が大きい段階と次の打ち手を毎週根拠付きで知りたい。PCでClaude Codeを定期実行できる",
+      "他のYouTubeクリエイター(一般利用者): 自分のチャンネルデータを連携し、自分のClaude Codeでスキルを実行して改善提案を得たい",
+      "Google(API提供者): OAuth同意画面・API利用規約・クォータを遵守させる立場",
+      "Anthropic Claude Code(各利用者の実行環境): 各利用者自身のプランで分析を実行"
+    ],
+    "scope": {
+      "in": [
+        "Googleログイン、初回ログインでのテナント自動作成、1つのD1でtenant_idによる行分離(将来テナント単位で別DBへ移せる)、招待リンクでのメンバー追加とオーナー/編集者/閲覧者の3権限",
+        "YouTube Analytics API/YouTube Reporting API/YouTube Data APIの読取連携(OAuth)。字幕の自動取得は追加同意者のみforce-ssl",
+        "YouTube Studio CSV手動取込(表データ/グラフデータ/合計の3種)と週次事業CSV手動取込(MVPの外部事業データproviderはこれだけ)。事業CSVはweek_start(JST月曜), channel_id, route_label(既定LINE), route_visits, inquiries, closed_deals, revenue_jpyを持つ",
+        "Cloudflare Cron Triggersによる毎日1回(JST 3:00)の定期取得(Cloudflare Queuesでテナントごとに分けて実行)と、Reporting APIによるインプレッション・CTRの自動取得",
+        "文字起こし(SRT/VTT/Whisper取込・希望者はcaptions.download)と画像(サムネイル・場面画像・スクショ)の取得とR2保存",
+        "コメント取得(commentThreads.list)と視聴維持曲線の取得",
+        "人の考え・感情・行動を推定する心理分析(コメント感情・離脱場面・台本と話し方・サムネ/タイトル訴求・アナリティクス全般)をClaude Codeで実行しレポート化",
+        "CSV起点のダッシュボードと分析内容の定義(docs/analysis/dashboard-analysis-catalog.md)",
+        "Claude Code用連携スキル(データ取得→report-design-system実行→結果反映)",
+        "個人アクセストークン発行と反映API",
+        "HTMLレポート保存・閲覧、結論/要因要約、改善アクション管理",
+        "運営者用のローカル定期実行(launchd)",
+        "Gemini API/AI Studio無料範囲の調査・比較記録",
+        "Cloudflare(Workers/D1/R2)/GitHub/Google Cloudの設定手順"
+      ],
+      "out": [
+        "GA4・Search Console連携(今回データ元として選択されていない)",
+        "アプリ内でのLLM呼び出し(Gemini含む。調査・比較記録のみ)",
+        "因果推論・予測・機械学習(スキルの対象外)",
+        "有料プラン前提の機能",
+        "動画アップロード・メタデータ更新などYouTubeへの書込操作",
+        "多数の画面・複雑な管理機能",
+        "APIデータからの派生指標の作成(規約III.E.4。III.Lの個別許可を得ていない)",
+        "画面の自動操作(Codexのコンピュータユース等)によるYouTube Studioからの取得(YouTube利用規約の自動アクセス禁止)"
+      ]
+    },
+    "constraints": [
+      "費用: 完全無料(Cloudflare Free/Google Cloud無料/GitHub無料枠)。有料tierへの自動移行をしない",
+      "技術: Cloudflare Workers + D1 + R2(画像保存・qa-026)をAIDDキット標準として採用。秘密情報はwrangler secretのみ(INV-1)",
+      "AI実行: Claude Codeは各利用者のPCで各自のプランを使う。システム側はLLMを呼ばない(心理分析もClaude Code側で行う)",
+      "Google: YouTube読取スコープは機密スコープのため、他者提供(本番公開)にはOAuth同意画面の検証が必要(利用者80人超で申請着手)。APIクォータ10,000 units/日",
+      "心理分析は推定であり、根拠データ・反証条件・確信度を必ず付ける。因果推論・予測・機械学習は行わない",
+      "規約: APIで取得したデータから派生指標を作らない(YouTube API Developer Policies III.E.4)。派生指標はCSV由来のデータだけで計算し、公式の値でない旨を画面に明示する",
+      "規模: D1無料枠(書込10万行/日)に収めるため、テナント数の上限を100とする(上限到達時は新規テナントを作らない)"
+    ],
+    "concrete_intents": [
+      {
+        "id": "I1",
+        "text": "Googleでログインし、YouTubeチャンネルを読取専用で連携する",
+        "serves": [
+          "G1",
+          "G4"
+        ]
+      },
+      {
+        "id": "I2",
+        "text": "YouTube Studio CSV(表データ/グラフデータ/合計)と週次事業CSVを手動取込し、出典付きで保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算する。事業CSVと同一週Studio CSVから導線誘導率=route_visits/views×100、問い合わせ→成約率=closed_deals/inquiries×100を計算し、週次5段階原因指標と結果指標をダッシュボードに分けて表示する",
+        "serves": [
+          "G1",
+          "G2"
+        ]
+      },
+      {
+        "id": "I3",
+        "text": "Cronで毎日1回、Analytics API(日別指標・動画別・流入元・視聴者属性・維持率)とReporting API(インプレッション・CTR)から取得し、出典(API)付きで保存する",
+        "serves": [
+          "G1"
+        ]
+      },
+      {
+        "id": "I4",
+        "text": "Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする",
+        "serves": [
+          "G2"
+        ]
+      },
+      {
+        "id": "I5",
+        "text": "運営者はlaunchdで週次にI4を自動実行する。一般利用者は手動実行",
+        "serves": [
+          "G2"
+        ]
+      },
+      {
+        "id": "I6",
+        "text": "改善アクションを対象ファネル段付きで未着手/実施中/効果測定中/完了として管理し、次回レポートで対象原因指標と売上・成約数等の下流結果を前後比較する",
+        "serves": [
+          "G2",
+          "G5"
+        ]
+      },
+      {
+        "id": "I7",
+        "text": "Gemini API無料枠・YouTube API・Cloudflare・GitHubの無料範囲と設定手順を文書化する",
+        "serves": [
+          "G3"
+        ]
+      },
+      {
+        "id": "I8",
+        "text": "画面はログイン/ダッシュボード/動画/AI分析(レポート)/改善アクション/設定の6枚+規約の静的ページ2枚に絞る(qa-030)",
+        "serves": [
+          "G5"
+        ]
+      },
+      {
+        "id": "I9",
+        "text": "字幕・画像・コメント・維持曲線を取り込み、Claude Codeで人の考え・感情・行動を推定した心理分析レポートを作る",
+        "serves": [
+          "G1",
+          "G2"
+        ]
+      },
+      {
+        "id": "I10",
+        "text": "初回ログインで自分のテナントが作られ、招待リンクでメンバーを追加してオーナー/編集者/閲覧者の権限で共有する",
+        "serves": [
+          "G4"
+        ]
+      }
+    ],
+    "confirmed": true,
+    "approval_ref": "appr-011"
+  },
+  "decisions": [
+    {
+      "id": "D-ai-engine",
+      "question": "AI分析の実行エンジンをどれにするか(Gemini API無料枠の扱いを含む)",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "claude-code-skill",
+          "label": "Claude Code上のreport-design-systemスキル(利用者各自のPCで実行し結果をアップロード)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "利用者各自の既存Claude Code契約内で追加費用0。システム側のLLM費用は0"
+          },
+          "free_tier_limits": "システム側の従量課金なし(各自の契約範囲に依存)",
+          "goal_fit": "数値再現(analysis.mjs)+結論→要因→打ち手HTMLという既存資産をそのまま使えG2に直結",
+          "security_fit": "データは利用者のPC→自分のトークンでのみ送信。システムはLLMへデータを送らない",
+          "pros": [
+            "既存スキル資産を流用",
+            "システムにLLM費用・APIキーが不要"
+          ],
+          "cons": [
+            "各利用者がClaude Codeを用意する必要"
+          ],
+          "risks": [
+            "スキル仕様変更時に連携部の追従が必要"
+          ],
+          "lock_in": "中(スキル形式に依存)",
+          "ops_burden": "中(スキル配布と更新手順)",
+          "evidence_refs": [
+            "https://docs.claude.com/en/docs/claude-code/overview"
+          ]
+        },
+        {
+          "id": "gemini-free",
+          "label": "Workersから Gemini API Free tier(Flash/Flash-Lite)を呼ぶ",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "無料枠内0円。ただしレート上限はAI Studio表示のみで保証なし"
+          },
+          "free_tier_limits": "RPM/TPM/RPDはプロジェクト単位・AI Studioで確認、太平洋時間0時リセット",
+          "goal_fit": "アプリ内で完結し自動化しやすい",
+          "security_fit": "無料枠の入力はGoogleの製品改善・人間レビューに使われ得る(規約で機密・個人情報の送信禁止)",
+          "pros": [
+            "アプリ内で完結",
+            "最新Flashに無料枠あり"
+          ],
+          "cons": [
+            "入力データが改善に利用される",
+            "上限値非公開・非保証"
+          ],
+          "risks": [
+            "他者データを送ると規約・信頼上の問題"
+          ],
+          "lock_in": "中(Gemini API)",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://ai.google.dev/gemini-api/docs/pricing",
+            "https://ai.google.dev/gemini-api/docs/rate-limits",
+            "https://ai.google.dev/gemini-api/terms"
+          ]
+        },
+        {
+          "id": "gemini-paid",
+          "label": "Gemini API Paid tier(3.1 Flash-Lite等)",
+          "cost_model": {
+            "category": "low-cost",
+            "amount": 1,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "3.1 Flash-Liteで入力$0.25/出力$1.50 per 1M token。月数ドル程度の従量"
+          },
+          "free_tier_limits": "無料枠なし(従量課金)",
+          "goal_fit": "アプリ内で完結しデータは改善に使われない",
+          "security_fit": "有料はプロンプトが製品改善に使われない",
+          "pros": [
+            "データ取扱いが明確",
+            "自動化しやすい"
+          ],
+          "cons": [
+            "完全無料方針に反する"
+          ],
+          "risks": [
+            "従量課金の膨張"
+          ],
+          "lock_in": "中",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://ai.google.dev/gemini-api/docs/pricing",
+            "https://ai.google.dev/gemini-api/terms"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "claude-code-skill",
+        "rationale": "ユーザー指定のスキル資産をそのまま使え、完全無料方針と他者データの取扱いリスクを同時に満たすため。Geminiは無料で使えるが入力が改善に使われるため比較記録に留める",
+        "comparison_basis": {
+          "goal_fit": "G2の結論→要因→打ち手HTMLを既存スキルで満たす",
+          "tco": "システム側0円",
+          "security": "LLMへの送信は利用者本人のPCと契約内に限定",
+          "operations": "スキル配布・更新手順のみ",
+          "lock_in": "スキル形式に中程度依存"
+        },
+        "caveats": [
+          "Gemini無料枠の上限値はAI Studioでのみ確認でき保証されない",
+          "Claude Codeは利用者各自の契約が前提"
+        ],
+        "confidence": "high",
+        "latest_checked_at": "2026-09-21T09:40:00Z"
+      },
+      "serves_goals": [
+        "G2",
+        "G3"
+      ],
+      "user_decision": {
+        "option_id": "claude-code-skill",
+        "confirmed_at": "2026-09-21T09:30:09Z",
+        "note": "qa-007/qa-008の回答記録時刻。選択時刻の上限値。推奨の latest_checked_at(09:40)は決定後の裏取り再確認で、決定を覆す差分は無かった",
+        "qa_ref": "qa-007"
+      }
+    },
+    {
+      "id": "D-db",
+      "question": "データ・HTMLレポート・画像の保存先をどれにするか",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "d1-only",
+          "label": "Cloudflare D1に一本化(HTMLもD1)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "Free枠内0円。構築はmigrationのみ、撤退はSQLite dumpで容易"
+          },
+          "free_tier_limits": "読取500万行/日・書込10万行/日・合計5GB、UTC0時リセット、1行上限約2MB",
+          "goal_fit": "実績・要約・アクション・HTMLを1か所で管理しG1/G2/G4に適合",
+          "security_fit": "user_id列による行レベル分離をAPI層で強制",
+          "pros": [
+            "サービス1つで管理が簡単",
+            "SQLで効果比較しやすい"
+          ],
+          "cons": [
+            "2MB超のHTMLは保存不可"
+          ],
+          "risks": [
+            "無料枠超過時はクエリがエラー"
+          ],
+          "lock_in": "低(SQLite互換)",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://developers.cloudflare.com/d1/platform/pricing/",
+            "https://developers.cloudflare.com/d1/platform/limits/"
+          ]
+        },
+        {
+          "id": "d1-r2",
+          "label": "D1(構造化データ・HTML)+R2(画像: サムネイル・場面画像・スクショ)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "Free枠内0円(R2 Standard 10GB-month・Class A 100万/月・Class B 1,000万/月・egress無料)。保存先が2つになるが用途で明確に分かれる"
+          },
+          "free_tier_limits": "D1: 読取500万行/日・書込10万行/日・5GB。R2: 10GB-month/月・Class A 100万/月・Class B 1,000万/月(Standardのみ)",
+          "goal_fit": "画像をレポート画面で見られるため心理分析(サムネ訴求・離脱場面)の根拠提示に適合しG1/G2/G4を満たす",
+          "security_fit": "R2キーにuser_id接頭辞、公開バケットにせずWorker経由/短期URLで返す",
+          "pros": [
+            "画像をシステム内で閲覧できる",
+            "D1の1行2MB上限に画像を載せずに済む"
+          ],
+          "cons": [
+            "保存先が2つ",
+            "容量管理(古い場面画像の整理)が必要"
+          ],
+          "risks": [
+            "10GB超過で課金対象になるため容量メーターと整理手順が必要"
+          ],
+          "lock_in": "中(S3互換API)",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://developers.cloudflare.com/r2/pricing/",
+            "https://developers.cloudflare.com/d1/platform/pricing/"
+          ]
+        },
+        {
+          "id": "d1-kv",
+          "label": "D1 + Workers KV(HTML本体はKV)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "Free枠内0円。保存先が2つになり運用手順が増える"
+          },
+          "free_tier_limits": "KV無料は1GB・書込1,000回/日",
+          "goal_fit": "大きなHTMLに強い",
+          "security_fit": "KVキーにuser_id接頭辞で分離",
+          "pros": [
+            "大容量HTMLに対応"
+          ],
+          "cons": [
+            "保存先が2つ",
+            "書込回数上限が小さい"
+          ],
+          "risks": [
+            "整合性ずれ"
+          ],
+          "lock_in": "中",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://developers.cloudflare.com/d1/platform/pricing/",
+            "https://developers.cloudflare.com/kv/platform/pricing/"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "d1-only",
+        "rationale": "画面数を増やさず管理しやすく、無料枠で十分なため",
+        "comparison_basis": {
+          "goal_fit": "G1/G2/G4を1ストアで満たす",
+          "tco": "0円・移行容易",
+          "security": "user_id強制で分離",
+          "operations": "migration1系統",
+          "lock_in": "SQLite互換で低"
+        },
+        "caveats": [
+          "HTMLは取込時に2MB上限を検査し超過は拒否",
+          "画像を扱う場合はD1に載せず別ストアが必要(qa-026で利用者がR2追加を選択)"
+        ],
+        "confidence": "high",
+        "latest_checked_at": "2026-09-21T09:40:00Z"
+      },
+      "serves_goals": [
+        "G1",
+        "G2",
+        "G4"
+      ],
+      "user_decision": {
+        "option_id": "d1-r2",
+        "confirmed_at": "2026-09-21T12:35:35Z",
+        "qa_ref": "qa-026",
+        "qa_refs": [
+          "qa-014",
+          "qa-026"
+        ],
+        "note": "qa-014でd1-onlyを選択後、画像保存の要望(qa-026)により利用者がAI推奨(画像は手元・D1のみ)ではなくR2追加を明示選択。AskUserQuestion回答の実測時刻"
+      }
+    },
+    {
+      "id": "D-auth",
+      "question": "Web画面のログインとYouTube連携の認証をどうするか",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "google-oauth-published",
+          "label": "Google OAuth一本(同意画面を本番公開・未検証)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円。100人超で検証申請の工数が発生"
+          },
+          "free_tier_limits": "未検証公開は累計100ユーザーまで(警告画面あり)、refresh tokenはアカウント×クライアントで100本",
+          "goal_fit": "ログインとYouTube連携を1回の同意で完結しG1/G4に適合",
+          "security_fit": "読取専用スコープのみ。restricted scope非該当",
+          "pros": [
+            "ログイン1回で完結",
+            "7日失効を回避"
+          ],
+          "cons": [
+            "未検証の警告画面が出る"
+          ],
+          "risks": [
+            "100人超で検証必須"
+          ],
+          "lock_in": "中(Google)",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://developers.google.com/identity/protocols/oauth2",
+            "https://support.google.com/cloud/answer/15549945",
+            "https://support.google.com/cloud/answer/13464323"
+          ]
+        },
+        {
+          "id": "cf-access-plus-oauth",
+          "label": "Cloudflare Access + 別途Google OAuth",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "50人まで0円、以降$7/人/月"
+          },
+          "free_tier_limits": "Access Free 50ユーザー",
+          "goal_fit": "入口保護が強い",
+          "security_fit": "二段認証で強固",
+          "pros": [
+            "入口をゼロトラストで保護"
+          ],
+          "cons": [
+            "ログイン2段・設定二重"
+          ],
+          "risks": [
+            "設定不整合"
+          ],
+          "lock_in": "中",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://www.cloudflare.com/sase/products/access/",
+            "https://developers.google.com/identity/protocols/oauth2"
+          ]
+        },
+        {
+          "id": "google-oauth-testing",
+          "label": "Google OAuthをテスト状態のまま",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円だが7日ごとの再連携工数"
+          },
+          "free_tier_limits": "テストユーザー100人・refresh token7日失効",
+          "goal_fit": "定期収集が7日で止まるためG1に不適",
+          "security_fit": "同上",
+          "pros": [
+            "審査・公開不要"
+          ],
+          "cons": [
+            "7日ごとに再連携"
+          ],
+          "risks": [
+            "定期収集停止"
+          ],
+          "lock_in": "中",
+          "ops_burden": "高",
+          "evidence_refs": [
+            "https://developers.google.com/identity/protocols/oauth2",
+            "https://support.google.com/cloud/answer/15549945"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "google-oauth-published",
+        "rationale": "YouTube連携にOAuthが必須で、ログインを兼ねれば構成が最小、公開状態なら7日失効も避けられる",
+        "comparison_basis": {
+          "goal_fit": "G1の継続収集とG4の分離を両立",
+          "tco": "0円",
+          "security": "読取専用スコープ+暗号化保存",
+          "operations": "同意画面設定のみ",
+          "lock_in": "Googleアカウント前提"
+        },
+        "caveats": [
+          "未検証アプリの警告画面が出る",
+          "youtube.readonlyのsensitive区分はCloud Consoleで要確認",
+          "利用者が80人を超えた時点でOAuth検証申請に着手する(qa-021で確定・判断者=運営者)"
+        ],
+        "confidence": "medium",
+        "latest_checked_at": "2026-09-21T09:40:00Z"
+      },
+      "serves_goals": [
+        "G1",
+        "G4"
+      ],
+      "user_decision": {
+        "option_id": "google-oauth-published",
+        "confirmed_at": "2026-09-21T09:46:41Z",
+        "note": "AskUserQuestion回答直後の実測時刻。選択時刻の上限値",
+        "qa_ref": "qa-014",
+        "qa_refs": [
+          "qa-014",
+          "qa-021"
+        ]
+      }
+    },
+    {
+      "id": "D-cron",
+      "question": "YouTubeデータの定期収集をどこで動かすか",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "cf-cron",
+          "label": "Cloudflare Cron Triggers",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円"
+          },
+          "free_tier_limits": "Cron5個/アカウント、1回CPU10ms、サブリクエスト50/実行",
+          "goal_fit": "D1と同じ基盤で全利用者分を収集しG1に適合",
+          "security_fit": "トークンはWorkers内で復号し外部へ出さない",
+          "pros": [
+            "基盤が1つ",
+            "待ち時間はCPU時間外"
+          ],
+          "cons": [
+            "CPU10ms・サブリクエスト50の制約"
+          ],
+          "risks": [
+            "利用者増でサブリクエスト上限"
+          ],
+          "lock_in": "中",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://developers.cloudflare.com/workers/platform/limits/",
+            "https://developers.google.com/youtube/v3/determine_quota_cost",
+            "https://developers.cloudflare.com/d1/platform/limits/",
+            "https://developers.google.com/youtube/reporting/v1/reports",
+            "https://developers.cloudflare.com/queues/platform/limits/"
+          ]
+        },
+        {
+          "id": "gh-actions-schedule",
+          "label": "GitHub Actions schedule",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "privateで2,000分/月まで0円"
+          },
+          "free_tier_limits": "2,000分/月",
+          "goal_fit": "実装は容易",
+          "security_fit": "利用者トークンをActionsへ渡す必要があり分離に不向き",
+          "pros": [
+            "ログが見やすい"
+          ],
+          "cons": [
+            "他者トークンの扱い"
+          ],
+          "risks": [
+            "秘密情報の露出面増"
+          ],
+          "lock_in": "中",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://docs.github.com/en/billing/concepts/product-billing/github-actions"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "cf-cron",
+        "rationale": "D1とトークンがWorkers内で完結し、他者データを外へ出さずに済む",
+        "comparison_basis": {
+          "goal_fit": "G1の毎日収集",
+          "tco": "0円",
+          "security": "秘密情報がWorkers外に出ない",
+          "operations": "Cron1本(毎日JST 3:00・収集と削除を統合)+Queues 1本(無料枠1万操作/日に対し約300回/日)",
+          "lock_in": "Workers依存"
+        },
+        "caveats": [
+          "1実行のサブリクエストは50件(1テナント約16件)。収集は毎日JST 3:00の1回(`0 18 * * *`、Cron TriggersはUTCで動く)で、Cronはテナントごとの通を Cloudflare Queues へ入れるだけにし、consumer(max_batch_size=1)が1通=1実行で1テナントを処理する(上限100テナント・qa-049/qa-052/qa-058で確定。当初の `0 * * * 0` 週360人はqa-018)",
+          "YouTube Data APIは10,000units/日",
+          "qa-033/qa-035 に伴い削除用Cron `0 18 * * *`(毎日JST3:00)を追加し計2本。30日を超えた指標以外のAPIデータ削除・失敗した削除の再試行・更新失敗30日超の利用者の指標削除を担う(Workers Free上限5本の範囲内)。qa-058 で収集も同じ `0 18 * * *` に統合し、Cron Triggerは計1本(削除処理も Queues の cleanup 通として実行)",
+          "Reporting API(channel_reach_basic_a1)をテナント連携時にjobs.create。Analytics/Reportingのクォータ数値は非公開でCloud Consoleで確認(qa-048)"
+        ],
+        "confidence": "high",
+        "latest_checked_at": "2026-09-21T14:20:00Z"
+      },
+      "serves_goals": [
+        "G1",
+        "G3"
+      ],
+      "user_decision": {
+        "option_id": "cf-cron",
+        "confirmed_at": "2026-09-21T09:46:41Z",
+        "note": "AskUserQuestion回答直後の実測時刻。選択時刻の上限値",
+        "qa_ref": "qa-014",
+        "qa_refs": [
+          "qa-014",
+          "qa-018",
+          "qa-033",
+          "qa-035",
+          "qa-037",
+          "qa-048",
+          "qa-049",
+          "qa-052",
+          "qa-056",
+          "qa-058",
+          "qa-059"
+        ]
+      }
+    },
+    {
+      "id": "D-deploy",
+      "question": "デプロイと秘密情報の管理をどうするか",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "gh-actions-wrangler",
+          "label": "GitHub Actions + wrangler(main push)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "privateで2,000分/月まで0円"
+          },
+          "free_tier_limits": "2,000分/月、Secretsはリポジトリ100個まで",
+          "goal_fit": "履歴と検証が自動化され保守しやすくG3に適合",
+          "security_fit": "CF APIトークンはリポジトリSecrets、アプリ秘密はWorkers Secrets",
+          "pros": [
+            "デプロイ履歴",
+            "自動検証"
+          ],
+          "cons": [
+            "Free private ではEnvironments不可"
+          ],
+          "risks": [
+            "APIトークン権限の過大設定"
+          ],
+          "lock_in": "低",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+            "https://docs.github.com/en/actions/reference/security/secrets",
+            "https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments"
+          ]
+        },
+        {
+          "id": "local-wrangler",
+          "label": "手元からwrangler deploy",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円"
+          },
+          "free_tier_limits": "なし",
+          "goal_fit": "最小構成",
+          "security_fit": "秘密情報は手元のみ",
+          "pros": [
+            "構成が単純"
+          ],
+          "cons": [
+            "履歴・検証が人手頼み"
+          ],
+          "risks": [
+            "手順漏れ"
+          ],
+          "lock_in": "低",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://developers.cloudflare.com/workers/wrangler/commands/"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "gh-actions-wrangler",
+        "rationale": "保守運用を自動化し、秘密情報の置き場を明確に分けられる",
+        "comparison_basis": {
+          "goal_fit": "G3の設定の明確化",
+          "tco": "0円",
+          "security": "トークン最小権限+Secrets分離",
+          "operations": "push で完結",
+          "lock_in": "低"
+        },
+        "caveats": [
+          "Environmentsは使えないためリポジトリSecretsで運用",
+          "CF APIトークンはWorkers/D1編集の最小権限"
+        ],
+        "confidence": "high",
+        "latest_checked_at": "2026-09-21T09:40:00Z"
+      },
+      "serves_goals": [
+        "G3"
+      ],
+      "user_decision": {
+        "option_id": "gh-actions-wrangler",
+        "confirmed_at": "2026-09-21T09:46:41Z",
+        "note": "AskUserQuestion回答直後の実測時刻。選択時刻の上限値",
+        "qa_ref": "qa-014"
+      }
+    },
+    {
+      "id": "D-transcript",
+      "question": "動画の文字起こし(字幕)をどう取得するか",
+      "status": "confirmed",
+      "options": [
+        {
+          "id": "local-import",
+          "label": "手元で取得して取込(YouTube Studioの字幕SRT/VTT、または手元動画をWhisperで文字起こし)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円。API消費なし。利用者の手作業(字幕DL)かローカルWhisper実行が必要"
+          },
+          "free_tier_limits": "API消費なし(Whisperはローカル実行・MIT License)",
+          "goal_fit": "readonlyスコープのままG1/G2を満たす",
+          "security_fit": "許可範囲が広がらない",
+          "pros": [
+            "スコープ追加なし",
+            "0円"
+          ],
+          "cons": [
+            "手作業が1手増える"
+          ],
+          "risks": [
+            "Whisperの誤認識"
+          ],
+          "lock_in": "低",
+          "ops_burden": "低",
+          "evidence_refs": [
+            "https://github.com/openai/whisper",
+            "https://developers.google.com/youtube/v3/docs/captions/download"
+          ]
+        },
+        {
+          "id": "api-captions",
+          "label": "captions.downloadで自動取得",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円だが1本200 units(10,000 units/日の2%)"
+          },
+          "free_tier_limits": "YouTube Data API 10,000 units/日。captions.downloadは200 units/回",
+          "goal_fit": "自動化でO2に寄与",
+          "security_fit": "youtube.force-ssl(編集権限を含む)が必要で同意画面の権限表示が強くなる",
+          "pros": [
+            "手作業なし"
+          ],
+          "cons": [
+            "強いスコープ",
+            "クォータ消費大"
+          ],
+          "risks": [
+            "検証審査で説明負担が増える"
+          ],
+          "lock_in": "中",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://developers.google.com/youtube/v3/docs/captions/download"
+          ]
+        },
+        {
+          "id": "hybrid",
+          "label": "両方に対応(既定は手元取込、希望者だけ追加同意でAPI自動取得)",
+          "cost_model": {
+            "category": "free",
+            "amount": 0,
+            "currency": "USD",
+            "billing_period": "month",
+            "tco": "0円。実装と許可管理(段階的認可)が複雑になる"
+          },
+          "free_tier_limits": "追加同意者のcaptions.downloadのみ200 units/本",
+          "goal_fit": "readonly利用者と自動化希望者の両方を満たす",
+          "security_fit": "強いスコープは希望者だけに限定",
+          "pros": [
+            "利用者が選べる"
+          ],
+          "cons": [
+            "実装量が増える"
+          ],
+          "risks": [
+            "同意状態の管理漏れ"
+          ],
+          "lock_in": "中",
+          "ops_burden": "中",
+          "evidence_refs": [
+            "https://developers.google.com/youtube/v3/docs/captions/download",
+            "https://github.com/openai/whisper"
+          ]
+        }
+      ],
+      "recommendation": {
+        "option_id": "local-import",
+        "rationale": "読取専用スコープのまま0円で実現でき、未検証公開の同意画面の負担を増やさないため",
+        "comparison_basis": {
+          "goal_fit": "G1/G2を満たす",
+          "tco": "0円・API消費なし",
+          "security": "スコープ追加なし",
+          "operations": "手作業1手",
+          "lock_in": "低"
+        },
+        "caveats": [
+          "自動化を望む利用者には手間が残る"
+        ],
+        "confidence": "medium",
+        "latest_checked_at": "2026-09-21T12:30:18Z"
+      },
+      "serves_goals": [
+        "G1",
+        "G2"
+      ],
+      "user_decision": {
+        "option_id": "hybrid",
+        "confirmed_at": "2026-09-21T12:35:35Z",
+        "qa_ref": "qa-025",
+        "note": "利用者がAI推奨(手元取込)ではなく両方対応を明示選択。AskUserQuestion回答の実測時刻"
+      }
+    }
+  ],
+  "knowledge_candidates": [],
+  "design_applications": {
+    "database": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-020] 保存先はD1(構造化データ)+R2(画像)(qa-026でD1のみから変更)。基本11テーブル: users / channels / oauth_tokens / daily_metrics(PK tenant_id,channel_id,date) / video_metrics / csv_imports / analysis_requests(A-0001形式, 待機中|実行中|完了|失敗) / reports(版管理, html≤2,000,000 bytes) / findings / actions(未着手|実施中|効果測定中|完了, 判定 効果あり|不明|効果なし) / skill_tokens。[qa-025/026/027/029の機能決定に伴う追加テーブル(列はAI設計)] video_period_metrics(表データ.csvの21列を期間付きで保存。空欄=null・0=実測0を区別) / video_daily_metrics(グラフデータ.csv) / channel_daily_metrics(合計.csv) / video_angles(切り口: つまずき解決型|是非・意見型|追加型, 確定者) / retention_points(video_id, elapsed_ratio, audience_watch_ratio, relative_retention) / transcripts(video_id, source srt|vtt|whisper|captions_api, start_ms, end_ms, text) / media_assets(video_id, kind thumbnail|scene|screenshot, at_ms, r2_key, width, height, bytes) / comments(comment_id, video_id, published_at, text, like_count) / comment_emotions(comment_id, emotion Plutchik8種, intent 質問|共感|反論|体験談, report_id) / psych_findings(report_id, layer 考え|感情|行動, claim, evidence_json, counter_hypothesis, confidence)。全業務テーブルにtenant_id(操作した人のuser_idも保持)。設計知識(DDD)の適用: 集約は『レポート版(reports+findings+psych_findings+comment_emotions)』と『改善アクション(actions)』の2つに分け、版は追記のみ(過去版を更新しない)を不変条件とする。actionsの状態遷移は 未着手→実施中→効果測定中→完了 の一方向のみ許し、完了時に判定(効果あり/不明/効果なし)とbaseline/resultを必須にする。video_anglesは利用者確定後に再分析で上書きしない。[qa-035] 指標以外のAPIデータを持つ行(videosのタイトル等・comments・APIで取った字幕)にfetched_atを持たせ、30日超の行を掃除できるようにする。レポート版にはコメント本文を持たず、comment_idで参照する。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 追加テーブル: tenants(tenant_id, name, db_binding 既定'DB', created_by, created_at, deleted_at) / tenant_members(tenant_id, user_id, role owner|editor|viewer, joined_at, PK tenant_id,user_id) / tenant_invites(invite_id, tenant_id, email, role editor|viewer, token_hash SHA-256, expires_at 発行+7日, accepted_at, revoked_at, created_by)。既存の全業務テーブル(channels〜psych_findings・skill_tokens・oauth_tokens)にtenant_idを持たせ、主キーと索引の先頭をtenant_idにする(daily_metrics は PK tenant_id,channel_id,date)。user_idは『操作した人』の記録として残す(reports/actions/csv_importsの作成者)。R2キーは tenants/<tenant_id>/… で分ける。将来の分割: tenants.db_binding から参照先D1を決める解決関数を1か所だけに置く(既定は全テナント同じDB)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典で表を分ける(qa-054): API由来=daily_metrics(PK tenant_id,channel_id,date,content_type。content_typeはcreatorContentType)・video_metrics(PK tenant_id,video_id,date。単日指定の動画別クエリを毎日積み上げる)・traffic_source_daily(PK tenant_id,date,source_type)・audience_demographics(PK tenant_id,snapshot_date,age_group,gender)・video_reach_daily(PK tenant_id,video_id,date。video_thumbnail_impressions と video_thumbnail_impressions_ctr をAPIの値のまま保存し、CTRを自前計算しない・report_id と fetched_at を持つ)。CSV由来=既存の video_period_metrics / video_daily_metrics / channel_daily_metrics(csv_import_id を持つ)。同じ日・同じ指標でも上書きせず両方残す。派生指標M1〜M10はCSV由来の表だけから計算する(qa-053)。書込量の抑制: upsert前に値を比べ、変わった行だけ書く。索引は主キーのみ(索引の更新も書込行数に数えるため)。tenants に reporting_job_id と reporting_created_after、last_collected_date を追加。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "auth": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-021] Google OAuth 2.0 Authorization Code+PKCE(Workers実装)。scope=openid email youtube.readonly yt-analytics.readonly、access_type=offline。同意画面は外部・本番公開・未検証(累計100人上限)で、利用者が80人を超えた時点でOAuth検証申請に着手する(判断者=運営者)。セッションはランダム256bit IDをHttpOnly/Secure/SameSite=Lax Cookie・有効30日。Claude Code用個人トークン(Bearer)は平文を発行時1回だけ表示しD1にはSHA-256ハッシュ、持ち主のuser_idの行だけ読み書き可。[qa-025] 字幕のAPI自動取得を希望する利用者だけ、設定画面から追加同意(youtube.force-ssl・incremental authorization)を行い、同意の有無をoauth_tokens.scopeで判定する。既定はreadonlyのみ。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 初回ログインで tenants と tenant_members(role=owner) を作る。セッションは user_id と選択中の tenant_id を持つ。招待の受理は、リンクのトークンのハッシュが一致・7日以内・未使用・未取消で、かつログインしたGoogleアカウントの確認済みメールが招待先と一致したときだけ。Claude Code用トークンは (tenant_id, user_id) ごとに発行し、使える操作は発行者の役割の範囲まで。YouTube連携(OAuth)はオーナーだけが行い、oauth_tokensはテナントに属する。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] OAuthスコープは変更しない(yt-analytics.readonly で Reporting API も使える)。YouTube連携の完了時に Reporting API の jobs.create(channel_reach_basic_a1)を1回だけ実行し、job_id を tenants に保存する。字幕の API ダウンロード(youtube.force-ssl)は今回も要求しない。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "ui-ux": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-011/qa-016/qa-030] 画面は6つ: ①ログイン ②ダッシュボード ③動画(qa-030で追加) ④AI分析(依頼/実行状況/レポートの3区画) ⑤改善アクション ⑥設定。加えてメニュー外の静的ページ2枚(プライバシーポリシー・利用規約)。各画面の冒頭に問いを1行、結論→要因→打ち手の順。画面モックはdocs/screens/*.pngを正。[qa-029 委任により定義・qa-030/qa-031で表示を確定] ダッシュボードはdocs/analysis/dashboard-analysis-catalog.mdの9区画を持ち、最初に見えるのは視覚的に読める4ブロックだけ: ①KPIカード4枚(視聴回数・総再生時間・加重平均視聴率M1・登録者増。各カードに期間内の小さな推移線と前期比) ②日次推移の折れ線グラフ(合計.csvのエンゲージビュー。前期間を点線、動画公開日にマーカー) ③動画別の表(上位8本: タイトル・切り口バッジ・視聴回数・M1を行内の横棒・CTR。値には出典バッジを付ける。行を押すと動画画面) ④右カラムに最新AI分析の要約(結論1行+主な発見3つ)と実施中アクション。期間セレクタは上部固定。『詳しく見る』を開くと、ファネル(段ごとの横棒と転換率)・切り口別比較(横棒)・視聴者の形(M4/M8の横棒)・Shorts枠(小さな表)・データ品質バッジを表示する。数字だけのカードや文章だけの区画を作らず、比較はグラフ、個別の値は表で見せる。[qa-030] 動画画面は左に動画一覧(公開日・切り口・M1・集計中バッジ)、右に選択動画の詳細(問い『この動画で視聴者は何を考え、どこで離れたか』→切り口の確定→維持曲線と急落点→心理(考え→感情→行動・推定バッジ)→コメント感情→場面画像と文字起こし(折りたたみ))。ダッシュボードの動画表の行からも開く。[qa-030] 静的ページはログイン画面とフッターからリンクし、ログイン前に同意を求める(YouTube API Developer Policies III.A.2)。[qa-027] AI分析レポートに『視聴者心理』区画(考え→感情→行動、推定である旨・根拠データ・確信度・反対仮説)と『コメント感情』区画(8基本感情の構成比と代表コメント)と『離脱場面』区画(維持曲線上の急落点×その時刻の文字起こし・場面画像)を追加。[qa-019] デスクトップはCLI体験: [1/3] データ取得中…(A-0004) → [2/3] 分析・HTML生成中… → [3/3] 反映完了 → レポートURL。失敗時は原因1行+対処1行。静的ページ2枚(プライバシーポリシー・利用規約)は文章だけのページなので画面モック(docs/screens/*.png)の対象外とし、本文は公開前に別途用意する。[qa-036] スマホ・タブレットもWebで全操作できる: 幅360px以上で6画面の全操作(CSV・字幕・画像の取込、分析依頼とプロンプトのコピー、結果JSONの取込、アクション更新、設定)を行える。幅900px未満ではサイドバーを下部タブ(5項目)に、表を縦積みカードに切り替え、取込はドラッグ&ドロップに加えてファイル選択ボタンを置く。タップ領域は44pt以上(Apple HIG)。グラフは横スクロールさせず、幅に合わせて目盛りを間引く。Claude Code によるAI分析の実行だけはPC側で行う(スマホではプロンプトのコピーと結果の取込まで)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 画面は6枚のまま。サイドバー上部にテナント切替(所属が1つなら名前の表示だけ)。設定画面に『メンバー』欄(一覧・役割変更・招待リンク発行と取消・削除。オーナーだけに表示)。招待リンクを開くとログイン画面に『○○のテナントに招待されています』を表示する。閲覧者には取込・分析依頼・アクション更新のボタンを出さない。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 画面は6枚のまま。値の横に出典バッジ(API/CSV)を付ける。KPIカードの視聴回数・総再生時間・登録者増は API の公式値(バッジ API)、M1 は CSV 由来(バッジ CSV)。動画別の表の CTR は Reporting API の値(バッジ API)を使い、無い期間は CSV の値(バッジ CSV)。M1〜M10 を表示する区画には『CSVの取込データから計算した値で、YouTube公式の数値ではありません』を常に表示する(III.E.4 の開示義務)。ユニーク視聴者数は CSV にだけあるため CSV バッジで表示する。最後の収集日時と最後のCSV取込日時を設定画面に表示する(催促通知は出さない・qa-055)。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "security": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-022] refresh tokenはAES-256-GCM(Web Crypto)で暗号化しD1へ、鍵TOKEN_ENC_KEYとGOOGLE_CLIENT_SECRETはWorkers Secretsのみ。user_idはセッション/トークンから導出し全クエリをWHERE user_id=?で絞る(パラメータのuser_idを信用しない)。レポートHTMLはallow-scriptsなしのsandbox iframe+CSP default-src 'none'; style-src 'unsafe-inline'; img-src data:。結果JSONは形式・サイズ検証後に保存。YouTube書込スコープは既定で要求しない。連携解除時はGoogle revokeを呼びトークン削除。[qa-025/026の機能決定に伴う追加] R2の画像キーは user_id/ 接頭辞で分離し、画像は署名付き短期URLかWorker経由でのみ返す(公開バケットにしない)。force-ssl追加同意はcaptions.downloadにだけ使い、他の書込系APIを呼ばないことをコードレビューとテストで確認する。コメント本文は第三者の個人情報を含み得るため、利用者本人のレポート内でのみ表示し外部送信しない。[qa-030 YouTube API Developer Policies III.A.2/III.D.2.3/III.E.4.g] プライバシーポリシー(Google Privacy Policyへのリンクを含む)への同意をログイン前に求める。設定の『データを削除』と連携解除のどちらでも、その利用者のD1行・R2画像を7日以内に削除する(削除は受付時に即時実行し、失敗分は毎日3:00 JSTのCron `0 18 * * *` で再試行)。[qa-035 YouTube API Developer Policies III.E.4] 保持期間: 分析指標(daily_metrics/video_metrics/video_*_metrics/retention_points)は毎日の収集でrefresh tokenの有効性を確かめられている間だけ保持する(30日を超えて更新に失敗した利用者は指標も削除)。指標以外のAPIデータ(videosのタイトル・説明・サムネイルURL、comments本文、APIで取った字幕)は各行にfetched_atを持ち、毎日の収集で再取得する。fetched_atが30日を超えた行は毎日1回のCron掃除で削除する。レポートにはコメント本文を複製せずcomment_idだけを持たせ、表示時にcommentsから引く(期限切れは『(保存期間を過ぎたため非表示)』)。手元の動画から切り出した場面画像と手元の字幕ファイルは利用者自身のデータでAPIデータではないため、この30日規定の対象外とする。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 認可: 全APIでtenant_idはセッション(またはスキル用トークン)からだけ導き、tenant_membersで役割を確かめる。画面でボタンを隠すだけにしない。権限表: owner=全操作+YouTube連携+招待+役割変更+テナント削除 / editor=CSV・字幕・画像の取込、分析依頼、結果の取込、アクション更新 / viewer=閲覧のみ。脅威の追加: 『招待リンクの流出』(ハッシュ保存・7日・1回限り・メール一致・取消可で対策)、『権限昇格』(役割変更はオーナーだけ、最後のオーナーは外せない)。削除: オーナーの『データを削除』はテナント全体を7日以内に削除し、メンバーは『このテナントから抜ける』。アカウント削除時は、オーナーであるテナントを削除し、他テナントの所属を外す。プライバシーポリシーに『オーナーが招待したメンバーにチャンネルのデータが表示される』ことを書く。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 規約 III.E.4 への対応: API由来の値から新しい指標を計算しない(比率・スコア・合算・CTRの再計算を含む)。派生指標M1〜M10・統計分析はCSV由来の表だけで行う。/yt-analyze への書き出しでも行ごとに source(api/csv)を付け、スキル側は source=api の行を新しい指標の計算に使わない。コメントは件数・割合の感情指標を作らず、comment_id を引用した定性的な解釈にとどめる(comment_emotions の件数・割合の列を廃止)。画面の自動操作による Studio からの取得は行わない(YouTube利用規約の自動アクセス禁止・qa-055)。保持期間の確認は毎日の収集で行う(30日ごとの認可確認を満たす)。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "infrastructure": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-018/qa-026] Cloudflare Workers(Free)1本にAPI・静的配信・Cronを同居、D1バインディングとR2バケット(Standard、無料10GB-month・Class A 100万/月・Class B 1,000万/月)を追加。収集Cron(qa-049で毎日に変更。詳細は末尾の[毎日収集]節)。YouTube Data API 10,000 units/日の内訳: 動画一覧は差分取得、commentThreads.listは1 unit/回、captions.downloadは200 units/本で追加同意者のみ・1日上限を設定値で管理。設計知識card 0件の理由: resource-mapにインフラ(サーバレス基盤の容量設計)向けcardが無く、該当観点は doctrine anchor(Google SREの信頼性・運用)で扱うため。[qa-033/qa-035 に伴う追加] Cron Triggersをもう1本 `0 18 * * *`(毎日UTC18:00=JST3:00)追加する。役割は①fetched_atが30日を超えた指標以外のAPIデータの削除 ②『データを削除』/連携解除で失敗した削除の再試行 ③30日を超えてtoken更新に失敗した利用者の指標削除。削除依頼は受付時に即時実行し、失敗しても翌日3:00から毎日再試行するため、7日以内の削除(III.E.4.g)を最大6回の再試行で満たす。収集も同じ `0 18 * * *` に統合するため(qa-058)Cron Triggerは1本(Workers Freeのアカウント上限5本の範囲内)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] D1は1つのまま(binding名 DB)。R2は1バケットで tenants/<tenant_id>/ のプレフィックスで分ける。テナントを別DBへ移すときは新しいD1を作ってbindingを追加し、tenants.db_binding を切り替える(無料プランのD1上限10個・1つ500MB、2026-04-21更新の公式Limitsで確認)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 収集を週1回から毎日1回に変える(qa-049)。起動は毎日JST 3:00の1回だけ(qa-058): Cron Trigger `0 18 * * *`(Cron TriggersはUTCで動くため UTC 18:00=JST 3:00 と書く)。この Cron は既存の削除処理と同じ時刻なので1本に統合し、Cron Trigger は計1本(Free上限5本の範囲内)。Cron の実行では重い処理をせず、D1 から対象テナント(オーナー連携済み→古い順、上限 MAX_TENANTS=100・qa-052)を読み、Cloudflare Queues の collect-queue へテナントごとに1通(collect)と削除処理の1通(cleanup)を sendBatch で入れるだけにする。consumer は max_batch_size=1 とし、1通=1回の実行(Queues は1バッチを1回の consumer 実行として届ける)で1テナントを処理するため、1テナント約16件のサブリクエストが1実行の上限50件に収まる。失敗した通は msg.retry() で再試行(max_retries=3・retry_delay=600秒)し、最後の試行でも失敗したら tenants.collection_status=failed を書く(翌日の収集が直近7日を取り直すので欠けは埋まる)。Queues の操作数は1通あたり書込・読取・削除の約3回で、100テナント+cleanupでも1日約300回(無料枠1万回/日の範囲内)。メッセージの保持は24時間。1テナントの1日の呼出し: トークン更新1 / Analytics reports.query 5(チャンネル日次 D-7〜D-1・動画別の単日 D-3・流入元 D-7〜D-1・視聴者属性・新しい動画のShorts判定) / 維持率 最大2本(公開28日以内の動画を順番に) / Reporting reports.list 1+新しいレポートのダウンロード / Data API playlistItems.list・videos.list 2〜4 / D1 batch 1〜2。Reporting の CSV は gzip を要求せず平文で受け、date・video_id・impressions・ctr の列だけを読む(CPU 10ms 対策)。channel_basic_a3 などの大きいレポートは使わない。Google Cloud で YouTube Reporting API を有効化する。テナント上限は wrangler.toml の MAX_TENANTS=100(qa-052)。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "backend": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-023] Hono v4 on Workers。画面用REST: GET /api/me, GET /api/dashboard?period=, POST /api/csv, GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff?a=&b=), GET/PATCH /api/actions/:id。スキル連携API(個人トークン): GET /api/skill/export?request_id= / PATCH /api/skill/requests/:id / POST /api/skill/reports。YouTube API失敗は指数バックオフ最大3回→次の毎時実行で拾い直し。[qa-025/026/027/029の機能決定に伴う追加(エンドポイント名はAI設計)] POST /api/skill/transcripts(SRT/VTT/Whisper結果を時刻付きで保存) / POST /api/skill/media(縮小画像をR2へ・キーをmedia_assetsへ) / exportに維持曲線・コメント・字幕・画像キー・派生指標M1〜M10を含める / POST /api/skill/reportsの受理JSONにpsych_findings・comment_emotions・ideasを追加。CSV取込はカタログの判定規則(Shorts判定・空欄と0の区別・集計遅延・合計行の別保存)で正規化する。[qa-030の画面追加に伴う追加(エンドポイント名はAI設計)] GET /api/videos(一覧) / GET /api/videos/:id(維持曲線・心理・コメント感情・場面画像キー・文字起こし) / PUT /api/videos/:id/angle(切り口の確定) / DELETE /api/me/data(全データ削除)。設計知識(API Design Patterns)の適用: エラーは {error:{code,message,hint}} の単一形式、POST /api/skill/reportsは request_id+版番号をIdempotency-Keyとして二重送信で版を増やさない、一覧はcursorページング、スキル連携APIは /api/skill/ 配下で版番号をヘッダ(X-Skill-Api-Version)で明示する。設計知識(DDD)の適用: usecaseと集約を1対1で対応させる。ingestReportは『レポート版』集約の新しい版を追記だけで作り、updateActionは『改善アクション』集約の状態遷移(未着手→実施中→効果測定中→完了の一方向)を集約内で検査する。ほかのusecaseが2つの集約を1トランザクションで同時に書き換えることはしない。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 全usecaseの入力に TenantContext(tenant_id, user_id, role) を必須にし、repository は tenant_id 無しのクエリを組めない形(TenantScopedRepository)にする。役割の確認は usecase の入口で1回行う。追加API: GET/POST /api/tenants / POST /api/session/tenant(切替) / POST /api/tenants/:id/invites / DELETE /api/tenants/:id/invites/:inviteId / POST /api/invites/accept / PATCH・DELETE /api/tenants/:id/members/:userId / POST /api/tenants/:id/leave。収集Cronは毎日(qa-049、末尾の[毎日収集]節)。取得元はYouTube API・CSV・字幕/画像ファイルの3系統をテナント単位で受ける(qa-043)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] collector usecase を日次に変える: 1テナントの処理を1関数(collectTenantDaily)にまとめ、Analytics はD-7〜D-1を取り直し、動画別は startDate=endDate=D-3 の単日クエリ(maxResults 200, sort -views)で積み上げる。Reporting は reports.list(createdAfter=前回値)で新しいレポートだけを取り、同じ startTime/endTime の修正版が来たらその期間の行を置き換える。レポートは60日で取れなくなるため、60日以上収集できなかった期間は CSV 取込で補う。テナント作成API(初回ログイン時)は MAX_TENANTS に達していたら作成せず『現在新規の受付を停止しています』を返す(招待でのメンバー追加は上限の対象外)。/api/skill/export は行ごとに source を付け、M1〜M10 は CSV 由来の行からだけ計算して返す。収集は毎日JST 3:00の Cron が Queues にテナントごとの通を入れ、consumer が1通=1テナントで collectTenantDaily を呼ぶ(qa-058)。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "frontend": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-024] Workersの静的アセットとして配信するVite+素のTypeScriptのSPA(ルートは6画面+静的ページ2枚のみ・qa-030)。グラフは軽量ライブラリ1つで、使う図の型は折れ線(推移・維持曲線)・横棒(比較・ファネル・感情構成)・行内の横棒(表の中のM1)・小さな推移線(KPIカード)の4種に限る(qa-031)。スマホ幅ではサイドバーを下部タブに切替え、全操作をできるようにする(qa-036)。レポートHTMLはsandbox iframeで本体DOMと分離。画面モックはdocs/screens/*.pngを正。[qa-029/qa-027] ダッシュボードの9区画とAI分析の心理・感情・離脱場面区画はカタログの派生指標定義(M1〜M10)をAPIから受け取り表示するだけとし、ブラウザ側で指標を再計算しない(計算式の二重化を防ぐ)。場面画像はR2の短期URLを遅延読込する。端末幅での確認は Playwright の 390×844(スマホ)・820×1180(タブレット)・1440×900(PC)の3サイズで主要操作のE2Eを回す(qa-036)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 選択中のテナントはセッションで持ち、切替時は画面を再取得する。役割に応じてボタンを出し分ける(サーバ側でも拒否する)。E2Eに『閲覧者の書込が403』『他テナントのIDを指定すると404』『招待リンクを別アカウントで開くと参加できない』を加える。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典バッジ(API/CSV)と M1〜M10 区画の開示文は共通コンポーネントにし、値の表示と必ず一緒に出す(付け忘れを防ぐ)。E2Eに『M1区画に開示文がある』『API と CSV の値が同じ日にあると両方バッジ付きで出る』『上限到達時に新規テナントが作れない』を加える。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    },
+    "maintenance-ops": {
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-028] GitHub Actions: pull_requestでlint/test/`wrangler deploy --dry-run`、mainへのpushで`wrangler d1 migrations apply`→`wrangler deploy`。CLOUDFLARE_API_TOKEN(Workers Scripts/D1/R2編集のみの最小権限)とCLOUDFLARE_ACCOUNT_IDはリポジトリSecrets。オーナーMacはlaunchdで毎週月曜09:00 JST(毎日JST 3:00に始まる収集が終わった後)にClaude Codeを非対話実行、一般利用者は手動実行。監視は設定画面の無料枠メーター(Workers/D1/R2/YouTube units)とWorkers Logs。設計知識(Clean Code)の適用: 派生指標M1〜M10とCSV判定規則は1モジュール(metrics/)に純関数で置き、カタログのid(M1等)を関数名に対応させる。検算テストとして2026-08-22〜09-19の実CSVでM1=16.97%を固定値テストにする。runbookはOAuth再連携・無料枠超過時の対応・スキル更新・R2容量逼迫時の古い場面画像削除の4本。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] runbookに『テナントを別DBへ移す』(対象テナントの行をexport→新DBへimport→db_binding切替→旧DBの行を削除)を加えて5本にする。無料枠メーターはテナント数と1テナントあたりの行数も表示する。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] runbook に『Analytics/Reporting API の割り当てを Cloud Console で確認する』『Reporting のレポートが60日以上取れなかったときに CSV で補う』を加えて7本にする。無料枠メーターに D1 の1日の書込行数とテナント数/上限を表示し、80%で警告する。launchd による運営者の週次 /yt-analyze は月曜09:00 JST のまま(毎日JST 3:00に始まる収集と再試行が終わった後)。",
+      "recorded_at": "2026-09-21T14:10:14Z",
+      "basis": "user-decision"
+    }
+  },
+  "hearing_progress": {
+    "loop_count": 14,
+    "next_question": null,
+    "complete": true
+  },
+  "doctrine_applications": {
+    "database": {
+      "data-access": {
+        "text": "[qa-020/qa-026] D1はrepositories(metricsRepo/reportsRepo/actionsRepo/mediaRepo)に、R2はmediaStoreアダプタに閉じ込め、ユースケース層はD1/R2 APIを直接呼ばない。各repoはuser_idを必須引数に取る。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      },
+      "reliability": {
+        "text": "[qa-020/qa-018/qa-049/qa-052/qa-058] D1 Free枠上限到達時はクエリがエラーになるため、収集はupsertで再実行可能にし失敗したテナントは Queues の自動再試行(最大3回・10分間隔)で再取得する(qa-049/qa-058)。値が変わった行だけ書き、D1の書込10万行/日に対してテナント上限100で余裕を残す(qa-052)。週次でwrangler d1 exportをGitHub Actionsで取得しバックアップとする。",
+        "recorded_at": "2026-09-21T14:10:14Z",
+        "basis": "user-decision"
+      }
+    },
+    "auth": {
+      "authentication": {
+        "text": "[qa-021] OAuth PKCE+stateでCSRFを防ぎ、セッションはサーバ側保存のランダムIDのみCookieへ。スキル用トークンはハッシュ保存・失効可能・最終使用日時を記録。force-sslは追加同意時のみ要求する段階的認可とする。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      },
+      "security": {
+        "text": "[qa-021/qa-022] 認可はセッション/トークン→user_idの導出を唯一の経路とし、リクエストパラメータのuser_idを信用しない。利用者80人超で検証申請に着手し、100人上限到達で新規連携が止まる事態を避ける。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      }
+    },
+    "backend": {
+      "application-architecture": {
+        "text": "[qa-023] routes(Hono)→usecases(collectMetrics/importCsv/ingestReport/ingestTranscript/ingestMedia/updateAction)→repositoriesの内向き依存。YouTube APIクライアントはadapterとして差し替え可能にしテストではモックする。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      },
+      "data-access": {
+        "text": "[qa-023/qa-027] ingestReportは結果JSONのスキーマ検証→reports新版INSERT→findings/psych_findings/comment_emotions/actions一括INSERTをD1 batchで1トランザクションにまとめ、途中失敗で版だけ残る状態を作らない。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      }
+    },
+    "maintenance-ops": {
+      "operations": {
+        "text": "[qa-028] 運用手順をdocs/runbook.mdに4本置く(OAuth再連携、無料枠超過時の対応、スキル更新、R2容量逼迫時の場面画像整理)。障害はWorkers Logsとlast_collected_atが7日超の利用者数で検知する。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      }
+    },
+    "infrastructure": {
+      "reliability": {
+        "text": "[qa-018/qa-023/qa-049/qa-058] 収集は毎日JST 3:00の1回の Cron で Cloudflare Queues にテナントごとの通を入れ、1通=1実行で処理する。冪等upsertで途中失敗から再開でき、YouTube APIの429/5xxは指数バックオフ3回で打ち切り、その通を Queues の再試行(最大3回・10分間隔)へ持ち越す。Analyticsは直近7日、Reportingは修正版の置換で後からの値の修正を吸収する。SLOは『全テナントの当日の収集が毎日09:00 JSTまでに完了』とする。",
+        "recorded_at": "2026-09-21T14:10:14Z",
+        "basis": "user-decision"
+      },
+      "operations": {
+        "text": "[qa-014/qa-026] 環境はproductionの1系統のみ、設定値はwrangler.toml(非秘密: D1/R2バインディング・Cron式)とWorkers Secrets(秘密)に分離。構成変更はすべてGitHub経由のデプロイで行い手作業変更をしない。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      }
+    },
+    "ui-ux": {
+      "presentation": {
+        "text": "[qa-016/qa-027/qa-029] 各画面の最上部に問い、次に結論(KPI/主な発見)、要因(数字の事実→推定した心理)、打ち手の順。心理の記述には必ず『推定』バッジと確信度を付け、事実の数字と見た目で区別する。操作は1画面1主ボタン。",
+        "recorded_at": "2026-09-21T12:49:30Z",
+        "basis": "user-decision"
+      }
+    },
+    "frontend": {
+      "presentation": {
+        "text": "[qa-024] デザインはFINAL-UI参照の濃紺サイドバー+白カード+ティール主ボタンに統一し、6画面で同一レイアウト骨格を共有(qa-030)。メニュー項目はログイン後の5つ(ダッシュボード・動画・AI分析・改善アクション・設定)で固定し(ログイン画面を含めて6画面)、情報は『最初に見える要点』と『詳しく見る』の2段に分けて一度に出す量を抑える。スマホ・タブレット幅でも全操作をでき(qa-036)、表は縦積みカードに変換する。",
+        "recorded_at": "2026-09-21T13:25:30Z",
+        "basis": "user-decision"
+      },
+      "application-architecture": {
+        "text": "[qa-024/qa-032/qa-033/qa-031] 画面はpages/*(6つ: login・dashboard・videos・ai-analysis・actions・settings)+静的ページ2枚(privacy・terms)と、api client層の2層に分け、画面からfetchを直接呼ばずapi client経由にする。状態はURLクエリ(期間・選択ID)とサーバ応答だけで持ち、グローバルストアを置かない。グラフは4種の部品(折れ線・横棒・行内の横棒・小さな推移線)にまとめて各画面から使う。(層の分け方は qa-037 で承認)",
+        "recorded_at": "2026-09-21T13:14:06Z",
+        "basis": "user-decision"
+      }
+    },
+    "security": {
+      "security": {
+        "text": "[qa-022/qa-033/qa-035/qa-037] 脅威は『他人のデータが見える』『トークンが漏れる』『取り込んだHTMLでスクリプトが動く』『スキル用トークンの悪用』『APIデータの保存期間超過』の5つに『招待リンクの流出』『権限昇格』を加えた7つ。対策: tenant_idと役割はセッション/トークンとtenant_membersからだけ導く(qa-041〜045)、refresh tokenは暗号化して保存、レポートはsandbox iframe+CSP、スキル用トークンは失効でき最終使用日時を残す、読み取り専用スコープ、reports/actionsに作成者と時刻を残す、指標以外のAPIデータは30日で削除または再取得、削除依頼と連携解除は7日以内に全データ削除。(脅威の選定は qa-022・qa-033 の利用者回答、30日保持と7日以内削除は qa-035 で確認した規約本文、対策の具体化は qa-037 の一括承認による)(qa-053: APIデータから派生指標を作らない規約 III.E.4 への対応として、派生指標はCSV由来の表だけで計算し、画面に公式の値でない旨を開示する。qa-055: 画面の自動操作による取得は行わない)",
+        "recorded_at": "2026-09-21T14:10:14Z",
+        "basis": "user-decision"
+      }
+    }
+  }
+}

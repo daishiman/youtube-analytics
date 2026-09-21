@@ -1,0 +1,72 @@
+{
+  "verb": "init",
+  "generated_at": "2026-09-21T09:25:34.866332+00:00",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "worktree_id": "wt_eb62d4573486eac5",
+  "head_sha": "cdbce2123e5845aea66710b80b30085b02eeb1c5",
+  "content_roots": [
+    "issues",
+    "tasks",
+    "specs",
+    "architecture",
+    "features",
+    "docs"
+  ],
+  "created": [
+    "issues",
+    "tasks",
+    "specs",
+    "architecture",
+    "features",
+    "docs",
+    ".dev-graph/state",
+    ".dev-graph/cache",
+    ".dev-graph/locks",
+    ".dev-graph/templates",
+    ".dev-graph/staging",
+    ".dev-graph/published",
+    ".dev-graph/config.json",
+    ".dev-graph/state/graph.json",
+    ".dev-graph/templates/README.md",
+    ".dev-graph/templates/api-contract.md",
+    ".dev-graph/templates/architecture-backend.md",
+    ".dev-graph/templates/architecture-data.md",
+    ".dev-graph/templates/architecture-frontend.md",
+    ".dev-graph/templates/architecture-infrastructure.md",
+    ".dev-graph/templates/architecture-security.md",
+    ".dev-graph/templates/architecture.md",
+    ".dev-graph/templates/claude-settings.example.json",
+    ".dev-graph/templates/common-frontmatter.md",
+    ".dev-graph/templates/document.md",
+    ".dev-graph/templates/feature.md",
+    ".dev-graph/templates/issue.md",
+    ".dev-graph/templates/repo-config.example.json",
+    ".dev-graph/templates/specification.md",
+    ".dev-graph/templates/system-phase-spec.md",
+    ".dev-graph/templates/system-plan-contract.json",
+    ".dev-graph/templates/system-task-spec.md",
+    ".dev-graph/templates/task-graph-node.md",
+    ".dev-graph/templates/task.md",
+    ".dev-graph/templates/template-contract.json"
+  ],
+  "preserved": [],
+  "migration_preview": [],
+  "hook_source": "plugin",
+  "template_result": {
+    "contract_entries": 21,
+    "missing": 0,
+    "user_edited_overwritten": 0
+  },
+  "schema_result": {
+    "valid": true,
+    "violations": [],
+    "implementation_readiness": "complete"
+  },
+  "github": {
+    "enabled": false,
+    "secrets_persisted": false,
+    "node_ids_persisted": false
+  },
+  "second_run_planned_changes": 0,
+  "user_choice": "accept-as-is"
+}

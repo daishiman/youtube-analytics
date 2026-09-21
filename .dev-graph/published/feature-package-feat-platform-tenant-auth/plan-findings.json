@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-platform-tenant-auth-r1",
+  "evaluated_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec すべてでスコープ外一覧が feature の scope_out(YouTube連携/CSV等取込/Claude Code連携/業務画面/保持期間運用)と完全一致しており、成果物・write_scope もその範囲内に収まる。system-spec 章(auth/security/database/infrastructure/maintenance-ops/00-requirements-definition)との矛盾も検出しなかった。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-05-implementation.md#スコープ外",
+        "task-specs/phase-13-release-deploy.md#スコープ外",
+        "workstream-inventory.json"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "feature 受入6項目すべてが task の acceptance/verification に写像されている。(1)未ログイン401→P04/P06/P07、(2)初回ログインでtenants+owner1組→P04/P05/P07、(3)閲覧者書込403・他テナント404・越境成功0件→P04/P06/P07、(4)招待リンクの別アカウント参加不可→P04、(5)MAX_TENANTS到達で受付停止→P04/P05、(6)main pushでD1マイグレーションとdeploy完了→P13。漏れは検出しなかった。",
+      "evidence": [
+        "task-specs/phase-04-test-design.md#Verification and evidence",
+        "task-specs/phase-06-test-run.md#Verification and evidence",
+        "task-specs/phase-07-acceptance.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#Verification and evidence"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "task-specs/phase-01〜13、workstream-inventory.json、task-graph.json、system-build-handoff.json の間で task_id(SYS-PTA-P01〜P13)、phase_ref(P01〜P13)、write_scope、depends_on が一貫している。feature_package_id/parent_feature/repository_id(github:daishiman/youtube-analytics)も全ファイルで一致し、source_feature_digest(sha256:921630778ada9cc013965d562f034a336daa25039ccf23ff43a059c7773f9f16)は features/feat-platform-tenant-auth.context.json の実ハッシュと一致した。不整合は検出しなかった。",
+      "evidence": [
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "feature-package.json"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→...→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向きDAGで、サイクルや同一 package 外への依存参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致している。",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/初期設定",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-platform-tenant-auth-r1"
+      ],
+      "exit_code": 0,
+      "conditions": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6\",\n  \"feature_package_id\": \"feature-package/feat-platform-tenant-auth\",\n  \"parent_feature\": \"feat-platform-tenant-auth\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "04fba1763dee4ee4fbd63d1afcc8975dceb6590f18191388cc02b71a0c2c5995"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "ca575daa9e751d1c6f432129d5bf10fa0b6810a655d29909eb1629d64ac53a3d"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "47a4ed967af275a1669c8c394f0813fe5e0502b229b3368ac1bfc432a875ece6"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "fc8ec830dc6666034dc23359a5cfaaa4c49c8235d4d2d2ef1fe933f8a42936e1"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "3dd1c3409cdbb8edf78626c0d5ba3d85bf19f4386b012c199b7830cc988569b2"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "7e1edb4a320edc6785c947daca425981f8e7686c87d239625de7df3a5d2c3dc1"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "33d5d3727d53b89fa82546596486bffbe2c53112a847472382f6a579c4255b6f"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "054d990492a08958e0e55f5a09b954e74c8c7dcf84f079295413c3ff5a32e04d"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "b06b5a98b3907693cf5e633b87d4e3ac748a4f90396180e5c9cd938a2dfecc44"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "1bca3a4ba6fb8ec0ce2f619691ad6cfd5307957e3b43b5e264ae4202a7097393"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "e9097c053c43a4deee03ff3f34f051341725fd1b5e0bd4fe0b587dbcea3db1a0"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "ab89939d92e2a6b79df493004edf8d1de205d417bb20cb8b3acd8b727e8c1c55"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "26ea6682763f3a146d78dbc81596e7f4cbfa3a05313cd7712963519abec93606"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "7ff90f598fa6d0373897dc4af86e2b37c6690a28fdf520eae486210119aeb4c2"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "499967b3a6b0a6ed17593df63fd773dc9894d612fbbe7a40ee07312974e78051"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "d365e50830b06f0471ccbe40ce087932a07fddde8ea8838edc386941aa8d9e70"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "13d9446ab9a6da94ce03a6bccf45647fe69c3abf2cdba44de812712ac8d67d44"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "ced8136967ec13580c62647dde9981e90dfab38adbaefe5dcb4cf7e39e7c7c67"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "feature context の architecture_refs には architecture/youtube-analytics-system.md と specs/youtube-analytics-system.md が含まれるが、13本の task-spec の source_lineage/参照情報は system-spec 配下7章のみを列挙しており、この2ファイルへの明示的な参照がない。矛盾ではないが、根拠章の網羅性表示としては軽微な抜けである。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#参照情報",
+        "workstream-inventory.json"
+      ]
+    }
+  ]
+}

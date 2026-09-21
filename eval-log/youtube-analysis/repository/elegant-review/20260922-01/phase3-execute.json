@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "run_id": "20260922-01",
+  "iteration": 3,
+  "executed_at": "2026-09-21T16:10:07Z",
+  "strategy": "canonical contract + thin projections + machine-validated resync gate",
+  "changes": [
+    "週次売上ファネルを原因5指標と結果指標へ分離し、ダッシュボード先頭4ブロックを再定義",
+    "manual週次事業CSV、business_funnel_weekly、funnel_targets、率・目標差・標本・鮮度・判定保留を契約化",
+    "target_gapが負の指標だけを改善候補にし、全指標目標達成時は候補を作らない",
+    "問い合わせ→成約率を同週スナップショットと明示",
+    "直近5回の分析履歴パックと前回仮説・施策効果の差分分析を統合",
+    "6画面promptの共通デザインを_shared.prompt.txtへ集約",
+    "旧PNGを非規範スナップショット化し、promptと仕様をUI正本に指定",
+    "task依存表示をcanonical task-graph参照のthin indexへ変更",
+    "source lineageの偽同期を避け、対象feature計画前の再同期gateを記録",
+    "独立審査で検出した画面promptのsource・target_gap・設定/アクション項目・結果JSONキー・source enumの追従漏れを修正",
+    "最終反復で複合由来のLINE誘導率、architecture projection、3値source enum、履歴射影、projection再同期gateを整合"
+  ],
+  "validation": [
+    "python3 scripts/validate-repository-consistency.py",
+    "JSON parse: spec-state, feature context, task graph, review artifacts",
+    "feature frontmatter/context equality",
+    "bash -n docs/screens/prompts/generate.sh",
+    "aidd-agent-kit/verify-codex-layout.sh",
+    "git diff --check",
+    "30 paradigm coverage validator"
+  ],
+  "amplified_positive_pattern": "正本を一つに定め、派生物はthin projectionまたは再同期gate付きにする",
+  "destructive_actions": [],
+  "physical_deletions": false
+}

@@ -1,0 +1,36 @@
+{
+ "skill": "run-dev-graph-system-spec",
+ "checklist": [
+  {
+   "item": "content root in caller repo",
+   "status": "pass",
+   "evidence": "system-spec/ under repo_root"
+  },
+  {
+   "item": "harness version/4 entry points",
+   "status": "pass",
+   "evidence": "0.1.14 (>=0.1.0 <1.0.0)"
+  },
+  {
+   "item": "elicit/doc-fetch/compile/evaluator via harness",
+   "status": "pass",
+   "evidence": "apply-spec-transition.py / build-fetched-references.py / compile-spec-doc.py / evaluator r6"
+  },
+  {
+   "item": "coverage/source-citation/evaluator gates",
+   "status": "pass",
+   "evidence": "eval-log/completeness-report-20260921-r6.json verdict PASS"
+  },
+  {
+   "item": "lineage/confirmation/evidence/readiness",
+   "status": "pass",
+   "evidence": "validate-graph-schema.py exit0 (valid=true, violations=[])"
+  },
+  {
+   "item": "no duplicated elicitation/compile logic",
+   "status": "pass",
+   "evidence": "dev-graph 側は要約+参照のみ"
+  }
+ ],
+ "recorded_at": "2026-09-21T14:36:15Z"
+}

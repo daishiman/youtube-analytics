@@ -1,0 +1,225 @@
+{
+  "references": [
+    {
+      "target_id": "cloudflare-workers",
+      "retrieved_at": "2026-09-21T09:50:54Z",
+      "source_url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-09-05",
+      "latest_checked_at": "2026-09-21T09:50:54Z",
+      "summary": "Workers Free: 100,000リクエスト/日、HTTP/Cron 1回あたりCPU 10ms、サブリクエスト50、メモリ128MB。超過はError 1027。"
+    },
+    {
+      "target_id": "cloudflare-d1",
+      "retrieved_at": "2026-09-21T09:50:54Z",
+      "source_url": "https://developers.cloudflare.com/d1/platform/pricing/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-04-21",
+      "latest_checked_at": "2026-09-21T09:50:54Z",
+      "summary": "D1 Free: 読取5,000,000行/日、書込100,000行/日、合計5GB。上限到達でクエリはエラー、UTC0時リセット。"
+    },
+    {
+      "target_id": "cloudflare-cron-triggers",
+      "retrieved_at": "2026-09-21T09:50:54Z",
+      "source_url": "https://developers.cloudflare.com/workers/configuration/cron-triggers/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-09-04",
+      "latest_checked_at": "2026-09-21T09:50:54Z",
+      "summary": "Cron TriggersでWorkerのscheduledハンドラを定期実行。Freeでもアカウントあたり5個まで利用可(limitsページ)。"
+    },
+    {
+      "target_id": "cloudflare-workers-secrets",
+      "retrieved_at": "2026-09-21T09:50:55Z",
+      "source_url": "https://developers.cloudflare.com/workers/configuration/secrets/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-07-03",
+      "latest_checked_at": "2026-09-21T09:50:55Z",
+      "summary": "wrangler secret put またはダッシュボードで設定。設定後は値を表示できない。OAuth client secretと暗号鍵の保管先。"
+    },
+    {
+      "target_id": "google-oauth2",
+      "retrieved_at": "2026-09-21T09:50:55Z",
+      "source_url": "https://developers.google.com/identity/protocols/oauth2",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-05-26",
+      "latest_checked_at": "2026-09-21T09:50:55Z",
+      "summary": "外部ユーザー・公開ステータスTestingのプロジェクトはrefresh tokenが7日で失効。refresh tokenはアカウント×クライアントIDで100本上限。未検証の本番公開は累計100ユーザーまで(support.google.com/cloud/answer/15549945)。"
+    },
+    {
+      "target_id": "youtube-data-api",
+      "retrieved_at": "2026-09-21T09:50:58Z",
+      "source_url": "https://developers.google.com/youtube/v3/determine_quota_cost",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-15",
+      "latest_checked_at": "2026-09-21T09:50:58Z",
+      "summary": "既定クォータ10,000 units/日。channels/videos/playlistItemsのlistは1 unit。失敗も最低1 unit、太平洋時間0時リセット。"
+    },
+    {
+      "target_id": "youtube-analytics-api",
+      "retrieved_at": "2026-09-21T09:50:59Z",
+      "source_url": "https://developers.google.com/youtube/analytics/reference/reports/query",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-16",
+      "latest_checked_at": "2026-09-21T09:50:59Z",
+      "summary": "reports.queryはyt-analytics.readonly(収益はmonetary)に加えyoutube.readonlyスコープが必要。"
+    },
+    {
+      "target_id": "github-actions",
+      "retrieved_at": "2026-09-21T09:50:59Z",
+      "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+      "official_publisher": "GitHub",
+      "official_host": "docs.github.com",
+      "version": "GitHub.com (Free/Pro/Team)",
+      "latest_checked_at": "2026-09-21T09:50:59Z",
+      "summary": "GitHub Free: private リポジトリで2,000分/月、artifact 500MB。public標準ランナーは無料。"
+    },
+    {
+      "target_id": "github-actions-secrets",
+      "retrieved_at": "2026-09-21T09:51:00Z",
+      "source_url": "https://docs.github.com/en/actions/reference/security/secrets",
+      "official_publisher": "GitHub",
+      "official_host": "docs.github.com",
+      "version": "GitHub.com (Free/Pro/Team)",
+      "latest_checked_at": "2026-09-21T09:51:00Z",
+      "summary": "Secretsはリポジトリ100個、1つ48KBまで。Free privateではEnvironmentsが使えないためリポジトリSecretsで運用。"
+    },
+    {
+      "target_id": "gemini-api",
+      "retrieved_at": "2026-09-21T09:51:01Z",
+      "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "official_publisher": "Google",
+      "official_host": "ai.google.dev",
+      "last_updated": "2026-09-16",
+      "latest_checked_at": "2026-09-21T09:51:01Z",
+      "summary": "AI Studio利用は無料。最新Flash/Flash-LiteにFree tierあり(Pro最新は無し)。Free tierの入力は製品改善に使われ得る。比較記録として採用せず。"
+    },
+    {
+      "target_id": "claude-code",
+      "retrieved_at": "2026-09-21T09:51:01Z",
+      "source_url": "https://code.claude.com/docs/en/overview",
+      "official_publisher": "Anthropic",
+      "official_host": "code.claude.com",
+      "last_updated": "2026-09-18",
+      "latest_checked_at": "2026-09-21T09:51:01Z",
+      "summary": "Claude Codeはターミナル等で動くエージェント型コーディングツール。report-design-systemスキルの実行環境(利用者各自のPC)。"
+    },
+    {
+      "target_id": "hono",
+      "retrieved_at": "2026-09-21T09:51:02Z",
+      "source_url": "https://hono.dev/docs/getting-started/cloudflare-workers",
+      "official_publisher": "Hono",
+      "official_host": "hono.dev",
+      "version": "4.13.8",
+      "last_updated": "2026-09-20",
+      "latest_checked_at": "2026-09-21T09:51:02Z",
+      "summary": "Cloudflare Workers向けのWebフレームワーク。REST APIとスキル連携APIの実装に使用(npm最新4.13.8)。"
+    },
+    {
+      "target_id": "cloudflare-r2",
+      "retrieved_at": "2026-09-21T12:40:23Z",
+      "source_url": "https://developers.cloudflare.com/r2/pricing/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-08-07",
+      "latest_checked_at": "2026-09-21T12:40:23Z",
+      "summary": "R2無料枠: Storage 10 GB-month/月、Class A 100万回/月、Class B 1,000万回/月、インターネットへのegress無料。無料枠はStandardのみでInfrequent Accessには適用されない。"
+    },
+    {
+      "target_id": "youtube-captions-api",
+      "retrieved_at": "2026-09-21T12:30:18Z",
+      "source_url": "https://developers.google.com/youtube/v3/docs/captions/download",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-15",
+      "latest_checked_at": "2026-09-21T12:30:18Z",
+      "summary": "captions.download: youtube.force-ssl またはyoutubepartnerスコープが必要で、呼出者は動画の編集権限を持つ必要がある。クォータ200 units/回。形式 sbv/scc/srt/ttml/vtt。"
+    },
+    {
+      "target_id": "youtube-comment-threads-api",
+      "retrieved_at": "2026-09-21T12:30:20Z",
+      "source_url": "https://developers.google.com/youtube/v3/docs/commentThreads/list",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-14",
+      "latest_checked_at": "2026-09-21T12:30:20Z",
+      "summary": "commentThreads.list: クォータ1 unit/回。videoIdまたはallThreadsRelatedToChannelIdで絞込、maxResults 1〜100。"
+    },
+    {
+      "target_id": "youtube-analytics-retention-report",
+      "retrieved_at": "2026-09-21T12:30:20Z",
+      "source_url": "https://developers.google.com/youtube/analytics/channel_reports",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-13",
+      "latest_checked_at": "2026-09-21T12:44:00Z",
+      "summary": "(ページに更新日表示が無いため、last_updatedはYouTube Analytics API revision history(https://developers.google.com/youtube/analytics/revision_history)の最新項目2026-09-13) 視聴者維持率レポート: dimension elapsedVideoTimeRatio、metrics audienceWatchRatio/relativeRetentionPerformance/startedWatching/stoppedWatching/totalSegmentImpressions。filterは video==単一動画ID が必須。"
+    },
+    {
+      "target_id": "openai-whisper",
+      "retrieved_at": "2026-09-21T12:40:39Z",
+      "source_url": "https://github.com/openai/whisper/releases",
+      "official_publisher": "OpenAI",
+      "official_host": "github.com",
+      "version": "v20250625",
+      "latest_checked_at": "2026-09-21T12:40:39Z",
+      "summary": "Whisper: ローカル実行の多言語音声認識(MIT License)。最新リリース v20250625(2025-06-26)。モデルはtiny(39M)〜large(1550M)。"
+    },
+    {
+      "target_id": "ffmpeg",
+      "retrieved_at": "2026-09-21T12:40:32Z",
+      "source_url": "https://ffmpeg.org/download.html",
+      "official_publisher": "FFmpeg",
+      "official_host": "ffmpeg.org",
+      "version": "9.0.2",
+      "latest_checked_at": "2026-09-21T12:40:32Z",
+      "summary": "FFmpeg最新安定版 9.0.2 \"Lei\"(2026-09-18リリース、9.0ブランチ)。場面画像の切り出しに使用。"
+    },
+    {
+      "target_id": "youtube-api-developer-policies",
+      "retrieved_at": "2026-09-21T12:46:20Z",
+      "source_url": "https://developers.google.com/youtube/terms/developer-policies",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-14",
+      "latest_checked_at": "2026-09-21T12:46:20Z",
+      "summary": "III.A.2: 機能利用前にプライバシーポリシーへの同意を求め、常に目立つ位置で参照可能にし、Google Privacy Policyへリンクする。III.D.2.3: 認可の取消手段を用意し、取消から7日以内に保存データを削除。III.E.4.g: 利用者のデータ削除依頼を受け付け7日以内に削除。"
+    },
+    {
+      "target_id": "youtube-reporting-api",
+      "retrieved_at": "2026-09-21T14:25:35Z",
+      "source_url": "https://developers.google.com/youtube/reporting/v1/reports/channel_reports",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-09-14",
+      "latest_checked_at": "2026-09-21T14:25:35Z",
+      "summary": "YouTube Reporting API のチャンネル用レポート一覧。channel_reach_basic_a1 は dimensions=date・channel_id・video_id、metrics=video_thumbnail_impressions・video_thumbnail_impressions_ctr(インプレッション数とCTR)。レポートの概要ページ(同日更新)によれば、ジョブ作成から48時間以内に取得を開始でき、通常レポートは生成から60日、過去分(backfill)は30日で取得できなくなる。"
+    },
+    {
+      "target_id": "youtube-terms-of-service",
+      "retrieved_at": "2026-09-21T14:25:35Z",
+      "source_url": "https://www.youtube.com/t/terms",
+      "official_publisher": "Google (YouTube)",
+      "official_host": "www.youtube.com",
+      "last_updated": "2023-06-01",
+      "latest_checked_at": "2026-09-21T14:25:35Z",
+      "summary": "YouTube利用規約(2023年6月1日発効)。『自動化された手段(ロボット、ボットネット、スクレーパなど)を使用して本サービスにアクセスすること』を、robots.txtに従う公開検索エンジンとYouTubeの事前の書面許可の場合を除いて禁止する。画面の自動操作によるStudioからのCSV取得を行わない根拠(qa-055)。"
+    },
+    {
+      "target_id": "cloudflare-queues",
+      "retrieved_at": "2026-09-21T14:25:35Z",
+      "source_url": "https://developers.cloudflare.com/queues/platform/limits/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-04-21",
+      "latest_checked_at": "2026-09-21T14:25:35Z",
+      "summary": "Cloudflare Queues の上限。Workers Free でも利用でき、メッセージ保持は Free では24時間固定。consumer の1バッチ最大100通、再試行最大100回、送信・再試行の遅延最大24時間、consumer の実行時間15分。料金ページ(同日更新)では Free は1日1万操作まで。設定ページ(同日更新)は『Each batch delivery constitutes a separate consumer Worker invocation.』とし、max_batch_size=1 で1通=1実行になる(qa-058の根拠)。"
+    }
+  ]
+}

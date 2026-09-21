@@ -1,0 +1,38 @@
+{
+ "auditor": "dev-graph:dev-graph-integrity-auditor",
+ "scope": "C14 macro decompose staged graph_revision 2",
+ "audited_at": "2026-09-21T15:14:00Z",
+ "verdict": "PASS",
+ "checks": [
+  {
+   "id": "dag",
+   "status": "pass",
+   "evidence": "循環0・dangling 0・topo: platform-tenant-auth → {daily-collection, csv-media-ingest} → {skill-analysis-reports, retention-ops} → web-screens-actions"
+  },
+  {
+   "id": "no-phase-task",
+   "status": "pass",
+   "evidence": "6 feature 全て purpose/goal/scope_in/scope_out/acceptance/architecture_refs 保持・phase_ref null・P01..P13 grep 0件"
+  },
+  {
+   "id": "scope-coverage",
+   "status": "pass",
+   "evidence": "U7/U9 主要要件と1:1 対応・重複/抜けなし"
+  },
+  {
+   "id": "feature-context-schema",
+   "status": "pass",
+   "evidence": "jsonschema Draft2020-12 で6件適合・architecture_refs 全実在"
+  },
+  {
+   "id": "ready-feature",
+   "status": "pass",
+   "evidence": "feat-platform-tenant-auth (depends_on 空)"
+  },
+  {
+   "id": "placeholder",
+   "status": "pass",
+   "evidence": "TBD/TODO/未定/< 0件"
+  }
+ ]
+}
