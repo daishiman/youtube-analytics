@@ -22,8 +22,8 @@
 
 | ファイル | 対応 | 補足 |
 |---|---|---|
-| `wrangler.toml` | S1、S8 | Workers 1 本、D1 `DB`、R2 1 バケット、`MAX_TENANTS = "100"`。Queue と Cron の宣言は正本 infrastructure 章の構成を先に置いたもので、処理はない（下の `src/index.ts` を参照） |
-| `src/index.ts` | S1 | `fetch` は Hono、`scheduled` は空の stub。Queue consumer は処理と終端失敗契約を実装する feat-youtube-daily-collection で構成と同時に追加する |
+| `wrangler.toml` | S1、S8 | Workers 1 本、D1 `DB`、R2 1 バケット、`MAX_TENANTS = "100"`。Queue producer binding だけを先行配置し、Cron と consumer は実処理が揃う後続 feature で追加する |
+| `src/index.ts` | S1 | `fetch` は Hono。`scheduled` と Queue consumer は処理と終端失敗契約を実装する feat-youtube-daily-collection で構成と同時に追加する |
 | `src/env.ts` | S1、S8 | binding と Secret の型 |
 | `src/http/app.ts` | S1、S6 | ルーティングと共通ミドルウェア。セキュリティヘッダ（P03 の是正） |
 | `src/http/middleware.ts` | S3、S6 | 認証ゲート、CSRF ガード、TenantContext の解決 |
@@ -70,7 +70,7 @@
 
 | scope_out | 該当する変更 | 判定 |
 |---|---|---|
-| YouTube API の読取連携と収集 | なし。`scheduled` は空の stub、Queue は producer binding の予約だけで consumer 未構成。YouTube のスコープは要求しない（`openid email` だけ） | 0 件 |
+| YouTube API の読取連携と収集 | なし。Cron・`scheduled`・Queue consumer は未構成で、Queue は producer binding の予約だけ。YouTube のスコープは要求しない（`openid email` だけ） | 0 件 |
 | CSV、字幕、画像の取込 | なし。R2 は binding の宣言だけで、読み書きするコードはない | 0 件 |
 | Claude Code 連携 API とレポート | なし。`skill_tokens` はテーブルだけ（scope_in S2 の「土台」） | 0 件 |
 | ダッシュボード等の業務画面 | なし。画面はログイン、招待、メンバー設定、テナント切替だけ（S3〜S7 の操作に必要な最小範囲）。ダッシュボードは指標もグラフも持たない仮置き | 0 件 |

@@ -11,7 +11,7 @@
 | 画面 | Vite + React（React Router）の SPA（qa-061。Next.js は不採用。Workers 静的アセット配信） | `web/` → `dist/web/` |
 | DB | D1 `youtube-analytics-db`（binding `DB`） | `migrations/` |
 | 画像 | R2 `youtube-analytics-media`（binding `MEDIA`, `tenants/<tenant_id>/`） | — |
-| 収集 | 現在は Cron の空の入口 + Queue producer binding。日次収集 feature で consumer と終端失敗契約を同時に追加 | `src/index.ts`、`wrangler.toml` |
+| 収集 | 現在は Queue producer binding のみ。日次収集 feature で Cron・scheduled handler・consumer・終端失敗契約を同時に追加 | `src/index.ts`、`wrangler.toml` |
 | テスト | Vitest 4 + `@cloudflare/vitest-pool-workers`（Workers ランタイム上） / Playwright 3サイズ | `tests/` `e2e/` |
 | lint/format | Biome 2 | `biome.json` |
 | CI/CD | GitHub Actions（PR: `ci.yml`、main: `deploy.yml`） | `.github/workflows/` |
