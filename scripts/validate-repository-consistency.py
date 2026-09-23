@@ -23,6 +23,9 @@ PLAN_MD_PATH = PACKAGE_DIR / "plan-structure.md"
 PLAN_HTML_PATH = PACKAGE_DIR / "plan-structure-report.html"
 ARCHITECTURE_GRAPH_PATH = REPO_ROOT / "architecture" / "graph.json"
 ARCHITECTURE_DOC_PATH = REPO_ROOT / "architecture" / "youtube-analytics-system.md"
+WEB_FEATURE_PATH = REPO_ROOT / "features" / "feat-web-screens-actions.md"
+WEB_FEATURE_CONTEXT_PATH = REPO_ROOT / "features" / "feat-web-screens-actions.context.json"
+SYSTEM_FRONTEND_PATH = REPO_ROOT / "system-spec" / "frontend.md"
 STATE_GRAPH_PATH = REPO_ROOT / ".dev-graph" / "state" / "graph.json"
 README_PATH = REPO_ROOT / "README.md"
 PROMPTS_DIR = REPO_ROOT / "docs" / "screens" / "prompts"
@@ -290,6 +293,40 @@ def validate_readme(errors: list[str]) -> None:
         )
 
 
+def validate_frontend_projection(errors: list[str]) -> None:
+    """Keep generated feature projections aligned with approved qa-061."""
+
+    for path in (ARCHITECTURE_DOC_PATH, WEB_FEATURE_PATH, WEB_FEATURE_CONTEXT_PATH):
+        text = read_text(path, errors)
+        if text is None:
+            continue
+        for token in ("React", "Vite", "React Router", "ECharts"):
+            if token not in text:
+                errors.append(
+                    f"{relative(path)}: missing qa-061 frontend projection {token!r}"
+                )
+        if "素の TypeScript" in text:
+            errors.append(
+                f"{relative(path)}: retains obsolete pre-qa-061 frontend projection"
+            )
+
+    # qa-024/qa-031の逐語は履歴として残るため、確定章は旧語の有無ではなく
+    # 現行規範とsupersessionの明示を検査する。
+    system_frontend = read_text(SYSTEM_FRONTEND_PATH, errors)
+    if system_frontend is not None:
+        for token in (
+            "現行技術決定: `qa-061`",
+            "React + Vite + React Router",
+            "Apache ECharts",
+            "グラフ仕様JSON",
+            "qa-061はqa-024の素のTypeScript選択とqa-031の4種限定を置換する",
+        ):
+            if token not in system_frontend:
+                errors.append(
+                    f"{relative(SYSTEM_FRONTEND_PATH)}: missing current normative projection {token!r}"
+                )
+
+
 def validate_dashboard_prompt(errors: list[str]) -> None:
     prompt = read_text(DASHBOARD_PROMPT_PATH, errors)
     if prompt is None:
@@ -514,6 +551,7 @@ def main() -> int:
     validate_task_graph(errors)
     validate_graph_revision(errors)
     validate_readme(errors)
+    validate_frontend_projection(errors)
     validate_dashboard_prompt(errors)
     validate_screen_specific_contracts(errors)
     validate_prompt_composition(errors)

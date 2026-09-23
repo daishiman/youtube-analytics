@@ -1,0 +1,625 @@
+# 利用者が手で行う設定（公開までのチェックリスト）
+
+対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.daishimanju.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。外部サービスや Git の現在状態はこの文書へ複製せず、各手順の確認コマンドと管理画面を正とする。
+
+- 所要時間: 約 60〜90 分（Google Cloud が一番長い）
+- エージェントは、秘密の値の発行、外部サービスの画面操作、push と PR 作成を行わない。そのため、この文書の手順は利用者が行う。
+- **このリポジトリは公開（PUBLIC）。** 秘密の値（トークン、シークレット、鍵）は、ファイル、チャット、Issue、PR 本文に絶対に書かない。登録先の入力欄かターミナルのプロンプトにだけ貼る。
+
+## 0. 全体の流れ
+
+| # | やること | 登録先 | 誰が | 完了条件 |
+|---|---|---|---|---|
+| 1 | workers.dev のサブドメインを確認する | Cloudflare | あなた | 本番 URL が確定している |
+| 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | あなた | repository secret に登録されている |
+| — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | あなた | repository secret に登録されている |
+| 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | あなた | 必要な API が有効になっている |
+| 4 | Google の OAuth 同意画面（ブランディング、対象、データアクセス）を設定する | Google Auth Platform | あなた | 公開先に合う設定が保存されている |
+| 5 | Google の OAuth クライアントを作る | Google Auth Platform | あなた | redirect URI が登録されている |
+| 6 | クライアント ID を `wrangler.toml` に書く | リポジトリ | どちらでも | Google 側の値と一致し `pnpm check:release` が通る |
+| 6.5 | 利用規約とプライバシーポリシーの草案を確定する（運営者名、連絡先、施行日） | リポジトリ `public/` | 値はあなた、書換はエージェント可 | 人が承認した文面で `pnpm check:release` が通る |
+| 7 | Workers Secret を 2 つ登録する | Cloudflare Workers | あなた（秘密値のため） | Worker secrets に登録されている |
+| 8 | ローカルの `.dev.vars` を埋める（任意） | 手元だけ | あなた | 本物の Google をローカルで試す場合だけ設定する |
+| 9 | ブランチを切って commit し、PR を作る | GitHub | あなた | PR が作成されている |
+| 10 | CI が通ることを確認し、ブランチ保護を設定する | GitHub | あなた | 必須 check と保護規則が有効になっている |
+| 11 | merge して自動 deploy を確認する | GitHub Actions | あなた | deploy job が成功している |
+| 12 | 本番で動作を確認する | ブラウザ | あなた | runbook の本番確認が完了している |
+
+**確認済みで作業がいらないもの**（2026-09-23 に確認）:
+
+| 項目 | 状態 |
+|---|---|
+| GitHub の Personal Access Token（API キー） | 不要。Actions は GitHub が自動で発行するトークンで動く。`gh` は `daishiman` でログイン済み |
+| GitHub Actions の実行許可 | 有効、すべての Action を許可（Settings → Actions → General）。変更不要 |
+| Cloudflare の D1、R2、Queue の作成 | 作成済み（`docs/setup/environment.md` 3 節） |
+| `wrangler` のログイン（手元の端末） | ログイン済み（`Daishimanju@gmail.com's Account`） |
+| 独自ドメイン、DNS | 使わない（workers.dev だけで運用する） |
+| Google Cloud の課金（請求先アカウント） | 不要（ログインと YouTube API の無料枠だけを使う） |
+| GitHub の Environment `production` | 使わない。repository secrets と機械的なrelease-readiness gateに統一 |
+| Cloudflare の Git 連携（Workers Builds / Create an app）と Cloudflare GitHub App | **使わない**。deploy は GitHub Actions が `wrangler deploy` で行う。ダッシュボードで「Import a repository」を開かない（理由は 1.5.1） |
+| Worker 本体の作成（ダッシュボードでの新規作成） | 不要。初回の `wrangler deploy` が `wrangler.toml` の内容で自動作成する |
+
+固定の値（この文書で何度も使う）:
+
+| 名前 | 値 |
+|---|---|
+| GitHub リポジトリ | `daishiman/youtube-analytics`（https://github.com/daishiman/youtube-analytics） |
+| Cloudflare アカウント | `Daishimanju@gmail.com's Account` |
+| Cloudflare アカウント ID | `b3dde7be1cd856788fc47595ac455475` |
+| Worker 名 | `youtube-analytics`（`wrangler.toml` の `name`） |
+| ローカルの URL | `http://localhost:8791` |
+| 本番の URL | `https://youtube-analytics.daishimanju.workers.dev`（2026-09-23 に確認済み） |
+
+---
+
+## 1. workers.dev のサブドメインを確認する（確認済み。作業不要）
+
+2026-09-23 に Cloudflare の API（`GET /accounts/{account_id}/workers/subdomain`）で確認した。**サブドメインは `daishimanju` で登録済み**なので、この節の作業は不要。本番の URL は次の 1 つに確定している。
+
+```
+https://youtube-analytics.daishimanju.workers.dev
+```
+
+以降この文書で `<本番URL>` と書いたら、上の URL を指す。同時に次も確認済み（どれも作成済みで作業不要）。
+
+| 資源 | 名前 |
+|---|---|
+| D1 | `youtube-analytics-db` |
+| R2 | `youtube-analytics-media` |
+| Queue | `collect-queue` |
+| Worker `youtube-analytics` | **まだ存在しない**（初回 deploy で自動作成される。想定どおり） |
+
+> **デプロイ前に本番 URL を開くと「There is nothing here yet」と出る。** これは異常ではなく、ホスト名は解決しているが Worker がまだ無いことを示す Cloudflare の既定ページ（HTTP 404）。11 の deploy が終わると、ログイン画面に変わる。
+
+<details>
+<summary>自分で確認し直す手順（サブドメインを変えたときなど）</summary>
+
+本番の URL を決める。Google の設定（4、5）でこの URL を使うため、最初に確認する。
+
+1. https://dash.cloudflare.com/ を開き、`daishimanju@gmail.com` でログインする。
+2. 左のメニューで **「Compute (Workers)」→「Workers & Pages」** を開く（直接開く場合: https://dash.cloudflare.com/b3dde7be1cd856788fc47595ac455475/workers-and-pages ）。
+3. 画面の右側（または「Account details」欄）にある **「Subdomain」** の値を確認する。`xxxx.workers.dev` の形式になっている。
+   - 「Subdomain」が未登録のとき: 「Set up」または「Change」を押し、好きな名前（英小文字、数字、ハイフン）を入れて **「Continue」→「Confirm」** を押す。反映には数分かかる。
+4. 本番の URL を次の形でメモする。以降は `<本番URL>` と書く。
+
+   ```
+   https://youtube-analytics.<サブドメイン>.workers.dev
+   ```
+
+   例: サブドメインが `daishimanju` なら `https://youtube-analytics.daishimanju.workers.dev`
+
+</details>
+
+- [x] `<本番URL>` は `https://youtube-analytics.daishimanju.workers.dev`
+
+---
+
+## 1.5 デプロイの方式を理解する（読むだけ。5 分）
+
+### 1.5.1 ダッシュボードの「Create an app」は使わない
+
+Cloudflare のダッシュボードには、**「Workers & Pages」→「Create」→「Import a repository」**（画面名「アプリケーションをセットアップする」／Workers Builds）という、GitHub と直接つなぐ流れがある。**このプロジェクトでは使わない。開いてしまったら「戻る」を押して抜ける。**
+
+使わない理由:
+
+| 画面に出るもの | 実際に起きること |
+|---|---|
+| 「Wrangler の構成が検出されませんでした。Cloudflare は自動プロジェクト構成を試みます」 | `wrangler.toml` を読めていない状態で、Cloudflare が推測した構成で Worker を作る。D1・R2・Queue・Cron・静的アセットの binding がすべて付かず、起動しても `/api/health` が落ちる |
+| 「Git アカウント」「プロジェクト名 youtube-analytics」 | Cloudflare 側が**新しいリポジトリを作る**流れ（「Git リポジトリが作成され、アプリケーションに接続されます」）。既存の `daishiman/youtube-analytics` とは別物になる |
+| 「プレビュービルドを有効化」 | PR ごとに preview 環境を作る機能。本構成は production の 1 系統だけと決めている（正本 infrastructure 章 qa-014） |
+| 「Your GitHub authorization has expired…」 | Cloudflare の GitHub App の再認可を求めるもの。Git 連携を使わないので、**再インストールも不要** |
+
+このプロジェクトのデプロイは **GitHub Actions が `wrangler deploy` を実行する方式**（`.github/workflows/deploy.yml`）。Cloudflare 側は「API トークンを発行する」以外に、ダッシュボードでの設定は要らない。Worker 本体は初回の deploy 時に自動で作られる。
+
+### 1.5.2 デプロイで何が起きるか
+
+main への push（＝ PR の merge）で `deploy` ワークフローが走り、次の順で実行する。
+
+| # | 実行するもの | 中身 |
+|---|---|---|
+| 1 | `pnpm install --frozen-lockfile` | `pnpm-lock.yaml` どおりに依存を入れる |
+| 2 | 公開準備の検査 | 規約草案、OAuth client ID形式、Cloudflare Secretsのいずれかが未準備なら停止する |
+| 3 | `pnpm db:migrate:remote` | `wrangler d1 migrations apply DB --remote`。本番の D1 に未適用のマイグレーションを当てる |
+| 4 | `pnpm run deploy` | `vite build`（画面を `dist/web/` へ）→ `wrangler deploy`（Worker と静的アセットを上げる） |
+
+- 認証は環境変数 `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` の 2 つだけ（`wrangler login` は CI では使わない）。
+- 同時実行は `concurrency: deploy-production` で 1 本に制限され、前の deploy を打ち切らずに順番待ちする。
+- GitHub Environmentは使わず、`pnpm check:release:deploy`を単一の公開前gateにする。このgateはrepository secretsのAPI認証情報を確認した後、`wrangler secret list --format json`でWorker runtime secretの**名前だけ**を検査し、値は取得・表示しない。
+
+### 1.5.3 Cloudflare 側の構成は `wrangler.toml` が正本
+
+ダッシュボードで作った設定ではなく、**リポジトリの `wrangler.toml` が deploy のたびに適用される**。主な中身:
+
+| 設定 | 値 | 意味 |
+|---|---|---|
+| `name` | `youtube-analytics` | Worker の名前。URL の先頭（`https://youtube-analytics.daishimanju.workers.dev`）になる |
+| `main` | `src/index.ts` | 入口。現在は`fetch`（API）と空の`scheduled`だけを持つ |
+| `compatibility_date` | `2026-08-22` | 実行環境の版。上げるのは wrangler 更新時だけ |
+| `[assets]` | `directory = ./dist/web`、`not_found_handling = single-page-application`、`run_worker_first = ["/api/*"]` | 画面は静的配信。`/api/*` だけ Worker が先に受ける。それ以外の未知パスは `index.html` を返す（React Router のため） |
+| `[vars] MAX_TENANTS` | `"100"` | テナント数の上限。非秘密なのでファイルに書く |
+| `[vars] GOOGLE_CLIENT_ID` | 6 節で置換する | 非秘密。**シークレットはここに書かない** |
+| `[[d1_databases]]` | binding `DB`、`youtube-analytics-db`、`database_id = 91996166-…` | 本番 DB。`migrations_dir = migrations` |
+| `[[r2_buckets]]` | binding `MEDIA`、`youtube-analytics-media` | 画像置き場（この feature では宣言だけ） |
+| `[[queues.producers]]` | `collect-queue` | producer bindingの予約。consumerは処理と終端失敗契約を実装する次featureで同時に追加 |
+| `[triggers] crons` | `0 18 * * *` | UTC 18:00 = JST 3:00 の定期実行（今は空の受け口） |
+| `[observability]` | `enabled = true` | ダッシュボードでログとメトリクスを見られるようにする |
+
+**この 3 つは deploy では作られない。別に用意する**:
+
+1. D1・R2・Queue の実体 → すでに作成済み（`scripts/setup-cloudflare.sh`）。
+2. Secret（`GOOGLE_CLIENT_SECRET`、`TOKEN_ENC_KEY`）→ 7 節で `wrangler secret put` を使って登録する。`wrangler.toml` には書かない。
+3. workers.dev のサブドメイン → 1 節で確認済み。
+
+`wrangler.toml` を変えたいときは、ダッシュボードではなく**ファイルを直して PR を出す**（ダッシュボードで直接いじると、次の deploy で上書きされて元に戻る）。
+
+- [ ] ダッシュボードの Git 連携（Create an app）は使わないと理解した
+
+---
+
+## 2. Cloudflare API トークンを発行し、GitHub に登録する（10 分）
+
+GitHub Actions が Cloudflare へ deploy するための鍵。**登録しないと、main へ merge したときの deploy が「CLOUDFLARE_API_TOKEN が未設定です」で止まる。**
+
+### 2.1 トークンを発行する
+
+1. https://dash.cloudflare.com/profile/api-tokens を開く（右上の人のアイコン →「My Profile」→ 左の「API Tokens」でも同じ）。
+2. **「Create Token」** を押す。
+3. テンプレート一覧の **「Edit Cloudflare Workers」** の行の **「Use template」** を押す。
+4. 「Token name」を `github-actions-youtube-analytics` に変える（鉛筆アイコンで編集）。
+5. **「Permissions」** 欄: テンプレートの行（Workers Scripts: Edit など）はそのまま残す。**「+ Add more」** を押して、次の 2 行を追加する。
+
+   | 左（種類） | 中（対象） | 右（権限） |
+   |---|---|---|
+   | Account | D1 | Edit |
+   | Account | Queues | Edit |
+
+   - テンプレートに最初から入っている権限（Cloudflare 公式の一覧で確認済み）: Account の Workers Scripts、Workers KV Storage、Workers R2 Storage（いずれも Edit）、Account Settings、User Details、Memberships（いずれも Read）、Zone の Workers Routes（Edit）。R2 は含まれているので追加不要。
+   - 追加した結果、Permissions 欄に `D1` と `Queues` の行があることを確認する。D1 がないと main の deploy の `db:migrate:remote` が、Queues がないと `deploy` が権限エラーで止まる。
+6. **「Account Resources」** 欄: `Include` / `Daishimanju@gmail.com's Account` を選ぶ（「All accounts」にしない）。
+7. **「Zone Resources」** 欄: `Include` / `All zones from an account` / `Daishimanju@gmail.com's Account` を選ぶ（独自ドメインは使わないが、テンプレートがこの欄を求めるため）。
+8. 「Client IP Address Filtering」は空のまま（GitHub Actions の IP は固定されないため）。
+9. 「TTL」は空のまま（期限なし）。期限を付ける場合は、期限が来る前に 2.2 をやり直す必要がある。
+10. **「Continue to summary」** を押す。内容を確認して **「Create Token」** を押す。
+11. 表示されたトークン（長い英数字）を **「Copy」** でコピーする。**この画面を閉じると二度と表示されない。** メモ帳などには保存せず、そのまま 2.2 に進む。
+
+### 2.2 GitHub に登録する（どちらか一方）
+
+**方法 A: ブラウザ**
+
+1. https://github.com/daishiman/youtube-analytics/settings/secrets/actions を開く（リポジトリの「Settings」→ 左の「Secrets and variables」→「Actions」）。
+2. 「Repository secrets」欄の **「New repository secret」** を押す。
+3. 「Name」に `CLOUDFLARE_API_TOKEN` と入れる（大文字、アンダースコアまで完全一致）。
+4. 「Secret」に 2.1 でコピーしたトークンを貼る。
+5. **「Add secret」** を押す。
+
+**方法 B: ターミナル**（Claude Code の画面なら、先頭に `!` を付けて実行する）
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN -R daishiman/youtube-analytics
+# 「? Paste your secret」と出たら貼り付けて Enter
+```
+
+### 2.3 確認
+
+```bash
+gh secret list -R daishiman/youtube-analytics
+```
+
+`CLOUDFLARE_ACCOUNT_ID` と `CLOUDFLARE_API_TOKEN` の 2 行が出れば完了（値は表示されない）。
+
+- [ ] `CLOUDFLARE_API_TOKEN` が一覧に出た
+
+> **GitHub 自身の API キー（Personal Access Token）は不要。** Actions は GitHub が自動で発行するトークンで動く。`gh` もすでに `daishiman` でログイン済み。
+
+---
+
+## 3. Google Cloud プロジェクトを作り、API を有効にする（10 分）
+
+1. https://console.cloud.google.com/projectcreate を開き、ログインに使う Google アカウントでサインインする。
+2. 「プロジェクト名」に `youtube-analytics` と入れる。「組織」は「組織なし」のままでよい。**「作成」** を押す。
+3. 画面上部のプロジェクト選択欄が `youtube-analytics` になっていることを確認する。以降はすべてこのプロジェクトで操作する。
+4. 次の 3 つの URL を順に開き、それぞれ **「有効にする」** を押す。YouTube の API はこの feature のログインには使わないが、後続の feature（feat-youtube-daily-collection）で必要になるため、ここでまとめて有効にする。
+   - YouTube Data API v3: https://console.cloud.google.com/apis/library/youtube.googleapis.com
+   - YouTube Analytics API: https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com
+   - YouTube Reporting API: https://console.cloud.google.com/apis/library/youtubereporting.googleapis.com
+
+- [ ] プロジェクト `youtube-analytics` を作った
+- [ ] 3 つの API が「有効」になった
+
+---
+
+## 4. OAuth 同意画面を設定する（15 分）
+
+Google のログイン画面に出るアプリ名や、誰がログインできるかを決める。画面の名前は「Google Auth Platform」（旧メニュー名は「API とサービス」→「OAuth 同意画面」）。
+
+### 4.1 初回の設定
+
+1. https://console.cloud.google.com/auth/overview を開く。
+2. 「Google Auth Platform はまだ構成されていません」と出たら **「開始」**（Get started）を押す。
+3. **アプリ情報**
+   - 「アプリ名」: `YouTube分析`
+   - 「ユーザー サポートメール」: 自分の Gmail を選ぶ
+   - **「次へ」**
+4. **対象**（Audience）: **「外部」**（External）を選ぶ →「次へ」。自分以外の Google アカウントでもログインできるようにするため。
+5. **連絡先情報**: 「メールアドレス」に自分の Gmail →「次へ」。
+6. **終了**: 「Google API サービス: ユーザーデータに関するポリシー」に同意するチェックを入れる →「続行」→ **「作成」**。
+
+### 4.2 ブランディング（Branding）
+
+1. https://console.cloud.google.com/auth/branding を開く。
+2. 次の欄を入れる。
+
+   | 欄 | 入れる値 |
+   |---|---|
+   | アプリ名 | `YouTube分析` |
+   | ユーザー サポートメール | 自分の Gmail |
+   | アプリのホームページ | `https://youtube-analytics.daishimanju.workers.dev` |
+   | アプリのプライバシー ポリシーへのリンク | `https://youtube-analytics.daishimanju.workers.dev/privacy` |
+   | アプリの利用規約へのリンク | `https://youtube-analytics.daishimanju.workers.dev/terms` |
+   | 承認済みドメイン（「+ ドメインの追加」） | `daishimanju.workers.dev` |
+   | デベロッパーの連絡先情報 | 自分の Gmail |
+
+3. ロゴは空のままにする（ロゴを入れると Google の審査が必要になる）。
+4. 一番下の **「保存」** を押す。
+
+**承認済みドメインの欄には、ドメイン名だけを入れる。** URL ではない。
+
+| 入れるもの | 例 | 可否 |
+|---|---|---|
+| ドメイン名だけ | `daishimanju.workers.dev` | ○ |
+| `https://` 付き | `https://daishimanju.workers.dev` | × 「無効なドメイン: スキームを指定することはできません」 |
+| パス付き（リダイレクト URI） | `https://youtube-analytics.daishimanju.workers.dev/api/auth/callback` | × 同上。これは 5 節のクライアント画面で登録するもの |
+| localhost | `http://localhost:8791/...` | × 登録不要。Google は localhost をリダイレクト URI としてだけ特別に受け付ける |
+| 親ドメイン | `workers.dev` | × 他人のサブドメインまで名乗れてしまうため拒否される |
+
+登録する承認済みドメインは **`daishimanju.workers.dev` の 1 つだけ**。欄が 2 つ以上あるときは、余った欄を消してから保存する。
+
+> `workers.dev` 自体は登録できないが、`daishimanju.workers.dev` は登録できる（workers.dev は Public Suffix List に載っており、その下が 1 つのドメインとして扱われるため）。
+>
+> 赤字で **「次のドメインが見つかりません: daishimanju.workers.dev」** と出るのは、ホームページやプライバシーポリシーの URL に使っているドメインが、承認済みドメインの一覧に無いという意味。承認済みドメインに `daishimanju.workers.dev` を正しく入れれば消える。
+
+### 4.3 データアクセス（スコープ）
+
+1. https://console.cloud.google.com/auth/scopes を開く。
+2. **「スコープを追加または削除」** を押す。
+3. 一覧から次の 2 つにだけチェックを入れる。
+   - `openid`
+   - `.../auth/userinfo.email`
+4. **「更新」** →画面下の **「保存」** を押す。
+
+> YouTube のスコープはここでは追加しない（feat-youtube-daily-collection で追加する）。`openid` と `email` は「機密性の低いスコープ」なので、Google の審査なしで公開できる。
+
+### 4.4 対象（Audience）を本番にする
+
+1. https://console.cloud.google.com/auth/audience を開く。
+2. 「公開ステータス」が「テスト中」なら、**「アプリを公開」** →確認ダイアログで **「確認」** を押す。「本番環境」になれば完了。
+   - 「テスト中」のままだと、「テストユーザー」に追加した人しかログインできない。テスト中のまま試す場合は、同じ画面の「テストユーザー」→ **「+ Add users」** でメールを追加する。
+
+- [ ] ブランディングに 3 つの URL を入れた
+- [ ] スコープは `openid` と `userinfo.email` だけ
+- [ ] 公開ステータスが「本番環境」
+
+---
+
+## 5. OAuth クライアントを作る（5 分）
+
+1. https://console.cloud.google.com/auth/clients を開く。
+2. **「+ クライアントを作成」**（CREATE CLIENT）を押す。
+3. 「アプリケーションの種類」: **「ウェブ アプリケーション」**。
+4. 「名前」: `youtube-analytics-web`
+5. **「承認済みの JavaScript 生成元」**: 空のままでよい（ブラウザから Google の API を直接呼ばないため）。
+6. **「承認済みのリダイレクト URI」** で **「+ URI を追加」** を 2 回押し、次の 2 つを入れる（1 文字でも違うとログインが `redirect_uri_mismatch` で失敗する。末尾に `/` を付けない）。
+
+   ```
+   <本番URL>/api/auth/callback
+   http://localhost:8791/api/auth/callback
+   ```
+
+   例: `https://youtube-analytics.daishiman.workers.dev/api/auth/callback`
+
+7. **「作成」** を押す。
+8. 「OAuth クライアントを作成しました」のダイアログに出る 2 つの値を扱う。
+   - **クライアント ID**（`xxxx.apps.googleusercontent.com`）: 秘密ではない。6 で使うのでコピーしておく。
+   - **クライアント シークレット**（`GOCSPX-` で始まる）: **秘密**。7 で使う。ダイアログの **「JSON をダウンロード」** は押さない（ダウンロードしたファイルを誤ってリポジトリに置くと漏れるため）。値はあとでもクライアントの詳細画面から確認できる。
+
+- [ ] リダイレクト URI を 2 つ登録した
+- [ ] クライアント ID を控えた
+
+---
+
+## 6. クライアント ID を `wrangler.toml` に書く（2 分）
+
+クライアント ID は Google のログイン画面の URL にそのまま表示される値で、秘密ではない。そのため、リポジトリの設定ファイルに書いてコミットする。
+
+1. `wrangler.toml` を開き、18 行目を次のように書き換える。
+
+   ```toml
+   # 変更前
+   GOOGLE_CLIENT_ID = "REPLACE_WITH_GOOGLE_CLIENT_ID"
+   # 変更後（例）
+   GOOGLE_CLIENT_ID = "123456789012-abcdefg.apps.googleusercontent.com"
+   ```
+
+   自分で書き換えずに、エージェントに「クライアント ID は `…` です。wrangler.toml に入れて」と頼んでもよい。
+
+- [ ] `REPLACE_WITH_GOOGLE_CLIENT_ID` が残っていない（`grep -n GOOGLE_CLIENT_ID wrangler.toml` で確認）
+
+---
+
+## 6.5 利用規約とプライバシーポリシーを確定する（15 分）
+
+2 つのページは**草案のまま**で、画面の上部に「草案です」という帯が表示され、連絡先が空欄になっている。4.2 で Google に登録する URL はこのページを指すので、公開（11 の merge）より前に確定させる。
+
+- このリポジトリは公開なので、ここに書く連絡先は誰でも見られる。個人のメールアドレスを載せたくない場合は、問い合わせ専用の Gmail を作るか、Google フォームの URL を載せる。
+- 本文（取得する情報、利用目的、保存期間など）は、要件正本の security 章と実装に合わせて書いてある。変えるのは、下の表の箇所だけでよい。
+
+**`public/privacy.html`**
+
+| 行 | 変更前 | 変更後（例） |
+|---|---|---|
+| 6 | `<title>プライバシーポリシー（草案） \| YouTube分析</title>` | `<title>プライバシーポリシー \| YouTube分析</title>` |
+| 15 | `<p class="draft">草案です。公開前に…記入します。</p>` | `<p>施行日: 2026年10月1日　運営者: 〇〇（屋号または氏名）</p>` |
+| 46 | `<p>（運営者の連絡先を公開前に記入）</p>` | `<p>運営者: 〇〇<br>連絡先: support-xxxx@gmail.com</p>` |
+
+**`public/terms.html`**
+
+| 行 | 変更前 | 変更後（例） |
+|---|---|---|
+| 6 | `<title>利用規約（草案） \| YouTube分析</title>` | `<title>利用規約 \| YouTube分析</title>` |
+| 15 | `<p class="draft">草案です。公開前に…記入します。</p>` | `<p>施行日: 2026年10月1日　運営者: 〇〇（屋号または氏名）</p>` |
+
+- 他人に使わせる前に、法務の専門家に確認してもらうことを勧める（とくに第 5 条の免責）。
+- 運営者名、連絡先、施行日の 3 つを教えてもらえれば、書き換えはエージェントが行える。
+- E2E テストが、プライバシーポリシーの「オーナーが招待したメンバーには、そのテナントのチャンネルのデータが表示されます。」という文を検査している。この文は消さない。
+- 書き換えたら `pnpm build:web` を実行し、http://localhost:8791/privacy と http://localhost:8791/terms で「草案」の帯が消えたことを確認する。
+
+- [ ] 2 つのページから「草案」の文字と空欄がなくなった（`grep -n "草案\|公開前に記入" public/*.html` で何も出ない）
+
+---
+
+## 7. Workers Secret を 2 つ登録する（5 分）
+
+アプリが実行中に使う秘密の値。Cloudflare の中にだけ保存され、GitHub にもファイルにも残らない。
+
+ターミナルでリポジトリのフォルダに移動して実行する（Claude Code の画面なら、先頭に `!` を付ける）。
+
+```bash
+pnpm wrangler secret put GOOGLE_CLIENT_SECRET
+```
+
+- 初回は「There doesn't seem to be a Worker called "youtube-analytics". Do you want to create a new Worker with that name and add secrets to it?」と聞かれる。**`Y`** を押す（空の Worker が作られ、最初の deploy で中身が入る）。
+- 「Enter a secret value:」と出たら、5 のクライアント シークレット（`GOCSPX-…`）を貼って Enter。画面には表示されない。
+
+```bash
+openssl rand -base64 32 | pnpm wrangler secret put TOKEN_ENC_KEY
+```
+
+- ランダムな 32 バイトの鍵を作り、そのまま登録する（鍵の値は画面に出ない）。後続の feature で、YouTube のトークンを暗号化するのに使う。**登録後に作り直すと、暗号化済みのデータが読めなくなる。** 一度登録したら変えない。
+
+確認:
+
+```bash
+pnpm wrangler secret list
+```
+
+`GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY` の 2 つが出れば完了。ブラウザでは https://dash.cloudflare.com/b3dde7be1cd856788fc47595ac455475/workers/services/view/youtube-analytics/production/settings の「Variables and Secrets」でも確認できる。
+
+- [ ] 2 つの Secret が一覧に出た
+
+> `DEV_LOGIN` は **本番に登録しない**（開発用ログインは localhost 専用）。
+
+---
+
+## 8. ローカルの `.dev.vars` を埋める（任意、3 分）
+
+ローカルで**本物の Google ログイン**を試したいときだけ行う。開発用ログインだけで試すなら不要。
+
+1. リポジトリ直下の `.dev.vars` を開く（なければ `cp .dev.vars.example .dev.vars`）。
+2. 次のように埋める。このファイルは `.gitignore` 済みで、コミットされない。
+
+   ```ini
+   GOOGLE_CLIENT_SECRET=GOCSPX-…（5 のシークレット）
+   TOKEN_ENC_KEY=…（openssl rand -base64 32 の出力。本番とは別の値でよい）
+   DEV_LOGIN=1
+   ```
+
+3. `pnpm dev` を再起動する。ログイン画面の「Google でログイン」で本物の Google に移動できる（6 のクライアント ID も必要）。
+
+---
+
+## 9. ブランチを確認して commit し、PR を作る（10 分）
+
+作業ツリーの状態は `git status` で確認し、意図した feature の成果物だけを含める。
+
+### 9.0 今の作業ブランチを確認する
+
+次のコマンドで、現在のブランチと `origin/main` との関係を確認する。
+
+```bash
+git fetch origin
+git status -sb | head -1                                 # 1 行目にブランチ名が出る
+git merge-base --is-ancestor origin/main HEAD && echo OK # OK と出れば main の最新を含む
+```
+
+`OK` と出ない（ほかの PR で main が進んだ）場合は、`git merge origin/main` で取り込んでから続ける。
+
+### 9.1 事前の片付けを確認する
+
+エージェントが次の 2 つを取り除き、削除後に lint / typecheck / test / build / E2E が成功することを確認した。可変な件数はこの手順書へ複製せず、CIログを正とする。
+
+| 取り除いたもの | 理由 |
+|---|---|
+| `web/main.ts` | React 化の前の未使用ファイル（`index.html` は `main.tsx` を読む） |
+| `/Users/dm/orca/workspaces/YouTube分析/environment-placeholder` | リポジトリ外の 1 バイトの仮ファイル |
+
+### 9.2 秘密が混ざっていないことを確認する
+
+```bash
+git status --short                   # .dev.vars が出ていないこと（出たら止まる）
+git check-ignore -v .dev.vars        # 「.gitignore:…:.dev.vars」と出れば ignore 済み
+git add -A --dry-run | grep -iE "dev\.vars|client_secret" | grep -v "\.dev\.vars\.example"   # 何も出なければよい
+```
+
+> `.dev.vars.example` は値の入っていない雛形なので、commit してよい。実値を含む `.dev.vars` や Google からダウンロードした JSON は含めない。
+
+`client_secret_….json`（Google からダウンロードした JSON）が出たら、**commit せずに削除する**。
+
+feature の成果物以外の変更が表示された場合は、次の関係資料か利用者の変更であることを確認してから含める。
+
+| ファイル | 内容 |
+|---|---|
+| `system-spec/` の収集状態ファイルと `frontend.md`、`eval-log/spec-change-qa-061-20260922.json`、`eval-log/review-queue.jsonl` | qa-061は確定章の現行規範へ対象を限定して投影済み。全章compileとdev-graph再同期は既存gateで別途行う |
+| `.gitignore`、`docs/setup/` | 環境構築の手順と、秘密ファイルの除外設定 |
+
+分けたい場合は、`git add` の対象を指定して 2 回に分けて commit する。
+
+### 9.3 commit と push
+
+```bash
+git switch -c feat/platform-tenant-auth
+git add -A
+git commit -m "feat-platform-tenant-auth: Googleログイン・テナント・招待・役割・CI/CD（SYS-PTA-P01〜P13）"
+git push -u origin feat/platform-tenant-auth
+```
+
+### 9.4 PR を作る
+
+ブラウザ: https://github.com/daishiman/youtube-analytics/pulls → **「New pull request」** →「base: main」←「compare: feat/platform-tenant-auth」→ **「Create pull request」**。
+
+ターミナル:
+
+```bash
+gh pr create --base main --title "feat-platform-tenant-auth（SYS-PTA-P01〜P13）" \
+  --body "受入: docs/feat-platform-tenant-auth/acceptance.md / 証跡: evidence/feat-platform-tenant-auth/index.json"
+```
+
+- [ ] PR を作った
+
+---
+
+## 10. CI の結果を確認し、ブランチ保護を設定する（10 分）
+
+### 10.1 CI を確認する
+
+1. PR の画面下の「Checks」欄に `ci / check` と `ci / e2e` が出る。数分待つ。
+2. 両方に緑のチェックが付けば合格。赤なら **「Details」** を押してログを見る（エージェントに PR の URL を渡して調べてもらってもよい）。
+   - 一覧: https://github.com/daishiman/youtube-analytics/actions
+
+### 10.2 ブランチ保護（main に直接 push できないようにする）
+
+チェック名は **一度 CI が動いたあとでないと選べない**。そのため、10.1 のあとで行う。
+
+1. https://github.com/daishiman/youtube-analytics/settings/rules を開く（「Settings」→ 左の「Rules」→「Rulesets」）。
+2. **「New ruleset」→「New branch ruleset」** を押す。
+3. 設定する項目:
+
+   | 欄 | 値 |
+   |---|---|
+   | Ruleset Name | `protect-main` |
+   | Enforcement status | **Active** |
+   | Bypass list | 空（自分も例外にしない場合）。緊急時に備えるなら「+ Add bypass」→「Repository admin」 |
+   | Target branches | 「+ Add target」→ **「Include default branch」** |
+   | Restrict deletions | ✅ |
+   | Require a pull request before merging | ✅（「Required approvals」は `0` のまま。1 人で運用するため） |
+   | Require status checks to pass | ✅ →「+ Add checks」で `check` と `e2e` を検索して 2 つ追加 |
+   | Block force pushes | ✅ |
+
+4. 一番下の **「Create」** を押す。
+
+- [ ] CI の 2 つのチェックが緑
+- [ ] ruleset `protect-main` が Active
+
+---
+
+## 11. merge して自動 deploy を確認する（5 分）
+
+1. PR の画面で **「Merge pull request」→「Confirm merge」** を押す。
+2. https://github.com/daishiman/youtube-analytics/actions を開き、ワークフロー **`deploy`** の実行を開く。
+3. 次の 2 つの手順が緑になれば完了。
+   - `pnpm db:migrate:remote`: ログに `0001_platform.sql` の適用が出る（2 回目以降は「No migrations to apply」）
+   - `pnpm run deploy`: ログの最後に `<本番URL>` が出る
+4. 初回は、GitHub が `production` という Environment を自動で作る（https://github.com/daishiman/youtube-analytics/settings/environments で確認できる。設定は不要）。
+
+失敗したときの見分け方:
+
+| ログのエラー | 原因 | 対処 |
+|---|---|---|
+| `CLOUDFLARE_API_TOKEN が未設定です` | 2 が未完了 | 2.2 をやり直し、「Re-run jobs」 |
+| `Authentication error [code: 10000]` | トークンの権限不足、または別アカウント | 2.1 の権限と Account Resources を確認し、トークンを作り直す |
+| `D1 … not found` | アカウントの取り違え | `CLOUDFLARE_ACCOUNT_ID` が `b3dde7be1cd856788fc47595ac455475` か確認 |
+
+- [ ] `deploy` が緑
+
+### 11.1 Cloudflare 側で構成が正しく載ったか確かめる
+
+deploy が緑になったら、ダッシュボードで Worker を開いて確認する。場所は **「Compute (Workers)」→「Workers & Pages」→ `youtube-analytics`**（直接: https://dash.cloudflare.com/b3dde7be1cd856788fc47595ac455475/workers/services/view/youtube-analytics/production ）。
+
+| タブ | 見るところ | 期待する表示 |
+|---|---|---|
+| Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=100` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
+| Settings → Domains & Routes | 公開先 | `youtube-analytics.daishimanju.workers.dev` が Enabled。カスタムドメインは付けない |
+| Settings → Trigger Events（Cron Triggers） | 定期実行 | `0 18 * * *` が 1 件 |
+| Settings → Trigger Events（Queue Consumers） | 消費者 | 現在は未構成で一覧が空。日次収集 feature で処理・終端失敗契約と同時に追加する |
+| Deployments | 履歴 | 最新に今の日時と、Source が `Upload`（API トークン経由）で並ぶ |
+| Observability → Logs | 実行ログ | `/api/health` を開いたあと、リクエストが記録される |
+
+`wrangler` でも同じことを確認できる（ローカルの端末で実行する）。
+
+```bash
+pnpm wrangler deployments list     # 直近のデプロイ一覧
+pnpm wrangler secret list          # Secret の名前だけ表示（値は出ない）
+pnpm wrangler d1 info DB --remote  # 本番 D1 のサイズとテーブル数
+pnpm wrangler tail                 # 本番のログをその場で流す（Ctrl+C で終了）
+```
+
+- [ ] binding が 4 つ、変数 2 つ、Secret 2 つそろっている
+- [ ] Cron と Queue producer binding が登録され、Queue consumer は未構成である（日次収集 feature で追加）
+
+### 11.2 戻したくなったとき
+
+| やりたいこと | 方法 |
+|---|---|
+| 直前の版に戻す（緊急） | Deployments タブで 1 つ前の版の「…」→ **Rollback**。または `pnpm wrangler rollback` |
+| コードごと戻す | GitHub で問題の PR を **Revert** し、その PR を merge する（deploy が走って戻る） |
+| DB を戻す | マイグレーションは前進のみ。取り消す SQL を新しいマイグレーションとして足す（`runbook.md` 6.5） |
+
+Rollback はコードだけを戻す。D1 に当てたマイグレーションは戻らないので、DB を変えた版を戻すときは上の 3 番目も要る。
+
+---
+
+## 12. 本番で動作を確認する（10 分）
+
+1. `<本番URL>/api/health` を開く → `{"status":"ok","db":true}` と出る。
+2. `<本番URL>/login` を開く。
+   - 「開発用ログイン」の欄が **出ない** こと（出たら `DEV_LOGIN` を本番に登録してしまっているので、`pnpm wrangler secret delete DEV_LOGIN`）。
+   - 同意にチェックするまで「Google でログイン」が押せないこと。
+3. 同意にチェック →「Google でログイン」→ Google の画面で自分のアカウントを選ぶ → 「YouTube分析 がアクセスをリクエストしています」で **「続行」**。
+   - 「このアプリは Google で確認されていません」と出たら、「詳細」→「YouTube分析（安全ではないページ）に移動」で進める（4.4 のとおり、審査していないため。機密性の低いスコープだけなので問題はない）。
+4. ダッシュボードに「あなたの役割: オーナー」と出れば成功。
+5. 招待の確認（A4）には、Google アカウントが **2 つ**必要になる（招待する側と、される側）。予備のアカウントがなければ https://accounts.google.com/signup で作る。そのうえで、`docs/feat-platform-tenant-auth/acceptance.md` の 3 節（A1〜A6）を試し、結果の「preview」列を埋める。これはエージェントに頼んでもよい。
+
+- [ ] 本番でログインできた
+- [ ] acceptance.md の preview 列を埋めた
+
+---
+
+## 13. 完了したら
+
+- エージェントに「本番確認まで終わった」と伝える。Beads の `yta-c8g.1`〜`.13` と epic `yta-c8g` を close し、README の「現況」を更新する。
+- 次の feature（`feat-youtube-daily-collection`）の計画（`/dev-graph plan`）に進める。
+
+## 付録: 困ったとき
+
+| 症状 | 原因 | 対処 |
+|---|---|---|
+| Google で「エラー 400: redirect_uri_mismatch」 | 5 のリダイレクト URI と実際の URL が 1 文字違う | エラー画面の「詳細」に出る URI を、そのまま 5 に追加する |
+| Google で「アクセスをブロック: このアプリは…テスト中」 | 4.4 が「テスト中」のまま | 「アプリを公開」するか、テストユーザーに追加する |
+| ログイン後に `/login?error=OAUTH_FAILED` | クライアント ID かシークレットの誤り | 6 の値と 7 の Secret を見直す（`pnpm wrangler secret put GOOGLE_CLIENT_SECRET` で上書きできる） |
+| ログイン後に `/login?error=OAUTH_STATE_MISMATCH` | ログイン画面を 10 分以上放置した | もう一度ログインする |
+| 「現在新規の受付を停止しています」 | テナント数が `MAX_TENANTS`（100）に達した | `runbook.md` の 6.1 |
+| Cloudflare の画面で「Wrangler の構成が検出されませんでした」 | Git 連携（Create an app）の画面を開いている | 「戻る」で抜ける。この方式は使わない（1.5.1） |
+| Cloudflare の画面で「Your GitHub authorization has expired」 | 同上 | 再認可も GitHub App の再インストールも不要。画面を閉じる |
+| `youtube-analytics` が Workers & Pages に見当たらない | まだ一度も deploy していない | 11 の deploy が緑になると現れる。急ぐなら手元で `pnpm run deploy` |
+| 本番の `/api/health` が `"db": false` | D1 の binding か `database_id` の不一致 | `wrangler.toml` の `database_id` と `pnpm wrangler d1 list` の値を照合する |
+| 本番で画面が真っ白、`/login` が 404 | `dist/web` が入っていない | `pnpm run deploy` は `vite build` を含む。Actions のログで `vite build` の成功を確認する |
+| 詳しい運用 | — | `docs/feat-platform-tenant-auth/runbook.md` |

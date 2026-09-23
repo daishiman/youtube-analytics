@@ -1,0 +1,722 @@
+{
+  "agent": "elegant-meta-divergent-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Iteration 2 の評価枠を『変更行が動くか』から『13 root cause と独立承認 blocker が本当に閉じたか』へ上げた。独立承認は実行系を PASS とする一方、Queue の最終喪失と正本文書 drift の2 blocker により総合 FAIL としており、force-PASS しない判断は妥当である。",
+        "前回実装対象のうち RC-TENANT-UI-STATE、RC-AUTH-CONTEXT-REFRESH、RC-ME-RECOVERY、RC-OAUTH-BOUNDARY は、web/pages/Shell.tsx:9-99、web/pages/SettingsPage.tsx:18-118、e2e/shell-state.spec.ts:31-166 により解消した。RC-QUEUE-STUB は即時 ack を止めただけで terminal loss が残るため未解消へ戻す。",
+        "残課題13の fresh 判定は全件『残存』である: RC-MUTABLE-STATUS-DOC、RC-LAST-TENANT-LIFETIME、RC-TENANT-NAME-INVARIANT、RC-UNBOUNDED-LISTS、RC-SESSION-RETENTION、RC-PREMATURE-SHARD-ABSTRACTION、RC-SPEC-PROJECTION-DRIFT、RC-FEATURE-STATE-MODEL、RC-E2E-DATA-LIFECYCLE、RC-SELF-REFERENTIAL-ORACLE、RC-CI-CONSISTENCY-HOOK、RC-RELEASE-GATE、RC-DELIVERY-SEQUENCING。今回差分はいずれの所有ファイル/契約も変更していない。",
+        "新規 root cause は RC-QUEUE-TERMINAL-LOSS である。docs/feat-platform-tenant-auth/final-review.md の component/test inventory 再発は新規現象だが、根因は既存 RC-MUTABLE-STATUS-DOC と RC-CI-CONSISTENCY-HOOK に包含されるため14件目として水増ししない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "docs/feat-platform-tenant-auth/final-review.md:42 は Shell がメンバー管理・招待・脱退を担うとするが、現在は SettingsPage が担う。test-design.md:28-30 の件数/ファイル一覧も current worktree と一致しない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "13 residual root cause は対象外として残り、特に DLQ と正本文書更新が Iteration 2 の完了要素から欠ける。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "コード分割後の責務と canonical docs/test inventory が整合しない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "有限 retry と DLQ 不在により、Queue の再処理依存は最終的に切断される。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "doc",
+          "description": "component 分割後も final-review は Shell.tsx が settings の業務責務を持つと記し、新規 component/page/test を列挙していない。test-design は Vitest 76件・auth-flow 10件・E2E smoke 5シナリオのままで、独立承認の実測79件と shell-state 4シナリオに追従していない。",
+          "recommended_intervention": "final-review と test-design を current source/test inventory から更新し、件数を手書き固定する場合は検証コマンドの出力と reviewed_commit を併記する。より再発しにくくするには、component/test manifest と実測件数を生成して CI の repository consistency gate に接続する。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/feat-platform-tenant-auth/final-review.md",
+            "line": 42,
+            "section": "全ファイルの対応表"
+          },
+          "root_cause": "RC-MUTABLE-STATUS-DOC / RC-CI-CONSISTENCY-HOOK: 変更される source/test inventory と実測件数を手書き文書へ複製し、差分時に stale を検出する継続 gate を持たない。"
+        }
+      ],
+      "score": 0.61,
+      "reusable_abstraction": "RootCauseLedger: resolved/residual/new/reopened を source diff と独立承認 evidence へ結び、現象の再発を新しい根因として重複計上しない。",
+      "template_variables": [
+        "{{ROOT_CAUSE_ID}}",
+        "{{RESOLUTION_STATE}}",
+        "{{REVIEWED_COMMIT}}"
+      ],
+      "reuse_surface": "governance-log",
+      "negative_cases": [
+        "component/test inventory を現在状態として主張しない凍結証跡では、current worktree との差を contradiction にしない。"
+      ],
+      "re_audit_trigger": "component/test ファイル追加、test count 変更、または独立承認 FAIL の時"
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "component 境界は適切である。Shell は session load/tenant switch/logout、ShellFrame は外枠、SettingsPage は tenant resource と mutation、DashboardPage は仮 dashboard、CreateTenantForm は再利用 form に分かれ、import は main→page→component/api の一方向で循環がない。",
+        "SettingsPage は378行だが、useTenantResources、TenantSettings、InviteSection は同じ tenant-settings lifecycle を共有する。今すぐ別 hook/file へ細分化すると変更の局所性より navigation cost が上回るため、現段階では過剰な分割不足とは判定しない。",
+        "Outlet key、TenantSettings key、InviteSection key、issued.tenantId guard は一部重複するが、component identity・async response・bearer URL 表示という異なる層の防御である。有害な重複実装ではなく、tenant boundary の defense-in-depth と判断する。",
+        "一方、storage abstraction は非変更である。src/repositories/db.ts:13-15 の resolveTenantDb は依然 production call path を持たず、members/invites は controlDb 固定なので RC-PREMATURE-SHARD-ABSTRACTION は残存する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "新 component の責務名・import 方向・状態所有は互いに矛盾しない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "UI 分割は必要要素を満たすが、tenant DB locator/factory は今回も欠ける。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "db_binding による将来分割という設計と未接続 resolver の不整合は非変更である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "新 UI component 間の依存は一方向で、外部 package や循環 import を追加していない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "critical",
+          "bucket": "schema",
+          "description": "resolveTenantDb と tenants.db_binding は依然実行経路へ接続されず、TenantScopedRepository は control-plane 表も扱う。UI refactor はこの storage 境界を変更していないため、将来 D1 分割を resolver だけで実現できるという設計主張は未達のままである。",
+          "recommended_intervention": "2つ目の binding 実装前に ControlPlaneRepository、TenantLocator、TenantDataRepository を分離し、未知 binding の fail-closed と control/tenant DB が異なる結合テストを追加する。単一 DB を維持すると決めるなら speculative db_binding/resolver を削除し、設計を単純化する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "src/repositories/db.ts",
+            "line": 13,
+            "section": "resolveTenantDb"
+          },
+          "root_cause": "RC-PREMATURE-SHARD-ABSTRACTION: 将来の D1 分割を schema と関数名で先取りしたが、application-level locator/factory と control/data plane の責務を設計していない。"
+        }
+      ],
+      "score": 0.72,
+      "reusable_abstraction": "UI の状態所有境界は session/layout/tenant-resource/mutation で分け、storage の認可 scope と物理 binding scope は別 abstraction にする。",
+      "template_variables": [
+        "{{SESSION_BOUNDARY}}",
+        "{{TENANT_RESOURCE_SCOPE}}",
+        "{{CONTROL_DB_BINDING}}",
+        "{{TENANT_DB_BINDING}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "同じ tenant lifecycle を共有する小さな内部 component を、行数だけを理由に別 package/file へ分けない。",
+        "恒久的に単一 D1 と確定した場合は TenantLocator を導入せず speculative abstraction を除去する。"
+      ],
+      "re_audit_trigger": "SettingsPage に別業務ドメインを追加する時、または2つ目の D1 binding を追加する時"
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "単一ループでは queue handler の ack を retry に変え、unit test を追加した。しかし独立承認は『retry を呼んだか』ではなく『retry 上限後も回収可能か』へ目標を問い直し、fail-closed の定義不足を検出した。これは有効な double-loop である。",
+        "src/index.ts:21 は fail-closed と命名するが、wrangler.toml:35-39 は max_retries=3 かつ DLQ なしである。コード単体の成功条件を構成全体の配送保証へ拡張しなければ、同じ根因が形を変えて残る。",
+        "文書 drift も同様に、今回2行だけ同期した結果、component/test inventory がさらに stale になった。手で追随するルールを反復するのではなく、文書の性質を generated manifest または frozen evidence に変える必要がある。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "fail-closed という命名と、最大 retry 後に永久削除される構成が矛盾する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "unit test は retry 呼出しだけを検査し、terminal delivery と DLQ を required element に含めない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "source comment、architecture、final-review が fail-closed とする一方、wrangler consumer policy がその意味を満たさない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "message lifecycle の terminal node が recoverable store ではなく削除である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.49,
+      "reusable_abstraction": "DeliveryGuaranteeTest: handler の関数呼出しではなく、retry budget、terminal sink、redrive 手順まで含む構成全体を評価する。",
+      "template_variables": [
+        "{{MAX_RETRIES}}",
+        "{{DEAD_LETTER_QUEUE}}",
+        "{{REDRIVE_POLICY}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "message が意図的に disposable で terminal deletion を成功と定義する場合は DLQ を必須にしない。"
+      ],
+      "re_audit_trigger": "Queue retry/DLQ 設定、consumer 実装、または fail-closed claim の変更時"
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "未実装 consumer の代替案を批判保留で7件出した: (1) consumer 宣言自体を後続 feature まで外す、(2) dedicated DLQ を設定する、(3) stub 専用 quarantine queue へ明示転送して ack する、(4) producer と consumer を同一 release gate で同時有効化する、(5) message schema version と unsupported-version DLQ を導入する、(6) feature flag で producer/consumer 双方を無効化する、(7) Queue を作るだけに留め consumer binding は配備しない。",
+        "現在は producer code も scheduled enqueue も未実装なので、最小案は (1)/(7) である。将来 message が既に存在する rollback compatibility を重視するなら (2)+(5) が適する。(3) は独自 redrive 実装が増えるため現段階では過剰である。",
+        "component 分割の代替案も比較した: 元の巨大 Shell 維持、custom hook だけ抽出、現在の page/component 分割、状態管理 library 導入、route 単位 data loader 化。新 package なしで current defect を閉じる現在案が最小で、状態管理 library は過剰である。",
+        "残課題13に対しては一括修正せず、schema契約、運用gate、仕様投影、テストoracleの4束に分ける方が依存を明確にできる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "代替案は現在の producer 未実装状態と rollback 後の message 存在状態を区別している。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "Queue の terminal sink を含む案は揃ったが、現実装では採択されていない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "component 分割案は新 dependency なしという current constraint と整合する。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "DLQ/redrive または consumer 未配備を採択するまで Queue lifecycle DAG は閉じない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.7,
+      "reusable_abstraction": "PlaceholderDeploymentPolicy: 未実装依存は『未配備』『隔離』『互換処理』から明示選択し、成功消費や有限retryを暗黙の既定にしない。",
+      "template_variables": [
+        "{{PLACEHOLDER_POLICY}}",
+        "{{MESSAGE_SCHEMA_VERSION}}",
+        "{{TERMINAL_SINK}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "外部契約上 consumer binding の先行配備が必須なら、単純に宣言を削除せず DLQ/compatibility を選ぶ。"
+      ],
+      "re_audit_trigger": "未実装 handler/resource を production config に追加する時"
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "分散 cache の namespace と fencing token を frontend へ移植した設計が実装された。Outlet/TenantSettings の tenant key、AbortController、generation check が、遅延応答を別 tenant へ混入させない。",
+        "database transaction の commit 順を権限 UI へ移植し、自己 role 変更では child resource load より parent /api/me reload を先行させた。e2e/shell-state.spec.ts:125-166 がこの順序を直接検証する。",
+        "Queue には同じ発想を適用し切れていない。fencing/retry は一時失敗を扱うが、terminal sink のない有限 state machine はデータ保持を保証しない。storage system の write-ahead log に類推すれば、DLQ が recoverable terminal log に相当する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "frontend の scope identity は表示・取得・mutation で一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "abort、generation、keyed remount、retry UI、自己権限 refresh の必要要素が実装された。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "server TenantContext と frontend tenant resource scope が同じ tenant identity 原則を持つ。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "UI dependency は整合したが、Queue terminal dependency は未整合である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.83,
+      "reusable_abstraction": "ScopedAsyncBoundary: scope key、abort、generation、mutation disable、parent-context-first refresh を一組で適用する。",
+      "template_variables": [
+        "{{SCOPE_KEY}}",
+        "{{REQUEST_GENERATION}}",
+        "{{PARENT_CONTEXT}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "hard reload が scope 切替を担い in-flight request が残らない画面では全ガードを重ねない。"
+      ],
+      "re_audit_trigger": "tenant scoped resource/mutation を追加する時"
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "『成功 ack しないから安全』という改善が、有限 retry 後の自動削除によって『遅れて失う』だけになる逆説が生じた。src/index.ts:21 の fail-closed という名前が安心感を増すほど、DLQ 不在を見落としやすい。",
+        "UI では防御の重複が単純性を下げるように見えるが、key は component state、generation は async completion、issued.tenantId は secret display を守り、失敗面が異なる。ここで重複削除を優先すると安全性を落とすため、現状は逆機能にならない。",
+        "逆に文書の手書き inventory は同じ変更理由と失効タイミングを持つ重複であり、DRY/生成化が有効である。構文の重複ではなく、変更理由の重複で判断すべきである。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "fail-closed claim と DLQ なし有限 retry の terminal deletion が両立しない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "terminal sink と redrive 手順が欠ける。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "architecture/final-review/source comment の名称が実構成の保証水準を過大表現する。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "max_retries 消費後に recoverable node がなく dependency chain が終端削除される。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "Queue handler は全 message に retry({delaySeconds:600}) を要求するが、consumer は max_retries=3 で dead_letter_queue を持たない。未実装状態が4配送続けば message は永久削除され、fail-closed ではない。",
+          "recommended_intervention": "producer 未実装の現段階では consumer 宣言を外すのが最小である。consumer を先行配備する必要があるなら専用 DLQ を wrangler に設定し、redrive runbook と terminal delivery の構成テストを追加する。source/docs の fail-closed 表現はその保証が成立してから用いる。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "wrangler.toml",
+            "line": 35,
+            "section": "queues.consumers"
+          },
+          "root_cause": "RC-QUEUE-TERMINAL-LOSS: handler の retry 呼出しを配送保証と同一視し、有限 retry budget 後の terminal sink を設計・テストしなかった。"
+        }
+      ],
+      "score": 0.42,
+      "reusable_abstraction": "FailClosedQueue = no-consumer-before-ready または retry-budget + DLQ + redrive。retry() 単独を fail-closed と呼ばない。",
+      "template_variables": [
+        "{{MAX_RETRIES}}",
+        "{{RETRY_DELAY_SECONDS}}",
+        "{{DEAD_LETTER_QUEUE_NAME}}"
+      ],
+      "reuse_surface": "config",
+      "negative_cases": [
+        "破棄可能な telemetry message で loss を明示許容する場合は DLQ を要求しないが、fail-closed と表現しない。"
+      ],
+      "re_audit_trigger": "DLQ 設定、consumer binding 削除、または実 consumer 実装時"
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "ShellFrame はアプリケーション shell、Shell は session controller、SettingsPage は tenant feature module に相当し、一般的な route-shell/feature-page 構成へ自然に写像できる。component 分割は命名と所有状態が一致し、抽象 factory や汎用 container を増やしていない。",
+        "useTenantResources は query cache の小型版だが、現時点で members/invites 2取得だけを扱い package 依存を増やさない。別ページで同じ caching/revalidation が3件以上再発するまでは共有 library 化しない方がよい。",
+        "正本文書を package manifest に類推すると、source/test file list と件数は手書き narrative ではなく build artifact から生成すべきである。現在は manifest としての一意性を持たず drift した。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "component 名と実責務は current source 上で一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "session、layout、dashboard、settings、tenant form、shared context の境界が揃う。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "source は整合するが、final-review の component ownership が旧構成のままである。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "main→pages→components/api の依存方向に循環はない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.86,
+      "reusable_abstraction": "RouteShellPattern: session controller、presentational frame、feature page、shared context を状態寿命で分ける。",
+      "template_variables": [
+        "{{SESSION_CONTROLLER}}",
+        "{{SHELL_FRAME}}",
+        "{{FEATURE_PAGE}}"
+      ],
+      "reuse_surface": "template",
+      "negative_cases": [
+        "小規模な単一画面で状態寿命が同じ場合は、この粒度へ機械的に分割しない。",
+        "同型の remote-resource hook が複数 feature で再発する前に汎用 query abstraction を作らない。"
+      ],
+      "re_audit_trigger": "同型 remote-resource hook が3 feature以上へ増えた時"
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "もし tenant 切替中に旧応答が遅延しても、keyed unmount、AbortController、generation の3層で current state を上書きしない。もし自己降格して invite が403になっても、parent reload を先に行うため旧 owner UI を残さない。これらは dedicated E2E で解消確認できる。",
+        "もし Queue message が4回連続で未実装 consumer に届けば、retry budget を使い切り DLQ なしで削除される。即時消失が最大約30分遅延しただけで、rollback/誤投入の極端条件には耐えない。",
+        "もし1 tenant の member/invite が10倍・100倍になれば、src/repositories/tenant-scoped-repository.ts:39-49,102-111 は依然 LIMIT なしで全件を返し、SettingsPage は全件描画する。RC-UNBOUNDED-LISTS は非変更である。",
+        "もし docs の file inventory を次の refactor でも手更新しなければ、同じ blocker が再発する。今回の分割直後に再現したこと自体が RC-CI-CONSISTENCY-HOOK の反証例である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "UI の extreme switch/self-demotion scenario は実装とテストで一貫して処理される。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "member/invite cardinality contract、page size、overflow behavior は依然ない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "MAX_TENANTS は定義済みだが tenant 内集合規模は未定義である。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "Queue の terminal retry と unbounded DB→JSON→DOM chain が極端条件で破綻する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "member と pending invite の一覧は LIMIT、pagination、業務上限を持たず、current refactor でも全件取得・全件描画のままである。tenant 数上限100は tenant 内 cardinality を制限しない。",
+          "recommended_intervention": "想定最大件数を要件化し、小さい hard cap を server で強制するか、cursor pagination・安定 sort key・index・paging UI を一組で導入する。後続 feature の一覧 API も同じ CardinalityContract を要求する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 39,
+            "section": "listMembers"
+          },
+          "root_cause": "RC-UNBOUNDED-LISTS: global tenant 数だけを capacity constraint とし、tenant 内集合の cardinality を設計変数にしていない。"
+        }
+      ],
+      "score": 0.64,
+      "reusable_abstraction": "CardinalityContract: collection ごとに max size、page size、sort stability、overflow behavior を定義する。",
+      "template_variables": [
+        "{{MAX_COLLECTION_SIZE}}",
+        "{{PAGE_SIZE}}",
+        "{{CURSOR_KEY}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "小さな hard cap を server とテストで強制する場合は pagination を導入しない。"
+      ],
+      "re_audit_trigger": "member/invite 上限決定時、または一覧 API 追加時"
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見利用者にとって /api/me と tenant resource の retry UI、切替中表示、操作 disable は明快で、前回の『エラー文だけで止まる』問題は解消した。",
+        "初見開発者にも Shell.tsx:1 の session boundary、SettingsPage、ShellFrame、CreateTenantForm という名前は読みやすい。巨大 Shell を追う必要がなく、component 分割は理解を改善している。",
+        "ただし初見運用担当は final-review を読むと Shell が settings を持つと誤解し、test-design を読むと79件中3件と shell-state 4 scenario の存在を知らない。README.md:8 と docs/setup/README.md:16-28 の進捗矛盾も非変更である。",
+        "Queue の『fail-closed』は専門家でなくても『失わない』と解釈する語だが、実際は4配送後に削除される。用語が実保証より強い点は、設定詳細を知らない読者ほど危険である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "current component ownership/test count と案内文書が一致しない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "画面内の loading/error/retry/switching feedback は初見でも回復方法が分かる。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "fail-closed という利用者向け意味と有限 retry 後削除の実挙動が整合しない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "UI 操作の依存は明瞭だが、Queue の回収導線は文書から辿れない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.69,
+      "reusable_abstraction": "BeginnerProofClaim: 強い運用語（fail-closed、exactly-once、complete）は非専門家が期待する保証を設定・テストで満たす時だけ用いる。",
+      "template_variables": [
+        "{{OPERATIONAL_CLAIM}}",
+        "{{PROVEN_GUARANTEE}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "内部コード名だけで利用者・運用文書へ露出せず、保証を主張しない場合は用語是正の優先度を下げる。"
+      ],
+      "re_audit_trigger": "運用保証を表す用語を source/docs に追加する時"
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "current component ownership/test inventory と final-review/test-design が矛盾する。",
+        "fail-closed claim と DLQ なし有限 retry の terminal deletion が矛盾する。"
+      ],
+      "violation_count": 1
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "残課題13はすべて残存し、RC-UNBOUNDED-LISTS を含む。",
+        "Queue の terminal sink/redrive と canonical docs の新 file/test inventory が欠ける。"
+      ],
+      "violation_count": 1
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "RC-PREMATURE-SHARD-ABSTRACTION は非変更である。",
+        "source/config/docs 間の Queue 保証水準と component ownership が一致しない。"
+      ],
+      "violation_count": 1
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "DLQ のない max_retries=3 consumer は terminal loss を起こす。",
+        "repo全体では release/spec/test lifecycle の residual dependencies が残る。"
+      ],
+      "violation_count": 1
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "max_retries=3",
+      "variable_name": "{{MAX_RETRIES}}",
+      "default_value": "3",
+      "source_trace": "wrangler.toml:38"
+    },
+    {
+      "concrete_value": "retry_delay=600 seconds",
+      "variable_name": "{{RETRY_DELAY_SECONDS}}",
+      "default_value": "600",
+      "source_trace": "wrangler.toml:39; src/index.ts:4"
+    },
+    {
+      "concrete_value": "dead_letter_queue not configured",
+      "variable_name": "{{DEAD_LETTER_QUEUE_NAME}}",
+      "default_value": "project decision required",
+      "source_trace": "wrangler.toml:35-39"
+    },
+    {
+      "concrete_value": "10000 milliseconds",
+      "variable_name": "{{OAUTH_TIMEOUT_MS}}",
+      "default_value": "10000",
+      "source_trace": "src/http/google-oauth.ts:76"
+    },
+    {
+      "concrete_value": "tenantId",
+      "variable_name": "{{RESOURCE_SCOPE_KEY}}",
+      "default_value": "tenantId",
+      "source_trace": "web/pages/Shell.tsx:95; web/pages/SettingsPage.tsx:78"
+    },
+    {
+      "concrete_value": "79 Vitest tests",
+      "variable_name": "{{CURRENT_TEST_COUNT}}",
+      "default_value": "derive from current test runner output",
+      "source_trace": "independent-approval.json validation; docs/feat-platform-tenant-auth/test-design.md:28"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "meta",
+      "abstraction",
+      "double-loop",
+      "brainstorming",
+      "lateral",
+      "paradox",
+      "analogy",
+      "if",
+      "naive"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  },
+  "reusable_abstraction": [
+    {
+      "name": "ScopedAsyncBoundary",
+      "purpose": "scope key、AbortController、generation、操作 disable、親 context 先行 refresh で tenant resource を隔離する。",
+      "source_trace": "web/pages/Shell.tsx:90-98; web/pages/SettingsPage.tsx:18-71",
+      "reuse_surface": "reference",
+      "not_applicable_when": "scope 切替が hard reload を必ず伴う場合"
+    },
+    {
+      "name": "FailClosedQueue",
+      "purpose": "未実装 consumer を配備しない、または retry budget・DLQ・redrive を一体で定義する。",
+      "source_trace": "src/index.ts:4-24; wrangler.toml:35-39",
+      "reuse_surface": "config",
+      "not_applicable_when": "message loss を契約上明示許容する場合"
+    },
+    {
+      "name": "GeneratedRepositoryInventory",
+      "purpose": "component/test inventory と実測件数を source から生成し、canonical docs の drift を CI で検出する。",
+      "source_trace": "docs/feat-platform-tenant-auth/final-review.md:39-50; docs/feat-platform-tenant-auth/test-design.md:28-30",
+      "reuse_surface": "hook",
+      "not_applicable_when": "文書が current inventory を主張しない凍結証跡の場合"
+    },
+    {
+      "name": "RootCauseLedger",
+      "purpose": "resolved/residual/new/reopened を evidence と結び、再発現象を既存根因へ束ねる。",
+      "source_trace": "phase3-execution.json; independent-approval.json",
+      "reuse_surface": "governance-log",
+      "not_applicable_when": "単発で反復評価を行わない変更"
+    }
+  ],
+  "template_variables": [
+    {
+      "name": "{{RESOURCE_SCOPE_KEY}}",
+      "meaning": "async resource と mutation の namespace",
+      "default": "tenantId",
+      "required": true,
+      "not_applicable_when": "単一 scope のみ"
+    },
+    {
+      "name": "{{MAX_RETRIES}}",
+      "meaning": "Queue の retry budget",
+      "default": "3",
+      "required": false,
+      "not_applicable_when": "Queue を使わない場合"
+    },
+    {
+      "name": "{{DEAD_LETTER_QUEUE_NAME}}",
+      "meaning": "retry exhaustion 後の recoverable terminal sink",
+      "default": "project decision required",
+      "required": true,
+      "not_applicable_when": "consumer 未配備または message loss 許容の場合"
+    },
+    {
+      "name": "{{REVIEWED_COMMIT}}",
+      "meaning": "document inventory/count が対応する commit",
+      "default": "current HEAD",
+      "required": true,
+      "not_applicable_when": "時点非依存の不変仕様"
+    },
+    {
+      "name": "{{CURRENT_TEST_COUNT}}",
+      "meaning": "test runner から導出する実測件数",
+      "default": "generated",
+      "required": false,
+      "not_applicable_when": "文書で件数を主張しない場合"
+    }
+  ],
+  "negative_cases": [
+    "状態寿命が同じ単一画面を行数だけで session/layout/feature component へ機械分割しない。",
+    "Outlet key、generation、issued tenant guard は異なる failure surface を守るため、見かけの重複だけで削除しない。",
+    "message loss を明示許容する telemetry queue では DLQ を必須化しないが、fail-closed と表現しない。",
+    "producer/consumer とも未実装なら、retry stub より consumer 未配備を優先する。",
+    "凍結証跡が reviewed_commit/observed_at を明示する場合、current inventory との差を contradiction にしない。",
+    "同型 remote-resource hook が複数 feature へ再発する前に state-management package や汎用 query layer を追加しない。",
+    "残課題13の再発現象を新しい root cause として重複計上せず、既存 root cause の residual evidence として束ねる。",
+    "単一 D1 を恒久採用するなら TenantLocator を追加せず speculative resolver/db_binding を除去する。"
+  ]
+}

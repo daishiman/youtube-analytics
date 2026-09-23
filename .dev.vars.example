@@ -1,0 +1,8 @@
+# ローカル開発用の秘密値（.dev.vars にコピーして使う。.dev.vars はコミットしない）
+GOOGLE_CLIENT_SECRET=
+# refresh token 暗号化鍵（AES-256-GCM, 32byte を base64）: openssl rand -base64 32
+TOKEN_ENC_KEY=
+# 開発専用ログイン（Google を使わずメールアドレスでログイン）。localhost でだけ有効。本番には設定しない
+DEV_LOGIN=1
+# 受付停止（A5）を試すときだけ、現在のテナント数以下に下げる（未設定なら wrangler.toml の 100）
+# MAX_TENANTS=2

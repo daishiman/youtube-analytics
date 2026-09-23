@@ -2,12 +2,36 @@
 
 YouTube の実績と週次の事業ファネルをつなぎ、目標差が最も大きい改善候補と次の打ち手を判断するための Web システムです。インプレッション、CTR、加重平均視聴率、導線誘導率、問い合わせから成約への転換率を原因指標として追い、売上・成約数を結果指標、登録者数を参考の結果指標として分けて扱います。これは因果推論ではなく、週次データと設定目標の比較です。
 
-## 現況
+## 対象範囲
 
-- 要件・技術仕様は確定済みで、アプリ実装コードはまだありません。
-- 現在の公開 feature package は `feat-platform-tenant-auth`、進捗は `0/13` task です。
-- 次に実行する task は `SYS-PTA-P01`（要件の実装単位への確定）です。
+- 要件・技術仕様は確定済みです。最初の feature `feat-platform-tenant-auth` は Google ログイン、テナント、招待、役割、CI/CD の土台を提供します。受入条件と検証方法は `docs/feat-platform-tenant-auth/requirements.md` と `docs/feat-platform-tenant-auth/test-design.md` を正とします。
+- ブランチ、作業ツリー、CI、公開環境の状態は変化するため、この README には複製しません。ローカルは下記コマンド、外部環境は GitHub Actions と `docs/setup/owner-manual-setup.mdx` の確認手順で判定してください。
+- 業務機能（YouTube 収集、CSV と画像の取込、分析レポート、業務画面、保持期間の運用）の 5 feature は未着手です。
 - 週次事業ファネルと分析履歴の追補は、対象3 featureのtask計画前に dev-graph compile / decompose で digest とstate graphを再同期します。必要なgateは `eval-log/dev-graph-resync-required-20260922.json` に固定しています。
+
+## セットアップ
+
+前提: Node 22（`.node-version`）、pnpm 10。
+
+```bash
+pnpm install
+cp .dev.vars.example .dev.vars   # TOKEN_ENC_KEY などを記入する（コミットしない）
+pnpm db:migrate:local            # ローカル D1 にテーブルを作る
+pnpm db:seed:local               # ローカル画面テスト用のアカウントとテナントを入れる
+pnpm dev                         # http://localhost:8791
+```
+
+| 目的 | コマンド |
+|---|---|
+| 静的検査 | `pnpm lint && pnpm typecheck` |
+| API の結合テスト（Workers ランタイム上） | `pnpm test` |
+| 画面の E2E（3 サイズ） | `pnpm e2e` |
+| 画面の再ビルド（`pnpm dev` の起動中に画面を変えたとき） | `pnpm build:web` |
+| 構成の確認（deploy の dry-run） | `pnpm build` |
+
+- `.dev.vars` に `DEV_LOGIN=1` を入れると、localhost に限り、メールアドレスだけでログインできる「開発用ログイン」が使えます。テストアカウントと画面テストの流れは `docs/feat-platform-tenant-auth/runbook.md` の 5 節を参照してください。
+- 公開までに利用者が手で行う設定は、まず `docs/setup/README.md`（入口。作業一覧と現在の状態）を開いてください。1 手順ずつの詳細は `docs/setup/owner-manual-setup.mdx` にあります。
+- Cloudflare の資源作成、Google OAuth クライアント、Secrets の登録、preview（本番）環境の構築と運用は `docs/feat-platform-tenant-auth/runbook.md`、開発環境の現況は `docs/setup/environment.md` にあります。
 
 ## リポジトリの見方
 

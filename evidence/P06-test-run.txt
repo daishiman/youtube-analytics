@@ -1,0 +1,85 @@
+
+ RUN  v4.1.11 <repo>
+
+ ✓ tests/platform/health.test.ts > GET /api/health > ログインなしで D1 に到達して ok を返す 32ms
+ ✓ tests/platform/health.test.ts > API の応答ヘッダ > エラー応答を含め no-store と nosniff・フレーム禁止を付ける 3ms
+ ✓ tests/platform/seed.test.ts > ローカル seed > 2回流しても同じ件数になり、テストアカウントの役割と招待が想定どおり 33ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > 同意なしのログイン開始は同意を求めてログイン画面へ戻す 29ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > ログイン開始は PKCE(S256)・state・nonce 付きで Google へ送り、署名付き短命 Cookie を置く 1ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > state が一致しないコールバックは拒否する 1ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > Cookie がないコールバック（別ブラウザからの注入）は拒否する 0ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > 正しいコールバックでコードを交換し、初回テナントを作ってセッション Cookie を発行する 21ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > aud が違う・nonce が違う・メール未確認の ID トークンは受け付けない 8ms
+ ✓ tests/platform/auth-flow.test.ts > セッション Cookie（https） > https では __Host- 接頭辞と Secure を付ける 8ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN が無ければ 404（本番の既定） 1ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN=1 でも localhost 以外のホストでは 404 0ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN=1 かつ localhost ならログインできる 9ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/me は Cookie なしで 401 UNAUTHENTICATED 5ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/session/tenant は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/invites/accept は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants/:id/members は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > PATCH /api/tenants/:id/members/:userId は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > DELETE /api/tenants/:id/members/:userId は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants/:id/leave は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants/:id/invites は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants/:id/invites は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > DELETE /api/tenants/:id/invites/:inviteId は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > CSRF ヘッダなしの書込でも、未ログインなら 401 を先に返す 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 未登録の /api/* パスも未ログインなら 401 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > でたらめなセッション Cookie は 401 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 期限切れセッションは 401 12ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > ログアウト後のセッションは 401 10ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 公開 API（health・招待プレビュー）はログインなしで 401 にならない 4ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy は main への push で起動する 1ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy は D1 マイグレーション適用 → Worker デプロイの順で実行する 0ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy の認証情報は GitHub Secrets から渡し、直書きしない 0ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > PR では lint・typecheck・test・dry-run を回す 1ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 初回ログインで tenants 1件と owner 1件が作られ、/api/me に現れる 50ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 2回目以降のログインでは増えない 13ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 同じ利用者の並行ログインでも1組だけ 28ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > メール未確認の Google アカウントはログインできず、何も作られない 2ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限ちょうどまでは作られ、上限に達すると初回ログインでも作らない 59ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限到達後はテナント追加 API も 403 SIGNUP_CLOSED（受付停止メッセージ） 13ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限到達後でも招待による参加はできる（上限の対象外） 19ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 残り1枠に別人が同時に初回ログインしても、作られるのは1件だけ 17ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 招待されたのと別のアカウントでは参加できない（ログイン時・ログイン後の両方） 72ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > メールの大文字小文字の違いは同一とみなす 19ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 1回限り: 使用済みの招待は再利用できない 18ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限未満ならテナント追加 API で2つ目を作れ、作成者が owner になる 16ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は PATCH /api/tenants/:id/members/:userId で 403 FORBIDDEN 3ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は DELETE /api/tenants/:id/members/:userId で 403 FORBIDDEN 3ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は GET /api/tenants/:id/invites で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は POST /api/tenants/:id/invites で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は DELETE /api/tenants/:id/invites/:inviteId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は PATCH /api/tenants/:id/members/:userId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は DELETE /api/tenants/:id/members/:userId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は GET /api/tenants/:id/invites で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は POST /api/tenants/:id/invites で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は DELETE /api/tenants/:id/invites/:inviteId で 403 FORBIDDEN 1ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > 403 の後も対象は変わっていない（owner は owner のまま・招待は未使用のまま） 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer と editor もメンバー一覧は読める 4ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > 役割変更は次の要求から効く（editor→viewer→書込 403 / viewer→owner→書込可） 14ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > t1 の owner が t2 のテナントID・資源IDで全テナント API を呼ぶと、すべて 404 9ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 自テナントのパスに他テナントの userId・inviteId を混ぜても 404 4ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 所属していないテナントへは切り替えられない（404） 1ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 越境の試行後も t2 のデータは変わっていない 2ms
+ ✓ tests/platform/a3-authorization.test.ts > CSRF 対策 > X-Requested-With がない書込は 403 CSRF_REJECTED 2ms
+ ✓ tests/platform/a3-authorization.test.ts > CSRF 対策 > 別オリジンからの書込は 403 CSRF_REJECTED 1ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 取り消した招待は使えない 15ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 7日の期限を過ぎた招待は使えない 10ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 平文トークンは保存せず SHA-256 だけを持つ 7ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > ログイン前のプレビューはテナント名・役割・伏せ字メールだけを返す 7ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > すでにメンバーなら 409 ALREADY_MEMBER で、招待は消費しない 8ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 招待できる役割は editor と viewer だけ 4ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > 最後の owner は降格・削除・脱退できない（409 LAST_OWNER） 10ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > owner はメンバーを削除でき、削除されたメンバーはそのテナントに入れなくなる 12ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > viewer は自分で脱退できる 13ms
+ ✓ tests/platform/routes-coverage.test.ts > ルート網羅 > 登録済みの全 API ルートが A1/A3 の表に載っている 1ms
+
+ Test Files  10 passed (10)
+      Tests  76 passed (76)
+   Start at  13:27:59
+   Duration  2.74s (transform 1.39s, setup 4.79s, import 455ms, tests 731ms, environment 0ms)
+

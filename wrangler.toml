@@ -1,0 +1,40 @@
+# YouTube分析 Worker 構成（正本: 要件正本 infrastructure 章）
+# 非秘密の設定だけを置く。秘密は `wrangler secret put` と GitHub Actions secrets に分ける（qa-014/qa-026）。
+name = "youtube-analytics"
+main = "src/index.ts"
+compatibility_date = "2026-08-22"
+compatibility_flags = ["nodejs_compat"]
+
+# Vite でビルドした SPA を Workers 静的アセットとして配信し、/api/* だけ Worker を先に通す
+[assets]
+directory = "./dist/web"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+[vars]
+MAX_TENANTS = "100"
+# Google Cloud の OAuth クライアントID（非秘密）。本番値へ置き換える
+GOOGLE_CLIENT_ID = "183283977516-m8erkdffia1u9eonfj60g0ims3h3csav.apps.googleusercontent.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "youtube-analytics-db"
+# scripts/setup-cloudflare.sh で作成（アカウント: Daishimanju@gmail.com's Account）
+database_id = "91996166-d308-4e8e-9ca1-b1e21595e816"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "youtube-analytics-media"
+
+[[queues.producers]]
+binding = "COLLECT_QUEUE"
+queue = "collect-queue"
+
+# 収集と cleanup を1本に統合した Cron（UTC 18:00 = JST 3:00, qa-058/qa-059）
+[triggers]
+crons = ["0 18 * * *"]
+
+[observability]
+enabled = true

@@ -1,0 +1,334 @@
+{
+  "agent": "elegant-meta-divergent-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Iteration 2 の blocker だった Queue terminal loss は consumer と queue handler を同時に撤去したため解消した。producer binding だけを予約し、実処理と terminal failure 契約を後続 feature で同時追加する境界は source・wrangler・architecture・owner manual で一致する。",
+        "単一D1、last-tenant選好、bounded session cleanup、tenant名長、CI consistency hook、release gate、可変テスト件数の固定記載は current diff でそれぞれ根因へ作用している。単なる症状修正ではない。",
+        "ただし final-review と test-design が詳細なテストファイル inventory を重複保持し、今回追加された session-lifecycle.test.ts が両方の列挙から既に漏れた。件数だけを削除しても mutable inventory の重複根因は残る。",
+        "最小削減案は final-review の詳細 file inventory を architecture と test-design への参照に置換し、受入項目とテストの対応だけを test-design に一意化すること。実行件数と全ファイル集合は pnpm test / CI を正本にし、第三の生成 inventory は作らない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["詳細 test inventory が session-lifecycle.test.ts を落としており current diff と一致しない。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["受入との対応を持つ test-design に session lifecycle の検証位置がない。"], "violation_count": 1},
+        "C3": {"verdict": "PASS", "evidence": ["Queue、DB、session、release gate の source/config/spec projection は current diff 内で揃った。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["CI と deploy は check:repo / check:release:deploy を明示依存に持つ。"], "violation_count": 0}
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "medium",
+          "bucket": "documentation",
+          "description": "final-review と test-design の詳細 test inventory が重複し、新規 session-lifecycle.test.ts を既に取りこぼしている。可変件数を削っただけでは同一理由で変わる列挙の重複は解消しない。",
+          "recommended_intervention": "final-review の詳細な test file 列挙を削り test-design へのリンクだけにする。test-design の A2 に session-lifecycle.test.ts を一度だけ対応付け、全ファイル集合・件数は test runner/CI を正本とする。",
+          "condition_signal": "inconsistency",
+          "location": {"file": "docs/feat-platform-tenant-auth/final-review.md", "line": 51, "section": "2.2 テスト、証跡、開発ツール"},
+          "root_cause": "RC-MUTABLE-STATUS-DOC: 同じ変更理由を持つ current file inventory を複数の手書き文書に残した。"
+        }
+      ],
+      "score": 0.82,
+      "reusable_abstraction": "DocumentOwnershipMap: architecture=安定設計、test-design=受入対応、final-review=判定と参照、CI=実測集合。",
+      "template_variables": ["{{ARCHITECTURE_DOC}}", "{{TEST_DESIGN_DOC}}", "{{CI_RUN}}"],
+      "reuse_surface": "reference",
+      "negative_cases": ["凍結証跡として commit と observed_at を持つ inventory は削除対象にしない。"],
+      "re_audit_trigger": "テストファイルまたは受入項目の追加時"
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "resolveTenantDb と新規 tenant への db_binding 書込みを除去し、controlDb だけを残したため speculative shard abstraction は解消した。既存列は legacy schema として未使用と明記され、現行実行経路へ漏れない。",
+        "Shell=session boundary、ShellFrame=layout、SettingsPage=tenant feature state、CreateTenantForm=再利用可能な mutation form という component 境界は Iteration 2 から回帰していない。新しい session lifecycle と release gate は backend/CI に閉じ、frontend の抽象層を増やしていない。",
+        "Outlet key、request generation、AbortSignal、issued tenant guard はそれぞれ component state、async completion、transport、secret display を守る。見かけの重複を一つの汎用 hook へ統合すると失敗面が隠れるため、現状の局所重複は適切である。",
+        "SettingsPage をさらに members/invites ごとに分割する根拠は current diff にない。同じ remote-resource lifecycle が別 feature で再発するまで共有 query abstraction を作らない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["単一D1という宣言と db.ts 実装が一致する。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["session/layout/feature/form の状態寿命が component 境界に対応する。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["将来 shard 用 resolver を現在の repository contract から除去した。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["新規抽象・循環依存・package dependency は current diff にない。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.96,
+      "reusable_abstraction": "StateLifetimeBoundary: session、layout、tenant resource、form mutation を寿命と所有者で分ける。",
+      "template_variables": ["{{SESSION_BOUNDARY}}", "{{FEATURE_SCOPE_KEY}}", "{{MUTATION_OWNER}}"],
+      "reuse_surface": "template",
+      "negative_cases": ["行数だけを理由に cohesive feature page を細分化しない。", "将来 shard の可能性だけで locator/resolver を先取りしない。"],
+      "re_audit_trigger": "同型 resource lifecycle が3 feature以上へ増えた時"
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue は retry stub を改善するのではなく『処理と終端契約がない consumer をなぜ配備するのか』を問い直し、consumer 自体を撤去した。前提を変えたため double-loop 修正である。",
+        "文書 drift に対して件数を79へ更新せず固定件数を廃止した点、DB resolver に分岐を足さず抽象自体を除去した点も、局所値ではなく維持モデルを修正している。",
+        "legal 文面は app implementation が推測して埋める対象ではない。public terms/privacy の最終文言は release scope 内の human-owned prerequisite、automatic refactor scope 外であり、check:release が未記入を止める現在の依存表現は適切である。",
+        "ただし deploy workflow は legal 文面が未確定の間は意図的に停止する。これはコード欠陥ではなく公開可否の既知状態であり、owner input が完了条件である。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["owner manual は legal 未実施と release gate を同時に明示する。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["legal の不足内容・所有者・停止点が列挙される。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["human-owned content と machine-owned enforcement を分離している。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["deploy は check:release:deploy を migration より先に実行する。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.94,
+      "reusable_abstraction": "HumanDecisionGate: 内容決定は owner、未決検出と副作用停止は automation が担う。",
+      "template_variables": ["{{HUMAN_OWNED_INPUT}}", "{{RELEASE_GATE_COMMAND}}", "{{SIDE_EFFECT_STEP}}"],
+      "reuse_surface": "workflow",
+      "negative_cases": ["legal 文面を技術 refactor の自動修正で確定しない。", "未確定を黙認して deploy を続行しない。"],
+      "re_audit_trigger": "public terms/privacy の確定時または release 実行時"
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "残る docs/spec 重複の代替案を7件比較した: (1) final-review の file inventory を削り architecture/test-design へ参照、(2) inventory を生成、(3) CI で複数文書の同期を検査、(4) docs を一冊へ統合、(5) commit固定の凍結証跡化、(6) frontmatter ownership を付与、(7)現状維持。最小かつ新しい正本を増やさない案は(1)である。",
+        "pagination の代替案を6件比較した: (1) server hard cap、(2) cursor pagination、(3) offset pagination、(4) search-only UI、(5) virtualized all-fetch、(6)現状維持+明示容量契約。現在必要なのは想定最大と overflow behavior の決定であり、規模が小さいなら(1)、増加要件が確定した時だけ(2)を選ぶ。",
+        "component の代替案を5件比較した: 現状維持、SettingsPage追加分割、汎用 resource hook、state library導入、Shellへ再統合。現在の状態寿命と失敗面には現状維持が最小で、他案は再発回数の証拠が不足する。",
+        "legal の代替案は owner確定+gate、仮文言で公開、feature flagで非公開、外部legal service、deploy手動承認。仮文言公開は不適切で、owner確定+既存gateが現在の最小案である。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["各代替案は既存 source/config の前提と矛盾しない形で比較した。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["docs、pagination、component、legal で各5件以上の選択肢を検討した。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["最小案は新たな生成物や汎用層を増やさない。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["選択案は既存 CI/release dependency を保持する。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "OptionBeforeAbstraction: hard cap、pagination、generation、manual gate を再発頻度と容量閾値で選ぶ。",
+      "template_variables": ["{{ALTERNATIVES}}", "{{SCALE_THRESHOLD}}", "{{OWNER}}"],
+      "reuse_surface": "reference",
+      "negative_cases": ["選択肢数を満たすためだけに現行制約へ適合しない案を採用しない。"],
+      "re_audit_trigger": "容量要件または文書 owner の変更時"
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue の安全性を handler 内で解く代わりに consumer deployment を消すことで terminal loss 経路自体をなくした。処理未実装という制約では DLQ追加より小さい水平解である。",
+        "文書同期を別の generator で解くと正本が増える。final-review を判定・リンクへ縮退し、既に意味を所有する architecture/test-design に委ねる方が変更経路を減らす。",
+        "pagination を UI widget の問題ではなく cardinality contract の問題として扱う。先に最大件数と overflow を決めれば、小規模運用では hard cap だけで十分な可能性がある。",
+        "legal を執筆問題ではなく副作用 gate として扱い、人間判断を待つ間も誤公開を機械的に防ぐ。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["consumer不在と producer予約の説明が一致する。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["終端消失経路を構成から除去した。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["解決策が現 feature の実装済み責務を越えない。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["producer は未実装 consumer に依存しない。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "RemoveUnsafeEdge: 空実装を堅牢化する前に未使用 dependency edge を構成から除去する。",
+      "template_variables": ["{{UNREADY_CONSUMER}}", "{{FUTURE_FEATURE}}"],
+      "reuse_surface": "config",
+      "negative_cases": ["producer が既に本番 message を投入する場合は consumer 撤去だけで解決しない。"],
+      "re_audit_trigger": "collect producer または consumer 実装時"
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue の『安全な stub』は存在するほど message を失わせたが、stub をなくすと将来機能の土台が減るように見えて現在の安全性は上がる。producer binding だけの予約が最小の正しい土台である。",
+        "docs の詳細さは信頼を上げるように見えるが、current file inventory は追加直後から session-lifecycle を漏らした。詳細を final-review から削るほど、ownership が明確になり正確性が上がる。",
+        "frontend の三重 scope guard は重複に見えるが異なる failure surface を守るため削除が逆機能になる。一方、docs inventory は同じ変更理由を持つため削除が正機能になる。DRY は表面形ではなく失効理由で判定すべきである。",
+        "pagination を早く導入すると将来性が上がるように見えるが、件数契約なしでは page size と ordering も推測になる。先に contract を小さく定義する方が拡張可能性を高める。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["Queue の強い fail-closed 表現は current diff から消えた。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["将来 consumer の必要条件として terminal failure 契約を明記した。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["重複削除の適否を failure surface と変更理由で区別した。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["未実装 consumer への runtime dependency はない。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.96,
+      "reusable_abstraction": "ChangeReasonDRY: 同時に失効する記述は一意化し、異なる failure surface の防御は統合しない。",
+      "template_variables": ["{{CHANGE_REASON}}", "{{FAILURE_SURFACE}}"],
+      "reuse_surface": "reference",
+      "negative_cases": ["防御コードの構文類似だけで scope guards を削除しない。"],
+      "re_audit_trigger": "同じ事実を別文書へ追加する時"
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "current component 構成は OS の process boundary に類似する。Shell が認証session、ShellFrame が chrome、route page が process固有stateを所有し、tenant key は process identity として旧stateを破棄する。責務境界は自然である。",
+        "release gate は型検査に類似し、human-owned legal text を生成せず『未確定値を持つ artifact は deploy できない』と制約する。この分業は秘密値・OAuth・legal の異質な前提を一つの副作用前検査へ束ねる。",
+        "test-design は source map、CI run は実行 binary に類似する。final-review が同じ symbol table を再記載すると drift するため、判定から source map へ参照する方がよい。",
+        "member/invite pagination は storage engine より API protocol の契約に類似する。cursor実装より先に順序、上限、overflow を規定する必要がある。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["component名と状態所有が route-shell analogy に一致する。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["session、frame、feature、form の主要境界が揃う。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["汎用 state manager を追加せず domain語彙を保つ。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["route shell の依存方向は一方向である。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "RouteProcessBoundary: identity が変わると feature state を remount し、frame と session は上位で維持する。",
+      "template_variables": ["{{IDENTITY_KEY}}", "{{SESSION_OWNER}}", "{{FEATURE_STATE_OWNER}}"],
+      "reuse_surface": "template",
+      "negative_cases": ["全 route が同じ state lifetime の単画面ではこの階層を強制しない。"],
+      "re_audit_trigger": "nested route または跨tenant cache追加時"
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "もし未実装 collect message が投入されても current Worker に consumer binding がないため、旧構成の有限 retry 後削除経路へ入らない。consumer追加時は DLQ/redrive または明示 loss 契約が再監査条件になる。",
+        "もし logout 後に再loginしても users.last_tenant_id が session寿命と独立して選好を保持する。もし期限切れsessionが大量でも login一回のcleanupは100件で止まり、通常要求を無制限走査にしない。",
+        "もし member/invite が10倍・100倍になれば listMembers/listPendingInvites と SettingsPage は依然全件取得・描画する。だが cursor pagination を直ちに入れるのではなく、想定最大、stable ordering、overflow behavior の決定が current feature 内の未完 contract である。",
+        "pagination実装の scope はその contract が hard cap を超える規模を要求した場合の後続作業。小さい組織上限を server で強制できるなら pagination は過剰である。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["Queue/session の極端条件と current configuration は矛盾しない。"], "violation_count": 0},
+        "C2": {"verdict": "FAIL", "evidence": ["member/invite collection の想定最大、ordering、overflow behavior が未定義である。"], "violation_count": 1},
+        "C3": {"verdict": "PASS", "evidence": ["pagination実装を容量契約から分離して scope を明示した。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["current Queue dependency break は consumer撤去で解消した。"], "violation_count": 0}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "capacity-contract",
+          "description": "member と pending invite の collection contract に最大件数、安定順序、overflow behavior がない。pagination実装そのものは規模次第だが、容量判断は既存 S4-S6 API の scope 内である。",
+          "recommended_intervention": "current feature では想定最大件数を決め、小規模なら作成時 hard cap と明示 sort を実装・文書化する。上限を超える利用要件が確定した場合だけ cursor pagination、index、API response、UI paging を一組の後続 feature とする。",
+          "condition_signal": "omission",
+          "location": {"file": "src/repositories/tenant-scoped-repository.ts", "line": 39, "section": "listMembers"},
+          "root_cause": "RC-UNBOUNDED-LISTS: tenant総数だけを容量変数とし、tenant内collectionのcardinalityを要件化していない。"
+        }
+      ],
+      "score": 0.78,
+      "reusable_abstraction": "CardinalityDecision: max、sort、overflow を先に決め、hard cap と cursor pagination を規模で分岐する。",
+      "template_variables": ["{{MAX_COLLECTION_SIZE}}", "{{STABLE_SORT_KEY}}", "{{OVERFLOW_BEHAVIOR}}", "{{PAGE_SIZE}}"],
+      "reuse_surface": "reference",
+      "negative_cases": ["serverで小さいhard capを保証するcollectionへpaginationを機械導入しない。"],
+      "re_audit_trigger": "member/invite最大件数の決定時"
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見開発者には Shell、ShellFrame、SettingsPage、CreateTenantForm の名前から責務を推測でき、巨大componentへ戻る回帰はない。tenant切替時のloadingとretryも利用者が次の操作を理解できる。",
+        "初見運用者には『producerのみ、consumerは後続』『公開前検査で草案を停止』が owner manual に明記され、Iteration 2 の fail-closed 誤解は解消した。",
+        "一方、final-review のテスト列挙を読む初見者は session lifecycle が検証されていないと誤解する。test-design へ一意化すれば『どこを見れば受入対応が分かるか』も単純になる。",
+        "pagination は『大規模対応を今すぐ実装』ではなく『何人まで扱う製品かを先に決める』と説明する方が非専門家にも判断可能である。legal は ownerが内容を決め、機械が誤公開だけを止めると説明できる。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["詳細 test inventory から session lifecycle が見えない。"], "violation_count": 1},
+        "C2": {"verdict": "PASS", "evidence": ["利用者向け recovery、運用者向け release blocker、Queue scope は明示される。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["component名と実責務、Queue説明と構成が一致する。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["初見でも deploy前提と owner action を辿れる。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.88,
+      "reusable_abstraction": "SingleReaderPath: 初見読者が architecture、test-design、owner manual のどれを正本として読むか一意にする。",
+      "template_variables": ["{{READER_ROLE}}", "{{CANONICAL_DOC}}"],
+      "reuse_surface": "reference",
+      "negative_cases": ["異なる読者目的の説明まで一冊へ統合しない。"],
+      "re_audit_trigger": "setup/architecture/test docsの追加時"
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": ["final-review/test-design の詳細 test inventory が current session-lifecycle.test.ts を落としている。"],
+      "violation_count": 1
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": ["member/invite collection の最大件数・安定順序・overflow behavior が未定義である。", "test-design に session lifecycle と受入の対応がない。"],
+      "violation_count": 2
+    },
+    "C3": {
+      "verdict": "PASS",
+      "evidence": ["Queue、単一D1、session lifetime、tenant name、CI/release gate の source/config/spec は current diff で整合した。", "component abstraction は Iteration 2 から回帰せず、過剰な共通層も追加されていない。"],
+      "violation_count": 0
+    },
+    "C4": {
+      "verdict": "PASS",
+      "evidence": ["未実装 Queue consumer dependency は撤去され、CI/deploy の gates は副作用前に接続された。", "legal は human-owned release prerequisite として未確定時に deploy を止める。"],
+      "violation_count": 0
+    }
+  },
+  "variable_abstraction": [
+    {"concrete_value": "100 sessions/login", "variable_name": "{{SESSION_CLEANUP_BATCH_SIZE}}", "default_value": "100", "source_trace": "src/usecases/common.ts:7; src/usecases/session.ts:47"},
+    {"concrete_value": "60 Unicode code points", "variable_name": "{{TENANT_NAME_MAX_LENGTH}}", "default_value": "60", "source_trace": "src/usecases/common.ts:39"},
+    {"concrete_value": "producer binding only", "variable_name": "{{QUEUE_DEPLOYMENT_STAGE}}", "default_value": "producer-only reservation", "source_trace": "wrangler.toml:31; src/index.ts:10"},
+    {"concrete_value": "legal draft markers", "variable_name": "{{RELEASE_BLOCKER_PATTERNS}}", "default_value": "草案|公開前に|記入します|（運営者", "source_trace": "scripts/check-release-readiness.mjs:8"},
+    {"concrete_value": "tenantId", "variable_name": "{{RESOURCE_SCOPE_KEY}}", "default_value": "tenantId", "source_trace": "web/pages/Shell.tsx; iteration2 finding 11"},
+    {"concrete_value": "undecided", "variable_name": "{{MAX_COLLECTION_SIZE}}", "default_value": "product decision required", "source_trace": "src/repositories/tenant-scoped-repository.ts:39"}
+  ],
+  "thought_method_coverage": {
+    "used": ["meta", "abstraction", "double-loop", "brainstorming", "lateral", "paradox", "analogy", "if", "naive"],
+    "skipped_with_reason": [],
+    "total": 30
+  },
+  "reusable_abstraction": [
+    {
+      "name": "DocumentOwnershipMap",
+      "purpose": "architecture、test-design、final-review、CI の責務を分け、同じ mutable inventory を複製しない。",
+      "source_trace": "docs/feat-platform-tenant-auth/final-review.md:23; docs/feat-platform-tenant-auth/test-design.md:16",
+      "reuse_surface": "reference",
+      "not_applicable_when": "reviewed_commit付きの凍結証跡"
+    },
+    {
+      "name": "StateLifetimeBoundary",
+      "purpose": "session、layout、tenant feature、mutation form を状態寿命で分離する。",
+      "source_trace": "web/pages/Shell.tsx; web/components/ShellFrame.tsx; web/pages/SettingsPage.tsx",
+      "reuse_surface": "template",
+      "not_applicable_when": "単一画面で状態寿命が同じ場合"
+    },
+    {
+      "name": "HumanDecisionGate",
+      "purpose": "ownerが決める legal/外部設定を自動生成せず、未確定時の deploy だけを機械停止する。",
+      "source_trace": "scripts/check-release-readiness.mjs:6; .github/workflows/deploy.yml:30",
+      "reuse_surface": "workflow",
+      "not_applicable_when": "入力が機械的に導出可能な場合"
+    },
+    {
+      "name": "CardinalityDecision",
+      "purpose": "collectionのmax、sort、overflowを決め、hard capかcursor paginationかを規模で選ぶ。",
+      "source_trace": "src/repositories/tenant-scoped-repository.ts:39",
+      "reuse_surface": "reference",
+      "not_applicable_when": "単一固定要素のresource"
+    }
+  ],
+  "template_variables": [
+    {"name": "{{ARCHITECTURE_DOC}}", "meaning": "安定設計の正本文書", "default": "docs/feat-platform-tenant-auth/architecture.md", "required": true, "not_applicable_when": "設計文書を持たない場合"},
+    {"name": "{{TEST_DESIGN_DOC}}", "meaning": "受入とtestの一意な対応表", "default": "docs/feat-platform-tenant-auth/test-design.md", "required": true, "not_applicable_when": "test設計を別systemで管理する場合"},
+    {"name": "{{SESSION_CLEANUP_BATCH_SIZE}}", "meaning": "一要求で削除する期限切れsession数", "default": "100", "required": true, "not_applicable_when": "session永続化がない場合"},
+    {"name": "{{MAX_COLLECTION_SIZE}}", "meaning": "tenant内collectionの想定最大または強制上限", "default": "product decision required", "required": true, "not_applicable_when": "collection APIがない場合"},
+    {"name": "{{HUMAN_OWNED_INPUT}}", "meaning": "automationが推測してはならない公開前入力", "default": "legal identity/contact/effective date", "required": true, "not_applicable_when": "公開副作用がない場合"}
+  ],
+  "negative_cases": [
+    "Queue producerが本番messageを投入し始めた後はconsumer撤去を安全策にせず、処理・retry budget・terminal sink・redriveを一体で設計する。",
+    "legal文言はowner判断が必要なため、コード品質改善の名目で自動確定しない。",
+    "paginationは容量契約なしに導入せず、小さいhard capで十分なら採用しない。",
+    "Outlet key、generation、AbortSignal、issued tenant guardは異なるfailure surfaceを守るため見かけの重複だけで削除しない。",
+    "final-review、architecture、test-designを一冊へ統合して異なる読者目的まで失わない。重複するmutable inventoryだけを削る。",
+    "既存db_binding列をlegacy schemaとして残すことと、runtime shard abstractionを残すことを同一視しない。",
+    "テスト件数を文書へ再記載せず、CI結果を実測正本とする。",
+    "component行数だけを理由にSettingsPageをさらに分割しない。"
+  ]
+}

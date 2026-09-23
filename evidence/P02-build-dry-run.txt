@@ -1,0 +1,33 @@
+
+> youtube-analytics@ build <repo>
+> pnpm build:web && wrangler deploy --dry-run --outdir dist/worker
+
+
+> youtube-analytics@ build:web <repo>
+> vite build
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 95 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.39 kB │ gzip:  0.28 kB
+dist/web/assets/index-_X_3eZUL.css    3.00 kB │ gzip:  1.08 kB
+dist/web/assets/index-Byao8ot5.js   272.20 kB │ gzip: 86.28 kB
+
+✓ built in 118ms
+
+ ⛅️ wrangler 4.136.1
+────────────────────
+✨ Read 6 files from the assets directory <repo>/dist/web
+Total Upload: 109.05 KiB / gzip: 27.34 KiB
+Your Worker has access to the following bindings:
+Binding                                                     Resource                  
+env.COLLECT_QUEUE (collect-queue)                           Queue                     
+env.DB (youtube-analytics-db)                               D1 Database               
+env.MEDIA (youtube-analytics-media)                         R2 Bucket                 
+env.ASSETS                                                  Assets                    
+env.MAX_TENANTS ("100")                                     Environment Variable      
+env.GOOGLE_CLIENT_ID ("REPLACE_WITH_GOOGLE_CLIENT_ID")      Environment Variable      
+
+--dry-run: exiting now.

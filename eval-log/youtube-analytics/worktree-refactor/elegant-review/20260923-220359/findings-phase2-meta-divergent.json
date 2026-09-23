@@ -1,0 +1,877 @@
+{
+  "agent": "elegant-meta-divergent-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "評価枠組みを一段上げて見ると、現行の受入 A1〜A6 は認証・越境・招待・上限・CI の局所挙動をよく覆う一方、後続 feature へ渡す境界（tenant 別 DB 解決、Queue/Cron の未実装期間、画面の tenant 切替時の状態破棄）は受入集合に入っていない。docs/feat-platform-tenant-auth/requirements.md:7-14 と tests/platform/routes.ts:13-41 は HTTP ルートを網羅するが、これらの handoff seam はルート外である。",
+        "運用状態を説明する文書が複数の手書きスナップショットになっている。README.md:8 は未コミット、docs/setup/README.md:16-28 は commit 済みだが push 未実施、docs/setup/environment.md:84 は未コミットとし、現在のローカル Git 参照（HEAD と origin/feat/platform-tenant-auth が同一）と同時には成立しない。",
+        "良い枠組みとして、機能仕様・実装写像・受入証跡が docs/feat-platform-tenant-auth 配下で分かれ、現行 feature と後続5 feature の境界は明記されている。問題は『現在状態』だけが正本化されず、時間とともに自己矛盾する点である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "README.md:8、docs/setup/README.md:16-28、docs/setup/environment.md:84 の commit/push 状態が相互に矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "A1〜A6 は明示されるが、後続 feature 用 seam の失敗時挙動と tenant 切替中の UI 状態は required-element checklist にない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "現在状態の説明が実装・Git状態へ追従せず、初見の作業開始判断と整合しない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "現行 feature の依存 DAG は読めるが、未実装 seam を後続 feature の開始条件として検証する gate はない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "doc",
+          "description": "実装の現在状態を示す文書が、未コミット・commit済み・push未実施という互いに両立しない状態を表示している。初見利用者はどの手順から再開すべきか決められず、完了済み操作の再実行や必要操作の取りこぼしにつながる。",
+          "recommended_intervention": "可変な進捗は1つの機械可読 status artifact（commit SHA、upstream 関係、外部確認の observed_at を含む）を正本にし、README 群はそこへのリンクと不変の手順だけを持たせる。過去の受入文書は『観測時点のスナップショット』と明記して現在状態を主張しない。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "README.md",
+            "line": 8,
+            "section": "現況"
+          },
+          "root_cause": "進捗という高頻度で変わる値を複数文書へ手作業で複製し、更新トリガーと正本を定義していない。"
+        }
+      ],
+      "score": 0.55,
+      "reusable_abstraction": "EvidenceSnapshot: mutable な進捗を observed_at・source・commit_ref 付きスナップショットとして扱い、不変仕様から分離する。",
+      "template_variables": [
+        "{{STATUS_SOURCE}}",
+        "{{COMMIT_REF}}",
+        "{{OBSERVED_AT}}"
+      ],
+      "reuse_surface": "governance-log",
+      "negative_cases": [
+        "履歴文書が明示的に過去時点の証跡として凍結され、現在状態を案内しない場合は自動更新しない。"
+      ],
+      "re_audit_trigger": "commit、push、PR merge、deploy、preview 受入のいずれかが完了した時"
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "TenantContext と requirePermission は『誰が・どの tenant で・どの役割か』を usecase 入口に固定する良い抽象化で、src/domain/tenant-context.ts:15-37 と src/http/middleware.ts:54-67 の境界は具体的かつ検証可能である。",
+        "一方、TenantScopedRepository は security scope（全 SQL に tenant_id を入れる）と physical storage scope（どの D1 binding を使うか）を同じ名前に畳んでいる。現在は users・members・invites・sessions という control-plane 表もこの repository から触るため、将来 tenant data DB を分離すると users JOIN や session 更新を tenant DB 側へ誤って運ぶ危険がある。",
+        "src/repositories/db.ts:13-15 に resolveTenantDb はあるが、src/usecases/members.ts:8-10 と src/usecases/invites.ts:10-12 は常に controlDb を渡し、tenants.db_binding を読む呼出しは worktree 内にない。docs/feat-platform-tenant-auth/architecture.md:35-47 が示す『解決関数1か所』『将来は拡張だけ』という抽象化は、実行経路に接続されていない speculative seam である。",
+        "抽象化の適切な境界は、ControlPlaneRepository（users/tenants/members/invites/sessions）、TenantLocator（control DB から db_binding を解決）、TenantDataRepository（業務表だけ）の3つである。tenant_id による認可境界と D1 binding の物理境界を同一クラスにしない方が、現在の単一 DB と将来の分割の双方を表現できる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "現時点で binding=DB の単一構成だけを使う限り、全 repository は同じ D1 を一貫して参照する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "db_binding を control DB から取得し、Bindings の実 binding へ安全に写像する locator と、そのテストが欠けている。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "docs/feat-platform-tenant-auth/architecture.md:37,46 は DB 解決を集約済みと説明するが、resolveTenantDb へ到達する production call path が存在しない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "将来の db_binding 切替は resolver だけでなく、binding 値の取得・Bindings 型・control/data repository 分離に依存するため、現在の seam だけでは DAG が完結しない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "critical",
+          "bucket": "schema",
+          "description": "将来の tenant 別 D1 解決を1か所に集約したという設計説明に対し、resolveTenantDb はどこからも呼ばれず、tenants.db_binding も読まれない。さらに TenantScopedRepository は control-plane 表を扱うため、単に resolver を使い始めると users JOIN や sessions 更新の配置まで破綻する。",
+          "recommended_intervention": "現 feature では未使用 seam を削除して YAGNI として後続 feature で設計し直すか、後続着手前に ControlPlaneRepository / TenantLocator / TenantDataRepository を分離する。後者では db_binding の閉列挙・Bindings への型安全な写像・未知 binding の fail-closed・control DB と tenant DB が異なる結合テストを追加する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "src/repositories/db.ts",
+            "line": 13,
+            "section": "resolveTenantDb"
+          },
+          "root_cause": "将来の変動点を関数1個として先取りしたが、その変動点に必要な上流コンテキスト伝播と control/data plane の責務分離を抽象化していない。"
+        }
+      ],
+      "score": 0.47,
+      "reusable_abstraction": "TenantLocator + ControlPlaneRepository + TenantDataRepository の三分割。認可スコープと物理保存先スコープを直交させる。",
+      "template_variables": [
+        "{{CONTROL_DB_BINDING}}",
+        "{{TENANT_DB_BINDING}}",
+        "{{TENANT_ID}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "全期間を通して単一 D1 しか使わないと確定した場合は TenantLocator を導入せず、未使用の db_binding と resolver を削除する方が単純である。"
+      ],
+      "re_audit_trigger": "2つ目の D1 binding を追加する時、または最初の業務データ repository を実装する時"
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "単一ループ改善は機能している。docs/feat-platform-tenant-auth/design-review.md:48-54 はセキュリティヘッダ、脆弱依存、lint、DEV_LOGIN 漏れを検出して修正し、docs/feat-platform-tenant-auth/final-review.md:81-92 は未使用ファイルを削除している。",
+        "しかしルール自体を見直す外側のループは弱い。レビュー完了後に OAuth client ID と commit/push 状態が変わった結果、docs/feat-platform-tenant-auth/qa-report.md:41 は現在もダミー値と記述し、README 群の進捗も分岐した。『レビューで直したら完了』という停止条件に、状態変更後の証跡失効が含まれていない。",
+        "再発防止には内容をもう一度手で同期するだけでなく、mutable claim に re_audit_trigger を付け、setup/deploy の状態遷移が古い証跡を stale にする規範へ変える必要がある。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "docs/feat-platform-tenant-auth/qa-report.md:41 の placeholder 主張は wrangler.toml:18 の設定済み状態と矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "個別レビューの是正記録は揃うが、是正後に前提が変わった場合の invalidation checklist がない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "品質保証レポートが評価時点のスナップショットと明示されず、現在設定の説明として読めてしまう。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "setup 状態変更から README・qa-report・acceptance の再監査へ至る依存エッジが自動化されていない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "doc",
+          "description": "品質保証レポートが GOOGLE_CLIENT_ID をダミーのままと記録する一方、wrangler 設定には実 client ID が入っている。過去の安全確認が現在設定にも適用済みであるかのように見え、証跡の鮮度を誤認させる。",
+          "recommended_intervention": "qa-report を観測時点で凍結するなら reviewed_commit と observed_at を追加し『現在値ではない』と明記する。現在状態を示すなら、placeholder 検査と設定済み検査を CI の相反する状態チェックとして実装し、どちらのフェーズかを status artifact から決める。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/feat-platform-tenant-auth/qa-report.md",
+            "line": 41,
+            "section": "Secrets の非露出"
+          },
+          "root_cause": "レビュー成果物に有効期限・対象 commit・再監査トリガーがなく、後続セットアップが前回の判定前提を変えても stale と判定されない。"
+        }
+      ],
+      "score": 0.56,
+      "reusable_abstraction": "EvidenceInvalidationRule: 証跡に reviewed_commit・observed_at・re_audit_trigger を持たせ、前提変更時に stale へ遷移させる。",
+      "template_variables": [
+        "{{REVIEWED_COMMIT}}",
+        "{{OBSERVED_AT}}",
+        "{{RE_AUDIT_TRIGGER}}"
+      ],
+      "reuse_surface": "governance-log",
+      "negative_cases": [
+        "法令文や不変のアーキテクチャ原則など、実行時状態に依存しない記述は状態変更で stale にしない。"
+      ],
+      "re_audit_trigger": "wrangler vars、Secrets、外部 resource、Git state のいずれかが変わった時"
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "tenant 切替時の Settings 状態管理について批判を保留して代替案を7件出した。(1) SettingsPage を key={tenantId} で remount、(2) members/invites/issued を tenantId 付き reducer で管理、(3) TanStack Query 等の queryKey=[tenantId,resource] と cancel を利用、(4) URL を /tenants/:tenantId/settings にして route identity を状態境界にする、(5) AbortController で旧 load を中止、(6) request generation 番号で古い応答を無視、(7) tenant 切替中は破壊操作を disable し skeleton へ戻す。",
+        "最小変更へ収束するなら (1)+(6)+(7) が明快である。key だけでは Shell.reload 前後の並行応答を完全には防げず、generation だけでは issued link の local state を消さないため、component identity と async identity の両方が必要である。",
+        "web/pages/Shell.tsx:198-218 では members/invites が tenant と独立した配列として残り、load の応答がどの base 用か検証されない。旧 tenant の遅い応答が新 tenant の state を上書きし、その後の操作 URL は新しい base を使うため、表示対象と操作対象が分離する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "通常の単一 tenant 操作では base と state が一致し、API の TenantContext も越境を拒否する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "tenant 変更時の reset/cancel/stale-response guard と、切替中の操作禁止が実装・E2Eから漏れている。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "画面に表示する resource tenant と、action が使う base tenant が同一であるという不変条件を状態モデルが表現していない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "非同期 load の完了順が tenant 切替順に依存せず、古い依存結果が新しい context へ流入できる。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "SettingsPage の members/invites state は tenantId で名前空間化されず、tenant 切替時にも保持される。旧 load が遅れて完了すると旧 tenant の行を新 tenant の base URL 下に表示し、同じ userId が両 tenant に存在する場合は、旧画面のつもりの役割変更・削除が新 tenant に適用され得る。",
+          "recommended_intervention": "SettingsPage を tenantId で remount し、load ごとに generation または AbortController を持たせ、応答時に現在 tenant と一致する場合だけ state を更新する。切替開始時に配列を空へ戻して操作を disable し、『設定画面上で高速に A→B 切替、A 応答を遅延、両 tenant に同一 member』の E2E/コンポーネントテストを追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "web/pages/Shell.tsx",
+            "line": 198,
+            "section": "SettingsPage resource state"
+          },
+          "root_cause": "server state を component lifetime に紐づけ、resource identity の一部である tenantId と request generation を state key に含めていない。"
+        }
+      ],
+      "score": 0.6,
+      "reusable_abstraction": "TenantBoundAsyncResource<T>: tenantId・generation・status・data を不可分に持ち、context 不一致の応答と操作を拒否する。",
+      "template_variables": [
+        "{{RESOURCE_SCOPE_ID}}",
+        "{{REQUEST_GENERATION}}",
+        "{{RESOURCE_STATUS}}"
+      ],
+      "reuse_surface": "template",
+      "negative_cases": [
+        "画面遷移が常に full reload で component と全 in-flight request が破棄される構成では generation guard は不要である。"
+      ],
+      "re_audit_trigger": "tenant 切替を伴う新しい画面・resource・mutation を追加する時"
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "HTTP キャッシュの namespace 原則を UI へ横移植すると、tenantId は cache key の必須部分であり、値だけでなく mutation target も同じ key に束縛すべきである。backend の TenantContext はこの原則を満たすが、frontend の Settings local state は満たさない。",
+        "分散システムの fencing token と同じく、request generation を tenant 切替ごとに増やせば遅延応答を決定論的に捨てられる。単なる useEffect cleanup より、何を stale と判定したかをテストしやすい。",
+        "InviteSection は web/pages/Shell.tsx:336-359 で base を prop として受けるが、issued は component local state で、base 変更時の reset がない。tenant A で発行した token URL が tenant B の設定画面でも表示され続け、利用者は B の招待だと思ってコピーできる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "発行済み URL 自体は server が返した正しい tenant A の URL で、token の改ざんはない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "base 変更時に issued を破棄する effect、tenantId 付き model、または key による remount がない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "現在表示中 tenant と表示中 invite URL の tenant が同一という UI の意味的一貫性を保証しない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "API token は正しい依存を持つが、UI component identity が tenant dependency を持たない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "InviteSection の issued URL は tenant 切替後も残る。複数 tenant の owner が A で招待を発行して B へ切り替えると、B の画面内に A の有効な bearer token URL が表示され、誤配布すると意図しない tenant へ参加させる。",
+          "recommended_intervention": "InviteSection を key={tenantId} で再生成するか、issued を {tenantId,url,expiresAt} として保存し current tenant と一致する時だけ表示・コピーする。base 変更時に email/role/issued/error も reset し、A 発行→B 切替で URL が消える E2E を追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "web/pages/Shell.tsx",
+            "line": 347,
+            "section": "InviteSection issued state"
+          },
+          "root_cause": "component の再利用を表示最適化として扱い、local state の所有スコープに tenant identity を含めていない。"
+        }
+      ],
+      "score": 0.53,
+      "reusable_abstraction": "ScopedCacheKey: resource・mutation・ephemeral secret の identity に tenantId を必須化する。",
+      "template_variables": [
+        "{{SCOPE_KEY}}",
+        "{{RESOURCE_KEY}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "tenant を跨がない単一 scope の画面、または切替時にページ全体を hard reload する画面には適用不要である。"
+      ],
+      "re_audit_trigger": "tenant 切替可能な画面で token、draft、選択値など ephemeral state を追加する時"
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "将来用インフラを先に宣言すると後続実装は速くなるが、src/index.ts:10-13 の consumer は未実装メッセージを成功として ack するため、『準備したこと』が rollback や誤投入時の復旧可能性を下げる逆説がある。",
+        "重複削除も常に善ではない。src/usecases/members.ts:8-10 と src/usecases/invites.ts:10-12 の scoped helper は重複しているが、今すぐ共通化すると controlDb と TenantScopedRepository の誤った物理境界を固定化する。先に DB 境界を決め、重複が同じ責務だと確定してから統合すべきである。",
+        "逆に、README 群の『現在状態』の重複は独立して変化し同じ意味を持つため、削除・正本化が有効である。重複は構文一致ではなく、変更理由と失効タイミングが同じかで判断する必要がある。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "現 feature が Queue 処理を scope_out とする説明と、stub 実装である説明自体は一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "stub の存在は記録されるが、誤投入・rollback・旧 message がある場合の安全な挙動は定義されない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "『処理はない』という scope 説明と『正常消費する』という runtime semantics の差が明示されていない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "後続 producer または rollback 前の message が届いた時、consumer dependency は成功として message を破棄し、再試行 DAG を切断する。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "未実装 Queue consumer が全 message を無条件 ack する。手動誤投入、段階 deploy、または daily-collection 実装後に現版へ rollback した場合、collect/cleanup message は成功扱いで不可逆に失われる。",
+          "recommended_intervention": "consumer 実装まで consumer binding 自体を宣言しないのが最小である。先行宣言が必須なら、未対応 kind/version は ack せず明示的に retry または dead-letter し、観測イベントを残す。後続 message には schema version を入れ、rollback compatibility test を追加する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "src/index.ts",
+            "line": 11,
+            "section": "queue handler"
+          },
+          "root_cause": "handler 必須という構成制約を満たすことを目的化し、placeholder の成功 semantics と将来メッセージの配送保証を分離しなかった。"
+        }
+      ],
+      "score": 0.5,
+      "reusable_abstraction": "FailClosedPlaceholder: 将来用 handler は未知入力を成功消費せず、未対応を観測可能かつ再処理可能にする。",
+      "template_variables": [
+        "{{MESSAGE_KIND}}",
+        "{{MESSAGE_SCHEMA_VERSION}}",
+        "{{DEAD_LETTER_POLICY}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "message が明示的な disposable probe で、破棄が契約上の成功である場合は ack-only handler が適切である。",
+        "見た目が同じ helper でも変更理由や将来の依存先が異なる場合、DRY 化しない。"
+      ],
+      "re_audit_trigger": "Queue producer の実装時、message schema 変更時、または Worker rollback 手順を確定する時"
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "tenant 切替を database transaction の commit に類推すると、選択 tenant の更新と、その tenant に依存する role/members/invites の invalidation は同じ境界で起きる必要がある。backend は session tenant を更新後、次 request で role を再解決してこの性質を持つ。",
+        "frontend は Shell.me と Settings の members/invites を別々に更新する。特に web/pages/Shell.tsx:263-273 は自己 role 変更後に load() を先に呼び、その後 reload() する。owner が別 owner を残して自分を editor/viewer に下げると、load は古い isOwner=true のまま owner-only invites を取得して 403 になり、reload に到達しない。",
+        "これは transaction commit 後に古い権限の read set を再利用するのと同じである。mutation response を新しい context として先に commit するか、親 context を invalidate してから子 resource を再取得すべきである。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "server は役割を request ごとに読み直し、自己降格後の owner-only API を正しく 403 にする。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "自己 role 変更の E2E と、mutation 後の context refresh 順序の受入条件がない。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "server の新 role と UI の me.currentTenant.role が mutation 成功後も一致しない経路がある。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "load 成功を reload の前提にした順序が、権限変更そのものによって成立しなくなる。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "owner が自分の role を下げると、更新後の load() は古い isOwner=true で招待一覧を要求して 403 となり、後続 reload() が実行されない。UI は自分を owner と表示して owner 操作を残し続ける。",
+          "recommended_intervention": "自己を含む role mutation 後は親の me を最初に reload/invalidate し、更新後 role で Settings を再生成する。より確実には changeRole API の返却 member を使って current user 変更を検知し、子 load を中止する。『owner 2名→自分を viewer に変更→owner UI が消え、閲覧は継続』の E2E を追加する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "web/pages/Shell.tsx",
+            "line": 269,
+            "section": "role change after-callback"
+          },
+          "root_cause": "mutation 後も権限 context が不変という前提で、子 resource refresh を親 authorization context refresh より先に置いた。"
+        }
+      ],
+      "score": 0.55,
+      "reusable_abstraction": "AuthorizationContextCommit: 権限を変える mutation 後は親 context を先に確定し、依存 resource は新 context から再構築する。",
+      "template_variables": [
+        "{{AUTH_CONTEXT}}",
+        "{{RESOURCE_INVALIDATION_ORDER}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "mutation が現在利用者の権限へ影響しないことを server 契約で保証できる場合は、子 resource のみ再取得してよい。"
+      ],
+      "re_audit_trigger": "role、membership、selected tenant、session を変更する mutation を追加する時"
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "もし tenant が上限の100件なら、Shell の select は100件を一度に表示する。機能的には動くが検索不能で、これは後続業務画面で検討すべき UX 上限である。",
+        "もし1 tenant の members/pending invites が10倍・100倍に増えたら、src/repositories/tenant-scoped-repository.ts:39-49,102-111 は LIMIT なしで全行を取得し、web/pages/Shell.tsx:251-306,431-446 は全 DOM を描画する。MAX_TENANTS はあるが、tenant 内 cardinality の契約がない。",
+        "もし tenant 切替を短時間に繰り返し、古い fetch が新しい fetch より遅く完了したら、Settings state は最後に到着した旧応答になる。もし queue 実装後に現版へ rollback したら、残 message は ack される。極端条件は通常経路では見えない context identity の欠落を同じ根から露呈する。",
+        "もし MAX_TENANTS=0 なら現実装はログインだけ許し tenant を作らず、NoTenant が受付停止を表示する。この境界は maxTenants の n>=0 と画面分岐で一貫しており、良い負例である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "MAX_TENANTS=0 と通常値の意味は maxTenants と UI の signupClosed で矛盾しない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "tenant 内 member/invite の最大件数、ページサイズ、応答サイズ、UI 描画上限が仕様・実装・テストにない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "global tenant 上限は100で整合するが、1 tenant 内規模の capacity model は未定義である。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "D1 query、API payload、React DOM の各段階が無制限 cardinality をそのまま次段へ渡す。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "member と pending invite の一覧に上限・pagination・cardinality 契約がない。招待発行回数や member 数が増えると、D1 全件読取、単一 JSON 応答、全行 DOM 描画が同時に増大し、Free tier とモバイル UI の両方で破綻点が不明である。",
+          "recommended_intervention": "想定最大 member/pending invite 数を要件化する。小さい hard cap を採るなら作成時に server で強制し境界テストを追加し、上限を設けないなら cursor pagination・安定 sort key・適切な index・ページング UI を一緒に導入する。単に frontend だけ slice して未表示行を操作不能にしない。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 39,
+            "section": "listMembers"
+          },
+          "root_cause": "global tenant 数だけを capacity constraint とし、tenant 内の集合 cardinality を設計変数として扱っていない。"
+        }
+      ],
+      "score": 0.58,
+      "reusable_abstraction": "CardinalityContract: 集合 API ごとに expected/max size、page size、sort stability、overflow behavior を定義する。",
+      "template_variables": [
+        "{{MAX_COLLECTION_SIZE}}",
+        "{{PAGE_SIZE}}",
+        "{{CURSOR_KEY}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "業務規則で member 数が極小の固定値に制限され、その制限を server とテストで強制する場合は pagination を入れない。"
+      ],
+      "re_audit_trigger": "member 招待の利用実績が想定上限の80%に達した時、または一覧 API を追加する時"
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見でも README.md:36-48 のリポジトリ地図と docs/setup/README.md:5-12 の読む文書の案内により、仕様・実装・運用資料の位置は把握しやすい。ログイン、招待、設定の文言も専門用語を抑えている。",
+        "一方、初見利用者が /api/me の一時障害に遭うと、web/pages/Shell.tsx:37-43 は error を入れるだけで me は null のまま、line 64 はエラー文字列を表示するだけで再試行操作を出さない。復旧しても利用者には refresh しか手段がなく、その説明もない。",
+        "初見の運用担当は README の未コミット記述、setup README の commit/push 記述、実際の Git 状態のどれを信じるか判断できない。専門家なら履歴を調べられるが、案内文書の役割はその調査を不要にすることである。",
+        "規約ページが草案で連絡先未記入である点は public/privacy.html:15,45-46 と public/terms.html:15 に明示され、docs/setup/README.md:43 も公開前作業として追跡しているため、現段階では隠れた欠落ではなく公開 gate として扱える。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "画面内の用語は一貫するが、開始状態の文書説明は初見には矛盾して見える。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初期データ読込失敗時の retry action、offline/一時障害の区別、回復状態が欠ける。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "ApiError の hint を表示する点は良いが、Shell の null state が loading と terminal error の両方を表す。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "401 は login へ遷移し、認証依存の回復経路は明確である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "Shell の初回 /api/me が一時的に失敗すると、画面はエラー文だけになり retry control を持たない。me=null が loading と error を兼ねるため自動再試行や回復表示もできず、初見利用者にはサービスが恒久的に壊れたように見える。",
+          "recommended_intervention": "Shell state を loading/success/error に分け、error 画面へ『再試行』ボタンと必要ならログアウト導線を出す。成功時は以前の error を clear する。API を一度失敗後に成功させ、refresh なしで復旧できる UI test を追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "web/pages/Shell.tsx",
+            "line": 37,
+            "section": "Shell reload/error state"
+          },
+          "root_cause": "nullable data だけで loading と error の状態機械を表し、回復遷移を UI 契約に含めていない。"
+        }
+      ],
+      "score": 0.66,
+      "reusable_abstraction": "RecoverableLoadState<T>: loading/success/error と retry transition を明示する初期読込状態機械。",
+      "template_variables": [
+        "{{LOAD_STATE}}",
+        "{{RETRY_ACTION}}"
+      ],
+      "reuse_surface": "template",
+      "negative_cases": [
+        "静的ページや失敗しないローカル計算には retry state を導入しない。",
+        "公開前であることが明示され、公開 gate に追跡済みの草案規約は、現段階の未追跡欠落として重複計上しない。"
+      ],
+      "re_audit_trigger": "初期データ fetch を持つ画面を追加する時、または error handling を共通化する時"
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "README.md:8、docs/setup/README.md:16-28、docs/setup/environment.md:84 の現在状態が競合する。",
+        "docs/feat-platform-tenant-auth/qa-report.md:41 の client ID placeholder 状態と wrangler.toml:18 の設定状態が競合する。"
+      ],
+      "violation_count": 2
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "tenant 切替時の Settings state reset/stale response guard がない。",
+        "InviteSection の issued URL を tenant 切替時に破棄しない。",
+        "member/invite 集合の cardinality contract がない。",
+        "Shell 初期読込失敗の retry transition がない。"
+      ],
+      "violation_count": 4
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "resolveTenantDb を集約点とする設計説明に対し、production call path と db_binding 読取が存在しない。"
+      ],
+      "violation_count": 1
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "未実装 Queue consumer が message を ack し、後続/rollback の再処理依存を切断する。",
+        "自己 role 変更後の子 load→親 reload の順序は、権限変更による 403 で親更新へ到達できない。"
+      ],
+      "violation_count": 2
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "youtube-analytics",
+      "variable_name": "{{PROJECT_NAME}}",
+      "default_value": "current package name",
+      "source_trace": "package.json:2; wrangler.toml:3",
+      "meaning": "package と Worker の論理プロジェクト名",
+      "required": true,
+      "not_applicable_when": "単一ファイルの再利用でプロジェクト識別子を持たない場合"
+    },
+    {
+      "concrete_value": "dist/web",
+      "variable_name": "{{WEB_ASSET_DIR}}",
+      "default_value": "dist/web",
+      "source_trace": "wrangler.toml:10; vite.config.ts:10",
+      "meaning": "frontend build と Workers assets が共有する出力先",
+      "required": true,
+      "not_applicable_when": "静的 assets を Worker と別 deploy unit で配信する場合"
+    },
+    {
+      "concrete_value": "DB",
+      "variable_name": "{{CONTROL_DB_BINDING}}",
+      "default_value": "DB",
+      "source_trace": "wrangler.toml:21; src/repositories/db.ts:5-6",
+      "meaning": "control-plane D1 binding 名",
+      "required": true,
+      "not_applicable_when": "D1 を利用しない場合"
+    },
+    {
+      "concrete_value": "collect-queue",
+      "variable_name": "{{COLLECT_QUEUE_NAME}}",
+      "default_value": "collect-queue",
+      "source_trace": "wrangler.toml:33,36",
+      "meaning": "定期収集 message の Queue 名",
+      "required": false,
+      "not_applicable_when": "定期収集 feature と Queue consumer を配備しない場合"
+    },
+    {
+      "concrete_value": "0 18 * * *",
+      "variable_name": "{{DAILY_CRON_UTC}}",
+      "default_value": "0 18 * * *",
+      "source_trace": "wrangler.toml:43",
+      "meaning": "日次収集・cleanup 起動の UTC Cron",
+      "required": false,
+      "not_applicable_when": "scheduled handler を配備しない場合"
+    },
+    {
+      "concrete_value": "100",
+      "variable_name": "{{MAX_TENANTS}}",
+      "default_value": "100",
+      "source_trace": "wrangler.toml:16; src/usecases/common.ts:21-24",
+      "meaning": "作成可能な active tenant の上限",
+      "required": true,
+      "not_applicable_when": "tenant を作成しない単一組織システムの場合"
+    },
+    {
+      "concrete_value": "30 days",
+      "variable_name": "{{SESSION_TTL_MS}}",
+      "default_value": "2592000000",
+      "source_trace": "src/usecases/common.ts:5; src/http/cookies.ts:28",
+      "meaning": "server session と Cookie の有効期間",
+      "required": true,
+      "not_applicable_when": "session を利用しない stateless API の場合"
+    },
+    {
+      "concrete_value": "7 days",
+      "variable_name": "{{INVITE_TTL_MS}}",
+      "default_value": "604800000",
+      "source_trace": "src/usecases/common.ts:6; src/usecases/invites.ts:33",
+      "meaning": "招待 token の有効期間",
+      "required": false,
+      "not_applicable_when": "招待フローを持たない場合"
+    },
+    {
+      "concrete_value": "https://accounts.google.com/o/oauth2/v2/auth",
+      "variable_name": "{{OIDC_AUTHORIZATION_ENDPOINT}}",
+      "default_value": "provider discovery document value",
+      "source_trace": "src/http/google-oauth.ts:8",
+      "meaning": "OIDC provider の authorization endpoint",
+      "required": true,
+      "not_applicable_when": "OIDC/OAuth login を使わない場合"
+    },
+    {
+      "concrete_value": "https://oauth2.googleapis.com/token",
+      "variable_name": "{{OIDC_TOKEN_ENDPOINT}}",
+      "default_value": "provider discovery document value",
+      "source_trace": "src/http/google-oauth.ts:9",
+      "meaning": "OIDC provider の token endpoint",
+      "required": true,
+      "not_applicable_when": "OIDC/OAuth login を使わない場合"
+    },
+    {
+      "concrete_value": "production OAuth client id (masked: ***)",
+      "variable_name": "{{GOOGLE_CLIENT_ID}}",
+      "default_value": "deployment-specific non-secret client id",
+      "source_trace": "wrangler.toml:18",
+      "meaning": "deployment ごとの OAuth public client identifier",
+      "required": true,
+      "not_applicable_when": "Google login を使わない場合"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "meta",
+      "abstraction",
+      "double-loop",
+      "brainstorming",
+      "lateral",
+      "paradox",
+      "analogy",
+      "if",
+      "naive"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  },
+  "reusable_abstraction": [
+    {
+      "name": "TenantBoundAsyncResource",
+      "purpose": "tenantId・request generation・status・data を不可分にし、古い応答と別 scope の mutation を拒否する。",
+      "source_trace": "web/pages/Shell.tsx:198-218",
+      "reuse_surface": "template",
+      "not_applicable_when": "scope 切替がない画面、または切替で hard reload する画面"
+    },
+    {
+      "name": "TenantStorageBoundary",
+      "purpose": "ControlPlaneRepository、TenantLocator、TenantDataRepository を分け、認可 scope と物理 DB binding を直交させる。",
+      "source_trace": "src/repositories/db.ts:1-15; src/repositories/tenant-scoped-repository.ts:20-28",
+      "reuse_surface": "reference",
+      "not_applicable_when": "永続的に単一 DB だけを使い、db_binding 自体を持たない場合"
+    },
+    {
+      "name": "EvidenceSnapshot",
+      "purpose": "可変な作業状態と品質証跡を commit_ref・observed_at・re_audit_trigger 付きで不変仕様から分離する。",
+      "source_trace": "README.md:5-10; docs/setup/README.md:14-28",
+      "reuse_surface": "governance-log",
+      "not_applicable_when": "現在状態を主張しない不変の参照資料"
+    },
+    {
+      "name": "FailClosedPlaceholder",
+      "purpose": "未実装 handler が未知の job/message を成功消費せず、再処理と観測可能性を保つ。",
+      "source_trace": "src/index.ts:7-13",
+      "reuse_surface": "reference",
+      "not_applicable_when": "入力が契約上 disposable で、破棄が明示的な成功である場合"
+    },
+    {
+      "name": "CardinalityContract",
+      "purpose": "集合 API の expected/max size、page size、sort key、overflow behavior を実装前に固定する。",
+      "source_trace": "src/repositories/tenant-scoped-repository.ts:39-49,102-111",
+      "reuse_surface": "reference",
+      "not_applicable_when": "小さな hard cap を server で強制し、境界テストで保証する場合"
+    }
+  ],
+  "template_variables": [
+    {
+      "name": "{{SCOPE_KEY}}",
+      "meaning": "UI/server resource を名前空間化する tenant 等の識別子",
+      "default": "tenantId",
+      "required": true,
+      "not_applicable_when": "単一 scope のみ"
+    },
+    {
+      "name": "{{REQUEST_GENERATION}}",
+      "meaning": "非同期応答が現在 context に属するか判定する fencing token",
+      "default": "monotonic integer",
+      "required": true,
+      "not_applicable_when": "in-flight request が存在しない同期処理"
+    },
+    {
+      "name": "{{CONTROL_DB_BINDING}}",
+      "meaning": "tenant metadata を保持する control-plane DB binding",
+      "default": "DB",
+      "required": true,
+      "not_applicable_when": "DBを使わない場合"
+    },
+    {
+      "name": "{{TENANT_DB_BINDING}}",
+      "meaning": "tenant 業務データの物理保存先 binding",
+      "default": "{{CONTROL_DB_BINDING}}",
+      "required": false,
+      "not_applicable_when": "tenant 別 DB 分割をしない場合"
+    },
+    {
+      "name": "{{MESSAGE_SCHEMA_VERSION}}",
+      "meaning": "Queue consumer が互換性を判断する message version",
+      "default": "1",
+      "required": false,
+      "not_applicable_when": "Queueを利用しない場合"
+    },
+    {
+      "name": "{{MAX_COLLECTION_SIZE}}",
+      "meaning": "一覧 resource の業務上の最大件数",
+      "default": "project decision required",
+      "required": true,
+      "not_applicable_when": "集合 resource を持たない場合"
+    },
+    {
+      "name": "{{OBSERVED_AT}}",
+      "meaning": "状態・証跡を観測した日時",
+      "default": "runtime UTC timestamp",
+      "required": true,
+      "not_applicable_when": "時点に依存しない不変仕様"
+    }
+  ],
+  "negative_cases": [
+    "単一 tenant で切替が存在しない構成では tenant-keyed UI state を一般化しない。",
+    "tenant 切替が hard reload を必ず伴い全 request が中止されるなら component generation guard は不要である。",
+    "control DB と tenant data DB を分けないと確定した場合は未使用 resolver を残さず削除する。",
+    "message が disposable probe で破棄を成功と定義する場合だけ ack-only placeholder を許容する。",
+    "member/invite 数を小さな hard cap で server 強制する場合は pagination を導入しない。",
+    "同じ数行の helper でも変更理由・データ配置・将来依存が異なるなら、重複削除を目的に共通化しない。",
+    "過去の受入文書が reviewed_commit と observed_at を持つ凍結証跡なら、現在状態との差を欠陥として扱わない。",
+    "公開前と明示され setup gate に追跡済みの規約草案は、現段階の隠れた omission として二重計上しない。"
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "agent": "elegant-system-strategic-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 19,
+      "paradigm_name": "systems",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "依存DAGは cron → Queue producer → collect/cleanup message → consumer → usecase/repository → D1/R2 と、route registration → authorization matrix → coverage test → CI → deploy に分かれる。今回の差分で Shell → keyed Outlet → Settings resource loader のtenant切替境界と OAuth fetch → AppError → redirect の異常系は解消した。",
+        "残存: wrangler.toml の稼働consumerは max_retries=3 だがDLQがなく、src/index.ts の未実装consumerは毎回retryするため、有限再試行の終端でmessageが失われる。独立承認も essential_problem_resolution=FAIL と判定している。",
+        "残存: 選択tenantは sessions 行から復元する一方、logoutはその行を削除する。30日session保持と『最後の選択を永続化』が同じ記録へ結合され、cleanupを正しく行うほど選好が消える。",
+        "新規顕在化: React component分割と queue/E2E test追加に対して feature正本のsource inventory・test countが更新されず、CIにも正本同期checkがない。後続5 featureの未実装自体は今回のblockerに数えない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["system-spec/spec-state.json:1499 のReact確定と architecture/youtube-analytics-system.md:77,117 および features/feat-web-screens-actions.md:36,62 の素のTypeScript記述が矛盾する。", "system-spec/00-requirements-definition.md:119 はGitHub Environments不使用を選ぶが .github/workflows/deploy.yml:19 は production environment を要求する。"], "violation_count": 2},
+        "C2": {"verdict": "FAIL", "evidence": ["wrangler.toml:35-39 と src/index.ts:21-24 は有限retry後の配送先を持たない。", "src/repositories/platform-repository.ts:202-218 はsession削除と選好復元を同じsessions表に置く。"], "violation_count": 2},
+        "C3": {"verdict": "FAIL", "evidence": ["docs/feat-platform-tenant-auth/final-review.md:42,49-50 は新しいDashboardPage/SettingsPage/components、queue-handler、shell-state E2Eを投影していない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["実行DAGのQueue終端とrelease前提が未接続であり、route網羅性は tests/platform/routes.ts:13-51 の手書き分類を唯一のoracleとしている。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "critical",
+          "bucket": "dependency-loop",
+          "condition_signal": "dependency_break",
+          "description": "残存: Queue consumerは即時ackではなくretryするよう改善されたが、max_retries=3の終端にDLQも失敗状態記録もなく、未実装のcollect/cleanup messageは最終的に削除される。",
+          "location": {"file": "wrangler.toml", "line": 35, "section": "queues.consumers"},
+          "root_cause": "retryをfail-closedの終端保証として扱い、有限再試行後のdelivery contractを設計・テストしていない。",
+          "recommended_intervention": "consumerにdead_letter_queueを設定し、DLQ監視と再投入手順を追加する。DLQを置けない間はproducer/consumerをrelease対象から外し、terminal deliveryを検証するintegration testを追加する。"
+        },
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "condition_signal": "contradiction",
+          "description": "残存: 最終選択tenantをsession履歴から復元する設計は、logout時削除・30日expiry cleanupと両立せず、選好の永続性かsession衛生のどちらかを損なう。",
+          "location": {"file": "src/repositories/platform-repository.ts", "line": 209, "section": "lastSelectedTenant"},
+          "root_cause": "ユーザー選好という長寿命状態を、認証sessionという短寿命・削除必須の状態へ同居させた。",
+          "recommended_intervention": "usersまたは専用user_preferencesにlast_tenant_idを保存し、membership確認後だけ採用する。sessionsはexpires_atで定期削除し、選好保持と認証保持を分離する。"
+        }
+      ],
+      "score": 0.42
+    },
+    {
+      "paradigm_id": 20,
+      "paradigm_name": "causal",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "Queue因果鎖は『handler未実装 → retry() → 600秒遅延 → 3回到達 → DLQなし → Cloudflare側で削除』であり、即時ackによる喪失は解消しても、喪失時刻を後ろへずらしただけである。",
+        "仕様因果鎖は『qa-061でReact確定 → architecture/featureへ未投影 → reviewerと実装者が異なる前提を使用 → docs inventory/test countも陳腐化 → 独立承認FAIL』である。",
+        "UI因果鎖は『tenant切替 → Outlet key変更/AbortController abort → 旧request破棄 → 旧tenant表示なし』となり、今回のE2Eで解消が確認された。OAuth fetch/JSON失敗も OAUTH_FAILED へ収束する。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["React選定とarchitecture/featureの記述差が同じ入力に異なる実装判断を生む。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["tests/platform/queue-handler.test.ts:5-15 はretry呼出しだけを検証し、max_retries終端の喪失を検出しない。"], "violation_count": 1},
+        "C3": {"verdict": "FAIL", "evidence": ["docs/feat-platform-tenant-auth/test-design.md:28,30 は76件/smokeのみだが独立承認のfresh runは79 unit testsとshell-state 12 casesを示す。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["retry helperからwrangler consumer policyへ渡る終端因果がtest seamに含まれない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "critical",
+          "bucket": "dependency-loop",
+          "condition_signal": "omission",
+          "description": "残存: Queue unit testがmessage.retry呼出しの局所因果だけを証明し、runtime設定を含む最終配送結果を証明しない。",
+          "location": {"file": "tests/platform/queue-handler.test.ts", "line": 5, "section": "未実装 Queue consumer"},
+          "root_cause": "コード単体のmockを実運用のdelivery semanticsの代替oracleにした。",
+          "recommended_intervention": "wrangler queue設定とhandlerを同時に読む契約testを置き、未実装handler時はDLQ必須、実装済みなら成功/失敗状態記録必須という終端不変条件を検証する。"
+        },
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "inconsistency",
+          "description": "新規: component分割とテスト追加がfeature正本へ投影されず、独立承認の実測結果と正本の件数・範囲が一致しない。",
+          "location": {"file": "docs/feat-platform-tenant-auth/test-design.md", "line": 28, "section": "受入条件と自動テスト"},
+          "root_cause": "実装差分の完了条件にcanonical source inventory/test evidence更新が含まれていない。",
+          "recommended_intervention": "79 unit tests、shell-state 4 scenarios×3 viewports、分割後file ownershipを正本へ更新し、CIでdocumented count/inventoryのdrift checkを行う。"
+        }
+      ],
+      "score": 0.45
+    },
+    {
+      "paradigm_id": 21,
+      "paradigm_name": "causal-loop",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "Queueのloopは retry → delay → redelivery を3回だけ反復し、DLQなしでloopが消滅する。運用者への可視化も回復入力もなく、障害学習のfeedback loopが閉じていない。",
+        "session loopは login → lastSelectedTenant(session履歴) → 新session作成 → logoutで現session削除 → 次loginで選好消失、またはcleanupを避けてexpired row蓄積、という悪い二択を作る。",
+        "docs loopは code split/test追加 → docs未更新 → CIがcodeのみPASS → stale docsが次の変更入力になる強化loopである。一方、Shellのkeyed remount + abort + E2EはUI stale stateのloopを遮断した。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["source-of-truth更新を強制するfeedbackがCIにないため、React/素TS矛盾が残る。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["Queue retry loopはwrangler.toml:38で3回に制限されるが失敗feedbackの着地点がない。"], "violation_count": 1},
+        "C3": {"verdict": "FAIL", "evidence": ["docs driftが独立承認まで検出されず、通常CIは増分学習loopを閉じない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["session preferenceとretentionのfeedbackが同一sessions tableに結合される。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "critical",
+          "bucket": "dependency-loop",
+          "condition_signal": "dependency_break",
+          "description": "残存: retry loopが有限回で終了した後にDLQ/状態遷移/運用アラートへ接続されない。",
+          "location": {"file": "src/index.ts", "line": 21, "section": "queue handler"},
+          "root_cause": "再試行を回復loop全体ではなく局所API呼出しとして実装した。",
+          "recommended_intervention": "retry exhaustion → DLQ → alert → inspect/replay のloopを構成し、message id/tenant/kind/attemptを観測可能にする。"
+        },
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "condition_signal": "smell",
+          "description": "残存: sessionsの正常cleanupを行うほどlast tenant preferenceが失われ、選好保持を優先すると期限切れsessionが増える負のloopがある。",
+          "location": {"file": "migrations/0001_platform.sql", "line": 51, "section": "sessions"},
+          "root_cause": "retention policyの異なる認証状態とUX選好に同一lifecycleを与えた。",
+          "recommended_intervention": "選好をuser-scoped rowへ分離し、sessionsにexpires_at indexと日次cleanupを設ける。logout後も選好だけが残るtestを追加する。"
+        }
+      ],
+      "score": 0.34
+    },
+    {
+      "paradigm_id": 22,
+      "paradigm_name": "trade-on",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "今回のcomponent分割は責務分離とtenant-state安全性を同時に高めたtrade-onである。Shellはsession境界、ShellFrameはlayout、SettingsPageはtenant資源に分かれ、追加packageなしで複雑性も抑えた。",
+        "Queueは『後続feature未着手でもmessageを成功扱いしない』安全性をretryで上げたが、DLQなしでは遅延と操作数を増やしつつ終端喪失を残すためtrade-onになっていない。",
+        "releaseは自動deployの簡潔さを維持しながら、public legal文書確定checkと承認済みpreview evidenceを機械gateにすれば、速度と信頼を同時に上げられる。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["GitHub Environments不使用の確定とproduction environment指定が運用単純性を相殺する。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["public/privacy.html:15,46 と public/terms.html:15 の未確定文言がmain push deployから遮断されない。"], "violation_count": 1},
+        "C3": {"verdict": "PASS", "evidence": ["UI component抽出とkeyed tenant boundaryは可読性・再利用性・stale-state防止を同時に改善した。"], "violation_count": 0},
+        "C4": {"verdict": "FAIL", "evidence": ["release DAGにlegal/preview/independent approvalを前提nodeとして含めない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "hook-ci",
+          "condition_signal": "omission",
+          "description": "残存: main pushはmigration直後にdeployし、草案legal pages、independent approval、実previewをrelease前提として検査しない。",
+          "location": {"file": ".github/workflows/deploy.yml", "line": 33, "section": "deploy steps"},
+          "root_cause": "build成功とrelease readinessを同一視し、業務上の公開条件をDAGへ符号化していない。",
+          "recommended_intervention": "CI成功・legal文書のplaceholder zero・preview smoke URL・independent approval PASSをdeploy jobのneeds/gateにし、確定方針どおりEnvironmentを使わないrepo-level gateに統一する。"
+        }
+      ],
+      "score": 0.58
+    },
+    {
+      "paradigm_id": 23,
+      "paradigm_name": "plus-sum",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "解消: Shellの責務分割、tenant key、AbortController/generation guard、self-role変更後のme先行reloadは、開発者の局所理解と利用者の越境防止・回復性を同時に上げた。",
+        "解消: google-oauthのnetwork/invalid JSONをOAUTH_FAILEDへ正規化し、利用者には再試行可能な一貫表示、運用側には安定したerror taxonomyを与えた。",
+        "解消: e2e/shell-state.spec.tsは全APIをroute mockし、testごとに新しいbrowser contextを使うため、tenant/role/invite状態を永続DBへ残さず3 viewportの回帰を得ている。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["Shell/Settingsの責務とtenant identityが明示され、同一状態の二重解釈を減らした。"], "violation_count": 0},
+        "C2": {"verdict": "PASS", "evidence": ["web/pages/Shell.tsx:90-96 の切替中遮断/keyed OutletとSettingsPageのabortにより旧tenant応答を隔離する。"], "violation_count": 0},
+        "C3": {"verdict": "PASS", "evidence": ["independent approvalはcomponentization、security/UI regression、E2E shell-stateをPASSとした。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["新規循環依存やpackageを増やさず、API mock E2Eは外部データcleanupを不要にした。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.94
+    },
+    {
+      "paradigm_id": 24,
+      "paradigm_name": "value-proposition",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "今回の評価範囲で提供価値は、安全なGoogle login、tenant作成/切替、member/invite管理を回復可能なUIで行うことにある。新規E2Eはtenant切替・招待URL・自己権限変更の価値を直接保護する。",
+        "後続5 featureの未着手はiteration 2のblocker外とした。ただし既に有効なQueue配線がmessageを最終喪失することと、草案legal pagesの自動公開は、現在提供する信頼価値を損なうためblockerとして残る。",
+        "member/invite APIは全件返却でcursorを受けず、メンバー上限がない。利用規模が増えるほど設定画面の応答・Workers/D1 read量が悪化し、仕様の一覧cursor契約にも反する。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["public表示される法務文書が自ら草案と明記し、信頼価値と矛盾する。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["src/repositories/tenant-scoped-repository.ts:39,102 はmembers/invitesを無制限配列で返し、specs/youtube-analytics-system.md:174 のcursor pagingへ接続しない。"], "violation_count": 1},
+        "C3": {"verdict": "PARTIAL", "evidence": ["auth/settings価値の自動回帰は強化されたが、正本test evidenceが更新されていない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["価値提供前のrelease gateとQueue終端保証がDAGにない。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "schema",
+          "condition_signal": "inconsistency",
+          "description": "残存: members/invites一覧がcursorを受けず全件返却し、承認済みの一覧pagination方針と成長時の応答上限を満たさない。",
+          "location": {"file": "src/repositories/tenant-scoped-repository.ts", "line": 39, "section": "listMembers/listPendingInvites"},
+          "root_cause": "初期tenant規模の実装をAPI contractとして固定し、list resource共通のcursor abstractionを適用していない。",
+          "recommended_intervention": "安定sort key＋idのopaque cursorとlimitをusecase/repository/APIに通し、UIの追加入力、重複/欠落/tenant分離のcontract testを追加する。"
+        },
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "other",
+          "condition_signal": "contradiction",
+          "description": "残存: 利用者に同意を要求するprivacy/termsが草案・連絡先未記入のまま静的assetとしてdeploy可能である。",
+          "location": {"file": "public/privacy.html", "line": 15, "section": "草案告知"},
+          "root_cause": "legal content readinessをUI実装やdeploy workflowと独立した手作業にしている。",
+          "recommended_intervention": "施行日・運営者・問い合わせ先を確定し、placeholder scannerをrelease gateに追加する。"
+        }
+      ],
+      "score": 0.61
+    },
+    {
+      "paradigm_id": 25,
+      "paradigm_name": "strategic",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "優先順は P0 Queue終端配送とrelease gate、P1 canonical spec/docs投影とpersistent preference/retention分離、P2 independent route oracleとcursor pagingである。これは後続5 featureを実装する前の基盤リスクを先に閉じる順である。",
+        "今回の差分はUI回復性とOAuth異常系という局所リスクを良く下げたが、CIがコードgreenだけで正本・runtime delivery・公開準備を保証しないため、リリース戦略全体のボトルネックは残る。",
+        "未着手の収集/cleanup等5 featureは今回blocker外だが、active Queue bindingの終端喪失は『未着手』ではなく現在の設定が作る障害なので除外しない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["D-deploy確定はEnvironment不使用だがworkflowはenvironment: productionを参照する。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["独立承認はQueue terminal semanticsとcanonical docs inventoryをFAILとした。"], "violation_count": 2},
+        "C3": {"verdict": "FAIL", "evidence": ["qa-061のReact/ECharts決定がarchitecture/featureへ未投影である。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["deployはCI/approval/legal/previewをneedsで結ばず、Queueはterminal nodeを持たない。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "hook-ci",
+          "condition_signal": "contradiction",
+          "description": "残存: 確定した個人運用/free private方針はGitHub Environmentsを使わないが、deploy workflowがproduction Environmentを要求する。",
+          "location": {"file": ".github/workflows/deploy.yml", "line": 19, "section": "deploy job"},
+          "root_cause": "一般的なproduction deployment templateが、このrepositoryの確定運用制約へ正規化されていない。",
+          "recommended_intervention": "environment参照を除去してrepository secretsへ統一し、代わりにCI/approval/legal/preview artifactをneedsで強制する。"
+        },
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "contradiction",
+          "description": "残存: 正式決定React/Vite/React Router/EChartsと、architecture/featureの素のTypeScript・4 chart限定が競合する。",
+          "location": {"file": "architecture/youtube-analytics-system.md", "line": 77, "section": "Container and component view"},
+          "root_cause": "決定台帳更新後のprojection対象と完了checkが定義されていない。",
+          "recommended_intervention": "architecture:77,117,125 と feature:36,62をqa-061へ再投影し、spec-stateからderived docsへのprojection testを追加する。"
+        }
+      ],
+      "score": 0.39
+    },
+    {
+      "paradigm_id": 27,
+      "paradigm_name": "kaizen",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "改善済み: unit/integrationは79件、shell-stateは4 scenario×3 viewportが通り、OAuth network/JSON異常系とQueue retry呼出しtestが増えた。UIの大きなShellを境界別componentへ分割した。",
+        "次の最小改善はQueue testを『retryした』から『terminal lossしない』へ1段引き上げること、docs inventory/countを同じ変更で更新すること、route coverageのoracleをapp registrationから独立させることである。",
+        "E2E cleanupは新規shell-state suiteが全API route mockで永続DBを変更しないため解消扱い。ただし正本はsmoke suiteのみと記載しており改善loopの記録が欠ける。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PARTIAL", "evidence": ["コード/test改善は一貫するがdocs count/inventoryが追随しない。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["Queueの改善がterminal semanticsまで到達していない。"], "violation_count": 1},
+        "C3": {"verdict": "FAIL", "evidence": ["改善結果をcanonical docsへ還流するcheckがCIにない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["route coverageとauthorization matrixが同じPROTECTED_ROUTESを共有し、誤分類に独立検出力がない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "condition_signal": "smell",
+          "description": "残存: route coverageは登録漏れを検出するが、protected/public/tenantScoped/kindの期待値を同じ手書き表から取り、分類誤りを独立に検出できない。",
+          "location": {"file": "tests/platform/routes-coverage.test.ts", "line": 13, "section": "route oracle"},
+          "root_cause": "coverage対象と期待oracleがtests/platform/routes.tsに共通化され、テストの独立性までDRYにした。",
+          "recommended_intervention": "route metadataを本番route registrationへ宣言し、別の承認済みcontract fixtureまたはdeny-by-default middleware traceからcoverageを照合する。public routeは明示allowlistにする。"
+        },
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "inconsistency",
+          "description": "新規: 79 testsとshell-state E2E追加後もtest-design/final-reviewが76 tests・smokeのみ・旧Shell責務を記録する。",
+          "location": {"file": "docs/feat-platform-tenant-auth/final-review.md", "line": 42, "section": "implementation inventory"},
+          "root_cause": "local code/testを更新するkaizenに証跡更新を含めなかった。",
+          "recommended_intervention": "分割後component、queue handler test、shell-state E2Eとfresh test totalsを正本へ同期し、CIでdriftを失敗させる。"
+        }
+      ],
+      "score": 0.54
+    },
+    {
+      "paradigm_id": 28,
+      "paradigm_name": "hypothesis",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "仮説H1『retryを呼べば未実装messageは安全』は棄却: max_retries=3かつDLQなしなので4回目以降の保存先がなく、独立承認もterminal semantics FAILとした。",
+        "仮説H2『sessionsから最後のtenantを読めば選好は永続』は棄却: logoutはcurrent sessionを削除し、expiry cleanupを実装すれば最大30日で根拠rowが消える。",
+        "仮説H3『route table一致なら認可網羅』は部分採用: route追加漏れは検出するが、同じtableのtenantScoped/kind誤分類はcoverage testが再利用するため検出できない。",
+        "仮説H4『shell-state E2Eはcleanupが必要』は今回棄却: suiteはAPIをpage.routeで完結させ、永続データを作らない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["H2はcommentの『最後に選んでいたテナント』とlogout削除動作の意味不一致を示す。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["H1はruntime queue policyに反証される。"], "violation_count": 1},
+        "C3": {"verdict": "PARTIAL", "evidence": ["H4はE2E sourceと独立承認PASSで支持されるが、正本にsuiteが未記載。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["H3のroute classificationに独立oracleがない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "schema",
+          "condition_signal": "contradiction",
+          "description": "残存: lastSelectedTenantという契約名/コメントが永続選好を示すのに、実体はlogout/expiryで消えるsession履歴である。",
+          "location": {"file": "src/repositories/platform-repository.ts", "line": 209, "section": "lastSelectedTenant"},
+          "root_cause": "永続期間を仮説検証せず、利用可能だった直近tableを選好storeとして流用した。",
+          "recommended_intervention": "logout→login、expiry cleanup→login、membership削除→loginの3 hypothesis testを先に追加し、専用preference rowで満たす。"
+        }
+      ],
+      "score": 0.47
+    },
+    {
+      "paradigm_id": 29,
+      "paradigm_name": "issue",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "論点1(P0): active Queueの有限retry後にcollect/cleanup messageを失わない終端delivery contractは何か。",
+        "論点2(P0): main pushで公開してよい条件を、確定したEnvironment不使用方針のままどう自動gate化するか。",
+        "論点3(P1): user preferenceとsession retentionをどのstore/lifecycleに分けるか。",
+        "論点4(P1): qa-061、分割後source inventory、79 tests、shell-state E2Eをどの正本へ再投影しCIで守るか。",
+        "論点5(P2): list API cursorと独立route oracleを後続feature前に共通contract化するか。後続5 featureの未実装自体は今回の論点blockerから除外した。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["論点2/4に確定文書間の矛盾がある。"], "violation_count": 2},
+        "C2": {"verdict": "FAIL", "evidence": ["論点1/2/3/5に未充足の安全・性能・保持条件がある。"], "violation_count": 4},
+        "C3": {"verdict": "FAIL", "evidence": ["論点4の仕様・証跡projectionが欠ける。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["論点1/2はrelease DAGのterminal/precondition node欠落である。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "critical",
+          "bucket": "dependency-loop",
+          "condition_signal": "dependency_break",
+          "description": "P0論点: Queue retry exhaustion後の責任主体と保存先が未定義である。",
+          "location": {"file": "wrangler.toml", "line": 38, "section": "max_retries"},
+          "root_cause": "失敗時の状態機械をretry回数だけで表現した。",
+          "recommended_intervention": "DLQを選び、producer→consumer→DLQ→replayのowner/SLO/runbook/testを1つのacceptanceとして確定する。"
+        },
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "rubric-governance",
+          "condition_signal": "omission",
+          "description": "P1論点: 仕様決定とcurrent implementation/evidenceを一貫してprojectionするownerとCI ruleがない。",
+          "location": {"file": ".github/workflows/ci.yml", "line": 27, "section": "check steps"},
+          "root_cause": "CIがlint/type/test/buildだけをrepository consistencyとみなし、canonical docsとderived docsの整合を対象外にした。",
+          "recommended_intervention": "spec projection check、source inventory check、test evidence生成をCIに追加し、generated/derived文書のownerを明記する。"
+        }
+      ],
+      "score": 0.36
+    },
+    {
+      "paradigm_id": 30,
+      "paradigm_name": "kj",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "KJ群A『配送と公開の終端欠落』: Queue retry/DLQ、草案legal pages、deploy gate、Environment方針矛盾。共通見出しは『成功経路はあるが失敗/公開可否のterminal nodeがない』。",
+        "KJ群B『lifecycle混線』: session retention、last tenant preference、logout削除、pagination不在。共通見出しは『短期状態と長期状態/小規模前提を同じstoreとcontractに固定』。",
+        "KJ群C『正本とoracleの自己参照』: React spec projection、旧source inventory/test count、CI docs非検査、route table共通oracle。共通見出しは『同じ情報源を写して一致を確認しており独立性がない』。",
+        "KJ群D『解消済みの境界強化』: Shell/component分割、keyed tenant remount、request abort/generation、OAuth error normalization、mock E2E cleanup不要。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["群CにReact/素TSとEnvironment使用/不使用の矛盾が集中する。"], "violation_count": 2},
+        "C2": {"verdict": "FAIL", "evidence": ["群A/BにQueue terminal、release、retention、paginationの欠落が集中する。"], "violation_count": 4},
+        "C3": {"verdict": "FAIL", "evidence": ["群Cはcanonical projectionとevidence更新の欠落を示す。"], "violation_count": 2},
+        "C4": {"verdict": "FAIL", "evidence": ["群A/CはDAG終端欠落とself-referential oracleを示す。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "condition_signal": "smell",
+          "description": "KJ群Aの共通根: Queueとdeployの両方がhappy pathの接続を持つ一方、失敗時/公開不可時のterminal nodeを持たない。",
+          "location": {"file": ".github/workflows/deploy.yml", "line": 31, "section": "deploy preconditions"},
+          "root_cause": "局所実装の完了をend-to-end outcomeの完了と見なした。",
+          "recommended_intervention": "共通release readiness DAGを明文化し、Queue terminal delivery、legal readiness、preview、independent approvalをdeploy前の必須nodeにする。"
+        },
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "inconsistency",
+          "description": "KJ群Cの共通根: canonical decision、derived architecture、feature docs、tests、CI oracleの間に一方向projectionと独立検証がない。",
+          "location": {"file": "system-spec/spec-state.json", "line": 1499, "section": "qa-061"},
+          "root_cause": "各成果物を個別に正本扱いし、source lineageはあるが再生成/同期責任を実行可能な形で持たない。",
+          "recommended_intervention": "spec-stateをdecision source、architecture/featureをprojection、current tests/runtime traceを独立evidenceと位置づけ、CIで三者差分を検出する。"
+        }
+      ],
+      "score": 0.41
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "system-spec/spec-state.json:1499 はReact/Vite/React Router/EChartsを確定するが、architecture/youtube-analytics-system.md:77,117,125 と features/feat-web-screens-actions.md:36,62 は素のTypeScript/4 chart限定を記す。",
+        "system-spec/00-requirements-definition.md:119 はGitHub Environments不使用を確定するが、.github/workflows/deploy.yml:19 は environment: production を指定する。",
+        "src/repositories/platform-repository.ts:209 の『最後に選んでいたテナント』は、logout時のsession削除と30日保持の意味に一致しない。"
+      ],
+      "violation_count": 3
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "wrangler.toml:35-39 はmax_retries=3でDLQなし、src/index.ts:21-24 は常にretryするため、即時ackは解消したが最終配送保証は残存FAILである。",
+        "public/privacy.html:15,46 と public/terms.html:15 は草案/未記入のままdeploy可能である。",
+        "sessions cleanupと永続選好が未分離で、members/invites APIはcursor paginationを持たない。",
+        "e2e/shell-state.spec.ts はAPI mockで永続stateを作らず、今回追加suiteのcleanup問題は解消している。"
+      ],
+      "violation_count": 4
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "docs/feat-platform-tenant-auth/final-review.md:42,49-50 は分割後UI files、queue-handler test、shell-state E2Eを列挙しない。",
+        "docs/feat-platform-tenant-auth/test-design.md:28,30 は76件/smokeのみとするが、independent approvalのfresh runは79件とshell-state 12 casesを確認した。",
+        "qa-061のReact決定がarchitectureとfeatureへ再投影されていない。"
+      ],
+      "violation_count": 3
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "Queue DAGはretry exhaustion後のDLQ/failed state/replay nodeを持たない。",
+        "release DAGはCI、legal readiness、preview、independent approvalをdeploy jobの前提として接続しない。",
+        "tests/platform/routes-coverage.test.ts:13-17 は tests/platform/routes.ts の同じ手書き表を期待oracleにし、route分類誤りを独立に検出しない。",
+        "UI tenant-state DAGはkeyed Outlet、abort/generation guard、mock E2Eにより解消した。"
+      ],
+      "violation_count": 3
+    }
+  },
+  "variable_abstraction": [
+    {"concrete_value": "youtube-analytics", "variable_name": "{{PROJECT_ID}}", "default_value": "youtube-analytics", "source_trace": "README.md:1; package.json:2; wrangler.toml:3"},
+    {"concrete_value": "100", "variable_name": "{{MAX_TENANTS}}", "default_value": "100", "source_trace": "wrangler.toml:15-16; src/usecases/common.ts:21-24"},
+    {"concrete_value": "0 18 * * *", "variable_name": "{{COLLECTION_CRON}}", "default_value": "0 18 * * *", "source_trace": "wrangler.toml:41-43; specs/youtube-analytics-system.md:119"},
+    {"concrete_value": "collect-queue", "variable_name": "{{QUEUE_NAME}}", "default_value": "collect-queue", "source_trace": "wrangler.toml:31-39"},
+    {"concrete_value": "3", "variable_name": "{{QUEUE_MAX_RETRIES}}", "default_value": "3", "source_trace": "wrangler.toml:38; system-spec/infrastructure.md:579"},
+    {"concrete_value": "600", "variable_name": "{{QUEUE_RETRY_DELAY_SECONDS}}", "default_value": "600", "source_trace": "wrangler.toml:39; src/index.ts:4-12"},
+    {"concrete_value": "30 days", "variable_name": "{{SESSION_TTL}}", "default_value": "30 days", "source_trace": "migrations/0001_platform.sql:51; src/usecases/session.ts:99-106"},
+    {"concrete_value": "production", "variable_name": "{{DEPLOY_ENVIRONMENT}}", "default_value": "production", "source_trace": ".github/workflows/deploy.yml:12-19"},
+    {"concrete_value": "cursor", "variable_name": "{{LIST_PAGINATION_MODE}}", "default_value": "cursor", "source_trace": "specs/youtube-analytics-system.md:174; system-spec/backend.md:686-711"}
+  ],
+  "thought_method_coverage": {
+    "used": ["systems", "causal", "causal-loop", "trade-on", "plus-sum", "value-proposition", "strategic", "kaizen", "hypothesis", "issue", "kj"],
+    "skipped_with_reason": [],
+    "total": 30
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "feature_id": "feat-platform-tenant-auth",
+  "feature_package_id": "feature-package/feat-platform-tenant-auth",
+  "task_id": "SYS-PTA-P11",
+  "generated_at": "2026-09-22",
+  "environment": "local (wrangler dev, http://localhost:8791)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、preview 環境と Actions の実行は未確認。初回 deploy 後に acceptance.md 3 節で確認する",
+  "acceptance": [
+    {
+      "id": "A1",
+      "criterion": "未ログインで /api/* は 401",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a1-unauthenticated.test.ts",
+          "note": "18 件"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/routes-coverage.test.ts",
+          "note": "保護ルート表と実ルートの一致"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/P07-e2e-run.txt",
+          "note": "E2E を 3 サイズで実行。13 件成功、2 件は意図的なスキップ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "criterion": "初回ログインで tenants と owner が1組だけ作られる",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a2-first-login.test.ts",
+          "note": "4 件"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/auth-flow.test.ts",
+          "note": "コールバック経由の作成"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/P07-e2e-run.txt",
+          "note": "E2E を 3 サイズで実行。13 件成功、2 件は意図的なスキップ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "A3",
+      "criterion": "viewer の書込は 403、他テナントの資源は 404",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a3-authorization.test.ts",
+          "note": "19 件（越境と CSRF を含む）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/routes-coverage.test.ts",
+          "note": "越境テストの網羅"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/P07-e2e-run.txt",
+          "note": "E2E を 3 サイズで実行。13 件成功、2 件は意図的なスキップ"
+        },
+        {
+          "kind": "review",
+          "path": "docs/feat-platform-tenant-auth/test-design.md",
+          "note": "欠陥注入による検知の確認（4 節）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "A4",
+      "criterion": "招待リンクを別アカウントで開くと参加できない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a4-invite.test.ts",
+          "note": "12 件"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/P07-e2e-run.txt",
+          "note": "E2E を 3 サイズで実行。13 件成功、2 件は意図的なスキップ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "A5",
+      "criterion": "MAX_TENANTS 到達で新規受付を停止する",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a5-tenant-limit.test.ts",
+          "note": "5 件（並行 5 件を含む）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "A6",
+      "criterion": "main への push で migrations と deploy が実行される",
+      "verdict_local": "static-only",
+      "evidence": [
+        {
+          "kind": "test-log",
+          "path": "evidence/P06-test-run.txt",
+          "note": "単体と結合テスト 76 件すべて成功（verbose）"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/a6-workflows.test.ts",
+          "note": "ワークフローの静的検査 4 件"
+        },
+        {
+          "kind": "config",
+          "path": ".github/workflows/deploy.yml",
+          "note": "db:migrate:remote → deploy"
+        },
+        {
+          "kind": "config",
+          "path": ".github/workflows/ci.yml",
+          "note": "PR で lint、typecheck、test、build"
+        },
+        {
+          "kind": "build-log",
+          "path": "evidence/P02-build-dry-run.txt",
+          "note": "wrangler deploy --dry-run 成功"
+        },
+        {
+          "kind": "migration-log",
+          "path": "evidence/P08-migration-empty-db.txt",
+          "note": "空の DB への適用と 2 回目の差分なし"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-platform-tenant-auth/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    }
+  ],
+  "quality": [
+    {
+      "kind": "lint-log",
+      "path": "evidence/P09-lint.txt",
+      "note": "エラー 0"
+    },
+    {
+      "kind": "typecheck-log",
+      "path": "evidence/P09-typecheck.txt",
+      "note": "エラー 0"
+    },
+    {
+      "kind": "audit-log",
+      "path": "evidence/P09-audit.txt",
+      "note": "high 以上 0 件"
+    },
+    {
+      "kind": "report",
+      "path": "docs/feat-platform-tenant-auth/qa-report.md",
+      "note": "品質とセキュリティ、Secrets の非露出"
+    },
+    {
+      "kind": "review",
+      "path": "docs/feat-platform-tenant-auth/design-review.md",
+      "note": "ASVS 5.0 による設計レビュー。未解決の high 0 件"
+    },
+    {
+      "kind": "review",
+      "path": "docs/feat-platform-tenant-auth/final-review.md",
+      "note": "scope_out 0 件、未解決の指摘 0 件"
+    }
+  ],
+  "redaction": "ログ中の作業ディレクトリの絶対パスは <repo> に置換済み"
+}

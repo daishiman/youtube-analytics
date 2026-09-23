@@ -1,0 +1,780 @@
+{
+  "agent": "elegant-logical-structural-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 1,
+      "paradigm_name": "批判的思考",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "実装済み・公開準備中という主張を疑い、現況文書を実ファイルと照合した。README.md:7-9 は基盤 feature を実装済みとする一方、README.md:8 はなお『未コミット』と記載するが、対象コードは現在の HEAD に追跡済みである。",
+        "docs/setup/owner-manual-setup.mdx:19 と docs/feat-platform-tenant-auth/qa-report.md:41 は GOOGLE_CLIENT_ID がプレースホルダーだと述べるが、wrangler.toml:18 には非プレースホルダー値が設定済みで、同じ現況を表す文書間で反証可能な矛盾がある。",
+        "認証・認可の主要主張には実装根拠があり、src/http/middleware.ts:25-31 の認証ゲート、src/domain/tenant-context.ts:15-21 の権限表、tests/platform/routes-coverage.test.ts:7-17 のルート集合比較は互いに整合する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "docs/setup/owner-manual-setup.mdx:19 の『未実施（仮の値）』と wrangler.toml:18 の設定済み値が同時には真にならない。",
+            "README.md:8 の『未コミット』は現在の追跡済み worktree 状態と一致しない。"
+          ],
+          "violation_count": 2
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "現況を示す資料は複数あるが、どれを最新状態の正本とするか、また実ファイルから状態を再生成する仕組みがない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "設定・セットアップ手順・QA報告の現在状態が同期されておらず、運用者が不要な置換や再設定を行う可能性がある。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "公開手順は手動チェックリストに依存するため、古い状態記述が後続の PR・deploy 判断へそのまま伝播する。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "medium",
+          "bucket": "doc",
+          "description": "現況文書が設定済みの OAuth クライアント ID を未設定プレースホルダーと記録し、README も追跡済み成果物を未コミットと記録している。根拠は docs/setup/owner-manual-setup.mdx:19、docs/feat-platform-tenant-auth/qa-report.md:41、README.md:8 と wrangler.toml:18 の直接比較である。",
+          "recommended_intervention": "日付付きの履歴は docs/delivery へ移し、README と owner manual の『現在状態』を現 worktree に更新する。GOOGLE_CLIENT_ID の placeholder 有無、草案表示、必須ファイルの追跡状態を検査する production-readiness スクリプトを設け、CI から実行する。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "docs/setup/owner-manual-setup.mdx",
+            "line": 19,
+            "section": "0. 全体の流れと現在の状態"
+          },
+          "root_cause": "実行可能な設定と手書きの進捗表が別々に更新され、現況を一つの機械可読状態から投影していない。"
+        }
+      ],
+      "score": 0.68,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "日付付き delivery 記録として明示された過去状態は、現在状態との相違だけで矛盾扱いしない。"
+      ],
+      "re_audit_trigger": "OAuth 設定、公開手順、README の現況欄のいずれかを変更したとき"
+    },
+    {
+      "paradigm_id": 2,
+      "paradigm_name": "演繹思考",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "一般則『Google との通信失敗は OAUTH_FAILED としてログイン画面へ戻す』は docs/feat-platform-tenant-auth/requirements.md:26,83 に明記されている。",
+        "個別実装では src/http/google-oauth.ts:63-77 が HTTP 非成功と id_token 欠落だけを AppError(OAUTH_FAILED) に変換し、fetch の reject、タイムアウト、JSON 解析例外は通常例外のまま流す。",
+        "src/http/auth-routes.ts:72-74 は AppError だけをリダイレクトへ変換するため、通常例外は src/http/app.ts:31-35 の 500 JSON 応答になり、上位契約から必然的に外れる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "HTTP 非成功・id_token 欠落・claim 不正については一貫して OAUTH_FAILED を返す。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "外部通信の失敗集合から transport reject、応答本文の不正 JSON、明示的 timeout が漏れている。"
+          ],
+          "violation_count": 3
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "requirements.md:26 の OAUTH_FAILED 契約に対し、通常例外は callback 上で 500 JSON となる。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "Google token endpoint の非決定的障害が exchangeCode→callback→共通 onError の依存鎖で意味変換されない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "other",
+          "description": "OAuth token endpoint がネットワーク例外または不正 JSON を返すと、要件上の OAUTH_FAILED リダイレクトではなく /api/auth/callback 上の汎用 500 JSON になる。利用者はログイン画面へ戻れず、UI の REDIRECT_MESSAGES も使われない。",
+          "recommended_intervention": "exchangeCode の fetch と JSON decode を timeout 付き境界で捕捉し、既知の AppError は維持しつつ transport/parser 例外を AppError(\"OAUTH_FAILED\") に正規化する。tests/platform/auth-flow.test.ts に fetch reject、timeout、不正 JSON のケースを追加し、/login?error=OAUTH_FAILED を検証する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "src/http/google-oauth.ts",
+            "line": 63,
+            "section": "exchangeCode"
+          },
+          "root_cause": "外部 API 境界のエラー分類が HTTP status と payload の正常解析後だけに実装され、通信・解析例外をドメインエラーへ変換する層がない。"
+        }
+      ],
+      "score": 0.7,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "アプリ内部の予期しない DB 例外まで OAUTH_FAILED に潰さず、外部 token exchange の境界だけを正規化する。"
+      ],
+      "re_audit_trigger": "Google OAuth token exchange または callback のエラー処理を変更したとき"
+    },
+    {
+      "paradigm_id": 3,
+      "paradigm_name": "帰納的思考",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "複数の入力検証事例を見ると、明示作成は src/usecases/tenants.ts:19-23 でテナント名を1〜60文字に制限し、招待メールも src/usecases/invites.ts:27-30 で共通検査を通す。",
+        "一方、初回ログインの既定名は src/usecases/common.ts:35-38 でメールの local-part に接尾辞を付けるだけで、60文字への正規化を通らない。migrations/0001_platform.sql:16-22 にも長さ制約がない。",
+        "tests/platform/a2-first-login.test.ts は通常長のメールによる一組作成を中心に検査し、最大長メールから生成される既定名の不変条件を検査していない。個別入口ごとに検証を置くパターンから、共有ドメイン不変条件の抜けが一般化できる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "手動作成名は60文字上限だが、自動生成名は同じ tenant.name にそれを適用しない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "初回ログイン経路の最大長入力と DB レベルの tenant.name 制約がテスト・スキーマから漏れている。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "同じ tenants.name に対し POST /api/tenants と初回自動作成で異なる長さ規則が適用される。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "既定名生成から repository への呼出し自体は成立し、DB 参照破綻はない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "low",
+          "bucket": "schema",
+          "description": "手動作成するテナント名は1〜60文字だが、初回ログインの defaultTenantName は最大64文字のメール local-part に接尾辞を加え得るため、同じ tenants.name に60文字超の値を保存できる。",
+          "recommended_intervention": "テナント名の正規化・検証を共有関数または値オブジェクトへ集約し、既定名は接尾辞を含め60文字以内へ安全に切り詰める。可能なら migration に length(name) の CHECK を加え、最大長 local-part の初回ログイン回帰テストを追加する。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "src/usecases/common.ts",
+            "line": 35,
+            "section": "defaultTenantName"
+          },
+          "root_cause": "tenant.name の不変条件がドメイン境界ではなく明示作成 API の一入口だけに実装されている。"
+        }
+      ],
+      "score": 0.72,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "表示専用の仮名に別の上限を認めるなら、DB と API 契約で明示的に別概念として扱う。"
+      ],
+      "re_audit_trigger": "テナント名、初回ログイン、users.email の制約を変更したとき"
+    },
+    {
+      "paradigm_id": 4,
+      "paradigm_name": "アブダクション",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "観測結果は、docs/feat-platform-tenant-auth/requirements.md:54 が再ログイン時に『最後に使ったテナント』を選ぶとする一方、選択情報は sessions.tenant_id にしか存在しないことである。",
+        "src/usecases/session.ts:138-140 はログアウト時にその session 行を削除し、src/repositories/platform-repository.ts:210-218 は残存 session を created_at 順で読む。",
+        "最節約仮説は『一時的な認証セッションを永続的な利用者プリファレンスとして兼用した』ことであり、この一因で正常ログアウト後の記憶消失と複数 session 間の誤順序の両方を説明できる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "『最後に選択した値を再利用する』主張と、その唯一の保存行をログアウトで削除する動作は両立しない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "利用者単位の last_tenant_id または選択時刻を保持する構造が migrations/0001_platform.sql にない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "repository のメソッド名・コメントは lastSelectedTenant だが、SQL は最後に作成された残存 session の tenant_id を返す。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "選択復元が session 行の寿命に依存し、その行は logout 依存で削除されるため依存関係が破綻する。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "schema",
+          "description": "『最後に使ったテナント』が durable preference ではなく sessions.tenant_id から推測されるため、正常ログアウト後は選択が失われる。複数 session がある場合も ORDER BY created_at は最後に切り替えた時刻を表さない。",
+          "recommended_intervention": "users.last_tenant_id または user_preferences のような durable な選択先と selected_at を設け、switchTenant、招待受理、テナント作成で所属検査後に更新する。ログアウトは認証 session だけを削除する。『2テナント→切替→ログアウト→再ログイン』と複数 session の順序をテストする。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "src/repositories/platform-repository.ts",
+            "line": 210,
+            "section": "lastSelectedTenant"
+          },
+          "root_cause": "認証の寿命を持つ session と、利用者設定の寿命を持つ tenant preference を同じ列で表現した。"
+        }
+      ],
+      "score": 0.64,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "仕様を『有効な別 session が残る場合だけ前回値を使う』へ変更するなら、現 SQL の意味を名前と文書に反映する必要がある。"
+      ],
+      "re_audit_trigger": "session schema、ログアウト、テナント切替、ログイン時の選択規則を変更したとき"
+    },
+    {
+      "paradigm_id": 5,
+      "paradigm_name": "垂直思考",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "テナント切替を一直線に追うと、web/pages/Shell.tsx:50-54 → POST /api/session/tenant → src/usecases/tenants.ts:39-46 → sessions.tenant_id 更新となる。",
+        "次に logout を追うと web/pages/Shell.tsx:59-62 → src/http/auth-routes.ts:82-86 → src/usecases/session.ts:138-140 → sessions 行削除となり、選択の証跡は消える。",
+        "次回 login は src/usecases/session.ts:91-97 で lastSelectedTenant を試すが、残存行がなければ memberships[0] へ戻る。表層の switch 成功ではなく、認証 lifecycle 全体で見ると仕様未達である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "切替成功と再ログイン復元を同一 feature の状態遷移として見ると、logout が状態を消す。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "tests/platform と e2e/smoke.spec.ts:51-59 は現在 session 内の切替だけを確認し、logout 後の復元を確認しない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "requirements.md:54 の状態遷移終端と実装の終端が異なる。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "switch→logout→login の工程間で引き渡すべき選択状態が存在しない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "E2E のテナント切替テストは同じ session 内で表示が変わるところで終了し、仕様が約束する次回ログイン時の選択復元まで到達していないため、lastSelectedTenant の破綻を検出できない。",
+          "recommended_intervention": "e2e または Workers 結合テストを switch→logout→同一利用者で login→currentTenant 検証まで延長し、仕様の状態遷移を一つのシナリオとして固定する。実装側は durable preference を導入する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "e2e/smoke.spec.ts",
+            "line": 51,
+            "section": "テナントを切り替えると役割が変わる"
+          },
+          "root_cause": "テストの完了条件が画面の即時反映に置かれ、要件の『次のログイン』まで状態遷移を深掘りしていない。"
+        }
+      ],
+      "score": 0.63,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "単一テナント利用者では fallback と期待値が同じになるため、必ず2テナントで検証する。"
+      ],
+      "re_audit_trigger": "テナント切替 E2E またはログインの優先テナント決定を変更したとき"
+    },
+    {
+      "paradigm_id": 6,
+      "paradigm_name": "要素分解",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "対象を HTTP、usecase、repository、DB、Web、テストに分解すると、保護ルートは api-routes→tenantContextFor→usecase requirePermission→TenantScopedRepository という明確な層を持つ。",
+        "一方、D1 分割の構造は migrations/0001_platform.sql:15-23 の db_binding、src/repositories/db.ts:13-15 の resolver、実際の usecase factory の3要素に分かれ、members/invites は src/usecases/members.ts:8-10 と src/usecases/invites.ts:10-12 で常に controlDb を直接渡す。",
+        "現時点は全 tenant が DB binding のため正しく動くが、『参照先解決を1か所』という抽象は呼び出し経路に接続されておらず、将来分割時に現在の repository パターンを踏襲すると db_binding が無視される。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "現在の全 tenant が既定 DB にある前提では controlDb と resolveTenantDb(\"DB\") の結果は同じである。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "db_binding を TenantContext から repository factory へ渡す接続要素と、その契約テストが未実装である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "docs/feat-platform-tenant-auth/architecture.md:37 は解決を1か所に集約するとするが、現在の tenant-scoped usecase は resolver を使わない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "db_binding→resolveTenantDb→TenantScopedRepository の将来 DAG が途中で切れているが、単一 DB の現機能は破綻しない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "low",
+          "bucket": "other",
+          "description": "tenants.db_binding と resolveTenantDb は将来分割用に存在するが、TenantScopedRepository を作る現行 factory は controlDb を直接使い、解決抽象が実際の依存経路に組み込まれていない。これは現状の単一DBでは無害だが、先置きした構造が誤った拡張パターンを示す。",
+          "recommended_intervention": "業務データ実装時に、control DB から db_binding を取得して resolveTenantDb を通す単一の repository factory を導入し、その時点まで未使用 scaffold であることを architecture に明記する。別 binding の契約テストを同時に追加する。",
+          "condition_signal": "smell",
+          "location": {
+            "file": "src/usecases/members.ts",
+            "line": 8,
+            "section": "scoped factory"
+          },
+          "root_cause": "将来の D1 分割を示す schema と resolver を先に追加したが、現在の TenantContext と factory の責務境界までは設計していない。"
+        }
+      ],
+      "score": 0.77,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "tenant_members と tenant_invites を恒久的に control DB に置く設計なら、業務 data repository と管理 repository を別名・別型に分ければよい。"
+      ],
+      "re_audit_trigger": "2つ目の D1 binding または最初の業務データ repository を追加したとき"
+    },
+    {
+      "paradigm_id": 7,
+      "paradigm_name": "MECE",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "HTTP 経路集合は tests/platform/routes.ts:13-51 と tests/platform/routes-coverage.test.ts:7-17 により、公開・保護を過不足なく比較している。これはルート単位の MECE として良い。",
+        "実行入口全体を集合にすると fetch 以外に scheduled と queue があるが、tests/ 以下には ExportedHandler の scheduled/queue を対象にするテストがない。",
+        "src/index.ts:7-12 は未実装境界を明示する一方、queue は全 message を無条件 ack し、wrangler.toml:31-39 は consumer を有効化済みである。未対応 message を『成功』集合へ入れるため、失敗・再試行集合が空になる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "コメントは queue 処理を後続 feature で実装するとするが、現在動作は受信 message を成功扱いで破棄する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "入口集合 fetch/scheduled/queue のうち、テスト設計とルート網羅表は fetch だけを対象にし、Cron/Queue の安全な stub 挙動を含まない。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "scheduled/queue が後続 feature 範囲であることは README.md:9 と src/index.ts のコメントで一貫して明示される。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "consumer binding は有効だが処理 dependency は未実装で、到着した message は retry/DLQ へ渡らず ack される。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "description": "Queue consumer が本番設定で有効なのに、stub は collect/cleanup を区別せず全 message を ack する。現在は producer 未実装だが、手動投入や段階的 rollout で message が到着すると再試行不能で消失し、テストもこの非 HTTP 入口を扱わない。",
+          "recommended_intervention": "後続 feature まで consumer binding を公開しないか、未実装期間は message を ack せず明示的に retry/DLQ へ送る fail-closed stub にする。scheduled/queue を実行する Workers テストを追加し、collect/cleanup/未知 kind の分割が MECE であることを検証する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "src/index.ts",
+            "line": 10,
+            "section": "queue handler"
+          },
+          "root_cause": "将来 feature のインフラ宣言を先行配備するために handler を置いたが、未実装状態を成功応答で表した。"
+        }
+      ],
+      "score": 0.66,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "Queue への投入権限と producer が物理的に存在しないローカル限定構成なら、現 stub の実害はない。"
+      ],
+      "re_audit_trigger": "feat-youtube-daily-collection または feat-retention-ops が scheduled/queue を実装したとき"
+    },
+    {
+      "paradigm_id": 8,
+      "paradigm_name": "2軸思考",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "重要度×緊急度で分類すると、OAuth 例外正規化と last-tenant 永続化は利用者動作へ直結する中〜高重要度、文書状態ドリフトと E2E 蓄積は公開前に直す中重要度、未使用 resolver は後続 feature 時に扱う低緊急度である。",
+        "可逆性×影響範囲では、public/privacy.html:15,46 と public/terms.html:15 の草案は修正自体は可逆だが、公開後の影響が大きい。owner manual は merge 前確定を要求する一方、deploy workflow に草案検査はない。",
+        "CI はコードの lint/typecheck/test/build を持つが、法務ページの placeholder、設定済み ID と手順状態、必須 Workers Secret の存在という公開 readiness 軸を評価しない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "公開前に草案を確定するという文書上の順序は一貫するが、その現況表自体に OAuth 設定のドリフトがある。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "自動 deploy の gate に public/*.html の草案・空欄、必須設定、secret 名の存在確認が含まれない。"
+          ],
+          "violation_count": 3
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "手動チェックリストは必要項目を列挙するが、CI/deploy の完了条件とは接続されていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "main push→migration→deploy は成立するが、公開前 prerequisite を workflow が依存として表現しない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "description": "公開前に必須と明記された規約確定・OAuth 設定・Workers Secret が手動チェックリストだけにあり、main push の deploy job は API token の非空だけを検査して migration と deploy を進める。チェックリストの状態が既に一部古いため、人手だけでは草案公開やログイン不能 deploy を機械的に防げない。",
+          "recommended_intervention": "deploy 前に production-readiness job を追加し、public/*.html の『草案』『公開前に記入』、GOOGLE_CLIENT_ID placeholder、必要な secret 名の存在を検査する。外部 secret 値は読まず名前だけ確認し、production Environment の承認または明示フラグを最後の可逆ゲートにする。",
+          "condition_signal": "omission",
+          "location": {
+            "file": ".github/workflows/deploy.yml",
+            "line": 31,
+            "section": "deploy steps"
+          },
+          "root_cause": "公開準備をドキュメント責務、deploy を機械責務として分けたまま、両者の完了条件を一つの gate に結合していない。"
+        }
+      ],
+      "score": 0.69,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "preview 専用 deploy で草案を意図的に公開する場合は明示的な環境フラグで gate を緩和する。"
+      ],
+      "re_audit_trigger": "初回 production deploy、規約確定、GitHub Environment 保護設定の変更時"
+    },
+    {
+      "paradigm_id": 9,
+      "paradigm_name": "プロセス思考",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "ローカル E2E 工程は playwright.config.ts:7-13 で既存 server を再利用し、そうでなければ既定の永続 local D1 に migrate→seed→server を行う。",
+        "scripts/seed-local.sql:1 は何度流しても同じ状態に戻ると主張するが、削除対象は lines 5-11 の seed-* だけである。e2e/smoke.spec.ts:64-68 は毎回ランダム email で新規 owner と tenant を作り、teardown がない。",
+        "この工程を反復すると非 seed tenant が1実行ごとに残り、wrangler.toml:15-18 の MAX_TENANTS 上限へ近づく。CI の新規 checkout では見えにくいが、ローカル再実行では入力状態が変化し、同じ工程が同じ結果を保証しない。",
+        "scripts/validate-repository-consistency.py:512-532 は仕様投影の有用な gate だが、package.json:9-24 と .github/workflows/ci.yml:26-31 のどちらにも接続されず、文書ドリフトを継続的に止めない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "seed-local.sql:1 の反復同一状態という主張と、ランダム tenant を削除しない実際の工程が矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "E2E の setup に対応する teardown/隔離 step がなく、repository consistency gate も CI step から漏れている。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "CI の clean runner では安定するが、README.md:28 が案内するローカル pnpm e2e の反復性は保証されない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "setup→test→cleanup の工程 DAG に cleanup がなく、validate script→CI の edge も存在しない。"
+          ],
+          "violation_count": 2
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "description": "E2E が共有 local D1 にランダム owner/tenant を作る一方、seed は seed-* だけを初期化し teardown もない。反復実行で active tenant が蓄積し、最終的に MAX_TENANTS 到達や前回データ依存の失敗を生む。",
+          "recommended_intervention": "E2E ごとに mktemp 相当の専用 persistence path を使うか、test-run ID を全作成行に持たせて afterAll で確実に削除する。seed-local.sql の『同じ状態』を DB 全体リセットとして実装する場合は、開発者データを消さない専用 test DB に限定する。連続2回実行を CI で検証する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "playwright.config.ts",
+            "line": 7,
+            "section": "webServer"
+          },
+          "root_cause": "seed データの冪等性とテスト全体の隔離性を同一視し、動的テストデータの lifecycle owner を定めていない。"
+        },
+        {
+          "condition": "C2",
+          "severity": "low",
+          "bucket": "hook-ci",
+          "description": "repository consistency checker は存在し手動実行では成功するが、package script と CI に接続されていないため、README・setup・仕様投影のドリフトを継続的に検出する工程になっていない。",
+          "recommended_intervention": "package.json に check:repo を追加し、CI の check job で lint/typecheck/test/build と並べて実行する。現在検査対象外の README 現況、owner manual placeholder、公開 readiness もルールへ追加する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": ".github/workflows/ci.yml",
+            "line": 26,
+            "section": "check steps"
+          },
+          "root_cause": "整合性スクリプトが一回限りの delivery 証跡として追加され、継続的な品質ゲートの依存に昇格していない。"
+        }
+      ],
+      "score": 0.58,
+      "reuse_surface": "script-frontmatter",
+      "negative_cases": [
+        "CI の完全に使い捨てな D1 だけを対象にする場合、データ蓄積問題はローカル実行に限定される。"
+      ],
+      "re_audit_trigger": "Playwright の persistence 設定、seed 方針、CI check step を変更したとき"
+    },
+    {
+      "paradigm_id": 26,
+      "paradigm_name": "why思考",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "なぜ最後に使った tenant を復元できないか: logout が session を削除するから。なぜ削除で preference も消えるか: preference を session.tenant_id に置いたから。なぜそこへ置いたか: 現在選択と次回既定を同じ状態とみなしたから。",
+        "なぜテストで見つからないか: switch の即時表示までを完了条件にしたから。なぜ完了条件が短いか: 受入 A2 が重複作成を中心にし、requirements.md:54 の『最後に使った』が独立した検証項目へ写像されていないから。",
+        "同じ根は、tenant.name の入口別検証、OAuth の解析後だけのエラー変換、手書き現況表にも見える。寿命・不変条件・正本の owner がドメイン単位ではなく局所実装単位で置かれている。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "現在選択と次回既定を同一視する前提が logout semantics と矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "requirements.md:54 の個別受入・回帰テストと、状態の lifetime 定義が欠けている。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "仕様上の durable preference と実装上の ephemeral session が同じ lastSelected という語で扱われる。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "preference→session→logout の依存方向が lifetime の短い要素へ逆転している。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "last-tenant 不具合の真因は SQL の並び順だけでなく、利用者 preference と認証 session の lifetime を分離していないことにある。ORDER BY を直すだけでは logout 後の消失は解消しない。",
+          "recommended_intervention": "状態ごとに owner と lifetime を設計資料へ明記し、durable user preference を session から分離する。要件表へ『最後の選択を logout 後も復元』を追加し、repository 単体ではなく lifecycle 結合テストで固定する。",
+          "condition_signal": "dependency_break",
+          "location": {
+            "file": "src/usecases/session.ts",
+            "line": 92,
+            "section": "loginWithIdentity tenant selection"
+          },
+          "root_cause": "一時的状態と永続的状態を、同じ値を持つという理由だけで一つの保存場所へ統合した。"
+        }
+      ],
+      "score": 0.62,
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "製品要件として毎回最古 tenant を既定にするなら durable preference は不要だが、requirements.md:54 を先に変更する。"
+      ],
+      "re_audit_trigger": "認証 session と利用者 preference のデータモデルを変更したとき"
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "OAuth client ID と commit 状態について、現況文書が current config/worktree と矛盾する。",
+        "『最後に使ったテナント』を保存する session 行を logout で削除する。",
+        "seed-local.sql は反復同一状態を主張するが、E2E の動的 tenant を削除しない。"
+      ],
+      "violation_count": 3
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "OAuth transport/parser failureの正規化とテスト、logout 後の tenant 復元テスト、最大長既定名、scheduled/queue の安全な stub テスト、E2E teardown、production-readiness gate が欠ける。"
+      ],
+      "violation_count": 6
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "requirements.md:54 の tenant 選択、requirements.md:26 の OAuth failure、tenant.name の60文字規則が実装の一部経路と一致しない。",
+        "setup/QA/README の現在状態が実設定と同期していない。"
+      ],
+      "violation_count": 4
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "durable preference が削除される session に依存し、Queue binding が成功 ack の未実装 handler に依存し、E2E setup に cleanup がなく、consistency checker が CI に接続されない。"
+      ],
+      "violation_count": 4
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "/Users/***/orca/workspaces/YouTube分析/環境構築",
+      "variable_name": "{{PROJECT_ROOT}}",
+      "default_value": "runtime cwd",
+      "source_trace": "raw_observations.json concrete_values_to_abstract[fixed-path]"
+    },
+    {
+      "concrete_value": "youtube-analytics",
+      "variable_name": "{{WORKER_NAME}}",
+      "default_value": "youtube-analytics",
+      "source_trace": "wrangler.toml:3 and package.json:2"
+    },
+    {
+      "concrete_value": "feat-platform-tenant-auth",
+      "variable_name": "{{CURRENT_FEATURE}}",
+      "default_value": "feat-platform-tenant-auth",
+      "source_trace": "features/feat-platform-tenant-auth.md:19"
+    },
+    {
+      "concrete_value": "dist/web",
+      "variable_name": "{{WEB_ASSET_DIR}}",
+      "default_value": "dist/web",
+      "source_trace": "wrangler.toml:10 and vite.config.ts:10"
+    },
+    {
+      "concrete_value": "/api/*",
+      "variable_name": "{{API_ROUTE_PREFIX}}",
+      "default_value": "/api/*",
+      "source_trace": "wrangler.toml:13 and src/http/app.ts:12"
+    },
+    {
+      "concrete_value": "/api/auth/callback",
+      "variable_name": "{{OAUTH_CALLBACK_PATH}}",
+      "default_value": "/api/auth/callback",
+      "source_trace": "src/http/auth-routes.ts:20"
+    },
+    {
+      "concrete_value": "https://accounts.google.com/o/oauth2/v2/auth",
+      "variable_name": "{{OAUTH_AUTHORIZATION_URL}}",
+      "default_value": "provider authorization endpoint",
+      "source_trace": "src/http/google-oauth.ts:8"
+    },
+    {
+      "concrete_value": "https://oauth2.googleapis.com/token",
+      "variable_name": "{{OAUTH_TOKEN_URL}}",
+      "default_value": "provider token endpoint",
+      "source_trace": "src/http/google-oauth.ts:9"
+    },
+    {
+      "concrete_value": "MAX_TENANTS=100",
+      "variable_name": "{{MAX_TENANTS}}",
+      "default_value": "100",
+      "source_trace": "wrangler.toml:16 and src/usecases/common.ts:21-24"
+    },
+    {
+      "concrete_value": "0 18 * * *",
+      "variable_name": "{{DAILY_CRON_UTC}}",
+      "default_value": "0 18 * * *",
+      "source_trace": "wrangler.toml:41-43"
+    },
+    {
+      "concrete_value": "Node 22",
+      "variable_name": "{{NODE_RUNTIME_VERSION}}",
+      "default_value": ">=22",
+      "source_trace": "package.json:6-8 and README.md:14"
+    },
+    {
+      "concrete_value": "pnpm 10.19.0",
+      "variable_name": "{{PACKAGE_MANAGER_VERSION}}",
+      "default_value": "10.19.0",
+      "source_trace": "package.json:5"
+    },
+    {
+      "concrete_value": "***",
+      "variable_name": "{{owner}}",
+      "default_value": "project-defined owner",
+      "source_trace": "wrangler.toml:23 and docs/setup/owner-manual-setup.mdx:35; identifying value masked"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "critical",
+      "deduction",
+      "induction",
+      "abduction",
+      "vertical",
+      "decomposition",
+      "mece",
+      "two-axis",
+      "process",
+      "why"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  }
+}
