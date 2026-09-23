@@ -133,7 +133,7 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 | 設定 | 値 | 意味 |
 |---|---|---|
 | `name` | `youtube-analytics` | Worker の名前。URL の先頭（`https://youtube-analytics.daishimanju.workers.dev`）になる |
-| `main` | `src/index.ts` | 入口。現在は`fetch`（API）と空の`scheduled`だけを持つ |
+| `main` | `src/index.ts` | 入口。現在は`fetch`（API）だけを持つ |
 | `compatibility_date` | `2026-08-22` | 実行環境の版。上げるのは wrangler 更新時だけ |
 | `[assets]` | `directory = ./dist/web`、`not_found_handling = single-page-application`、`run_worker_first = ["/api/*"]` | 画面は静的配信。`/api/*` だけ Worker が先に受ける。それ以外の未知パスは `index.html` を返す（React Router のため） |
 | `[vars] MAX_TENANTS` | `"100"` | テナント数の上限。非秘密なのでファイルに書く |
@@ -141,7 +141,7 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 | `[[d1_databases]]` | binding `DB`、`youtube-analytics-db`、`database_id = 91996166-…` | 本番 DB。`migrations_dir = migrations` |
 | `[[r2_buckets]]` | binding `MEDIA`、`youtube-analytics-media` | 画像置き場（この feature では宣言だけ） |
 | `[[queues.producers]]` | `collect-queue` | producer bindingの予約。consumerは処理と終端失敗契約を実装する次featureで同時に追加 |
-| `[triggers] crons` | `0 18 * * *` | UTC 18:00 = JST 3:00 の定期実行（今は空の受け口） |
+| `[triggers] crons` | 未構成 | 空のCronでFree枠を消費しない。UTC 18:00 = JST 3:00 の定期実行は、日次収集の実処理とconsumerが揃う後続featureで追加する |
 | `[observability]` | `enabled = true` | ダッシュボードでログとメトリクスを見られるようにする |
 
 **この 3 つは deploy では作られない。別に用意する**:
@@ -558,7 +558,7 @@ deploy が緑になったら、ダッシュボードで Worker を開いて確�
 |---|---|---|
 | Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=100` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
 | Settings → Domains & Routes | 公開先 | `youtube-analytics.daishimanju.workers.dev` が Enabled。カスタムドメインは付けない |
-| Settings → Trigger Events（Cron Triggers） | 定期実行 | `0 18 * * *` が 1 件 |
+| Settings → Trigger Events（Cron Triggers） | 定期実行 | 現在は未構成で一覧が空。日次収集 feature で実処理と同時に `0 18 * * *` を追加する |
 | Settings → Trigger Events（Queue Consumers） | 消費者 | 現在は未構成で一覧が空。日次収集 feature で処理・終端失敗契約と同時に追加する |
 | Deployments | 履歴 | 最新に今の日時と、Source が `Upload`（API トークン経由）で並ぶ |
 | Observability → Logs | 実行ログ | `/api/health` を開いたあと、リクエストが記録される |

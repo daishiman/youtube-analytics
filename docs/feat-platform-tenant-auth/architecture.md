@@ -11,7 +11,7 @@
 | DB | D1 `youtube-analytics-db`、binding `DB` | `[[d1_databases]]`、`migrations/` |
 | 画像 | R2 `youtube-analytics-media`、binding `MEDIA`（本 feature では未使用。キー接頭辞 `tenants/<tenant_id>/` を予約） | `[[r2_buckets]]` |
 | 収集キュー | Queue `collect-queue` の producer binding `COLLECT_QUEUE` のみ。consumer は処理と終端失敗契約を実装する後続 feature で同時に追加する | `[[queues.producers]]` |
-| Cron | `0 18 * * *`（JST 3:00。本 feature では空 handler） | `[triggers]` |
+| Cron | 本 feature では未構成。`0 18 * * *`（JST 3:00）を実処理と consumer が揃う後続 feature で追加する | — |
 
 `/api/*` だけを Worker が先に処理し、それ以外（`/`、`/login`、`/settings` など）は静的アセットの `index.html` が返る。`/privacy` と `/terms` は `public/` の静的 HTML。
 

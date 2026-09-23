@@ -32,9 +32,8 @@ bucket_name = "youtube-analytics-media"
 binding = "COLLECT_QUEUE"
 queue = "collect-queue"
 
-# 収集と cleanup を1本に統合した Cron（UTC 18:00 = JST 3:00, qa-058/qa-059）
-[triggers]
-crons = ["0 18 * * *"]
+# Cron は scheduled/consumer の実処理が揃う feat-youtube-daily-collection で追加する。
+# 空のトリガーを先に登録せず、アカウント共通の Free 枠を消費しない。
 
 [observability]
 enabled = true
