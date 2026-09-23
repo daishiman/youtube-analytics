@@ -30,7 +30,7 @@ pnpm dev                         # http://localhost:8791
 | 構成の確認（deploy の dry-run） | `pnpm build` |
 
 - `.dev.vars` に `DEV_LOGIN=1` を入れると、localhost に限り、メールアドレスだけでログインできる「開発用ログイン」が使えます。テストアカウントと画面テストの流れは `docs/feat-platform-tenant-auth/runbook.md` の 5 節を参照してください。
-- 公開までに利用者が手で行う設定（Cloudflare API トークン、Google OAuth、Secrets、PR、ブランチ保護）は `docs/setup/owner-manual-setup.md` に、上から順に実行できる形でまとめています。
+- 公開までに利用者が手で行う設定は、まず `docs/setup/README.md`（入口。作業一覧と現在の状態）を開いてください。1 手順ずつの詳細は `docs/setup/owner-manual-setup.md` にあります。
 - Cloudflare の資源作成、Google OAuth クライアント、Secrets の登録、preview（本番）環境の構築と運用は `docs/feat-platform-tenant-auth/runbook.md`、開発環境の現況は `docs/setup/environment.md` にあります。
 
 ## リポジトリの見方

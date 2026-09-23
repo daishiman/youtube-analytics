@@ -1,31 +1,31 @@
 # 利用者が手で行う設定（公開までのチェックリスト）
 
-最終更新: 2026-09-22。対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.<サブドメイン>.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。
+最終更新: 2026-09-23。対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.<サブドメイン>.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。
 
 - 所要時間: 約 60〜90 分（Google Cloud が一番長い）
-- エージェントは、秘密の値の発行、外部サービスの画面操作、commit と push を行わない。そのため、この文書の手順は利用者が行う。
+- エージェントは、秘密の値の発行、外部サービスの画面操作、push と PR 作成を行わない。そのため、この文書の手順は利用者が行う（ローカルの commit は 2026-09-23 に実施済み。9 節）。
 - **このリポジトリは公開（PUBLIC）。** 秘密の値（トークン、シークレット、鍵）は、ファイル、チャット、Issue、PR 本文に絶対に書かない。登録先の入力欄かターミナルのプロンプトにだけ貼る。
 
 ## 0. 全体の流れと現在の状態
 
-| # | やること | 登録先 | 状態（2026-09-22 時点） |
-|---|---|---|---|
-| 1 | workers.dev のサブドメインを確認する | Cloudflare | 未確認 |
-| 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | **未登録** |
-| — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | 登録済み（作業不要） |
-| 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | 未実施 |
-| 4 | Google の OAuth 同意画面（ブランディング、対象、データアクセス）を設定する | Google Auth Platform | 未実施 |
-| 5 | Google の OAuth クライアントを作る | Google Auth Platform | 未実施 |
-| 6 | クライアント ID を `wrangler.toml` に書く | リポジトリ | 未実施（仮の値 `REPLACE_WITH_GOOGLE_CLIENT_ID`） |
-| 6.5 | 利用規約とプライバシーポリシーの草案を確定する（運営者名、連絡先、施行日） | リポジトリ `public/` | **未実施（「草案」の表示と空欄が残っている）** |
-| 7 | Workers Secret を 2 つ登録する | Cloudflare Workers | **未登録** |
-| 8 | ローカルの `.dev.vars` を埋める（任意） | 手元だけ | 任意 |
-| 9 | ブランチを切って commit し、PR を作る | GitHub | 未実施 |
-| 10 | CI が通ることを確認し、ブランチ保護を設定する | GitHub | 未実施 |
-| 11 | merge して自動 deploy を確認する | GitHub Actions | 未実施 |
-| 12 | 本番で動作を確認する | ブラウザ | 未実施 |
+| # | やること | 登録先 | 誰が | 状態（2026-09-23 時点） |
+|---|---|---|---|---|
+| 1 | workers.dev のサブドメインを確認する | Cloudflare | あなた | 未確認 |
+| 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | あなた | **未登録** |
+| — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | — | 登録済み（作業不要） |
+| 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | あなた | 未実施 |
+| 4 | Google の OAuth 同意画面（ブランディング、対象、データアクセス）を設定する | Google Auth Platform | あなた | 未実施 |
+| 5 | Google の OAuth クライアントを作る | Google Auth Platform | あなた | 未実施 |
+| 6 | クライアント ID を `wrangler.toml` に書く | リポジトリ | どちらでも | 未実施（仮の値 `REPLACE_WITH_GOOGLE_CLIENT_ID`） |
+| 6.5 | 利用規約とプライバシーポリシーの草案を確定する（運営者名、連絡先、施行日） | リポジトリ `public/` | 値はあなた、書換はエージェント可 | **未実施（「草案」の表示と空欄が残っている）** |
+| 7 | Workers Secret を 2 つ登録する | Cloudflare Workers | あなた（秘密値のため） | **未登録** |
+| 8 | ローカルの `.dev.vars` を埋める（任意） | 手元だけ | あなた | 任意（本物の Google をローカルで試すときだけ） |
+| 9 | ブランチを切って commit し、PR を作る | GitHub | あなた | **commit まで実施済み**（ブランチ `feat/platform-tenant-auth`、`1b72db3`、84 ファイル）。push と PR が残り |
+| 10 | CI が通ることを確認し、ブランチ保護を設定する | GitHub | あなた | 未実施 |
+| 11 | merge して自動 deploy を確認する | GitHub Actions | あなた | 未実施 |
+| 12 | 本番で動作を確認する | ブラウザ | あなた | 未実施 |
 
-**確認済みで作業がいらないもの**（2026-09-22 に確認）:
+**確認済みで作業がいらないもの**（2026-09-23 に確認）:
 
 | 項目 | 状態 |
 |---|---|
