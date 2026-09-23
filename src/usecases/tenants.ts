@@ -1,0 +1,58 @@
+// テナント: 所属一覧・追加作成（MAX_TENANTS で受付停止）・選択テナントの切替・画面用の自分の情報
+import { newId } from "../lib/crypto";
+import { AppError } from "../lib/errors";
+import { type Deps, iso, maxTenants, platform } from "./common";
+import type { CurrentSession } from "./session";
+
+export async function listMyTenants(deps: Deps, userId: string) {
+  return (await platform(deps).listMemberships(userId)).map((m) => ({
+    tenantId: m.tenant_id,
+    name: m.name,
+    role: m.role,
+  }));
+}
+
+export async function isSignupClosed(deps: Deps): Promise<boolean> {
+  return (await platform(deps).countActiveTenants()) >= maxTenants(deps.env);
+}
+
+export async function createTenant(deps: Deps, session: CurrentSession, name: unknown) {
+  const trimmed = typeof name === "string" ? name.trim() : "";
+  if (trimmed.length < 1 || trimmed.length > 60) {
+    throw new AppError("VALIDATION_FAILED", "テナント名は1〜60文字で入力してください");
+  }
+  const repo = platform(deps);
+  const tenantId = newId();
+  const created = await repo.createTenantWithOwner({
+    tenantId,
+    name: trimmed,
+    userId: session.userId,
+    now: iso(deps.now),
+    maxTenants: maxTenants(deps.env),
+    onlyIfNoMembership: false,
+  });
+  if (!created) throw new AppError("SIGNUP_CLOSED");
+  await repo.setSessionTenant(session.sessionIdHash, tenantId);
+  return { tenantId, name: trimmed, role: "owner" as const };
+}
+
+export async function switchTenant(deps: Deps, session: CurrentSession, tenantId: unknown) {
+  if (typeof tenantId !== "string")
+    throw new AppError("VALIDATION_FAILED", "tenantId を指定してください");
+  const repo = platform(deps);
+  const role = await repo.getRole(tenantId, session.userId);
+  if (!role) throw new AppError("NOT_FOUND");
+  await repo.setSessionTenant(session.sessionIdHash, tenantId);
+  return { tenantId, role };
+}
+
+export async function getMe(deps: Deps, session: CurrentSession) {
+  const tenants = await listMyTenants(deps, session.userId);
+  const current = tenants.find((t) => t.tenantId === session.tenantId) ?? null;
+  return {
+    user: { userId: session.userId, email: session.email },
+    tenants,
+    currentTenant: current,
+    signupClosed: await isSignupClosed(deps),
+  };
+}

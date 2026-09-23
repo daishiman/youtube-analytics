@@ -1,0 +1,4 @@
+
+> youtube-analytics@ typecheck <repo>
+> tsc --noEmit
+

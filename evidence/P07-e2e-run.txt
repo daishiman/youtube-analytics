@@ -1,0 +1,25 @@
+
+> youtube-analytics@ e2e <repo>
+> playwright test
+
+
+Running 15 tests using 3 workers
+
+  ✓   3 [tablet] › e2e/smoke.spec.ts:20:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする (412ms)
+  ✓   2 [mobile] › e2e/smoke.spec.ts:20:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする (413ms)
+  ✓   1 [desktop] › e2e/smoke.spec.ts:20:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする (412ms)
+  ✓   4 [tablet] › e2e/smoke.spec.ts:37:1 › 未ログインで保護画面を開くとログイン画面へ戻る (112ms)
+  ✓   6 [desktop] › e2e/smoke.spec.ts:37:1 › 未ログインで保護画面を開くとログイン画面へ戻る (127ms)
+  ✓   5 [mobile] › e2e/smoke.spec.ts:37:1 › 未ログインで保護画面を開くとログイン画面へ戻る (126ms)
+  ✓   9 [desktop] › e2e/smoke.spec.ts:42:1 › 閲覧者には書込ボタンが出ない (314ms)
+  ✓   7 [tablet] › e2e/smoke.spec.ts:42:1 › 閲覧者には書込ボタンが出ない (358ms)
+  ✓   8 [mobile] › e2e/smoke.spec.ts:42:1 › 閲覧者には書込ボタンが出ない (368ms)
+  ✓  10 [desktop] › e2e/smoke.spec.ts:51:1 › テナントを切り替えると役割が変わる (247ms)
+  ✓  12 [mobile] › e2e/smoke.spec.ts:51:1 › テナントを切り替えると役割が変わる (251ms)
+  ✓  11 [tablet] › e2e/smoke.spec.ts:51:1 › テナントを切り替えると役割が変わる (303ms)
+  -  14 [mobile] › e2e/smoke.spec.ts:61:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+  -  15 [tablet] › e2e/smoke.spec.ts:61:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+  ✓  13 [desktop] › e2e/smoke.spec.ts:61:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加 (715ms)
+
+  2 skipped
+  13 passed (2.6s)

@@ -1,0 +1,23 @@
+{
+  "status": "spec_state_applied_chapter_regeneration_deferred",
+  "recorded_at": "2026-09-22T00:55:00Z",
+  "qa_ref": "qa-061",
+  "decision": "フロントエンドを React(Vite SPA・React Router)+Apache ECharts+サーバが返すグラフ仕様JSONの汎用描画に変更。Next.js は不採用。M1〜M10 をブラウザで再計算しない方針と『要点だけ先に表示』の画面構成は維持",
+  "supersedes": [
+    "qa-024 の『React は不採用』",
+    "qa-031 の『図の型は4種に限る・軽量ライブラリ1つ』(4種は既定の図として維持)"
+  ],
+  "applied_via": "system-spec-harness run-system-spec-elicit の単一 writer (apply-spec-transition.py chunk): frontend/web を reopen→qa-061 で confirm→既存 qa_refs を add-qa-ref で復元、design_applications.frontend と doctrine_applications.frontend.application-architecture を置換",
+  "validation": {
+    "validate-coverage-matrix --require-complete --require-basis --require-foundation": "exit0",
+    "validate-knowledge-graph --profile required-info ungrounded_blocking_items": []
+  },
+  "chapter_regeneration": {
+    "status": "deferred",
+    "reason": "compile-spec-doc.py で全章を再生成すると、現行章に存在する compiler 外の追補節(例: frontend.md『週次売上ファネル画面契約』、各章『対象外の承認範囲』)が消えるため。確定章は Write/Edit でも直接改変しない",
+    "gate": "eval-log/dev-graph-resync-required-20260922.json の再同期(system-spec compile/evaluate と dev-graph compile/decompose)と同時に、追補節を保ったまま frontend 章へ qa-061 を反映する",
+    "affected_features": ["feat-web-screens-actions"]
+  },
+  "implementation_effect": "feat-platform-tenant-auth の画面(ログイン・招待受諾・静的ページ2枚)は qa-061 に従い React で実装する。グラフは本 feature に含まれない",
+  "non_action": "digest を手作業で置換しない。確定章 Markdown を直接編集しない"
+}

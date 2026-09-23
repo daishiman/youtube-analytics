@@ -4,10 +4,34 @@ YouTube の実績と週次の事業ファネルをつなぎ、目標差が最も
 
 ## 現況
 
-- 要件・技術仕様は確定済みで、アプリ実装コードはまだありません。
-- 現在の公開 feature package は `feat-platform-tenant-auth`、進捗は `0/13` task です。
-- 次に実行する task は `SYS-PTA-P01`（要件の実装単位への確定）です。
+- 要件・技術仕様は確定済みです。最初の feature `feat-platform-tenant-auth`（Google ログイン、テナント、招待、役割、CI/CD の土台）を実装済みで、ローカルで受入 A1〜A5 が合格、A6 はワークフローの静的検査が合格です（`docs/feat-platform-tenant-auth/acceptance.md`）。
+- `feat-platform-tenant-auth` の 13 task（`SYS-PTA-P01`〜`P13`）は作業ツリー上で実施済みで、未コミットです。Beads（`yta-c8g.1`〜`.13`）は PR が main へ merge された時点で close します。preview 環境と GitHub Actions の実行確認は、初回 deploy の後に行います。
+- 業務機能（YouTube 収集、CSV と画像の取込、分析レポート、業務画面、保持期間の運用）の 5 feature は未着手です。
 - 週次事業ファネルと分析履歴の追補は、対象3 featureのtask計画前に dev-graph compile / decompose で digest とstate graphを再同期します。必要なgateは `eval-log/dev-graph-resync-required-20260922.json` に固定しています。
+
+## セットアップ
+
+前提: Node 22（`.node-version`）、pnpm 10。
+
+```bash
+pnpm install
+cp .dev.vars.example .dev.vars   # TOKEN_ENC_KEY などを記入する（コミットしない）
+pnpm db:migrate:local            # ローカル D1 にテーブルを作る
+pnpm db:seed:local               # ローカル画面テスト用のアカウントとテナントを入れる
+pnpm dev                         # http://localhost:8791
+```
+
+| 目的 | コマンド |
+|---|---|
+| 静的検査 | `pnpm lint && pnpm typecheck` |
+| API の結合テスト（Workers ランタイム上） | `pnpm test` |
+| 画面の E2E（3 サイズ） | `pnpm e2e` |
+| 画面の再ビルド（`pnpm dev` の起動中に画面を変えたとき） | `pnpm build:web` |
+| 構成の確認（deploy の dry-run） | `pnpm build` |
+
+- `.dev.vars` に `DEV_LOGIN=1` を入れると、localhost に限り、メールアドレスだけでログインできる「開発用ログイン」が使えます。テストアカウントと画面テストの流れは `docs/feat-platform-tenant-auth/runbook.md` の 5 節を参照してください。
+- 公開までに利用者が手で行う設定（Cloudflare API トークン、Google OAuth、Secrets、PR、ブランチ保護）は `docs/setup/owner-manual-setup.md` に、上から順に実行できる形でまとめています。
+- Cloudflare の資源作成、Google OAuth クライアント、Secrets の登録、preview（本番）環境の構築と運用は `docs/feat-platform-tenant-auth/runbook.md`、開発環境の現況は `docs/setup/environment.md` にあります。
 
 ## リポジトリの見方
 
