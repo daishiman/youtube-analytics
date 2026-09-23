@@ -58,6 +58,7 @@
 | 秘密の値をファイルやチャットに書く | **このリポジトリは公開。** 入力欄かターミナルのプロンプトにだけ貼る |
 | 本番 URL を推測して Google に登録する | 正しくは `https://youtube-analytics.daishimanju.workers.dev`（末尾に `/` は付けない）。5 と 6 でこの URL を使う |
 | `.dev.vars` を commit する | `.gitignore` 済み。`git status` に出たら止まって確認する |
+| deploy 前に本番 URL を開いて「There is nothing here yet」に驚く | 正常。Worker がまだ無いだけ（HTTP 404）。12 の deploy でログイン画面に変わる |
 
 ## 5. 作業前の確認コマンド
 

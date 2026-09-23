@@ -69,6 +69,8 @@ https://youtube-analytics.daishimanju.workers.dev
 | Queue | `collect-queue` |
 | Worker `youtube-analytics` | **まだ存在しない**（初回 deploy で自動作成される。想定どおり） |
 
+> **デプロイ前に本番 URL を開くと「There is nothing here yet」と出る。** これは異常ではなく、ホスト名は解決しているが Worker がまだ無いことを示す Cloudflare の既定ページ（HTTP 404）。11 の deploy が終わると、ログイン画面に変わる。
+
 <details>
 <summary>自分で確認し直す手順（サブドメインを変えたときなど）</summary>
 
