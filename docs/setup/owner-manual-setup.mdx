@@ -247,20 +247,36 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 ### 4.2 ブランディング（Branding）
 
 1. https://console.cloud.google.com/auth/branding を開く。
-2. 次の欄を入れる（`<本番URL>` は 1 でメモした値）。
+2. 次の欄を入れる。
 
    | 欄 | 入れる値 |
    |---|---|
-   | アプリのホームページ | `<本番URL>/` |
-   | アプリのプライバシー ポリシーへのリンク | `<本番URL>/privacy` |
-   | アプリの利用規約へのリンク | `<本番URL>/terms` |
-   | 承認済みドメイン（「+ ドメインの追加」） | `daishimanju.workers.dev`（`https://` も末尾の `/` も付けない） |
+   | アプリ名 | `YouTube分析` |
+   | ユーザー サポートメール | 自分の Gmail |
+   | アプリのホームページ | `https://youtube-analytics.daishimanju.workers.dev` |
+   | アプリのプライバシー ポリシーへのリンク | `https://youtube-analytics.daishimanju.workers.dev/privacy` |
+   | アプリの利用規約へのリンク | `https://youtube-analytics.daishimanju.workers.dev/terms` |
+   | 承認済みドメイン（「+ ドメインの追加」） | `daishimanju.workers.dev` |
    | デベロッパーの連絡先情報 | 自分の Gmail |
 
 3. ロゴは空のままにする（ロゴを入れると Google の審査が必要になる）。
 4. 一番下の **「保存」** を押す。
 
-> 承認済みドメインには、`workers.dev` 自体は登録できない。一方 `<サブドメイン>.workers.dev` は登録できる（workers.dev は Public Suffix List に載っており、その下が 1 つのドメインとして扱われるため）。ここに登録したドメインの URL しか、ホームページやリダイレクト URI に使えない。「無効なドメイン」と出たときは綴り（`https://` や末尾の `/` を付けていないか）を確認する。
+**承認済みドメインの欄には、ドメイン名だけを入れる。** URL ではない。
+
+| 入れるもの | 例 | 可否 |
+|---|---|---|
+| ドメイン名だけ | `daishimanju.workers.dev` | ○ |
+| `https://` 付き | `https://daishimanju.workers.dev` | × 「無効なドメイン: スキームを指定することはできません」 |
+| パス付き（リダイレクト URI） | `https://youtube-analytics.daishimanju.workers.dev/api/auth/callback` | × 同上。これは 5 節のクライアント画面で登録するもの |
+| localhost | `http://localhost:8791/...` | × 登録不要。Google は localhost をリダイレクト URI としてだけ特別に受け付ける |
+| 親ドメイン | `workers.dev` | × 他人のサブドメインまで名乗れてしまうため拒否される |
+
+登録する承認済みドメインは **`daishimanju.workers.dev` の 1 つだけ**。欄が 2 つ以上あるときは、余った欄を消してから保存する。
+
+> `workers.dev` 自体は登録できないが、`daishimanju.workers.dev` は登録できる（workers.dev は Public Suffix List に載っており、その下が 1 つのドメインとして扱われるため）。
+>
+> 赤字で **「次のドメインが見つかりません: daishimanju.workers.dev」** と出るのは、ホームページやプライバシーポリシーの URL に使っているドメインが、承認済みドメインの一覧に無いという意味。承認済みドメインに `daishimanju.workers.dev` を正しく入れれば消える。
 
 ### 4.3 データアクセス（スコープ）
 

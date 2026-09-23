@@ -6,7 +6,7 @@
 
 | 目的 | 文書 |
 |---|---|
-| 公開までに自分で行う設定を、1 手順ずつ実行する | **[owner-manual-setup.md](owner-manual-setup.md)**（本編。画面の場所、URL、入力値まで） |
+| 公開までに自分で行う設定を、1 手順ずつ実行する | **[owner-manual-setup.mdx](owner-manual-setup.mdx)**（本編。画面の場所、URL、入力値まで） |
 | 構成と現況、残課題の全体像を知る | [environment.md](environment.md) |
 | 公開後の日々の運用（上限変更、招待の取消、障害時、ロールバック） | [../feat-platform-tenant-auth/runbook.md](../feat-platform-tenant-auth/runbook.md) |
 | ローカルで画面を触る（テストアカウント、画面テストの流れ） | [runbook.md の 5 節](../feat-platform-tenant-auth/runbook.md) |
@@ -29,7 +29,7 @@
 
 ## 3. あなたが行う作業（この順に）
 
-所要時間は合計で約 60〜90 分。各行の「詳細」は owner-manual-setup.md の節番号。
+所要時間は合計で約 60〜90 分。各行の「詳細」は owner-manual-setup.mdx の節番号。
 
 | # | 作業 | 入口の URL / コマンド | 詳細 | 目安 |
 |---|---|---|---|---|
@@ -53,11 +53,12 @@
 
 | よくある間違い | 正しくは |
 |---|---|
-| Cloudflare の画面で「Create an app」→「Import a repository」を使って GitHub とつなぐ | **使わない。** deploy は GitHub Actions が `wrangler deploy` で行う（owner-manual-setup.md 1.5.1） |
+| Cloudflare の画面で「Create an app」→「Import a repository」を使って GitHub とつなぐ | **使わない。** deploy は GitHub Actions が `wrangler deploy` で行う（owner-manual-setup.mdx 1.5.1） |
 | Cloudflare のダッシュボードで binding や変数を直接いじる | `wrangler.toml` を直して PR を出す。ダッシュボードの変更は次の deploy で消える（1.5.3） |
 | 秘密の値をファイルやチャットに書く | **このリポジトリは公開。** 入力欄かターミナルのプロンプトにだけ貼る |
 | 本番 URL を推測して Google に登録する | 正しくは `https://youtube-analytics.daishimanju.workers.dev`（末尾に `/` は付けない）。5 と 6 でこの URL を使う |
 | `.dev.vars` を commit する | `.gitignore` 済み。`git status` に出たら止まって確認する |
+| Google の「承認済みドメイン」にリダイレクト URI（`https://.../api/auth/callback`）を入れる | ドメイン名だけを入れる。正しくは `daishimanju.workers.dev` の 1 行だけ。リダイレクト URI は 6 のクライアント画面で登録する（owner-manual-setup.mdx 4.2） |
 | deploy 前に本番 URL を開いて「There is nothing here yet」に驚く | 正常。Worker がまだ無いだけ（HTTP 404）。12 の deploy でログイン画面に変わる |
 
 ## 5. 作業前の確認コマンド

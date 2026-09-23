@@ -48,7 +48,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 
 ## 4. 利用者の手作業が必要な残り
 
-外部アカウントの画面操作・秘密値の発行が必要なため、エージェントでは実行していない。**画面の場所、URL、入力する値まで含めた詳しい手順は `docs/setup/owner-manual-setup.md` にある。**
+外部アカウントの画面操作・秘密値の発行が必要なため、エージェントでは実行していない。**画面の場所、URL、入力する値まで含めた詳しい手順は `docs/setup/owner-manual-setup.mdx` にある。**
 
 1. **Cloudflare API トークン**: ダッシュボード → My Profile → API Tokens → 「Edit Cloudflare Workers」テンプレートに D1 Edit・Queues Edit を追加し、対象アカウントを上記個人アカウントに限定して発行。`gh secret set CLOUDFLARE_API_TOKEN -R daishiman/youtube-analytics`
 2. **Google Cloud**（SYS-PTA-P05 の受入前まで）:
@@ -56,7 +56,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
    2. OAuth 同意画面を External・本番公開（未検証）で作成、スコープ `openid email`（YouTube 連携スコープは feat-youtube-daily-collection で追加）
    3. OAuth クライアント（Web）を作成し、承認済みリダイレクト URI に `https://youtube-analytics.<subdomain>.workers.dev/api/auth/callback` と `http://localhost:8791/api/auth/callback` を登録
    4. `wrangler.toml` の `GOOGLE_CLIENT_ID` を置換、`pnpm wrangler secret put GOOGLE_CLIENT_SECRET`
-3. **規約ページの確定**: `public/privacy.html` と `public/terms.html` の「草案」表示を消し、運営者名、連絡先、施行日を記入する（owner-manual-setup.md 6.5 節）
+3. **規約ページの確定**: `public/privacy.html` と `public/terms.html` の「草案」表示を消し、運営者名、連絡先、施行日を記入する（owner-manual-setup.mdx 6.5 節）
 4. **Workers Secret**: `openssl rand -base64 32 | pnpm wrangler secret put TOKEN_ENC_KEY`（初回 deploy 後）
 5. **ブランチ保護**: 初回 CI 実行後、main に「PR 必須・`check` と `e2e` を必須チェック」を設定
 6. **Claude Code**: `/reload-plugins` で Cloudflare Skills / MCP を有効化
