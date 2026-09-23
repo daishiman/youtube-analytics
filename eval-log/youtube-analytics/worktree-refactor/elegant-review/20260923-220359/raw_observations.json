@@ -1,0 +1,74 @@
+{
+  "purpose": "YouTubeの実績と週次の事業ファネルをテナント単位で扱い、設定目標との差が大きい改善候補と次の行動を、因果推論ではなく実績比較として把握・管理するWebシステム。現在の実装範囲は基盤、ログイン、テナント、招待、役割、CI/CDである。",
+  "scope": {
+    "in_scope": [
+      "現在のworktreeにあるWebアプリの実装（src、web、migrations）",
+      "要件・設計の正本と投影（system-spec、specs、architecture、features）",
+      "現実装の受入資料とセットアップ資料",
+      "単体・結合・E2Eテストとルート網羅表",
+      "package、ビルド、テスト、Cloudflare、GitHub Actionsの設定"
+    ],
+    "out_of_scope": [
+      "外部のCloudflare・Google・GitHub環境の実状態",
+      "未コミット秘密値を含む.dev.varsの内容",
+      "aidd-agent-kitと実行時スキル配置の設計評価",
+      "未実装featureの実行時挙動",
+      "アプリ本体への変更、採点、改善提案"
+    ]
+  },
+  "stakeholders": [
+    "運営者兼利用者",
+    "招待されるオーナー・編集者・閲覧者",
+    "他のYouTubeクリエイター",
+    "Google API提供者",
+    "各利用者のClaude Code実行環境",
+    "Cloudflare・GitHubを扱う運用担当"
+  ],
+  "first_impressions": [
+    "全体仕様と現在実装の境界がfeature単位で分けて記録されている。",
+    "現在のHTTP経路はHono、業務入口はusecase、D1操作はplatform/scoped repositoryに分かれている。",
+    "画面はReact SPAで、現在はログイン、招待、ダッシュボードの仮表示、設定を持つ。",
+    "テストは未認証、初回ログイン、権限、越境、招待、上限、ワークフロー、OAuth、ルート網羅、E2Eを扱う。",
+    "READMEの未コミット記述と観察開始時のgit cleanは異なる時点を表している。",
+    "scheduledとqueueのhandlerは後続feature向けの空実装で、preview環境の受入結果も未記入である。",
+    "プライバシーポリシーと利用規約は草案表示と未記入欄を残している。"
+  ],
+  "facts_vs_assumptions": {
+    "facts": [
+      "観察開始時のブランチはfeat/platform-tenant-authで、git statusはcleanだった。",
+      "packageはNode 22とpnpm 10を前提に、Hono、React、React Router、Vite、Vitest、Playwright、Wranglerを使う。",
+      "system-specの8技術章はindex上でconfirmedと記録されている。",
+      "現在のsrcはセッション、Google OAuth、テナント、メンバー、招待と関連repositoryを実装している。",
+      "wrangler設定はWorker、D1、R2、Queue、Cron、静的assetsを宣言している。",
+      "src/index.tsのscheduledは空で、queueは受信messageをackする。",
+      "受入資料はA1からA5をローカル合格、A6を静的検査合格、previewを未実施と記録している。",
+      "featuresには現在実装のplatform-tenant-authと、後続5機能の仕様がある。",
+      "publicの規約2ページは草案である。"
+    ],
+    "assumptions": [
+      "READMEと受入資料は作成時点の状態を記述しており、現在の外部環境状態までは保証しない。",
+      "ローカルファイルに記録されたテスト成功は今回の観察中に再実行した結果ではない。",
+      "固定された資源名、URL、ID、上限値、Cron時刻は配備先または運用方針で変わり得る。"
+    ]
+  },
+  "concrete_values_to_abstract": [
+    { "value": "youtube-analytics", "kind": "proper-noun" },
+    { "value": "feat-platform-tenant-auth", "kind": "proper-noun" },
+    { "value": "YouTube", "kind": "proper-noun" },
+    { "value": "Google OAuth", "kind": "proper-noun" },
+    { "value": "Cloudflare Workers/D1/R2/Queues", "kind": "proper-noun" },
+    { "value": "Claude Code", "kind": "proper-noun" },
+    { "value": "report-design-system", "kind": "proper-noun" },
+    { "value": "/Users/***/orca/workspaces/YouTube分析/環境構築", "kind": "fixed-path" },
+    { "value": "dist/web", "kind": "fixed-path" },
+    { "value": "/api/*", "kind": "fixed-path" },
+    { "value": "/api/auth/callback", "kind": "fixed-path" },
+    { "value": "tenants/{tenant_id}/", "kind": "fixed-path" },
+    { "value": "https://accounts.google.com/o/oauth2/v2/auth", "kind": "fixed-url" },
+    { "value": "https://oauth2.googleapis.com/token", "kind": "fixed-url" },
+    { "value": "***", "kind": "fixed-owner" },
+    { "value": "MAX_TENANTS=100", "kind": "other" },
+    { "value": "0 18 * * *", "kind": "other" },
+    { "value": "Node 22 / pnpm 10.19.0", "kind": "other" }
+  ]
+}

@@ -10,7 +10,7 @@
 | 画面 | Vite + React（React Router）の SPA を `dist/web` にビルドし、Workers 静的アセットで配信 | `[assets]`（`run_worker_first = ["/api/*"]`、`not_found_handling = "single-page-application"`） |
 | DB | D1 `youtube-analytics-db`、binding `DB` | `[[d1_databases]]`、`migrations/` |
 | 画像 | R2 `youtube-analytics-media`、binding `MEDIA`（本 feature では未使用。キー接頭辞 `tenants/<tenant_id>/` を予約） | `[[r2_buckets]]` |
-| 収集キュー | Queue `collect-queue`、binding `COLLECT_QUEUE`（本 feature では ack するだけの空 consumer） | `[[queues.*]]` |
+| 収集キュー | Queue `collect-queue` の producer binding `COLLECT_QUEUE` のみ。consumer は処理と終端失敗契約を実装する後続 feature で同時に追加する | `[[queues.producers]]` |
 | Cron | `0 18 * * *`（JST 3:00。本 feature では空 handler） | `[triggers]` |
 
 `/api/*` だけを Worker が先に処理し、それ以外（`/`、`/login`、`/settings` など）は静的アセットの `index.html` が返る。`/privacy` と `/terms` は `public/` の静的 HTML。
@@ -34,8 +34,10 @@ Domain (src/domain)      Role・Permission の表と TenantContext 型（副作�
 Repository (src/repositories)
   ├─ tenant-scoped-repository.ts  テナント内の読み書き。生成時に tenant_id を固定し、全 SQL の WHERE に入れる
   ├─ platform-repository.ts       テナントをまたぐ管理面（users・sessions・テナント作成・招待の検索/消費）
-  └─ db.ts                        参照先 D1 の解決（controlDb / resolveTenantDb）をこの1か所に集約
+  └─ db.ts                        単一control D1 bindingを返す（将来分割の先取り抽象は置かない）
 ```
+
+Frontendは`Shell`（session境界）→`ShellFrame`（共通外枠）→route pageの一方向とし、`SettingsPage`だけがtenant resource・member mutation・invite stateを所有する。tenant切替ではpage identity、request generation、AbortSignalを同時に更新する。
 
 依存の向きは HTTP → Usecase → (Domain, Repository) の一方向。Usecase は `Deps = { env, now }` を受け取り、時刻を注入できるので期限切れのテストが書ける。
 
@@ -51,7 +53,7 @@ Repository (src/repositories)
 | テーブル | 主キー | 用途 |
 |---|---|---|
 | users | user_id（google_sub は UNIQUE） | Google アカウントと1対1 |
-| tenants | tenant_id | 名前・`db_binding`（既定 `DB`）・論理削除 |
+| tenants | tenant_id | 名前・論理削除。既存`db_binding`列は現在未使用で、単一D1が正本 |
 | tenant_members | (tenant_id, user_id) | 役割 owner / editor / viewer |
 | tenant_invites | (tenant_id, invite_id)、token_hash は UNIQUE | 招待（SHA-256 のハッシュだけを保存、7日、1回限り、取消） |
 | sessions | session_id_hash | **本 feature で追加**。下記 2.3 |
@@ -63,7 +65,8 @@ Repository (src/repositories)
 
 - Cookie の平文 ID は保存しない。SHA-256 の値だけを保存するので、D1 が漏れても Cookie は偽造できない。
 - ログアウトしたら行を削除する。期限は `expires_at` で判定する。
-- 選択中のテナントは `sessions.tenant_id` に持つ。役割は毎回 `tenant_members` から読むため、メンバーから削除された人はそのテナントに入れない。
+- 選択中のテナントは `sessions.tenant_id`、logoutを越える最後の選好は`users.last_tenant_id`に分離する。役割は毎回`tenant_members`から読み、選好先から外れていればlogin時に所属先へfallbackする。
+- 期限切れsessionはlogin時に最大100件ずつ削除し、通常要求の処理量をboundedにする。
 
 ### 2.4 MAX_TENANTS の置き場所
 

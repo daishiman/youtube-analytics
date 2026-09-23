@@ -1,6 +1,6 @@
 # feat-platform-tenant-auth 最終レビュー（SYS-PTA-P10）
 
-最終更新: 2026-09-22。対象は作業ツリーの差分全体（`git status --porcelain` で、変更 3 件と未追跡 80 件。`node_modules` や `.wrangler` などの ignore 対象は除く）。判断の基準は、`features/feat-platform-tenant-auth.context.json` の purpose、goal、scope_in（8 項目）、scope_out（5 項目）。
+本 feature の実装境界を `features/feat-platform-tenant-auth.context.json` の purpose、goal、scope_in、scope_out に照らしてレビューした記録である。変化する作業ツリー、テストファイル一覧、実測件数はここへ複製せず、`git status`、`test-design.md`、CI run をそれぞれ正とする。
 
 ## 1. scope_in の番号
 
@@ -23,7 +23,7 @@
 | ファイル | 対応 | 補足 |
 |---|---|---|
 | `wrangler.toml` | S1、S8 | Workers 1 本、D1 `DB`、R2 1 バケット、`MAX_TENANTS = "100"`。Queue と Cron の宣言は正本 infrastructure 章の構成を先に置いたもので、処理はない（下の `src/index.ts` を参照） |
-| `src/index.ts` | S1 | `fetch` は Hono。`scheduled` と `queue` は**空の stub**（ack するだけ）で、収集処理は feat-youtube-daily-collection の範囲。Queue の consumer 宣言に handler が必須なため置いた |
+| `src/index.ts` | S1 | `fetch` は Hono、`scheduled` は空の stub。Queue consumer は処理と終端失敗契約を実装する feat-youtube-daily-collection で構成と同時に追加する |
 | `src/env.ts` | S1、S8 | binding と Secret の型 |
 | `src/http/app.ts` | S1、S6 | ルーティングと共通ミドルウェア。セキュリティヘッダ（P03 の是正） |
 | `src/http/middleware.ts` | S3、S6 | 認証ゲート、CSRF ガード、TenantContext の解決 |
@@ -33,21 +33,21 @@
 | `src/usecases/*.ts`（common、session、tenants、members、invites） | S3〜S6 | usecase の入口で権限を検査する |
 | `src/repositories/*.ts`（db、platform-repository、tenant-scoped-repository） | S2 | `TenantScopedRepository` は tenant_id を固定する |
 | `src/lib/crypto.ts`、`src/lib/errors.ts` | S3、S5、S6 | 乱数、SHA-256、HMAC 署名と、エラー形式 |
-| `migrations/0001_platform.sql`、`migrations/.gitkeep` | S2 | 5 テーブルに加えて `sessions`（S3 のサーバ側失効に必要。architecture.md 4 節）。`skill_tokens` は**テーブルだけ**で、API はない（feat-skill-analysis-reports の範囲） |
+| `migrations/0001_platform.sql`、`migrations/0002_user_preferences_and_session_cleanup.sql`、`migrations/.gitkeep` | S2 | 基本schemaに加え、sessionと独立したlast-tenant選好・期限cleanup indexを前進migrationで追加。`skill_tokens`はテーブルだけ |
 | `public/privacy.html`、`public/terms.html` | S7 | 静的ページ |
 | `public/_headers` | S7、S6 | 画面のセキュリティヘッダ（P03 の是正） |
-| `web/index.html`、`web/main.tsx`、`web/api.ts`、`web/styles.css` | S3〜S7 | ログイン、招待、設定の最小限の SPA（qa-061 で React と Vite に確定） |
+| `web/index.html`、`web/main.tsx`、`web/api.ts`、`web/styles.css` | S3〜S7 | SPA entry、API client、共通style（qa-061 で React と Vite に確定） |
 | `web/pages/LoginPage.tsx` | S3、S7 | 同意チェック、Google ログイン、開発用ログイン |
 | `web/pages/InvitePage.tsx` | S5 | 招待の受理とメール不一致の案内 |
-| `web/pages/Shell.tsx` | S4〜S6 | テナント切替、メンバー管理、招待発行、脱退。ダッシュボードの欄は「ログイン後の着地点」の仮置きで、業務データを持たない |
-| `web/main.ts` | —（削除済み） | React 化の前の素の TypeScript 版。どこからも参照されていなかったため 2026-09-23 に削除した（`index.html` は `main.tsx` を読む） |
+| `web/pages/Shell.tsx`、`web/components/ShellFrame.tsx` | S4〜S6 | セッション読込・tenant切替・logoutの境界と共通レイアウト |
+| `web/pages/SettingsPage.tsx`、`web/components/CreateTenantForm.tsx` | S4〜S6 | tenant単位のmember/invite状態、権限操作、tenant作成。遅延応答をtenant generationで隔離する |
+| `web/pages/DashboardPage.tsx`、`web/pages/shell-context.ts` | S4〜S6 | ログイン後の仮置き着地点とShell配下の共有context |
 
 ### 2.2 テスト、証跡、開発ツール
 
 | ファイル | 対応 |
 |---|---|
-| `tests/platform/*.test.ts`（a1〜a6、auth-flow、health、routes-coverage、seed）、`helpers.ts`、`routes.ts`、`tests/setup.ts`、`tests/env.d.ts`、`tests/raw.d.ts` | T（P04、P06）。受入 A1〜A6 の自動テスト |
-| `e2e/smoke.spec.ts`、`playwright.config.ts` | T（P07）。画面の受入 |
+| `tests/`、`e2e/`、`playwright.config.ts` | T（P04、P06、P07）。受入条件と補助検査の唯一の対応表は `test-design.md`、実測結果は `pnpm test` / `pnpm e2e` と CI run を正とする |
 | `vitest.config.ts`、`vite.config.ts`、`tsconfig.json`、`biome.json`、`package.json`、`pnpm-lock.yaml`、`.node-version` | S1、S8（ビルド、lint、test の土台） |
 | `scripts/setup-cloudflare.sh` | S1（D1、R2、Queue を冪等に作る） |
 | `scripts/seed-local.sql` | T（ローカル画面テスト用のアカウント。ローカル D1 専用で、remote には流さない） |
@@ -56,21 +56,21 @@
 | `evidence/*.txt` | T（P06〜P09 の実行ログ） |
 | `docs/feat-platform-tenant-auth/*.md` | T（P01〜P12 の成果物） |
 
-### 2.3 feature の外にある差分（既存の未コミット変更と、利用者が決めた仕様変更）
+### 2.3 feature の外にある関連変更（環境構築と、利用者が決めた仕様変更）
 
 | ファイル | 由来 | 扱い |
 |---|---|---|
 | `.gitignore`（変更） | 環境構築（`.dev.vars`、`test-results/`、`playwright-report/` を ignore） | S8 の秘密分離に必要。保持する |
 | `README.md`（変更） | 環境構築の「現況」更新と、P12 のセットアップ節 | P12 の成果物（Write scope に README.md を含む） |
 | `docs/setup/environment.md` | 環境構築の手順書 | 保持する。qa-061 と実装の現状に合わせて更新した |
-| `system-spec/spec-state.json`（変更） | 利用者が決めた qa-061（React と Vite の SPA、ECharts、Next.js 不採用）を単一 writer で反映 | feature の外の仕様変更。章の再生成は保留中（`eval-log/spec-change-qa-061-20260922.json` の status は `spec_state_applied_chapter_regeneration_deferred`） |
-| `eval-log/spec-change-qa-061-20260922.json`、`eval-log/review-queue.jsonl` | 上の仕様変更の記録 | 同上 |
+| `system-spec/spec-state.json`、`system-spec/frontend.md`（変更） | 利用者が決めた qa-061（React + Vite + React Router、ECharts、Next.js 不採用）を単一 writer で反映 | 確定章の現行規範へ対象を限定して投影済み。qa-024/qa-031の質疑録とcompiler外の追補節は保持した |
+| `eval-log/spec-change-qa-061-20260922.json`、`eval-log/review-queue.jsonl` | 上の仕様変更の記録 | 対象章への投影完了を記録。全章compileとdev-graph再同期は既存gateまで保留 |
 
 ## 3. scope_out との照合
 
 | scope_out | 該当する変更 | 判定 |
 |---|---|---|
-| YouTube API の読取連携と収集 | なし。`scheduled` と `queue` は空の stub、YouTube のスコープは要求しない（`openid email` だけ） | 0 件 |
+| YouTube API の読取連携と収集 | なし。`scheduled` は空の stub、Queue は producer binding の予約だけで consumer 未構成。YouTube のスコープは要求しない（`openid email` だけ） | 0 件 |
 | CSV、字幕、画像の取込 | なし。R2 は binding の宣言だけで、読み書きするコードはない | 0 件 |
 | Claude Code 連携 API とレポート | なし。`skill_tokens` はテーブルだけ（scope_in S2 の「土台」） | 0 件 |
 | ダッシュボード等の業務画面 | なし。画面はログイン、招待、メンバー設定、テナント切替だけ（S3〜S7 の操作に必要な最小範囲）。ダッシュボードは指標もグラフも持たない仮置き | 0 件 |
@@ -86,12 +86,12 @@
 | R2 | sharp の high 脆弱性（P03 #28、開発依存） | 是正済み（`pnpm.overrides`） |
 | R3 | lint の対象パスとルールが実質無効だった | 是正済み（P09） |
 | R4 | `.dev.vars` の `DEV_LOGIN=1` がテストへ漏れた | 是正済み（`vitest.config.ts` で固定） |
-| R5 | `web/main.ts` が未使用のまま残っている | 是正済み（2026-09-23 に削除。削除後に lint / typecheck / test 76 件 / build が成功） |
+| R5 | React 化前の未使用 entry が残っていた | 是正済み。現行 entry は `web/main.tsx` に一本化 |
 | R6 | 監査ログ、レート制限、古いセッション（P03 #33〜35、low） | 受容（理由は design-review.md） |
 
 **未解決のレビュー指摘: 0 件**（R5 はコードの欠陥ではなく、不要ファイルの片付け）。
 
 ## 5. 限界
 
-- preview 環境（本物の Google OAuth と workers.dev）と GitHub Actions の実行は、commit、push、deploy をしていないため未確認。acceptance.md と runbook.md 4 節の手順で、初回 deploy 後に確認する。
+- preview 環境（本物の Google OAuth と workers.dev）と GitHub Actions はローカルレビューの対象外。acceptance.md と runbook.md 4 節の手順で公開時に確認する。
 - 本 feature の 13 task は 1 つの作業ツリーで続けて実施した。task 仕様の「1 task 1 branch」とは異なる。

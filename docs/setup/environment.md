@@ -1,6 +1,6 @@
 # 開発環境とデプロイ基盤のセットアップ
 
-最終更新: 2026-09-22。正本は要件正本の infrastructure / maintenance-ops 章。ここは実行手順と現況だけを持つ。
+正本は要件正本の infrastructure / maintenance-ops 章。この文書は再現可能な実行手順と構成の参照先だけを持ち、変化する作業ツリー、テスト件数、外部サービスの状態は複製しない。
 
 ## 1. 構成
 
@@ -11,7 +11,7 @@
 | 画面 | Vite + React（React Router）の SPA（qa-061。Next.js は不採用。Workers 静的アセット配信） | `web/` → `dist/web/` |
 | DB | D1 `youtube-analytics-db`（binding `DB`） | `migrations/` |
 | 画像 | R2 `youtube-analytics-media`（binding `MEDIA`, `tenants/<tenant_id>/`） | — |
-| 収集 | Cron `0 18 * * *`（JST 3:00）→ Queue `collect-queue`（max_batch_size=1, max_retries=3, retry_delay=600） | `wrangler.toml` |
+| 収集 | 現在は Cron の空の入口 + Queue producer binding。日次収集 feature で consumer と終端失敗契約を同時に追加 | `src/index.ts`、`wrangler.toml` |
 | テスト | Vitest 4 + `@cloudflare/vitest-pool-workers`（Workers ランタイム上） / Playwright 3サイズ | `tests/` `e2e/` |
 | lint/format | Biome 2 | `biome.json` |
 | CI/CD | GitHub Actions（PR: `ci.yml`、main: `deploy.yml`） | `.github/workflows/` |
@@ -32,17 +32,15 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 - ポートは他プロジェクトとの衝突を避けて `8791` 固定。
 - `compatibility_date` は同梱 workerd の対応上限（2026-08-22）に合わせている。wrangler 更新時に引き上げる。
 
-## 3. 完了済み（2026-09-22）
+## 3. 構成値の参照先
 
-| 項目 | 状態 |
+| 項目 | 正本・確認方法 |
 |---|---|
-| Cloudflare ログイン | 個人アカウント `Daishimanju@gmail.com's Account`（`b3dde7be1cd856788fc47595ac455475`） |
-| D1 作成 | `youtube-analytics-db` = `91996166-d308-4e8e-9ca1-b1e21595e816`（APAC） |
-| R2 作成 | `youtube-analytics-media`（Standard） |
-| Queue 作成 | `collect-queue` |
-| GitHub Secret | `CLOUDFLARE_ACCOUNT_ID` 登録済み |
-| Cloudflare agent 設定 | `cloudflare@cloudflare` プラグイン導入（Claude で `/reload-plugins` が必要） |
-| ローカル検証 | lint / typecheck / test（76件） / `wrangler deploy --dry-run` / E2E 3サイズ（13件成功、2件は意図的なスキップ） / audit 0件 すべて成功 |
+| D1 | `wrangler.toml` の binding、database_name、database_id |
+| R2 | `wrangler.toml` の binding と bucket_name |
+| Queue | `wrangler.toml` の producer binding。consumer はまだ構成しない |
+| GitHub Secrets | `.github/workflows/deploy.yml` が要求する名前。値の有無は GitHub 側で確認 |
+| ローカル検証 | `package.json` の `lint`、`typecheck`、`test`、`build`、`e2e`、`check:repo` |
 
 再作成は `scripts/setup-cloudflare.sh`（冪等）。
 
@@ -61,29 +59,11 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 5. **ブランチ保護**: 初回 CI 実行後、main に「PR 必須・`check` と `e2e` を必須チェック」を設定
 6. **Claude Code**: `/reload-plugins` で Cloudflare Skills / MCP を有効化
 
-## 5. 関係する全タスク
+## 5. 計画と進捗の正本
 
-### 5.1 feat-platform-tenant-auth（公開済み exact-13, Beads `yta-c8g`）
+`feat-platform-tenant-auth` の task graph は `.dev-graph/published/feature-package-feat-platform-tenant-auth/task-graph.json`、成果物は `docs/feat-platform-tenant-auth/`、テストの対応表は `docs/feat-platform-tenant-auth/test-design.md` を正とする。ブランチや tracker の現在状態は `git status` と tracker で確認する。
 
-| task | Beads | 内容 | 状態 |
-|---|---|---|---|
-| SYS-PTA-P01 | yta-c8g.1 | 要件の実装単位への確定 | 実施済み（`docs/feat-platform-tenant-auth/requirements.md`） |
-| SYS-PTA-P02 | yta-c8g.2 | Workers/D1/R2 構成とテナント分離の設計 | 実施済み（`architecture.md`、`wrangler.toml`） |
-| SYS-PTA-P03 | yta-c8g.3 | 認証・越境防止の設計レビュー | 実施済み（`design-review.md`。未解決 high 0 件） |
-| SYS-PTA-P04 | yta-c8g.4 | 受入テストと越境テストの設計 | 実施済み（`test-design.md`） |
-| SYS-PTA-P05 | yta-c8g.5 | 基盤・ログイン・テナント・招待の実装 | 実施済み（`src/`、`web/`、`migrations/`） |
-| SYS-PTA-P06 | yta-c8g.6 | テスト実行と不具合修正 | 実施済み（76 件成功、`evidence/P06-test-run.txt`） |
-| SYS-PTA-P07 | yta-c8g.7 | 受入確認 | ローカルで実施済み（`acceptance.md`。preview は初回 deploy 後） |
-| SYS-PTA-P08 | yta-c8g.8 | リファクタリングとマイグレーション整理 | 実施済み（`evidence/P08-migration-empty-db.txt`） |
-| SYS-PTA-P09 | yta-c8g.9 | セキュリティと品質の保証 | 実施済み（`qa-report.md`） |
-| SYS-PTA-P10 | yta-c8g.10 | 最終レビュー | 実施済み（`final-review.md`。scope_out 0 件） |
-| SYS-PTA-P11 | yta-c8g.11 | 証跡の集約 | 実施済み（`evidence/feat-platform-tenant-auth/index.json`） |
-| SYS-PTA-P12 | yta-c8g.12 | 運用手順とドキュメント | 実施済み（`runbook.md`、README のセットアップ節） |
-| SYS-PTA-P13 | yta-c8g.13 | CI/CD とリリース | ワークフローは静的検査済み（a6 テスト）。Actions の実行は push 後に確認 |
-
-文書はすべて `docs/feat-platform-tenant-auth/` にある。未コミットのため、Beads はまだ open のまま。PR が main へ merge された時点で close する。
-
-### 5.2 未計画の feature（Beads epic のみ。exact-13 task 計画は未生成）
+### 5.1 後続 feature
 
 | feature | Beads | 依存 | 計画前ゲート |
 |---|---|---|---|
@@ -93,9 +73,9 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 | feat-web-screens-actions | yta-7o5 | daily-collection, csv-media-ingest, skill-analysis-reports | 同上 |
 | feat-retention-ops | yta-sjb | daily-collection | なし |
 
-各 feature は `/dev-graph plan` で P01〜P13（要件確定・設計・設計レビュー・テスト設計・実装・テスト実行・受入・リファクタ・セキュリティ・最終レビュー・証跡・運用手順・CI/CD）の13 task に分解する。計 65 task が未生成。
+各 feature の task は `/dev-graph plan` で生成する。生成済みかどうかは tracker と `.dev-graph/` を正とする。
 
-### 5.3 横断の残課題
+### 5.2 横断の残課題
 
 - 影響3 feature の dev-graph compile / decompose による再同期（digest を手で置換しない）
 - `docs/screens/02-dashboard.png` を週次売上ファネル追補後の prompt から再生成

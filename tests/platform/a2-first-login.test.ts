@@ -1,4 +1,5 @@
 // 受入 A2: 初回ログインで tenants と owner の tenant_members が1組だけ作られる
+import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import { call, count, login, uniqueEmail } from "./helpers";
 
@@ -65,5 +66,15 @@ describe("A2 初回ログインのテナント自動作成", () => {
       code: "EMAIL_NOT_VERIFIED",
     });
     expect(await count("SELECT COUNT(*) AS n FROM users WHERE email = ?1", email)).toBe(0);
+  });
+
+  it("長いメールlocal-partからも60文字以内のtenant名だけを作る", async () => {
+    const email = `${"a".repeat(64)}@example.com`;
+    const user = await login(email, { env: BIG });
+    const row = await env.DB.prepare("SELECT name FROM tenants WHERE created_by = ?1")
+      .bind(user.userId)
+      .first<{ name: string }>();
+    expect(Array.from(row?.name ?? "")).toHaveLength(60);
+    expect(row?.name.endsWith("のテナント")).toBe(true);
   });
 });

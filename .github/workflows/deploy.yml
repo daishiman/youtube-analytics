@@ -16,7 +16,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -28,7 +27,7 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: API トークン未設定なら停止
-        run: test -n "$CLOUDFLARE_API_TOKEN" || { echo "::error::CLOUDFLARE_API_TOKEN が未設定です（docs/setup/environment.md 参照）"; exit 1; }
+      - name: 公開可否・OAuth・Secrets を検査
+        run: pnpm check:release:deploy
       - run: pnpm db:migrate:remote
       - run: pnpm run deploy

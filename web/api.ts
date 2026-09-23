@@ -42,7 +42,7 @@ export class ApiError extends Error {
 
 export async function api<T>(
   path: string,
-  init: { method?: string; body?: unknown } = {},
+  init: { method?: string; body?: unknown; signal?: AbortSignal } = {},
 ): Promise<T> {
   const method = init.method ?? "GET";
   const headers: Record<string, string> = {};
@@ -53,6 +53,7 @@ export async function api<T>(
     headers,
     credentials: "same-origin",
     body: init.body === undefined ? undefined : JSON.stringify(init.body),
+    signal: init.signal,
   });
   if (res.status === 204) return undefined as T;
   const data = (await res.json().catch(() => ({}))) as {

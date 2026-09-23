@@ -2,9 +2,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { DashboardPage } from "./pages/DashboardPage";
 import { InvitePage } from "./pages/InvitePage";
 import { LoginPage } from "./pages/LoginPage";
-import { DashboardPage, SettingsPage, Shell } from "./pages/Shell";
+import { SettingsPage } from "./pages/SettingsPage";
+import { Shell } from "./pages/Shell";
 import "./styles.css";
 
 const root = document.querySelector("#app");

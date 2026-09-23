@@ -1,29 +1,29 @@
 # 利用者が手で行う設定（公開までのチェックリスト）
 
-最終更新: 2026-09-23。対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.daishimanju.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。
+対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.daishimanju.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。外部サービスや Git の現在状態はこの文書へ複製せず、各手順の確認コマンドと管理画面を正とする。
 
 - 所要時間: 約 60〜90 分（Google Cloud が一番長い）
-- エージェントは、秘密の値の発行、外部サービスの画面操作、push と PR 作成を行わない。そのため、この文書の手順は利用者が行う（ローカルの commit は 2026-09-23 に実施済み。9 節）。
+- エージェントは、秘密の値の発行、外部サービスの画面操作、push と PR 作成を行わない。そのため、この文書の手順は利用者が行う。
 - **このリポジトリは公開（PUBLIC）。** 秘密の値（トークン、シークレット、鍵）は、ファイル、チャット、Issue、PR 本文に絶対に書かない。登録先の入力欄かターミナルのプロンプトにだけ貼る。
 
-## 0. 全体の流れと現在の状態
+## 0. 全体の流れ
 
-| # | やること | 登録先 | 誰が | 状態（2026-09-23 時点） |
+| # | やること | 登録先 | 誰が | 完了条件 |
 |---|---|---|---|---|
-| 1 | workers.dev のサブドメインを確認する | Cloudflare | — | **確認済み（作業不要）**: `daishimanju` |
-| 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | あなた | **未登録** |
-| — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | — | 登録済み（作業不要） |
-| 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | あなた | 未実施 |
-| 4 | Google の OAuth 同意画面（ブランディング、対象、データアクセス）を設定する | Google Auth Platform | あなた | 未実施 |
-| 5 | Google の OAuth クライアントを作る | Google Auth Platform | あなた | 未実施 |
-| 6 | クライアント ID を `wrangler.toml` に書く | リポジトリ | どちらでも | 未実施（仮の値 `REPLACE_WITH_GOOGLE_CLIENT_ID`） |
-| 6.5 | 利用規約とプライバシーポリシーの草案を確定する（運営者名、連絡先、施行日） | リポジトリ `public/` | 値はあなた、書換はエージェント可 | **未実施（「草案」の表示と空欄が残っている）** |
-| 7 | Workers Secret を 2 つ登録する | Cloudflare Workers | あなた（秘密値のため） | **未登録** |
-| 8 | ローカルの `.dev.vars` を埋める（任意） | 手元だけ | あなた | 任意（本物の Google をローカルで試すときだけ） |
-| 9 | ブランチを切って commit し、PR を作る | GitHub | あなた | **commit まで実施済み**（ブランチ `feat/platform-tenant-auth`、`1b72db3`、84 ファイル）。push と PR が残り |
-| 10 | CI が通ることを確認し、ブランチ保護を設定する | GitHub | あなた | 未実施 |
-| 11 | merge して自動 deploy を確認する | GitHub Actions | あなた | 未実施 |
-| 12 | 本番で動作を確認する | ブラウザ | あなた | 未実施 |
+| 1 | workers.dev のサブドメインを確認する | Cloudflare | あなた | 本番 URL が確定している |
+| 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | あなた | repository secret に登録されている |
+| — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | あなた | repository secret に登録されている |
+| 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | あなた | 必要な API が有効になっている |
+| 4 | Google の OAuth 同意画面（ブランディング、対象、データアクセス）を設定する | Google Auth Platform | あなた | 公開先に合う設定が保存されている |
+| 5 | Google の OAuth クライアントを作る | Google Auth Platform | あなた | redirect URI が登録されている |
+| 6 | クライアント ID を `wrangler.toml` に書く | リポジトリ | どちらでも | Google 側の値と一致し `pnpm check:release` が通る |
+| 6.5 | 利用規約とプライバシーポリシーの草案を確定する（運営者名、連絡先、施行日） | リポジトリ `public/` | 値はあなた、書換はエージェント可 | 人が承認した文面で `pnpm check:release` が通る |
+| 7 | Workers Secret を 2 つ登録する | Cloudflare Workers | あなた（秘密値のため） | Worker secrets に登録されている |
+| 8 | ローカルの `.dev.vars` を埋める（任意） | 手元だけ | あなた | 本物の Google をローカルで試す場合だけ設定する |
+| 9 | ブランチを切って commit し、PR を作る | GitHub | あなた | PR が作成されている |
+| 10 | CI が通ることを確認し、ブランチ保護を設定する | GitHub | あなた | 必須 check と保護規則が有効になっている |
+| 11 | merge して自動 deploy を確認する | GitHub Actions | あなた | deploy job が成功している |
+| 12 | 本番で動作を確認する | ブラウザ | あなた | runbook の本番確認が完了している |
 
 **確認済みで作業がいらないもの**（2026-09-23 に確認）:
 
@@ -35,7 +35,7 @@
 | `wrangler` のログイン（手元の端末） | ログイン済み（`Daishimanju@gmail.com's Account`） |
 | 独自ドメイン、DNS | 使わない（workers.dev だけで運用する） |
 | Google Cloud の課金（請求先アカウント） | 不要（ログインと YouTube API の無料枠だけを使う） |
-| GitHub の Environment `production` | 初回の deploy で自動作成される。設定は不要 |
+| GitHub の Environment `production` | 使わない。repository secrets と機械的なrelease-readiness gateに統一 |
 | Cloudflare の Git 連携（Workers Builds / Create an app）と Cloudflare GitHub App | **使わない**。deploy は GitHub Actions が `wrangler deploy` で行う。ダッシュボードで「Import a repository」を開かない（理由は 1.5.1） |
 | Worker 本体の作成（ダッシュボードでの新規作成） | 不要。初回の `wrangler deploy` が `wrangler.toml` の内容で自動作成する |
 
@@ -118,13 +118,13 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 | # | 実行するもの | 中身 |
 |---|---|---|
 | 1 | `pnpm install --frozen-lockfile` | `pnpm-lock.yaml` どおりに依存を入れる |
-| 2 | トークンの存在検査 | `CLOUDFLARE_API_TOKEN` が空なら、ここで失敗させる |
+| 2 | 公開準備の検査 | 規約草案、OAuth client ID形式、Cloudflare Secretsのいずれかが未準備なら停止する |
 | 3 | `pnpm db:migrate:remote` | `wrangler d1 migrations apply DB --remote`。本番の D1 に未適用のマイグレーションを当てる |
 | 4 | `pnpm run deploy` | `vite build`（画面を `dist/web/` へ）→ `wrangler deploy`（Worker と静的アセットを上げる） |
 
 - 認証は環境変数 `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` の 2 つだけ（`wrangler login` は CI では使わない）。
 - 同時実行は `concurrency: deploy-production` で 1 本に制限され、前の deploy を打ち切らずに順番待ちする。
-- `environment: production` を指定しているので、GitHub 側に承認や環境 Secret を足せば、後から「merge 後に人の承認を挟む」運用にもできる（今は不要）。
+- GitHub Environmentは使わず、`pnpm check:release:deploy`を単一の公開前gateにする。このgateはrepository secretsのAPI認証情報を確認した後、`wrangler secret list --format json`でWorker runtime secretの**名前だけ**を検査し、値は取得・表示しない。
 
 ### 1.5.3 Cloudflare 側の構成は `wrangler.toml` が正本
 
@@ -133,14 +133,14 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 | 設定 | 値 | 意味 |
 |---|---|---|
 | `name` | `youtube-analytics` | Worker の名前。URL の先頭（`https://youtube-analytics.daishimanju.workers.dev`）になる |
-| `main` | `src/index.ts` | 入口。`fetch`（API）、`scheduled`（Cron）、`queue`（Queue）を持つ |
+| `main` | `src/index.ts` | 入口。現在は`fetch`（API）と空の`scheduled`だけを持つ |
 | `compatibility_date` | `2026-08-22` | 実行環境の版。上げるのは wrangler 更新時だけ |
 | `[assets]` | `directory = ./dist/web`、`not_found_handling = single-page-application`、`run_worker_first = ["/api/*"]` | 画面は静的配信。`/api/*` だけ Worker が先に受ける。それ以外の未知パスは `index.html` を返す（React Router のため） |
 | `[vars] MAX_TENANTS` | `"100"` | テナント数の上限。非秘密なのでファイルに書く |
 | `[vars] GOOGLE_CLIENT_ID` | 6 節で置換する | 非秘密。**シークレットはここに書かない** |
 | `[[d1_databases]]` | binding `DB`、`youtube-analytics-db`、`database_id = 91996166-…` | 本番 DB。`migrations_dir = migrations` |
 | `[[r2_buckets]]` | binding `MEDIA`、`youtube-analytics-media` | 画像置き場（この feature では宣言だけ） |
-| `[[queues.producers]]` / `[[queues.consumers]]` | `collect-queue`、`max_batch_size=1`、`max_retries=3`、`retry_delay=600` | 収集ジョブの土台（処理は次の feature） |
+| `[[queues.producers]]` | `collect-queue` | producer bindingの予約。consumerは処理と終端失敗契約を実装する次featureで同時に追加 |
 | `[triggers] crons` | `0 18 * * *` | UTC 18:00 = JST 3:00 の定期実行（今は空の受け口） |
 | `[observability]` | `enabled = true` | ダッシュボードでログとメトリクスを見られるようにする |
 
@@ -427,13 +427,13 @@ pnpm wrangler secret list
 
 ---
 
-## 9. ブランチを切って commit し、PR を作る（10 分）
+## 9. ブランチを確認して commit し、PR を作る（10 分）
 
-作業ツリーには、13 task の成果物が未コミットのまま残っている。
+作業ツリーの状態は `git status` で確認し、意図した feature の成果物だけを含める。
 
 ### 9.0 今の作業ブランチを確認する
 
-2026-09-22 時点で、作業ツリーのブランチは `daishiman/環境構築` で、`origin/main`（`fd264e6`）の最新を含んでいる。念のため、次のコマンドで確認する。
+次のコマンドで、現在のブランチと `origin/main` との関係を確認する。
 
 ```bash
 git fetch origin
@@ -443,9 +443,9 @@ git merge-base --is-ancestor origin/main HEAD && echo OK # OK と出れば main 
 
 `OK` と出ない（ほかの PR で main が進んだ）場合は、`git merge origin/main` で取り込んでから続ける。
 
-### 9.1 事前の片付け（2026-09-23 に実施済み。作業不要）
+### 9.1 事前の片付けを確認する
 
-エージェントが次の 2 つを取り除き、削除後に lint / typecheck / test 76 件 / build / E2E 13 件が成功することを確認した。
+エージェントが次の 2 つを取り除き、削除後に lint / typecheck / test / build / E2E が成功することを確認した。可変な件数はこの手順書へ複製せず、CIログを正とする。
 
 | 取り除いたもの | 理由 |
 |---|---|
@@ -460,15 +460,15 @@ git check-ignore -v .dev.vars        # 「.gitignore:…:.dev.vars」と出れ�
 git add -A --dry-run | grep -iE "dev\.vars|client_secret" | grep -v "\.dev\.vars\.example"   # 何も出なければよい
 ```
 
-> `.dev.vars.example` は値の入っていない雛形なので、commit してよい（除外している）。2026-09-23 の時点では、これ以外に該当するファイルはない。
+> `.dev.vars.example` は値の入っていない雛形なので、commit してよい。実値を含む `.dev.vars` や Google からダウンロードした JSON は含めない。
 
 `client_secret_….json`（Google からダウンロードした JSON）が出たら、**commit せずに削除する**。
 
-この commit には、feature の成果物と一緒に、次の既存の変更も入る。どれも意図したもので、含めてよい。
+feature の成果物以外の変更が表示された場合は、次の関係資料か利用者の変更であることを確認してから含める。
 
 | ファイル | 内容 |
 |---|---|
-| `system-spec/` の収集状態ファイル、`eval-log/spec-change-qa-061-20260922.json`、`eval-log/review-queue.jsonl` | 画面を React に変える決定（qa-061）の記録。仕様書の章の再生成は未実施で、別途行う |
+| `system-spec/` の収集状態ファイルと `frontend.md`、`eval-log/spec-change-qa-061-20260922.json`、`eval-log/review-queue.jsonl` | qa-061は確定章の現行規範へ対象を限定して投影済み。全章compileとdev-graph再同期は既存gateで別途行う |
 | `.gitignore`、`docs/setup/` | 環境構築の手順と、秘密ファイルの除外設定 |
 
 分けたい場合は、`git add` の対象を指定して 2 回に分けて commit する。
@@ -559,7 +559,7 @@ deploy が緑になったら、ダッシュボードで Worker を開いて確�
 | Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=100` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
 | Settings → Domains & Routes | 公開先 | `youtube-analytics.daishimanju.workers.dev` が Enabled。カスタムドメインは付けない |
 | Settings → Trigger Events（Cron Triggers） | 定期実行 | `0 18 * * *` が 1 件 |
-| Settings → Trigger Events（Queue Consumers） | 消費者 | `collect-queue`（Batch size 1、Retries 3） |
+| Settings → Trigger Events（Queue Consumers） | 消費者 | 現在は未構成で一覧が空。日次収集 feature で処理・終端失敗契約と同時に追加する |
 | Deployments | 履歴 | 最新に今の日時と、Source が `Upload`（API トークン経由）で並ぶ |
 | Observability → Logs | 実行ログ | `/api/health` を開いたあと、リクエストが記録される |
 
@@ -573,7 +573,7 @@ pnpm wrangler tail                 # 本番のログをその場で流す（Ctrl
 ```
 
 - [ ] binding が 4 つ、変数 2 つ、Secret 2 つそろっている
-- [ ] Cron と Queue consumer が登録されている
+- [ ] Cron と Queue producer binding が登録され、Queue consumer は未構成である（日次収集 feature で追加）
 
 ### 11.2 戻したくなったとき
 

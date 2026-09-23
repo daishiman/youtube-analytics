@@ -2,10 +2,10 @@
 
 YouTube の実績と週次の事業ファネルをつなぎ、目標差が最も大きい改善候補と次の打ち手を判断するための Web システムです。インプレッション、CTR、加重平均視聴率、導線誘導率、問い合わせから成約への転換率を原因指標として追い、売上・成約数を結果指標、登録者数を参考の結果指標として分けて扱います。これは因果推論ではなく、週次データと設定目標の比較です。
 
-## 現況
+## 対象範囲
 
-- 要件・技術仕様は確定済みです。最初の feature `feat-platform-tenant-auth`（Google ログイン、テナント、招待、役割、CI/CD の土台）を実装済みで、ローカルで受入 A1〜A5 が合格、A6 はワークフローの静的検査が合格です（`docs/feat-platform-tenant-auth/acceptance.md`）。
-- `feat-platform-tenant-auth` の 13 task（`SYS-PTA-P01`〜`P13`）は作業ツリー上で実施済みで、未コミットです。Beads（`yta-c8g.1`〜`.13`）は PR が main へ merge された時点で close します。preview 環境と GitHub Actions の実行確認は、初回 deploy の後に行います。
+- 要件・技術仕様は確定済みです。最初の feature `feat-platform-tenant-auth` は Google ログイン、テナント、招待、役割、CI/CD の土台を提供します。受入条件と検証方法は `docs/feat-platform-tenant-auth/requirements.md` と `docs/feat-platform-tenant-auth/test-design.md` を正とします。
+- ブランチ、作業ツリー、CI、公開環境の状態は変化するため、この README には複製しません。ローカルは下記コマンド、外部環境は GitHub Actions と `docs/setup/owner-manual-setup.mdx` の確認手順で判定してください。
 - 業務機能（YouTube 収集、CSV と画像の取込、分析レポート、業務画面、保持期間の運用）の 5 feature は未着手です。
 - 週次事業ファネルと分析履歴の追補は、対象3 featureのtask計画前に dev-graph compile / decompose で digest とstate graphを再同期します。必要なgateは `eval-log/dev-graph-resync-required-20260922.json` に固定しています。
 

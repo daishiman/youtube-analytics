@@ -1,0 +1,477 @@
+{
+  "agent": "elegant-system-strategic-analyst",
+  "paradigm_findings": [
+    {
+      "paradigm_id": 19,
+      "paradigm_name": "systems",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "現在実装の同期呼出しは web/pages/Shell.tsx:37-57,195-228 → web/api.ts:43-65 → src/http/api-routes.ts:10-80 → src/usecases/{tenants,members,invites}.ts → src/repositories/{platform-repository,tenant-scoped-repository}.ts という一方向の連鎖で、認証・TenantContext・役割検査をサーバ側に集約している。tests/platform/routes.ts:13-41 と a1/a3 系テストが HTTP 境界を横断しており、platform feature の局所構造は明瞭である。",
+        "feature DAG は feat-platform-tenant-auth → {feat-youtube-daily-collection, feat-csv-media-ingest} → feat-skill-analysis-reports → feat-web-screens-actions、および daily-collection → feat-retention-ops で、features/*:14 の depends_on からは循環を検出しない。",
+        "一方、qa-061 の React 採用は system-spec/spec-state.json:1498-1500,2777 に入ったが、architecture/youtube-analytics-system.md:77,117 と features/feat-web-screens-actions.md:36,62 は素の TypeScript のままである。局所的な UI リファクタが正本投影・将来 feature・依存ライブラリ判断まで伝播していない。",
+        "将来のテナント別 D1 分割は architecture/youtube-analytics-system.md:95,219 が db_binding 切替を前提にする一方、現行 usecase は src/usecases/invites.ts:10-12 と members.ts:8-10 で常に controlDb を直接渡し、src/repositories/db.ts:13-15 の resolveTenantDb は呼ばれていない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["React 採用済みという system-spec/spec-state.json:1499 の主張と、素の TypeScript を採用する architecture/youtube-analytics-system.md:77,117 の主張が同時に残る。"], "violation_count": 1},
+        "C2": {"verdict": "PARTIAL", "evidence": ["API/usecase/repository/UI/test の現行連鎖は揃うが、将来の db_binding 解決を呼出し連鎖へ組み込む factory と切替テストがない。"], "violation_count": 1},
+        "C3": {"verdict": "FAIL", "evidence": ["spec-state、architecture、future feature、実装の技術選定が同一決定に整合していない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["feature DAG 自体は非循環だが、別 D1 移行の依存点 db_binding → resolver → repository が未接続である。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "critical",
+          "bucket": "doc",
+          "description": "React/Vite/React Router/ECharts を採る確定決定が spec-state にあるのに、アーキテクチャ投影と後続 UI feature は Vite+素の TypeScript を要求している。後続計画が古い技術前提で生成される。",
+          "recommended_intervention": "system-spec の frontend/ui-ux 章を qa-061 から再生成し、architecture と feat-web-screens-actions を同一変更で再投影する。repository consistency 検査に frontend stack の等価性チェックを追加する。",
+          "condition_signal": "inconsistency",
+          "location": {"file": "architecture/youtube-analytics-system.md", "line": 77, "section": "Container and component view"},
+          "root_cause": "spec-state だけを単一 writer で更新し、投影再生成を意図的に延期したまま、旧投影を active/complete として残した。"
+        },
+        {
+          "condition": "C4",
+          "severity": "medium",
+          "bucket": "dependency-loop",
+          "description": "将来のテナント別 D1 分割を支える resolveTenantDb は定義されるだけで、tenants.db_binding の読取りから repository 構築までの依存連鎖が存在しない。",
+          "recommended_intervention": "後続業務テーブルを追加する前に、control DB から db_binding を得て許可済み binding へ解決する tenant repository factory を設け、既定 DB と代替 binding の統合テストを追加する。",
+          "condition_signal": "dependency_break",
+          "location": {"file": "src/repositories/db.ts", "line": 13, "section": "resolveTenantDb"},
+          "root_cause": "分割方針を関数シグネチャだけで先行実装し、その関数へ到達する application-level port/factory を設計していない。"
+        }
+      ],
+      "score": 0.42
+    },
+    {
+      "paradigm_id": 20,
+      "paradigm_name": "causal",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "価値連鎖は、テナント分離基盤 → daily/API と CSV の入力 → skill export/report → 業務 UI → 改善アクション、という features/*:14 の順である。上流2入力が未実装のため、下流レポートと UI は現在の DashboardPage（web/pages/Shell.tsx:177-191）の仮表示から進めない。",
+        "非同期連鎖は wrangler.toml:31-43 で Queue consumer と Cron を有効化する一方、src/index.ts:7-12 の scheduled は無処理、queue は受信メッセージを常に ack する。メッセージが何らかの経路で投入されると『処理成功』として削除され、再試行・failed 記録へ到達しない。",
+        "認可テストの因果連鎖は routes table → coverage test と a3 matrix の双方である。tests/platform/routes-coverage.test.ts:13-17 と a3-authorization.test.ts:106-123 が同じ tests/platform/routes.ts:13-41 を正本にするため、誤った tenantScoped/kind 分類が両方へ同時伝播する。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PARTIAL", "evidence": ["同期 HTTP 連鎖の責務は一貫するが、有効な Queue consumer が全メッセージを成功 ack する状態は再試行契約と両立しない。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["route metadata の正しさを独立に検証する oracle と、stub consumer の誤配送ケースが欠ける。"], "violation_count": 2},
+        "C3": {"verdict": "FAIL", "evidence": ["features/feat-youtube-daily-collection.md:64-67 の sendBatch/retry/failed 契約に対し、src/index.ts:7-12 は空 scheduled と無条件 ack である。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["Queue → consumer → retry/failed の依存辺が stub で切れている。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "本番構成で consumer が登録されているのに、実装はメッセージ種別を問わず ack するため、誤投入・先行投入された collect/cleanup を不可逆に捨てる。",
+          "recommended_intervention": "daily-collection 実装までは Queue consumer を配備対象から外すか、stub は ack せず明示的に retry/失敗させる。実装時は collect/cleanup の成功時だけ ack し、例外・未知 kind・最終 retry の契約テストを追加する。",
+          "condition_signal": "dependency_break",
+          "location": {"file": "src/index.ts", "line": 11, "section": "queue handler"},
+          "root_cause": "Cloudflare の handler 必須条件を満たすための stub を、稼働構成の consumer へそのまま接続した。"
+        },
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "ルート網羅テストと越境行列が同じ手書きメタデータを参照するため、新ルートを tenantScoped=false や誤った kind で登録すると双方が同時に通り得る。",
+          "recommended_intervention": "ルータ側に認証・テナントスコープ・permission metadata を同居させてテスト表を生成するか、少なくとも /tenants/:id パターンと kind の独立 invariant、仕様の permission matrix との契約テストを追加する。",
+          "condition_signal": "omission",
+          "location": {"file": "tests/platform/routes.ts", "line": 13, "section": "PROTECTED_ROUTES"},
+          "root_cause": "被検査対象と期待値の分類が同一の手書き表から供給され、独立 oracle がない。"
+        }
+      ],
+      "score": 0.39
+    },
+    {
+      "paradigm_id": 21,
+      "paradigm_name": "causal-loop",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "強化ループ R1: spec-state だけ更新 → 投影は旧仕様のまま → scripts/validate-repository-consistency.py:414-457 は必要語の存在だけを見る → 検査が drift を検出しない → 旧投影が次の feature 計画へ再利用される、という仕様 drift の自己強化がある。",
+        "強化ループ R2: loginWithIdentity はログインごとに session を作成（src/usecases/session.ts:99-106）し、PlatformRepository は logout 時の単一削除しか持たない（src/repositories/platform-repository.ts:202-206）。期限切れ行の cleanup は feat-retention-ops.md:36,62-65 の対象にも明記されず、利用とともに sessions stock が単調増加する。",
+        "調整ループ B1: MAX_TENANTS と条件付き INSERT（src/repositories/platform-repository.ts:98-124）はテナント数増加を上限で抑え、a5 の並行テストが過剰作成を検出する。",
+        "release ループは、唯一の workers.dev production 系で OAuth/preview を確認する必要がある（docs/feat-platform-tenant-auth/runbook.md:46-63）一方、privacy/terms は公開前に確定が必要な草案（public/privacy.html:6,15,45-46、public/terms.html:6,15）で、deploy 前の機械ゲートがない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["唯一の production 系で preview を行う設計と、公開前に規約草案を確定する要件の順序が自動化されていない。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["期限切れ session の物理削除と規約 draft の deploy gate が欠ける。"], "violation_count": 2},
+        "C3": {"verdict": "PARTIAL", "evidence": ["テナント上限の調整ループは仕様・実装・テストが整合するが、仕様投影の再同期ループは drift を止めない。"], "violation_count": 1},
+        "C4": {"verdict": "FAIL", "evidence": ["draft 確定 → deploy → OAuth/preview 受入、という安全な順序を workflow dependency として表現していない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "30日で無効になる session は認証時に除外されるが、logout されない期限切れ行を削除する経路がなく、ログイン回数に比例して D1 の sessions が増え続ける。",
+          "recommended_intervention": "retention-ops の cleanup 対象に expires_at <= now の sessions DELETE を追加し、期限切れ/有効/ログアウト済みを区別するテストと削除件数の観測を入れる。",
+          "condition_signal": "omission",
+          "location": {"file": "src/repositories/platform-repository.ts", "line": 168, "section": "createSession"},
+          "root_cause": "セッションの論理失効は設計したが、期限切れレコードのライフサイクルを保持・削除 feature へ割り当てなかった。"
+        },
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "hook-ci",
+          "description": "preview と production が同一系統なのに、草案のプライバシーポリシー/利用規約を deploy から止める gate がなく、初回 OAuth 受入のための deploy が未確定規約の公開になり得る。",
+          "recommended_intervention": "deploy job の migration より前に、草案表示・未記入連絡先・未記入施行日を拒否する release check を追加する。preview 受入の手順を『規約確定→secret/OAuth設定→deploy→A1-A6』に固定する。",
+          "condition_signal": "dependency_break",
+          "location": {"file": "public/privacy.html", "line": 15, "section": "draft notice"},
+          "root_cause": "法務/公開準備を手作業チェックリストにだけ置き、単一 production pipeline の前提条件へ昇格していない。"
+        }
+      ],
+      "score": 0.36
+    },
+    {
+      "paradigm_id": 22,
+      "paradigm_name": "trade-on",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "速度と安全性は、platform feature の scope_out を明示して基盤だけを先に完成させる（features/feat-platform-tenant-auth.md:33-37）一方、後続 feature を depends_on で直列化することで両立を狙っている。",
+        "単一 Worker/D1/R2 による運用簡素化と、tenant_id + db_binding による将来分割可能性の両立案は妥当だが、現実装は resolver 未接続のため後者が設計上のオプションに留まる。",
+        "自動 deploy と将来の手動承認の両立として .github/workflows/deploy.yml:19 に environment: production を置く一方、確定仕様 system-spec/00-requirements-definition.md:119 は Free private では Environments を使わず repository Secrets で運用するとしており、トレードオン条件がリポジトリ内で矛盾する。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["GitHub Environments を使わない確定方針と、workflow の environment: production が矛盾する。"], "violation_count": 1},
+        "C2": {"verdict": "PARTIAL", "evidence": ["速度/品質、単純性/分割性の両立案はあるが、実行可能性を確かめる release 証跡と DB 切替テストがない。"], "violation_count": 2},
+        "C3": {"verdict": "FAIL", "evidence": ["workflow、owner manual、確定仕様で GitHub environment の扱いが一致しない。"], "violation_count": 1},
+        "C4": {"verdict": "PARTIAL", "evidence": ["deploy の migrate→deploy 順序は明示されるが、使用プランと environment 機能の前提が依存として固定されていない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "critical",
+          "bucket": "hook-ci",
+          "description": "確定仕様は Free private で GitHub Environments を使わないとする一方、deploy job は environment: production を指定し、owner manual は将来承認に使えると説明する。リポジトリ内だけでは実行前提を一意に決められない。",
+          "recommended_intervention": "repository Secrets のみで運用するなら environment キーを削除する。残すなら、リポジトリ可視性/契約プラン/環境設定を前提条件として正本へ戻し、実際の workflow run を受入証跡にする。",
+          "condition_signal": "contradiction",
+          "location": {"file": ".github/workflows/deploy.yml", "line": 19, "section": "jobs.deploy"},
+          "root_cause": "Cloudflare の production 一系統と GitHub Actions の environment 機能を同じ『production 環境』として混同した。"
+        }
+      ],
+      "score": 0.58
+    },
+    {
+      "paradigm_id": 23,
+      "paradigm_name": "plus-sum",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "TenantContext と TenantScopedRepository の共通境界は、利用者に越境防止を提供し、後続開発者には毎 feature で認可を再発明しない足場を提供する。src/http/middleware.ts:54-67、src/domain/tenant-context.ts:15-37、src/repositories/tenant-scoped-repository.ts:20-36 が同じ tenantId を受け渡す。",
+        "同じ API route 表を A1 と A3 が共有する設計は追加ルートのテスト漏れを目立たせ、実装者とレビュー者双方の負担を下げる。ただし分類の独立 oracle を加えると、共有の生産性を維持したまま自己参照リスクも減らせる。",
+        "feature DAG では daily-collection と csv-media-ingest を並列着手可能にし、その両成果を skill-analysis-reports が統合する。上流チームの独立性と、下流の統合価値を同時に上げる構造である。",
+        "API エラーを {error:{code,message,hint}} に統一（src/lib/errors.ts:4-64）し、web/api.ts:58-65 で一括解釈するため、サーバの診断可能性と UI の利用者支援が同時に向上する。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["共有境界・統一エラー・並列可能な feature DAG の価値は相互に矛盾しない。"], "violation_count": 0},
+        "C2": {"verdict": "PARTIAL", "evidence": ["plus-sum の主要構造は揃うが、route classification の独立検査だけは補完余地がある。"], "violation_count": 1},
+        "C3": {"verdict": "PASS", "evidence": ["現行 platform scope 内では UI/API/usecase/repository/test が共通契約へ整合する。"], "violation_count": 0},
+        "C4": {"verdict": "PASS", "evidence": ["features/*:14 の依存は循環せず、上流2 feature の並列性と下流統合順が両立する。"], "violation_count": 0}
+      },
+      "issues": [],
+      "score": 0.82
+    },
+    {
+      "paradigm_id": 24,
+      "paradigm_name": "value-proposition",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "最終価値は system-spec/00-requirements-definition.md:14-16 の『YouTube実績と週次事業CSVから目標差最大の改善候補と次の行動を判断・実行・効果検証』である。",
+        "現在実装は README.md:7-9 が明示する通り platform/auth/tenant までで、daily collection、CSV、skill report、業務 UI、retention の5 feature は未着手である。web/pages/Shell.tsx:177-191 のダッシュボードも分析画面は今後と説明する。",
+        "現行成果は G3/G4 の運用基盤・テナント分離には価値を出すが、運営者やクリエイターが週次に意思決定する G1/G2/G5 の success state はまだ観測不能である。仕様の充実度を製品価値の到達と混同しない release 表示が必要である。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["README と UI は未実装境界を明示しており、現在価値を過大に装ってはいない。"], "violation_count": 0},
+        "C2": {"verdict": "FAIL", "evidence": ["利用者の中心価値に必要な収集・CSV・分析・改善 UI・保持運用が実装されていない。"], "violation_count": 5},
+        "C3": {"verdict": "PARTIAL", "evidence": ["platform feature の価値は仕様と整合するが、repo 全体の Purpose を満たす実装・受入は未完了である。"], "violation_count": 1},
+        "C4": {"verdict": "PASS", "evidence": ["未実装機能は depends_on で順序付けられ、実装可能な DAG はある。"], "violation_count": 0}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "other",
+          "description": "repo の本質的価値である週次ファネル比較・改善候補・次アクションは、現在の画面/API/データモデルでは利用できず、認証基盤だけが完成している。",
+          "recommended_intervention": "価値の最短スライスとして platform → CSV/週次ファネル純関数 → dashboard read API/UI を先に end-to-end 化し、その後 daily collection と skill history を追加する案を dependency gate と照合して優先評価する。少なくとも current release を foundation-only と明示し、製品完了と分離する。",
+          "condition_signal": "omission",
+          "location": {"file": "README.md", "line": 9, "section": "現況"},
+          "root_cause": "リスクの高い認証・テナント基盤を先行する phased delivery を採り、価値を直接検証する vertical slice がまだ実装段階へ入っていない。"
+        }
+      ],
+      "score": 0.41
+    },
+    {
+      "paradigm_id": 25,
+      "paradigm_name": "strategic",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "中長期の critical path は platform 完了後に daily-collection と csv-media-ingest を並列化し、skill-analysis-reports、web-screens-actionsへ進む経路である。retention-ops は daily-collection 後に並行できるため、DAG 上の資源配分は合理的である。",
+        "docs/setup/environment.md:86-96 は後続5 feature の exact-13 計65 task が未生成で、3 feature は dev-graph 再同期を計画前 gate とする。つまり戦略上の次の一手は新規実装より先に仕様投影を収束させることである。",
+        "platform feature の release 価値は main push の migrate→deploy 成功まで含む（features/feat-platform-tenant-auth.md:22,79-86）が、acceptance.md:5,16-18 は preview と実 Actions 実行が未確認とする。最初の基盤 release が未閉鎖のまま65 taskへ進むと、後続すべての前提が推測になる。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PARTIAL", "evidence": ["次 feature の依存順は明確だが、platform を実装済みとする現況と deploy 受入未完了が緊張する。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["A6 runtime evidence、preview A1-A6、branch protection の実確認がない。"], "violation_count": 3},
+        "C3": {"verdict": "FAIL", "evidence": ["feature acceptance の『main push で完了』と acceptance report の『静的検査のみ』が整合しない。"], "violation_count": 1},
+        "C4": {"verdict": "PARTIAL", "evidence": ["feature DAG は成立するが、次段へ進むための platform release gate が閉じていない。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "hook-ci",
+          "description": "A6 は YAML の文字列とコマンド順を静的検査しただけで、feature acceptance が求める main push の migration/deploy 成功、preview の本物 OAuth、branch protection を実証していない。",
+          "recommended_intervention": "後続 feature 着手前の platform exit gate に、実 GitHub Actions run URL/commit、remote migration 結果、workers.dev A1-A6、DEV_LOGIN 非表示、branch protection の確認を必須 evidence として登録する。",
+          "condition_signal": "omission",
+          "location": {"file": "docs/feat-platform-tenant-auth/acceptance.md", "line": 16, "section": "A6"},
+          "root_cause": "外部状態を変更しない作業制約のため、実行時受入を将来の手作業へ送り、feature completion と release readiness を別状態にしなかった。"
+        }
+      ],
+      "score": 0.44
+    },
+    {
+      "paradigm_id": 27,
+      "paradigm_name": "kaizen",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "既存の改善履歴はセキュリティヘッダ、依存脆弱性、lint 対象、DEV_LOGIN 漏れ、不要ファイルを是正しており（docs/feat-platform-tenant-auth/final-review.md:81-92）、局所 PDCA は機能している。",
+        "一方、既知の qa-061 投影遅延は final-review.md:66 に明記されても、scripts/validate-repository-consistency.py:414-457 は spec-state に語が存在するかだけを調べ、architecture/features と比較しない。既知問題が再監査の自動チェックへ変換されていない。",
+        "README.md:8 は13 task を未コミットとするが、レビュー時点のアプリ worktree は clean で最新 commit が存在する。時点依存の現況記述が commit 後に更新されない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["README の未コミット記述と current worktree の状態が一致しない。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["consistency validator に技術選定 projection diff と release-state drift の検査がない。"], "violation_count": 2},
+        "C3": {"verdict": "FAIL", "evidence": ["既知の React drift を final review が記録しても、active projections は更新されず検査も通し得る。"], "violation_count": 1},
+        "C4": {"verdict": "PARTIAL", "evidence": ["改善ログは存在するが、再発防止を担う validator への依存辺が不足する。"], "violation_count": 1}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "description": "repository consistency validator は spec-state 内の必須語と一部 digest を検査するが、React/ECharts/React Router の決定が architecture と feature projection に反映されたかを比較しない。",
+          "recommended_intervention": "qa decision の supersedes 関係から技術選定 contract を抽出し、spec-state・system-spec chapters・architecture・feature scope・package dependencies の一致を検査する。既知 drift を fixture にして validator が失敗するテストを追加する。",
+          "condition_signal": "omission",
+          "location": {"file": "scripts/validate-repository-consistency.py", "line": 414, "section": "validate_spec_state"},
+          "root_cause": "改善検査が存在トークン中心で、決定から投影先への双方向 trace をモデル化していない。"
+        },
+        {
+          "condition": "C3",
+          "severity": "low",
+          "bucket": "doc",
+          "description": "README の worktree 状態が commit 後も『未コミット』のままで、運用者が現在の release 状態を誤認する。",
+          "recommended_intervention": "README の時点依存文を branch/commit から自動導出できる release checklist への参照へ置き換え、現況には foundation-only・preview 未確認だけを安定表現で残す。",
+          "condition_signal": "inconsistency",
+          "location": {"file": "README.md", "line": 8, "section": "現況"},
+          "root_cause": "作業中の handoff 文を長期の README status として直接記述した。"
+        }
+      ],
+      "score": 0.38
+    },
+    {
+      "paradigm_id": 28,
+      "paradigm_name": "hypothesis",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "中心仮説 H1 は『tenant_id と role を基盤で固定すれば、後続機能は安全に追加できる』である。反証条件は、新しい tenant-scoped route が越境テストから漏れる、または repository が tenant binding を誤解決することである。",
+        "H1 の現行証拠は middleware の session-derived TenantContext（src/http/middleware.ts:54-67）、全現行 SQL の tenant_id 条件、a3 の越境成功0件で強い。ただし route table の自己参照と resolver 未接続により、将来機能へ一般化する証拠は不足する。",
+        "仮説 H2 は『main push で安全に自動 deploy できる』である。tests/platform/a6-workflows.test.ts:15-43 は設定形状だけを検証し、実 Cloudflare/GitHub/OAuth の反証試験は acceptance.md:5,16 が未実施とする。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "PASS", "evidence": ["H1/H2 と反証条件は明示可能で、現在の証拠範囲も文書から区別できる。"], "violation_count": 0},
+        "C2": {"verdict": "FAIL", "evidence": ["H1 は将来 route/binding の独立反証、H2 は実 workflow/preview 反証が欠ける。"], "violation_count": 2},
+        "C3": {"verdict": "PARTIAL", "evidence": ["現行 platform route では H1 を支持するが、repository の将来分割仮説まで同じ証拠で主張している。"], "violation_count": 1},
+        "C4": {"verdict": "PARTIAL", "evidence": ["仮説を支える依存要素は列挙できるが、external run と alternate DB binding が未接続である。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "『全 tenant API を越境テストで網羅』という仮説のテスト oracle が手書き route table 自身に依存し、将来 route の誤分類を反証できない。",
+          "recommended_intervention": "本番 router metadata または API contract を独立入力として、全 write route の required permission と tenant binding を生成/照合する mutation test を加える。",
+          "condition_signal": "omission",
+          "location": {"file": "tests/platform/routes-coverage.test.ts", "line": 13, "section": "expected route set"},
+          "root_cause": "網羅数の検査を優先し、route の意味分類そのものを検証対象から外した。"
+        }
+      ],
+      "score": 0.49
+    },
+    {
+      "paradigm_id": 29,
+      "paradigm_name": "issue",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "残作業を決める第一論点は『platform を release-ready と扱えるか』であり、A6 runtime/preview、規約確定、GitHub environment 前提が決まれば後続 feature の安全な着手可否が決まる。",
+        "第二論点は『qa-061 をどの正本・投影へ同期するか』であり、これを閉じれば web feature の stack、ECharts 依存、テスト方針、生成 lineage が決まる。",
+        "第三論点は『最短で中心価値を検証する vertical slice は何か』である。現 DAG は完全な daily+CSV → skill → web を要求するが、CSV週次ファネルと read-only dashboard を先行できるかを再評価すると G2 の学習が早まる可能性がある。",
+        "現時点でコード修正より先に決めるべき順序は、(1) release blocker、(2) spec projection、(3) value slice、(4) async/retention hardening である。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["release 前提の GitHub environment と確定仕様が矛盾するため、第一論点が未決である。"], "violation_count": 1},
+        "C2": {"verdict": "FAIL", "evidence": ["release evidence、規約確定、projection sync、value slice の意思決定が未完了である。"], "violation_count": 4},
+        "C3": {"verdict": "FAIL", "evidence": ["技術選定 projection と feature completion evidence が上位仕様/実状態に整合しない。"], "violation_count": 2},
+        "C4": {"verdict": "FAIL", "evidence": ["後続65 task の前に閉じるべき gate が依存 DAG 上の明示ノードになっていない。"], "violation_count": 2}
+      },
+      "issues": [
+        {
+          "condition": "C4",
+          "severity": "high",
+          "bucket": "dependency-loop",
+          "description": "後続3 feature に dev-graph 再同期 gate は記録されるが、platform release acceptance と規約確定が feature DAG の前提ノードとして表現されず、実装順だけが可視化されている。",
+          "recommended_intervention": "DAG に release-readiness gate（policy finalized、workflow run、preview A1-A6、projection synced）を明示し、未達の間は downstream planning/implementation を blocked ではなく not-ready と判定する。",
+          "condition_signal": "dependency_break",
+          "location": {"file": "docs/setup/environment.md", "line": 86, "section": "未計画の feature"},
+          "root_cause": "依存モデルが code-producing feature の depends_on に限られ、外部受入・法務・仕様再投影を first-class dependency として扱っていない。"
+        }
+      ],
+      "score": 0.34
+    },
+    {
+      "paradigm_id": 30,
+      "paradigm_name": "kj",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "KJ 島A『release truth』: README の未コミット記述、A6/preview 未実施、GitHub environment 前提矛盾、規約草案がまとまる。根は release readiness を単一状態として持たないことにある。",
+        "KJ 島B『spec projection drift』: qa-061 React 決定、旧 architecture、旧 future UI feature、存在語中心 validator がまとまる。根は decision→projection の同期が非原子的なことにある。",
+        "KJ 島C『future safety seam』: route table 自己参照、未接続 db_binding resolver、無条件 ack stub、session cleanup 不在がまとまる。根は現在 feature の受入だけに最適化し、次 feature が使う失敗モードを contract test にしていないことにある。",
+        "KJ 島D『value gap』: 5 feature 未着手、Dashboard 仮表示、65 task 未生成がまとまる。根は foundation-first の段階であり、中心価値の vertical slice evidence がまだないことにある。",
+        "features/*.md は実装済み platform も未着手5 feature も status=active、completion_evidence.status=not_applicable（各10,40行）で同じ機械状態を持ち、島AとDをツールが区別できない。"
+      ],
+      "condition_matrix": {
+        "C1": {"verdict": "FAIL", "evidence": ["島AとBに、実状態/決定と表示/投影の矛盾がある。"], "violation_count": 3},
+        "C2": {"verdict": "FAIL", "evidence": ["release evidence、projection sync、future failure contracts、core value implementation の欠落が4島に分かれる。"], "violation_count": 4},
+        "C3": {"verdict": "FAIL", "evidence": ["active/completion_evidence metadata が実装済みと未着手を区別せず、仕様・現況・自動処理の整合を失う。"], "violation_count": 2},
+        "C4": {"verdict": "FAIL", "evidence": ["release/legal/spec gates が code feature DAG の外側にあり、future seam も未接続である。"], "violation_count": 4}
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "medium",
+          "bucket": "schema",
+          "description": "実装済みの platform feature と未着手の5 feature が同じ status=active / completion_evidence=not_applicable を持ち、機械的な portfolio/DAG 表示から現在境界を判定できない。",
+          "recommended_intervention": "feature lifecycle を planned|in_progress|implemented|released と evidence 状態へ分離し、platform は implemented-awaiting-release、後続5件は planned とする。README の現況はこの metadata から生成する。",
+          "condition_signal": "inconsistency",
+          "location": {"file": "features/feat-platform-tenant-auth.md", "line": 10, "section": "completion_evidence"},
+          "root_cause": "dev-graph metadata が設計確認/計画準備を表す status と、実装・release のライフサイクルを同一視している。"
+        }
+      ],
+      "score": 0.37
+    }
+  ],
+  "four_conditions": {
+    "C1": {
+      "verdict": "FAIL",
+      "evidence": [
+        "system-spec/spec-state.json:1499 は React/Vite/React Router/ECharts を確定するが、architecture/youtube-analytics-system.md:77,117 と features/feat-web-screens-actions.md:36,62 は素の TypeScript を要求する。",
+        "system-spec/00-requirements-definition.md:119 は GitHub Environments を使わない方針だが、.github/workflows/deploy.yml:19 は environment: production を指定する。",
+        "README.md:8 の未コミット記述は current app worktree の状態と一致しない。"
+      ],
+      "violation_count": 3
+    },
+    "C2": {
+      "verdict": "FAIL",
+      "evidence": [
+        "中心価値に必要な5 feature は README.md:9 で未着手で、web/pages/Shell.tsx:177-191 は仮表示である。",
+        "docs/feat-platform-tenant-auth/acceptance.md:5,16-18 に preview/A6 runtime evidence がない。",
+        "public/privacy.html:15,45-46 と public/terms.html:15 に草案/未記入が残り、deploy gate がない。",
+        "期限切れ sessions の cleanup、route classification の独立 oracle、alternate db_binding の統合テストがない。"
+      ],
+      "violation_count": 7
+    },
+    "C3": {
+      "verdict": "FAIL",
+      "evidence": [
+        "qa-061 の確定技術選定が architecture/future feature に再投影されていない。",
+        "feature acceptance は main push deploy 完了を求めるが、受入資料は静的検査だけを合格としている。",
+        "feature lifecycle metadata が実装済みと未着手を区別しない。"
+      ],
+      "violation_count": 3
+    },
+    "C4": {
+      "verdict": "FAIL",
+      "evidence": [
+        "code feature DAG は非循環だが、規約確定・実 deploy/preview・仕様再投影が前提ノードにない。",
+        "wrangler.toml:31-43 の稼働 consumer と src/index.ts:11-12 の無条件 ack stub が接続される。",
+        "db_binding → resolveTenantDb → TenantScopedRepository の別DB依存連鎖が未接続である。",
+        "route table が coverage と authorization matrix の共通 oracle で、分類誤りが相関して見逃される。"
+      ],
+      "violation_count": 4
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "youtube-analytics",
+      "variable_name": "{{PROJECT_ID}}",
+      "default_value": "youtube-analytics",
+      "source_trace": "README.md:1; package.json:2; wrangler.toml:3"
+    },
+    {
+      "concrete_value": "100",
+      "variable_name": "{{MAX_TENANTS}}",
+      "default_value": "100",
+      "source_trace": "wrangler.toml:15-16; src/usecases/common.ts:21-24"
+    },
+    {
+      "concrete_value": "0 18 * * *",
+      "variable_name": "{{COLLECTION_CRON}}",
+      "default_value": "0 18 * * *",
+      "source_trace": "wrangler.toml:41-43; features/feat-youtube-daily-collection.md:64"
+    },
+    {
+      "concrete_value": "collect-queue",
+      "variable_name": "{{QUEUE_NAME}}",
+      "default_value": "collect-queue",
+      "source_trace": "wrangler.toml:31-39"
+    },
+    {
+      "concrete_value": "youtube-analytics-db",
+      "variable_name": "{{D1_DATABASE_NAME}}",
+      "default_value": "youtube-analytics-db",
+      "source_trace": "wrangler.toml:20-25"
+    },
+    {
+      "concrete_value": "youtube-analytics-media",
+      "variable_name": "{{R2_BUCKET_NAME}}",
+      "default_value": "youtube-analytics-media",
+      "source_trace": "wrangler.toml:27-29"
+    },
+    {
+      "concrete_value": "production",
+      "variable_name": "{{DEPLOY_ENVIRONMENT}}",
+      "default_value": "production",
+      "source_trace": ".github/workflows/deploy.yml:12-19"
+    },
+    {
+      "concrete_value": "dist/web",
+      "variable_name": "{{WEB_ASSET_DIR}}",
+      "default_value": "dist/web",
+      "source_trace": "wrangler.toml:8-13; vite.config.ts"
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "systems",
+      "causal",
+      "causal-loop",
+      "trade-on",
+      "plus-sum",
+      "value-proposition",
+      "strategic",
+      "kaizen",
+      "hypothesis",
+      "issue",
+      "kj"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  }
+}

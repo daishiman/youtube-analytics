@@ -27,6 +27,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm check:repo
       # バインディング解決とバンドルだけを検証し、Cloudflare へは送らない
       - run: pnpm build
 

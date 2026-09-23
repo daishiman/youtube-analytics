@@ -109,8 +109,8 @@ export class PlatformRepository {
     const [insertTenant] = await this.db.batch([
       this.db
         .prepare(
-          `INSERT INTO tenants (tenant_id, name, db_binding, created_by, created_at)
-           SELECT ?1, ?2, 'DB', ?3, ?4
+          `INSERT INTO tenants (tenant_id, name, created_by, created_at)
+           SELECT ?1, ?2, ?3, ?4
             WHERE (SELECT COUNT(*) FROM tenants WHERE deleted_at IS NULL) < ?5 ${guard}`,
         )
         .bind(input.tenantId, input.name, input.userId, input.now, input.maxTenants),
@@ -172,13 +172,19 @@ export class PlatformRepository {
     now: string;
     expiresAt: string;
   }): Promise<void> {
-    await this.db
-      .prepare(
-        `INSERT INTO sessions (session_id_hash, user_id, tenant_id, created_at, expires_at)
+    await this.db.batch([
+      this.db
+        .prepare(
+          `INSERT INTO sessions (session_id_hash, user_id, tenant_id, created_at, expires_at)
          VALUES (?1, ?2, ?3, ?4, ?5)`,
-      )
-      .bind(input.sessionIdHash, input.userId, input.tenantId, input.now, input.expiresAt)
-      .run();
+        )
+        .bind(input.sessionIdHash, input.userId, input.tenantId, input.now, input.expiresAt),
+      this.db
+        .prepare(
+          `UPDATE users SET last_tenant_id = COALESCE(?2, last_tenant_id) WHERE user_id = ?1`,
+        )
+        .bind(input.userId, input.tenantId),
+    ]);
   }
 
   async findSession(sessionIdHash: string, now: string): Promise<SessionRow | null> {
@@ -193,10 +199,17 @@ export class PlatformRepository {
   }
 
   async setSessionTenant(sessionIdHash: string, tenantId: string | null): Promise<void> {
-    await this.db
-      .prepare("UPDATE sessions SET tenant_id = ?2 WHERE session_id_hash = ?1")
-      .bind(sessionIdHash, tenantId)
-      .run();
+    await this.db.batch([
+      this.db
+        .prepare("UPDATE sessions SET tenant_id = ?2 WHERE session_id_hash = ?1")
+        .bind(sessionIdHash, tenantId),
+      this.db
+        .prepare(
+          `UPDATE users SET last_tenant_id = ?2
+            WHERE user_id = (SELECT user_id FROM sessions WHERE session_id_hash = ?1)`,
+        )
+        .bind(sessionIdHash, tenantId),
+    ]);
   }
 
   async deleteSession(sessionIdHash: string): Promise<void> {
@@ -206,15 +219,25 @@ export class PlatformRepository {
       .run();
   }
 
-  /** 最後に選んでいたテナント（同じ利用者の直近セッション）を次のログインの既定にする */
+  /** 認証sessionとは独立した、利用者の最後のtenant選好。 */
   async lastSelectedTenant(userId: string): Promise<string | null> {
     const row = await this.db
-      .prepare(
-        `SELECT tenant_id FROM sessions WHERE user_id = ?1 AND tenant_id IS NOT NULL
-          ORDER BY created_at DESC LIMIT 1`,
-      )
+      .prepare("SELECT last_tenant_id FROM users WHERE user_id = ?1")
       .bind(userId)
-      .first<{ tenant_id: string }>();
-    return row?.tenant_id ?? null;
+      .first<{ last_tenant_id: string | null }>();
+    return row?.last_tenant_id ?? null;
+  }
+
+  /** 1回の要求で削除する量を制限し、通常ログインにcleanupの長時間処理を持ち込まない。 */
+  async deleteExpiredSessions(now: string, limit: number): Promise<number> {
+    const result = await this.db
+      .prepare(
+        `DELETE FROM sessions WHERE session_id_hash IN (
+           SELECT session_id_hash FROM sessions WHERE expires_at <= ?1 ORDER BY expires_at LIMIT ?2
+         )`,
+      )
+      .bind(now, limit)
+      .run();
+    return result.meta.changes;
   }
 }

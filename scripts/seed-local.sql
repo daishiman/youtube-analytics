@@ -2,9 +2,22 @@
 -- 開発用ログイン（DEV_LOGIN=1）は google_sub = 'dev:<メール>' で利用者を引くため、同じ形で入れる
 -- 招待トークン（平文）: local-invite-editor-0000000000000000000000000 … invitee@example.com を編集者として招待（有効）
 --                       local-invite-expired-000000000000000000000000 … expired@example.com（期限切れ）
+-- E2Eが作るdev:e2e-*も依存順に掃除し、反復実行でMAX_TENANTSへ近づかないようにする。
+DELETE FROM sessions WHERE user_id IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%');
+DELETE FROM tenant_invites WHERE tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%')
+);
+DELETE FROM tenant_members WHERE tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%')
+) OR user_id IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%');
+UPDATE users SET last_tenant_id = NULL WHERE google_sub LIKE 'dev:e2e-%';
+DELETE FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%');
+DELETE FROM users WHERE google_sub LIKE 'dev:e2e-%';
+
 DELETE FROM sessions WHERE user_id LIKE 'seed-%';
 DELETE FROM tenant_invites WHERE tenant_id LIKE 'seed-%';
 DELETE FROM tenant_members WHERE tenant_id LIKE 'seed-%' OR user_id LIKE 'seed-%';
+UPDATE users SET last_tenant_id = NULL WHERE user_id LIKE 'seed-%';
 DELETE FROM tenants WHERE tenant_id LIKE 'seed-%';
 DELETE FROM users WHERE user_id LIKE 'seed-%' OR google_sub IN (
   'dev:owner@example.com', 'dev:editor@example.com', 'dev:viewer@example.com',

@@ -5,7 +5,7 @@
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
   "current_source_digest": "3d02f48f10ce31fcb7eb8b181f84c7d28e7a7942c9126fef7e01834ca64b1f53",
-  "current_architecture_digest": "062eb42ec3d7fade6e61ad9847144648b64b6044614d3ee84a9123c96d60c062",
+  "current_architecture_digest": "1e14f8c1c409db25e5f9ce94791bb2a75abb3dc0dfc63430c65bdca6d96463f5",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",

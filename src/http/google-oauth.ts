@@ -60,23 +60,38 @@ export async function exchangeCode(input: {
   nonce: string;
   now: Date;
 }): Promise<VerifiedIdentity> {
-  const res = await fetch(GOOGLE_TOKEN_URL, {
-    method: "POST",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type: "authorization_code",
-      code: input.code,
-      code_verifier: input.codeVerifier,
-      client_id: input.clientId,
-      client_secret: input.clientSecret,
-      redirect_uri: input.redirectUri,
-    }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(GOOGLE_TOKEN_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        code: input.code,
+        code_verifier: input.codeVerifier,
+        client_id: input.clientId,
+        client_secret: input.clientSecret,
+        redirect_uri: input.redirectUri,
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    throw new AppError("OAUTH_FAILED");
+  }
   if (!res.ok) throw new AppError("OAUTH_FAILED");
-  const body = (await res.json()) as { id_token?: string };
-  if (!body.id_token) throw new AppError("OAUTH_FAILED");
+  let body: unknown;
+  try {
+    body = await res.json();
+  } catch {
+    throw new AppError("OAUTH_FAILED");
+  }
+  const idToken =
+    typeof body === "object" && body !== null && "id_token" in body
+      ? (body as { id_token?: unknown }).id_token
+      : undefined;
+  if (typeof idToken !== "string" || !idToken) throw new AppError("OAUTH_FAILED");
 
-  const claims = decodeClaims(body.id_token);
+  const claims = decodeClaims(idToken);
   const nowSec = Math.floor(input.now.getTime() / 1000);
   if (
     !claims.iss ||

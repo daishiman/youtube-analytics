@@ -22,7 +22,7 @@ export default defineConfig(async () => {
       }),
     ],
     test: {
-      include: ["tests/**/*.test.ts"],
+      include: ["tests/**/*.test.{ts,mjs}"],
       setupFiles: ["./tests/setup.ts"],
     },
   };

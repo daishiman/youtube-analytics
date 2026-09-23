@@ -51,7 +51,7 @@ implementation_readiness: {"status": "complete", "missing_sections": [], "checke
 
 # Architecture overview
 
-Cloudflare Workers(Free)1本に Hono の REST API・SPA の静的配信・Cron・Queue consumer を同居させ、D1(構造化データ)と R2(画像)を持つ。AI分析はシステム内で行わず、各利用者の PC の Claude Code が /api/skill/* 経由でデータを取り出し、report-design-system で作った HTML と結果JSONを反映する。
+Cloudflare Workers(Free)1本に Hono の REST API・React SPA の静的配信・Cron を同居させ、D1(構造化データ)と R2(画像)を持つ。日次収集の完成形では Queue consumer も同じ Worker に置くが、現在の `feat-platform-tenant-auth` は producer binding と空の scheduled 入口だけを先行配置し、consumer は未構成である。AI分析はシステム内で行わず、各利用者の PC の Claude Code が /api/skill/* 経由でデータを取り出し、report-design-system で作った HTML と結果JSONを反映する。
 
 ## Context and drivers
 
@@ -72,9 +72,9 @@ Cloudflare Workers(Free)1本に Hono の REST API・SPA の静的配信・Cron�
 ## Container and component view
 
 - Worker(単一): Hono ルータ → usecase(TenantContext 必須)→ TenantScopedRepository → D1 / R2。
-- scheduled ハンドラ: Cron `0 18 * * *` で collect/cleanup の通を Queues へ投入。
-- queue consumer: max_batch_size=1 で collectTenantDaily または cleanup を実行。
-- SPA: Vite + 素の TypeScript、Workers の静的アセットとして配信。
+- scheduled ハンドラ（`feat-youtube-daily-collection` の目標）: Cron `0 18 * * *` で collect/cleanup の通を Queues へ投入。現在は空の入口のみ。
+- queue consumer（同 feature の目標）: max_batch_size=1 で collectTenantDaily または cleanup を実行。現在の platform feature には consumer binding も handler も置かない。
+- SPA: React + Vite + React Router、Workers の静的アセットとして配信。
 - metrics/: M1〜M10、週次売上ファネル、判定保留規則の純関数モジュール。
 
 ## Cross-cutting contracts
@@ -91,7 +91,7 @@ frontend / backend / infrastructure / data / security の5 subtype を下に記�
 
 ## Architecture decisions
 
-- D-cron: 毎日 JST 3:00 の Cron 1本 + Queues fan-out(qa-058/appr-010)。Cron 自体は投入だけに限り、1テナント=1 consumer 実行でサブリクエスト上限を守る。
+- D-cron: 毎日 JST 3:00 の Cron 1本 + Queues fan-out(qa-058/appr-010)を日次収集の目標構成とする。Cron 自体は投入だけに限り、1テナント=1 consumer 実行でサブリクエスト上限を守る。現在の platform feature は producer-only で、この処理を実装しない。
 - 保存先: D1 + R2(qa-026)。1 D1 を tenant_id で行分離し、将来は tenants.db_binding で別DBへ移せる。
 - AI実行: Claude Code 側(システムは LLM を呼ばない)。
 - 集約: 「レポート版」(追記のみ)と「改善アクション」(一方向遷移)の2集約。
@@ -114,7 +114,7 @@ GitHub Actions で PR 時 dry-run、main push で D1 migrations → deploy。ロ
 
 ## Rendering and application pattern
 
-Vite + 素の TypeScript の SPA を Workers の静的アセットで配信。レポートHTMLは sandbox iframe で本体DOMと分離する。
+React + Vite + React Router の SPA を Workers の静的アセットで配信。レポートHTMLは sandbox iframe で本体DOMと分離する。
 
 ## Routes, screens and navigation
 
@@ -122,7 +122,7 @@ Vite + 素の TypeScript の SPA を Workers の静的アセットで配信。�
 
 ## Component and design-system boundaries
 
-グラフは軽量ライブラリ1つで、折れ線・横棒・行内の横棒・小さな推移線の4種に限る。出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。
+グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。
 
 ## State and data flow
 
@@ -160,7 +160,7 @@ usecase は1集約だけを1トランザクションで書く。TenantScopedRepo
 
 ## Async processing
 
-Cron `0 18 * * *` → Queues collect-queue(sendBatch)→ consumer max_batch_size=1。msg.retry()(max_retries=3・retry_delay=600秒)、最終失敗で collection_status=failed。
+`feat-youtube-daily-collection` の目標は Cron `0 18 * * *` → Queues collect-queue(sendBatch) → consumer max_batch_size=1。msg.retry()(max_retries=3・retry_delay=600秒)、最終失敗で collection_status=failed。現在の platform feature は producer binding のみで、成功 ack を行う仮 consumer は置かない。
 
 ## Security and resilience
 
@@ -174,7 +174,7 @@ Workers Logs、無料枠メーター。契約テスト・認可テスト・M1 �
 
 ## Environments and topology
 
-Cloudflare アカウント1つ、Worker 1本(API・静的配信・Cron・Queue consumer)、D1 1つ(binding DB)、R2 1バケット、Queues 1本(collect-queue)。
+Cloudflare アカウント1つ、Worker 1本(API・静的配信・Cron)、D1 1つ(binding DB)、R2 1バケット、Queues 1本(collect-queue)。日次収集 feature で同じ Worker に Queue consumer を追加する。現在は producer-only。
 
 ## Compute and storage
 
@@ -182,7 +182,7 @@ Workers Free(サブリクエスト50件/実行、CPU 10ms を考慮し Reporting
 
 ## IaC and delivery
 
-wrangler.toml(bindings、MAX_TENANTS=100、Cron、Queue の producer/consumer 設定)。GitHub Actions で dry-run と migrations → deploy。
+wrangler.toml(bindings、MAX_TENANTS=100、Cron、Queue producer 設定)。consumer 設定は処理と終端失敗契約を実装する日次収集 feature で同時に追加する。GitHub Actions で dry-run と migrations → deploy。
 
 ## Secrets and access
 

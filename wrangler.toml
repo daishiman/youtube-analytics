@@ -32,12 +32,6 @@ bucket_name = "youtube-analytics-media"
 binding = "COLLECT_QUEUE"
 queue = "collect-queue"
 
-[[queues.consumers]]
-queue = "collect-queue"
-max_batch_size = 1
-max_retries = 3
-retry_delay = 600
-
 # 収集と cleanup を1本に統合した Cron（UTC 18:00 = JST 3:00, qa-058/qa-059）
 [triggers]
 crons = ["0 18 * * *"]

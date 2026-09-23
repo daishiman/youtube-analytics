@@ -16,4 +16,21 @@ describe("ルート網羅", () => {
     ]);
     expect([...registered].sort()).toEqual([...expected].sort());
   });
+
+  it("pathとmethodから導くtenant scope・write分類にmetadataが一致する", () => {
+    for (const route of PROTECTED_ROUTES) {
+      const tenantScopedByPath = route.path.startsWith("/api/tenants/:id/");
+      expect(route.tenantScoped, route.path).toBe(tenantScopedByPath);
+
+      if (!tenantScopedByPath) {
+        expect(route.kind, route.path).toBe("self");
+      } else if (route.method === "GET" && route.path.endsWith("/members")) {
+        expect(route.kind, route.path).toBe("read");
+      } else if (route.path.endsWith("/leave")) {
+        expect(route.kind, route.path).toBe("member-write");
+      } else {
+        expect(route.kind, route.path).toBe("owner-write");
+      }
+    }
+  });
 });

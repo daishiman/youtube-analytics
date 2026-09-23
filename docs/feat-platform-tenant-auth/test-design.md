@@ -16,18 +16,18 @@
 
 ## 2. 受入6項目 × テスト
 
-| # | 受入項目 | テストファイル | 件数 | 代表的な検査 |
-|---|---|---|---|---|
-| A1 | 未ログインで `/api/*` は 401 | `a1-unauthenticated.test.ts` | 18 | 保護ルート 12 本を Cookie なしで呼ぶと 401。加えて、でたらめな Cookie、期限切れ、ログアウト後、未登録パス、CSRF ヘッダより 401 が先であること、公開 API は 401 にならないこと |
-| A2 | 初回ログインで tenants と owner が1組だけ | `a2-first-login.test.ts`、`auth-flow.test.ts` | 4 + 1 | 1組作成、2回目は増えない、同一利用者の並行ログインでも1組、メール未確認なら何も作らない。コールバック経由の作成も確認 |
-| A3 | viewer の書込は 403、他テナントは 404 | `a3-authorization.test.ts` | 19 | viewer 5 本と editor 5 本の書込が 403、403 の後もデータが不変、viewer と editor もメンバー一覧は読める、役割変更は次の要求から効く。越境: t1 の owner が t2 の ID で全テナント API を呼ぶと 404、自テナントのパスに他テナントの資源 ID を混ぜても 404、非所属テナントへの切替は 404、試行後も t2 は不変。CSRF 2 件 |
-| A4 | 招待を別アカウントで開くと参加できない | `a4-invite.test.ts` | 12 | メール不一致（ログイン時とログイン後の両方）、大文字小文字の同一視、1回限り、取消、7日の期限、ハッシュだけを保存、プレビューの最小情報、既メンバーは 409 で招待を消費しない、招待できる役割、最後の owner の保護、削除と脱退 |
-| A5 | MAX_TENANTS で受付停止 | `a5-tenant-limit.test.ts` | 5 | 上限ちょうどまで作成、上限到達後の初回ログインは作らず `signupClosed`、テナント追加 API は 403 `SIGNUP_CLOSED`（「現在新規の受付を停止しています」）、招待参加は対象外、残り1枠に5人が同時にログインしても1件 |
-| A6 | main への push で migrate と deploy | `a6-workflows.test.ts` | 4 | deploy は main への push で起動、`db:migrate:remote` が `deploy` より前、認証情報は `secrets.*` 参照だけ、PR で lint・typecheck・test・build。**実際の Actions 実行ログは push 後にしか取れない**（acceptance.md） |
+| # | 受入項目 | テストファイル | 代表的な検査 |
+|---|---|---|---|
+| A1 | 未ログインで `/api/*` は 401 | `a1-unauthenticated.test.ts`、`session-lifecycle.test.ts` | 保護ルートを Cookie なしで呼ぶと 401。でたらめな Cookie、期限切れ、ログアウト後、未登録パス、CSRFより認証が先であること、期限切れ session の bounded cleanup を検査 |
+| A2 | 初回ログインで tenants と owner が1組だけ | `a2-first-login.test.ts`、`auth-flow.test.ts`、`session-lifecycle.test.ts` | 1組作成、再ログイン・並行ログイン、メール未確認、callback、logout後も session から独立した最終tenant選好を復元できることを検査 |
+| A3 | viewer の書込は 403、他テナントは 404 | `a3-authorization.test.ts` | role別書込、状態不変、全tenant pathの越境、CSRFを検査 |
+| A4 | 招待を別アカウントで開くと参加できない | `a4-invite.test.ts` | メール一致、1回限り、取消、期限、hash保存、owner保護、削除と脱退を検査 |
+| A5 | MAX_TENANTS で受付停止 | `a5-tenant-limit.test.ts` | 上限、招待参加の除外、残り1枠への並行ログインを検査 |
+| A6 | main への push で migrate と deploy | `a6-workflows.test.ts` | 起動条件、release-readiness、Secret、migration→deploy順、PR checkを静的検査 |
 
-補助: `health.test.ts`（D1 疎通と応答ヘッダ、2 件）、`routes-coverage.test.ts`（1 件）、`seed.test.ts`（ローカル seed の冪等性、1 件）、`auth-flow.test.ts`（OAuth と開発用ログイン、10 件）。合計 **76 件**（`evidence/P06-test-run.txt`）。
+補助: `health.test.ts`、`routes-coverage.test.ts`、`seed.test.ts`、`queue-handler.test.ts`、`release-readiness.test.mjs`。ルート表・seed・producer-only Queue 構成・deploy時のWorker runtime secret一覧など、受入表を支える独立 invariant を検査する。可変なテスト件数は文書へ複製せず、`pnpm test` と CI runを正とする。
 
-画面の E2E（`e2e/smoke.spec.ts`、5 シナリオを 3 サイズで実行。データを作るシナリオは desktop だけ）:
+画面の E2Eは `e2e/smoke.spec.ts` と `e2e/shell-state.spec.ts` を3サイズで実行する。後者はAPI mockで初回失敗からの再試行、tenant切替中の遅延応答、招待URLの隔離、自己role変更を検査し、永続D1を変更しない。
 
 | シナリオ | 対応 |
 |---|---|

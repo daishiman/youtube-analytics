@@ -41,7 +41,7 @@ export class TenantScopedRepository {
       .prepare(
         `SELECT m.user_id, u.email, m.role, m.joined_at
            FROM tenant_members m JOIN users u ON u.user_id = m.user_id
-          WHERE m.tenant_id = ?1 ORDER BY m.joined_at, u.email`,
+          WHERE m.tenant_id = ?1 ORDER BY m.joined_at, u.email, m.user_id`,
       )
       .bind(this.tenantId)
       .all<MemberRow>();
@@ -104,7 +104,7 @@ export class TenantScopedRepository {
       .prepare(
         `SELECT invite_id, email, role, expires_at, created_at FROM tenant_invites
           WHERE tenant_id = ?1 AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at > ?2
-          ORDER BY created_at DESC`,
+          ORDER BY created_at DESC, invite_id`,
       )
       .bind(this.tenantId, now)
       .all<InviteRow>();

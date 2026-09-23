@@ -127,6 +127,32 @@ describe("Google ログイン", () => {
       expect(await count("SELECT COUNT(*) AS n FROM users WHERE email = ?1", email)).toBe(0);
     }
   });
+
+  it("token endpoint の通信失敗は OAUTH_FAILED としてログイン画面へ戻す", async () => {
+    const { url, cookie } = await startLogin();
+    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(new TypeError("network unavailable"));
+
+    const res = await call(`/api/auth/callback?code=c&state=${url?.searchParams.get("state")}`, {
+      cookie,
+    });
+
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("/login?error=OAUTH_FAILED");
+  });
+
+  it("token endpoint の不正 JSON は OAUTH_FAILED としてログイン画面へ戻す", async () => {
+    const { url, cookie } = await startLogin();
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response("not-json", { status: 200, headers: { "content-type": "application/json" } }),
+    );
+
+    const res = await call(`/api/auth/callback?code=c&state=${url?.searchParams.get("state")}`, {
+      cookie,
+    });
+
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("/login?error=OAUTH_FAILED");
+  });
 });
 
 describe("セッション Cookie（https）", () => {

@@ -154,7 +154,10 @@ select {
   gap: 1rem;
 }
 .brand {
+  color: inherit;
   font-weight: 700;
+  text-decoration: none;
+  width: fit-content;
 }
 .field {
   display: flex;

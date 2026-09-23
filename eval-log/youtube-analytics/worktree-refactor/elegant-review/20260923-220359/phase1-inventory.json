@@ -1,0 +1,45 @@
+{
+  "target_type": "custom",
+  "target_path": "/Users/dm/orca/workspaces/YouTube分析/環境構築",
+  "scope_mode": "repo",
+  "fresh_read": true,
+  "git_snapshot": {
+    "branch": "feat/platform-tenant-auth",
+    "status_at_observation_start": "clean"
+  },
+  "scope_basis": [
+    "READMEはsystem-specを正本、specs・architecture・featuresを投影、src・webをruntime実装、tests・e2eを検証として案内している。",
+    "依頼対象は現在のworktreeで開発中のWebアプリと、その仕様・テスト・実行設定である。",
+    "現在実装のfeatureはfeat-platform-tenant-authであり、関連するdocs、migration、CI/CD設定を含めた。",
+    "外部サービスの実状態、秘密値、AIDDキット自体は対象外とした。"
+  ],
+  "enumeration": {
+    "method": "rg --files（hidden設定ファイルはread-only inventoryで補完）",
+    "excluded": [".git/**", "node_modules/**", "dist/**", "build/**", "coverage/**", "既存eval-log/**"]
+  },
+  "review_modes": {
+    "full_or_direct": [
+      "package.json", "README.md", "architecture/graph.json", "architecture/youtube-analytics-system.md", "specs/youtube-analytics-system.md",
+      "system-spec/index.md", "system-spec/00-requirements-definition.md", "system-spec/completeness-findings.json",
+      "features/*.context.json", "features/*.md", "src/**/*.ts", "web/**/*", "tests/platform/*.ts", "tests/setup.ts", "tests/*.d.ts", "e2e/smoke.spec.ts",
+      "migrations/0001_platform.sql", "scripts/seed-local.sql", "public/_headers", "public/privacy.html", "public/terms.html",
+      "biome.json", "tsconfig.json", "vite.config.ts", "vitest.config.ts", "playwright.config.ts", "wrangler.toml", ".github/workflows/*.yml", ".dev.vars.example", ".node-version"
+    ],
+    "representative_or_structure": [
+      "system-spec/auth.md", "system-spec/backend.md", "system-spec/database.md", "system-spec/frontend.md", "system-spec/infrastructure.md", "system-spec/maintenance-ops.md", "system-spec/security.md", "system-spec/ui-ux.md",
+      "system-spec/fetched-references.json", "system-spec/spec-state.json", "docs/feat-platform-tenant-auth/*.md", "docs/setup/*", "pnpm-lock.yaml", "scripts/validate-repository-consistency.py"
+    ]
+  },
+  "related_files": [
+    ".dev.vars.example", ".github/workflows/ci.yml", ".github/workflows/deploy.yml", ".node-version",
+    "README.md", "architecture/graph.json", "architecture/youtube-analytics-system.md", "biome.json",
+    "docs/feat-platform-tenant-auth/acceptance.md", "docs/feat-platform-tenant-auth/architecture.md", "docs/feat-platform-tenant-auth/design-review.md", "docs/feat-platform-tenant-auth/final-review.md", "docs/feat-platform-tenant-auth/qa-report.md", "docs/feat-platform-tenant-auth/requirements.md", "docs/feat-platform-tenant-auth/runbook.md", "docs/feat-platform-tenant-auth/test-design.md",
+    "docs/setup/README.md", "docs/setup/environment.md", "docs/setup/owner-manual-setup.mdx", "e2e/smoke.spec.ts",
+    "features/feat-csv-media-ingest.context.json", "features/feat-csv-media-ingest.md", "features/feat-platform-tenant-auth.context.json", "features/feat-platform-tenant-auth.md", "features/feat-retention-ops.context.json", "features/feat-retention-ops.md", "features/feat-skill-analysis-reports.context.json", "features/feat-skill-analysis-reports.md", "features/feat-web-screens-actions.context.json", "features/feat-web-screens-actions.md", "features/feat-youtube-daily-collection.context.json", "features/feat-youtube-daily-collection.md",
+    "migrations/0001_platform.sql", "package.json", "playwright.config.ts", "pnpm-lock.yaml", "public/_headers", "public/privacy.html", "public/terms.html", "scripts/seed-local.sql", "scripts/validate-repository-consistency.py", "specs/youtube-analytics-system.md",
+    "src/domain/tenant-context.ts", "src/env.ts", "src/http/api-routes.ts", "src/http/app.ts", "src/http/auth-routes.ts", "src/http/cookies.ts", "src/http/google-oauth.ts", "src/http/middleware.ts", "src/index.ts", "src/lib/crypto.ts", "src/lib/errors.ts", "src/repositories/db.ts", "src/repositories/platform-repository.ts", "src/repositories/tenant-scoped-repository.ts", "src/usecases/common.ts", "src/usecases/invites.ts", "src/usecases/members.ts", "src/usecases/session.ts", "src/usecases/tenants.ts",
+    "system-spec/00-requirements-definition.md", "system-spec/auth.md", "system-spec/backend.md", "system-spec/completeness-findings.json", "system-spec/database.md", "system-spec/fetched-references.json", "system-spec/frontend.md", "system-spec/index.md", "system-spec/infrastructure.md", "system-spec/maintenance-ops.md", "system-spec/security.md", "system-spec/spec-state.json", "system-spec/ui-ux.md",
+    "tests/env.d.ts", "tests/platform/a1-unauthenticated.test.ts", "tests/platform/a2-first-login.test.ts", "tests/platform/a3-authorization.test.ts", "tests/platform/a4-invite.test.ts", "tests/platform/a5-tenant-limit.test.ts", "tests/platform/a6-workflows.test.ts", "tests/platform/auth-flow.test.ts", "tests/platform/health.test.ts", "tests/platform/helpers.ts", "tests/platform/routes-coverage.test.ts", "tests/platform/routes.ts", "tests/platform/seed.test.ts", "tests/raw.d.ts", "tests/setup.ts",
+    "tsconfig.json", "vite.config.ts", "vitest.config.ts", "web/api.ts", "web/index.html", "web/main.tsx", "web/pages/InvitePage.tsx", "web/pages/LoginPage.tsx", "web/pages/Shell.tsx", "web/styles.css", "wrangler.toml"
+  ]
+}

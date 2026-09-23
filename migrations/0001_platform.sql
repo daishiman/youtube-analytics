@@ -12,7 +12,7 @@ CREATE TABLE users (
   deleted_at     TEXT
 );
 
--- テナント。db_binding は参照先 D1 を決める解決関数（src/repositories/db.ts）だけが読む
+-- テナント。db_binding は将来の別D1移行との後方互換のため残す予約列。現在の正本bindingは単一の DB
 CREATE TABLE tenants (
   tenant_id  TEXT PRIMARY KEY,
   name       TEXT NOT NULL,

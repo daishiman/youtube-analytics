@@ -4,6 +4,7 @@ import { PlatformRepository } from "../repositories/platform-repository";
 
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 export const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+export const SESSION_CLEANUP_BATCH_SIZE = 100;
 
 /** usecase の依存。now を注入できるようにして期限切れをテストで再現する */
 export interface Deps {
@@ -35,5 +36,9 @@ export function isEmail(value: unknown): value is string {
 /** 初回テナントの既定名（メールのローカル部）。利用者が後で変えられる前提の仮名 */
 export function defaultTenantName(email: string): string {
   const local = email.split("@")[0] ?? "";
-  return `${local || "新しい"}のテナント`;
+  const suffix = "のテナント";
+  const maxBaseLength = 60 - Array.from(suffix).length;
+  return `${Array.from(local || "新しい")
+    .slice(0, maxBaseLength)
+    .join("")}${suffix}`;
 }

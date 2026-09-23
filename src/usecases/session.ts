@@ -10,6 +10,7 @@ import {
   iso,
   maxTenants,
   platform,
+  SESSION_CLEANUP_BATCH_SIZE,
   SESSION_TTL_MS,
 } from "./common";
 import { acceptInvite } from "./invites";
@@ -43,6 +44,7 @@ export async function loginWithIdentity(
   if (!identity.emailVerified) throw new AppError("EMAIL_NOT_VERIFIED");
   const repo = platform(deps);
   const now = iso(deps.now);
+  await repo.deleteExpiredSessions(now, SESSION_CLEANUP_BATCH_SIZE);
   const user = await repo.upsertUser({
     userId: newId(),
     googleSub: identity.sub,

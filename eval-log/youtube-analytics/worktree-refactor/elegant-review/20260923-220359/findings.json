@@ -1,0 +1,1901 @@
+{
+  "version": 1,
+  "target": {
+    "type": "custom",
+    "path": ". (feat/platform-tenant-auth worktree, current vertical slice)",
+    "reviewed_at": "2026-09-24T00:18:00+09:00"
+  },
+  "loop_count": 3,
+  "paradigm_findings": [
+    {
+      "paradigm_id": 1,
+      "paradigm_name": "critical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "Iteration 2 の blocker を現在差分へ反証した。Queue consumer は wrangler.toml:32-34 の producer binding だけとなり、docs/feat-platform-tenant-auth/architecture.md:13 も後続 feature で処理と終端契約を同時実装すると明記したため、現 feature の terminal-loss blocker は解消した。",
+        "last-tenant は migrations/0002_user_preferences_and_session_cleanup.sql:2 の users.last_tenant_id と src/repositories/platform-repository.ts:208-228 へ分離され、tenant 名も src/usecases/common.ts:40 で接尾辞込み60文字へ制限された。いずれも前回残件から解消した。",
+        "一方、qa-061 の React 決定に対して architecture/youtube-analytics-system.md:77,117,125 と features/feat-web-screens-actions.md:36,62 の旧 frontend 記述は現差分に含まれず、上位決定から派生仕様への投影矛盾は残る。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "system-spec/spec-state.json:1499 の React/Vite/React Router 決定と architecture/youtube-analytics-system.md:77,117,125 の旧 frontend 記述は同時に正本たり得ない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "現 feature の Queue、last-tenant、tenant 名、CI、route oracle、frontend state の前回漏れは現在差分で補われた。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "frontend 技術決定が aggregate architecture と将来画面 feature へ再投影されていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "現 feature では未実装 Queue consumer を依存グラフから外し、deploy 前 gate と CI consistency edge を追加した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "【current repository/spec blocker】確定済み React frontend と旧 architecture/feature の素の TypeScript 前提が競合する。実行コードの障害ではないが、後続 feat-web-screens-actions の実装入力を誤らせるため現在の整合性審査では残件である。",
+          "recommended_intervention": "qa-061 を起点に architecture/youtube-analytics-system.md と features/feat-web-screens-actions.md を再投影し、validate-repository-consistency.py に framework/route ownership の決定投影検査を追加する。",
+          "condition_signal": "contradiction",
+          "location": {
+            "file": "architecture/youtube-analytics-system.md",
+            "line": 77,
+            "section": "Container and component view"
+          },
+          "root_cause": "canonical decision 更新後に、派生 architecture と future-feature 文書を同じ変更単位で再生成・照合する owner がなかった。"
+        }
+      ],
+      "score": 0.78,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "qa-061 が単なる検討記録なら矛盾ではないが、spec-state.json は確定決定として保持している。"
+      ],
+      "re_audit_trigger": "qa-061 の派生仕様再投影または feat-web-screens-actions 着手時"
+    },
+    {
+      "paradigm_id": 2,
+      "paradigm_name": "deduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "一般則『公開不可条件が残る main push は deploy してはならない』を適用すると、.github/workflows/deploy.yml:29-31 が pnpm check:release:deploy を migration より前に置く現在構造は妥当である。",
+        "scripts/check-release-readiness.mjs:7-12 は privacy/terms の草案・未記入を検出し、lines 18-24 は deploy 時の Cloudflare secrets を検出する。public/privacy.html:15,46 と public/terms.html:15 はなお外部入力待ちだが、誤公開ではなく意図した停止になる。",
+        "したがって legal 未確定は current implementation defect ではなく external-input release blocker であり、値を推測して埋めるべきではない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "owner manual の未実施表示、legal page の草案、release gate の停止条件が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "運営者名・連絡先・施行日は repository から導出不能な外部入力として未完である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "deploy workflow、package script、owner manual が単一の release-readiness gate を参照する。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "readiness→migration→deploy の順序が明示され、不合格時は副作用前に停止する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "high",
+          "bucket": "doc",
+          "description": "【external-input release blocker / not a current-feature code blocker】規約・プライバシーの運営者情報等が未確定なので本番 deploy は完了しない。ただし現在は機械 gate が副作用前に確実に止める。",
+          "recommended_intervention": "運営者が owner-manual の6.5節に従って法務値を確定し、草案マーカーを除去する。実装側は gate を緩和せず、入力後に check:release:deploy を通す。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "public/privacy.html",
+            "line": 15,
+            "section": "草案告知"
+          },
+          "root_cause": "コードから生成できない法務・運営者情報が未提供であり、repository は安全側に停止している。"
+        }
+      ],
+      "score": 0.9,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "preview であっても利用者同意を取る公開 URL なら草案を通さない。"
+      ],
+      "re_audit_trigger": "public/privacy.html または public/terms.html の確定時"
+    },
+    {
+      "paradigm_id": 3,
+      "paradigm_name": "induction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "一覧系を横断すると src/repositories/tenant-scoped-repository.ts:39 の members と pending invites は LIMIT/cursor を持たず、API/UI も全件取得・描画する。",
+        "一方、feat-platform-tenant-auth の acceptance は認証・越境防止・招待・MAX_TENANTS・deploy であり、tenant 内 member/invite 件数や pagination を受入条件にしていない。",
+        "よって無制限一覧は成長時の共通リスクだが、現在の feature acceptance blocker ではなく future scalability hardening と分類する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "現在仕様は全件一覧を約束し、実装も全件を返すため主張自体は一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "tenant 内 cardinality 上限と cursor contract が設計されていない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "現 feature の明示受入項目との不一致はない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "現在の呼出し依存は成立するが、件数増大時の性能余裕は保証しない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "【future scalability hardening / not a current-feature blocker】member と pending invite 一覧に cursor または業務上限がなく、tenant 規模の成長で応答・描画が非有界になる。",
+          "recommended_intervention": "公開後の規模条件を定め、member/invite に共通 cursor contract、安定 sort、page size 上限を追加する。要件化するまでは future hardening として tracker に保持する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 39,
+            "section": "listMembers/listPendingInvites"
+          },
+          "root_cause": "global tenant 数だけを容量制約とし、tenant 内集合の cardinality を独立した設計変数にしていない。"
+        }
+      ],
+      "score": 0.82,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "小規模クローズド運用で member 数に外部上限があるなら、その上限を仕様へ明記すれば pagination は必須でない。"
+      ],
+      "re_audit_trigger": "member/invite の上限決定または一覧 API の公開拡大時"
+    },
+    {
+      "paradigm_id": 4,
+      "paradigm_name": "abduction",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "README.md:7-9 は実装済み・未コミット・merge 後 close を同時に記し、features/feat-platform-tenant-auth.md:40 は status=active のままである。現在の unmerged worktree では両者は矛盾しない。",
+        "最節約仮説は、README が可変な運用現況、feature metadata が lifecycle 状態を担い、merge が両者の遷移点だというもの。ただし README 文言は commit 後に自動で古くなる。",
+        "completion_evidence.status=not_applicable と updated_at=2026-09-21 の metadata は実装完了証跡を表さず、merge 後の更新 owner が手順文だけに依存する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "現在は未コミット worktree かつ active feature なので現時点の主張は両立する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "merge 時に README 現況・feature status・completion evidence を原子的に遷移させる機械 gate がない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "現時点は整合するが、可変現況を手書き複製しており次状態で drift しやすい。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "コード実行依存ではなく repository lifecycle metadata の後続遷移問題である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "medium",
+          "bucket": "doc",
+          "description": "【external lifecycle transition risk / not a current code blocker】README の『未コミット』と feature metadata の active/completion evidence は現在は正しいが、merge 後に同時更新されなければ即座に矛盾する。",
+          "recommended_intervention": "merge/close checklist で README の可変現況、feature status、completion_evidence、Beads close を一つの遷移として更新し、check:repo に『implemented/merged/active』の許容組合せを検査させる。",
+          "condition_signal": "smell",
+          "location": {
+            "file": "README.md",
+            "line": 8,
+            "section": "現況"
+          },
+          "root_cause": "同じ delivery lifecycle を prose と feature frontmatter に複製し、遷移を一つの機械可読 state machine にしていない。"
+        }
+      ],
+      "score": 0.8,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "未mergeの現在状態だけを評価する限り status=active は欠陥ではない。"
+      ],
+      "re_audit_trigger": "commit、PR merge、Beads close のいずれか直後"
+    },
+    {
+      "paradigm_id": 5,
+      "paradigm_name": "vertical",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "main push から deploy までを直線追跡すると .github/workflows/deploy.yml:29-33 は install→check:release:deploy→db:migrate:remote→deploy である。",
+        "草案、OAuth client ID、Secrets のいずれかが欠ければ scripts/check-release-readiness.mjs:7-28 が migration 前に非0終了する。",
+        "前回の『legal gate が deploy DAG にない』依存破綻は解消し、残る未確定値は利用者入力である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "公開条件と workflow の停止条件が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "法務、OAuth形式、deploy secrets の3分類を gate が覆う。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "owner manual:127 と deploy workflow:31 が同じ command を正本にする。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "公開不可時に migration/deploy へ到達しない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.94,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "GitHub secret の値の妥当性は存在確認だけでは証明できず、初回 Actions 実行確認は引き続き必要である。"
+      ],
+      "re_audit_trigger": "deploy workflow または release-readiness script 変更時"
+    },
+    {
+      "paradigm_id": 6,
+      "paradigm_name": "decomposition",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "frontend を session boundary、frame、route page、tenant resource state に分解すると Shell→ShellFrame→SettingsPage/DashboardPage の一方向依存になった。",
+        "docs/feat-platform-tenant-auth/architecture.md:39 と final-review.md:42-45 は分割後責務を反映し、test-design.md:28-30 も固定件数を削除して shell-state を列挙する。前回 docs 責務・件数 blocker は解消した。",
+        "API AbortSignal、keyed Outlet、generation guard、mock E2E は tenant 切替時の stale state を層ごとに防ぐ。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "文書と実 component ownership が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "session error、tenant switch、resource loading、mutation の各責務に owner がある。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "固定 test 件数を複製せず command/CI log を正とする方針に統一した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "component/import の依存方向に循環を認めない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.95,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "将来 SettingsPage がさらに肥大化した場合は resource hook と mutation service の分離を再評価する。"
+      ],
+      "re_audit_trigger": "SettingsPage の新 resource または route 追加時"
+    },
+    {
+      "paradigm_id": 7,
+      "paradigm_name": "mece",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "route 集合は tests/platform/routes-coverage.test.ts:7-17 が実登録と期待集合を比較し、lines 20-34 が path/method から tenantScoped/kind を独立導出する。前回の分類 oracle 共有は解消した。",
+        "非HTTP入口を現 feature/future feature に分けると scheduled は明示的空 stub、Queue は producer binding の予約のみ、consumer は後続収集 feature の責務である。",
+        "CI は .github/workflows/ci.yml:27-31 で lint/typecheck/test/check:repo/build を含み、repository consistency の欠落も解消した。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "route の登録集合と分類規則を別観点で検査する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "current feature の HTTP/cron/queue 境界は責務ごとに過不足なく分類される。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "architecture と wrangler が producer-only Queue 構成で一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "未実装 consumer を current runtime dependency から除外した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.94,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "将来、命名規則に当てはまらない GET owner-only route を追加する場合は分類導出規則も明示更新する。"
+      ],
+      "re_audit_trigger": "API route、Queue consumer、CI check 追加時"
+    },
+    {
+      "paradigm_id": 8,
+      "paradigm_name": "two-axis",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "軸1を feature 適合性、軸2を変更主体にすると、frontend projection は『current repository blocker×開発側』、legal 値は『release blocker×利用者側』、pagination は『future hardening×開発側』になる。",
+        "last-tenant、tenant名、Queue current consumer、docs/test件数、CI、route oracle、E2E state isolation は『current blocker×開発側』だったが現在差分で解消した。",
+        "この分類により、外部値を勝手に補完せず、future pagination を現 feature の不合格理由へ過大評価せず、C3 projection だけを現在修正対象として残せる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "current repository blocker として frontend projection 矛盾が1件残る。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "legal 外部入力と future pagination は未完だが owner/scope が分類済みである。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "上位 frontend 決定の派生投影だけは current consistency 条件を満たさない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "current runtime/release DAG の依存破綻は解消した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.86,
+      "reuse_surface": "none",
+      "negative_cases": [
+        "分類は未完項目を免責せず、修正時期と権限を明確にするためのもの。"
+      ],
+      "re_audit_trigger": "current feature 完了判定または production release 判断時"
+    },
+    {
+      "paradigm_id": 9,
+      "paradigm_name": "process",
+      "category": "B-structural",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "変更工程は source→tests/docs→check:repo→build、公開工程は external values→check:release:deploy→migration→deploy と分離された。",
+        "scripts/seed-local.sql:13,20 は E2E user の last_tenant_id を解除してから動的行を掃除し、新 shell-state E2E は API mock で永続 D1 を変更しない。前回 E2E cleanup 残件は解消した。",
+        "残る弱点は merge 後の README/feature metadata/Beads 遷移と、qa-061 の派生仕様再投影が同じ工程 gate にまだ含まれないことである。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "実装・検査・公開の順序は一貫する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "merge 後 metadata transition と canonical decision projection の工程が CI rule に不足する。"
+          ],
+          "violation_count": 2
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "feature-local docs は同期したが repository-wide frontend projection は未同期である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "E2E cleanup、CI check、release gate の工程 edge は接続済みである。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "hook-ci",
+          "description": "【current repository-process gap】check:repo は CI に接続されたが、確定 frontend decision の全 projection と merge 後 lifecycle metadata の遷移をまだ保証しない。",
+          "recommended_intervention": "decision-to-projection の対象表と lifecycle 許容遷移を validator に追加し、merge checklist では README・feature metadata・tracker close を同一 commit/evidence で更新する。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "scripts/validate-repository-consistency.py",
+            "line": 1,
+            "section": "repository invariants"
+          },
+          "root_cause": "validator は既存の構造 invariant を中心に成長し、decision projection と delivery lifecycle を検査モデルへまだ取り込んでいない。"
+        }
+      ],
+      "score": 0.83,
+      "reuse_surface": "script-frontmatter",
+      "negative_cases": [
+        "外部法務値そのものや secret 値を CI artifact に保存してはならない。"
+      ],
+      "re_audit_trigger": "validator rule または merge/close 手順変更時"
+    },
+    {
+      "paradigm_id": 10,
+      "paradigm_name": "meta",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Iteration 2 の blocker だった Queue terminal loss は consumer と queue handler を同時に撤去したため解消した。producer binding だけを予約し、実処理と terminal failure 契約を後続 feature で同時追加する境界は source・wrangler・architecture・owner manual で一致する。",
+        "単一D1、last-tenant選好、bounded session cleanup、tenant名長、CI consistency hook、release gate、可変テスト件数の固定記載は current diff でそれぞれ根因へ作用している。単なる症状修正ではない。",
+        "ただし final-review と test-design が詳細なテストファイル inventory を重複保持し、今回追加された session-lifecycle.test.ts が両方の列挙から既に漏れた。件数だけを削除しても mutable inventory の重複根因は残る。",
+        "最小削減案は final-review の詳細 file inventory を architecture と test-design への参照に置換し、受入項目とテストの対応だけを test-design に一意化すること。実行件数と全ファイル集合は pnpm test / CI を正本にし、第三の生成 inventory は作らない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "詳細 test inventory が session-lifecycle.test.ts を落としており current diff と一致しない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "受入との対応を持つ test-design に session lifecycle の検証位置がない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "Queue、DB、session、release gate の source/config/spec projection は current diff 内で揃った。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "CI と deploy は check:repo / check:release:deploy を明示依存に持つ。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "medium",
+          "bucket": "doc",
+          "description": "final-review と test-design の詳細 test inventory が重複し、新規 session-lifecycle.test.ts を既に取りこぼしている。可変件数を削っただけでは同一理由で変わる列挙の重複は解消しない。",
+          "recommended_intervention": "final-review の詳細な test file 列挙を削り test-design へのリンクだけにする。test-design の A2 に session-lifecycle.test.ts を一度だけ対応付け、全ファイル集合・件数は test runner/CI を正本とする。",
+          "condition_signal": "inconsistency",
+          "location": {
+            "file": "docs/feat-platform-tenant-auth/final-review.md",
+            "line": 51,
+            "section": "2.2 テスト、証跡、開発ツール"
+          },
+          "root_cause": "RC-MUTABLE-STATUS-DOC: 同じ変更理由を持つ current file inventory を複数の手書き文書に残した。"
+        }
+      ],
+      "score": 0.82,
+      "reusable_abstraction": "DocumentOwnershipMap: architecture=安定設計、test-design=受入対応、final-review=判定と参照、CI=実測集合。",
+      "template_variables": [
+        "{{ARCHITECTURE_DOC}}",
+        "{{TEST_DESIGN_DOC}}",
+        "{{CI_RUN}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "凍結証跡として commit と observed_at を持つ inventory は削除対象にしない。"
+      ],
+      "re_audit_trigger": "テストファイルまたは受入項目の追加時"
+    },
+    {
+      "paradigm_id": 11,
+      "paradigm_name": "abstraction",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "resolveTenantDb と新規 tenant への db_binding 書込みを除去し、controlDb だけを残したため speculative shard abstraction は解消した。既存列は legacy schema として未使用と明記され、現行実行経路へ漏れない。",
+        "Shell=session boundary、ShellFrame=layout、SettingsPage=tenant feature state、CreateTenantForm=再利用可能な mutation form という component 境界は Iteration 2 から回帰していない。新しい session lifecycle と release gate は backend/CI に閉じ、frontend の抽象層を増やしていない。",
+        "Outlet key、request generation、AbortSignal、issued tenant guard はそれぞれ component state、async completion、transport、secret display を守る。見かけの重複を一つの汎用 hook へ統合すると失敗面が隠れるため、現状の局所重複は適切である。",
+        "SettingsPage をさらに members/invites ごとに分割する根拠は current diff にない。同じ remote-resource lifecycle が別 feature で再発するまで共有 query abstraction を作らない。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "単一D1という宣言と db.ts 実装が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "session/layout/feature/form の状態寿命が component 境界に対応する。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "将来 shard 用 resolver を現在の repository contract から除去した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "新規抽象・循環依存・package dependency は current diff にない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96,
+      "reusable_abstraction": "StateLifetimeBoundary: session、layout、tenant resource、form mutation を寿命と所有者で分ける。",
+      "template_variables": [
+        "{{SESSION_BOUNDARY}}",
+        "{{FEATURE_SCOPE_KEY}}",
+        "{{MUTATION_OWNER}}"
+      ],
+      "reuse_surface": "template",
+      "negative_cases": [
+        "行数だけを理由に cohesive feature page を細分化しない。",
+        "将来 shard の可能性だけで locator/resolver を先取りしない。"
+      ],
+      "re_audit_trigger": "同型 resource lifecycle が3 feature以上へ増えた時"
+    },
+    {
+      "paradigm_id": 12,
+      "paradigm_name": "double-loop",
+      "category": "C-meta",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue は retry stub を改善するのではなく『処理と終端契約がない consumer をなぜ配備するのか』を問い直し、consumer 自体を撤去した。前提を変えたため double-loop 修正である。",
+        "文書 drift に対して件数を79へ更新せず固定件数を廃止した点、DB resolver に分岐を足さず抽象自体を除去した点も、局所値ではなく維持モデルを修正している。",
+        "legal 文面は app implementation が推測して埋める対象ではない。public terms/privacy の最終文言は release scope 内の human-owned prerequisite、automatic refactor scope 外であり、check:release が未記入を止める現在の依存表現は適切である。",
+        "ただし deploy workflow は legal 文面が未確定の間は意図的に停止する。これはコード欠陥ではなく公開可否の既知状態であり、owner input が完了条件である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "owner manual は legal 未実施と release gate を同時に明示する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "legal の不足内容・所有者・停止点が列挙される。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "human-owned content と machine-owned enforcement を分離している。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "deploy は check:release:deploy を migration より先に実行する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.94,
+      "reusable_abstraction": "HumanDecisionGate: 内容決定は owner、未決検出と副作用停止は automation が担う。",
+      "template_variables": [
+        "{{HUMAN_OWNED_INPUT}}",
+        "{{RELEASE_GATE_COMMAND}}",
+        "{{SIDE_EFFECT_STEP}}"
+      ],
+      "reuse_surface": "config",
+      "negative_cases": [
+        "legal 文面を技術 refactor の自動修正で確定しない。",
+        "未確定を黙認して deploy を続行しない。"
+      ],
+      "re_audit_trigger": "public terms/privacy の確定時または release 実行時"
+    },
+    {
+      "paradigm_id": 13,
+      "paradigm_name": "brainstorming",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "残る docs/spec 重複の代替案を7件比較した: (1) final-review の file inventory を削り architecture/test-design へ参照、(2) inventory を生成、(3) CI で複数文書の同期を検査、(4) docs を一冊へ統合、(5) commit固定の凍結証跡化、(6) frontmatter ownership を付与、(7)現状維持。最小かつ新しい正本を増やさない案は(1)である。",
+        "pagination の代替案を6件比較した: (1) server hard cap、(2) cursor pagination、(3) offset pagination、(4) search-only UI、(5) virtualized all-fetch、(6)現状維持+明示容量契約。現在必要なのは想定最大と overflow behavior の決定であり、規模が小さいなら(1)、増加要件が確定した時だけ(2)を選ぶ。",
+        "component の代替案を5件比較した: 現状維持、SettingsPage追加分割、汎用 resource hook、state library導入、Shellへ再統合。現在の状態寿命と失敗面には現状維持が最小で、他案は再発回数の証拠が不足する。",
+        "legal の代替案は owner確定+gate、仮文言で公開、feature flagで非公開、外部legal service、deploy手動承認。仮文言公開は不適切で、owner確定+既存gateが現在の最小案である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "各代替案は既存 source/config の前提と矛盾しない形で比較した。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "docs、pagination、component、legal で各5件以上の選択肢を検討した。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "最小案は新たな生成物や汎用層を増やさない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "選択案は既存 CI/release dependency を保持する。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "OptionBeforeAbstraction: hard cap、pagination、generation、manual gate を再発頻度と容量閾値で選ぶ。",
+      "template_variables": [
+        "{{ALTERNATIVES}}",
+        "{{SCALE_THRESHOLD}}",
+        "{{OWNER}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "選択肢数を満たすためだけに現行制約へ適合しない案を採用しない。"
+      ],
+      "re_audit_trigger": "容量要件または文書 owner の変更時"
+    },
+    {
+      "paradigm_id": 14,
+      "paradigm_name": "lateral",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue の安全性を handler 内で解く代わりに consumer deployment を消すことで terminal loss 経路自体をなくした。処理未実装という制約では DLQ追加より小さい水平解である。",
+        "文書同期を別の generator で解くと正本が増える。final-review を判定・リンクへ縮退し、既に意味を所有する architecture/test-design に委ねる方が変更経路を減らす。",
+        "pagination を UI widget の問題ではなく cardinality contract の問題として扱う。先に最大件数と overflow を決めれば、小規模運用では hard cap だけで十分な可能性がある。",
+        "legal を執筆問題ではなく副作用 gate として扱い、人間判断を待つ間も誤公開を機械的に防ぐ。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "consumer不在と producer予約の説明が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "終端消失経路を構成から除去した。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "解決策が現 feature の実装済み責務を越えない。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "producer は未実装 consumer に依存しない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "RemoveUnsafeEdge: 空実装を堅牢化する前に未使用 dependency edge を構成から除去する。",
+      "template_variables": [
+        "{{UNREADY_CONSUMER}}",
+        "{{FUTURE_FEATURE}}"
+      ],
+      "reuse_surface": "config",
+      "negative_cases": [
+        "producer が既に本番 message を投入する場合は consumer 撤去だけで解決しない。"
+      ],
+      "re_audit_trigger": "collect producer または consumer 実装時"
+    },
+    {
+      "paradigm_id": 15,
+      "paradigm_name": "paradox",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "Queue の『安全な stub』は存在するほど message を失わせたが、stub をなくすと将来機能の土台が減るように見えて現在の安全性は上がる。producer binding だけの予約が最小の正しい土台である。",
+        "docs の詳細さは信頼を上げるように見えるが、current file inventory は追加直後から session-lifecycle を漏らした。詳細を final-review から削るほど、ownership が明確になり正確性が上がる。",
+        "frontend の三重 scope guard は重複に見えるが異なる failure surface を守るため削除が逆機能になる。一方、docs inventory は同じ変更理由を持つため削除が正機能になる。DRY は表面形ではなく失効理由で判定すべきである。",
+        "pagination を早く導入すると将来性が上がるように見えるが、件数契約なしでは page size と ordering も推測になる。先に contract を小さく定義する方が拡張可能性を高める。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "Queue の強い fail-closed 表現は current diff から消えた。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "将来 consumer の必要条件として terminal failure 契約を明記した。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "重複削除の適否を failure surface と変更理由で区別した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "未実装 consumer への runtime dependency はない。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96,
+      "reusable_abstraction": "ChangeReasonDRY: 同時に失効する記述は一意化し、異なる failure surface の防御は統合しない。",
+      "template_variables": [
+        "{{CHANGE_REASON}}",
+        "{{FAILURE_SURFACE}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "防御コードの構文類似だけで scope guards を削除しない。"
+      ],
+      "re_audit_trigger": "同じ事実を別文書へ追加する時"
+    },
+    {
+      "paradigm_id": 16,
+      "paradigm_name": "analogy",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "current component 構成は OS の process boundary に類似する。Shell が認証session、ShellFrame が chrome、route page が process固有stateを所有し、tenant key は process identity として旧stateを破棄する。責務境界は自然である。",
+        "release gate は型検査に類似し、human-owned legal text を生成せず『未確定値を持つ artifact は deploy できない』と制約する。この分業は秘密値・OAuth・legal の異質な前提を一つの副作用前検査へ束ねる。",
+        "test-design は source map、CI run は実行 binary に類似する。final-review が同じ symbol table を再記載すると drift するため、判定から source map へ参照する方がよい。",
+        "member/invite pagination は storage engine より API protocol の契約に類似する。cursor実装より先に順序、上限、overflow を規定する必要がある。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "component名と状態所有が route-shell analogy に一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "session、frame、feature、form の主要境界が揃う。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "汎用 state manager を追加せず domain語彙を保つ。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "route shell の依存方向は一方向である。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.95,
+      "reusable_abstraction": "RouteProcessBoundary: identity が変わると feature state を remount し、frame と session は上位で維持する。",
+      "template_variables": [
+        "{{IDENTITY_KEY}}",
+        "{{SESSION_OWNER}}",
+        "{{FEATURE_STATE_OWNER}}"
+      ],
+      "reuse_surface": "template",
+      "negative_cases": [
+        "全 route が同じ state lifetime の単画面ではこの階層を強制しない。"
+      ],
+      "re_audit_trigger": "nested route または跨tenant cache追加時"
+    },
+    {
+      "paradigm_id": 17,
+      "paradigm_name": "if",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "もし未実装 collect message が投入されても current Worker に consumer binding がないため、旧構成の有限 retry 後削除経路へ入らない。consumer追加時は DLQ/redrive または明示 loss 契約が再監査条件になる。",
+        "もし logout 後に再loginしても users.last_tenant_id が session寿命と独立して選好を保持する。もし期限切れsessionが大量でも login一回のcleanupは100件で止まり、通常要求を無制限走査にしない。",
+        "もし member/invite が10倍・100倍になれば listMembers/listPendingInvites と SettingsPage は依然全件取得・描画する。だが cursor pagination を直ちに入れるのではなく、想定最大、stable ordering、overflow behavior の決定が current feature 内の未完 contract である。",
+        "pagination実装の scope はその contract が hard cap を超える規模を要求した場合の後続作業。小さい組織上限を server で強制できるなら pagination は過剰である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "Queue/session の極端条件と current configuration は矛盾しない。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "member/invite collection の想定最大、ordering、overflow behavior が未定義である。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "pagination実装を容量契約から分離して scope を明示した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "current Queue dependency break は consumer撤去で解消した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "other",
+          "description": "member と pending invite の collection contract に最大件数、安定順序、overflow behavior がない。pagination実装そのものは規模次第だが、容量判断は既存 S4-S6 API の scope 内である。",
+          "recommended_intervention": "current feature では想定最大件数を決め、小規模なら作成時 hard cap と明示 sort を実装・文書化する。上限を超える利用要件が確定した場合だけ cursor pagination、index、API response、UI paging を一組の後続 feature とする。",
+          "condition_signal": "omission",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 39,
+            "section": "listMembers"
+          },
+          "root_cause": "RC-UNBOUNDED-LISTS: tenant総数だけを容量変数とし、tenant内collectionのcardinalityを要件化していない。"
+        }
+      ],
+      "score": 0.78,
+      "reusable_abstraction": "CardinalityDecision: max、sort、overflow を先に決め、hard cap と cursor pagination を規模で分岐する。",
+      "template_variables": [
+        "{{MAX_COLLECTION_SIZE}}",
+        "{{STABLE_SORT_KEY}}",
+        "{{OVERFLOW_BEHAVIOR}}",
+        "{{PAGE_SIZE}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "serverで小さいhard capを保証するcollectionへpaginationを機械導入しない。"
+      ],
+      "re_audit_trigger": "member/invite最大件数の決定時"
+    },
+    {
+      "paradigm_id": 18,
+      "paradigm_name": "naive",
+      "category": "D-divergent",
+      "agent": "elegant-meta-divergent-analyst",
+      "observations": [
+        "初見開発者には Shell、ShellFrame、SettingsPage、CreateTenantForm の名前から責務を推測でき、巨大componentへ戻る回帰はない。tenant切替時のloadingとretryも利用者が次の操作を理解できる。",
+        "初見運用者には『producerのみ、consumerは後続』『公開前検査で草案を停止』が owner manual に明記され、Iteration 2 の fail-closed 誤解は解消した。",
+        "一方、final-review のテスト列挙を読む初見者は session lifecycle が検証されていないと誤解する。test-design へ一意化すれば『どこを見れば受入対応が分かるか』も単純になる。",
+        "pagination は『大規模対応を今すぐ実装』ではなく『何人まで扱う製品かを先に決める』と説明する方が非専門家にも判断可能である。legal は ownerが内容を決め、機械が誤公開だけを止めると説明できる。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "詳細 test inventory から session lifecycle が見えない。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "利用者向け recovery、運用者向け release blocker、Queue scope は明示される。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "component名と実責務、Queue説明と構成が一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "初見でも deploy前提と owner action を辿れる。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.88,
+      "reusable_abstraction": "SingleReaderPath: 初見読者が architecture、test-design、owner manual のどれを正本として読むか一意にする。",
+      "template_variables": [
+        "{{READER_ROLE}}",
+        "{{CANONICAL_DOC}}"
+      ],
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "異なる読者目的の説明まで一冊へ統合しない。"
+      ],
+      "re_audit_trigger": "setup/architecture/test docsの追加時"
+    },
+    {
+      "paradigm_id": 19,
+      "paradigm_name": "systems",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "解消: 稼働consumerをwrangler.tomlから外しsrc/index.tsからqueue handlerを除いたため、未実装messageのterminal loss経路は現在DAGから消えた。Environment矛盾、session依存のtenant選好、期限session cleanup、current feature文書のinventory/count driftも現diffで解消された。",
+        "解消: deployはcheck:release:deployをmigration前に通し、草案legal本文・OAuth・Secretsが未準備なら公開を止める。legal本文確定は運営者入力だが、未確定公開は実装DAGで遮断された。",
+        "残存: decision SSOT system-spec/spec-state.json:1499 のqa-061からtarget architecture/featuresへのprojection edgeが切れ、React/ECharts決定と素のTypeScript/4 chart限定が並存する。",
+        "残存: 現行member/invite listはcursor契約を持たず、specs/youtube-analytics-system.md:174の一覧paging方針からAPI/usecase/repository/UIまでの依存鎖が未接続。後続5 featureの未実装自体はblocker外である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "system-spec/spec-state.json:1499 のReact/Vite/React Router/ECharts決定と architecture/youtube-analytics-system.md:77,117,125・features/feat-web-screens-actions.md:36,62 の素のTypeScript/4 chart限定が矛盾する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "現行members/invites APIにcursor/limit/next_cursorがなく、承認済みlist contractの一要素が欠ける。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "qa-061はdecision SSOTにはあるがderived target architecture/featuresへ投影されていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "spec-state → architecture/featuresのprojection dependencyと、cursor → API → usecase → repository → UIのdependencyが未完である。"
+          ],
+          "violation_count": 2
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "contradiction",
+          "description": "残存: qa-061の正式なReact/ECharts選定に対し、target architectureとfuture featureが旧frontend方式を要求する。",
+          "location": {
+            "file": "architecture/youtube-analytics-system.md",
+            "line": 77,
+            "section": "Container and component view"
+          },
+          "root_cause": "decision SSOT更新後のderived target文書projectionが完了条件に含まれていない。",
+          "recommended_intervention": "architecture:77,117,125とfeatures/feat-web-screens-actions.md:36,62をqa-061へ投影し、decision SSOT→derived target docsの一方向関係を明記する。"
+        },
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "schema",
+          "condition_signal": "omission",
+          "description": "残存: 現在実装済みのmember/invite一覧にcursor paginationがなく、件数増加時に全件read/responseとなる。",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 39,
+            "section": "listMembers/listPendingInvites"
+          },
+          "root_cause": "system-wide list contractを後続画面向けと解釈し、現行tenant管理APIへ適用していない。",
+          "recommended_intervention": "members/invitesに安定sort key+idのopaque cursor、limit、next_cursorをAPI/usecase/repository/UIまで通し、重複・欠落・tenant分離を契約testで固定する。"
+        }
+      ],
+      "score": 0.72
+    },
+    {
+      "paradigm_id": 20,
+      "paradigm_name": "causal",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "qa-061更新 → architecture/features未投影 → 実装者が旧方式を読む → frontend方式とchart拡張性が再分岐する因果鎖が残る。",
+        "全件list → tenant member/invite増加 → D1 read/JSON/UI描画量増加 → latency/free quota圧迫の因果鎖が残る。",
+        "草案legal → check:release:deploy失敗 → migration/deploy未実行という遮断鎖が追加され、未確定公開の因果は解消した。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "qa-061とderived target docsの相反する入力が異なる実装を誘発する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "cursor absenceにより件数増加が直接全件応答へ伝播する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "projection因果を検査する明示的edgeがない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "paginationのcontractがrepository/UIまで伝播していない。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "inconsistency",
+          "description": "qa-061の更新結果がtarget architecture/featuresの入力へ伝播していない。",
+          "location": {
+            "file": "system-spec/spec-state.json",
+            "line": 1499,
+            "section": "qa-061"
+          },
+          "root_cause": "decision記録とderived設計文書の更新を別作業として扱った。",
+          "recommended_intervention": "qa idをderived文書へ埋め、repository consistency checkで旧『素のTypeScript』『4種限定』表現を拒否する。"
+        }
+      ],
+      "score": 0.73
+    },
+    {
+      "paradigm_id": 21,
+      "paradigm_name": "causal-loop",
+      "category": "E-system",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "残存loop: 旧target docsを参照 → 素TS/固定chart前提の設計 → docsを根拠にレビュー → 旧前提を再強化する。qa-061への再投影でloopを断てる。",
+        "残存loop: 全件list → 応答肥大 → retry/reload増加 → read量増加。cursorと上限で負のfeedbackを入れる必要がある。",
+        "解消loop: current feature文書は固定test件数を複製せずpnpm test/CIを正とし、check:repoをCIへ接続したため、current-state evidence driftを抑える。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "旧frontend記述が自己強化するloopを残す。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "全件responseに上限feedbackがない。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "decision projection loopが閉じていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "cursor feedbackがAPIからUIまで未接続。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "schema",
+          "condition_signal": "smell",
+          "description": "member/invite件数増加に対する応答量の制御loopがない。",
+          "location": {
+            "file": "src/repositories/tenant-scoped-repository.ts",
+            "line": 102,
+            "section": "listPendingInvites"
+          },
+          "root_cause": "初期データ量を暗黙の上限として扱った。",
+          "recommended_intervention": "server-side limitとcursor、UI追加読込、最大limit validationを同時に導入する。"
+        }
+      ],
+      "score": 0.7
+    },
+    {
+      "paradigm_id": 22,
+      "paradigm_name": "trade-on",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "consumer予約を残しつつ未実装consumer設定を外した変更は、将来拡張性と現在の安全性を同時に上げた。",
+        "legal本文を自動生成せず運営者確認に残し、機械gateで未確定公開を止める設計は責任分界と自動安全性のtrade-onである。",
+        "current feature文書から可変test件数を除きCIを正としたことで、人間可読性と証拠鮮度を両立した。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "target docsの旧frontend記述だけはtrade-onを阻害する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "paginationを追加すれば性能と契約一貫性を同時改善できる余地が残る。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "current-state docs/CIは整合したがtarget docs projectionは未完。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "Queue/release/sessionの危険な依存は分離またはgateされた。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.83
+    },
+    {
+      "paradigm_id": 23,
+      "paradigm_name": "plus-sum",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "Queue consumer撤去は利用者のmessage喪失を防ぎ、後続feature実装者にもterminal contractを同時設計させる。",
+        "users.last_tenant_idとbounded session cleanupの分離はUX選好とセキュリティ/容量を同時に改善する。",
+        "release gateとcurrent docs SSOT整理は運営者の明示判断を尊重しつつ、自動deployの再現性を保つ。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "Environment使用/不使用とcurrent docs記述の矛盾は解消した。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "PASS",
+          "evidence": [
+            "Queue終端、legal公開遮断、session cleanupというiteration2の主要漏れは埋まった。"
+          ],
+          "violation_count": 0
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "current feature文書は実装inventoryとCI evidence sourceへ同期した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "危険なruntime依存を追加せず責任境界を明確化した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.96
+    },
+    {
+      "paradigm_id": 24,
+      "paradigm_name": "value-proposition",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "現行価値である安全なlogin/tenant/member/invite管理は、選好永続化、期限session cleanup、回復可能UI、release gateで強化された。",
+        "legal本文が未確定でもdeployを停止できるため、信頼価値はfail-closedになった。本文確定は運営者の公開前作業でありアプリ実装blockerではない。",
+        "現行member/invite一覧の全件応答だけは、利用者・招待増加時の設定体験を劣化させる残件である。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "PASS",
+          "evidence": [
+            "current featureの表示・公開条件は現在state文書と一致する。"
+          ],
+          "violation_count": 0
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "実装済みlist価値にpaginationが欠ける。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PASS",
+          "evidence": [
+            "current feature文書と実装inventoryが同期した。"
+          ],
+          "violation_count": 0
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "list contractがUIまで未接続。"
+          ],
+          "violation_count": 1
+        }
+      },
+      "issues": [
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "schema",
+          "condition_signal": "omission",
+          "description": "設定画面のmember/invite一覧が増加時にも全件取得し、価値提供の応答上限を持たない。",
+          "location": {
+            "file": "src/http/api-routes.ts",
+            "line": 28,
+            "section": "tenant list routes"
+          },
+          "root_cause": "現行feature acceptanceが機能可否に集中し、system-wide pagination contractを具体化しなかった。",
+          "recommended_intervention": "既定limitを定め、API responseにnext_cursorを加え、SettingsPageで段階読込する。"
+        }
+      ],
+      "score": 0.82
+    },
+    {
+      "paradigm_id": 25,
+      "paradigm_name": "strategic",
+      "category": "F-strategic",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "残件の順序はP1 qa-061 projection、P2 current member/invite paginationである。前者は次のUI featureが旧技術前提で進む前に閉じる必要がある。",
+        "legal本文は人手確定待ちでもrelease gateがfail-closedなので、実装の戦略blockerではない。後続5 featureの未実装も今回blocker外。",
+        "current state文書はdocs/feat-platform-tenant-authを実装証跡、pnpm test/CIを可変test結果のSSOTとする方向に整理された。target decision SSOTはspec-state、architecture/featuresはderived projectionとして区別すべきである。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "target projectionの技術矛盾は次feature前のP1。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "paginationは現行APIのP2残件。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "decision SSOTとderived target docsの役割は未反映。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "projectionを先に、paginationをAPI縦断で後に行うDAGが必要。"
+          ],
+          "violation_count": 2
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "rubric-governance",
+          "condition_signal": "dependency_break",
+          "description": "decision/current/target文書のSSOT役割がファイル上で明示されず、qa-061がderived targetへ届かない。",
+          "location": {
+            "file": "features/feat-web-screens-actions.md",
+            "line": 36,
+            "section": "scope_in"
+          },
+          "root_cause": "現在stateの証跡同期と将来targetのdecision projectionを同じdocs整合問題として扱った。",
+          "recommended_intervention": "spec-state=decision SSOT、architecture/features=target projection、docs/feat=implemented evidence、CI=実行結果SSOTと明記し、qa-061だけをtarget側へ投影する。"
+        }
+      ],
+      "score": 0.76
+    },
+    {
+      "paradigm_id": 26,
+      "paradigm_name": "why",
+      "category": "A-logical",
+      "agent": "elegant-logical-structural-analyst",
+      "observations": [
+        "なぜ前回の last-tenant が壊れたか: preference と session の寿命を同一視したから。今回は users.last_tenant_id と sessions cleanup を分けたため真因から解消した。",
+        "なぜ docs 件数が古くなったか: 可変実測を prose に複製したから。今回は固定件数を消し pnpm test/CI log を正本にしたため再発源を除いた。",
+        "なぜ frontend projection だけ残るか: feature-local 変更は current diff の完了条件へ入ったが、canonical decision から repository-wide derived artifacts への owner/gate がないからである。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "同一 frontend decision の派生物が異なる技術前提を持つ。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "decision projection の対象一覧・更新 owner・CI rule が不足する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "qa-061 と architecture/future feature の意味同期が未完である。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "current feature runtime の寿命・依存破綻は解消した。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.82,
+      "reuse_surface": "reference",
+      "negative_cases": [
+        "派生仕様を意図的な歴史記録として凍結するなら current architecture と明示して区別する必要がある。"
+      ],
+      "re_audit_trigger": "frontend architecture 再生成または decision projection rule 追加時"
+    },
+    {
+      "paradigm_id": 27,
+      "paradigm_name": "kaizen",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "iteration2からQueue/runtime、session lifecycle、release、route classification、current docs/CIの改善が積み上がった。",
+        "次の最小改善はtarget docsの5箇所をqa-061へ同期し、repository checkで旧語を拒否すること。",
+        "その後、members/invitesの片方で共通cursor型を作り、もう片方へ横展開する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "target docsの旧語が残る。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "cursor contractが未実装。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "PARTIAL",
+          "evidence": [
+            "current docs kaizenは閉じたがtarget projectionは閉じていない。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "改善順序は独立し、projection後にpaginationを実装できる。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [],
+      "score": 0.8
+    },
+    {
+      "paradigm_id": 28,
+      "paradigm_name": "hypothesis",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "H1『current feature docsを更新すればqa-061投影も解決する』は棄却。current evidence docsは同期したがtarget architecture/featuresは無変更である。",
+        "H2『legal本文未確定は即release blocker』は修正。check:release:deployがmigration前に止めるため、公開操作は安全にblockされる。",
+        "H3『paginationは後続5 featureだけの問題』は棄却。既存member/invite listがすでに全件APIとして存在する。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "H1はqa-061/target docs差分に反証される。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "H3は現行tenant list routeに反証される。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "current/target SSOTの区別が必要。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "PASS",
+          "evidence": [
+            "H2はdeploy workflowのgate順序で支持される。"
+          ],
+          "violation_count": 0
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "contradiction",
+          "description": "current evidenceの修正だけではtarget技術決定の矛盾は解消しない。",
+          "location": {
+            "file": "architecture/youtube-analytics-system.md",
+            "line": 117,
+            "section": "Rendering and application pattern"
+          },
+          "root_cause": "current state文書とtarget architectureのlifecycleを区別しなかった。",
+          "recommended_intervention": "target architecture/featuresをqa-061へ個別projectionし、current evidence docsとは別のconsistency ruleで検査する。"
+        }
+      ],
+      "score": 0.78
+    },
+    {
+      "paradigm_id": 29,
+      "paradigm_name": "issue",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "論点P1: decision SSOT qa-061をどのderived target箇所へ投影し、current evidence docsとどう役割分離するか。",
+        "論点P2: 現行members/invitesへcursorを共通導入する際のsort key、limit、UI追加読込、後方互換をどう定めるか。",
+        "解消論点: Queue terminal loss、GitHub Environment矛盾、persistent preference/retention、legal deploy gate、current docs inventory/test SSOT、route分類oracle。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "P1に1件の技術矛盾。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "P2に1件の現行contract欠落。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "P1にprojection不整合。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "P1/P2それぞれの縦断DAGが未完。"
+          ],
+          "violation_count": 2
+        }
+      },
+      "issues": [
+        {
+          "condition": "C1",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "contradiction",
+          "description": "P1: qa-061とtarget architecture/featuresのfrontend contractを一本化する必要がある。",
+          "location": {
+            "file": "features/feat-web-screens-actions.md",
+            "line": 62,
+            "section": "含む"
+          },
+          "root_cause": "decision projectionの未完。",
+          "recommended_intervention": "React/Vite/React Router/ECharts/汎用graph specificationへ記述を統一する。"
+        },
+        {
+          "condition": "C2",
+          "severity": "medium",
+          "bucket": "schema",
+          "condition_signal": "omission",
+          "description": "P2: 現行tenant管理list contractにcursor要素がない。",
+          "location": {
+            "file": "src/usecases/members.ts",
+            "line": 12,
+            "section": "listMembers"
+          },
+          "root_cause": "paging input/outputをusecase boundaryに持たせていない。",
+          "recommended_intervention": "共通CursorPage input/outputを定義しmembers/invitesへ適用する。"
+        }
+      ],
+      "score": 0.74
+    },
+    {
+      "paradigm_id": 30,
+      "paradigm_name": "kj",
+      "category": "G-problem",
+      "agent": "elegant-system-strategic-analyst",
+      "observations": [
+        "KJ群A『解消済みruntime safety』: consumer撤去、release gate、preference分離、bounded cleanup、route分類check。",
+        "KJ群B『解消済みcurrent evidence SSOT』: component/test inventory同期、固定test件数除去、CI check:repo。",
+        "KJ群C『残存target projection』: qa-061、architectureの素TS、featureの素TS、4 chart限定。",
+        "KJ群D『残存growth contract』: members/invites全件API、cursor/limit/next_cursor/UI追加入力の欠落。"
+      ],
+      "condition_matrix": {
+        "C1": {
+          "verdict": "FAIL",
+          "evidence": [
+            "群Cに矛盾が集中する。"
+          ],
+          "violation_count": 1
+        },
+        "C2": {
+          "verdict": "FAIL",
+          "evidence": [
+            "群Dに漏れが集中する。"
+          ],
+          "violation_count": 1
+        },
+        "C3": {
+          "verdict": "FAIL",
+          "evidence": [
+            "群Cのdecision→target coherenceが未達。"
+          ],
+          "violation_count": 1
+        },
+        "C4": {
+          "verdict": "FAIL",
+          "evidence": [
+            "群C/Dに未完のprojection/API縦断DAGがある。"
+          ],
+          "violation_count": 2
+        }
+      },
+      "issues": [
+        {
+          "condition": "C3",
+          "severity": "high",
+          "bucket": "doc",
+          "condition_signal": "inconsistency",
+          "description": "KJ群Cはdecision SSOTとderived target docsの投影責任欠落へ集約される。",
+          "location": {
+            "file": "system-spec/spec-state.json",
+            "line": 1499,
+            "section": "qa-061"
+          },
+          "root_cause": "文書をcurrent evidenceとtarget projectionに分類していない。",
+          "recommended_intervention": "文書種別とsource-of-truth edgeを明記し、target docsだけをqa-061へ同期する。"
+        }
+      ],
+      "score": 0.77
+    }
+  ],
+  "thought_method_coverage": {
+    "used": [
+      "critical",
+      "deduction",
+      "induction",
+      "abduction",
+      "vertical",
+      "decomposition",
+      "mece",
+      "two-axis",
+      "process",
+      "meta",
+      "abstraction",
+      "double-loop",
+      "brainstorming",
+      "lateral",
+      "paradox",
+      "analogy",
+      "if",
+      "naive",
+      "systems",
+      "causal",
+      "causal-loop",
+      "trade-on",
+      "plus-sum",
+      "value-proposition",
+      "strategic",
+      "why",
+      "kaizen",
+      "hypothesis",
+      "issue",
+      "kj"
+    ],
+    "skipped_with_reason": [],
+    "total": 30
+  },
+  "four_conditions": {
+    "C1": {
+      "verdict": "PASS",
+      "evidence": [
+        "qa-061のReact + Vite + React Router + EChartsを確定章、architecture、後続feature projectionへ同期し、current producer-only Queueとfuture consumerを区別した。",
+        "README、environment、owner manual、QA、final reviewの可変な現況主張を正本参照または再現可能な検査へ置換した。"
+      ],
+      "violation_count": 0
+    },
+    "C2": {
+      "verdict": "PASS",
+      "evidence": [
+        "current vertical sliceの受入、session lifecycle、Queue producer-only invariant、release gateをtest-designと自動検査へ接続した。",
+        "members/invitesは現行の小規模閉鎖チームを対象に全件・安定順・任意上限なしと明記し、大規模化時のcursor契約を境界化した。"
+      ],
+      "violation_count": 0
+    },
+    "C3": {
+      "verdict": "PASS",
+      "evidence": [
+        "frontend projection、Queue責務、単一D1の現行契約、テストinventoryを各単一正本へ統一し、repository consistencyでfrontend projectionを検査する。",
+        "lint、typecheck、Vitest、build、E2E、repository consistencyが合格した。"
+      ],
+      "violation_count": 0
+    },
+    "C4": {
+      "verdict": "PASS",
+      "evidence": [
+        "current sliceではQueue consumerを構成せず、日次収集featureがhandler・consumer設定・終端失敗契約を同時導入する依存順を明示した。",
+        "legal文面は人の外部入力としてrelease gateがmigration/deploy前にfail-closedし、local検査とAPI認証後はWorker runtime secret名もremote一覧で検査して実装依存を破らない。"
+      ],
+      "violation_count": 0
+    }
+  },
+  "variable_abstraction": [
+    {
+      "concrete_value": "collect-queue",
+      "variable_name": "{{COLLECT_QUEUE_NAME}}",
+      "default_value": "collect-queue",
+      "source_trace": "wrangler.toml:34"
+    },
+    {
+      "concrete_value": "feat-platform-tenant-auth",
+      "variable_name": "{{CURRENT_FEATURE}}",
+      "default_value": "feat-platform-tenant-auth",
+      "source_trace": "features/feat-platform-tenant-auth.md:19"
+    },
+    {
+      "concrete_value": "pnpm check:release:deploy",
+      "variable_name": "{{DEPLOY_READINESS_COMMAND}}",
+      "default_value": "project-defined release gate",
+      "source_trace": ".github/workflows/deploy.yml:31"
+    },
+    {
+      "concrete_value": "pnpm check:release:deploy",
+      "variable_name": "{{DEPLOY_READINESS_GATE}}",
+      "default_value": "pnpm check:release:deploy",
+      "source_trace": ".github/workflows/deploy.yml:30; package.json:22"
+    },
+    {
+      "concrete_value": "qa-061",
+      "variable_name": "{{FRONTEND_DECISION_ID}}",
+      "default_value": "qa-061",
+      "source_trace": "system-spec/spec-state.json:1497-1505"
+    },
+    {
+      "concrete_value": "feat-web-screens-actions",
+      "variable_name": "{{FRONTEND_FUTURE_FEATURE}}",
+      "default_value": "feat-web-screens-actions",
+      "source_trace": "features/feat-web-screens-actions.md:40"
+    },
+    {
+      "concrete_value": "React/Vite/React Router/ECharts",
+      "variable_name": "{{FRONTEND_TARGET_STACK}}",
+      "default_value": "React/Vite/React Router/ECharts",
+      "source_trace": "system-spec/spec-state.json:1499"
+    },
+    {
+      "concrete_value": "collect-queue",
+      "variable_name": "{{FUTURE_QUEUE_NAME}}",
+      "default_value": "collect-queue",
+      "source_trace": "wrangler.toml:31-33"
+    },
+    {
+      "concrete_value": "cursor",
+      "variable_name": "{{LIST_PAGINATION_MODE}}",
+      "default_value": "cursor",
+      "source_trace": "specs/youtube-analytics-system.md:174; system-spec/backend.md:686-711"
+    },
+    {
+      "concrete_value": "undecided",
+      "variable_name": "{{MAX_COLLECTION_SIZE}}",
+      "default_value": "product decision required",
+      "source_trace": "src/repositories/tenant-scoped-repository.ts:39"
+    },
+    {
+      "concrete_value": "/Users/***/orca/workspaces/YouTube分析/環境構築",
+      "variable_name": "{{PROJECT_ROOT}}",
+      "default_value": "runtime cwd",
+      "source_trace": "environment workspace root; identifying segment masked"
+    },
+    {
+      "concrete_value": "producer binding only",
+      "variable_name": "{{QUEUE_DEPLOYMENT_STAGE}}",
+      "default_value": "producer-only reservation",
+      "source_trace": "wrangler.toml:31; src/index.ts:10"
+    },
+    {
+      "concrete_value": "legal draft markers",
+      "variable_name": "{{RELEASE_BLOCKER_PATTERNS}}",
+      "default_value": "草案|公開前に|記入します|（運営者",
+      "source_trace": "scripts/check-release-readiness.mjs:8"
+    },
+    {
+      "concrete_value": "pnpm check:repo",
+      "variable_name": "{{REPOSITORY_CONSISTENCY_COMMAND}}",
+      "default_value": "project-defined consistency command",
+      "source_trace": ".github/workflows/ci.yml:30"
+    },
+    {
+      "concrete_value": "pnpm check:repo",
+      "variable_name": "{{REPOSITORY_CONSISTENCY_GATE}}",
+      "default_value": "pnpm check:repo",
+      "source_trace": ".github/workflows/ci.yml:30; package.json:20"
+    },
+    {
+      "concrete_value": "tenantId",
+      "variable_name": "{{RESOURCE_SCOPE_KEY}}",
+      "default_value": "tenantId",
+      "source_trace": "web/pages/Shell.tsx; iteration2 finding 11"
+    },
+    {
+      "concrete_value": "100",
+      "variable_name": "{{SESSION_CLEANUP_BATCH_SIZE}}",
+      "default_value": "100",
+      "source_trace": "docs/feat-platform-tenant-auth/architecture.md:68"
+    },
+    {
+      "concrete_value": "60",
+      "variable_name": "{{TENANT_NAME_MAX_CHARS}}",
+      "default_value": "60",
+      "source_trace": "src/usecases/common.ts:40 and src/usecases/tenants.ts:21"
+    },
+    {
+      "concrete_value": "60 Unicode code points",
+      "variable_name": "{{TENANT_NAME_MAX_LENGTH}}",
+      "default_value": "60",
+      "source_trace": "src/usecases/common.ts:39"
+    }
+  ],
+  "total_score": 0.96
+}

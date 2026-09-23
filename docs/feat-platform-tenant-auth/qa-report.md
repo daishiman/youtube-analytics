@@ -38,7 +38,7 @@
 | 実行ログ | `wrangler dev` のログを実値で検索 → 0 件。Secret は `("(hidden)")` と表示される | 出ない |
 | アプリのログ | `console.error` は `app.onError` の未処理例外 1 か所だけ。Cookie、トークン、env は出力しない | 出ない |
 
-`wrangler.toml` の `GOOGLE_CLIENT_ID` は非秘密（ブラウザの認可 URL にも出る値）で、現在はダミーの `REPLACE_WITH_GOOGLE_CLIENT_ID` になっている。
+`wrangler.toml` の `GOOGLE_CLIENT_ID` は非秘密（ブラウザの認可 URL にも出る値）。特定時点の設定値はこのレポートへ複製せず、公開前に `pnpm check:release` が形式を検査し、利用者が Google 側の登録値との一致を確認する。
 
 ## 4. 結論
 
