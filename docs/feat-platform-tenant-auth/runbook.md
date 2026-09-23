@@ -25,7 +25,7 @@ bash scripts/setup-cloudflare.sh    # D1・R2・Queue を冪等に作成し、da
    - アプリのホームページ、プライバシーポリシー、利用規約の URL に、`https://<Worker の URL>/`、`/privacy`、`/terms` を入れる。
 2. 「認証情報」→「OAuth クライアント ID を作成」→ 種類は **ウェブ アプリケーション**。
    - 承認済みのリダイレクト URI:
-     - `https://youtube-analytics.<サブドメイン>.workers.dev/api/auth/callback`
+     - `https://youtube-analytics.daishimanju.workers.dev/api/auth/callback`（サブドメイン `daishimanju` は 2026-09-23 に確認済み）
      - `http://localhost:8791/api/auth/callback`（ローカルで本物の Google を試すとき）
 3. 発行されたクライアント ID を `wrangler.toml` の `[vars] GOOGLE_CLIENT_ID` に書く（非秘密）。
 4. クライアントシークレットは**ファイルに書かず**、次の 3 節で Workers Secret に入れる。

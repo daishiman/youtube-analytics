@@ -18,6 +18,7 @@
 | 区分 | 状態 |
 |---|---|
 | 実装（`feat-platform-tenant-auth`、13 task） | 完了 |
+| Cloudflare の資源 | D1・R2・Queue は作成済み。サブドメインは `daishimanju`（本番 URL は `https://youtube-analytics.daishimanju.workers.dev`）。Worker 本体は初回 deploy で作られる |
 | lint / typecheck | 指摘 0 / エラー 0 |
 | test | 76 件すべて成功 |
 | E2E（3 サイズ） | 13 件成功、2 件スキップ |
@@ -32,7 +33,7 @@
 
 | # | 作業 | 入口の URL / コマンド | 詳細 | 目安 |
 |---|---|---|---|---|
-| 1 | workers.dev のサブドメインを確認し、本番 URL を決める | https://dash.cloudflare.com/b3dde7be1cd856788fc47595ac455475/workers-and-pages | 1 | 5 分 |
+| ~~1~~ | ~~workers.dev のサブドメインを確認する~~ | **確認済み。本番 URL は `https://youtube-analytics.daishimanju.workers.dev`** | 1 | — |
 | 2 | Cloudflare API トークンを発行する | https://dash.cloudflare.com/profile/api-tokens | 2.1 | 5 分 |
 | 3 | トークンを GitHub に登録する | `gh secret set CLOUDFLARE_API_TOKEN -R daishiman/youtube-analytics` | 2.2 | 3 分 |
 | 4 | Google Cloud のプロジェクトを作り、YouTube の API を 3 つ有効にする | https://console.cloud.google.com/ | 3 | 10 分 |
@@ -55,7 +56,7 @@
 | Cloudflare の画面で「Create an app」→「Import a repository」を使って GitHub とつなぐ | **使わない。** deploy は GitHub Actions が `wrangler deploy` で行う（owner-manual-setup.md 1.5.1） |
 | Cloudflare のダッシュボードで binding や変数を直接いじる | `wrangler.toml` を直して PR を出す。ダッシュボードの変更は次の deploy で消える（1.5.3） |
 | 秘密の値をファイルやチャットに書く | **このリポジトリは公開。** 入力欄かターミナルのプロンプトにだけ貼る |
-| 順番を飛ばして Google の設定から始める | 1 で決まる本番 URL を 5、6 で使うため、1 から行う |
+| 本番 URL を推測して Google に登録する | 正しくは `https://youtube-analytics.daishimanju.workers.dev`（末尾に `/` は付けない）。5 と 6 でこの URL を使う |
 | `.dev.vars` を commit する | `.gitignore` 済み。`git status` に出たら止まって確認する |
 
 ## 5. 作業前の確認コマンド

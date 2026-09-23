@@ -1,6 +1,6 @@
 # 利用者が手で行う設定（公開までのチェックリスト）
 
-最終更新: 2026-09-23。対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.<サブドメイン>.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。
+最終更新: 2026-09-23。対象は `feat-platform-tenant-auth` を GitHub に push し、`https://youtube-analytics.daishimanju.workers.dev` で Google ログインできる状態にするまで。上から順に行えば、1 手順ずつ終わらせて次に進める。
 
 - 所要時間: 約 60〜90 分（Google Cloud が一番長い）
 - エージェントは、秘密の値の発行、外部サービスの画面操作、push と PR 作成を行わない。そのため、この文書の手順は利用者が行う（ローカルの commit は 2026-09-23 に実施済み。9 節）。
@@ -10,7 +10,7 @@
 
 | # | やること | 登録先 | 誰が | 状態（2026-09-23 時点） |
 |---|---|---|---|---|
-| 1 | workers.dev のサブドメインを確認する | Cloudflare | あなた | 未確認 |
+| 1 | workers.dev のサブドメインを確認する | Cloudflare | — | **確認済み（作業不要）**: `daishimanju` |
 | 2 | Cloudflare API トークンを発行し、GitHub に登録する | GitHub Secrets `CLOUDFLARE_API_TOKEN` | あなた | **未登録** |
 | — | Cloudflare のアカウント ID を GitHub に登録する | GitHub Secrets `CLOUDFLARE_ACCOUNT_ID` | — | 登録済み（作業不要） |
 | 3 | Google Cloud プロジェクトを作り、API を有効にする | Google Cloud | あなた | 未実施 |
@@ -48,11 +48,29 @@
 | Cloudflare アカウント ID | `b3dde7be1cd856788fc47595ac455475` |
 | Worker 名 | `youtube-analytics`（`wrangler.toml` の `name`） |
 | ローカルの URL | `http://localhost:8791` |
-| 本番の URL | `https://youtube-analytics.<サブドメイン>.workers.dev`（1 で確定する） |
+| 本番の URL | `https://youtube-analytics.daishimanju.workers.dev`（2026-09-23 に確認済み） |
 
 ---
 
-## 1. workers.dev のサブドメインを確認する（5 分）
+## 1. workers.dev のサブドメインを確認する（確認済み。作業不要）
+
+2026-09-23 に Cloudflare の API（`GET /accounts/{account_id}/workers/subdomain`）で確認した。**サブドメインは `daishimanju` で登録済み**なので、この節の作業は不要。本番の URL は次の 1 つに確定している。
+
+```
+https://youtube-analytics.daishimanju.workers.dev
+```
+
+以降この文書で `<本番URL>` と書いたら、上の URL を指す。同時に次も確認済み（どれも作成済みで作業不要）。
+
+| 資源 | 名前 |
+|---|---|
+| D1 | `youtube-analytics-db` |
+| R2 | `youtube-analytics-media` |
+| Queue | `collect-queue` |
+| Worker `youtube-analytics` | **まだ存在しない**（初回 deploy で自動作成される。想定どおり） |
+
+<details>
+<summary>自分で確認し直す手順（サブドメインを変えたときなど）</summary>
 
 本番の URL を決める。Google の設定（4、5）でこの URL を使うため、最初に確認する。
 
@@ -66,9 +84,11 @@
    https://youtube-analytics.<サブドメイン>.workers.dev
    ```
 
-   例: サブドメインが `daishiman` なら `https://youtube-analytics.daishiman.workers.dev`
+   例: サブドメインが `daishimanju` なら `https://youtube-analytics.daishimanju.workers.dev`
 
-- [ ] `<本番URL>` をメモした
+</details>
+
+- [x] `<本番URL>` は `https://youtube-analytics.daishimanju.workers.dev`
 
 ---
 
@@ -110,7 +130,7 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 
 | 設定 | 値 | 意味 |
 |---|---|---|
-| `name` | `youtube-analytics` | Worker の名前。URL の先頭（`https://youtube-analytics.<サブドメイン>.workers.dev`）になる |
+| `name` | `youtube-analytics` | Worker の名前。URL の先頭（`https://youtube-analytics.daishimanju.workers.dev`）になる |
 | `main` | `src/index.ts` | 入口。`fetch`（API）、`scheduled`（Cron）、`queue`（Queue）を持つ |
 | `compatibility_date` | `2026-08-22` | 実行環境の版。上げるのは wrangler 更新時だけ |
 | `[assets]` | `directory = ./dist/web`、`not_found_handling = single-page-application`、`run_worker_first = ["/api/*"]` | 画面は静的配信。`/api/*` だけ Worker が先に受ける。それ以外の未知パスは `index.html` を返す（React Router のため） |
@@ -232,7 +252,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
    | アプリのホームページ | `<本番URL>/` |
    | アプリのプライバシー ポリシーへのリンク | `<本番URL>/privacy` |
    | アプリの利用規約へのリンク | `<本番URL>/terms` |
-   | 承認済みドメイン（「+ ドメインの追加」） | `<サブドメイン>.workers.dev`（例: `daishiman.workers.dev`） |
+   | 承認済みドメイン（「+ ドメインの追加」） | `daishimanju.workers.dev`（`https://` も末尾の `/` も付けない） |
    | デベロッパーの連絡先情報 | 自分の Gmail |
 
 3. ロゴは空のままにする（ロゴを入れると Google の審査が必要になる）。
@@ -519,7 +539,7 @@ deploy が緑になったら、ダッシュボードで Worker を開いて確�
 | タブ | 見るところ | 期待する表示 |
 |---|---|---|
 | Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=100` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
-| Settings → Domains & Routes | 公開先 | `youtube-analytics.<サブドメイン>.workers.dev` が Enabled。カスタムドメインは付けない |
+| Settings → Domains & Routes | 公開先 | `youtube-analytics.daishimanju.workers.dev` が Enabled。カスタムドメインは付けない |
 | Settings → Trigger Events（Cron Triggers） | 定期実行 | `0 18 * * *` が 1 件 |
 | Settings → Trigger Events（Queue Consumers） | 消費者 | `collect-queue`（Batch size 1、Retries 3） |
 | Deployments | 履歴 | 最新に今の日時と、Source が `Upload`（API トークン経由）で並ぶ |
