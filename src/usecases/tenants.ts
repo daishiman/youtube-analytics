@@ -48,16 +48,25 @@ export async function switchTenant(deps: Deps, session: CurrentSession, tenantId
 }
 
 export async function getMe(deps: Deps, session: CurrentSession) {
-  const tenants = await listMyTenants(deps, session.userId);
-  const current = tenants.find((t) => t.tenantId === session.tenantId) ?? null;
+  const memberships = await platform(deps).listMemberships(session.userId);
+  const tenants = memberships.map((m) => ({ tenantId: m.tenant_id, name: m.name, role: m.role }));
+  const current = memberships.find((m) => m.tenant_id === session.tenantId);
   // ヘッダーの「最終更新」: 日次収集の最終時刻（未連携・未収集は null）
   const channel = current
-    ? await settingsRepo(deps, { tenantId: current.tenantId }).getChannel()
+    ? await settingsRepo(deps, { tenantId: current.tenant_id }).getChannel()
     : null;
   return {
     user: { userId: session.userId, email: session.email },
     tenants,
-    currentTenant: current,
+    // 連携状態は選択中テナントのバナー表示だけに使う（qa-065）
+    currentTenant: current
+      ? {
+          tenantId: current.tenant_id,
+          name: current.name,
+          role: current.role,
+          youtubeLinkStatus: current.youtube_link_status,
+        }
+      : null,
     signupClosed: await isSignupClosed(deps),
     lastUpdatedAt: channel?.last_collected_at ?? null,
   };

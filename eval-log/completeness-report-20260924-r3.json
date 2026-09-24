@@ -1,0 +1,274 @@
+{
+  "evaluator": {
+    "name": "assign-system-spec-completeness-evaluator",
+    "version": "0.1.0",
+    "context": "fork"
+  },
+  "spec_dir": "system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。U1〜U9 はすべて値が入っていて、goal→objective→セル→章のつながりに dangling は無い。前回 low の『同意記録・再同意と製品名 Channel Insight を上位概念へ反映するか』は今回の是正対象に含まれておらず、requirements_foundation・00-requirements-definition.md・index.md のどれにも出てこない(low として残す)。",
+      "evidence": [
+        "G-foundation exit0",
+        "00-requirements-definition.md / index.md の『Channel Insight』=0件"
+      ]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "D-auth は3案と無料案、goal_fit/TCO/security/operations/lock-in、推奨理由と注意点を持つ。前回 low は直った: user_decision.qa_refs が [qa-014, qa-021, qa-064, qa-065, qa-067, qa-073] になり、recommendation.latest_checked_at は 2026-09-24T00:07:34Z になった。AI の推奨だけで confirmed にしたものは無い。",
+      "evidence": [
+        "decisions[D-auth].user_decision.qa_refs",
+        "decisions[D-auth].recommendation.latest_checked_at=2026-09-24T00:07:34Z"
+      ]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。C07 は loop_pass・final_ready とも PASS。sub-input の C06 は4軸すべて PASS。前回の high(qa-070 による推奨付き一括承認)は直った。qa-071〜073 は推奨なし・1問1論点で聞き直されており、qa-070.corrections で承認範囲から外されている。回答は該当セルの qa_refs と design_applications / doctrine_applications の本文に個別に紐づいている。login_rate_limits と RATE_LIMITED は、規範節にはもう無い(残っているのは履歴注記だけ)。reopen_log の6件には qa-066 を主根拠にした理由が補記された。未解消は medium 3件(qa-063〜066 の answered_at と provenance の矛盾、hearing_progress.completed_at が2周続けて未記入、qa-071 の解釈を利用者に確認していない)と low 1件(database/backend で qa-067 を外した理由)。どれも確定セルが Q&A まで遡れなくなるものではないため、観点は PASS とした。",
+      "evidence": [
+        "G-matrix / G-matrix-basis / G-foundation / G-required-info-state exit0",
+        "C07: loop_pass=PASS final_ready=PASS, medium x2 low x1",
+        "C06: 聞き漏れ PASS / 誘導 PASS / 早期停止 PASS / トレーサビリティ PASS(medium 観察 2件)",
+        "qa_log[qa-070].corrections[0] corrected_at=2026-09-24T00:48:35Z"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(knowledge/doctrine/required-info/cross)はすべて exit0。前回 medium は直った: doctrine_applications.frontend.presentation が『マゼンタ主操作(共通デザイン正本を優先した qa-063 により旧記述のティールを置換)』になり、ui-ux 章のフォーカスリング・マゼンタと一致した。OWASP の指針(security/auth/data-access)は、qa-071〜073 の確定内容として具体的に反映されている。CSP ヘッダの全文、frame-ancestors 'none'、consent_records は追記のみ、試行回数を数えるテーブルは持たない、次回ログインで再同意、の各点である。『ティール』の語が残るのは観測差分の記述(画像の説明)だけで、規範節には無い。",
+      "evidence": [
+        "G-knowledge-graph exit0",
+        "frontend.md:39 presentation 行",
+        "design_applications.security『CSP は自サイトと Google 認証…(qa-072)』"
+      ]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "validate-source-citation / validate-spec-doc-sync は exit0。25 target と 25 reference が1対1で対応する。google-signin-branding を再取得し、公式の Last updated 2026-07-07 と色指定が記録と一致することを確かめた。前回 medium は直った: 4章(auth:360 / ui-ux:575 / security:455 / frontend:532)の qa-067 回答本文の誤帰属文の直後に『【※訂正あり…】』の注記が入った。qa-072/073 は利用者の方針決定で、新しい外部出典は引いていない。",
+      "evidence": [
+        "G-source-citation / G-doc-sync exit0",
+        "【※訂正あり】 auth/ui-ux/security/frontend 各1件"
+      ]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが verify-completeness.py と validate-prompt.py を exit0 で通った。R0-foundation.md の objectives 形状 {id,text,measure} に serves が無い問題は、plugin 側でまだ直っていない。依頼どおり、この仕様書への差し戻しには含めず報告だけにする。",
+      "evidence": [
+        "G-prompt: 18/18 exit0",
+        "R0-foundation.md U4 objectives `[{id,text,measure}]`"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "G-matrix-loop",
+      "name": "validate-coverage-matrix (loop)",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json"
+      ],
+      "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"
+    },
+    {
+      "id": "G-matrix",
+      "name": "validate-coverage-matrix --require-complete",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-complete"
+      ],
+      "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"
+    },
+    {
+      "id": "G-matrix-basis",
+      "name": "validate-coverage-matrix --require-basis",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-basis"
+      ]
+    },
+    {
+      "id": "G-foundation",
+      "name": "validate-coverage-matrix --require-foundation",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-foundation"
+      ]
+    },
+    {
+      "id": "G-knowledge-graph",
+      "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py",
+        "--knowledge-graph"
+      ],
+      "conditions": [
+        "design_knowledge_reflection",
+        "matrix_coverage"
+      ]
+    },
+    {
+      "id": "G-required-info-state",
+      "name": "validate-knowledge-graph --profile required-info --state",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-knowledge-graph.py",
+        "--profile",
+        "required-info",
+        "--input",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/run-system-spec-elicit/references/required-info-catalog.json",
+        "--state",
+        "system-spec/spec-state.json"
+      ],
+      "stdout": "ungrounded_blocking_items=[]"
+    },
+    {
+      "id": "G-doc-sync",
+      "name": "validate-spec-doc-sync",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-spec-doc-sync.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--references",
+        "system-spec/fetched-references.json",
+        "--spec-root",
+        "system-spec"
+      ]
+    },
+    {
+      "id": "G-source-citation",
+      "name": "validate-source-citation --state",
+      "exit_code": 0,
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-source-citation.py",
+        "--targets",
+        "system-spec/spec-state.json",
+        "--references",
+        "system-spec/fetched-references.json",
+        "--state",
+        "system-spec/spec-state.json"
+      ]
+    },
+    {
+      "id": "G-prompt",
+      "name": "prompt-creator verify-completeness + validate-prompt (18 prompts)",
+      "exit_code": 0,
+      "stdout": "18/18 exit0"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/トレーサビリティ(C06・C07): qa-063〜066 の answered_at と provenance の矛盾",
+      "observation": "qa-063〜066 に構造化された answered_at=2026-09-24T00:04:42Z が入った。ところが同じ4件の provenance には今も『回答時刻は未計測で、記録書込時刻 2026-09-24T00:05:04Z が上限値』と書かれたままで、値の出所(トランスクリプト時刻)と食い違っている。4件が秒まで同じなのは、1回の AskUserQuestion で4問に同時に答えたのであれば正しい。しかし provenance がそのことを書いていないため、監査する側からは推定値を複製したのと見分けられない。",
+      "suggested_fix": "elicit(C01 の transition writer)で qa-063〜066 の provenance を直す。『answered_at はトランスクリプトの tool_result 時刻。4問は1回の AskUserQuestion で同時に回答』と書き換え、『未計測』の文言を消す(qa-071〜073 と同じ書き方にそろえる)。",
+      "evidence": [
+        "qa_log[qa-063..066].answered_at=2026-09-24T00:04:42Z",
+        "qa_log[qa-063..066].provenance『回答時刻は未計測…00:05:04Z が上限値』",
+        "qa_log[qa-071].provenance『answered_at はトランスクリプトの tool_result 時刻』"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/誘導の芽(C06): qa-071 の自由回答からの導出を利用者に確認していない",
+      "observation": "qa-071 の問いは中立だった(推奨なし・4択・1論点)。回答は選択肢ではなく自由回答の『一番費用がかからない内容で、ユーザーに負荷もかからない内容で進めてほしい』で、アシスタントはこれを『制限を設けない』に変換した。示した4択のうち2条件を両方満たすのは『制限を設けない』だけなので、導出の筋は通っている。実装でもログイン開始の state/PKCE は暗号化 Cookie に持っており(src/http/auth-routes.ts)、D1 への書込が0という前提は正しい。ただし、この解釈を利用者に示して確認した記録が無い。security.md の規範節は、利用者が『選択』したかのように書いている。r2 の high の型(アシスタントの具体化で確定させる)を仕組みとして防いでいるとは言えない。",
+      "suggested_fix": "elicit(R3-reask)で『自由回答を「アプリ側の試行回数制限は設けない」と解釈して確定してよいか』を推奨なしの1問で確かめ、その qa を qa-071 の裏付けに足す。確認を省く場合は、qa-071.provenance に『選択肢外の自由回答からの導出で、再確認はしていない』と書き、security 章の『選択』を『回答から導出』に直す。",
+      "evidence": [
+        "qa_log[qa-071].answer",
+        "design_applications.security『qa-071: 利用者が…を基準に選択』",
+        "src/http/auth-routes.ts:37-38 writeOAuthCookie"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/hearing_progress.completed_at が2周続けて未記入(C07)",
+      "observation": "hearing_progress は {loop_count:8, next_question:null, complete:true} だけで、completed_at が無い。r2 で low として指摘したが、今回も直っていない(今回の是正対象にも入っていなかった)。C07 は2周続けて未着手であることを理由に medium に上げた。",
+      "suggested_fix": "elicit(C01)で、ヒアリングを終えた実測時刻(qa-073 の回答以降、例: 2026-09-24T00:48:35Z)を hearing_progress.completed_at に書く。",
+      "evidence": [
+        "spec-state.json hearing_progress"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)",
+      "observation": "R0-foundation.md の U4 は objectives を {id,text,measure} と定義しており、serves を求めていない。前回から直っていない。実データの objectives には serves がある。依頼どおり、この仕様書への差し戻しには含めない。",
+      "suggested_fix": "harness 側で、R0-foundation と --require-foundation に objectives[].serves を加える。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/database・backend で qa-067 を外した理由(C07)",
+      "observation": "database/backend の qa_refs に qa-067 が無い。一方で、両カテゴリの design_applications のログイン刷新ブロックの見出しは、6カテゴリ共通の『観測 qa-062/qa-067』をそのまま使っている。外したこと自体は意味の上で妥当(意匠の話なので)だが、理由がどこにも書かれておらず、見出しとも食い違っている。",
+      "suggested_fix": "compile/elicit で、database/backend の見出しから qa-067 を外すか、reopen_log の補記に『qa-067 は意匠の制約で、両章の規範内容には寄与しないため qa_refs から外した』と一文加える。",
+      "evidence": [
+        "matrix.database.web.qa_refs / matrix.backend.web.qa_refs",
+        "design_applications.database/backend『観測 qa-062/qa-067』"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "foundation_trace/新しい範囲項目と製品名が上位概念に入っていない(前回から継続)",
+      "observation": "同意の記録と再同意(qa-066/qa-073)と、製品名『Channel Insight』(qa-068)は、requirements_foundation(U1・scope.in)にも 00-requirements-definition.md・index.md にも書かれていない。今回の是正対象ではない。",
+      "suggested_fix": "elicit で scope.in[0] に『同意の記録と規約改定時の再同意』を加えるか、U1 か index に製品名を書くかを決める。決めた内容でプレビューを示して承認を得たうえで、compile で 00-requirements-definition.md・index.md を再生成する。",
+      "evidence": [
+        "requirements_foundation.scope.in[0]",
+        "00-requirements-definition.md / index.md『Channel Insight』=0件"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "design_knowledge_reflection/試行回数制限をなくす判断の前提が規範節に無い",
+      "observation": "security 章は、試行回数制限をなくす代わりに『Cloudflare の標準防御、Google 側の保護、state/PKCE に任せる』と書いている。しかし、判断の前提である『ログイン開始はサーバに状態を書かない(state/PKCE/nonce は暗号化 Cookie に持つ)』が規範節に書かれていない。将来 state を D1/KV に移すと、制限なしの判断の前提(書込0)が黙って崩れる。『Cloudflare の標準防御』も、何を指すかが特定されていない。",
+      "suggested_fix": "compile で、security/auth 章に『/api/auth/login は状態をサーバへ書かず、暗号化 Cookie だけを使う(qa-071 の前提)』を不変条件として書く。state をサーバに保存するように変える場合は、qa-071 を見直すことも記す。",
+      "evidence": [
+        "src/http/auth-routes.ts:37-38",
+        "design_applications.security『Cloudflare の標準防御…に任せ』"
+      ]
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点(是正確認)",
+      "observation": "r2 の high 1件と medium 4件(harness 側の1件は除く)は、次のとおり直った。(1) 誘導の一括承認(high): 推奨なし・1問1論点の qa-071/072/073 で確定し直し、qa-070.corrections で承認範囲から外した。セルの qa_refs、design_applications、doctrine_applications にも個別に反映され、login_rate_limits と RATE_LIMITED は規範節から消えた。C06 は誘導質問の軸を PASS に戻した。(2) reopen_log の6件に、qa-066 を主根拠にした理由を補記した。(3) frontend.presentation のティールをマゼンタ主操作に置き換えた。(4) 4章の qa-067 回答本文に『※訂正あり』の注記を入れた。(5) low の D-auth の qa_refs と latest_checked_at を更新した。qa-063〜066 の answered_at は構造化されたが、provenance との矛盾が残っている(medium)。9種の決定論ゲートはすべて exit0。C08 は google-signin-branding が公式の現行版と一致することを改めて確かめた。"
+    }
+  ],
+  "gaps": [
+    "[elicit・medium] qa-063〜066 の provenance を answered_at の出所(トランスクリプトの tool_result 時刻・4問を同時に回答)に合わせて書き直し、『未計測』の文言を消す",
+    "[elicit・medium] qa-071 の自由回答からの導出『アプリ側の試行回数制限は設けない』を、推奨なしの1問で利用者に確かめる(省く場合は provenance に導出であることを書き、security 章の『選択』を『回答から導出』に直す)",
+    "[elicit・medium] hearing_progress.completed_at に、ヒアリングを終えた実測時刻を書く",
+    "[compile/elicit・low] database/backend の design_applications の見出しから qa-067 を外すか、外した理由を reopen_log に補記する",
+    "[compile・low] security/auth 章に『ログイン開始はサーバへ状態を書かない(暗号化 Cookie のみ)』を qa-071 の前提となる不変条件として書く",
+    "[elicit/compile・low] 同意記録・再同意と製品名『Channel Insight』を requirements_foundation・00-requirements-definition.md・index.md に反映するかを決める",
+    "[harness 修正・報告のみ] R0-foundation と --require-foundation に objectives[].serves を加える(この仕様書への差し戻しには含めない)"
+  ]
+}

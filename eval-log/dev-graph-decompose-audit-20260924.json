@@ -1,0 +1,49 @@
+{
+  "auditor": "dev-graph:dev-graph-integrity-auditor",
+  "scope": "C14 macro decompose staged graph_revision 5 (feat-login-redesign draft追加)",
+  "audited_at": "2026-09-24T01:09:00Z",
+  "graph_digest": "sha256:fe250e38db0bbcd8f45c2d562b28ca240ae2592ad5e001a480df47fddcd9e86d",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "id": "dag",
+      "status": "pass",
+      "evidence": "22ノード全体で circular dependency 0・dangling depends_on 0(DFS/参照解決で確認)。feat-login-redesign.depends_on=[feat-platform-tenant-auth] は既存ノードを正しく参照し、feat-platform-tenant-auth が Google ログイン・テナント・招待・規約ページの土台(OAuth PKCE, セッション, 招待リンク, 静的規約ページ)を提供しており、その上にログイン画面刷新(スコープ表示・同意記録・部分許可・CSP)を積む依存関係として妥当。"
+    },
+    {
+      "id": "no-phase-task",
+      "status": "pass",
+      "evidence": "feat-login-redesign は purpose/goal/scope_in/scope_out/acceptance/architecture_refs を全て保持し、phase_ref は null、artifact_kind='feature'。grep で P01..P13 等の phase task 粒度の混入は0件。既存19ノード(現行 graph.json の全フィールド)を staged graph.json と diff した結果、完全一致(差分は graph_revision 4→5 と feat-login-redesign 追加のみ)。"
+    },
+    {
+      "id": "scope-coverage",
+      "status": "pass",
+      "evidence": "確定質疑 qa-062(画像と現行実装の差分6点)・qa-063(色/ロゴ/背景は正本優先)・qa-064(招待は権限1行)・qa-065(部分許可でもログイン継続)・qa-066(主たる接地根拠、4領域: 同意記録/表示とスコープ一致/セキュリティ強化/a11y・レスポンシブ)・qa-067(Google ブランド規定 Light ボタン)・qa-068(製品名統一)・qa-069(信頼表示3点)・qa-070(規範節への反映)・qa-071(試行回数制限を設けない)・qa-072(CSP は自サイト+Google 認証のみ許可)・qa-073(次回ログインで再同意)の全確定内容が scope_in/acceptance に1:1で反映されている。qa-071 で削除された試行回数制限関連の項目は scope_in に登場せず、scope_out に明示除外されている。関連 feature との境界は scope_out『テナント作成・招待・役割の仕組みそのもの(既存 feature で実装済みの土台を使う)』『ダッシュボード・設定画面の本体機能(別 feature。本 feature は再連携バナーの差し込みだけを持つ)』で明示。"
+    },
+    {
+      "id": "feature-context-schema",
+      "status": "pass",
+      "evidence": "context.json のキー集合は {graph_node_id, artifact_kind, purpose, goal, scope_in, scope_out, acceptance, architecture_refs, updated_at} の9件で exact 一致、過不足なし。architecture_refs 10件は全て os.path.exists で実在確認済み。graph node 側の architecture_refs=['arch-youtube-analytics-system'] はnode-id参照でスキーマ上妥当な別表現であり、purpose/goal/scope_in/scope_out/acceptance の文言は context.json と md frontmatter で完全一致。"
+    },
+    {
+      "id": "placeholder",
+      "status": "pass",
+      "evidence": "staged 文書2ファイルに対して大文字小文字無視で禁止語(未定義語含む)を検索し該当0件(grep exit code 1)。"
+    },
+    {
+      "id": "readiness",
+      "status": "pass",
+      "evidence": "依存先 feature は現時点で未done。md の依存節に『依存先 feature の done が P01 着手の条件』と明記されており、system-dev-planner の feature-execution-package-contract 4節『feature間依存はtaskへコピーしない。dev-graphのfeature A→feature Bを正本とし、B packageのP01 ready gateがA feature doneを参照する派生条件だけを持つ』と整合する。draft のため plan(task spec生成)自体は可能で、生成される P01 task 側の ready gate が依存先 feature の done を参照する設計であり、矛盾なし。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "detail": "validator は artifact_missing(feature md が staging にしかない)と confirmation_evidence 欠落(evaluator/evidence_ref/evaluated_digest 必須違反)の2種のみを検出。draft ノードとして想定内の違反であり、それ以外の schema_violation は0件。"
+    },
+    {
+      "severity": "low",
+      "detail": "feat-login-redesign の scope_in には OAuth callback の順序変更・consent 記録・連携状態更新など、依存先 feature のログイン基盤(OAuth PKCE ログイン・セッション)と隣接するコード領域への変更が含まれるが、scope_out は『テナント作成・招待・役割の仕組みそのもの』のみを境界として明示しており、OAuth callback 実装そのものの改修範囲(どちらの feature がその実装ファイルの責務を持つか)についての境界記述がない。実害はないが、promotion後のtask生成時に境界を明確化することを推奨する。"
+    }
+  ]
+}

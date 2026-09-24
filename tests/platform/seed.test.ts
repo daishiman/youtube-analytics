@@ -21,7 +21,21 @@ describe("ローカル seed", () => {
     await runSeed();
     expect(
       await count("SELECT COUNT(*) AS n FROM tenant_members WHERE tenant_id LIKE 'seed-%'"),
-    ).toBe(5);
+    ).toBe(6);
+    // トークンを持たない seed は、付与スコープがそろっていても partial
+    const status = await env.DB.prepare(
+      "SELECT tenant_id, youtube_link_status AS s FROM tenants WHERE tenant_id LIKE 'seed-%' ORDER BY tenant_id",
+    ).all<{ tenant_id: string; s: string }>();
+    expect(status.results.map((r) => [r.tenant_id, r.s])).toEqual([
+      ["seed-tenant-a", "partial"],
+      ["seed-tenant-b", "partial"],
+      ["seed-tenant-p", "partial"],
+    ]);
+    expect(
+      await count(
+        "SELECT COUNT(*) AS n FROM oauth_tokens WHERE tenant_id LIKE 'seed-%' AND refresh_token_enc IS NULL",
+      ),
+    ).toBe(3);
 
     // dev-login は google_sub = dev:<メール> で seed 済み利用者に紐づく（新しいテナントを作らない）
     const viaDev = await call("/api/auth/dev-login", {

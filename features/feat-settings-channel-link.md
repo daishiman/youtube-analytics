@@ -11,7 +11,7 @@ completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manu
 confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-feat-settings-channel-link-20260924.json", "evaluated_digest": "d609b5b1106b27ddfbe1f8b23fdd32932e765d5fa4af45a365676de6f1f736ea"}
 confirmation_status: "confirmed"
 created_at: "2026-09-24T01:00:12Z"
-depends_on: ["feat-platform-tenant-auth", "feat-youtube-daily-collection", "feat-skill-analysis-reports", "feat-retention-ops"]
+depends_on: ["feat-platform-tenant-auth"]
 domain: "youtube-analytics"
 evaluation_status: "pass"
 execution_contexts: []

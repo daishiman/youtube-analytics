@@ -7,7 +7,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
     <div className="public-layout">
       <header className="public-header">
         <a className="brand" href="/login">
-          YouTube分析
+          Channel Insight
         </a>
       </header>
       <main className="center">{children}</main>

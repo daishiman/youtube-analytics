@@ -1,0 +1,96 @@
+{
+  "audit_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json",
+  "changed_node_fields": {
+    "feat-csv-media-ingest": [
+      "acceptance",
+      "confirmation_evidence",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ],
+    "feat-login-redesign": [
+      "confirmation_evidence",
+      "scope_in"
+    ],
+    "feat-skill-analysis-reports": [
+      "acceptance",
+      "confirmation_evidence",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ],
+    "feat-web-screens-actions": [
+      "acceptance",
+      "confirmation_evidence",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ]
+  },
+  "external_writes": false,
+  "files_touched": [
+    ".dev-graph/state/graph.json",
+    "architecture/graph.json",
+    "eval-log/dev-graph-targeted-resync-audit-20260924.json",
+    "eval-log/dev-graph-targeted-resync-receipt-20260924.json",
+    "features/feat-csv-media-ingest.md",
+    "features/feat-login-redesign.md",
+    "features/feat-skill-analysis-reports.md",
+    "features/feat-web-screens-actions.md"
+  ],
+  "local_projection_four_conditions": {
+    "依存関係整合": "PASS: dependency lists preserved; graph DAG and reference validation passed",
+    "整合性あり": "PASS: schema, evidence parity, revision parity, repository consistency",
+    "漏れなし": "PASS: four named nodes and five semantic fields audited; all existing node IDs preserved",
+    "矛盾なし": "PASS: scoped graph fields equal context and Markdown; source digests match current canonical bytes"
+  },
+  "gate": {
+    "current_architecture_digest": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
+    "current_source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+    "generated_from_digest_preserved": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
+    "note": "Current digests already matched canonical bytes, so the gate file was not changed. Formal C14 compile/decompose gate remains recorded as required.",
+    "path": "eval-log/dev-graph-resync-required-20260922.json",
+    "status": "required_before_affected_feature_planning"
+  },
+  "graph_revision": {
+    "after": 7,
+    "before": 6
+  },
+  "operation": "authorized local-only targeted semantic reprojection (official C14/C02 dispatcher unavailable)",
+  "official_dispatch_probe": {
+    "claude_code_version": "2.1.62",
+    "plugin_validation": "dev-graph 0.1.11 and system-spec-harness 0.1.14 both fail: root Unrecognized key: dependencies",
+    "namespaced_dry_run": "original plugin returned Unknown skill: dev-graph:dev-graph; a temporary manifest-compatible copy returned no result and zero API tokens",
+    "formal_c14_executed": false,
+    "external_writes": false
+  },
+  "provenance": "source_lineage の source_plugin・origin_kind・imported_at は元の dev-graph 登録履歴として保持した。今回の更新経路は正式 C14/C02 ではなく、この receipt と confirmation_evidence.evaluator=dev-graph:local-targeted-projection-audit で区別する。",
+  "project_completion": "pending: formal C14 compile/decompose gate and production acceptance are outside this local projection audit",
+  "problems": [],
+  "scope": [
+    "feat-csv-media-ingest",
+    "feat-login-redesign",
+    "feat-skill-analysis-reports",
+    "feat-web-screens-actions"
+  ],
+  "sha256": {
+    "architecture_doc": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
+    "architecture_graph_after": "5600f1adde070429a14c22c947815f27c2d0042f0f6657961be5079855859a4a",
+    "architecture_graph_before": "0643db144ccb8eead08529e8880f584a64c5de2404631ed270a0b0084377a090",
+    "canonical_source": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+    "graph_after": "a7192cbfd12bdb813c933904a7f2ee0182b6a2b3c6473fbfc6abc00af6ad3833",
+    "graph_before": "4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143"
+  },
+  "status": "local_projection_pass_formal_gate_open",
+  "validation": {
+    "dependency_dag": "PASS",
+    "four_feature_context_markdown_graph_semantic_parity": "PASS",
+    "graph_architecture_revision": "PASS",
+    "graph_schema": "PASS",
+    "non_target_nodes_unchanged": "PASS",
+    "repository_consistency": "PASS (pnpm check:repo)"
+  }
+}

@@ -96,6 +96,7 @@ export const PUBLIC_ROUTES = [
   "GET /api/auth/config",
   "GET /api/auth/login",
   "GET /api/auth/callback",
+  "GET /api/auth/youtube/connect",
   "GET /api/auth/invite",
   "POST /api/auth/logout",
   "POST /api/auth/dev-login",

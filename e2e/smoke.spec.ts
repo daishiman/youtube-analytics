@@ -3,7 +3,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 async function devLogin(page: Page, email: string, invite?: string) {
   await page.goto(invite ? `/login?invite=${invite}` : "/login");
-  await page.getByLabel("利用規約とプライバシーポリシーに同意する").check();
+  await page.getByLabel("プライバシーポリシーと利用規約に同意します").check();
   await page.getByLabel("開発用ログインのメールアドレス").fill(email);
   await page.getByRole("button", { name: "開発用ログイン" }).click();
 }
@@ -22,11 +22,13 @@ test("ログイン画面: 同意するまで Google ログインは押せず、�
   page,
 }) => {
   await page.goto("/login");
-  await expect(page.getByRole("heading", { name: "YouTube分析" })).toBeVisible();
-  const google = page.getByRole("button", { name: "Google でログイン" });
-  await expect(google).toBeDisabled();
-  await page.getByLabel("利用規約とプライバシーポリシーに同意する").check();
-  await expect(google).toBeEnabled();
+  await expect(
+    page.getByRole("heading", { name: "YouTubeの実績から、次の一手を。" }),
+  ).toBeVisible();
+  const google = page.getByRole("button", { name: "Googleでログイン" });
+  await expect(google).toHaveAttribute("aria-disabled", "true");
+  await page.getByLabel("プライバシーポリシーと利用規約に同意します").check();
+  await expect(google).toHaveAttribute("aria-disabled", "false");
   await page.goto("/privacy");
   await expect(
     page.getByText(
@@ -73,9 +75,8 @@ test("ワークスペースを切り替えると役割が変わる", async ({ pa
   await select.selectOption({ label: "テストチャンネルA（オーナー）" });
 });
 
-test("初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加", async ({ page }, info) => {
-  // データを作るシナリオは1サイズだけで回す（3サイズ並列で同じ招待を奪い合わない）
-  test.skip(info.project.name !== "desktop", "desktop のみ");
+test("初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加", async ({ page }) => {
+  // メールアドレスは毎回一意なので、3サイズ並列でも同じ招待を奪い合わない（作ったデータは seed が掃除する）
   const ownerEmail = unique("e2e-owner");
   const invitee = unique("e2e-invitee");
 

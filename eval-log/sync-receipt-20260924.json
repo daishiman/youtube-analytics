@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-09-24T01:36:00Z",
+  "binding": "beads",
+  "authority": "C28 bd-bridge only (GitHub mutation 0)",
+  "workspace_id": "bdw_fed24357d2d6746d79913637",
+  "plan": {
+    "imports": 0,
+    "exports": {
+      "created_issues": 14,
+      "created_edges": 14
+    },
+    "conflicts": 0,
+    "tombstones": 0,
+    "pending_retry": 0,
+    "done_transitions": 0
+  },
+  "mutations": [
+    {
+      "preview": ".artifact-delivery/external-mutation/preview-e38136d8ba8947fa9dcf19b323b94955.json",
+      "op": "create projection",
+      "result": "epic yta-0sg + yta-0sg.1..13, 13 blocks edge, parity 13/13"
+    },
+    {
+      "preview": ".artifact-delivery/external-mutation/preview-0ed0e7e0f42f40b4bb5ffc053ef91b61.json",
+      "op": "dep-add yta-0sg -> yta-c8g",
+      "result": "added blocks"
+    },
+    {
+      "preview": ".artifact-delivery/external-mutation/preview-582540d193804551a41b333751a2b925.json",
+      "op": "(未使用 preview)",
+      "result": "cancelled, 実行なし"
+    }
+  ],
+  "linkage_manifest": ".dev-graph/state/beads/projection-feat-login-redesign.json",
+  "snapshot": {
+    "path": ".dev-graph/state/beads/sync-snapshot.json",
+    "digest": "sha256:9bf2467d0c4a938b4ac8c25bd62716cd34edebb2b53e5c316365f526c5c92d1d",
+    "nodes": 33
+  },
+  "second_run": {
+    "method": "read-only show --verify-parity 14 node + external_ref 検索",
+    "parity_confirmed": 14,
+    "imports": 0,
+    "exports": 0,
+    "changes": 0
+  },
+  "done_evidence": "merge evidence 対象なし (全 task active) → done 反映 0",
+  "bd_ready_with_parity": {
+    "ready": [
+      "SYS-PTA-P01",
+      "feat-platform-tenant-auth"
+    ],
+    "conflicts": [],
+    "unmapped_out_of_scope": [
+      "SYS-SCL-P13",
+      "SYS-SCL-P12",
+      "SYS-SCL-P11",
+      "SYS-SCL-P10",
+      "SYS-SCL-P01",
+      "feat-settings-channel-link"
+    ],
+    "note": "feat-settings-channel-link(yta-rh8) は別 worktree が共有 Beads DB へ投影したもので本 graph に存在しない。本 sync では触れない"
+  },
+  "graph_digest_unchanged": "sha256:4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143"
+}

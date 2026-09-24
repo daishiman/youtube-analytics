@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-schedule",
+ "recorded_at": "2026-09-24T02:10:00Z",
+ "checklist": [
+  {
+   "item": "candidate は confirmed/pass/complete・依存done・lease なし",
+   "status": "pass",
+   "evidence": "推薦0件 (SYS-LRD-P01 は feature gate で除外)"
+  },
+  {
+   "item": "feature/task ready 別 batch",
+   "status": "pass",
+   "evidence": "eval-log/schedule-20260924-beads.json"
+  },
+  {
+   "item": "同一 batch touches 重複0",
+   "status": "pass",
+   "evidence": "conflicts []"
+  },
+  {
+   "item": "branch devgraph/<id> と claim 形式",
+   "status": "pass",
+   "evidence": "推薦0件のため hint 0"
+  },
+  {
+   "item": "graph/tracker/lease digest 不変",
+   "status": "pass",
+   "evidence": "graph sha 4a2214f0… 前後一致、bd/lease は read-only op のみ"
+  }
+ ]
+}

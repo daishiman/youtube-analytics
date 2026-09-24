@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-render",
+ "recorded_at": "2026-09-24T01:40:00Z",
+ "checklist": [
+  {
+   "item": "schema PASS・出力が repo 内",
+   "status": "pass",
+   "evidence": "validate-graph-schema valid / .dev-graph/render/index.html"
+  },
+  {
+   "item": "node/edge/feature progress 一致",
+   "status": "pass",
+   "evidence": "35/35、parent_feature 実数から login 0/13・PTA 0/13"
+  },
+  {
+   "item": "外部参照0・SVG と inline JS 実在",
+   "status": "pass",
+   "evidence": "external 0 / <svg> あり / inline script 2"
+  },
+  {
+   "item": "receipt digest 一致",
+   "status": "pass",
+   "evidence": "input/output sha256 を実ファイルから再計算"
+  },
+  {
+   "item": "ブラウザ live trial",
+   "status": "not_run",
+   "evidence": "本セッションでは未実施。open .dev-graph/render/index.html で確認可能"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "staging": ".dev-graph/staging/sdp-feat-login-redesign-r1",
+  "destination": ".dev-graph/published/feature-package-feat-login-redesign",
+  "digest": "sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+  "feature_package_id": "feature-package/feat-login-redesign",
+  "receipt": ".dev-graph/published/feature-package-feat-login-redesign/atomic-promotion-receipt.json",
+  "completed_at": "2026-09-24T01:18:10Z"
+}

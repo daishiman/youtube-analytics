@@ -14,6 +14,7 @@ import {
   SESSION_TTL_MS,
 } from "./common";
 import { acceptInvite } from "./invites";
+import { type ConsentVersions, type Grant, recordConsent, saveGrant } from "./login-consent";
 
 export interface VerifiedIdentity {
   sub: string;
@@ -39,7 +40,13 @@ export interface LoginResult {
 export async function loginWithIdentity(
   deps: Deps,
   identity: VerifiedIdentity,
-  options: { inviteToken?: string | null } = {},
+  options: {
+    inviteToken?: string | null;
+    /** Google が付与したスコープと refresh token（招待でのログイン・開発用ログインでは渡さない） */
+    grant?: Grant;
+    /** 画面で同意した規約の版（現行版であることは呼び出し側で確認済み） */
+    consent?: ConsentVersions;
+  } = {},
 ): Promise<LoginResult> {
   if (!identity.emailVerified) throw new AppError("EMAIL_NOT_VERIFIED");
   const repo = platform(deps);
@@ -97,6 +104,23 @@ export async function loginWithIdentity(
     (last && ids.has(last) ? last : null) ??
     memberships[0]?.tenant_id ??
     null;
+
+  // 付与スコープの保存 → 同意の追記 → セッション発行の順（途中で失敗したらログインさせない）
+  if (options.grant && !options.inviteToken) {
+    const selectedOwner = memberships.find((m) => m.tenant_id === tenantId && m.role === "owner");
+    const ownerMemberships = memberships.filter((m) => m.role === "owner");
+    // 選択中が閲覧先なら、所有先が一意の場合だけ付与を保存する。
+    const grantTenantId =
+      selectedOwner?.tenant_id ??
+      (ownerMemberships.length === 1 ? ownerMemberships[0]?.tenant_id : null);
+    if (grantTenantId)
+      await saveGrant(deps, {
+        tenantId: grantTenantId,
+        userId: user.user_id,
+        grant: options.grant,
+      });
+  }
+  if (options.consent) await recordConsent(deps, user.user_id, options.consent);
 
   const sessionId = randomToken();
   await repo.createSession({

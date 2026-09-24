@@ -1,0 +1,1192 @@
+{
+  "schema_version": "1.0.0",
+  "source_digest": "sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+  "promotion_receipt": ".dev-graph/published/feature-package-feat-login-redesign/atomic-promotion-receipt.json",
+  "feature_package_id": "feature-package/feat-login-redesign",
+  "parent_feature": "feat-login-redesign",
+  "expected_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "binding_intents": {
+    "SYS-LRD-P01": "beads",
+    "SYS-LRD-P02": "beads",
+    "SYS-LRD-P03": "beads",
+    "SYS-LRD-P04": "beads",
+    "SYS-LRD-P05": "beads",
+    "SYS-LRD-P06": "beads",
+    "SYS-LRD-P07": "beads",
+    "SYS-LRD-P08": "beads",
+    "SYS-LRD-P09": "beads",
+    "SYS-LRD-P10": "beads",
+    "SYS-LRD-P11": "beads",
+    "SYS-LRD-P12": "beads",
+    "SYS-LRD-P13": "beads"
+  },
+  "nodes": [
+    {
+      "graph_node_id": "SYS-LRD-P01",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "ログイン刷新の要件を実装単位へ確定",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/requirements.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P01",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P01.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P01.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P02",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "スコープ定義・同意記録・連携状態の構成設計",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "backend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "backend",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P01"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/architecture.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P02",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P02.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P02.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P03",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "OAuth・同意・ヘッダの設計レビュー",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P02"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/design-review.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P03",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P03.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P03.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P04",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入テストと E2E の設計",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P03"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "tests/login/",
+        "e2e/login.spec.ts",
+        "docs/feat-login-redesign/test-design.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P04",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P04.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P04.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P05",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "ログイン画面・API・DB・ヘッダの実装",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "frontend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "frontend",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P04"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "web/pages/LoginPage.tsx",
+        "web/components/",
+        "web/api.ts",
+        "web/pages/DashboardPage.tsx",
+        "web/pages/SettingsPage.tsx",
+        "web/pages/Shell.tsx",
+        "web/index.html",
+        "web/styles.css",
+        "src/http/",
+        "src/usecases/",
+        "src/repositories/",
+        "migrations/0003_login_consent_youtube_link.sql",
+        "public/"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P05",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P05.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P05.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P06",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テスト実行と不具合修正",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P05"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "tests/login/",
+        "e2e/login.spec.ts",
+        "web/",
+        "src/"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P06",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P06.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P06.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P07",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入確認",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P06"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/acceptance.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P07",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P07.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P07.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P08",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "リファクタリングとマイグレーション整理",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "data",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P07"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "src/",
+        "web/",
+        "migrations/"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P08",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P08.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P08.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P09",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "セキュリティと品質の保証",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P08"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/qa-report.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P09",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P09.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P09.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P10",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "最終レビュー",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P09"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/final-review.md"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P10",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P10.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P10.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P11",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "証跡の集約",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "evidence/feat-login-redesign/"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P11",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P11.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P11.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P12",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "運用手順とドキュメント",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "operations",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/runbook.md",
+        "README.md",
+        "docs/setup/"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P12",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P12.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P12.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-LRD-P13",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "リリースとデプロイ",
+      "project_id": "feature-package-feat-login-redesign",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "login-redesign"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:18:10Z",
+      "updated_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P11",
+        "SYS-LRD-P12"
+      ],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "phase_ref": "P13",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P13.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json",
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "imported_at": "2026-09-24T01:18:10Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P13.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:14:00Z"
+      }
+    }
+  ]
+}

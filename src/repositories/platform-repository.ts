@@ -9,11 +9,19 @@ export interface UserRow {
   email_verified: number;
 }
 
+export type YoutubeLinkStatusValue = "none" | "partial" | "linked";
+
 export interface MembershipRow {
   tenant_id: string;
   name: string;
   role: Role;
   joined_at: string;
+  youtube_link_status: YoutubeLinkStatusValue;
+}
+
+export interface ConsentRow {
+  terms_version: string;
+  privacy_version: string;
 }
 
 export interface SessionRow {
@@ -62,7 +70,7 @@ export class PlatformRepository {
   async listMemberships(userId: string): Promise<MembershipRow[]> {
     const { results } = await this.db
       .prepare(
-        `SELECT m.tenant_id, t.name, m.role, m.joined_at
+        `SELECT m.tenant_id, t.name, m.role, m.joined_at, t.youtube_link_status
            FROM tenant_members m JOIN tenants t ON t.tenant_id = m.tenant_id
           WHERE m.user_id = ?1 AND t.deleted_at IS NULL
           ORDER BY m.joined_at, m.tenant_id`,
@@ -239,5 +247,99 @@ export class PlatformRepository {
       .bind(now, limit)
       .run();
     return result.meta.changes;
+  }
+
+  async findUserById(userId: string): Promise<UserRow | null> {
+    return this.db
+      .prepare(
+        "SELECT user_id, google_sub, email, email_verified FROM users WHERE user_id = ?1 AND deleted_at IS NULL",
+      )
+      .bind(userId)
+      .first<UserRow>();
+  }
+
+  /** 同意の証跡は追記だけ（更新しない）。版の比較用に直前の1行を引く */
+  async lastConsent(userId: string): Promise<ConsentRow | null> {
+    return this.db
+      .prepare(
+        `SELECT terms_version, privacy_version FROM consent_records
+          WHERE user_id = ?1 ORDER BY consented_at DESC, rowid DESC LIMIT 1`,
+      )
+      .bind(userId)
+      .first<ConsentRow>();
+  }
+
+  async insertConsent(input: {
+    id: string;
+    userId: string;
+    termsVersion: string;
+    privacyVersion: string;
+    consentedAt: string;
+    source: "login" | "reconsent";
+  }): Promise<void> {
+    await this.db
+      .prepare(
+        `INSERT INTO consent_records (id, user_id, terms_version, privacy_version, consented_at, source)
+         VALUES (?1, ?2, ?3, ?4, ?5, ?6)`,
+      )
+      .bind(
+        input.id,
+        input.userId,
+        input.termsVersion,
+        input.privacyVersion,
+        input.consentedAt,
+        input.source,
+      )
+      .run();
+  }
+
+  /** アカウント削除のときだけ使う（退会 API は後続 feature） */
+  async deleteConsentRecords(userId: string): Promise<void> {
+    await this.db.prepare("DELETE FROM consent_records WHERE user_id = ?1").bind(userId).run();
+  }
+
+  /**
+   * テナントの OAuth 付与状態と連携状態を同じ batch で更新する。
+   * 同じ利用者の再同意で refresh token が返らなかったときだけ保存済みの値を残す。
+   * linked は保存後のトークンの有無から同じトランザクション内で決める。
+   */
+  async saveOAuthGrant(input: {
+    tenantId: string;
+    userId: string;
+    scope: string;
+    refreshTokenEnc: string | null;
+    hasYoutubeReadScopes: boolean;
+    now: string;
+  }): Promise<Exclude<YoutubeLinkStatusValue, "none">> {
+    const [, update] = await this.db.batch([
+      this.db
+        .prepare(
+          `INSERT INTO oauth_tokens (tenant_id, user_id, scope, refresh_token_enc, updated_at)
+           VALUES (?1, ?2, ?3, ?4, ?5)
+           ON CONFLICT (tenant_id) DO UPDATE SET
+             user_id = excluded.user_id, scope = excluded.scope,
+             refresh_token_enc = CASE WHEN oauth_tokens.user_id = excluded.user_id
+               THEN COALESCE(excluded.refresh_token_enc, oauth_tokens.refresh_token_enc)
+               ELSE excluded.refresh_token_enc END,
+             updated_at = excluded.updated_at`,
+        )
+        .bind(input.tenantId, input.userId, input.scope, input.refreshTokenEnc, input.now),
+      this.db
+        .prepare(
+          `UPDATE tenants SET youtube_link_status = CASE
+             WHEN ?2 = 1 AND EXISTS (
+               SELECT 1 FROM oauth_tokens
+                WHERE tenant_id = ?1 AND refresh_token_enc IS NOT NULL AND length(refresh_token_enc) > 0
+             ) THEN 'linked' ELSE 'partial' END
+           WHERE tenant_id = ?1 RETURNING youtube_link_status`,
+        )
+        .bind(input.tenantId, input.hasYoutubeReadScopes ? 1 : 0),
+    ]);
+    const status = (
+      update?.results[0] as { youtube_link_status?: YoutubeLinkStatusValue } | undefined
+    )?.youtube_link_status;
+    if (status !== "linked" && status !== "partial")
+      throw new Error("YouTube 連携状態の更新に失敗しました");
+    return status;
   }
 }

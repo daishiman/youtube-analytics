@@ -4,19 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "38eecd95cddc3b3bcd8610375a9fdba7cb8a52438456024352ec6f19d23950ea",
-  "current_architecture_digest": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b",
-  "digest_refresh_evidence": {
-    "refreshed_at": "2026-09-24",
-    "reason": "feat-settings-channel-link の追補（qa-062〜qa-074）で仕様の compile と dev-graph の spec import を実行し、specs と architecture を再生成したため。続けて qa-075/qa-076 の追補で specs と architecture を再更新した",
-    "generated_by": [
-      ".dev-graph/state/graph.json",
-      "architecture/graph.json",
-      "eval-log/completeness-findings-20260924-r4.json",
-      "eval-log/dev-graph-spec-import-report-feat-settings-channel-link-20260924.json"
-    ],
-    "note": "affected_features 3件の task 計画の再生成は未実施のため、status は required のまま"
-  },
+  "current_source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
+  "current_architecture_digest": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -29,5 +18,17 @@
   ],
   "unaffected_current_package": "feat-platform-tenant-auth",
   "gate": "上記3 featureのtask計画を生成する前にsystem-spec compile/evaluateとdev-graph compile/decomposeを実行し、architecture projection、source_lineage digest、state graphを正本から再生成する",
-  "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。"
+  "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。",
+  "digest_refresh_log": [
+    {
+      "refreshed_at": "2026-09-24",
+      "by_feature": "feat-login-redesign",
+      "note": "qa-062〜qa-073 を system-spec の正規フローで正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    },
+    {
+      "refreshed_at": "2026-09-24",
+      "by_feature": "feat-settings-channel-link",
+      "note": "main（feat-login-redesign）を取り込み、qa-074〜088 と qa-062〜073 を統合した正本へ current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    }
+  ]
 }

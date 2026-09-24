@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-09-24T02:10:00Z",
+  "binding": "beads",
+  "graph": {
+    "path": ".dev-graph/state/graph.json",
+    "graph_revision": 6,
+    "digest": "sha256:4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143"
+  },
+  "self_ready_set": {
+    "features": [
+      "feat-platform-tenant-auth"
+    ],
+    "tasks": [
+      "SYS-LRD-P01",
+      "SYS-PTA-P01",
+      "arch-youtube-analytics-system",
+      "spec-youtube-analytics-system"
+    ]
+  },
+  "feature_gate_blocked_tasks": {
+    "SYS-LRD-P01": [
+      "feat-platform-tenant-auth"
+    ]
+  },
+  "self_ready_after_feature_gate": {
+    "features": [
+      "feat-platform-tenant-auth"
+    ],
+    "tasks": [
+      "SYS-PTA-P01",
+      "arch-youtube-analytics-system",
+      "spec-youtube-analytics-system"
+    ]
+  },
+  "bd_bridge": {
+    "candidate_count": 2,
+    "ready_set": [],
+    "unmapped": [
+      {
+        "bd_issue_id": "yta-c8g.1",
+        "external_ref": "SYS-PTA-P01",
+        "reason": "parity_manifest_missing"
+      },
+      {
+        "bd_issue_id": "yta-c8g",
+        "external_ref": "feat-platform-tenant-auth",
+        "reason": "parity_manifest_missing"
+      }
+    ]
+  },
+  "active_leases": [],
+  "conflicts": [],
+  "recommended": {
+    "features": [],
+    "tasks": []
+  },
+  "batches": {
+    "features": [],
+    "tasks": []
+  },
+  "assignment_hints": [],
+  "withheld": {
+    "reason": "binding=beads は C28 ready ∩ parity=confirmed だけを推薦する。parity_manifest_missing のため全候補を保留 (fail-closed)",
+    "remediation": "/dev-graph sync で Beads 投影と parity manifest を収束させてから next を再実行",
+    "candidates": [
+      "SYS-LRD-P01",
+      "SYS-PTA-P01",
+      "arch-youtube-analytics-system",
+      "feat-platform-tenant-auth",
+      "spec-youtube-analytics-system"
+    ]
+  },
+  "read_only": true
+}
