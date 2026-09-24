@@ -592,7 +592,7 @@ h4 {
 .switch input:disabled + .switch-track {
   opacity: 0.45;
 }
-/* YouTube連携: テナントの Google Cloud 接続情報（qa-075） */
+/* YouTube連携: テナントの Google Cloud 接続情報（qa-087） */
 .google-client {
   display: flex;
   flex-direction: column;

@@ -67,11 +67,11 @@ updated_at: "2026-09-24T01:20:21Z"
 
 ## 目的
 
-受入10項目を根拠章(qa-062〜qa-074)・画面区画・API・検証方法へ1対1で対応付け、エラーコード(409 channel_already_linked / 409 token_limit / 403 owner_only 等)と画像文言の差し替え(次回収集は『毎日 3:00 JST』)を確定する。
+受入10項目を根拠章(qa-074〜qa-086)・画面区画・API・検証方法へ1対1で対応付け、エラーコード(409 channel_already_linked / 409 token_limit / 403 owner_only 等)と画像文言の差し替え(次回収集は『毎日 3:00 JST』)を確定する。
 
 ## 背景
 
-feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-062〜qa-074(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-068)。
+feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-074〜qa-086(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-080)。
 
 ## 前提条件
 
@@ -90,7 +90,7 @@ feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を�
 - Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない
 - Security: N/A: 本 phase の成果物は Security の変更を含まない
 - Quality: N/A: 本 phase の成果物は Quality の変更を含まない
-- Documentation: 主。受入10項目を根拠章(qa-062〜qa-074)・画面区画・API・検証方法へ1対1で対応付け、エラーコード(409 channel_already_linked / 409 token_limit / 403 owner_only 等)と画像文言の差し替え(次回収集は『毎日 3:00 JST』)を確定する。
+- Documentation: 主。受入10項目を根拠章(qa-074〜qa-086)・画面区画・API・検証方法へ1対1で対応付け、エラーコード(409 channel_already_linked / 409 token_limit / 403 owner_only 等)と画像文言の差し替え(次回収集は『毎日 3:00 JST』)を確定する。
 - Operations: N/A: 本 phase の成果物は Operations の変更を含まない
 
 ## Architecture and deploy unit

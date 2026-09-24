@@ -1,4 +1,4 @@
-// YouTube チャンネル紐付け（1テナント1チャンネル）・再連携・連携解除・字幕の自動取得（qa-063/qa-064/qa-069/qa-070）
+// YouTube チャンネル紐付け（1テナント1チャンネル）・再連携・連携解除・字幕の自動取得（qa-075/qa-076/qa-081/qa-082）
 // 連携の手続きは oauth_pending に「開始した本人・テナント」と結びつけて保存し、コールバックでは Cookie ではなく
 // セッションの本人と照合する（別人のブラウザへコールバックを注入されても受け付けない）
 import {
@@ -55,7 +55,7 @@ async function startOAuth(
   origin: string,
 ): Promise<{ url: string }> {
   if (purpose !== "captions") await requireChannelDeletionComplete(settingsRepo(deps, ctx));
-  // テナントのクライアント未登録なら、Google へ飛ばす前に止める（qa-075）
+  // テナントのクライアント未登録なら、Google へ飛ばす前に止める（qa-087）
   const client = await tenantOAuthClient(deps, ctx);
   await rateLimit(deps, `oauth:${ctx.userId}`, OAUTH_START_LIMIT, HOUR_MS);
   const state = randomToken();

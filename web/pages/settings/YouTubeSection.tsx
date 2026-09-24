@@ -79,7 +79,7 @@ export function YouTubeSection({
 
   const channel = youtube.channel;
   const pendingDeletionDueAt = youtube.pendingDeletionDueAt;
-  // 連携の OAuth はテナントのクライアントで行うので、未登録の間は Google へ飛ぶ操作を止める（qa-075）
+  // 連携の OAuth はテナントのクライアントで行うので、未登録の間は Google へ飛ぶ操作を止める（qa-087）
   const clientReady = youtube.googleClient.configured;
 
   return (

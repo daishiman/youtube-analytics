@@ -17,7 +17,7 @@ DELETE FROM users WHERE google_sub LIKE 'dev:e2e-%';
 DELETE FROM sessions WHERE user_id LIKE 'seed-%';
 -- 設定画面（feat-settings-channel-link）の表。tenants より先に消す（外部キー）
 DELETE FROM oauth_pending WHERE tenant_id LIKE 'seed-%';
-DELETE FROM oauth_tokens WHERE tenant_id LIKE 'seed-%';
+DELETE FROM channel_oauth_tokens WHERE tenant_id LIKE 'seed-%';
 DELETE FROM channels WHERE tenant_id LIKE 'seed-%';
 DELETE FROM imports WHERE tenant_id LIKE 'seed-%';
 DELETE FROM skill_tokens WHERE tenant_id LIKE 'seed-%';
@@ -65,7 +65,7 @@ INSERT INTO channels (tenant_id, channel_id, title, thumbnail_url, subscriber_co
   ('seed-tenant-a', 'UCseedChannelA000000000', 'テストチャンネルA', NULL, 12345, '正常', 'seed-owner',
    '2026-09-01T00:00:00.000Z', strftime('%Y-%m-%dT03:00:00.000Z', 'now'));
 
-INSERT INTO oauth_tokens (tenant_id, channel_id, refresh_token_enc, granted_scopes, updated_at) VALUES
+INSERT INTO channel_oauth_tokens (tenant_id, channel_id, refresh_token_enc, granted_scopes, updated_at) VALUES
   ('seed-tenant-a', 'UCseedChannelA000000000', NULL,
    'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly',
    '2026-09-01T00:00:00.000Z');

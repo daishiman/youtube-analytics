@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-requirements",
+ "recorded_at": "2026-09-24T01:24:08Z",
+ "checklist": [
+  {
+   "item": "lineage closure 欠落0",
+   "status": "pass",
+   "evidence": "feature context digest=package source_feature_digest、spec/arch node confirmed"
+  },
+  {
+   "item": "C11 report と C02 saved state/digest 一致",
+   "status": "pass",
+   "evidence": "validate-graph-schema complete / 13 task evidence digest=sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+  },
+  {
+   "item": "missing_sections 全件表示",
+   "status": "pass",
+   "evidence": "0件"
+  },
+  {
+   "item": "同一snapshot digestで requirements/handoff 生成",
+   "status": "pass",
+   "evidence": ".dev-graph/handoffs/requirements-handoff-feat-settings-channel-link.json"
+  },
+  {
+   "item": "実装code生成0",
+   "status": "pass",
+   "evidence": "md/json のみ"
+  }
+ ]
+}

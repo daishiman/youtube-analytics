@@ -47,7 +47,7 @@ completion_evidence: {"policy": "manual", "status": "not_applicable", "source": 
 implementation_readiness: {"status": "complete", "missing_sections": [], "checked_at": "2026-09-24T09:17:58Z"}
 ---
 
-正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-findings-20260924-r3.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。2026-09-24 に設定画面(docs/screens/05-settings.png)・YouTubeチャンネル紐付け・共通レイアウト(qa-062〜qa-074/appr-012・appr-013)を正規フローで取り込んだ。同日、テナントごとの Google Cloud OAuth クライアント(qa-075)と、利用者向け表記『ワークスペース』・Google Cloud 準備手順(qa-076)を追補した。
+正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-findings-20260924-r3.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。2026-09-24 に設定画面(docs/screens/05-settings.png)・YouTubeチャンネル紐付け・共通レイアウト(qa-074〜qa-086/appr-013・appr-014)を正規フローで取り込んだ。同日、テナントごとの Google Cloud OAuth クライアント(qa-087)と、利用者向け表記『ワークスペース』・Google Cloud 準備手順(qa-088)を追補した。
 
 # 目的と成功状態
 
@@ -60,7 +60,7 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 
 ## 用語と主体
 
-- テナント: 初回ログインで作られるデータ分離の単位。1つの D1 に tenant_id で行分離する。利用者に見せる文言(画面・APIエラー・規約)では『ワークスペース』と表記し、コード・DB・開発者向け文書は tenant/テナントのまま(qa-076)。
+- テナント: 初回ログインで作られるデータ分離の単位。1つの D1 に tenant_id で行分離する。利用者に見せる文言(画面・APIエラー・規約)では『ワークスペース』と表記し、コード・DB・開発者向け文書は tenant/テナントのまま(qa-088)。
 - 役割: owner(全操作・YouTube連携・招待・役割変更・削除) / editor(取込・分析依頼・結果取込・アクション更新) / viewer(閲覧のみ)。
 - 出典: API(YouTube API の公式値)、Studio CSV、週次事業CSV。YouTube側の派生指標 M1〜M10 は Studio CSV 由来だけで計算する。
 - 原因指標: インプレッション、CTR、加重平均視聴率M1、誘導率(既定表示はLINE誘導率)、問い合わせ→成約率。結果指標: 売上、成約数、参考として登録者数。
@@ -68,7 +68,7 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 
 ## ユースケースとユーザーフロー
 
-具体的やりたいこと I1〜I10 に対応する。主要フロー: (1) Googleログイン→テナント作成→YouTube読取連携(owner。OAuth後に channels.list mine=true の候補から1チャンネルを選ぶ。1テナント1チャンネル、変更は連携解除→旧データ7日以内削除→再連携・qa-063) (2) 毎日 JST 3:00 に自動収集 (3) Studio CSV・週次事業CSV・字幕・画像の取込 (4) Claude Code で /yt-analyze を実行しデータ取得→週次5段ファネルと下流結果を分析→report-design-system→HTMLと結果JSONを反映 (5) 対象ファネル段を持つ改善アクションを 未着手→実施中→効果測定中→完了 で管理し、同じ原因指標と下流結果を次回レポートで前後比較 (6) 招待リンクでメンバー追加。詳細は system-spec/ui-ux.md と backend.md。
+具体的やりたいこと I1〜I10 に対応する。主要フロー: (1) Googleログイン→テナント作成→YouTube読取連携(owner。OAuth後に channels.list mine=true の候補から1チャンネルを選ぶ。1テナント1チャンネル、変更は連携解除→旧データ7日以内削除→再連携・qa-075) (2) 毎日 JST 3:00 に自動収集 (3) Studio CSV・週次事業CSV・字幕・画像の取込 (4) Claude Code で /yt-analyze を実行しデータ取得→週次5段ファネルと下流結果を分析→report-design-system→HTMLと結果JSONを反映 (5) 対象ファネル段を持つ改善アクションを 未着手→実施中→効果測定中→完了 で管理し、同じ原因指標と下流結果を次回レポートで前後比較 (6) 招待リンクでメンバー追加。詳細は system-spec/ui-ux.md と backend.md。
 
 ## 機能要件
 
@@ -77,12 +77,12 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 - 分析連携: /api/skill/export がYouTubeデータ、週次ファネル、目標、判定保留理由、同一テナント/チャンネルの完了済み直近5版の分析履歴パックを出典付きで書き出し、/api/skill/reports が前回仮説の当否・施策効果・ファネル段・改善候補・下流結果・参照版番号を含む版を追記だけで受ける。
 - 画面: ログイン/ダッシュボード/動画/AI分析/改善アクション/設定の6枚+静的ページ2枚(ui-ux.md)。ダッシュボード先頭4ブロックは結果サマリー、週次5段ファネル、目標未達が最大の改善候補+次のアクション(または全指標目標達成)、12週推移+データ品質とし、動画別実績は動画画面または詳細へ置く。
 - 管理: テナント・メンバー・招待、データ削除、無料枠メーター。
-- 設定画面(qa-062/qa-067): 順序は YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除。連携カードはチャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST・qa-065)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。取込はCSV/字幕(SRT・VTT)/画像のタブ別ドロップ領域と履歴(最新20件・失敗理由)。トークンは名前必須・平文は発行時1回表示・1人5本まで(6本目は409・qa-071)・失効は確認付き。
-- 共通レイアウト(qa-067): AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新・期間 ?period= 共有・アバターメニュー)+main+Footer(3バッジ+プライバシーポリシー|利用規約。ログイン・静的ページも同じ)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable/UsageBar/DropZone/ConfirmDialog/Toast。色は web/styles.css の既存CSS変数だけを使い、画像の色は採用しない(qa-068)。
+- 設定画面(qa-074/qa-079): 順序は YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除。連携カードはチャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST・qa-077)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。取込はCSV/字幕(SRT・VTT)/画像のタブ別ドロップ領域と履歴(最新20件・失敗理由)。トークンは名前必須・平文は発行時1回表示・1人5本まで(6本目は409・qa-083)・失効は確認付き。
+- 共通レイアウト(qa-079): AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新・期間 ?period= 共有・アバターメニュー)+main+Footer(3バッジ+プライバシーポリシー|利用規約。ログイン・静的ページも同じ)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable/UsageBar/DropZone/ConfirmDialog/Toast。色は web/styles.css の既存CSS変数だけを使い、画像の色は採用しない(qa-080)。
 
 ## 非機能要件
 
-- 費用: Cloudflare Free / Google Cloud 無料 / GitHub 無料枠で完全無料。無料枠使用率の警告は70%で黄・90%で赤(qa-072。O3の80%超アラートはこの2段で満たす)。
+- 費用: Cloudflare Free / Google Cloud 無料 / GitHub 無料枠で完全無料。無料枠使用率の警告は70%で黄・90%で赤(qa-084。O3の80%超アラートはこの2段で満たす)。
 - 規模: テナント上限 MAX_TENANTS=100(D1 書込10万行/日に収める)。
 - 性能: 1テナントの収集を1回の Queue consumer 実行に収め、サブリクエスト上限50件内(約16件)。
 - 表示: 幅360px以上で全操作、タップ領域44pt以上、各画面で最初に見える情報ブロックは4つ以内(O5)。
@@ -102,15 +102,15 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 
 ## API契約
 
-Hono v4 on Workers の REST。画面用: GET /api/me, GET /api/dashboard(週次ファネルと判定保留理由を含む), POST /api/csv(Studio CSVまたは週次事業CSV), GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff), GET/PATCH /api/actions/:id, GET /api/videos, GET /api/videos/:id, PUT /api/videos/:id/angle, DELETE /api/me/data。テナント: GET/POST /api/tenants, POST /api/session/tenant, POST/DELETE /api/tenants/:id/invites, POST /api/invites/accept, PATCH/DELETE /api/tenants/:id/members/:userId, POST /api/tenants/:id/leave。設定・連携(qa-067): GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel(別テナント連携済みは409・qa-069), POST /api/youtube/reconnect(同じチャンネルのみ), DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。スキル連携(個人トークン): GET /api/skill/export, PATCH /api/skill/requests/:id, POST /api/skill/reports, POST /api/skill/transcripts, POST /api/skill/media。操作単位の契約は下の「API: 共通契約」節。
+Hono v4 on Workers の REST。画面用: GET /api/me, GET /api/dashboard(週次ファネルと判定保留理由を含む), POST /api/csv(Studio CSVまたは週次事業CSV), GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff), GET/PATCH /api/actions/:id, GET /api/videos, GET /api/videos/:id, PUT /api/videos/:id/angle, DELETE /api/me/data。テナント: GET/POST /api/tenants, POST /api/session/tenant, POST/DELETE /api/tenants/:id/invites, POST /api/invites/accept, PATCH/DELETE /api/tenants/:id/members/:userId, POST /api/tenants/:id/leave。設定・連携(qa-079): GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel(別テナント連携済みは409・qa-081), POST /api/youtube/reconnect(同じチャンネルのみ), DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。スキル連携(個人トークン): GET /api/skill/export, PATCH /api/skill/requests/:id, POST /api/skill/reports, POST /api/skill/transcripts, POST /api/skill/media。操作単位の契約は下の「API: 共通契約」節。
 
 ## データモデル
 
-D1 の業務テーブル(users, tenants, tenant_members, tenant_invites, channels, oauth_tokens, daily_metrics, video_metrics, csv_imports, video_period_metrics, video_daily_metrics, channel_daily_metrics, business_funnel_weekly, funnel_targets, video_angles, retention_points, transcripts, media_assets, comments, comment_emotions, analysis_requests, reports, findings, psych_findings, actions, skill_tokens)は全て tenant_id を主キー・索引の先頭に持つ。`business_funnel_weekly` は tenant+channel+week で冪等upsertし、`funnel_targets` は metric_id, target_value, min_sample, effective_from を持つ。出典で表を分け、API由来・Studio CSV由来・事業CSV由来を混ぜない。R2 は1バケットでキーを tenants/{tenant_id}/ で分ける。設定画面の追加分(qa-067/qa-069): channels(UNIQUE tenant_id・UNIQUE channel_id・status)、oauth_pending(10分・暗号化)、oauth_tokens.granted_scopes、tenants.captions_auto、skill_tokens.name、tenant_google_clients(テナントの OAuth クライアントID・暗号化シークレット・qa-075)、imports(kind統合の取込履歴)、usage_counters(YouTube units・D1書込行数・字幕取得本数)、usage_snapshots(Cloudflare GraphQL Analytics の1時間キャッシュ)、audit_log。列定義は system-spec/database.md。
+D1 の業務テーブル(users, tenants, tenant_members, tenant_invites, channels, oauth_tokens, daily_metrics, video_metrics, csv_imports, video_period_metrics, video_daily_metrics, channel_daily_metrics, business_funnel_weekly, funnel_targets, video_angles, retention_points, transcripts, media_assets, comments, comment_emotions, analysis_requests, reports, findings, psych_findings, actions, skill_tokens)は全て tenant_id を主キー・索引の先頭に持つ。`business_funnel_weekly` は tenant+channel+week で冪等upsertし、`funnel_targets` は metric_id, target_value, min_sample, effective_from を持つ。出典で表を分け、API由来・Studio CSV由来・事業CSV由来を混ぜない。R2 は1バケットでキーを tenants/{tenant_id}/ で分ける。設定画面の追加分(qa-079/qa-081): channels(UNIQUE tenant_id・UNIQUE channel_id・status)、oauth_pending(10分・暗号化)、oauth_tokens.granted_scopes、tenants.captions_auto、skill_tokens.name、tenant_google_clients(テナントの OAuth クライアントID・暗号化シークレット・qa-087)、imports(kind統合の取込履歴)、usage_counters(YouTube units・D1書込行数・字幕取得本数)、usage_snapshots(Cloudflare GraphQL Analytics の1時間キャッシュ)、audit_log。列定義は system-spec/database.md。
 
 ## 認証・認可
 
-Google OAuth 2.0 Authorization Code + PKCE。scope は openid email youtube.readonly yt-analytics.readonly、access_type=offline(字幕の captions.download を望む利用者だけ youtube.force-ssl を追加同意)。字幕自動取得トグルは既定OFF、ONで incremental authorization により force-ssl を追加し新着動画の字幕を1日5本(1,000units)まで取得、OFFで revoke→読み取り専用で再連携する(qa-064/qa-070)。force-ssl は sensitive scope のため、トグルの一般公開前に検証を申請し、通るまでは運営者テナントのオーナーだけが操作でき他の利用者には『準備中』と表示する(qa-073)。YouTube連携(連携・コールバック・トークン交換/更新・revoke・字幕の追加同意)は、テナントのオーナーが設定画面で登録した自分の Google Cloud プロジェクトの OAuth クライアントで行い、未登録のあいだは連携を始められない。Googleログインはアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し画面・APIに返さない。クライアントIDの変更・削除は既存連携を『要再連携』にする。設定画面には初めての人向けの8手順の準備ガイドを表示する(qa-075/qa-076)。連携・解除・字幕・削除はオーナーのみ。セッションは256bit ランダムIDの HttpOnly/Secure/SameSite=Lax Cookie・30日。Claude Code 用個人トークンは (tenant_id, user_id) ごとに発行し SHA-256 で保存、権限は発行者の役割の範囲。全APIで tenant_id はセッション/トークンから導き、tenant_members で役割を確認する(auth.md / security.md)。
+Google OAuth 2.0 Authorization Code + PKCE。scope は openid email youtube.readonly yt-analytics.readonly、access_type=offline(字幕の captions.download を望む利用者だけ youtube.force-ssl を追加同意)。字幕自動取得トグルは既定OFF、ONで incremental authorization により force-ssl を追加し新着動画の字幕を1日5本(1,000units)まで取得、OFFで revoke→読み取り専用で再連携する(qa-076/qa-082)。force-ssl は sensitive scope のため、トグルの一般公開前に検証を申請し、通るまでは運営者テナントのオーナーだけが操作でき他の利用者には『準備中』と表示する(qa-085)。YouTube連携(連携・コールバック・トークン交換/更新・revoke・字幕の追加同意)は、テナントのオーナーが設定画面で登録した自分の Google Cloud プロジェクトの OAuth クライアントで行い、未登録のあいだは連携を始められない。Googleログインはアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し画面・APIに返さない。クライアントIDの変更・削除は既存連携を『要再連携』にする。設定画面には初めての人向けの8手順の準備ガイドを表示する(qa-087/qa-088)。連携・解除・字幕・削除はオーナーのみ。セッションは256bit ランダムIDの HttpOnly/Secure/SameSite=Lax Cookie・30日。Claude Code 用個人トークンは (tenant_id, user_id) ごとに発行し SHA-256 で保存、権限は発行者の役割の範囲。全APIで tenant_id はセッション/トークンから導き、tenant_members で役割を確認する(auth.md / security.md)。
 
 ## エラー・例外・回復
 
@@ -122,7 +122,7 @@ Cron Trigger は `0 18 * * *`(UTC 18:00 = JST 3:00)の1本だけ。Cron はテ�
 
 ## 可観測性
 
-Workers Logs と設定画面の無料枠メーター(Workers/D1/R2/YouTube units・D1 の1日の書込行数・テナント数と上限)。YouTube Data API units と D1 書込はアプリ内カウンタ、D1容量・R2容量・Workersリクエストは Account Analytics Read トークン(CF_ANALYTICS_TOKEN・Workers Secrets)で GraphQL Analytics API から取得し1時間キャッシュ、全員に合計値だけを表示する(qa-066)。70%で黄・90%で赤(qa-072)。設定・連携・トークン・削除の操作は audit_log に残す。設定画面に最後の収集日時と最後のCSV取込日時を表示する(催促通知は出さない)。
+Workers Logs と設定画面の無料枠メーター(Workers/D1/R2/YouTube units・D1 の1日の書込行数・テナント数と上限)。YouTube Data API units と D1 書込はアプリ内カウンタ、D1容量・R2容量・Workersリクエストは Account Analytics Read トークン(CF_ANALYTICS_TOKEN・Workers Secrets)で GraphQL Analytics API から取得し1時間キャッシュ、全員に合計値だけを表示する(qa-078)。70%で黄・90%で赤(qa-084)。設定・連携・トークン・削除の操作は audit_log に残す。設定画面に最後の収集日時と最後のCSV取込日時を表示する(催促通知は出さない)。
 
 ## 互換性・移行・リリース
 

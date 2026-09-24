@@ -1,4 +1,4 @@
--- テナントごとの Google Cloud OAuth クライアント（YouTube 連携用・system-spec qa-075）
+-- テナントごとの Google Cloud OAuth クライアント（YouTube 連携用・system-spec qa-087）
 -- 登録は必須（未登録のテナントは連携を始められない）。Google ログインはアプリ共通のクライアントのまま。
 -- シークレットは TOKEN_ENC_KEY で暗号化し、API・画面には返さない
 CREATE TABLE tenant_google_clients (

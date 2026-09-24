@@ -1,4 +1,4 @@
-// Claude Code 連携用の個人トークン。平文は発行時に1回だけ返し、DB には SHA-256 だけを保存する（qa-071）
+// Claude Code 連携用の個人トークン。平文は発行時に1回だけ返し、DB には SHA-256 だけを保存する（qa-083）
 import { requirePermission, type TenantContext } from "../domain/tenant-context";
 import { newId, randomToken, sha256Hex } from "../lib/crypto";
 import { AppError } from "../lib/errors";

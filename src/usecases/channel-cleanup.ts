@@ -92,7 +92,7 @@ async function processDeletion(
   // 解除時に通常は消える行も、途中失敗や古い状態からの再実行に備えて掃除する。
   await db.batch([
     db.prepare("DELETE FROM oauth_pending WHERE tenant_id = ?1").bind(tenantId),
-    db.prepare("DELETE FROM oauth_tokens WHERE tenant_id = ?1").bind(tenantId),
+    db.prepare("DELETE FROM channel_oauth_tokens WHERE tenant_id = ?1").bind(tenantId),
     db.prepare("DELETE FROM channels WHERE tenant_id = ?1").bind(tenantId),
     db.prepare("UPDATE tenants SET captions_auto = 0 WHERE tenant_id = ?1").bind(tenantId),
   ]);
@@ -101,7 +101,7 @@ async function processDeletion(
     .prepare(
       `SELECT 1 AS present FROM imports WHERE tenant_id = ?1
        UNION ALL SELECT 1 FROM oauth_pending WHERE tenant_id = ?1
-       UNION ALL SELECT 1 FROM oauth_tokens WHERE tenant_id = ?1
+       UNION ALL SELECT 1 FROM channel_oauth_tokens WHERE tenant_id = ?1
        UNION ALL SELECT 1 FROM channels WHERE tenant_id = ?1
        UNION ALL SELECT 1 FROM import_uploads WHERE tenant_id = ?1
        LIMIT 1`,
@@ -117,7 +117,7 @@ async function processDeletion(
        WHERE deletion_id = ?1 AND scope = 'channel' AND done_at IS NULL AND lease_token = ?3
          AND NOT EXISTS (SELECT 1 FROM imports WHERE tenant_id = data_deletions.tenant_id)
          AND NOT EXISTS (SELECT 1 FROM oauth_pending WHERE tenant_id = data_deletions.tenant_id)
-         AND NOT EXISTS (SELECT 1 FROM oauth_tokens WHERE tenant_id = data_deletions.tenant_id)
+         AND NOT EXISTS (SELECT 1 FROM channel_oauth_tokens WHERE tenant_id = data_deletions.tenant_id)
          AND NOT EXISTS (SELECT 1 FROM channels WHERE tenant_id = data_deletions.tenant_id)
          AND NOT EXISTS (SELECT 1 FROM import_uploads WHERE tenant_id = data_deletions.tenant_id)`,
     )

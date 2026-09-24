@@ -77,7 +77,7 @@ export async function getSettings(deps: Deps, ctx: TenantContext) {
         availability: captionsAvailability(deps.env, ctx),
         dailyLimit: CAPTION_DAILY_LIMIT,
       },
-      // テナントの Google Cloud OAuth クライアント（qa-075）。シークレットは返さない
+      // テナントの Google Cloud OAuth クライアント（qa-087）。シークレットは返さない
       googleClient,
     },
     imports,

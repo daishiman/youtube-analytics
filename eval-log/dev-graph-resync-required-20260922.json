@@ -13,7 +13,7 @@
       ".dev-graph/state/graph.json",
       "architecture/graph.json",
       "eval-log/completeness-findings-20260924-r4.json",
-      "eval-log/dev-graph-spec-import-report-20260924.json"
+      "eval-log/dev-graph-spec-import-report-feat-settings-channel-link-20260924.json"
     ],
     "note": "affected_features 3件の task 計画の再生成は未実施のため、status は required のまま"
   },

@@ -9,7 +9,7 @@
   {
    "item": "macro result は feature/architecture/depends_on のみ・循環/phase-task 混入0",
    "status": "pass",
-   "evidence": "eval-log/dev-graph-decompose-audit-feat-settings-channel-link-20260924.json verdict PASS (3周目)"
+   "evidence": "eval-log/dev-graph-decompose-audit-20260924.json verdict PASS (3周目)"
   },
   {
    "item": "draft/unconfirmed の tracker publication 0",

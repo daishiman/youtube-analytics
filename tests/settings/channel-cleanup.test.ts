@@ -75,7 +75,7 @@ describe("チャンネル解除後の旧データ削除", () => {
         NOW.toISOString(),
       ),
       env.DB.prepare(
-        `INSERT INTO oauth_tokens (tenant_id, channel_id, granted_scopes, updated_at)
+        `INSERT INTO channel_oauth_tokens (tenant_id, channel_id, granted_scopes, updated_at)
          VALUES (?1, ?2, '', ?3)`,
       ).bind(owner.tenantId, `UC_${owner.tenantId}`, NOW.toISOString()),
       env.DB.prepare(
@@ -96,7 +96,7 @@ describe("チャンネル解除後の旧データ削除", () => {
     expect(await env.MEDIA.get(key)).toBeNull();
     expect(await env.MEDIA.get(orphan)).toBeNull();
     expect(await env.MEDIA.get(otherKey)).not.toBeNull();
-    for (const table of ["imports", "oauth_pending", "oauth_tokens", "channels"]) {
+    for (const table of ["imports", "oauth_pending", "channel_oauth_tokens", "channels"]) {
       const row = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE tenant_id = ?1`)
         .bind(owner.tenantId)
         .first<{ n: number }>();

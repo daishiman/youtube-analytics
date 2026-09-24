@@ -150,7 +150,7 @@ async function postForm(
   }
   const body = await res.json().catch(() => null);
   if (!res.ok) {
-    // テナントが持ち込んだクライアント（qa-075）の誤りは、通信障害と分けて登録し直しを案内する
+    // テナントが持ち込んだクライアント（qa-087）の誤りは、通信障害と分けて登録し直しを案内する
     const code = body && typeof body === "object" ? (body as { error?: unknown }).error : undefined;
     if (code === "invalid_client" || code === "unauthorized_client") {
       throw new AppError("GOOGLE_CLIENT_REJECTED");

@@ -1,4 +1,4 @@
-// 「YouTube連携」区画の先頭: テナントの Google Cloud OAuth クライアント（qa-075）。
+// 「YouTube連携」区画の先頭: テナントの Google Cloud OAuth クライアント（qa-087）。
 // 連携の OAuth はこのクライアントで行う（ログインはアプリ共通のまま）。シークレットは送るだけで、画面には戻らない
 import { type FormEvent, useState } from "react";
 import { api, type GoogleClientSummary } from "../../api";

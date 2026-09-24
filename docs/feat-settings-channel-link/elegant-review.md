@@ -31,7 +31,7 @@
 | 23 | プラスサム思考 | 未使用`ShellFrame`の除去は読みやすさと変更安全性の双方を上げる。実際の重複を優先する。 |
 | 24 | 価値提案思考 | 利用者は「安全に分析できるか」を知りたい。処理待ちの取込や意味の違うクォータ表示を完了と誤認させない。 |
 | 25 | 戦略的思考 | Google APIの枠はテナント固有クライアントのプロジェクト単位になった。全テナントのunitsを単一10,000unitsで割らない。 |
-| 26 | why思考 | 誤った使用率←合計/単一上限←カウンタにテナント軸がない←共有クライアント時代の設計←qa-075の影響を横断反映していない。測定単位まで直す。 |
+| 26 | why思考 | 誤った使用率←合計/単一上限←カウンタにテナント軸がない←共有クライアント時代の設計←qa-087の影響を横断反映していない。測定単位まで直す。 |
 | 27 | 改善思考 | 旧データ混在、測定単位、機能間契約、未使用部品、資料の順で修正する。 |
 | 28 | 仮説思考 | 「予約後すぐ再連携可」は旧データがチャンネル別に隔離される場合のみ成立する。現行`imports`はテナント単位なので仮説は棄却する。 |
 | 29 | 論点思考 | 部品数より、画面・API・後続処理が同じライフサイクルと測定単位を語れることが本題。 |
@@ -40,7 +40,7 @@
 ## 照合した主な根拠
 
 - 画面資料: `docs/screens/05-settings.png`、`docs/screens/README.md`、`docs/screens/prompts/05-settings.prompt.txt`
-- 実装: `web/pages/SettingsPage.tsx`、`src/usecases/{settings,youtube,imports,usage}.ts`、`src/repositories/settings-repository.ts`、`migrations/0003_settings_channel_link.sql`
+- 実装: `web/pages/SettingsPage.tsx`、`src/usecases/{settings,youtube,imports,usage}.ts`、`src/repositories/settings-repository.ts`、`migrations/0004_settings_channel_link.sql`
 - 契約: `features/feat-settings-channel-link.md`、`docs/feat-settings-channel-link/{requirements,architecture,runbook,acceptance}.md`、`features/feat-{csv-media-ingest,retention-ops}.md`
 
 ## 検証の範囲

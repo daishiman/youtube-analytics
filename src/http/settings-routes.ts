@@ -68,7 +68,7 @@ settingsRoutes.put("/youtube/captions-auto", async (c) => {
   return c.json(await setCaptionsAuto(c.get("deps"), sessionTenant(c), body.enabled, origin(c)));
 });
 
-/** テナントの Google Cloud OAuth クライアント（qa-075・オーナーのみ）。シークレットは応答に含めない */
+/** テナントの Google Cloud OAuth クライアント（qa-087・オーナーのみ）。シークレットは応答に含めない */
 settingsRoutes.put("/youtube/google-client", async (c) => {
   const body = await readJson(c);
   return c.json(await saveGoogleClient(c.get("deps"), sessionTenant(c), body));

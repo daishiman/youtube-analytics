@@ -32,7 +32,7 @@ project_id: "feature-package-feat-settings-channel-link"
 pull_request_linkages: []
 purpose: null
 related_nodes: ["feat-settings-channel-link"]
-resource_scope: ["web/", "src/", "migrations/0003_settings_channel_link.sql", "public/privacy.html", "public/terms.html"]
+resource_scope: ["web/", "src/", "migrations/0004_settings_channel_link.sql", "public/privacy.html", "public/terms.html"]
 scope_in: []
 scope_out: []
 source_lineage: {"imported_at": "2026-09-24T01:20:21Z", "origin_kind": "system-dev-planner", "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8", "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-05-implementation.md", "source_plugin": "system-dev-planner", "source_version": "0.1.0"}
@@ -67,11 +67,11 @@ updated_at: "2026-09-24T01:20:21Z"
 
 ## 目的
 
-web/components/ に AppShell と共通部品8種を実装して全画面(ログイン・静的ページ含む)へ適用し、設定画面6区画を画像どおりに組む。src/ に settings・youtube 紐付け・captions-auto・imports・skill-tokens・usage の usecase とルート、migrations/0003_settings_channel_link.sql、audit_log 記録を実装する。
+web/components/ に AppShell と共通部品8種を実装して全画面(ログイン・静的ページ含む)へ適用し、設定画面6区画を画像どおりに組む。src/ に settings・youtube 紐付け・captions-auto・imports・skill-tokens・usage の usecase とルート、migrations/0004_settings_channel_link.sql、audit_log 記録を実装する。
 
 ## 背景
 
-feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-062〜qa-074(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-068)。
+feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-074〜qa-086(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-080)。
 
 ## 前提条件
 
@@ -83,7 +83,7 @@ feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を�
 
 ## Workstream applicability
 
-- Frontend: 主。web/components/ に AppShell と共通部品8種を実装して全画面(ログイン・静的ページ含む)へ適用し、設定画面6区画を画像どおりに組む。src/ に settings・youtube 紐付け・captions-auto・imports・skill-tokens・usage の usecase とルート、migrations/0003_settings_channel_link.sql、audit_log 記録を実装する。
+- Frontend: 主。web/components/ に AppShell と共通部品8種を実装して全画面(ログイン・静的ページ含む)へ適用し、設定画面6区画を画像どおりに組む。src/ に settings・youtube 紐付け・captions-auto・imports・skill-tokens・usage の usecase とルート、migrations/0004_settings_channel_link.sql、audit_log 記録を実装する。
 - Backend: 副。共通レイアウト・設定画面・チャンネル紐付け API の実装のうち Backend に関わる部分
 - API: 副。共通レイアウト・設定画面・チャンネル紐付け API の実装のうち API に関わる部分
 - Data: 副。共通レイアウト・設定画面・チャンネル紐付け API の実装のうち Data に関わる部分
@@ -97,16 +97,16 @@ feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を�
 
 - Architecture decisions: arch-youtube-analytics-system
 - Deploy unit/environment: application
-- Compatibility/migration/backfill: migrations/0003_settings_channel_link.sql は追加のみで既存テーブルを壊さない。既存テナントの channels 行は未連携として扱う
+- Compatibility/migration/backfill: migrations/0004_settings_channel_link.sql は追加のみで既存テーブルを壊さない。既存テナントの channels 行は未連携として扱う
 
 ## 成果物
 
 - web/components/(AppShell・PageHeader・SectionCard・StatusBadge・DataTable・UsageBar・DropZone・ConfirmDialog・Toast)
 - web/pages/SettingsPage.tsx
 - src/ 配下の usecase・ルート・repository
-- migrations/0003_settings_channel_link.sql
+- migrations/0004_settings_channel_link.sql
 - Consumed artifacts: features/feat-settings-channel-link.context.json, 先行 task の成果物
-- Write scope: web/, src/, migrations/0003_settings_channel_link.sql, public/privacy.html, public/terms.html
+- Write scope: web/, src/, migrations/0004_settings_channel_link.sql, public/privacy.html, public/terms.html
 
 ## Tracker publication and completion
 

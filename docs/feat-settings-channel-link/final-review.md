@@ -15,9 +15,9 @@
 | S7 | データの削除予約 | `src/usecases/settings.ts`、`web/pages/settings/DeleteSection.tsx` |
 | S8 | 共通の AppShell、Header、Footer と部品 | `web/pages/Shell.tsx`、`web/components/*`（AppShell、PublicLayout、SiteFooter ほか）、`web/main.tsx`、`public/privacy.html`、`public/terms.html`、`web/styles.css` |
 | S9 | 監査と CSRF | `src/http/middleware.ts`、`src/usecases/*`（`audit()`） |
-| S10 | テーブルと削除待ち中の連携確定ガード | `migrations/0003_settings_channel_link.sql`、`migrations/0005_channel_deletion_gate.sql` |
+| S10 | テーブルと削除待ち中の連携確定ガード | `migrations/0004_settings_channel_link.sql`、`migrations/0006_channel_deletion_gate.sql` |
 | S11 | テストと証跡 | `tests/settings/*`、`e2e/settings.spec.ts`、`e2e/smoke.spec.ts`、`e2e/shell-state.spec.ts`、`playwright.config.ts`、`scripts/seed-local.sql`、`evidence/feat-settings-channel-link/*` |
-| S13 | （qa-075）テナントごとの Google Cloud クライアント | `migrations/0004_tenant_google_client.sql`、`src/usecases/google-client.ts`、`src/repositories/settings-repository.ts`、`src/adapters/google-youtube.ts`、`src/lib/errors.ts`、`src/http/settings-routes.ts`、`web/pages/settings/GoogleClientPanel.tsx`、`web/pages/settings/YouTubeSection.tsx`、`tests/settings/google-client.test.ts` |
+| S13 | （qa-087）テナントごとの Google Cloud クライアント | `migrations/0005_tenant_google_client.sql`、`src/usecases/google-client.ts`、`src/repositories/settings-repository.ts`、`src/adapters/google-youtube.ts`、`src/lib/errors.ts`、`src/http/settings-routes.ts`、`web/pages/settings/GoogleClientPanel.tsx`、`web/pages/settings/YouTubeSection.tsx`、`tests/settings/google-client.test.ts` |
 | S12 | 文書と仕様の投影 | `docs/feat-settings-channel-link/*`、`README.md`、`system-spec/frontend.md`（qa-061 の節を承認付きで戻した）、`system-spec/spec-state.json`（reopen → 同じ根拠で再確定。reopen_log に記録） |
 
 ## 2. scope_out を守ったこと
@@ -35,6 +35,6 @@
 | CSV 取得元リンクの仕様への反映 | system-spec には未記載（qa-report.md 3b 節）。次の仕様追補で書き足す |
 | TODO(human) | 利用者から「全部完了させる」と指示があったため、作っていない |
 | preview での確認 | deploy 後に acceptance.md の preview 列を埋める |
-| 本番の既存テナント（qa-075） | deploy 後は、各テナントのオーナーが接続情報を登録するまで、再連携と字幕の設定ができない。保存済みトークンの更新にも登録したクライアントが要るので、deploy 前にオーナーへ案内する |
-| 利用者向けの表記と準備手順（qa-076） | 画面・API エラー・規約の「テナント」を「ワークスペース」に変え、設定画面に Google Cloud の準備手順を追加。仕様へ正規フローで反映済み（eval-log/spec-reflection-receipt-feat-settings-channel-link-20260924.json）。DB に保存済みの名前（例「○○のテナント」）はデータなので変えていない |
-| 仕様評価の深さ | MVP のため qa-075/qa-076 の追補は決定論ゲートだけで確認し、fork evaluator は再実行していない（r4 に明記） |
+| 本番の既存テナント（qa-087） | deploy 後は、各テナントのオーナーが接続情報を登録するまで、再連携と字幕の設定ができない。保存済みトークンの更新にも登録したクライアントが要るので、deploy 前にオーナーへ案内する |
+| 利用者向けの表記と準備手順（qa-088） | 画面・API エラー・規約の「テナント」を「ワークスペース」に変え、設定画面に Google Cloud の準備手順を追加。仕様へ正規フローで反映済み（eval-log/spec-reflection-receipt-feat-settings-channel-link-20260924.json）。DB に保存済みの名前（例「○○のテナント」）はデータなので変えていない |
+| 仕様評価の深さ | MVP のため qa-087/qa-088 の追補は決定論ゲートだけで確認し、fork evaluator は再実行していない（r4 に明記） |

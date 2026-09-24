@@ -63,7 +63,7 @@ describe("YouTube チャンネルの紐付け", () => {
     expect(settings.youtube.scopes).toEqual(["youtube.readonly", "yt-analytics.readonly"]);
 
     const token = await env.DB.prepare(
-      "SELECT refresh_token_enc FROM oauth_tokens WHERE tenant_id = ?1",
+      "SELECT refresh_token_enc FROM channel_oauth_tokens WHERE tenant_id = ?1",
     )
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string }>();
@@ -233,7 +233,7 @@ describe("再連携と連携解除", () => {
     fakeGoogle({ channels: [{ id: ch }] });
     expect((await linkChannel(owner, ch)).status).toBe(201);
     const before = await env.DB.prepare(
-      "SELECT refresh_token_enc FROM oauth_tokens WHERE tenant_id = ?1",
+      "SELECT refresh_token_enc FROM channel_oauth_tokens WHERE tenant_id = ?1",
     )
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string }>();
@@ -247,7 +247,7 @@ describe("再連携と連携解除", () => {
     expect(await callback(owner, { code: "c", state })).toBe("/settings?error=CHANNEL_MISMATCH");
     expect(google.revoked).toEqual(["other-refresh"]);
     const after = await env.DB.prepare(
-      "SELECT o.refresh_token_enc, c.channel_id FROM oauth_tokens o JOIN channels c USING (tenant_id) WHERE tenant_id = ?1",
+      "SELECT o.refresh_token_enc, c.channel_id FROM channel_oauth_tokens o JOIN channels c USING (tenant_id) WHERE tenant_id = ?1",
     )
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string; channel_id: string }>();
@@ -313,7 +313,10 @@ describe("再連携と連携解除", () => {
       await count("SELECT COUNT(*) AS n FROM channels WHERE tenant_id = ?1", owner.tenantId),
     ).toBe(0);
     expect(
-      await count("SELECT COUNT(*) AS n FROM oauth_tokens WHERE tenant_id = ?1", owner.tenantId),
+      await count(
+        "SELECT COUNT(*) AS n FROM channel_oauth_tokens WHERE tenant_id = ?1",
+        owner.tenantId,
+      ),
     ).toBe(0);
     expect(
       await count(
@@ -429,7 +432,10 @@ describe("再連携と連携解除", () => {
       await count("SELECT COUNT(*) AS n FROM channels WHERE tenant_id = ?1", owner.tenantId),
     ).toBe(0);
     expect(
-      await count("SELECT COUNT(*) AS n FROM oauth_tokens WHERE tenant_id = ?1", owner.tenantId),
+      await count(
+        "SELECT COUNT(*) AS n FROM channel_oauth_tokens WHERE tenant_id = ?1",
+        owner.tenantId,
+      ),
     ).toBe(0);
   });
 

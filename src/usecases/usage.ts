@@ -60,7 +60,7 @@ export async function getUsage(deps: Deps): Promise<UsageItem[]> {
   });
   const orNull = (v: number | undefined) => (typeof v === "number" ? v : null);
   const report = (cf: Record<string, number>, tenants: number | null): UsageItem[] => [
-    // qa-075 で OAuth クライアントがテナントごとになった。全体カウンタを
+    // qa-087 で OAuth クライアントがテナントごとになった。全体カウンタを
     // 1プロジェクトの 10,000 units/日で割ると誤警告になるため使用率は不明にする。
     item("youtube_units", "YouTube API（プロジェクトごと・本日）", null, 10_000, "units"),
     // D1 書込行数には索引更新も含まれる。アプリ側に計測処理がない間は 0 と推定しない。

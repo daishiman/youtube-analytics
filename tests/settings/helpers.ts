@@ -79,7 +79,7 @@ export function fakeGoogle(init: Partial<GoogleFake> = {}): GoogleFake {
   return fake;
 }
 
-/** テスト用のテナント Google クライアント（qa-075）。形式チェックを通る値 */
+/** テスト用のテナント Google クライアント（qa-087）。形式チェックを通る値 */
 export const TEST_CLIENT = {
   clientId: "123456789012-testclient0a1b2c3d.apps.googleusercontent.com",
   clientSecret: "GOCSPX-test-secret-0123456789",

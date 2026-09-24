@@ -1,4 +1,4 @@
-// 全画面共通のフッター（ログイン・招待・静的ページも同じ内容・qa-062）。public/*.html も同じ文言を持つ（e2e/settings.spec.ts で一致を検査）
+// 全画面共通のフッター（ログイン・招待・静的ページも同じ内容・qa-074）。public/*.html も同じ文言を持つ（e2e/settings.spec.ts で一致を検査）
 export const FOOTER_BADGES = [
   "OAuthは読み取り専用（字幕ON時は字幕のみ追加許可）",
   "データは利用者ごとに分離",

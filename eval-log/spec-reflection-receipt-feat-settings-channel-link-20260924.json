@@ -30,7 +30,7 @@
     "check:repo": "OK"
   },
   "evidence_ref": "eval-log/completeness-findings-20260924-r4.json",
-  "import_report": "eval-log/dev-graph-spec-import-report-20260924.json",
+  "import_report": "eval-log/dev-graph-spec-import-report-feat-settings-channel-link-20260924.json",
   "digests": {
     "system-spec/ui-ux.md": "35d70f9ef8ffeb44e91ad6076b8453964c4c91ccbb0dc0e69edef0575242bf04",
     "system-spec/frontend.md": "001e19c6dc081a5b190c577ee21979f7491dccdd1fee075288b87815ef2d7421",

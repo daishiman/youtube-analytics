@@ -1,4 +1,4 @@
-// テナントごとの Google Cloud OAuth クライアント（qa-075）。YouTube 連携の OAuth はこのクライアントで行い、
+// テナントごとの Google Cloud OAuth クライアント（qa-087）。YouTube 連携の OAuth はこのクライアントで行い、
 // Google ログインはアプリ共通のクライアント（env.GOOGLE_CLIENT_ID/SECRET）のまま。
 // シークレットは TOKEN_ENC_KEY で暗号化して保存し、API・画面・監査ログには出さない
 import { revokeGoogleToken } from "../adapters/google-youtube";

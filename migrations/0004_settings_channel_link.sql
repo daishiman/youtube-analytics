@@ -1,13 +1,13 @@
--- 設定画面・YouTube チャンネル紐付け（feat-settings-channel-link / system-spec qa-062〜qa-074）
+-- 設定画面・YouTube チャンネル紐付け（feat-settings-channel-link / system-spec qa-074〜qa-086）
 -- 追加のみ。既存テーブルは列追加だけで壊さない。既存テナントは channels 行なし = 未連携として扱う
 
--- 字幕の自動取得（既定 OFF・qa-064）
+-- 字幕の自動取得（既定 OFF・qa-076）
 ALTER TABLE tenants ADD COLUMN captions_auto INTEGER NOT NULL DEFAULT 0 CHECK (captions_auto IN (0, 1));
 
--- 個人トークンの名前（必須・qa-071）。既存行は空文字になり、画面では「（名前なし）」と出す
+-- 個人トークンの名前（必須・qa-083）。既存行は空文字になり、画面では「（名前なし）」と出す
 ALTER TABLE skill_tokens ADD COLUMN name TEXT NOT NULL DEFAULT '';
 
--- 1テナント1チャンネル（qa-063）。channel_id の UNIQUE で別テナントの連携を DB でも拒否する（qa-069）
+-- 1テナント1チャンネル（qa-075）。channel_id の UNIQUE で別テナントの連携を DB でも拒否する（qa-081）
 CREATE TABLE channels (
   tenant_id        TEXT PRIMARY KEY REFERENCES tenants (tenant_id),
   channel_id       TEXT NOT NULL UNIQUE,
@@ -20,8 +20,10 @@ CREATE TABLE channels (
   last_collected_at TEXT                  -- 日次収集（feat-youtube-daily-collection）が更新する
 );
 
--- OAuth の refresh token（暗号化）と付与スコープ（qa-064）。収集ジョブもこの行を読む
-CREATE TABLE oauth_tokens (
+-- OAuth の refresh token（暗号化）と付与スコープ（qa-076）。収集ジョブもこの行を読む
+-- ワークスペースの OAuth クライアント（qa-087）で得たトークンだけを置く。ログイン時の付与記録
+-- oauth_tokens（0003・アプリ共通クライアント）とは発行元が違い、混ぜると更新に失敗するので表を分ける
+CREATE TABLE channel_oauth_tokens (
   tenant_id         TEXT PRIMARY KEY REFERENCES tenants (tenant_id),
   channel_id        TEXT NOT NULL,
   refresh_token_enc TEXT,
@@ -60,7 +62,7 @@ CREATE TABLE imports (
 );
 CREATE INDEX idx_imports_recent ON imports (tenant_id, created_at);
 
--- 無料枠の自前カウンタ（日付 × 種類。全テナント合計・qa-066）
+-- 無料枠の自前カウンタ（日付 × 種類。全テナント合計・qa-078）
 CREATE TABLE usage_counters (
   date  TEXT NOT NULL,                    -- YYYY-MM-DD（UTC。YouTube のクォータ日とずれる点は runbook に記載）
   kind  TEXT NOT NULL CHECK (kind IN ('youtube_units', 'caption_count', 'd1_writes')),

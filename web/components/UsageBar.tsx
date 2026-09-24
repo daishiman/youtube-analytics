@@ -12,7 +12,7 @@ export function formatUsageValue(value: number, unit: string): string {
 
 const LEVEL_TEXT = { ok: "", warn: "（70%超）", danger: "（90%超）", unknown: "" } as const;
 
-/** 無料枠のバー。70% で黄・90% で赤（qa-072）。値が取れないときは「取得できません」 */
+/** 無料枠のバー。70% で黄・90% で赤（qa-084）。値が取れないときは「取得できません」 */
 export function UsageBar({ item }: { item: UsageItem }) {
   const limit = formatUsageValue(item.limit, item.unit);
   const unit = item.unit === "bytes" ? "" : ` ${item.unit}`;

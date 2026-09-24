@@ -88,7 +88,7 @@ export class SettingsRepository {
 
   async getGrantedScopes(): Promise<string[]> {
     const row = await this.db
-      .prepare("SELECT granted_scopes FROM oauth_tokens WHERE tenant_id = ?1")
+      .prepare("SELECT granted_scopes FROM channel_oauth_tokens WHERE tenant_id = ?1")
       .bind(this.tenantId)
       .first<{ granted_scopes: string }>();
     return row ? row.granted_scopes.split(" ").filter(Boolean) : [];
@@ -96,7 +96,7 @@ export class SettingsRepository {
 
   async getRefreshTokenEnc(): Promise<string | null> {
     const row = await this.db
-      .prepare("SELECT refresh_token_enc FROM oauth_tokens WHERE tenant_id = ?1")
+      .prepare("SELECT refresh_token_enc FROM channel_oauth_tokens WHERE tenant_id = ?1")
       .bind(this.tenantId)
       .first<{ refresh_token_enc: string | null }>();
     return row?.refresh_token_enc ?? null;
@@ -186,7 +186,7 @@ export class SettingsRepository {
   }): Promise<void> {
     await this.db.batch([
       this.deleteAllPendingStmt(),
-      this.db.prepare("DELETE FROM oauth_tokens WHERE tenant_id = ?1").bind(this.tenantId),
+      this.db.prepare("DELETE FROM channel_oauth_tokens WHERE tenant_id = ?1").bind(this.tenantId),
       this.db.prepare("DELETE FROM channels WHERE tenant_id = ?1").bind(this.tenantId),
       this.db
         .prepare("UPDATE tenants SET captions_auto = 0 WHERE tenant_id = ?1")
@@ -215,16 +215,16 @@ export class SettingsRepository {
   ): D1PreparedStatement {
     return this.db
       .prepare(
-        `INSERT INTO oauth_tokens (tenant_id, channel_id, refresh_token_enc, granted_scopes, updated_at)
+        `INSERT INTO channel_oauth_tokens (tenant_id, channel_id, refresh_token_enc, granted_scopes, updated_at)
          VALUES (?1, ?2, ?3, ?4, ?5)
          ON CONFLICT (tenant_id) DO UPDATE SET channel_id = excluded.channel_id,
-           refresh_token_enc = COALESCE(excluded.refresh_token_enc, oauth_tokens.refresh_token_enc),
+           refresh_token_enc = COALESCE(excluded.refresh_token_enc, channel_oauth_tokens.refresh_token_enc),
            granted_scopes = excluded.granted_scopes, updated_at = excluded.updated_at`,
       )
       .bind(this.tenantId, channelId, refreshTokenEnc, scopes.join(" "), now);
   }
 
-  // ---- テナントの Google Cloud OAuth クライアント（qa-075） ----
+  // ---- テナントの Google Cloud OAuth クライアント（qa-087） ----
 
   async getGoogleClient(): Promise<GoogleClientRow | null> {
     return this.db
@@ -276,7 +276,7 @@ export class SettingsRepository {
     return [
       this.db
         .prepare(
-          "UPDATE oauth_tokens SET refresh_token_enc = NULL, granted_scopes = '' WHERE tenant_id = ?1",
+          "UPDATE channel_oauth_tokens SET refresh_token_enc = NULL, granted_scopes = '' WHERE tenant_id = ?1",
         )
         .bind(this.tenantId),
       this.db

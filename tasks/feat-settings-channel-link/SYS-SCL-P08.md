@@ -71,7 +71,7 @@ updated_at: "2026-09-24T01:20:21Z"
 
 ## 背景
 
-feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-062〜qa-074(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-068)。
+feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を画像どおりに実装し、1テナント1チャンネルの YouTube 紐付けと共通レイアウト AppShell を全画面へ提供する feature である。根拠は確定仕様 system-spec の qa-074〜qa-086(ui-ux/frontend/backend/auth/security/database/maintenance-ops 章)にあり、配色は web/styles.css の既存 CSS 変数だけを使う(qa-080)。
 
 ## 前提条件
 
@@ -97,7 +97,7 @@ feat-settings-channel-link は、設定画面(docs/screens/05-settings.png)を�
 
 - Architecture decisions: arch-youtube-analytics-system
 - Deploy unit/environment: application
-- Compatibility/migration/backfill: migrations/0003_settings_channel_link.sql は追加のみで既存テーブルを壊さない。既存テナントの channels 行は未連携として扱う
+- Compatibility/migration/backfill: migrations/0004_settings_channel_link.sql は追加のみで既存テーブルを壊さない。既存テナントの channels 行は未連携として扱う
 
 ## 成果物
 

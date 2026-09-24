@@ -47,7 +47,7 @@ completion_evidence: {"policy": "manual", "status": "not_applicable", "source": 
 implementation_readiness: {"status": "complete", "missing_sections": [], "checked_at": "2026-09-24T09:17:58Z"}
 ---
 
-正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-report-20260921-r6.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。qa-060の週次売上ファネルとpsc-001の分析履歴は手動追補済みで、生成lineageの正式再同期は`eval-log/dev-graph-resync-required-20260922.json`をgateとする。2026-09-24 の設定画面・チャンネル紐付け・共通レイアウト(qa-062〜qa-074)は正規フロー(evaluator r3 PASS)で取り込み、lineage を更新した。qa-075(テナントごとの Google Cloud OAuth クライアント)と qa-076(利用者向け表記『ワークスペース』・準備手順)も同じ経路で追補した。
+正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-report-20260921-r6.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。qa-060の週次売上ファネルとpsc-001の分析履歴は手動追補済みで、生成lineageの正式再同期は`eval-log/dev-graph-resync-required-20260922.json`をgateとする。2026-09-24 の設定画面・チャンネル紐付け・共通レイアウト(qa-074〜qa-086)は正規フロー(evaluator r3 PASS)で取り込み、lineage を更新した。qa-087(テナントごとの Google Cloud OAuth クライアント)と qa-088(利用者向け表記『ワークスペース』・準備手順)も同じ経路で追補した。
 
 # Architecture overview
 
@@ -82,7 +82,7 @@ Cloudflare Workers(Free)1本に Hono の REST API・React SPA の静的配信・
 - 認可: tenant_id はセッション/トークンからだけ導出し、全クエリの先頭条件にする。
 - エラー: {error:{code,message,hint}}。
 - 出典: 全ての値に `source=api|studio_csv|business_csv` を持たせる。M1〜M10と週次診断のYouTube側入力は`studio_csv`だけで計算し、`lead_route_rate`は分子`business_csv`・分母`studio_csv`の複合由来を保持する。
-- 秘密: wrangler secret のみ(TOKEN_ENC_KEY, GOOGLE_CLIENT_SECRET, CF_ANALYTICS_TOKEN=Account Analytics Read のみ・qa-066)。GitHub Secrets は CLOUDFLARE_API_TOKEN(最小権限)と CLOUDFLARE_ACCOUNT_ID。
+- 秘密: wrangler secret のみ(TOKEN_ENC_KEY, GOOGLE_CLIENT_SECRET, CF_ANALYTICS_TOKEN=Account Analytics Read のみ・qa-078)。GitHub Secrets は CLOUDFLARE_API_TOKEN(最小権限)と CLOUDFLARE_ACCOUNT_ID。
 - 保持: 指標以外のAPIデータは fetched_at を持ち30日で削除。
 
 ## Subtype architecture
@@ -97,12 +97,12 @@ frontend / backend / infrastructure / data / security の5 subtype を下に記�
 - 集約: 「レポート版」(追記のみ)と「改善アクション」(一方向遷移)の2集約。
 - 週次診断: 5原因指標と結果指標を分離し、負のtarget_gapが最小の1段だけを改善候補にする。全指標目標達成時は候補を作らず、因果を断定しない。
 - 履歴: 同一tenant+channelの完了済み直近5版を既存レポートから射影し、HTML本体を重複保存しない。
-- チャンネル紐付け: 1テナント1チャンネル(channels の UNIQUE tenant_id / UNIQUE channel_id)。OAuth後に channels.list mine=true から選び、別テナント連携済みは409、変更は解除→旧データ7日以内削除→再連携(qa-063/qa-069)。
-- 段階的認可(D-auth): 既定は読み取り専用。字幕自動取得を ON にした人だけ force-ssl を追加同意し captions.download にだけ使う。sensitive scope の検証が通るまで運営者のみ操作可(qa-064/qa-073)。
-- 共通レイアウト: 全画面を AppShell(Sidebar+Header+main+Footer)で包み、ログイン・静的ページも同じ Footer を使う。色は既存CSS変数のみ(qa-067/qa-068)。
-- YouTube連携の OAuth クライアント(qa-075): テナントごとに必須で持ち込む(tenant_google_clients・シークレットは TOKEN_ENC_KEY で暗号化)。ログインはアプリ共通クライアントのまま。クォータと OAuth 未検証公開の100人上限は、YouTube連携についてはテナントの Google Cloud プロジェクト単位になる。
-- 利用者向けの語(qa-076): 画面・APIエラー・規約では『ワークスペース』。識別子と開発者向け文書は tenant のまま。
-- 無料枠の外部値: Cron を増やさず、設定画面の表示時に GraphQL Analytics API を読み1時間キャッシュする(qa-066/qa-067)。
+- チャンネル紐付け: 1テナント1チャンネル(channels の UNIQUE tenant_id / UNIQUE channel_id)。OAuth後に channels.list mine=true から選び、別テナント連携済みは409、変更は解除→旧データ7日以内削除→再連携(qa-075/qa-081)。
+- 段階的認可(D-auth): 既定は読み取り専用。字幕自動取得を ON にした人だけ force-ssl を追加同意し captions.download にだけ使う。sensitive scope の検証が通るまで運営者のみ操作可(qa-076/qa-085)。
+- 共通レイアウト: 全画面を AppShell(Sidebar+Header+main+Footer)で包み、ログイン・静的ページも同じ Footer を使う。色は既存CSS変数のみ(qa-079/qa-080)。
+- YouTube連携の OAuth クライアント(qa-087): テナントごとに必須で持ち込む(tenant_google_clients・シークレットは TOKEN_ENC_KEY で暗号化)。ログインはアプリ共通クライアントのまま。クォータと OAuth 未検証公開の100人上限は、YouTube連携についてはテナントの Google Cloud プロジェクト単位になる。
+- 利用者向けの語(qa-088): 画面・APIエラー・規約では『ワークスペース』。識別子と開発者向け文書は tenant のまま。
+- 無料枠の外部値: Cron を増やさず、設定画面の表示時に GraphQL Analytics API を読み1時間キャッシュする(qa-078/qa-079)。
 
 ## Delivery, migration and rollback
 
@@ -110,8 +110,8 @@ GitHub Actions で PR 時 dry-run、main push で D1 migrations → deploy。ロ
 
 ## Risks and verification
 
-- 無料枠超過 → 無料枠メーターで70%黄・90%赤(qa-072)、MAX_TENANTS=100、字幕取得は1日5本=1,000units(qa-070)。
-- force-ssl 未検証の警告画面と100アカウント上限 → 字幕トグル一般公開前に検証申請(qa-073)。
+- 無料枠超過 → 無料枠メーターで70%黄・90%赤(qa-084)、MAX_TENANTS=100、字幕取得は1日5本=1,000units(qa-082)。
+- force-ssl 未検証の警告画面と100アカウント上限 → 字幕トグル一般公開前に検証申請(qa-085)。
 - OAuth 未検証公開の100人上限 → 80人で検証申請。
 - Reporting レポートの60日失効 → CSV で補う runbook。
 - 越境 → 認可テストと E2E(403/404)。
@@ -129,7 +129,7 @@ React + Vite + React Router の SPA を Workers の静的アセットで配信�
 
 ## Component and design-system boundaries
 
-グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-068)。
+グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
 
 ## State and data flow
 
@@ -201,7 +201,7 @@ Queue の再試行と翌日の直近7日取り直し。削除は即時実行+毎
 
 ## Infrastructure verification
 
-`wrangler deploy --dry-run`、28日連続の収集完了監視(O1)、無料枠メーター70%黄・90%赤(qa-072)。
+`wrangler deploy --dry-run`、28日連続の収集完了監視(O1)、無料枠メーター70%黄・90%赤(qa-084)。
 
 # Data architecture
 
@@ -237,7 +237,7 @@ M1=16.97% 固定値テスト、空欄と0の区別、`source=api|studio_csv|busi
 
 ## Identity and authorization
 
-Google OAuth + PKCE、セッションCookie、個人トークン(SHA-256 保存)。役割の権限表(owner/editor/viewer)を usecase 入口で検査。最後の owner は外せない。連携・解除・字幕トグル・データ削除はオーナーのみ。連携トークンは1人5本まで(qa-071)で発行にレート制限を掛ける。状態変更APIは Origin を検査する。
+Google OAuth + PKCE、セッションCookie、個人トークン(SHA-256 保存)。役割の権限表(owner/editor/viewer)を usecase 入口で検査。最後の owner は外せない。連携・解除・字幕トグル・データ削除はオーナーのみ。連携トークンは1人5本まで(qa-083)で発行にレート制限を掛ける。状態変更APIは Origin を検査する。
 
 ## Data and secret protection
 

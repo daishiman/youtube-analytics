@@ -15,7 +15,7 @@
 4. 「OAuth 同意画面」の公開ステータスを「本番環境」にする。「テスト」のままだと許可が7日で切れて、毎週「要再連携」になる。
 5. 表示されたクライアント ID とシークレットを、設定画面「YouTube連携」→「Google Cloud の接続情報」に登録する（オーナーのみ）。
 
-**qa-075 以降、1〜5 はテナントごとの作業**になった。各テナントのオーナーが自分の Google Cloud プロジェクトで行う（API の利用枠もそのプロジェクトのものを使う）。画面の「Google Cloud Console での準備手順」に同じ内容がある。アプリ共通のクライアント（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`）はログイン専用で、リダイレクト URI は `/api/auth/callback` のまま。
+**qa-087 以降、1〜5 はテナントごとの作業**になった。各テナントのオーナーが自分の Google Cloud プロジェクトで行う（API の利用枠もそのプロジェクトのものを使う）。画面の「Google Cloud Console での準備手順」に同じ内容がある。アプリ共通のクライアント（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`）はログイン専用で、リダイレクト URI は `/api/auth/callback` のまま。
 
 ## 2. D1 のテーブルを増やす
 
@@ -26,9 +26,9 @@ pnpm db:migrate:local    # ローカル
 pnpm db:migrate:remote   # 本番（通常は deploy.yml が自動で実行する）
 ```
 
-`migrations/0003_settings_channel_link.sql` 以降の設定関連 migration は追加・保護用で、既存の行は消さない。チャンネル削除ジョブと取込中の競合を防ぐため、Queue consumer を有効にする前に最新 migration まで適用する。
+`migrations/0004_settings_channel_link.sql` 以降の設定関連 migration は追加・保護用で、既存の行は消さない。チャンネル削除ジョブと取込中の競合を防ぐため、Queue consumer を有効にする前に最新 migration まで適用する。
 
-`0006_channel_cleanup_write_gate.sql` は未完了の旧予約を世代0の削除対象にし、予約履歴があるテナントの新規取込を世代1へ移す。すでに完了した旧予約は当時の R2 キーに旧/新の印がないため、後続sweepから除外する。
+`0007_channel_cleanup_write_gate.sql` は未完了の旧予約を世代0の削除対象にし、予約履歴があるテナントの新規取込を世代1へ移す。すでに完了した旧予約は当時の R2 キーに旧/新の印がないため、後続sweepから除外する。
 
 ## 3. 無料枠の表示（Cloudflare の値）
 

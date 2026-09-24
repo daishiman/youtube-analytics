@@ -311,7 +311,7 @@
     },
     {
       "id": "AC11",
-      "criterion": "(qa-075) YouTube 連携はテナントの Google Cloud クライアントで行い、未登録なら連携できない。シークレットは暗号化し返さない",
+      "criterion": "(qa-087) YouTube 連携はテナントの Google Cloud クライアントで行い、未登録なら連携できない。シークレットは暗号化し返さない",
       "verdict_local": "pass",
       "evidence": [
         {
@@ -337,7 +337,7 @@
         {
           "kind": "spec",
           "path": "system-spec/spec-state.json",
-          "note": "qa-075"
+          "note": "qa-087"
         }
       ]
     }

@@ -2,7 +2,7 @@ import { type FormEvent, type ReactNode, useState } from "react";
 import { Modal } from "./Modal";
 
 /**
- * 確認ダイアログ（window.confirm の代わり）。confirmText を渡すと、その文字列の入力を求める（危険操作・qa-067）
+ * 確認ダイアログ（window.confirm の代わり）。confirmText を渡すと、その文字列の入力を求める（危険操作・qa-079）
  */
 export function ConfirmDialog({
   open,

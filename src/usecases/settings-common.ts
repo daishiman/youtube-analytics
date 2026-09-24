@@ -8,7 +8,7 @@ import { SettingsRepository, UsageRepository } from "../repositories/settings-re
 import { type Deps, iso } from "./common";
 
 export const DELETION_GRACE_MS = 7 * 24 * 60 * 60 * 1000;
-/** 字幕の自動取得は1日5本まで（captions.download 200 units × 5 = 1,000 units・qa-070） */
+/** 字幕の自動取得は1日5本まで（captions.download 200 units × 5 = 1,000 units・qa-082） */
 export const CAPTION_DAILY_LIMIT = 5;
 export const NEXT_COLLECTION_TEXT = "毎日 3:00 JST";
 
@@ -39,7 +39,7 @@ export async function rateLimit(deps: Deps, key: string, limit: number, windowMs
 export type CaptionsAvailability = "available" | "preparing";
 
 /**
- * force-ssl の Google 検証が通るまでは、運営者テナントのオーナーだけが字幕トグルを使える（qa-070）。
+ * force-ssl の Google 検証が通るまでは、運営者テナントのオーナーだけが字幕トグルを使える（qa-082）。
  * 検証後は FORCE_SSL_VERIFIED=1 で全テナントのオーナーへ開放する
  */
 export function captionsAvailability(env: Bindings, ctx: TenantContext): CaptionsAvailability {

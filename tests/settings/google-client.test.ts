@@ -1,4 +1,4 @@
-// qa-075: テナントごとに Google Cloud OAuth クライアントを持ち込む（登録は必須・シークレットは返さない）
+// qa-087: テナントごとに Google Cloud OAuth クライアントを持ち込む（登録は必須・シークレットは返さない）
 import { env } from "cloudflare:workers";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { addMember, call, count, expectError, newOwner } from "../platform/helpers";
@@ -179,7 +179,7 @@ describe("テナントの Google Cloud クライアント", () => {
     expect((await settingsOf(owner.cookie)).youtube.status).toBe("要再連携");
     expect(google.revoked).toEqual([google.refreshToken]);
     const token = await env.DB.prepare(
-      "SELECT refresh_token_enc FROM oauth_tokens WHERE tenant_id = ?1",
+      "SELECT refresh_token_enc FROM channel_oauth_tokens WHERE tenant_id = ?1",
     )
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string | null }>();

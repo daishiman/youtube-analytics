@@ -163,7 +163,7 @@ describe("字幕 ON / OFF", () => {
     expect(s.youtube.captions.enabled).toBe(false);
     expect(await auditCount(owner.tenantId, "captions.off")).toBe(1);
     const row = await env.DB.prepare(
-      "SELECT refresh_token_enc FROM oauth_tokens WHERE tenant_id = ?1",
+      "SELECT refresh_token_enc FROM channel_oauth_tokens WHERE tenant_id = ?1",
     )
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string | null }>();

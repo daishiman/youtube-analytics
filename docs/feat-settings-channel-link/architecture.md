@@ -55,7 +55,7 @@ main.tsx（react-router）
 | `GET/POST /api/skill-tokens`、`DELETE /api/skill-tokens/:id` | 所属者 / 編集者以上 | POST は 201 で平文を1回だけ返す | 409 TOKEN_LIMIT、404 |
 | `POST /api/tenant/delete` | オーナー | `{dueAt}`（削除予約。二重受付しない） | 400 CONFIRM_MISMATCH |
 
-## 4. テーブル（`migrations/0003_settings_channel_link.sql`）
+## 4. テーブル（`migrations/0004_settings_channel_link.sql`）
 
 追加だけで、既存テーブルは列を足すだけにとどめる。
 
@@ -64,7 +64,7 @@ main.tsx（react-router）
 | `tenants.captions_auto` | 0/1。既定 0 |
 | `skill_tokens.name` | 必須（既存行は空文字） |
 | `channels` | PK `tenant_id`（1テナント1チャンネル）、`channel_id UNIQUE`（別テナントの連携を DB でも拒否）、`status IN ('正常','要再連携')` |
-| `oauth_tokens` | refresh token は AES-GCM で暗号化（`v1.<iv>.<ct>`）。`granted_scopes` は空白区切り |
+| `channel_oauth_tokens` | refresh token は AES-GCM で暗号化（`v1.<iv>.<ct>`）。`granted_scopes` は空白区切り |
 | `oauth_pending` | state ごとの一時状態（10分）。verifier、候補、トークンは暗号化 |
 | `imports` | csv / caption / image を1つにまとめた履歴。`(tenant_id, created_at)` の index |
 | `usage_counters` / `usage_snapshots` | 前者は後続の日次収集で計測を実装するための準備済みテーブル（現時点で設定画面の使用率には使わない）。後者は Cloudflare 値の1時間キャッシュ |
@@ -72,7 +72,7 @@ main.tsx（react-router）
 | `data_deletions` | 解除とテナント削除の予約。`due_at` は受付から7日以内の期限、`done_at` は削除実行の完了証跡 |
 | `rate_limits` | OAuth 開始（20回/時）、トークン発行（10回/時） |
 
-`migrations/0005_channel_deletion_gate.sql` は削除待ち中の新チャンネル保存を拒否する。`0006_channel_cleanup_write_gate.sql` は削除予約の lease と対象世代、テナントの取込世代、R2.put 前の `import_uploads` 台帳、削除待ち中の取込拒否を加える。取込の D1 INSERT は開始時の世代と現在世代が一致するときだけ通す。移行前の未完了予約は旧世代0を対象にし、すでに完了した旧予約は原本の旧/新を識別できないため後続sweepから除外する。
+`migrations/0006_channel_deletion_gate.sql` は削除待ち中の新チャンネル保存を拒否する。`0007_channel_cleanup_write_gate.sql` は削除予約の lease と対象世代、テナントの取込世代、R2.put 前の `import_uploads` 台帳、削除待ち中の取込拒否を加える。取込の D1 INSERT は開始時の世代と現在世代が一致するときだけ通す。移行前の未完了予約は旧世代0を対象にし、すでに完了した旧予約は原本の旧/新を識別できないため後続sweepから除外する。
 
 ## 5. 連携の状態遷移
 

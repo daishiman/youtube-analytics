@@ -1,4 +1,4 @@
-// ログイン後の全画面に共通の枠（サイドバー＋ヘッダー＋本文＋フッター）。qa-062・qa-063
+// ログイン後の全画面に共通の枠（サイドバー＋ヘッダー＋本文＋フッター）。qa-074・qa-075
 // 900px 未満はサイドバーのナビを画面下部のタブへ切り替える
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useSearchParams } from "react-router";

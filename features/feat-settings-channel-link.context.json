@@ -19,8 +19,8 @@
     "データを削除区画の UI と POST /api/tenant/delete の呼出し(削除処理本体は feat-retention-ops)",
     "設定・連携・トークン・削除の操作を audit_log に記録、書込系はオーナーのみ・Origin 検査・レート制限",
     "runbook『チャンネルを変更する』と設定画面の Playwright 3サイズ E2E",
-    "YouTube連携の OAuth クライアントをテナントごとに必須で持ち込む(qa-075): GET/PUT/DELETE /api/youtube/google-client と tenant_google_clients(シークレットは TOKEN_ENC_KEY で暗号化・画面/APIに返さない)。未登録のあいだは連携ボタンを押せず、クライアントIDの変更・削除は既存連携を『要再連携』にする",
-    "利用者向けの表記を『ワークスペース』にし、設定画面に Google Cloud Console の準備手順(8手順+よくあるエラーの対処)を表示する(qa-076)"
+    "YouTube連携の OAuth クライアントをテナントごとに必須で持ち込む(qa-087): GET/PUT/DELETE /api/youtube/google-client と tenant_google_clients(シークレットは TOKEN_ENC_KEY で暗号化・画面/APIに返さない)。未登録のあいだは連携ボタンを押せず、クライアントIDの変更・削除は既存連携を『要再連携』にする",
+    "利用者向けの表記を『ワークスペース』にし、設定画面に Google Cloud Console の準備手順(8手順+よくあるエラーの対処)を表示する(qa-088)"
   ],
   "scope_out": [
     "日次収集ジョブ本体と refresh token の暗号化保存・更新(feat-youtube-daily-collection)",

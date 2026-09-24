@@ -91,7 +91,7 @@ export interface Settings {
     lastCsvImportAt: string | null;
     scopes: string[];
     captions: { enabled: boolean; availability: "available" | "preparing"; dailyLimit: number };
-    /** テナントの Google Cloud OAuth クライアント（qa-075）。シークレットは返らない */
+    /** テナントの Google Cloud OAuth クライアント（qa-087）。シークレットは返らない */
     googleClient: GoogleClientSummary;
     /** 連携解除後、旧チャンネルの削除が完了するまでの期限。未処理なら null */
     pendingDeletionDueAt: string | null;

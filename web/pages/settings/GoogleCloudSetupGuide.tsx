@@ -1,4 +1,4 @@
-// Google Cloud Console での準備手順（qa-075）。Google Cloud を触ったことがない人が、
+// Google Cloud Console での準備手順（qa-087）。Google Cloud を触ったことがない人が、
 // 上から順に1つずつ進めれば「接続情報」を用意できる粒度で書く。画面名は日本語表示を基準に、英語表示の名前を括弧で添える
 import { type ReactNode, useState } from "react";
 import { useToast } from "../../components/Toast";
