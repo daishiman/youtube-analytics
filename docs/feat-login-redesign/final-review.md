@@ -1,6 +1,6 @@
 # feat-login-redesign 最終レビュー（SYS-LRD-P10）
 
-最終更新: 2026-09-24。差分は `git diff HEAD`（main 5f978da からの未コミット変更）と新規ファイル。dev-graph や仕様生成の成果物（`.dev-graph/`、`eval-log/`、`system-spec/`、`specs/`、`architecture/`、`features/`、`tasks/`、`issues/`）は計画工程の出力なので、ここでは実装差分だけを扱う。
+最終更新: 2026-09-24。対象は `feat-login-redesign` の実装差分。dev-graph や仕様生成の成果物（`.dev-graph/`、`eval-log/`、`system-spec/`、`specs/`、`architecture/`、`features/`、`tasks/`、`issues/`）は計画工程の出力なので、ここでは実装差分だけを扱う。
 
 ## 1. 差分と scope_in の対応
 
@@ -60,7 +60,7 @@ scope_in の番号は `features/feat-login-redesign.context.json` の並び順�
 
 | 事項 | 内容 | 対応 |
 |---|---|---|
-| リポジトリ整合性検査 | resync gate の `current_source_digest` / `current_architecture_digest` を、system-spec の正規フローで正本へ取り込んだ qa-062〜qa-073 の現在値に合わせた（`digest_refresh_log` に記録。PR #2 と同じ扱い）。`generated_from_digest` と gate の status は変えていない。`pnpm check:repo` は OK | 旧3 feature と本 feature の graph node の内容同期（C14 の正式な再分解）は未実施。`eval-log/feat-login-redesign-resync-preview-20260924.md` の対象4ノードを、正式経路が使えるようになった時点で再投影する |
+| リポジトリ整合性検査 | 旧3 feature と本 feature の4ノードは、現行 context・Markdown に合わせて限定ローカル再投影し、別担当が監査した。graph revision 6→7、schema・DAG・内容照合と `pnpm check:repo` は OK。[再同期記録](../../eval-log/dev-graph-targeted-resync-receipt-20260924.json) | 正式な C14 compile/decompose は未実施。Claude Code 2.1.62 はプラグイン manifest の `dependencies` を受理せず、正式 apply には Beads 投影も含まれる。旧3 feature の task 計画前ゲートは開いたまま |
 | アカウント削除から同意記録を消す | `deleteConsentRecords` は用意済みだが呼び出し元がない | アカウント削除を作る feature |
 | preview での実 Google 確認 | acceptance.md §3 | merge・デプロイ後 |
 | main への push で migration とデプロイ | 受入 10 | P13 |

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "derived_from": ".dev-graph/state/graph.json",
-  "derived_graph_revision": 6,
+  "derived_graph_revision": 7,
   "nodes": [
     {
       "id": "arch-youtube-analytics-system",

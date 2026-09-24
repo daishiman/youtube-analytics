@@ -1,0 +1,54 @@
+{
+  "architecture_doc_sha256": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
+  "audited_stage_sha256": "31fe816cd58339d355da48f60bb5f291e12778d022527a299c3187de38b6de6f",
+  "auditor": "separate read-only projected-graph audit using dev-graph validate-graph-schema.py library",
+  "baseline_graph_sha256": "4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143",
+  "canonical_source_sha256": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+  "changed_fields": {
+    "feat-csv-media-ingest": [
+      "acceptance",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ],
+    "feat-login-redesign": [
+      "scope_in"
+    ],
+    "feat-skill-analysis-reports": [
+      "acceptance",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ],
+    "feat-web-screens-actions": [
+      "acceptance",
+      "goal",
+      "purpose",
+      "scope_in",
+      "source_lineage"
+    ]
+  },
+  "checks": {
+    "canonical_digests_current": true,
+    "content_equal_context_and_markdown": true,
+    "dependencies_preserved_and_dag": true,
+    "node_ids_and_count_preserved": true,
+    "non_target_nodes_unchanged": true,
+    "schema_and_artifact_parity": true
+  },
+  "evaluated_content_digest_formula": "sha256(UTF-8 canonical JSON of graph_node_id,purpose,goal,scope_in,scope_out,acceptance,depends_on,source_digest; sort_keys=True; separators=(comma,colon); ensure_ascii=False)",
+  "evaluated_content_digests": {
+    "feat-csv-media-ingest": "9ba0dc91f8188dc2f9f1463afce3a7bc8cb81a4a80975f95c63dac35de4b6006",
+    "feat-login-redesign": "0cebb55575e920459406972afd4afa1c7fa289a9926d1967db06ec6a622b28a6",
+    "feat-skill-analysis-reports": "1757c7940b6cf27b414bb8c540cbdd3f4a7ac1804f767deb1c086d2e026dbfa8",
+    "feat-web-screens-actions": "e45ab702cc3060bb0b8778b7cb68a25dd64abddda00166dfc815bc32fa6a641c"
+  },
+  "external_writes": false,
+  "graph_revision_before": 6,
+  "graph_revision_staged": 7,
+  "issues": [],
+  "validator_findings": [],
+  "verdict": "PASS"
+}

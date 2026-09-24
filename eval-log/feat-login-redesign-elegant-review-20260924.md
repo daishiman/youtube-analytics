@@ -52,13 +52,17 @@
 - ライトテーマに統一し、重複した色定義を削除。948×1659・同意済み・開発フォームなしの [比較画像](../evidence/feat-login-redesign/login-948-production-like.png) ではカードが x=162、y=248、w=624、h=847。元画像との差は位置・寸法が数 px。色・背景・ロゴ・Google Light ボタンは qa-063/qa-067 に基づく意図的な差。
 - 文書の誤った画像比較・部品共有・seed 状態を訂正。`pnpm test` **124/124**、`pnpm e2e` **69/69**、`pnpm lint`、`pnpm typecheck`、`pnpm build:web`、`pnpm check:release`、`git diff --check` が通過。ローカルの `http://localhost:8791/api/health` は 200 を返す。
 
-### 残る判定
+### 第2改善・独立再検証
 
-ワークツリー全体として **incomplete**。`pnpm check:repo` は当初6件から2件へ減ったが、旧 resync gate の source/architecture digest は正式な C14 再分解前なので更新していない。gate 指定の既存3 feature と、今回のログイン feature の graph node 1件に文書との意味的な差が残る。C14 は対象 ID を限定する引数がなく、4件とも Beads binding なので、対象外ノードや外部 tracker を変えずに適用できることを確認するまで graph を直接編集しない。main push 後の migration/deploy と実 Google OAuth の本番受入も未実施。
+利用者が承認した限定ローカル再投影で、旧3 feature とログイン feature の計4 graph node を現行 context・Markdown に同期した。graph revision は 6→7。変更対象、全ノード ID の維持、内容、source digest、依存 DAG、schema を別担当が読み取り専用で検証し、[再同期記録](dev-graph-targeted-resync-receipt-20260924.json)と[監査記録](dev-graph-targeted-resync-audit-20260924.json)に残した。`pnpm check:repo`、`pnpm check:release`、`git diff --check` は通過した。Beads・GitHub・本番環境への書込みは行っていない。
 
-| 条件 | 現在 | 根拠 |
+### 最終判定
+
+ローカルの実装・graph 投影に限れば、矛盾なし・漏れなし・整合性あり・依存関係整合の4条件は **PASS**。ただし、旧3 feature の task 計画前に必要な正式 C14 compile/decompose は実行できず、[既存ゲート](dev-graph-resync-required-20260922.json)を維持した。Claude Code 2.1.62 は dev-graph のプラグイン manifest の `dependencies` を受理せず、正式 apply には Beads 投影も含まれる。今回のローカル再投影を正式経路の完了とは扱わない。実 Google OAuth と main への migration/deploy の本番受入も未実施である。このため**プロジェクト全体の完了判定は未達**。
+
+| 条件 | ローカル実装・投影 | プロジェクト全体の留保 |
 |---|---|---|
-| 矛盾なし | FAIL | graph の4 feature node が更新済み context/Markdown と一致しない |
-| 漏れなし | FAIL | C14 再分解、実 Google と deploy の受入が未完了 |
-| 整合性あり | FAIL | `pnpm check:repo` に digest 不一致が2件残る |
-| 依存関係整合 | FAIL | graph source lineage と現行仕様の対応を正式に再投影できていない |
+| 矛盾なし | PASS | 正式ゲートと lineage の関係は正式再生成時に確定する |
+| 漏れなし | PASS | 正式 C14 と本番受入が未実施 |
+| 整合性あり | PASS | `pnpm check:repo` と別担当の内容監査が通過 |
+| 依存関係整合 | PASS | DAG は通過。旧3 feature の計画前ゲートは開いたまま |

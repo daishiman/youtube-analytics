@@ -8,7 +8,7 @@ classification_candidates: [{"artifact_kind": "feature", "confidence": 0.95, "ca
 classification_confidence: 0.95
 classification_reason: "C14 macro 分解で確定仕様から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない"
 completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manual", "reconciled_at": null, "source": null, "status": "not_applicable"}
-confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json", "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9"}
+confirmation_evidence: {"evaluator": "dev-graph:local-targeted-projection-audit", "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json", "evaluated_digest": "1757c7940b6cf27b414bb8c540cbdd3f4a7ac1804f767deb1c086d2e026dbfa8"}
 confirmation_status: "confirmed"
 created_at: "2026-09-21T15:15:00Z"
 depends_on: ["feat-youtube-daily-collection", "feat-csv-media-ingest"]
@@ -35,7 +35,7 @@ related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
 scope_in: ["(tenant_id,user_id)単位の個人トークン発行(平文1回表示・SHA-256 保存)と失効", "analysis_requests(待機中→実行中→完了|失敗)と GET/POST /api/analysis-requests", "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)", "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport", "5つの原因指標と結果指標を問う分析、負のtarget_gap最小を改善候補とし、全指標0以上なら候補なしと示す非因果的な出力", "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード", "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存", "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較", "Claude Code 用 /yt-analyze スキルと運営者 Mac の launchd 週次実行"]
 scope_out: ["レポート閲覧画面と改善アクション画面(feat-web-screens-actions)", "アプリ内 LLM 呼出し", "因果推論・予測"]
-source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
+source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
 tags: ["feature", "youtube-analytics"]
@@ -102,4 +102,4 @@ Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・�
 
 exact-13 の task 仕様は system-dev-planner が `--feature-id feat-skill-analysis-reports --feature-context features/feat-skill-analysis-reports.context.json` で生成する。本ノードは task を持たない。
 
-本追補はユーザー追加要件である。`source_lineage.source_digest` は手作業で変更せず、次回dev-graph compileで正本から再同期する。
+本追補はユーザー追加要件である。現行正本からの限定ローカル再投影と監査は [再同期記録](../eval-log/dev-graph-targeted-resync-receipt-20260924.json) に記録した。

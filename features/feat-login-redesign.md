@@ -8,7 +8,7 @@ classification_candidates: [{"artifact_kind": "feature", "candidate_path": "feat
 classification_confidence: 0.95
 classification_reason: "C14 macro 分解で確定仕様(qa-062〜qa-073)から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない"
 completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manual", "reconciled_at": null, "source": null, "status": "not_applicable"}
-confirmation_evidence: {"evaluated_digest": "af8a5c92412acee12f9fe6fb59f0a61e2c33907205396582c091f9c472acca58", "evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260924.json"}
+confirmation_evidence: {"evaluator": "dev-graph:local-targeted-projection-audit", "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json", "evaluated_digest": "0cebb55575e920459406972afd4afa1c7fa289a9926d1967db06ec6a622b28a6"}
 confirmation_status: "confirmed"
 created_at: "2026-09-24T01:06:26Z"
 depends_on: ["feat-platform-tenant-auth"]

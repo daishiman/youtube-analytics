@@ -5,10 +5,10 @@ YouTube の実績と週次の事業ファネルをつなぎ、目標差が最も
 ## 対象範囲
 
 - 要件・技術仕様は確定済みです。最初の feature `feat-platform-tenant-auth` は Google ログイン、テナント、招待、役割、CI/CD の土台を提供します。受入条件と検証方法は `docs/feat-platform-tenant-auth/requirements.md` と `docs/feat-platform-tenant-auth/test-design.md` を正とします。
-- 2 つ目の feature `feat-login-redesign` はログイン画面を `docs/screens/01-login.png` どおりに刷新し（製品名 Channel Insight）、表示する権限と Google へ要求するスコープの一致、規約への同意の記録と改定時の再同意、YouTube の一部だけ許可されたときの再連携、画面のセキュリティヘッダを加えます。受入条件と検証は `docs/feat-login-redesign/requirements.md` と `docs/feat-login-redesign/test-design.md`、運用は `docs/feat-login-redesign/runbook.md` を正とします。
+- 2 つ目の feature `feat-login-redesign` は `docs/screens/01-login.png` の配置・文言を基にログイン画面を刷新し（製品名 Channel Insight）、表示する権限と Google へ要求するスコープの一致、規約への同意の記録と改定時の再同意、YouTube の一部だけ許可されたときの再連携、画面のセキュリティヘッダを加えます。色・背景・ロゴと Google ボタンは既存のデザイン決定に従います。受入条件と検証は `docs/feat-login-redesign/requirements.md` と `docs/feat-login-redesign/test-design.md`、運用は `docs/feat-login-redesign/runbook.md` を正とします。
 - ブランチ、作業ツリー、CI、公開環境の状態は変化するため、この README には複製しません。ローカルは下記コマンド、外部環境は GitHub Actions と `docs/setup/owner-manual-setup.mdx` の確認手順で判定してください。
 - 業務機能（YouTube 収集、CSV と画像の取込、分析レポート、業務画面、保持期間の運用）の 5 feature は未着手です。
-- 週次事業ファネルと分析履歴の追補は、対象3 featureのtask計画前に dev-graph compile / decompose で digest とstate graphを再同期します。必要なgateは `eval-log/dev-graph-resync-required-20260922.json` に固定しています。
+- 週次事業ファネルと分析履歴の追補は、対象3 featureのtask計画前に正式な dev-graph compile / decompose が必要です。現行 context と graph の内容は限定ローカル再投影で一致させました（`eval-log/dev-graph-targeted-resync-receipt-20260924.json`）。正式処理のgateは `eval-log/dev-graph-resync-required-20260922.json` に残しています。
 
 ## セットアップ
 
