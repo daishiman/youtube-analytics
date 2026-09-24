@@ -1,29 +1,30 @@
 {
  "graph_node_id": "feat-skill-analysis-reports",
  "artifact_kind": "feature",
-  "purpose": "システム内で LLM を呼ばずに、各利用者の Claude Code 上で売上ファネルの目標差・下流結果・直近5版からの差分を分析し、その結果を版管理されたレポートとして取り込めるようにする",
-  "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
+ "purpose": "システム内で LLM を呼ばずに、各利用者の Claude Code 上で売上ファネルの目標差・下流結果・直近5版からの差分を分析し、その結果を版管理されたレポートとして取り込めるようにする",
+ "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
  "scope_in": [
   "(tenant_id,user_id)単位の個人トークン発行(平文1回表示・SHA-256 保存)と失効",
   "analysis_requests(待機中→実行中→完了|失敗)と GET/POST /api/analysis-requests",
-    "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)",
-    "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport",
+  "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)",
+  "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport",
   "5つの原因指標と結果指標を問う分析、負のtarget_gap最小を改善候補とし、全指標0以上なら候補なしと示す非因果的な出力",
   "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード",
-    "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存",
+  "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存",
   "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較",
   "Claude Code 用 /yt-analyze スキルと運営者 Mac の launchd 週次実行"
  ],
  "scope_out": [
   "レポート閲覧画面と改善アクション画面(feat-web-screens-actions)",
   "アプリ内 LLM 呼出し",
-  "因果推論・予測"
+  "因果推論・予測",
+  "トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)"
  ],
  "acceptance": [
   "/yt-analyze 1回で依頼→書き出し→HTML と JSON の反映まで手作業0で完了する",
-    "分析結果に週次5段ファネル・下流結果・目標未達が最大の改善候補、全指標目標達成、または判定保留理由があり、因果を断定しない",
-    "同一tenant+channelの完了済み直近5版だけを履歴に使い、前回仮説の当否・施策効果・参照版番号を新規版へ保存する",
-    "履歴0件は初回分析として成功し、別tenant/channelの履歴は混ざらない",
+  "分析結果に週次5段ファネル・下流結果・目標未達が最大の改善候補、全指標目標達成、または判定保留理由があり、因果を断定しない",
+  "同一tenant+channelの完了済み直近5版だけを履歴に使い、前回仮説の当否・施策効果・参照版番号を新規版へ保存する",
+  "履歴0件は初回分析として成功し、別tenant/channelの履歴は混ざらない",
   "改善アクションの効果比較に対象ファネル段と下流結果が含まれる",
   "同じ Idempotency-Key の二重送信で版が増えない",
   "過去の版は更新されない",
@@ -44,5 +45,5 @@
   "system-spec/database.md",
   "system-spec/maintenance-ops.md"
  ],
- "updated_at": "2026-09-21T15:15:00Z"
+ "updated_at": "2026-09-24T01:00:12Z"
 }

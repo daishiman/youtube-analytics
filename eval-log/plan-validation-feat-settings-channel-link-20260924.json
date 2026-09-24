@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "status": "pass",
+  "validated_digest": "sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+  "feature_package_id": "feature-package/feat-settings-channel-link",
+  "parent_feature": "feat-settings-channel-link",
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "violations": []
+}

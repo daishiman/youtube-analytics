@@ -1,0 +1,445 @@
+{
+ "generated_at": "2026-09-24T01:29:10Z",
+ "validation": {
+  "exit": 0,
+  "valid": true,
+  "readiness": null,
+  "violations": 0
+ },
+ "dangling": [],
+ "outside_root_file_path": [],
+ "queries": {
+  "feature": {
+   "filters": {
+    "graph_node_id": "feat-settings-channel-link"
+   }
+  },
+  "package_tasks": {
+   "filters": {
+    "parent_feature": "feat-settings-channel-link",
+    "artifact_kind": "task"
+   }
+  },
+  "empty_probe": {
+   "filters": {
+    "parent_feature": "feat-settings-channel-link",
+    "status": "done"
+   }
+  }
+ },
+ "results": {
+  "feature": [
+   {
+    "graph_node_id": "feat-settings-channel-link",
+    "artifact_kind": "feature",
+    "project_id": "youtube-analytics",
+    "domain": "youtube-analytics",
+    "tags": [
+     "feature",
+     "youtube-analytics"
+    ],
+    "file_path": "features/feat-settings-channel-link.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "feat-platform-tenant-auth",
+     "feat-youtube-daily-collection",
+     "feat-csv-media-ingest",
+     "feat-skill-analysis-reports"
+    ],
+    "parent_feature": null,
+    "feature_package_id": null,
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "feat-web-screens-actions"
+    ],
+    "file_exists": true
+   }
+  ],
+  "package_tasks": [
+   {
+    "graph_node_id": "SYS-SCL-P01",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "documentation",
+    "tags": [
+     "p01",
+     "documentation",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P01.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P02"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P02",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "api",
+    "tags": [
+     "p02",
+     "api",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P02.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P01"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P03"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P03",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "security",
+    "tags": [
+     "p03",
+     "security",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P03.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P02"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P04"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P04",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "quality",
+    "tags": [
+     "p04",
+     "quality",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P04.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P03"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P05"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P05",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "frontend",
+    "tags": [
+     "p05",
+     "frontend",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P05.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P04"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P06"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P06",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "quality",
+    "tags": [
+     "p06",
+     "quality",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P06.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P05"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P07"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P07",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "quality",
+    "tags": [
+     "p07",
+     "quality",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P07.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P06"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P08"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P08",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "data",
+    "tags": [
+     "p08",
+     "data",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P08.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P07"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P09"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P09",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "security",
+    "tags": [
+     "p09",
+     "security",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P09.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P08"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P10"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P10",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "quality",
+    "tags": [
+     "p10",
+     "quality",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P10.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P09"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P11",
+     "SYS-SCL-P12"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P11",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "documentation",
+    "tags": [
+     "p11",
+     "documentation",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P11.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P10"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P13"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P12",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "operations",
+    "tags": [
+     "p12",
+     "operations",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P12.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P10"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-SCL-P13"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-SCL-P13",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-settings-channel-link",
+    "domain": "infrastructure",
+    "tags": [
+     "p13",
+     "infrastructure",
+     "settings-channel-link"
+    ],
+    "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P13.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-SCL-P11",
+     "SYS-SCL-P12"
+    ],
+    "parent_feature": "feat-settings-channel-link",
+    "feature_package_id": "feature-package/feat-settings-channel-link",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [],
+    "file_exists": true
+   }
+  ],
+  "empty_probe": []
+ },
+ "summary": {
+  "graph_revision": 6,
+  "node_count": 35,
+  "by_kind": {
+   "architecture": 1,
+   "feature": 7,
+   "specification": 1,
+   "task": 26
+  },
+  "by_status": {
+   "active": 35
+  }
+ },
+ "digest_before": "14b758fd2abd2a52a503ffe0b821f6bb0820a4e102036441b62b46a0a0fac5d2",
+ "digest_after": "14b758fd2abd2a52a503ffe0b821f6bb0820a4e102036441b62b46a0a0fac5d2",
+ "side_effects": 0
+}

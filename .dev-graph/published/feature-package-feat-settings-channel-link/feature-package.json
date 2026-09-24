@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "feature_package_id": "feature-package/feat-settings-channel-link",
+  "parent_feature": "feat-settings-channel-link",
+  "source_feature_digest": "sha256:7012b9ad2dfcea19a4a0df2cd2745a22d91951c8333440b36d7311ba28498e12",
+  "task_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "task_spec_paths": [
+    "task-specs/phase-01-requirements.md",
+    "task-specs/phase-02-architecture.md",
+    "task-specs/phase-03-design-review.md",
+    "task-specs/phase-04-test-design.md",
+    "task-specs/phase-05-implementation.md",
+    "task-specs/phase-06-test-run.md",
+    "task-specs/phase-07-acceptance.md",
+    "task-specs/phase-08-refactoring-migration.md",
+    "task-specs/phase-09-quality-assurance.md",
+    "task-specs/phase-10-final-review.md",
+    "task-specs/phase-11-evidence.md",
+    "task-specs/phase-12-documentation-operations.md",
+    "task-specs/phase-13-release-deploy.md"
+  ],
+  "task_node_ids": [
+    "SYS-SCL-P01",
+    "SYS-SCL-P02",
+    "SYS-SCL-P03",
+    "SYS-SCL-P04",
+    "SYS-SCL-P05",
+    "SYS-SCL-P06",
+    "SYS-SCL-P07",
+    "SYS-SCL-P08",
+    "SYS-SCL-P09",
+    "SYS-SCL-P10",
+    "SYS-SCL-P11",
+    "SYS-SCL-P12",
+    "SYS-SCL-P13"
+  ]
+}

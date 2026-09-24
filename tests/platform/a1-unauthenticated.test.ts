@@ -6,10 +6,18 @@ import { call, expectError, newOwner } from "./helpers";
 import { bodyFor, fill, PROTECTED_ROUTES } from "./routes";
 
 describe("A1 未ログインは 401", () => {
-  for (const route of PROTECTED_ROUTES) {
+  for (const route of PROTECTED_ROUTES.filter((r) => !r.redirect)) {
     it(`${route.method} ${route.path} は Cookie なしで 401 UNAUTHENTICATED`, async () => {
       const res = await call(fill(route.path, {}), { method: route.method, body: bodyFor(route) });
       await expectError(res, 401, "UNAUTHENTICATED");
+    });
+  }
+
+  for (const route of PROTECTED_ROUTES.filter((r) => r.redirect)) {
+    it(`${route.method} ${route.path} は Cookie なしでログイン画面へ 302`, async () => {
+      const res = await call(fill(route.path, {}), { method: route.method });
+      expect(res.status).toBe(302);
+      expect(res.headers.get("location")).toBe("/login?error=UNAUTHENTICATED");
     });
   }
 

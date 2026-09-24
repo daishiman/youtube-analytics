@@ -1,0 +1,1155 @@
+{
+  "schema_version": "1.0.0",
+  "feature_package_id": "feature-package/feat-settings-channel-link",
+  "parent_feature": "feat-settings-channel-link",
+  "repo_context": {
+    "config_path": ".dev-graph/config.json",
+    "repo_identity": "github:daishiman/youtube-analytics",
+    "root_resolution_source": "explicit-cli"
+  },
+  "source_lineage": {
+    "source_plugin": "system-spec-harness",
+    "source_version": "0.1.0",
+    "compile_entrypoint": "run-system-spec-compile",
+    "completeness_entrypoint": "assign-system-spec-completeness-evaluator",
+    "source_paths": [
+      "system-spec/index.md",
+      "system-spec/00-requirements-definition.md",
+      "system-spec/ui-ux.md",
+      "system-spec/frontend.md",
+      "system-spec/backend.md",
+      "system-spec/auth.md",
+      "system-spec/security.md",
+      "system-spec/database.md",
+      "system-spec/maintenance-ops.md"
+    ],
+    "confirmed": true
+  },
+  "tasks": [
+    {
+      "id": "SYS-SCL-P01",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "要件の実装単位への確定",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P01",
+      "depends_on": [],
+      "write_scope": [
+        "docs/feat-settings-channel-link/requirements.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P01 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P01.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入10項目すべてに根拠章・区画/API・検証方法が1対1で対応している",
+        "新規エラーコードの一覧と画像からの文言差し替えが確定している"
+      ],
+      "verification": [
+        "対応表の行数が受入項目数10と一致することを目視とスクリプトで確認"
+      ],
+      "rollback": "requirements.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P01",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P01.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P01"
+      }
+    },
+    {
+      "id": "SYS-SCL-P02",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "AppShell・設定API・channels データモデルの設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "api",
+      "build_target_kind": "application-code",
+      "phase_ref": "P02",
+      "depends_on": [
+        "SYS-SCL-P01"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/architecture.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P02 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P02.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "全 API がテナントスコープの repository 経由で tenant_id を必須引数に取る設計になっている",
+        "共通部品の色指定が既存 CSS 変数名だけで記述されている"
+      ],
+      "verification": [
+        "architecture.md の API 一覧が scope_in の API と過不足なく一致することを確認"
+      ],
+      "rollback": "architecture.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P02",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P02.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P02"
+      },
+      "secondary_workstreams": [
+        "frontend",
+        "data",
+        "backend"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P03",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "OAuth 追加権限・越境防止・トークン管理の設計レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P03",
+      "depends_on": [
+        "SYS-SCL-P02"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/design-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P03 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P03.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "high の是正事項が0件、または P05 の実装範囲へ取り込み済みである"
+      ],
+      "verification": [
+        "レビュー表の全行に判定と根拠がある"
+      ],
+      "rollback": "design-review.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P03",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P03.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P03"
+      },
+      "secondary_workstreams": [
+        "api"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P04",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "受入テスト・越境テスト・3サイズ E2E の設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P04",
+      "depends_on": [
+        "SYS-SCL-P03"
+      ],
+      "write_scope": [
+        "tests/settings/",
+        "e2e/settings.spec.ts",
+        "docs/feat-settings-channel-link/test-design.md"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P04 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P04.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入10項目それぞれに少なくとも1つのテストケースがある",
+        "越境テストが設定系の全 tenant スコープ API を網羅する"
+      ],
+      "verification": [
+        "pnpm test でテストが列挙され、実装前は失敗する"
+      ],
+      "rollback": "tests/settings/ と e2e/settings.spec.ts の追加分を削除する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P04",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P04.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P04"
+      },
+      "secondary_workstreams": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P05",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "共通レイアウト・設定画面・チャンネル紐付け API の実装",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "frontend",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "frontend",
+      "build_target_kind": "application-code",
+      "phase_ref": "P05",
+      "depends_on": [
+        "SYS-SCL-P04"
+      ],
+      "write_scope": [
+        "web/",
+        "src/",
+        "migrations/0003_settings_channel_link.sql",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P05 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P05.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "P04 のテストがすべて通る",
+        "ページ固有の色指定が既存 CSS 変数以外0件である"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local"
+      ],
+      "rollback": "機能ブランチの revert とローカル D1 の再作成",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P05",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P05.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P05"
+      },
+      "secondary_workstreams": [
+        "backend",
+        "api",
+        "data",
+        "security"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P06",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "テスト実行と不具合修正",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P06",
+      "depends_on": [
+        "SYS-SCL-P05"
+      ],
+      "write_scope": [
+        "tests/settings/",
+        "e2e/settings.spec.ts",
+        "src/",
+        "web/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P06 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P06.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "失敗0件・スキップ0件",
+        "別テナント連携済みチャンネルの紐付け成功0件"
+      ],
+      "verification": [
+        "pnpm test -- --reporter=verbose",
+        "pnpm exec playwright test e2e/settings.spec.ts"
+      ],
+      "rollback": "修正コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P06",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P06.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P06"
+      },
+      "secondary_workstreams": [
+        "frontend",
+        "backend"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P07",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "受入確認",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P07",
+      "depends_on": [
+        "SYS-SCL-P06"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/acceptance.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P07 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P07.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入10項目すべてが合格"
+      ],
+      "verification": [
+        "preview 環境で手動確認と自動テストの両方を記録"
+      ],
+      "rollback": "不合格項目を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P07",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P07.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P07"
+      }
+    },
+    {
+      "id": "SYS-SCL-P08",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "共通化の整理とマイグレーション整理",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "data",
+      "build_target_kind": "application-code",
+      "phase_ref": "P08",
+      "depends_on": [
+        "SYS-SCL-P07"
+      ],
+      "write_scope": [
+        "web/",
+        "src/",
+        "migrations/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P08 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P08.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "振る舞い変更0件(P06 のテストが引き続き green)",
+        "空の D1 へのマイグレーションが成功する"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local を空 DB で実行"
+      ],
+      "rollback": "整理コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P08",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P08.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P08"
+      },
+      "secondary_workstreams": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P09",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "セキュリティと品質の保証",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P09",
+      "depends_on": [
+        "SYS-SCL-P08"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/qa-report.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P09 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P09.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "high 以上の脆弱性0件",
+        "refresh token・トークン平文・CF_ANALYTICS_TOKEN がリポジトリとログに現れない"
+      ],
+      "verification": [
+        "pnpm lint",
+        "npx tsc --noEmit",
+        "pnpm audit --audit-level=high"
+      ],
+      "rollback": "qa-report.md の是正事項を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P09",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P09.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P09"
+      },
+      "secondary_workstreams": [
+        "quality"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P10",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "最終レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P10",
+      "depends_on": [
+        "SYS-SCL-P09"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/final-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P10 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P10.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "scope_out に当たる変更0件",
+        "未解決のレビュー指摘0件"
+      ],
+      "verification": [
+        "git diff の全ファイルを scope_in と対応付ける"
+      ],
+      "rollback": "指摘を該当 phase へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P10",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P10.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P10"
+      }
+    },
+    {
+      "id": "SYS-SCL-P11",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "証跡の集約",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P11",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ],
+      "write_scope": [
+        "evidence/feat-settings-channel-link/"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P11 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P11.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入10項目すべてに証跡がある"
+      ],
+      "verification": [
+        "index.json の全参照先ファイルが実在することを確認"
+      ],
+      "rollback": "index.json を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P11",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P11.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P11"
+      }
+    },
+    {
+      "id": "SYS-SCL-P12",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "運用手順『チャンネルを変更する』とドキュメント",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "operations",
+      "build_target_kind": "application-code",
+      "phase_ref": "P12",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ],
+      "write_scope": [
+        "docs/feat-settings-channel-link/runbook.md",
+        "README.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P12 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P12.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "初見の担当者が runbook だけでチャンネル変更と機能フラグ解除を行える"
+      ],
+      "verification": [
+        "runbook の手順を preview 環境で1回通す"
+      ],
+      "rollback": "ドキュメントを直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P12",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P12.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P12"
+      },
+      "secondary_workstreams": [
+        "documentation"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P13",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "title": "CI/CD とリリース",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "settings-channel-link"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "workstream_kind": "infrastructure",
+      "build_target_kind": "application-code",
+      "phase_ref": "P13",
+      "depends_on": [
+        "SYS-SCL-P11",
+        "SYS-SCL-P12"
+      ],
+      "write_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P13 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P13.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "main への push で 0003 マイグレーションと deploy が完了する",
+        "PR で lint/test/E2E が必須チェックになっている"
+      ],
+      "verification": [
+        "Actions の実行ログで migrations apply と deploy の成功を確認"
+      ],
+      "rollback": "直前の Workers バージョンへ wrangler rollback し、マイグレーションは前方修正で戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SCL-P13",
+        "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P13.md",
+        "parent_feature": "feat-settings-channel-link",
+        "feature_package_id": "feature-package/feat-settings-channel-link",
+        "phase_ref": "P13"
+      },
+      "secondary_workstreams": [
+        "operations"
+      ]
+    }
+  ]
+}

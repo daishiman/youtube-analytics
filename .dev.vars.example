@@ -1,4 +1,6 @@
 # ローカル開発用の秘密値（.dev.vars にコピーして使う。.dev.vars はコミットしない）
+# Google ログイン用のアプリ共通クライアント（wrangler.toml の GOOGLE_CLIENT_ID と対）。
+# YouTube 連携用のクライアントはテナントごとに設定画面「Google Cloud の接続情報」で登録する（qa-087・ここには書かない）
 GOOGLE_CLIENT_SECRET=
 # refresh token 暗号化鍵（AES-256-GCM, 32byte を base64）: openssl rand -base64 32
 TOKEN_ENC_KEY=
@@ -6,3 +8,8 @@ TOKEN_ENC_KEY=
 DEV_LOGIN=1
 # 受付停止（A5）を試すときだけ、現在のテナント数以下に下げる（未設定なら wrangler.toml の 100）
 # MAX_TENANTS=2
+# 字幕の自動取得（force-ssl）を検証前に試せる運営テナント。seed では seed-tenant-a
+# OPERATOR_TENANT_ID=seed-tenant-a
+# 無料枠の Cloudflare 値（任意）。未設定なら Cloudflare の3項目は「取得できません」になる
+# CF_ACCOUNT_ID=
+# CF_ANALYTICS_TOKEN=

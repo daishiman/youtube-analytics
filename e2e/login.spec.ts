@@ -52,7 +52,9 @@ test.describe("ログイン画面", () => {
     await expect(rows.nth(1)).toContainText("YouTube Analyticsレポートの閲覧");
 
     await page.goto(`/login?invite=${INVITE}`);
-    await expect(page.getByText("テストチャンネルAのテナントに招待されています")).toBeVisible();
+    await expect(
+      page.getByText("テストチャンネルAのワークスペースに招待されています"),
+    ).toBeVisible();
     await expect(rows).toHaveCount(1);
     await expect(rows.first()).toContainText("メールアドレス");
   });
@@ -195,7 +197,7 @@ test.describe("A5 YouTube 連携が未完了のときの案内", () => {
 
   test("一部許可の閲覧者にはオーナーへの依頼だけを出す", async ({ page }) => {
     await devLogin(page, "owner@example.com");
-    const select = page.getByLabel("テナント切替");
+    const select = page.getByLabel("ワークスペース切替");
     await select.selectOption({ label: "テストチャンネルA（オーナー）" });
     await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
     await select.selectOption({ label: "別チャンネルB（閲覧者）" });

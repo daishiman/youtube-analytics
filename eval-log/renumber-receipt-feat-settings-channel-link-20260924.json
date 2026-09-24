@@ -1,0 +1,26 @@
+{
+  "receipt_kind": "id-renumber-for-merge",
+  "graph_node_id": "feat-settings-channel-link",
+  "beads_id": "yta-rh8",
+  "recorded_at": "2026-09-24T10:30:00Z",
+  "reason": "main（PR #5 feat-login-redesign）が同じ日に qa-062〜qa-073・appr-012・migrations/0003 を先に使って merge 済み。公開済みの main の番号を正とし、本 feature 側を後ろへずらした",
+  "mapping": {
+    "qa": "qa-062〜qa-076 → qa-074〜qa-088（+12。例: qa-075 → qa-087、qa-076 → qa-088）",
+    "approval": {"appr-012": "appr-013", "appr-013": "appr-014"},
+    "migrations": {
+      "0003_settings_channel_link.sql": "0004_settings_channel_link.sql",
+      "0004_tenant_google_client.sql": "0005_tenant_google_client.sql",
+      "0005_channel_deletion_gate.sql": "0006_channel_deletion_gate.sql",
+      "0006_channel_cleanup_write_gate.sql": "0007_channel_cleanup_write_gate.sql"
+    },
+    "table": {"oauth_tokens（本 feature の用途）": "channel_oauth_tokens"},
+    "eval_log": "両ブランチが同名で新規作成した run-dev-graph-{render,schedule,status,sync}-* と dev-graph-decompose-audit / dev-graph-spec-import-report は、本 feature 側を -feat-settings-channel-link 付きの名前へ移した"
+  },
+  "table_split_reason": "main の oauth_tokens はログイン時にアプリ共通の OAuth クライアントで得た付与記録。本 feature は qa-087 でワークスペースごとの OAuth クライアントを使うため、発行元の違う refresh token が同じ行で上書きし合うと更新（refresh）に失敗する。MVP では表を分けて両方を壊さない。ログイン時に YouTube 権限を求める main の方針（qa-064/065）と qa-087 の整理は残課題",
+  "not_rewritten": [
+    ".dev-graph/published/**（digest 固定の公開 package）",
+    ".dev-graph/state/receipts/**・.dev-graph/handoffs/**",
+    "eval-log/** の過去の記録（本 receipt の mapping で読み替える）",
+    "Beads issue の本文"
+  ]
+}

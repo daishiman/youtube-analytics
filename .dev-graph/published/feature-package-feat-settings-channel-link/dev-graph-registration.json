@@ -1,0 +1,1183 @@
+{
+  "schema_version": "1.0.0",
+  "source_digest": "sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+  "promotion_receipt": ".dev-graph/published/feature-package-feat-settings-channel-link/atomic-promotion-receipt.json",
+  "feature_package_id": "feature-package/feat-settings-channel-link",
+  "parent_feature": "feat-settings-channel-link",
+  "expected_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "binding_intents": {
+    "SYS-SCL-P01": "beads",
+    "SYS-SCL-P02": "beads",
+    "SYS-SCL-P03": "beads",
+    "SYS-SCL-P04": "beads",
+    "SYS-SCL-P05": "beads",
+    "SYS-SCL-P06": "beads",
+    "SYS-SCL-P07": "beads",
+    "SYS-SCL-P08": "beads",
+    "SYS-SCL-P09": "beads",
+    "SYS-SCL-P10": "beads",
+    "SYS-SCL-P11": "beads",
+    "SYS-SCL-P12": "beads",
+    "SYS-SCL-P13": "beads"
+  },
+  "nodes": [
+    {
+      "graph_node_id": "SYS-SCL-P01",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "要件の実装単位への確定",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/requirements.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P01",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P01.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P01.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P02",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "AppShell・設定API・channels データモデルの設計",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "api",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P01"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/architecture.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P02",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P02.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P02.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P03",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "OAuth 追加権限・越境防止・トークン管理の設計レビュー",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P02"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/design-review.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P03",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P03.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P03.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P04",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入テスト・越境テスト・3サイズ E2E の設計",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P03"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "tests/settings/",
+        "e2e/settings.spec.ts",
+        "docs/feat-settings-channel-link/test-design.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P04",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P04.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P04.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P05",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "共通レイアウト・設定画面・チャンネル紐付け API の実装",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "frontend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "frontend",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P04"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/0003_settings_channel_link.sql",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P05",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P05.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P05.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P06",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テスト実行と不具合修正",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P05"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "tests/settings/",
+        "e2e/settings.spec.ts",
+        "src/",
+        "web/"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P06",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P06.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P06.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P07",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入確認",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P06"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/acceptance.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P07",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P07.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P07.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P08",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "共通化の整理とマイグレーション整理",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "data",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P07"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P08",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P08.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P08.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P09",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "セキュリティと品質の保証",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P08"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/qa-report.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P09",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P09.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P09.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P10",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "最終レビュー",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P09"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/final-review.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P10",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P10.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P10.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P11",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "証跡の集約",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "evidence/feat-settings-channel-link/"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P11",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P11.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P11.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P12",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "運用手順『チャンネルを変更する』とドキュメント",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "operations",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        "docs/feat-settings-channel-link/runbook.md",
+        "README.md"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P12",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P12.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P12.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SCL-P13",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "CI/CD とリリース",
+      "project_id": "feature-package-feat-settings-channel-link",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "settings-channel-link"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T01:20:21Z",
+      "updated_at": "2026-09-24T01:20:21Z",
+      "depends_on": [
+        "SYS-SCL-P11",
+        "SYS-SCL-P12"
+      ],
+      "related_nodes": [
+        "feat-settings-channel-link"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "parent_feature": "feat-settings-channel-link",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "phase_ref": "P13",
+      "file_path": "tasks/feat-settings-channel-link/SYS-SCL-P13.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-settings-channel-link/plan-findings.json",
+        "evaluated_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-settings-channel-link/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+        "imported_at": "2026-09-24T01:20:21Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-settings-channel-link/SYS-SCL-P13.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T01:20:00Z"
+      }
+    }
+  ]
+}

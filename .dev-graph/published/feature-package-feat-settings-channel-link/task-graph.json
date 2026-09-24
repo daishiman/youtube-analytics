@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-SCL-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-SCL-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P01"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P02"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P03"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P04"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P05"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P06"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P07"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P08"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P09"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P10"
+      ]
+    },
+    {
+      "id": "SYS-SCL-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-settings-channel-link",
+      "parent_feature": "feat-settings-channel-link",
+      "depends_on": [
+        "SYS-SCL-P11",
+        "SYS-SCL-P12"
+      ]
+    }
+  ]
+}

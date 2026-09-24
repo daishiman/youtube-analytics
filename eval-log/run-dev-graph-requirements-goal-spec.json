@@ -1,6 +1,6 @@
 {
  "skill": "run-dev-graph-requirements",
- "original_goal": "自然文ではなく確定graphとexact-13 packageから feat-platform-tenant-auth の実装要件を導出し、C11/C02/validate-system-plan 三gate同一digest PASS時だけ task-graph へhandoffする",
- "original_goal_hash": "343615babd3349d7d6571ee0b73b78ed9f9d98aba5272d28e9807b4ef1003334",
- "recorded_at": "2026-09-21T14:58:00Z"
+ "original_goal": "自然文ではなく確定graphとexact-13 packageから feat-settings-channel-link の実装要件を導出し、C11/C02/validate-system-plan 三gate同一digest PASS時だけ task-graph へhandoffする",
+ "original_goal_hash": "29e2a9ae2648dd32f33b9a4aa3ae030a903f620b6448c3938abbe0408fe42c64",
+ "recorded_at": "2026-09-24T01:24:08Z"
 }

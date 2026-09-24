@@ -1,0 +1,103 @@
+{
+ "generated_at": "2026-09-24T01:26:13Z",
+ "graph_revision": 6,
+ "binding": "beads",
+ "authoritative": {
+  "assignment_hints": [
+   {
+    "claim_command": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>",
+    "graph_node_id": "SYS-PTA-P01",
+    "suggested_branch": "devgraph/SYS-PTA-P01"
+   }
+  ],
+  "batches": {
+   "features": [
+    [
+     "feat-platform-tenant-auth"
+    ]
+   ],
+   "tasks": [
+    [
+     "SYS-PTA-P01"
+    ]
+   ]
+  },
+  "conflicts": [],
+  "ready_set": {
+   "features": [
+    "feat-platform-tenant-auth"
+   ],
+   "tasks": [
+    "SYS-PTA-P01"
+   ]
+  },
+  "ready_source": "bd-bridge",
+  "unmapped": []
+ },
+ "self_reference": {
+  "assignment_hints": [
+   {
+    "claim_command": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>",
+    "graph_node_id": "SYS-PTA-P01",
+    "suggested_branch": "devgraph/SYS-PTA-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim SYS-SCL-P01 --branch devgraph/SYS-SCL-P01 --session-id <session>",
+    "graph_node_id": "SYS-SCL-P01",
+    "suggested_branch": "devgraph/SYS-SCL-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim arch-youtube-analytics-system --branch devgraph/arch-youtube-analytics-system --session-id <session>",
+    "graph_node_id": "arch-youtube-analytics-system",
+    "suggested_branch": "devgraph/arch-youtube-analytics-system"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim spec-youtube-analytics-system --branch devgraph/spec-youtube-analytics-system --session-id <session>",
+    "graph_node_id": "spec-youtube-analytics-system",
+    "suggested_branch": "devgraph/spec-youtube-analytics-system"
+   }
+  ],
+  "batches": {
+   "features": [
+    [
+     "feat-platform-tenant-auth"
+    ]
+   ],
+   "tasks": [
+    [
+     "SYS-PTA-P01",
+     "SYS-SCL-P01",
+     "arch-youtube-analytics-system",
+     "spec-youtube-analytics-system"
+    ]
+   ]
+  },
+  "conflicts": [],
+  "ready_set": {
+   "features": [
+    "feat-platform-tenant-auth"
+   ],
+   "tasks": [
+    "SYS-PTA-P01",
+    "SYS-SCL-P01",
+    "arch-youtube-analytics-system",
+    "spec-youtube-analytics-system"
+   ]
+  },
+  "ready_source": "self",
+  "unmapped": []
+ },
+ "note": "beads binding の推薦は bd-bridge (parity confirmed) の結果のみ。SYS-SCL-* は Beads 未投影 (sync 前) のため推薦外",
+ "verifier": {
+  "agent": "dev-graph:dev-graph-parallel-safety-verifier",
+  "verdict": "PASS",
+  "findings": [
+   {
+    "id": "F1",
+    "severity": "medium",
+    "summary": "self readiness が parent_feature の depends_on 未達を子 task へ伝播しない (SYS-SCL-P01 が self で ready 化)。beads binding の推薦には影響なし",
+    "suggested_fix": "schedule-graph.py の readiness 判定で parent_feature の depends_on を再帰評価する"
+   }
+  ]
+ }
+}

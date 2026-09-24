@@ -26,7 +26,12 @@ export const authGate: MiddlewareHandler<AppEnv> = async (c, next) => {
   if (isPublicApi(c.req.path)) return next();
   const sessionId = readSessionCookie(c);
   const session = sessionId ? await resolveSession(c.get("deps"), sessionId) : null;
-  if (!session) throw new AppError("UNAUTHENTICATED");
+  if (!session) {
+    // Google から戻ってきた時点でセッションが切れていたら、JSON ではなくログイン画面へ戻す
+    if (c.req.path === "/api/oauth/callback")
+      return c.redirect("/login?error=UNAUTHENTICATED", 302);
+    throw new AppError("UNAUTHENTICATED");
+  }
   c.set("session", session);
   await next();
 };

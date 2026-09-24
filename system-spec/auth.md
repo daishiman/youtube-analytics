@@ -15,7 +15,7 @@ serves_goals: [G1, G4, G2]
 
 | プラットフォーム | 状態 | 根拠 |
 |---|---|---|
-| Web (web) | 確定 | 確定質疑: qa-066。裏付け質疑 (`qa_refs`): `qa-004`, `qa-008`, `qa-014`, `qa-021`, `qa-025`, `qa-037`, `qa-038`, `qa-015`, `qa-041`, `qa-042`, `qa-043`, `qa-045`, `qa-046`, `qa-047`, `qa-048`, `qa-050`, `qa-055`, `qa-056`, `qa-059`, `qa-044`, `qa-062`, `qa-063`, `qa-064`, `qa-065`, `qa-067`, `qa-068`, `qa-070`, `qa-073` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G4 |
+| Web (web) | 確定 | 確定質疑: qa-079。裏付け質疑 (`qa_refs`): `qa-004`, `qa-008`, `qa-014`, `qa-021`, `qa-025`, `qa-037`, `qa-038`, `qa-015`, `qa-041`, `qa-042`, `qa-043`, `qa-045`, `qa-046`, `qa-047`, `qa-048`, `qa-050`, `qa-055`, `qa-056`, `qa-059`, `qa-044`, `qa-062`, `qa-063`, `qa-064`, `qa-065`, `qa-067`, `qa-068`, `qa-070`, `qa-073`, `qa-074`, `qa-075`, `qa-076`, `qa-077`, `qa-078`, `qa-085`, `qa-086`, `qa-082`, `qa-084`, `qa-087` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G4 |
 | モバイル (mobile) | 対象外 | 理由: mobile: 専用アプリのログインは作らず、スマホ・タブレットのブラウザでも同じGoogleログインを使う(qa-036で中立に再確認) |
 | タブレット (tablet) | 対象外 | 理由: tablet: 専用アプリのログインは作らず、スマホ・タブレットのブラウザでも同じGoogleログインを使う(qa-036で中立に再確認) |
 | デスクトップ (Windows) (desktop-windows) | 確定 | 確定質疑: qa-015。裏付け質疑 (`qa_refs`): `qa-021`, `qa-037`, `qa-038`, `qa-046`, `qa-056`, `qa-059` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G4, G2 |
@@ -36,8 +36,8 @@ serves_goals: [G1, G4, G2]
 
 | 設計 concern | 上流の正本 (authority) | 導く範囲 | 出典 | 最終確認 | 本章の確定セルへの反映 |
 |---|---|---|---|---|---|
-| authentication | OWASP ASVS + Secrets Management Cheat Sheet | 認証方式・セッション・資格情報/シークレット/API キーの取扱いの上流指針 | https://owasp.org/www-project-application-security-verification-standard/ | 2026-07-12 | [qa-021] OAuth PKCE+stateでCSRFを防ぎ、セッションはサーバ側保存のランダムIDのみCookieへ。スキル用トークンはハッシュ保存・失効可能・最終使用日時を記録。force-sslは追加同意時のみ要求する段階的認可とする。 [qa-064/qa-065/qa-070] 最小権限: 招待経由は openid email だけを要求し、部分許可では付与スコープをサーバで確かめて YouTube 機能だけを止める。再要求は利用者が再連携を押したときだけ行う。 |
-| security | OWASP ASVS + Secrets Management Cheat Sheet | 脅威モデル・入力検証・暗号化・監査ログの上流指針 | https://owasp.org/www-project-application-security-verification-standard/ | 2026-07-12 | [qa-021/qa-022] 認可はセッション/トークン→user_idの導出を唯一の経路とし、リクエストパラメータのuser_idを信用しない。利用者80人超で検証申請に着手し、100人上限到達で新規連携が止まる事態を避ける。 [qa-066/qa-073] 同意した規約の版と日時を consent_records に追記のみで残し、規約改定後は既存セッションを切らずに次回ログインで再同意を求める。 |
+| authentication | OWASP ASVS + Secrets Management Cheat Sheet | 認証方式・セッション・資格情報/シークレット/API キーの取扱いの上流指針 | https://owasp.org/www-project-application-security-verification-standard/ | 2026-07-12 | [qa-021] OAuth PKCE+stateでCSRFを防ぎ、セッションはサーバ側保存のランダムIDのみCookieへ。スキル用トークンはハッシュ保存・失効可能・最終使用日時を記録。force-sslは追加同意時のみ要求する段階的認可とする。 [qa-064/qa-065/qa-070] 最小権限: 招待経由は openid email だけを要求し、部分許可では付与スコープをサーバで確かめて YouTube 機能だけを止める。再要求は利用者が再連携を押したときだけ行う。 チャンネル選択は OAuth(prompt=select_account consent)→channels.list mine=true→1つ選択で確定し、oauth_pending は暗号化・10分(qa-075)。force-ssl は字幕トグルON時だけ include_granted_scopes の追加同意で得て、OFFで revoke(qa-076)、検証前は運営者だけ(qa-085)。 要件定義書の I1 もこの連携方式(1チャンネル選択・変更は解除から・字幕希望者だけ force-ssl 追加)に更新した(qa-086/appr-014)。 |
+| security | OWASP ASVS + Secrets Management Cheat Sheet | 脅威モデル・入力検証・暗号化・監査ログの上流指針 | https://owasp.org/www-project-application-security-verification-standard/ | 2026-07-12 | [qa-021/qa-022] 認可はセッション/トークン→user_idの導出を唯一の経路とし、リクエストパラメータのuser_idを信用しない。利用者80人超で検証申請に着手し、100人上限到達で新規連携が止まる事態を避ける。 [qa-066/qa-073] 同意した規約の版と日時を consent_records に追記のみで残し、規約改定後は既存セッションを切らずに次回ログインで再同意を求める。 sensitive scope の force-ssl は、字幕トグルの一般公開前に検証を申請する(qa-085)。readonly の範囲は qa-021 の80人基準のまま。 |
 
 > **未記入** の行は、上流の正本を掲げただけで本章の確定内容へ反映した箇所を示せていない。表への出現は反映の証拠ではない。
 
@@ -49,17 +49,22 @@ serves_goals: [G1, G4, G2]
 
 - 資するゴール: G1, G4
 
-#### 主たる接地根拠: `qa-066`
+#### 主たる接地根拠: `qa-079`
 
 **問**
 
-画像から想定される『見えない追加機能』のうち、今回の範囲に含めるものを選んでください(複数選択)
+設定画面・チャンネル紐付け・共通レイアウトの詳細設計(画面に見えないバックエンド/DB/セキュリティ/運用を含む)をこの内容で確定してよいか
 
 **答**
 
-同意の記録(同意した規約の版・日時をD1に保存し、規約改定時は再同意を求める) / 表示と要求スコープの一致(画面の権限一覧をサーバのOAuthスコープ定義から返す) / ログイン画面のセキュリティ強化(CSP・frame-ancestors拒否・ログイン開始のレート制限・エラー表示の統一) / アクセシビリティ・レスポンシブ(360px幅・44ptタップ領域・キーボード操作・同意前の主ボタン無効状態と理由表示)。全4件を選択
+この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [共通レイアウト] AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新=収集/取込の新しい方・期間28日/90日/1年/任意を?period=で全画面共有・アバターメニュー)+main+Footer(3バッジ『OAuthは読み取り専用(字幕ON時は字幕のみ追加許可)』『データは利用者ごとに分離』『無料枠で運用』+プライバシーポリシー|利用規約。ログイン・静的ページも同じFooter)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone(+ファイル選択ボタン)/ConfirmDialog(危険操作は名前入力)/Toast/デザイントークン。[設定画面] 順序 YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ・既存qa-041〜)→無料枠の使用状況→データを削除。連携カード=アイコン・チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日3:00 JST)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。チャンネル選択=OAuth(prompt=select_account consent)→channels.list mine=true→1つ選択→確定。ブランドアカウントはGoogleのアカウント選択で選ぶ旨を案内。同じチャンネルが別テナントに連携済みなら拒否。再連携は同じチャンネルのみ、変更は連携解除から。字幕ON=追加同意→新着動画の字幕を毎日収集で取得(1日上限10本=2000units)、OFF=revoke→読み取り専用で再連携。取込=タブ別DropZoneと履歴(ファイル名/期間/行数/取込日時/状態+失敗理由・最新20件)。トークン=名前必須・平文は発行時1回表示・1人5本まで・失効は確認付き。無料枠=YouTube Data API units/D1書込/D1容量/R2容量/Workersリクエスト+テナント数、80%黄/95%赤。[バックエンド] GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel, POST /api/youtube/reconnect, DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。[DB] channels(UNIQUE tenant_id・UNIQUE channel_id・status)/oauth_pending(10分・暗号化)/oauth_tokens.granted_scopes/tenants.captions_auto/skill_tokens.name/imports(kind統合)/usage_counters/usage_snapshots/audit_log。[セキュリティ] 連携・解除・字幕・削除はオーナーのみ/force-sslはcaptions.downloadだけ/CF_ANALYTICS_TOKEN(Account Analytics Read)はWorkers Secrets/Origin検査/トークン発行のレート制限/監査ログ。[インフラ・運用] Cronは増やさない(無料枠の外部値は画面表示時に1時間キャッシュ)/runbook『チャンネルを変更する』を追加
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答時刻は未計測で、記録書込時刻 2026-09-24T00:05:04Z が上限値 / 回答時刻: 2026-09-24T00:04:42Z)
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:52:00Z` — 承認内容のうち2つの値は、その後の個別確認で置き換えた。(1) 字幕自動取得の『1日上限10本=2000units』→ qa-082 で『1日5本=1,000units』。(2) 無料枠バーの『80%黄/95%赤』→ qa-084 で『70%黄/90%赤』。現行の規範は qa-082/qa-084 の値で、qa-079 のその他の承認内容は変更なし。qa-081(別テナント連携の拒否)・qa-083(トークン1人5本)は qa-079 の値を個別に確認したもので変更なし。qa-085(force-ssl の検証を字幕トグル公開前に申請)は qa-079 に含まれない新しい論点。主根拠(qa_ref)を qa-079 のまま残すのは、10カテゴリにまたがる詳細設計の承認がこの一件で、個別確認の qa-081〜085 は qa_refs に追加して項目単位の根拠にしているため
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:09:29Z)
 
 #### 裏付け質疑: `qa-004`
 
@@ -357,7 +362,7 @@ qa-063(色・ロゴ・背景は共通デザイン正本を優先)を『Googleで
 
 **答**
 
-適用できない。Google公式 Sign in with Google ブランドガイドライン(developers.google.com/identity/branding-guidelines, 最終更新2026-07-07)は、ボタンの塗りを Light(#FFFFFF・枠#747775・文字#1F1F1F)/Dark(#131314)/Neutral(#F2F2F2)の3種に限り、標準カラーの『G』ロゴを白地で改変せず置くことを求め、単色G・独自アイコンを禁じる。したがって『Googleでログイン』ボタンは Light テーマ固定(白地・灰枠・標準Gロゴ・文言『Googleでログイン』・Webの余白 ロゴ前12px/ロゴ後10px/文字後12px)とし、画像のティール塗りも正本のマゼンタ塗りも使わない。正本の主操作色マゼンタは同意チェックボックスのチェック状態とフォーカスリングに使い、ボタン幅はカード幅いっぱい・高さ44pt以上で主操作としての目立ちを確保する。未検証アプリ画面の案内(『詳細』→『移動』)と累計100人上限は google-oauth-unverified-app 出典の事実として security 章に紐づける。【※訂正あり: 『詳細→移動』の案内は画像由来(qa-062)で出典の事実は累計100人上限のみ。下の訂正を参照】部分許可時の扱い(qa-065)は google-oauth-granular-consent 出典(付与スコープを必ず確認し、拒否された機能だけ無効化・利用者が機能を使う意思を示したときだけ再要求・include_granted_scopes=true)に一致する。
+適用できない。Google公式 Sign in with Google ブランドガイドライン(developers.google.com/identity/branding-guidelines, 最終更新2026-07-07)は、ボタンの塗りを Light(#FFFFFF・枠#747775・文字#1F1F1F)/Dark(#131314)/Neutral(#F2F2F2)の3種に限り、標準カラーの『G』ロゴを白地で改変せず置くことを求め、単色G・独自アイコンを禁じる。したがって『Googleでログイン』ボタンは Light テーマ固定(白地・灰枠・標準Gロゴ・文言『Googleでログイン』・Webの余白 ロゴ前12px/ロゴ後10px/文字後12px)とし、画像のティール塗りも正本のマゼンタ塗りも使わない。正本の主操作色マゼンタは同意チェックボックスのチェック状態とフォーカスリングに使い、ボタン幅はカード幅いっぱい・高さ44pt以上で主操作としての目立ちを確保する。未検証アプリ画面の案内(『詳細』→『移動』)と累計100人上限は google-oauth-unverified-app 出典の事実として security 章に紐づける。部分許可時の扱い(qa-065)は google-oauth-granular-consent 出典(付与スコープを必ず確認し、拒否された機能だけ無効化・利用者が機能を使う意思を示したときだけ再要求・include_granted_scopes=true)に一致する。
 
 > **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
 > 本文中の記述と食い違う場合は、訂正側が正である。
@@ -406,6 +411,136 @@ qa-063(色・ロゴ・背景は共通デザイン正本を優先)を『Googleで
 次回ログインで再同意: 今のセッションは切らず、次にログインするときに同意チェックをもう一度求める。
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 推奨を付けない選択肢提示・1問ずつ。answered_at はトランスクリプトの tool_result 時刻 / 回答時刻: 2026-09-24T00:46:33Z)
+
+#### 裏付け質疑: `qa-074`
+
+**問**
+
+設定画面をどう変えるか(利用者の追加指示)
+
+**答**
+
+docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カード: チャンネル名・登録者数・状態バッジ・次回収集・付与スコープ・字幕自動取得トグル・再連携・連携解除 / データ取込: CSV・字幕(SRT・VTT)・画像のタブとドロップ領域と取込履歴表 / Claude Code連携トークン: 名前・作成日・最終使用・失効と新規発行 / 無料枠の使用状況: YouTube Data API・D1書込・D1容量・R2画像・Workersリクエストのバー / データを削除)。画面に見えないバックエンド・設定・追加機能も定義する。YouTubeのどのアカウント(チャンネル)と紐付けるかの設定を追加する。ヘッダーとフッターは共通化し、共通化できる部分は全て共通化する
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 利用者のチャット原文による直接指示(画像添付 docs/screens/05-settings.png)。時刻はセッション内で最初に date -u で実測した値(指示時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-075`
+
+**問**
+
+1つのテナントに紐付けるYouTubeチャンネルの数と、切り替え時の扱いはどうするか(Googleアカウントは複数のチャンネル/ブランドアカウントを持てる)
+
+**答**
+
+1テナント1チャンネル。OAuth後にチャンネル一覧(channels.list mine=true)から1つ選ぶ。別チャンネルへ変えるときは連携解除→旧データを7日以内削除→再連携。提示した他の案: 1テナント複数チャンネル / 1チャンネル・切替時は旧データ保持
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-076`
+
+**問**
+
+画像の『字幕を自動取得する(youtube.force-ssl)』トグルは確定仕様(qa-058: force-sslは要求しない)と矛盾する。どうするか
+
+**答**
+
+画像通りトグルを実装する。既定OFF。ONにした人だけ追加同意(incremental authorization)でforce-sslを付与しcaptions.download(1本200units)を使う。OFFに戻すとforce-sslを含むトークンをrevokeし読み取り専用で再連携する(qa-058の『force-sslは要求しない』を置換)。提示した他の案: トグルは表示のみ(準備中) / トグルを置かない
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:33:05Z` — 本文の『qa-058: force-sslは要求しない』は置換元の誤記。qa-058 は収集時刻(毎日 JST 3:00)の回答で force-ssl に触れていない。force-ssl の方針の出所は qa-025(D-transcript=hybrid)と design_applications.auth の『force-sslは追加同意時のみ要求する段階的認可』であり、qa-076 はそれを置換せず具体化したもの(トグル既定OFF・ON時だけ追加同意・OFFでrevoke)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-077`
+
+**問**
+
+画像の『次回収集 9/27(日) 毎時』は旧仕様(週1回・日曜毎時)の文言で、確定仕様は『毎日JST 3:00』。どちらに合わせるか
+
+**答**
+
+現行仕様の毎日JST 3:00で表示する(例『次回収集 9/25(木) 3:00 毎日』)。画像の文言だけ差し替え、収集スケジュールは変えない。提示した他の案: 画像通り週1回・毎時に戻す
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-078`
+
+**問**
+
+『無料枠の使用状況』はシステム全体の値。誰に表示し、どう計測するか
+
+**答**
+
+全員に表示し、テナント横断の個別情報は出さず合計だけを出す。YouTube Data API unitsとD1書込行数はアプリ内カウンタで計測し、D1容量・R2容量・Workersリクエスト数は読み取り専用トークンでCloudflare GraphQL Analytics APIから取得して1時間キャッシュする。提示した他の案: 運営者だけに表示 / 自前計測のみ
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-085`
+
+**問**
+
+youtube.force-ssl は sensitive scope で、未検証だと警告画面と累計100アカウント上限がある(検証は3〜5営業日・デモ動画・ドメイン確認・同一ドメインのプライバシーポリシーが必要)。検証申請の時期をどうするか
+
+**答**
+
+字幕トグルを一般公開する前に検証申請する。検証が通るまで字幕自動取得トグルは運営者(運営者テナントのオーナー)だけが操作でき、他の利用者には『準備中』と表示する。提示した他の案: 既存の80人基準(qa-021)に合わせる(推奨)
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:52:00Z` — provenance の『qa-079一括承認の項目分割の再質問』は qa-081〜084 に当てはまる説明で、qa-085 は qa-079 に含まれていない新しい論点(force-ssl が sensitive scope であることによる検証申請の時期)を、完成度評価の指摘を受けて新たに聞いたもの
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-079一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値)。選択肢の前提は sensitive-scope-verification 公式ページ(Last updated 2026-08-19)を当日確認したもの / 回答時刻: 2026-09-24T00:33:05Z)
+
+#### 裏付け質疑: `qa-086`
+
+**問**
+
+要件定義書 U9 の I1 を『Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する』へ更新してよいか
+
+**答**
+
+この内容で更新する。提示した他の案: I1は変えない
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:33:05Z)
+
+#### 裏付け質疑: `qa-082`
+
+**問**
+
+字幕自動取得(captions.download 1本200units)の1日の上限本数(qa-079一括承認からの項目分割)
+
+**答**
+
+1日5本(1,000units/日)。qa-079 承認内容の『1日上限10本=2000units』をこの値で置換する。上限を超えた新着動画は翌日以降の毎日収集へ持ち越す。提示した他の案: 1日10本(推奨)/1日20本
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-079一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
+
+#### 裏付け質疑: `qa-084`
+
+**問**
+
+無料枠の使用状況バーの警告色の閾値(qa-079一括承認からの項目分割)
+
+**答**
+
+70%で黄・90%で赤。qa-079 承認内容の『80%黄/95%赤』をこの値で置換する。提示した他の案: 80%黄・95%赤(推奨)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-079一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
+
+#### 裏付け質疑: `qa-087`
+
+**問**
+
+YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クライアントを、アプリ共通の1つにするか、テナントごとに利用者が自分の Google Cloud プロジェクトのものを持ち込むか(利用者ごとに API の使用先=プロジェクト・クォータ・同意画面が異なるため)
+
+**答**
+
+テナントごとに必須で持ち込む。オーナーが設定画面で自分の Google Cloud プロジェクトの OAuth クライアントID とクライアントシークレットを登録するまで『連携』ボタンは押せない。チャンネル連携・コールバック・トークン交換・更新・revoke・字幕の追加同意は、そのテナントのクライアントで行う。Googleログイン自体はテナントが決まる前なのでアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し、画面・APIには返さない。登録の変更・削除は既存の連携トークンを無効にするため『要再連携』にする。これにより D-auth の『ログインとYouTube連携を1回の同意で完結』と、クォータ・100人上限をアプリ共通で数える前提(qa-021)は、YouTube連携についてはテナントごとのプロジェクト単位に置き換わる。提示した他の案: アプリ共通のクライアントのまま(推奨)/ 任意で持ち込み(未登録なら共通を使う)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(AI推奨表示あり)。利用者の発話『テナントごとに各ユーザーごとで設定できるように…ユーザーごとによってこのAPI使う先が違う』を受けた質問。回答後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T07:28:46Z)
 
 ### デスクトップ (Windows) (desktop-windows)
 
@@ -511,7 +646,7 @@ qa-063(色・ロゴ・背景は共通デザイン正本を優先)を『Googleで
 
 ### 本章がかなえる具体的やりたいこと (U9)
 
-- **I1**: Googleでログインし、YouTubeチャンネルを読取専用で連携する
+- **I1**: Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する(qa-075/qa-076/qa-085・qa-086で更新)
 - **I2**: YouTube Studio CSV(表データ/グラフデータ/合計)と週次事業CSVを手動取込し、出典付きで保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算する。事業CSVと同一週Studio CSVから導線誘導率=route_visits/views×100、問い合わせ→成約率=closed_deals/inquiries×100を計算し、週次5段階原因指標と結果指標をダッシュボードに分けて表示する
 - **I3**: Cronで毎日1回、Analytics API(日別指標・動画別・流入元・視聴者属性・維持率)とReporting API(インプレッション・CTR)から取得し、出典(API)付きで保存する
 - **I4**: Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする
@@ -544,7 +679,7 @@ qa-063(色・ロゴ・背景は共通デザイン正本を優先)を『Googleで
 
 ### 本章での適用
 
-[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-021] Google OAuth 2.0 Authorization Code+PKCE(Workers実装)。scope=openid email youtube.readonly yt-analytics.readonly、access_type=offline。同意画面は外部・本番公開・未検証(累計100人上限)で、利用者が80人を超えた時点でOAuth検証申請に着手する(判断者=運営者)。セッションはランダム256bit IDをHttpOnly/Secure/SameSite=Lax Cookie・有効30日。Claude Code用個人トークン(Bearer)は平文を発行時1回だけ表示しD1にはSHA-256ハッシュ、持ち主のuser_idの行だけ読み書き可。[qa-025] 字幕のAPI自動取得を希望する利用者だけ、設定画面から追加同意(youtube.force-ssl・incremental authorization)を行い、同意の有無をoauth_tokens.scopeで判定する。既定はreadonlyのみ。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 初回ログインで tenants と tenant_members(role=owner) を作る。セッションは user_id と選択中の tenant_id を持つ。招待の受理は、リンクのトークンのハッシュが一致・7日以内・未使用・未取消で、かつログインしたGoogleアカウントの確認済みメールが招待先と一致したときだけ。Claude Code用トークンは (tenant_id, user_id) ごとに発行し、使える操作は発行者の役割の範囲まで。YouTube連携(OAuth)はオーナーだけが行い、oauth_tokensはテナントに属する。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] OAuthスコープは変更しない(yt-analytics.readonly で Reporting API も使える)。YouTube連携の完了時に Reporting API の jobs.create(channel_reach_basic_a1)を1回だけ実行し、job_id を tenants に保存する。字幕の API ダウンロード(youtube.force-ssl)は今回も要求しない。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] Google OAuth 2.0 Authorization Code+PKCE+state を維持し、要求スコープは用途別の定義 SCOPE_SETS(src/http/google-oauth.ts)を唯一の正本とする: owner-signup=openid email youtube.readonly yt-analytics.readonly(access_type=offline・prompt=consent・include_granted_scopes=true)、invite=openid email。招待リンク経由(invite トークン付き)は invite セットを使い YouTube 権限を求めない(qa-064)。トークン応答の scope を必ず確認し、付与された実スコープを oauth_tokens.scope に保存する。YouTube 系2スコープのどちらかが欠けたら(部分許可)ログインとテナント作成は完了させ、tenants.youtube_link_status を partial(値は none/partial/linked)にして、ダッシュボードと設定に『YouTube 連携が未完了です・再連携』を出す(qa-065)。再連携は GET /api/auth/youtube/connect(オーナーのみ)で YouTube 2スコープを include_granted_scopes=true で再要求し、利用者が再連携ボタンを押したときだけ行う(google-oauth-granular-consent)。同意記録: /api/auth/login は consent=1 と terms_version・privacy_version を受け取り、サーバの現行版と一致しなければ /login?error=CONSENT_OUTDATED へ戻す。一致すれば版を state と同じ署名付き短命Cookie(10分)へ入れ、callback 成功時に consent_records へ1行追記する。規約改定後は既存セッションを切らず、次回ログイン時に現行版への再同意を求める(source=reconsent。qa-073)。Google Cloud の OAuth 同意画面のアプリ名は『Channel Insight』にする(qa-068)。
+[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-021] Google OAuth 2.0 Authorization Code+PKCE(Workers実装)。scope=openid email youtube.readonly yt-analytics.readonly、access_type=offline。同意画面は外部・本番公開・未検証(累計100人上限)で、利用者が80人を超えた時点でOAuth検証申請に着手する(判断者=運営者)。セッションはランダム256bit IDをHttpOnly/Secure/SameSite=Lax Cookie・有効30日。Claude Code用個人トークン(Bearer)は平文を発行時1回だけ表示しD1にはSHA-256ハッシュ、持ち主のuser_idの行だけ読み書き可。[qa-025] 字幕のAPI自動取得を希望する利用者だけ、設定画面から追加同意(youtube.force-ssl・incremental authorization)を行い、同意の有無をoauth_tokens.scopeで判定する。既定はreadonlyのみ。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 初回ログインで tenants と tenant_members(role=owner) を作る。セッションは user_id と選択中の tenant_id を持つ。招待の受理は、リンクのトークンのハッシュが一致・7日以内・未使用・未取消で、かつログインしたGoogleアカウントの確認済みメールが招待先と一致したときだけ。Claude Code用トークンは (tenant_id, user_id) ごとに発行し、使える操作は発行者の役割の範囲まで。YouTube連携(OAuth)はオーナーだけが行い、oauth_tokensはテナントに属する。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] OAuthスコープは変更しない(yt-analytics.readonly で Reporting API も使える)。YouTube連携の完了時に Reporting API の jobs.create(channel_reach_basic_a1)を1回だけ実行し、job_id を tenants に保存する。字幕の API ダウンロード(youtube.force-ssl)はこの時点では要求しなかった(qa-076/qa-085 で『字幕トグルON時だけ追加同意』に具体化)。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] OAuth 開始時に prompt=select_account consent を付け、ブランドアカウントは Google のアカウント選択で選ぶ旨を案内する。コールバック後 channels.list(mine=true)の候補から1つを選んで確定する(qa-075)。再連携は同じチャンネルだけ受け付け、変更は連携解除から(qa-075)。字幕自動取得トグルONで include_granted_scopes=true の追加同意により youtube.force-ssl を付与し granted_scopes に記録、force-ssl は captions.download だけに使う。OFFに戻すと force-ssl を含むトークンを revoke し(スコープ単位では取り消せないため)、readonly だけで再連携する(qa-076)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] Google OAuth 2.0 Authorization Code+PKCE+state を維持し、要求スコープは用途別の定義 SCOPE_SETS(src/http/google-oauth.ts)を唯一の正本とする: owner-signup=openid email youtube.readonly yt-analytics.readonly(access_type=offline・prompt=consent・include_granted_scopes=true)、invite=openid email。招待リンク経由(invite トークン付き)は invite セットを使い YouTube 権限を求めない(qa-064)。トークン応答の scope を必ず確認し、付与された実スコープを oauth_tokens.scope に保存する。YouTube 系2スコープのどちらかが欠けたら(部分許可)ログインとテナント作成は完了させ、tenants.youtube_link_status を partial(値は none/partial/linked)にして、ダッシュボードと設定に『YouTube 連携が未完了です・再連携』を出す(qa-065)。再連携は GET /api/auth/youtube/connect(オーナーのみ)で YouTube 2スコープを include_granted_scopes=true で再要求し、利用者が再連携ボタンを押したときだけ行う(google-oauth-granular-consent)。同意記録: /api/auth/login は consent=1 と terms_version・privacy_version を受け取り、サーバの現行版と一致しなければ /login?error=CONSENT_OUTDATED へ戻す。一致すれば版を state と同じ署名付き短命Cookie(10分)へ入れ、callback 成功時に consent_records へ1行追記する。規約改定後は既存セッションを切らず、次回ログイン時に現行版への再同意を求める(source=reconsent。qa-073)。Google Cloud の OAuth 同意画面のアプリ名は『Channel Insight』にする(qa-068)。force-ssl は sensitive scope のため、字幕トグルを一般公開する前に OAuth 検証を申請し、通るまでトグルは運営者テナントのオーナーだけが操作でき、他の利用者には『準備中』と表示する(qa-085)。連携・解除・字幕切替はオーナーだけ。
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-24T00:48:35Z)
 
@@ -595,3 +730,5 @@ qa-063(色・ロゴ・背景は共通デザイン正本を優先)を『Googleで
 |---|---|---|---|---|---|
 | google-oauth2 | 2026-05-26 | Google (developers.google.com) | https://developers.google.com/identity/protocols/oauth2 | 2026-09-21T09:50:55Z | 2026-09-21T09:50:55Z |
 | google-oauth-granular-consent | 2026-05-26 | Google (developers.google.com) | https://developers.google.com/identity/protocols/oauth2/resources/granular-permissions | 2026-09-24T00:07:34Z | 2026-09-24T00:07:34Z |
+| google-oauth-incremental-auth | 2026-09-14 | Google (developers.google.com) | https://developers.google.com/identity/protocols/oauth2/web-server | 2026-09-24T00:11:45Z | 2026-09-24T00:37:09Z |
+| google-sensitive-scope-verification | 2026-08-19 | Google (developers.google.com) | https://developers.google.com/identity/protocols/oauth2/production-readiness/sensitive-scope-verification | 2026-09-24T00:37:09Z | 2026-09-24T00:37:09Z |

@@ -1,0 +1,50 @@
+{
+  "index": "system-spec/index.md",
+  "imported_nodes": [
+    {
+      "graph_node_id": "spec-youtube-analytics-system",
+      "artifact_kind": "specification",
+      "file_path": "specs/youtube-analytics-system.md",
+      "source_path": "system-spec/00-requirements-definition.md",
+      "source_digest": "3cce8b44a7a66f5daca0a87a309c14bb4ec4a2ed40f448de71332d4ed077cac0",
+      "node_file_digest": "38eecd95cddc3b3bcd8610375a9fdba7cb8a52438456024352ec6f19d23950ea"
+    },
+    {
+      "graph_node_id": "arch-youtube-analytics-system",
+      "artifact_kind": "architecture",
+      "file_path": "architecture/youtube-analytics-system.md",
+      "source_path": "system-spec/index.md",
+      "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656",
+      "node_file_digest": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b"
+    }
+  ],
+  "source_version": "0.1.14",
+  "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100",
+  "evaluated_digest_definition": "sha256 of sorted lines 'relpath\\tsha256\\n' over system-spec/*.md + spec-state.json + fetched-references.json",
+  "evaluated_inputs": [
+    "system-spec/00-requirements-definition.md",
+    "system-spec/auth.md",
+    "system-spec/backend.md",
+    "system-spec/database.md",
+    "system-spec/fetched-references.json",
+    "system-spec/frontend.md",
+    "system-spec/index.md",
+    "system-spec/infrastructure.md",
+    "system-spec/maintenance-ops.md",
+    "system-spec/security.md",
+    "system-spec/spec-state.json",
+    "system-spec/ui-ux.md"
+  ],
+  "evidence_ref": "eval-log/completeness-findings-20260924-r4.json",
+  "confirmation_status": "confirmed",
+  "evaluation_status": "pass",
+  "readiness": "complete",
+  "graph_revision": 7,
+  "imported_at": "2026-09-24T09:17:58Z",
+  "scope": "qa-062〜qa-076 設定画面・YouTubeチャンネル紐付け・共通レイアウト・テナント別OAuthクライアント・利用者向け表記(差分更新・本文全置換なし)",
+  "carried_over": [
+    "r3 medium: 要件定義書 O3『80%超でアラート』表記と70/90の関係注記",
+    "r3 low: plugin compile-spec-doc の未コミット変更による test 1件失敗(plugin 側)",
+    "r3 low: 直接指示ラベル分離(plugin 側)"
+  ]
+}

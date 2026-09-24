@@ -1,7 +1,8 @@
 # Workers 静的アセット（画面・規約ページ）の応答ヘッダ。値は src/http/security-headers.ts の SECURITY_HEADERS と完全一致させる
 # （tests/login/security-headers.test.ts が照合する）。/api/* には Worker 側の middleware が同じ値を付ける
+# チャンネルのアイコンは YouTube の画像ホスト（yt3.*）から読む
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' https://accounts.google.com; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://yt3.ggpht.com https://yt3.googleusercontent.com; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' https://accounts.google.com; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin

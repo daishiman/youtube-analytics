@@ -15,7 +15,7 @@ const SCOPE_ICONS: Record<string, () => ReactElement> = {
 const CONFIG_FAILED = "設定を読み込めませんでした。ページを再読み込みしてください";
 const DESCRIPTIONS: Record<AuthConfig["mode"], string> = {
   signup: "Googleアカウントでログインすると、YouTube Analyticsの読み取り連携も同時に行います",
-  invite: "招待されたテナントに参加します。読み取るのはメールアドレスだけです",
+  invite: "招待されたワークスペースに参加します。読み取るのはメールアドレスだけです",
 };
 
 export function LoginPage() {
@@ -121,7 +121,9 @@ function LoginView({ invite, errorCode }: { invite: string; errorCode: string })
             </p>
           )}
           {config?.inviteTenantName && (
-            <p className="invite-note">{config.inviteTenantName}のテナントに招待されています</p>
+            <p className="invite-note">
+              {config.inviteTenantName}のワークスペースに招待されています
+            </p>
           )}
           <h1 id="login-heading">
             YouTubeの実績から、

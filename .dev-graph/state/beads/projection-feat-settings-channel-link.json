@@ -1,0 +1,138 @@
+{
+ "feature": {
+  "graph_node_id": "feat-settings-channel-link",
+  "title": "設定画面・YouTubeチャンネル紐付け・共通レイアウト",
+  "description": "dev-graph feature feat-settings-channel-link"
+ },
+ "children": [
+  {
+   "graph_node_id": "SYS-SCL-P01",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P01",
+   "title": "P01 要件の実装単位への確定",
+   "depends_on": [],
+   "description": "dev-graph task SYS-SCL-P01 (tasks/feat-settings-channel-link/SYS-SCL-P01.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P02",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P02",
+   "title": "P02 AppShell・設定API・channels データモデルの設計",
+   "depends_on": [
+    "SYS-SCL-P01"
+   ],
+   "description": "dev-graph task SYS-SCL-P02 (tasks/feat-settings-channel-link/SYS-SCL-P02.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P03",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P03",
+   "title": "P03 OAuth 追加権限・越境防止・トークン管理の設計レビュー",
+   "depends_on": [
+    "SYS-SCL-P02"
+   ],
+   "description": "dev-graph task SYS-SCL-P03 (tasks/feat-settings-channel-link/SYS-SCL-P03.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P04",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P04",
+   "title": "P04 受入テスト・越境テスト・3サイズ E2E の設計",
+   "depends_on": [
+    "SYS-SCL-P03"
+   ],
+   "description": "dev-graph task SYS-SCL-P04 (tasks/feat-settings-channel-link/SYS-SCL-P04.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P05",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P05",
+   "title": "P05 共通レイアウト・設定画面・チャンネル紐付け API の実装",
+   "depends_on": [
+    "SYS-SCL-P04"
+   ],
+   "description": "dev-graph task SYS-SCL-P05 (tasks/feat-settings-channel-link/SYS-SCL-P05.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P06",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P06",
+   "title": "P06 テスト実行と不具合修正",
+   "depends_on": [
+    "SYS-SCL-P05"
+   ],
+   "description": "dev-graph task SYS-SCL-P06 (tasks/feat-settings-channel-link/SYS-SCL-P06.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P07",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P07",
+   "title": "P07 受入確認",
+   "depends_on": [
+    "SYS-SCL-P06"
+   ],
+   "description": "dev-graph task SYS-SCL-P07 (tasks/feat-settings-channel-link/SYS-SCL-P07.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P08",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P08",
+   "title": "P08 共通化の整理とマイグレーション整理",
+   "depends_on": [
+    "SYS-SCL-P07"
+   ],
+   "description": "dev-graph task SYS-SCL-P08 (tasks/feat-settings-channel-link/SYS-SCL-P08.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P09",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P09",
+   "title": "P09 セキュリティと品質の保証",
+   "depends_on": [
+    "SYS-SCL-P08"
+   ],
+   "description": "dev-graph task SYS-SCL-P09 (tasks/feat-settings-channel-link/SYS-SCL-P09.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P10",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P10",
+   "title": "P10 最終レビュー",
+   "depends_on": [
+    "SYS-SCL-P09"
+   ],
+   "description": "dev-graph task SYS-SCL-P10 (tasks/feat-settings-channel-link/SYS-SCL-P10.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P11",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P11",
+   "title": "P11 証跡の集約",
+   "depends_on": [
+    "SYS-SCL-P10"
+   ],
+   "description": "dev-graph task SYS-SCL-P11 (tasks/feat-settings-channel-link/SYS-SCL-P11.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P12",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P12",
+   "title": "P12 運用手順『チャンネルを変更する』とドキュメント",
+   "depends_on": [
+    "SYS-SCL-P10"
+   ],
+   "description": "dev-graph task SYS-SCL-P12 (tasks/feat-settings-channel-link/SYS-SCL-P12.md)"
+  },
+  {
+   "graph_node_id": "SYS-SCL-P13",
+   "parent_feature": "feat-settings-channel-link",
+   "phase_ref": "P13",
+   "title": "P13 CI/CD とリリース",
+   "depends_on": [
+    "SYS-SCL-P11",
+    "SYS-SCL-P12"
+   ],
+   "description": "dev-graph task SYS-SCL-P13 (tasks/feat-settings-channel-link/SYS-SCL-P13.md)"
+  }
+ ]
+}

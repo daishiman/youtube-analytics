@@ -4,7 +4,8 @@ export const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "script-src 'self'",
   "style-src 'self'",
-  "img-src 'self' data:",
+  // 設定画面のチャンネルアイコンは YouTube の画像ホスト（yt3.*）から読む。読めないときは画面側で頭文字に切り替える
+  "img-src 'self' data: https://yt3.ggpht.com https://yt3.googleusercontent.com",
   "connect-src 'self'",
   "font-src 'self'",
   "object-src 'none'",

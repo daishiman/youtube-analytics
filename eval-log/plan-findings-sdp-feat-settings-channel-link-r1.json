@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-settings-channel-link-r1",
+  "evaluated_digest": "sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec すべてでスコープ外一覧が feature の scope_out(日次収集本体/CSV等取込/スキル連携API/テナント・メンバー・招待/削除実行処理/他画面中身/複数チャンネル同時紐付け/新色トークン)と完全一致しており、成果物・write_scope もその範囲内に収まる。system-spec 各章(ui-ux/frontend/backend/auth/security/database/maintenance-ops/00-requirements-definition)との矛盾も検出しなかった。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-05-implementation.md#スコープ外",
+        "task-specs/phase-13-release-deploy.md#スコープ外",
+        "workstream-inventory.json"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "feature 受入10項目すべてが task の acceptance/verification に写像されている。(1)6区画表示・閲覧者にメンバー非表示→P04/P06/P07、(2)候補選択と別テナント409→P04/P06/P07、(3)再連携は同一チャンネルのみ・変更順序→P04/P06、(4)字幕トグルと force-ssl・準備中表示→P04、(5)トークン名前必須・6本目409・平文1回→P04、(6)使用量バー70/90%・1時間キャッシュ・個別内訳非表示→P04、(7)取込履歴20件+失敗理由→P04、(8)共通Header/Footer・色指定0件→P02(検証)/P05(受入)/P08(整理)、(9)audit_log記録・Origin不一致拒否→P04/P09、(10)3サイズE2E→P04/P06。scope_in 14項目もP01〜P13の目的・成果物に概ね写像されているが、1件軽微な抜けをfindingsに記載した。",
+      "evidence": [
+        "task-specs/phase-04-test-design.md#Verification and evidence",
+        "task-specs/phase-06-test-run.md#Verification and evidence",
+        "task-specs/phase-07-acceptance.md#Verification and evidence",
+        "task-specs/phase-09-quality-assurance.md#Verification and evidence"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "task-specs/phase-01〜13、workstream-inventory.json、task-graph.json、system-build-handoff.json の間で task_id(SYS-SCL-P01〜P13)、phase_ref(P01〜P13)、write_scope、depends_on が一貫している。feature_package_id/parent_feature/repository_id(github:daishiman/youtube-analytics)も全ファイルで一致し、source_feature_digest(sha256:7012b9ad2dfcea19a4a0df2cd2745a22d91951c8333440b36d7311ba28498e12)は features/feat-settings-channel-link.context.json の実ハッシュと一致した。不整合は検出しなかった。",
+      "evidence": [
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "feature-package.json"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→...→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向きDAGで、サイクルや同一 package 外への依存参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致している。",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/05設定",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-settings-channel-link-r1"
+      ],
+      "exit_code": 0,
+      "conditions": ["C1", "C2", "C3", "C4"],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8\",\n  \"feature_package_id\": \"feature-package/feat-settings-channel-link\",\n  \"parent_feature\": \"feat-settings-channel-link\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "8e0321c44717229a704f10625a5c7a549e8da49d15f26cd9023060ae35b20fcb"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "3b0bdbf39b18366adf35635a4b67a8e2a51d05e392ca4ce86437d03ac5167c67"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "375919b2a1d3e53ace87011bf129738e648704bd23a328272612f9ace7f338c1"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "1376e5c702c001a319b31da0d96aed55bd41e2a5e0f99ad24534f2d3fe68d7bc"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "b5f7647f175b908ccfcff83d2620cb9a9ceba9269f77597a9c65818598dc009e"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "54fe8bc3af04d7184dab2813c52f0674389abe779bb03c3f2515e4e04fe379fa"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "c03e4651fe3be7abdcc11fedd30b95e5ae685a90742705fab184a22efe76bb26"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "6bfa3c11b6a4d6fb78f5d241f993a3df7d4f333d67da70b6eb6d437c47c497e3"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "f2a4f541efc196bf022f1406b45e0127df506c8d6c22261ef367b01f6cdd061f"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "7dd7ff2918a1832a609dfef2944f3b1d9e07bf0587bb3d5805626193d3e9295a"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "643a8e890af1d402e8483ac278592e76f083fdc9206667da7cb8e51fcb8a4939"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "b462d2fcf13ebdb20433e98d495acc3b6b88e9b07d391f2b49c422ca88b9dc2b"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "04c7e8ac99324b27d4f7fa362a0e7b50c90cc130dbd4c828e7b4137627537576"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "f6615b023bd5491e5d9281a31a4a57a7feab28c767667e977ea8e95b6dd38e42"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "c9ae62658a7658168116868f1ffe5311a31dfe6763ab3720b857aa2e45a18e36"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "d323ff9f6bb96014cbf87bb2700933aca38d375d75d1c4c9944d4cbc6b47fcb2"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "39154fe229ff29a314b06881b6fea49996b210a98468b3e0590e4ba80e96901a"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "93f8e6d7603a9894b8b3368fed6ba79f638e491edb81f357a1f4b422bb59e81c"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:b99f16a19d6b011e9af0228340cc1112273911b4f51180dbad5a1f5b16c529b8)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "completeness",
+      "observation": "feature context の scope_in にある『データを削除区画の UI と POST /api/tenant/delete の呼出し』は、P02(architecture)の API 契約列挙(GET /api/settings・YouTube 紐付け系・captions-auto・imports・skill-tokens・usage)にも P05(implementation)の成果物列挙にも API 名として明示されていない。設定画面6区画の一部として実装対象には含まれる想定だが、他の scope_in 項目のように API 名や区画名で個別に対応付けられておらず、追跡性がやや弱い。矛盾ではなく C2 を FAIL とするほどの漏れではない。",
+      "evidence": [
+        "task-specs/phase-02-architecture.md#目的",
+        "task-specs/phase-05-implementation.md#目的",
+        "features/feat-settings-channel-link.context.json"
+      ]
+    }
+  ]
+}

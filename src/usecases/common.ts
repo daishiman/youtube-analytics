@@ -36,7 +36,7 @@ export function isEmail(value: unknown): value is string {
 /** 初回テナントの既定名（メールのローカル部）。利用者が後で変えられる前提の仮名 */
 export function defaultTenantName(email: string): string {
   const local = email.split("@")[0] ?? "";
-  const suffix = "のテナント";
+  const suffix = "のワークスペース";
   const maxBaseLength = 60 - Array.from(suffix).length;
   return `${Array.from(local || "新しい")
     .slice(0, maxBaseLength)

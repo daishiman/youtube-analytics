@@ -1,0 +1,3401 @@
+{
+  "schema_version": 1,
+  "profile_id": "jp-web-design/catalog-default",
+  "profile_version": "1.0.0",
+  "profile_digest": "15b7e3168aa2089980d5911f6322fe2b146283fdf00819181f032f5d8ed07ea8",
+  "stage": "v0",
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "profile-present",
+      "passed": false,
+      "evidence": "docs/product/design-profile.json"
+    },
+    {
+      "id": "profile-id",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "profile-version",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "profile-digest",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "sample-copy-disabled",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "component-adoption-declared",
+      "passed": false,
+      "evidence": "0"
+    },
+    {
+      "id": "adoption-screens-valid-and-unique",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "id": "adoption-runtime-markers-unique",
+      "passed": true,
+      "evidence": ""
+    },
+    {
+      "id": "consumer-source-inventory",
+      "passed": true,
+      "evidence": "39"
+    },
+    {
+      "id": "consumer-source-no-sample-cd6e8a715041",
+      "passed": true,
+      "evidence": "README.md: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-be4dc57a29d3",
+      "passed": true,
+      "evidence": "README.md: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b056e2d22257",
+      "passed": true,
+      "evidence": "README.md: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c352a91b37c3",
+      "passed": true,
+      "evidence": "README.md: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-0d452958f63e",
+      "passed": true,
+      "evidence": "README.md: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-5ac6697aaaa9",
+      "passed": true,
+      "evidence": "README.md: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-508212c50e50",
+      "passed": true,
+      "evidence": "README.md: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-b0225ed1769b",
+      "passed": true,
+      "evidence": "README.md: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-19c40f9acc92",
+      "passed": true,
+      "evidence": "README.md: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-05e1296d9f11",
+      "passed": true,
+      "evidence": "README.md: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-869cf91256a9",
+      "passed": true,
+      "evidence": "README.md: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-e0e1a570665b",
+      "passed": true,
+      "evidence": "README.md: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-7e676453fc01",
+      "passed": true,
+      "evidence": "README.md: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-10851907fcb2",
+      "passed": true,
+      "evidence": "README.md: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-fef819c22bb4",
+      "passed": true,
+      "evidence": "README.md: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-22a4b32f0486",
+      "passed": true,
+      "evidence": "README.md: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-6edca41bb29b",
+      "passed": true,
+      "evidence": "README.md: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-095d3a229af7",
+      "passed": true,
+      "evidence": "biome.json: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-695fd7a0632f",
+      "passed": true,
+      "evidence": "biome.json: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-3dd822745586",
+      "passed": true,
+      "evidence": "biome.json: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-d48852b727f1",
+      "passed": true,
+      "evidence": "biome.json: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-205faf27ea8d",
+      "passed": true,
+      "evidence": "biome.json: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-ba8dc47006a6",
+      "passed": true,
+      "evidence": "biome.json: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-c237673380a4",
+      "passed": true,
+      "evidence": "biome.json: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-ebd5798b926e",
+      "passed": true,
+      "evidence": "biome.json: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-ab785c211ac7",
+      "passed": true,
+      "evidence": "biome.json: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-ae7eea209b79",
+      "passed": true,
+      "evidence": "biome.json: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-07f00f081ed0",
+      "passed": true,
+      "evidence": "biome.json: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-024cc0928ee4",
+      "passed": true,
+      "evidence": "biome.json: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-9ea0b5efd3b6",
+      "passed": true,
+      "evidence": "biome.json: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-009e2a43cc82",
+      "passed": true,
+      "evidence": "biome.json: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-ed68c2ad54ef",
+      "passed": true,
+      "evidence": "biome.json: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-5038b8779168",
+      "passed": true,
+      "evidence": "biome.json: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-61ac5c127e6d",
+      "passed": true,
+      "evidence": "biome.json: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-5e9620b295d9",
+      "passed": true,
+      "evidence": "package.json: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-800bdd88d9a0",
+      "passed": true,
+      "evidence": "package.json: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-44e7c0532800",
+      "passed": true,
+      "evidence": "package.json: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c7c236a6f73e",
+      "passed": true,
+      "evidence": "package.json: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-dfa7849ba0cc",
+      "passed": true,
+      "evidence": "package.json: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-a72220c6a46b",
+      "passed": true,
+      "evidence": "package.json: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-6f20999d5c0d",
+      "passed": true,
+      "evidence": "package.json: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-485038356114",
+      "passed": true,
+      "evidence": "package.json: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-a73457381213",
+      "passed": true,
+      "evidence": "package.json: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-560e829855e7",
+      "passed": true,
+      "evidence": "package.json: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-ae261c527d96",
+      "passed": true,
+      "evidence": "package.json: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-a50939d89941",
+      "passed": true,
+      "evidence": "package.json: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-12bce1b7f090",
+      "passed": true,
+      "evidence": "package.json: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-3721ebe4ed43",
+      "passed": true,
+      "evidence": "package.json: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-604f9faae189",
+      "passed": true,
+      "evidence": "package.json: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-9117f042aef1",
+      "passed": true,
+      "evidence": "package.json: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-935cf399c313",
+      "passed": true,
+      "evidence": "package.json: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-0203d0272b3e",
+      "passed": true,
+      "evidence": "playwright.config.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-492da0062f47",
+      "passed": true,
+      "evidence": "playwright.config.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-85fc6ba1b44a",
+      "passed": true,
+      "evidence": "playwright.config.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-bf27f3373676",
+      "passed": true,
+      "evidence": "playwright.config.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-bfb8c891e054",
+      "passed": true,
+      "evidence": "playwright.config.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-3338a203e18a",
+      "passed": true,
+      "evidence": "playwright.config.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-b45607fc9e1f",
+      "passed": true,
+      "evidence": "playwright.config.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-93778ec0b7ca",
+      "passed": true,
+      "evidence": "playwright.config.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-2bca1614c018",
+      "passed": true,
+      "evidence": "playwright.config.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-23ec8c0e627d",
+      "passed": true,
+      "evidence": "playwright.config.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-a13fbe1d02b1",
+      "passed": true,
+      "evidence": "playwright.config.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-7846ded45c5f",
+      "passed": true,
+      "evidence": "playwright.config.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-d7bf366e93bb",
+      "passed": true,
+      "evidence": "playwright.config.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-2eb9a87bd10b",
+      "passed": true,
+      "evidence": "playwright.config.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-3da1a3ec3986",
+      "passed": true,
+      "evidence": "playwright.config.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-b1656fcd5476",
+      "passed": true,
+      "evidence": "playwright.config.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-908a7de769e7",
+      "passed": true,
+      "evidence": "playwright.config.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-d0d206e90d82",
+      "passed": true,
+      "evidence": "public/privacy.html: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-a57427bd7410",
+      "passed": true,
+      "evidence": "public/privacy.html: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-553c634a0dc7",
+      "passed": true,
+      "evidence": "public/privacy.html: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c3683e10bc0c",
+      "passed": true,
+      "evidence": "public/privacy.html: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-73fc2f38942d",
+      "passed": true,
+      "evidence": "public/privacy.html: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-1d1fdd2b0d6a",
+      "passed": true,
+      "evidence": "public/privacy.html: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-c41b891ee72d",
+      "passed": true,
+      "evidence": "public/privacy.html: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-79f3304029fc",
+      "passed": true,
+      "evidence": "public/privacy.html: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-de3ad3a2e3a1",
+      "passed": true,
+      "evidence": "public/privacy.html: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-8fb513ebf2a1",
+      "passed": true,
+      "evidence": "public/privacy.html: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-ae8ae8d56063",
+      "passed": true,
+      "evidence": "public/privacy.html: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-e2d1a34be924",
+      "passed": true,
+      "evidence": "public/privacy.html: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-b09532cf076c",
+      "passed": true,
+      "evidence": "public/privacy.html: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-728f12717a90",
+      "passed": true,
+      "evidence": "public/privacy.html: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-aa3e8f3becf6",
+      "passed": true,
+      "evidence": "public/privacy.html: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-ee93fcafee6f",
+      "passed": true,
+      "evidence": "public/privacy.html: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-138120905471",
+      "passed": true,
+      "evidence": "public/privacy.html: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-408703d0fb06",
+      "passed": true,
+      "evidence": "public/terms.html: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-be904bad66b1",
+      "passed": true,
+      "evidence": "public/terms.html: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-2897887be2c6",
+      "passed": true,
+      "evidence": "public/terms.html: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-2828687a6732",
+      "passed": true,
+      "evidence": "public/terms.html: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-cd2f0b530044",
+      "passed": true,
+      "evidence": "public/terms.html: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-80c79a56b203",
+      "passed": true,
+      "evidence": "public/terms.html: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-4ad43614763f",
+      "passed": true,
+      "evidence": "public/terms.html: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-0cd372581a35",
+      "passed": true,
+      "evidence": "public/terms.html: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-7839fc47948b",
+      "passed": true,
+      "evidence": "public/terms.html: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-48a1b7b5ec7a",
+      "passed": true,
+      "evidence": "public/terms.html: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-26da4f203488",
+      "passed": true,
+      "evidence": "public/terms.html: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-5d9e4d0f889b",
+      "passed": true,
+      "evidence": "public/terms.html: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-53507cbf8177",
+      "passed": true,
+      "evidence": "public/terms.html: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-cf87061eeeda",
+      "passed": true,
+      "evidence": "public/terms.html: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-c4564cc5a792",
+      "passed": true,
+      "evidence": "public/terms.html: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-cce642da37f0",
+      "passed": true,
+      "evidence": "public/terms.html: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-9d641ca81a09",
+      "passed": true,
+      "evidence": "public/terms.html: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-e11b64d2a56f",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-40a75bdd8192",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9f500b8edc20",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9f95036d944e",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-3e0ed6c4ce27",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-56c7a3fe5b34",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-f14153604a0a",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-7c1a1d3e0beb",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1ae21aae9a62",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-b29ffc7c5923",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-4aae514bff4a",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-0cf294affbff",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-714bde30410a",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-662c91c46967",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-9944693ddf1f",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-77fd05a1cea9",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-8a50f51b0072",
+      "passed": true,
+      "evidence": "src/adapters/cf-analytics.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-8bd660be53b0",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-1c80cd495f29",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-4ac21966473c",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c1c4184ff059",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-d064a96733bd",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-35d4caf5c889",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-07d585d1ad43",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-c68342b898af",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-80eff4840b68",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-15975588c1a4",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-d68d0c76901f",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-ec9943a0bc39",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-aa7a098f4793",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-16f9061f5c2b",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-342faecc5acc",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-12542a28ed52",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-e842a5aa182a",
+      "passed": true,
+      "evidence": "src/adapters/google-youtube.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-e04de76ff6e4",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-ac23260e9289",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-377a22e0503b",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-5ebc627848a3",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-710a80ab20f7",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-4a88fbd29faf",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-85e87cba2a7b",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-d13084daaa8d",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-091e751fef81",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-73e49ab3d260",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-954d71092a3f",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-9c4d57c08d64",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-21ee64739227",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-43a9020de11a",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-a7a6cc9306f5",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-13dfe87656b3",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-faa8d0a0adcb",
+      "passed": true,
+      "evidence": "src/domain/tenant-context.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-2ee5e465372b",
+      "passed": true,
+      "evidence": "src/env.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-0fd7bc29678a",
+      "passed": true,
+      "evidence": "src/env.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-193724e6a6c0",
+      "passed": true,
+      "evidence": "src/env.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-92ce879b4588",
+      "passed": true,
+      "evidence": "src/env.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-29e0f32ad13a",
+      "passed": true,
+      "evidence": "src/env.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-b46b78999aaa",
+      "passed": true,
+      "evidence": "src/env.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-a18312dfcd7b",
+      "passed": true,
+      "evidence": "src/env.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-6f425183925f",
+      "passed": true,
+      "evidence": "src/env.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-3b0578fdfc12",
+      "passed": true,
+      "evidence": "src/env.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-ef93f0432ce4",
+      "passed": true,
+      "evidence": "src/env.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-1740421c02e3",
+      "passed": true,
+      "evidence": "src/env.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-80af8ff83fbb",
+      "passed": true,
+      "evidence": "src/env.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-66bf07c21a19",
+      "passed": true,
+      "evidence": "src/env.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-d9a3bd2af6c4",
+      "passed": true,
+      "evidence": "src/env.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-a8a9a4631640",
+      "passed": true,
+      "evidence": "src/env.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-e5f4d937e844",
+      "passed": true,
+      "evidence": "src/env.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-7a0c2dbc45e0",
+      "passed": true,
+      "evidence": "src/env.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-e1dfd31abb5f",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-83664932716d",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-3d22d3fb430a",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-a334599b35bb",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-9fbc14953b85",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-bf37840d0301",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-137fa4e0c99e",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-45b0440412bd",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-65b268093ca0",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-6b928c538025",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-728100132dc1",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-7dea66534f7b",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-4f92dfd90891",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-d7909270d146",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-e5f9c1ba1d3d",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-98f1b91af7ef",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-a1da0ccf5da0",
+      "passed": true,
+      "evidence": "src/http/api-routes.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-4e05784efd21",
+      "passed": true,
+      "evidence": "src/http/app.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-1a917cd182b1",
+      "passed": true,
+      "evidence": "src/http/app.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-e34f5046a27e",
+      "passed": true,
+      "evidence": "src/http/app.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-e61ac07521dd",
+      "passed": true,
+      "evidence": "src/http/app.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-22a1099e72f9",
+      "passed": true,
+      "evidence": "src/http/app.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-185306fdfd24",
+      "passed": true,
+      "evidence": "src/http/app.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-b68bc784e5c6",
+      "passed": true,
+      "evidence": "src/http/app.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-6f0f38793df8",
+      "passed": true,
+      "evidence": "src/http/app.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-0f1c9fa8bff0",
+      "passed": true,
+      "evidence": "src/http/app.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-f64f704fc18c",
+      "passed": true,
+      "evidence": "src/http/app.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-239c2fa3055e",
+      "passed": true,
+      "evidence": "src/http/app.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-975d36b40eb8",
+      "passed": true,
+      "evidence": "src/http/app.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-1b59ab6a0d2d",
+      "passed": true,
+      "evidence": "src/http/app.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-0695d639bd41",
+      "passed": true,
+      "evidence": "src/http/app.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-72c7183404d2",
+      "passed": true,
+      "evidence": "src/http/app.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-5b0bdeda584f",
+      "passed": true,
+      "evidence": "src/http/app.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-86799689fbef",
+      "passed": true,
+      "evidence": "src/http/app.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-de0a54cb907f",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-0339aafff339",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-6a2179f655e7",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-a53ce5d265fa",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-b62505b58634",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-c20667b17233",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-35ed41b03030",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-ad215580552e",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-fbec7eae284b",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-aec7b79aa702",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-59d83d325672",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-9c1737eddbfc",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-0e5655626771",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-01a76b872756",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-4ac2c1145e1c",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-e5452f19387c",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-97663729b74d",
+      "passed": true,
+      "evidence": "src/http/auth-routes.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-ca8e58e4d1cf",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-c1ba39895ee2",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b640ab078687",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9ccd2f0645f4",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-e17b58b83cfe",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-bbe59d6cf4c7",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-29b023b7e9ba",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-30cc4f3b79bc",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-69f03b6cc2ce",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-9db21a0a7e9e",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-8dff0ec8a23c",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-b148f5de7600",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-193e8fd53a23",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-bf7eb8e89d01",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-b98fa2bb87a8",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-632aaf4279b1",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-f7b03b629c20",
+      "passed": true,
+      "evidence": "src/http/cookies.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-0858cd7c152a",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-b6e4a9429a2a",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b6c04c3b5da4",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c1f1b5a55e0d",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-a0eb7f4c1573",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-14f3bedd87a2",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-f6db1ce2cf6e",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-c82516a740f4",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-19fc6d682293",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-c67f2c7b366f",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-8f3b6db731a4",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-6c5d54960414",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-86d1a872a35f",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-fda2a0e3d162",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-eab31f652409",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-a3293293d581",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-b58610bdd711",
+      "passed": true,
+      "evidence": "src/http/google-oauth.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-fc6ed323c311",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-71715740b668",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-5bbbb3faba37",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-8553a6b13db8",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-7e9b363a6c3a",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-cf81a648f015",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-3fdeb718a51d",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1a7f15511bdf",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-25287bee244c",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-561ac625cfce",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-24ca9935740d",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-7ccf520b9531",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-b7a3a8eb0f7c",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-2907087f5d78",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-2661d35203f5",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-56d69693a7f1",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-ad95bce6bc4f",
+      "passed": true,
+      "evidence": "src/http/middleware.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-73f88d7839f4",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-a571a5b0c998",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-0d3281e48933",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-493768f88693",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-8bf8bbbdd02d",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-a2f2fd38e71a",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-1a359c679737",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-0203434666db",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-68507ec6bb20",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-e5f2e267bbaa",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-04582f969b71",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-7c676372db98",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-4c9a827be0c8",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-f58cb4253f82",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-d6e92b5c7f06",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-5f992b4ee558",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-17e2e044f458",
+      "passed": true,
+      "evidence": "src/http/settings-routes.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-828fbdcb2966",
+      "passed": true,
+      "evidence": "src/index.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-f9c95e921323",
+      "passed": true,
+      "evidence": "src/index.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-f477d79b0184",
+      "passed": true,
+      "evidence": "src/index.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-0fe72547eae4",
+      "passed": true,
+      "evidence": "src/index.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-bfcd2fa76255",
+      "passed": true,
+      "evidence": "src/index.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-042a878dc650",
+      "passed": true,
+      "evidence": "src/index.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-14496e393ad7",
+      "passed": true,
+      "evidence": "src/index.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-4b79e18781f1",
+      "passed": true,
+      "evidence": "src/index.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-af0da54068b6",
+      "passed": true,
+      "evidence": "src/index.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-003539f29494",
+      "passed": true,
+      "evidence": "src/index.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-89906e8ea070",
+      "passed": true,
+      "evidence": "src/index.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-57c27f8a7b7a",
+      "passed": true,
+      "evidence": "src/index.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-c98ce7924754",
+      "passed": true,
+      "evidence": "src/index.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-f159ebc29954",
+      "passed": true,
+      "evidence": "src/index.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-fc56a778cc49",
+      "passed": true,
+      "evidence": "src/index.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-88237340aa58",
+      "passed": true,
+      "evidence": "src/index.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-f2066fe02ecd",
+      "passed": true,
+      "evidence": "src/index.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-4850ef8d7046",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-381a722df25d",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-76ff717c0da5",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-a45acb5fff00",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-965f73b9f96c",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-1da66ee89e6f",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-7ba0229ef1bb",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-fb84068c5500",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-a9258ac9e755",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-e75ef1ece3c5",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-eee923961d20",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-4b6a52dcd247",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-8aab9284b04f",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-a064bfac43b0",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-4da68cd92615",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-f8c41276e3bc",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-308be12cb744",
+      "passed": true,
+      "evidence": "src/lib/crypto.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-840d5889c1d1",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-f14486301159",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-e9595076b8ee",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-47b6640b4a06",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-60c8ef089ece",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-11650fe1c0de",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-5695c9bd25cc",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-0a02d8c615ec",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-f6aaa8dbe199",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-f9596adb076f",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-3148cdcccbe7",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-1f5495d0c5e5",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-6ac49928c94d",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-a4a77ca96fea",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-d9167a0e18c4",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-816cc38c89f3",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-11db4d47493c",
+      "passed": true,
+      "evidence": "src/lib/errors.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-4e0464ce8885",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-c7d309c22d3b",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-762a99b679aa",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-ca442ed8ca9b",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-5e6ce1397ff2",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-544fc13360f1",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-c6228e5477b5",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1c0b37013683",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-95a21b429349",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-f86228e421ca",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-4c3a5a1bc122",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-8d57701de237",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-561e4ec1df8a",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-94ee2c863f04",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-d9944fef65cb",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-9a96f8338584",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-27a701cc5ddd",
+      "passed": true,
+      "evidence": "src/repositories/db.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-c210901a4bcc",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-f7be78d1c048",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-19984b0df495",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-063a2d81f747",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-515cdf95d359",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-c10ebf4c131d",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-b56764b42a49",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-3200a707b31f",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-0e3cc6bdc8f1",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-c59989ff3ac3",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-28bb87e5a6cf",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-301cc40975cb",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-ff7893be24f1",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-dd6c5fb5fe9e",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-590b1c9ef688",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-ee90aeedc46b",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-ba6aacb2c339",
+      "passed": true,
+      "evidence": "src/repositories/platform-repository.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-2a0c9a81da05",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-db4fd283a70c",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9c3de99ebc2b",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-10488b29a3bb",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-c900167138b6",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-4d7d322ef8b2",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-1b1c3c254fe1",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1e219391aa55",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-3481bc2bea29",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-41e95009e1cf",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-2f7a9dbb8af1",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-241a23eaf5c1",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-cf08036939a6",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-56301bedfcd8",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-8c7bd9f96a1c",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-14ffce50718a",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-21260128dc4a",
+      "passed": true,
+      "evidence": "src/repositories/settings-repository.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-6411c663165e",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-cf0ea7d05412",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-e9d1cd8e5841",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-dbdfbd0a1683",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-4965ab998ee8",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-41dda125210f",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-74c8ef3d95ca",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-e988e1211294",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-3f9def0662e0",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-07cc2b129d68",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-2ccf7c2ccc83",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-a0fac9796f44",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-82239ddf0696",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-b98779b6add5",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-2a9361008f14",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-7f6e97d1889e",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-e3012aa1b096",
+      "passed": true,
+      "evidence": "src/repositories/tenant-scoped-repository.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-d988a3c55230",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-bdebd95cb761",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-ba66edda37b9",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-abedcafc5a2f",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-66341a5dda06",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-707722cb7d8e",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-4266fe653df5",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-2ca36e7008d6",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-f6f105fd5966",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-701525422f4b",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-831e90936eb7",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-db067adba2ae",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-9ae5c7a2ebbd",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-8400d21127f1",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-a9d648099146",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-da71db0d8ade",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-e4a60f0bf51a",
+      "passed": true,
+      "evidence": "src/usecases/common.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-cea9d2662e29",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-28a60bf667a7",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-2e9f5eabfdf9",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9514590f8ec4",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-f0abdd764920",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-9f8c1305ea7e",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-d4b3f79b165e",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-da40b510e96e",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-25fc9107d30a",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-90c060bf4adb",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-9b1cce52549a",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-aeb39d5e646f",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-8d0faca2c944",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-499e80da3b53",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-227d786e25be",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-e0cb5d8dd47b",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-72aa2864fc79",
+      "passed": true,
+      "evidence": "src/usecases/google-client.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-2588a7b13abf",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-6cee18bd3ec9",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-1a995f269599",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-276e689062aa",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-642f3a4fb18a",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-a604631b2efd",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-3b699cc848ba",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-81e185ea5057",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-079ca0e83414",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-76b7fac5b6fc",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-766be65d53bd",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-c98cd4148d65",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-e9245f59d50f",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-7c2ee3ee705e",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-7e6b39707f9b",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-47f4658c1639",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-0e3ff8110211",
+      "passed": true,
+      "evidence": "src/usecases/imports.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-2beb16fce4a1",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-863cd6e6ac37",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-8a562844fd63",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-5b44bd974eb4",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-77f433029c1d",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-d2c077cfe046",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-73d57412daf1",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-95a42cf7d964",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1d86c4d96be3",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-cb52cf9743aa",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-06484482a26d",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-35e8f9e72702",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-8b9f575dac76",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-c7f9d450b593",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-d71d56092738",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-36cd18836260",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-41b0b9a96802",
+      "passed": true,
+      "evidence": "src/usecases/invites.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-5a5da6108fe3",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-5dcb4c092802",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-4f533ae7f2d0",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-4625ce0f45de",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-1aa583eab4c8",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-8183ccb53b73",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-6f183a55a686",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-d01a1be5a140",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-833ab49fb65c",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-812959d8a77f",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-e866982c0b1e",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-ee8f0824a771",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-f2afce40b192",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-3d6cb311d99b",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-60eceea8111b",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-0e89a9ae27ba",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-c84dd43729fb",
+      "passed": true,
+      "evidence": "src/usecases/members.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-70f2a0219cff",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-28705a3cc472",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-659960324629",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-f956e8e78e12",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-c4faaf4b0f3a",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-c9b1212ca0fe",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-b9a702963945",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-b572f1a8d48a",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-267784a70127",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-cfdd1be7a4b0",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-a9bb02203bf3",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-79e0a8b88e3b",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-3db86718c1fb",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-7f0ecd05e582",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-07bc144f141f",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-da26ad5e2039",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-2ff3aa502332",
+      "passed": true,
+      "evidence": "src/usecases/session.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-fd680eee25c1",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-c8f30b41563a",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-92eb232498a2",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-24aef798d05a",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-f7344f8b527b",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-30955de03986",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-6672abf8416c",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-5fb278545e9a",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-8447ad865582",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-c410542e5a12",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-c8a6ee85fea3",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-0367073172c4",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-3aabcda78b71",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-0fb8277aa17f",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-bd09028813d5",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-538ec4c6d3a1",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-bdcb5b4eefe3",
+      "passed": true,
+      "evidence": "src/usecases/settings-common.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-b548ebcc0775",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-137082896c8e",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-35e4e03c1eca",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-585e34991897",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-ee93bb1f4bd3",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-0f0e430dd0ec",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-79e00b3fffbf",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-a928597d8ac6",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-70f6cdba59c6",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-c107ed395f11",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-4c83100f0bf2",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-709fc5cd2fba",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-0770ce61d7e6",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-bc7f28cbb7bb",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-efb523e4b2fe",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-ddbfc35f2562",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-823fbb2e09ba",
+      "passed": true,
+      "evidence": "src/usecases/settings.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-ce358d1baccd",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-9c1a95480da7",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b0a8e0e6cd36",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c123e6907157",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-5fba061e4692",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-88f632f8d011",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-9a7d619276ea",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-48b77d62c0b4",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1708f3fd520e",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-34f269e08f32",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-ce9d20b4a957",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-06e25571e266",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-ea1ec2016fcf",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-4827266e9075",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-2cd576defaab",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-440bb5146d84",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-7b0e1b83329a",
+      "passed": true,
+      "evidence": "src/usecases/skill-tokens.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-d512d7af34d2",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-dd8762191d7e",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-c635677f0e42",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b0eadc5ab455",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-e36aa63deee9",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-0b8f9a884b9c",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-9da21f2d1352",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-8c3ad14b5400",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-2ee8c5a03cf0",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-07a0571244d7",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-8743a1a1a451",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-62b3e3ae7fc4",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-2fe1f9e6bd8d",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-939163d73991",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-6f23481f856e",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-930912599898",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-883772b0561e",
+      "passed": true,
+      "evidence": "src/usecases/tenants.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-152936cb1ddc",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-bcfe7c03ec3d",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-0658e820db7c",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-440dc1a3606c",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-b8c2553a2d18",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-5fc0e1ae43f7",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-6fb4d97dc82e",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-461bb86c6acb",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-14fa0c7aea0b",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-8e3900fb1963",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-d746227d9a69",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-30a4ae089456",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-c0f6c735e477",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-72ef525e4a03",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-bb976ad81e40",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-31e0e0e8e265",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-cd744f98dcfa",
+      "passed": true,
+      "evidence": "src/usecases/usage.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-dddc7bbf0c6a",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-f09a151aabee",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-6781c786595d",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-3481d3db1a0c",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-b922007b3941",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-750db411256e",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-55e376203dcb",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-ad6868eeb4b1",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-1f5ad700df85",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-e79690ba6ccf",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-4dfbb1e2938b",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-c37d299a902a",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-f173a819027c",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-59100e10cd10",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-cd6740f21aa7",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-3159c94ddaf3",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-0c8dd969afc7",
+      "passed": true,
+      "evidence": "src/usecases/youtube.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-74d2b1b5316c",
+      "passed": true,
+      "evidence": "tsconfig.json: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-bb994f9bdde6",
+      "passed": true,
+      "evidence": "tsconfig.json: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-ec2d17057785",
+      "passed": true,
+      "evidence": "tsconfig.json: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-9529b8f5080f",
+      "passed": true,
+      "evidence": "tsconfig.json: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-20b07d1b2f9d",
+      "passed": true,
+      "evidence": "tsconfig.json: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-42d2353ce2ea",
+      "passed": true,
+      "evidence": "tsconfig.json: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-85320e9a9e5f",
+      "passed": true,
+      "evidence": "tsconfig.json: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-38c7ba4d2d41",
+      "passed": true,
+      "evidence": "tsconfig.json: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-eb1b43b2d048",
+      "passed": true,
+      "evidence": "tsconfig.json: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-bff2dc8f6974",
+      "passed": true,
+      "evidence": "tsconfig.json: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-edb05d85ad03",
+      "passed": true,
+      "evidence": "tsconfig.json: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-77a1733cb6f4",
+      "passed": true,
+      "evidence": "tsconfig.json: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-31526c0dc1d1",
+      "passed": true,
+      "evidence": "tsconfig.json: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-6cfc0da53c57",
+      "passed": true,
+      "evidence": "tsconfig.json: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-f6c65bb45047",
+      "passed": true,
+      "evidence": "tsconfig.json: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-94ee50b19ed9",
+      "passed": true,
+      "evidence": "tsconfig.json: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-aff4952057aa",
+      "passed": true,
+      "evidence": "tsconfig.json: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-605bb73f18e7",
+      "passed": true,
+      "evidence": "vite.config.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-83f00a861028",
+      "passed": true,
+      "evidence": "vite.config.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-4a2a493ba6a1",
+      "passed": true,
+      "evidence": "vite.config.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-b6bf3333085c",
+      "passed": true,
+      "evidence": "vite.config.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-d7034a97153a",
+      "passed": true,
+      "evidence": "vite.config.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-cbd26791d690",
+      "passed": true,
+      "evidence": "vite.config.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-44bf5e45d8e5",
+      "passed": true,
+      "evidence": "vite.config.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-2af08c63e518",
+      "passed": true,
+      "evidence": "vite.config.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-5be9b5e32b49",
+      "passed": true,
+      "evidence": "vite.config.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-613b6d18f5f6",
+      "passed": true,
+      "evidence": "vite.config.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-6a6c381db8ad",
+      "passed": true,
+      "evidence": "vite.config.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-623275a17860",
+      "passed": true,
+      "evidence": "vite.config.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-87c84fd9ffad",
+      "passed": true,
+      "evidence": "vite.config.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-c74edff2838b",
+      "passed": true,
+      "evidence": "vite.config.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-692281d98158",
+      "passed": true,
+      "evidence": "vite.config.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-5d600cf6291e",
+      "passed": true,
+      "evidence": "vite.config.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-dcb4f5b9ca14",
+      "passed": true,
+      "evidence": "vite.config.ts: 概要書から登録する"
+    },
+    {
+      "id": "consumer-source-no-sample-cd7d5ce73e09",
+      "passed": true,
+      "evidence": "vitest.config.ts: 練馬区 一棟マンション"
+    },
+    {
+      "id": "consumer-source-no-sample-b23d4d847ba1",
+      "passed": true,
+      "evidence": "vitest.config.ts: 川口市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-81d7032125e7",
+      "passed": true,
+      "evidence": "vitest.config.ts: 船橋市 一棟アパート"
+    },
+    {
+      "id": "consumer-source-no-sample-384aa346eda8",
+      "passed": true,
+      "evidence": "vitest.config.ts: taro@example.com"
+    },
+    {
+      "id": "consumer-source-no-sample-63c0af4087ab",
+      "passed": true,
+      "evidence": "vitest.config.ts: sato@example"
+    },
+    {
+      "id": "consumer-source-no-sample-08b0f218aeda",
+      "passed": true,
+      "evidence": "vitest.config.ts: 東京23区"
+    },
+    {
+      "id": "consumer-source-no-sample-a258d24cfb5e",
+      "passed": true,
+      "evidence": "vitest.config.ts: 首都圏"
+    },
+    {
+      "id": "consumer-source-no-sample-ad1b49c3b221",
+      "passed": true,
+      "evidence": "vitest.config.ts: 関西圏"
+    },
+    {
+      "id": "consumer-source-no-sample-a7cd7357cdfa",
+      "passed": true,
+      "evidence": "vitest.config.ts: 地元(和歌山県)"
+    },
+    {
+      "id": "consumer-source-no-sample-79363dc83843",
+      "passed": true,
+      "evidence": "vitest.config.ts: 田中様"
+    },
+    {
+      "id": "consumer-source-no-sample-53befb72cfec",
+      "passed": true,
+      "evidence": "vitest.config.ts: 提案内容を確認中です。"
+    },
+    {
+      "id": "consumer-source-no-sample-84b482a8eaff",
+      "passed": true,
+      "evidence": "vitest.config.ts: 7月22日にご連絡します。"
+    },
+    {
+      "id": "consumer-source-no-sample-23e3019b8e65",
+      "passed": true,
+      "evidence": "vitest.config.ts: 123,456,789円"
+    },
+    {
+      "id": "consumer-source-no-sample-d0813f7d25b2",
+      "passed": true,
+      "evidence": "vitest.config.ts: 目標120通に対する実績"
+    },
+    {
+      "id": "consumer-source-no-sample-a317aa2905b2",
+      "passed": true,
+      "evidence": "vitest.config.ts: +7.4pt"
+    },
+    {
+      "id": "consumer-source-no-sample-b7957bc06dcc",
+      "passed": true,
+      "evidence": "vitest.config.ts: まだ物件の登録がありません"
+    },
+    {
+      "id": "consumer-source-no-sample-637620781281",
+      "passed": true,
+      "evidence": "vitest.config.ts: 概要書から登録する"
+    },
+    {
+      "id": "token-asset",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "component-asset",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "entry-css-path-inside-root",
+      "passed": false,
+      "evidence": "missing"
+    },
+    {
+      "id": "entry-css-import",
+      "passed": false,
+      "evidence": "missing active=0"
+    },
+    {
+      "id": "entry-css-import-order",
+      "passed": false,
+      "evidence": "canonical import must be the final active @import"
+    },
+    {
+      "id": "light-theme-only",
+      "passed": true,
+      "evidence": "canonical component CSS"
+    }
+  ],
+  "exceptions": []
+}

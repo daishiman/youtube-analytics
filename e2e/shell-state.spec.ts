@@ -1,8 +1,8 @@
 import { expect, type Page, test } from "@playwright/test";
 
 const user = { userId: "user-self", email: "self@example.com" };
-const tenantA = { tenantId: "tenant-a", name: "テナントA", role: "owner" as const };
-const tenantB = { tenantId: "tenant-b", name: "テナントB", role: "owner" as const };
+const tenantA = { tenantId: "tenant-a", name: "ワークスペースA", role: "owner" as const };
+const tenantB = { tenantId: "tenant-b", name: "ワークスペースB", role: "owner" as const };
 const tenants = [tenantA, tenantB];
 
 const member = (tenant: "a" | "b", email = `${tenant}@example.com`) => ({
@@ -18,6 +18,32 @@ const invite = (tenant: "a" | "b") => ({
   role: "viewer" as const,
   expires_at: "2026-09-30T00:00:00.000Z",
   created_at: "2026-09-23T00:00:00.000Z",
+});
+
+/** 設定画面の他区画が使う /api/settings の最小形（ここではメンバー区画だけを検証する） */
+const settings = {
+  tenant: { tenantId: tenantA.tenantId, name: tenantA.name },
+  role: "owner",
+  permissions: { manageSettings: true, writeContent: true, manageMembers: true },
+  youtube: {
+    status: "未連携",
+    channel: null,
+    nextCollection: null,
+    lastCollectedAt: null,
+    lastCsvImportAt: null,
+    scopes: [],
+    captions: { enabled: false, availability: "preparing", dailyLimit: 5 },
+    googleClient: { configured: false, clientId: null, updatedAt: null },
+  },
+  imports: [],
+  tokens: [],
+  tokenLimit: 5,
+  usage: [],
+  deletion: null,
+};
+
+test.beforeEach(async ({ page }) => {
+  await page.route("**/api/settings", (route) => route.fulfill({ json: settings }));
 });
 
 async function routeMe(page: Page, currentTenant: () => (typeof tenants)[number]) {
@@ -52,7 +78,7 @@ test.describe("Shell の回復可能な tenant context", () => {
     await expect(page.getByRole("alert")).toContainText("一時的に失敗しました");
     failing = false;
     await page.getByRole("button", { name: "再試行" }).click();
-    await expect(page.getByRole("heading", { name: "テナントA" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "ワークスペースA" })).toBeVisible();
   });
 
   test("tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない", async ({ page }) => {
@@ -78,8 +104,8 @@ test.describe("Shell の回復可能な tenant context", () => {
     );
 
     await page.goto("/settings");
-    await page.getByLabel("テナント切替").selectOption("tenant-b");
-    await expect(page.getByRole("heading", { name: "メンバー（テナントB）" })).toBeVisible();
+    await page.getByLabel("ワークスペース切替").selectOption("tenant-b");
+    await expect(page.getByRole("heading", { name: "メンバー（ワークスペースB）" })).toBeVisible();
     await expect(page.getByRole("cell", { name: "b@example.com" })).toBeVisible();
     await expect(page.getByText(/invite-b@example\.com/)).toBeVisible();
     await page.waitForTimeout(650);
@@ -117,8 +143,8 @@ test.describe("Shell の回復可能な tenant context", () => {
     await page.getByLabel("招待するメールアドレス").fill("new@example.com");
     await page.getByRole("button", { name: "招待リンクを発行" }).click();
     await expect(page.getByLabel("発行した招待リンク")).toHaveValue(/tenant-a-secret/);
-    await page.getByLabel("テナント切替").selectOption("tenant-b");
-    await expect(page.getByRole("heading", { name: "メンバー（テナントB）" })).toBeVisible();
+    await page.getByLabel("ワークスペース切替").selectOption("tenant-b");
+    await expect(page.getByRole("heading", { name: "メンバー（ワークスペースB）" })).toBeVisible();
     await expect(page.getByLabel("発行した招待リンク")).toHaveCount(0);
   });
 
@@ -159,7 +185,8 @@ test.describe("Shell の回復可能な tenant context", () => {
 
     await page.goto("/settings");
     await page.getByLabel("self@example.com の役割").selectOption("viewer");
-    await expect(page.getByRole("cell", { name: "閲覧者", exact: true })).toBeVisible();
+    // 閲覧者になった時点でメンバー区画ごと消える（owner UI を残さない）
+    await expect(page.getByRole("heading", { name: "メンバー（ワークスペースA）" })).toHaveCount(0);
     await expect(page.getByRole("heading", { name: "メンバーを招待" })).toHaveCount(0);
     await expect(page.getByLabel("self@example.com の役割")).toHaveCount(0);
     await expect(page.getByRole("alert")).toHaveCount(0);

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { ApiError, api, type Me, REDIRECT_MESSAGES, ROLE_LABELS, type Role } from "../api";
+import { PublicLayout } from "../components/PublicLayout";
 
 interface Preview {
   tenantName: string;
@@ -56,9 +57,9 @@ export function InvitePage() {
   }
 
   return (
-    <main className="center">
+    <PublicLayout>
       <section className="card narrow">
-        <h1>テナントへの招待</h1>
+        <h1>ワークスペースへの招待</h1>
         {loading && <p className="muted">確認中…</p>}
         {error && (
           <p role="alert" className="alert">
@@ -94,6 +95,6 @@ export function InvitePage() {
           </Link>
         )}
       </section>
-    </main>
+    </PublicLayout>
   );
 }

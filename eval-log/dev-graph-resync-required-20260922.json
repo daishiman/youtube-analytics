@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
-  "current_architecture_digest": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
+  "current_source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
+  "current_architecture_digest": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -24,6 +24,11 @@
       "refreshed_at": "2026-09-24",
       "by_feature": "feat-login-redesign",
       "note": "qa-062〜qa-073 を system-spec の正規フローで正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    },
+    {
+      "refreshed_at": "2026-09-24",
+      "by_feature": "feat-settings-channel-link",
+      "note": "main（feat-login-redesign）を取り込み、qa-074〜088 と qa-062〜073 を統合した正本へ current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
     }
   ]
 }

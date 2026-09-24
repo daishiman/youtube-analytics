@@ -1,0 +1,66 @@
+{
+ "imports": [],
+ "exports": [
+  {
+   "op": "create-projection",
+   "epic": "yta-rh8",
+   "children": {
+    "SYS-SCL-P01": "yta-rh8.1",
+    "SYS-SCL-P02": "yta-rh8.2",
+    "SYS-SCL-P03": "yta-rh8.3",
+    "SYS-SCL-P04": "yta-rh8.4",
+    "SYS-SCL-P05": "yta-rh8.5",
+    "SYS-SCL-P06": "yta-rh8.6",
+    "SYS-SCL-P07": "yta-rh8.7",
+    "SYS-SCL-P08": "yta-rh8.8",
+    "SYS-SCL-P09": "yta-rh8.9",
+    "SYS-SCL-P10": "yta-rh8.10",
+    "SYS-SCL-P11": "yta-rh8.11",
+    "SYS-SCL-P12": "yta-rh8.12",
+    "SYS-SCL-P13": "yta-rh8.13"
+   }
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-rh8",
+   "depends_on": "yta-c8g",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-rh8",
+   "depends_on": "yta-04l",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-rh8",
+   "depends_on": "yta-9tm",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-rh8",
+   "depends_on": "yta-ufd",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-7o5",
+   "depends_on": "yta-rh8",
+   "idempotent": false
+  }
+ ],
+ "conflicts": [],
+ "tombstones": [],
+ "pending_retry": [],
+ "parity": {
+  "checked": 33,
+  "failed": []
+ },
+ "snapshot": {
+  "path": ".dev-graph/state/beads/sync-snapshot.json",
+  "graph_revision": 6,
+  "node_count": 33
+ }
+}

@@ -1,0 +1,31 @@
+{
+  "verdict": "PASS",
+  "auditor": "dev-graph:dev-graph-integrity-auditor",
+  "scope": "C14 decompose stage: feat-settings-channel-link 新規追加 + 既存5 feature(feat-youtube-daily-collection, feat-csv-media-ingest, feat-skill-analysis-reports, feat-web-screens-actions, feat-retention-ops)の scope 移管差分",
+  "audited_at": "2026-09-24T01:11:36Z",
+  "evaluated_digest": "d609b5b1106b27ddfbe1f8b23fdd32932e765d5fa4af45a365676de6f1f736ea",
+  "evaluated_digest_definition": "sha256 of sorted lines 'relpath\\tsha256\\n' over the staged files (features/*.md, features/*.context.json, .dev-graph/state/graph.json)",
+  "graph_digest": {
+    "repo_graph_revision": 4,
+    "stage_graph_revision": 5
+  },
+  "audit_rounds": [
+    {"round": 1, "verdict": "FAIL", "cause": "既存3 feature の graph node を md へ収束させたため purpose/goal と週次ファネル系の既存乖離(2da45b2)が混入、md 本文の全再生成で無関係行も変化"},
+    {"round": 2, "verdict": "FAIL", "cause": "新ノードが status=active のまま confirmation_status=draft で schema 違反"},
+    {"round": 3, "verdict": "PASS", "cause": "node は自値へ設定系差分のみ、md は行単位編集、新ノードは draft で監査し apply 時に digest 一致で昇格"}
+  ],
+  "checks": [
+    {"id": "dag", "status": "PASS", "evidence": "循環・dangling無し。topo順: feat-platform-tenant-auth, feat-youtube-daily-collection, feat-csv-media-ingest, feat-skill-analysis-reports, feat-settings-channel-link, feat-web-screens-actions, feat-retention-ops"},
+    {"id": "no-phase-task", "status": "PASS", "evidence": "feat-settings-channel-linkはphase task粒度混入なし。SYS-PTA-P01〜P13はrepo/stageで完全一致(diff 0件)"},
+    {"id": "scope-coverage", "status": "PASS", "evidence": "設定画面6区画・共通レイアウト・チャンネル紐付け・字幕トグル・トークン管理UI・imports履歴API・無料枠メーターUIの責務がfeat-settings-channel-link.scope_inに網羅され、移管元4featureのscope_outに移管先が明記されている"},
+    {"id": "feature-context-schema", "status": "PASS", "evidence": "context.jsonは9キー・非空文字列・architecture_refs全件実在。validate-graph-schema.py を ov1 overlay(repo rsync+stage上書き)に対し再実行し valid=true, violations=0"},
+    {"id": "diff-only", "status": "PASS", "evidence": "既存5featureの変更フィールドはscope_in/scope_out/acceptance/depends_on/updated_atのみ。purpose/goal変更は無し。新規ノード追加とgraph_revision変更のみが追加差分"},
+    {"id": "placeholder", "status": "PASS", "evidence": "features/配下でTBD/TODO/未定 0件"},
+    {"id": "apply-ordering", "status": "PASS", "evidence": "decomp_apply.pyは監査verdict==PASS検査→stage現物からのdigest再計算と一致検査→一致時のみstatus/confirmation_status/evaluation_status/confirmation_evidenceの4フィールドのみを機械的に反映"}
+  ],
+  "findings": [
+    {"node_id": "feat-csv-media-ingest", "severity": "medium", "carried_over": true, "evidence": "graph nodeのpurpose/goal/acceptance/scope_inがmd frontmatterと既に不一致(HEAD 2da45b2 由来)。本diffでは持ち込んでいない", "suggested_fix": "別タスクでgraph node側を md/context の週次事業ファネル内容に同期"},
+    {"node_id": "feat-skill-analysis-reports", "severity": "medium", "carried_over": true, "evidence": "同上のnode/md乖離", "suggested_fix": "同上"},
+    {"node_id": "feat-web-screens-actions", "severity": "medium", "carried_over": true, "evidence": "同上のnode/md乖離", "suggested_fix": "同上"}
+  ]
+}

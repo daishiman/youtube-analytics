@@ -1,0 +1,95 @@
+{
+  "receipt_kind": "spec-reflection",
+  "graph_node_id": "feat-settings-channel-link",
+  "beads_id": "yta-rh8",
+  "recorded_at": "2026-09-24T09:19:55Z",
+  "impact": [
+    {
+      "change": "利用者向け表記を『テナント』→『ワークスペース』、設定画面に Google Cloud 準備手順(8手順)",
+      "spec_impact": true,
+      "qa_ref": "qa-076",
+      "flow": "apply-spec-transition chunk(add-qa-ref ui-ux.web/frontend.web) → compile-spec-doc compile → specs/architecture 要約追記 → dev-graph spec import(graph_revision 7)"
+    },
+    {
+      "change": "ワークスペースごとの Google Cloud OAuth クライアント(tenant_google_clients・/api/youtube/google-client)",
+      "spec_impact": true,
+      "qa_ref": "qa-075",
+      "flow": "system-spec の章は反映済み。今回 specs/・architecture/・features/ の要約へ未反映分を追記"
+    },
+    {
+      "change": "チャンネル解除後の旧データ掃除の書込ゲート(migrations 0005/0006: import_generation・lease_token/lease_until/target_generation・専用 Queue)",
+      "spec_impact": false,
+      "reason": "qa-063/qa-069 で確定済みの『解除→旧データ7日以内削除→再連携』を、実装側で安全にする細部(二重実行と新連携への混入を防ぐ)。外部から見える振る舞い・API・画面・保持期間は変わらないため、設計は docs/feat-settings-channel-link/architecture.md と runbook.md に記録し、仕様章は変更しない"
+    }
+  ],
+  "gates": {
+    "validate-coverage-matrix(final+basis+foundation)": "exit0",
+    "compile-spec-doc": "exit0(変更2章)",
+    "validate-graph-schema": "valid",
+    "validate-system-plan": "violations 0",
+    "check:repo": "OK"
+  },
+  "evidence_ref": "eval-log/completeness-findings-20260924-r4.json",
+  "import_report": "eval-log/dev-graph-spec-import-report-feat-settings-channel-link-20260924.json",
+  "digests": {
+    "system-spec/ui-ux.md": "35d70f9ef8ffeb44e91ad6076b8453964c4c91ccbb0dc0e69edef0575242bf04",
+    "system-spec/frontend.md": "001e19c6dc081a5b190c577ee21979f7491dccdd1fee075288b87815ef2d7421",
+    "system-spec/spec-state.json": "eecbf355fa39ad5a03550b429c2af550a8132694bec3f968bdce76df6d5b5d40",
+    "specs/youtube-analytics-system.md": "38eecd95cddc3b3bcd8610375a9fdba7cb8a52438456024352ec6f19d23950ea",
+    "architecture/youtube-analytics-system.md": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b",
+    "architecture/graph.json": "68d47fca24dc6b1dddd865c7b5807026620d5e76c6055c25191ba64f380a0f40",
+    ".dev-graph/state/graph.json": "4908c56136658531856699bb6bfbef19fce0a11d6f8ecd0360a8aeecd4d54881",
+    "features/feat-settings-channel-link.md": "06884f15c0e10e442ab2206c17d3c38e54da598ff4d6468f78bf013cb59efd53",
+    "features/feat-settings-channel-link.context.json": "a273cbc9d2113a684002a52802d5bf7b6be24d1968d8cfb3d9c838aa7c48895b",
+    "docs/feat-settings-channel-link/requirements.md": "116a6d25dec95b91e36dce530ba075535da9c957bdfec3264942468238825a73"
+  },
+  "merge_with_main": {
+    "recorded_at": "2026-09-24T10:10:00Z",
+    "merged": "origin/main（feat-login-redesign: qa-062〜073・appr-012・migration 0003）を本ブランチへ統合",
+    "renumbering": "本 feature の qa-062〜076 → qa-074〜088、migrations 0003〜0006 → 0004〜0007。上の impact にある qa-075/qa-076 は付け替え後の qa-087/qa-088 を指す",
+    "spec_impact": [
+      {
+        "change": "配色の統合: qa-080（色は CSS 変数トークン経由）と qa-063（値はマゼンタ/インディゴ）は矛盾しないため両立させ、frontend presentation 文を統合",
+        "spec_impact": true,
+        "qa_refs": [
+          "qa-063",
+          "qa-080"
+        ]
+      },
+      {
+        "change": "D1 テーブル: 本 feature のワークスペース別 OAuth トークンを channel_oauth_tokens として分離（main の oauth_tokens はログイン時の許可記録）",
+        "spec_impact": true
+      },
+      {
+        "change": "CSP img-src にチャンネル画像ホスト（yt3.ggpht.com / yt3.googleusercontent.com）を追加",
+        "spec_impact": false,
+        "reason": "確定済みのチャンネル候補表示の実装細部。外部 API・保持・権限は変わらない"
+      },
+      {
+        "change": "feat-settings-channel-link の depends_on を feat-platform-tenant-auth のみに是正（依存の循環 csv→settings→skill→csv を解消）し、graph（revision 8）と Beads（yta-rh8 / yta-9tm）へ再投影",
+        "spec_impact": false,
+        "reason": "計画グラフの依存の是正で、仕様の内容は変わらない"
+      },
+      {
+        "change": "ログイン画面フッター（TrustFooter）に共通フッターと同じ aria-label を付与",
+        "spec_impact": false,
+        "reason": "qa-074 の共通フッター要件への実装の合わせ込み"
+      }
+    ],
+    "gates": {
+      "validate-coverage-matrix": "exit0",
+      "validate-source-citation": "exit0",
+      "validate-graph-schema": "valid（49 nodes, graph_revision 8）",
+      "validate-system-plan": "violations 0",
+      "check:repo": "OK",
+      "typecheck / lint / build:web": "OK",
+      "test": "251 passed",
+      "e2e": "全件 PASS（初回 3 件失敗 → TrustFooter の aria-label 付与で解消し、settings/login spec 102 passed を再確認）"
+    },
+    "digests": {
+      "specs/youtube-analytics-system.md": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
+      "architecture/youtube-analytics-system.md": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf",
+      ".dev-graph/state/graph.json": "87e404491b1faec59ecff8158c5ac52c16dfdea0ff39e92aff529bc110c63f5e"
+    }
+  }
+}

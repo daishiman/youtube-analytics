@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-render",
+ "recorded_at": "2026-09-24T01:42:34Z",
+ "checklist": [
+  {
+   "item": "schema PASS・output repo 内",
+   "status": "pass",
+   "evidence": "resolve-repo-context read OK, out=.dev-graph/render/index.html"
+  },
+  {
+   "item": "counts 一致",
+   "status": "pass",
+   "evidence": "nodes 35/35, edges 39/39, feature progress SCL 0/13 PTA 0/13 aggregate 0/26"
+  },
+  {
+   "item": "外部参照0・SVG/inline JS 実在",
+   "status": "pass",
+   "evidence": "external refs 0, svg 1, script 1"
+  },
+  {
+   "item": "digest 一致",
+   "status": "pass",
+   "evidence": "input 4e06c06a… = graph.json, output 5de85c6e… = index.html"
+  },
+  {
+   "item": "live trial",
+   "status": "pass",
+   "evidence": "headless Chrome で SVG と feature X/Y 表示を確認"
+  }
+ ]
+}

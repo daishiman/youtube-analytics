@@ -1,0 +1,15 @@
+{
+  "verb": "init",
+  "generated_at": "2026-09-24T00:00:00+09:00",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "head_sha": "5f978daed080c7af52846a07267a1cc93c134d59",
+  "content_roots": ["issues","tasks","specs","architecture","features","docs"],
+  "created": ["issues", ".dev-graph/cache"],
+  "preserved": [".dev-graph/config.json", ".dev-graph/state/graph.json", ".dev-graph/templates/* (21 files, digest identical to plugin)"],
+  "migration_preview": [],
+  "hook_source": "plugin",
+  "github": {"enabled": false, "gh_auth": "logged_in:daishiman"},
+  "schema_result": {"valid": true, "violations": []},
+  "second_run_planned_changes": 0,
+  "choice": "accept-as-is"
+}

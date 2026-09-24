@@ -16,8 +16,8 @@ export function YouTubeLinkBanner({ tenant }: { tenant: TenantSummary }) {
               ? "YouTube の読み取り連携がまだありません。「連携する」から許可してください。"
               : "YouTube の読み取り連携を完了できていません。「再連携」からやり直してください。"
             : status === "none"
-              ? "テナントのオーナーに YouTube の連携を依頼してください。"
-              : "テナントのオーナーに YouTube の再連携を依頼してください。"}
+              ? "ワークスペースのオーナーに YouTube の連携を依頼してください。"
+              : "ワークスペースのオーナーに YouTube の再連携を依頼してください。"}
         </p>
       </div>
       {tenant.role === "owner" && (

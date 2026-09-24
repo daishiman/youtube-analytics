@@ -1,13 +1,23 @@
 // ログイン必須 API の網羅表。A1（401）と A3（403/404 行列）が同じ表を使い、
 // routes-coverage.test.ts が「アプリに登録された全ルート = この表 + 公開ルート」であることを検査する
-export type WriteKind = "read" | "owner-write" | "member-write" | "self";
+export type WriteKind =
+  | "read"
+  | "owner-write"
+  | "member-write"
+  | "self"
+  // 設定画面の API（セッションで選択中のテナントが対象。パスにテナント ID を持たない）
+  | "session-read"
+  | "session-writer"
+  | "session-owner";
 
 export interface ProtectedRoute {
-  method: "GET" | "POST" | "PATCH" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   /** :id = テナント、:userId・:inviteId = テナント内の資源 */
   path: string;
   tenantScoped: boolean;
   kind: WriteKind;
+  /** 未ログイン時に 401 JSON ではなくログイン画面へリダイレクトする（Google からの戻り先） */
+  redirect?: boolean;
 }
 
 export const PROTECTED_ROUTES: ProtectedRoute[] = [
@@ -38,7 +48,48 @@ export const PROTECTED_ROUTES: ProtectedRoute[] = [
     tenantScoped: true,
     kind: "owner-write",
   },
+  { method: "GET", path: "/api/settings", tenantScoped: false, kind: "session-read" },
+  { method: "GET", path: "/api/usage", tenantScoped: false, kind: "session-read" },
+  { method: "POST", path: "/api/youtube/connect", tenantScoped: false, kind: "session-owner" },
+  { method: "POST", path: "/api/youtube/reconnect", tenantScoped: false, kind: "session-owner" },
+  {
+    method: "GET",
+    path: "/api/youtube/channel-candidates",
+    tenantScoped: false,
+    kind: "session-owner",
+  },
+  { method: "POST", path: "/api/youtube/channel", tenantScoped: false, kind: "session-owner" },
+  { method: "DELETE", path: "/api/youtube/connection", tenantScoped: false, kind: "session-owner" },
+  { method: "PUT", path: "/api/youtube/captions-auto", tenantScoped: false, kind: "session-owner" },
+  { method: "PUT", path: "/api/youtube/google-client", tenantScoped: false, kind: "session-owner" },
+  {
+    method: "DELETE",
+    path: "/api/youtube/google-client",
+    tenantScoped: false,
+    kind: "session-owner",
+  },
+  {
+    method: "GET",
+    path: "/api/oauth/callback",
+    tenantScoped: false,
+    kind: "session-owner",
+    redirect: true,
+  },
+  { method: "GET", path: "/api/imports", tenantScoped: false, kind: "session-read" },
+  { method: "POST", path: "/api/imports", tenantScoped: false, kind: "session-writer" },
+  { method: "GET", path: "/api/skill-tokens", tenantScoped: false, kind: "session-read" },
+  { method: "POST", path: "/api/skill-tokens", tenantScoped: false, kind: "session-writer" },
+  {
+    method: "DELETE",
+    path: "/api/skill-tokens/:tokenId",
+    tenantScoped: false,
+    kind: "session-read",
+  },
+  { method: "POST", path: "/api/tenant/delete", tenantScoped: false, kind: "session-owner" },
 ];
+
+/** 設定画面の API（セッションの選択中テナントが対象） */
+export const SESSION_TENANT_ROUTES = PROTECTED_ROUTES.filter((r) => r.kind.startsWith("session-"));
 
 export const PUBLIC_ROUTES = [
   "GET /api/health",
@@ -53,9 +104,10 @@ export const PUBLIC_ROUTES = [
 
 export function fill(
   path: string,
-  ids: { id?: string; userId?: string; inviteId?: string },
+  ids: { id?: string; userId?: string; inviteId?: string; tokenId?: string },
 ): string {
   return path
+    .replace(":tokenId", ids.tokenId ?? "00000000-0000-0000-0000-000000000003")
     .replace(":id", ids.id ?? "00000000-0000-0000-0000-000000000000")
     .replace(":userId", ids.userId ?? "00000000-0000-0000-0000-000000000001")
     .replace(":inviteId", ids.inviteId ?? "00000000-0000-0000-0000-000000000002");
@@ -63,12 +115,23 @@ export function fill(
 
 /** 各ルートに送る妥当な本文（検証エラーで権限判定が隠れないようにする） */
 export function bodyFor(route: ProtectedRoute): unknown {
-  if (route.method === "GET" || route.method === "DELETE") return undefined;
+  if (route.method === "GET") return undefined;
+  if (route.method === "DELETE" && route.path !== "/api/youtube/connection") return undefined;
   if (route.path.endsWith("/members/:userId")) return { role: "viewer" };
   if (route.path.endsWith("/invites")) return { email: "someone@example.com", role: "viewer" };
   if (route.path === "/api/tenants") return { name: "テスト" };
   if (route.path === "/api/session/tenant")
     return { tenantId: "00000000-0000-0000-0000-000000000000" };
   if (route.path === "/api/invites/accept") return { token: "x".repeat(43) };
+  if (route.path === "/api/skill-tokens") return { name: "テスト用" };
+  if (route.path === "/api/youtube/channel") return { channelId: "UC_test" };
+  if (route.path === "/api/youtube/captions-auto") return { enabled: true };
+  if (route.path === "/api/youtube/google-client")
+    return {
+      clientId: "123456789012-routes0a1b2c3d.apps.googleusercontent.com",
+      clientSecret: "GOCSPX-routes-secret-0123",
+    };
+  if (route.path === "/api/youtube/connection" || route.path === "/api/tenant/delete")
+    return { confirmName: "x" };
   return {};
 }

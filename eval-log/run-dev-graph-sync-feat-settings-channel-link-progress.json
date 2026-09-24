@@ -1,0 +1,41 @@
+{
+ "skill": "run-dev-graph-sync",
+ "recorded_at": "2026-09-24T01:41:36Z",
+ "checklist": [
+  {
+   "item": "3-way plan 分類と snapshot digest",
+   "status": "pass",
+   "evidence": "eval-log/dev-graph-sync-20260924.json exports=6 (create-projection+5 dep-add), snapshot rev6 33 nodes"
+  },
+  {
+   "item": "mutation authority 一経路",
+   "status": "pass",
+   "evidence": "tracker_binding=beads, bd-bridge 経由のみ (guard authorization-05b353ab)"
+  },
+  {
+   "item": "dry-run write 0",
+   "status": "pass",
+   "evidence": "create --projection-manifest --dry-run write_count=0"
+  },
+  {
+   "item": "双方変更 manual conflict",
+   "status": "pass",
+   "evidence": "conflicts=[] (新規投影のみ)"
+  },
+  {
+   "item": "close/delete は tombstone",
+   "status": "pass",
+   "evidence": "tombstones=[] 物理削除0"
+  },
+  {
+   "item": "merge evidence のみ done",
+   "status": "pass",
+   "evidence": "SCL 全 node status=active、done 反映0"
+  },
+  {
+   "item": "2回目 changes=0",
+   "status": "pass",
+   "evidence": "3way changes=0、Beads graph_node_id 重複0、SCL 14件、parity fail 0/33"
+  }
+ ]
+}
