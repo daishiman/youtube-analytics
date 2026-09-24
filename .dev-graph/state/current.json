@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "feature_package_id": "feature-package/feat-platform-tenant-auth",
-  "published_path": ".dev-graph/published/feature-package-feat-platform-tenant-auth",
-  "published_digest": "sha256:6e46c44289a97833c3c2c07fe53f3de4232895bd5c8f332291a34706873bafd6",
-  "receipt": ".dev-graph/published/feature-package-feat-platform-tenant-auth/atomic-promotion-receipt.json"
+  "feature_package_id": "feature-package/feat-login-redesign",
+  "published_path": ".dev-graph/published/feature-package-feat-login-redesign",
+  "published_digest": "sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+  "receipt": ".dev-graph/published/feature-package-feat-login-redesign/atomic-promotion-receipt.json"
 }

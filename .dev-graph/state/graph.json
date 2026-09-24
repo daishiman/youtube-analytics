@@ -1,5 +1,5 @@
 {
-  "graph_revision": 3,
+  "graph_revision": 7,
   "nodes": [
     {
       "acceptance": [],
@@ -32,9 +32,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "513945ca4d1a83bbc4f49ce1a6630c491e2fa5cbe96b2ffdf9bcebe21a754f31",
+        "evaluated_digest": "122fcda061d8e5d2eccdf627beee44376b51cb5d65eee0826a8ab674a6c5929b",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-report-20260921-r6.json"
+        "evidence_ref": "eval-log/completeness-report-20260924-r3.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -54,7 +54,7 @@
       "goal": null,
       "graph_node_id": "spec-youtube-analytics-system",
       "implementation_readiness": {
-        "checked_at": "2026-09-21T14:36:15Z",
+        "checked_at": "2026-09-24T01:02:38Z",
         "missing_sections": [],
         "status": "complete"
       },
@@ -76,9 +76,9 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-21T14:36:15Z",
+        "imported_at": "2026-09-24T01:02:38Z",
         "origin_kind": "system-spec-harness",
-        "source_digest": "3120625b8dbafc05988e878234f4912600f839feef80e723b97db1d6cbb88843",
+        "source_digest": "efb339b71ab83e7bfcc6f73642e5047b392efe7475c6322049e30cdeab0cce96",
         "source_path": "system-spec/00-requirements-definition.md",
         "source_plugin": "system-spec-harness",
         "source_version": "0.1.14"
@@ -96,7 +96,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム 要件・機能仕様",
       "tracker_binding": "none",
-      "updated_at": "2026-09-21T14:36:15Z"
+      "updated_at": "2026-09-24T01:02:38Z"
     },
     {
       "acceptance": [],
@@ -133,9 +133,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "513945ca4d1a83bbc4f49ce1a6630c491e2fa5cbe96b2ffdf9bcebe21a754f31",
+        "evaluated_digest": "122fcda061d8e5d2eccdf627beee44376b51cb5d65eee0826a8ab674a6c5929b",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-report-20260921-r6.json"
+        "evidence_ref": "eval-log/completeness-report-20260924-r3.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -155,7 +155,7 @@
       "goal": null,
       "graph_node_id": "arch-youtube-analytics-system",
       "implementation_readiness": {
-        "checked_at": "2026-09-21T14:36:15Z",
+        "checked_at": "2026-09-24T01:02:38Z",
         "missing_sections": [],
         "status": "complete"
       },
@@ -177,9 +177,9 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-21T14:36:15Z",
+        "imported_at": "2026-09-24T01:02:38Z",
         "origin_kind": "system-spec-harness",
-        "source_digest": "6a63b1daef2c0fc1124963fce58d577bd684474487d8b44a94ec5cafd98915dc",
+        "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656",
         "source_path": "system-spec/index.md",
         "source_plugin": "system-spec-harness",
         "source_version": "0.1.14"
@@ -197,7 +197,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム アーキテクチャ",
       "tracker_binding": "none",
-      "updated_at": "2026-09-21T14:36:15Z"
+      "updated_at": "2026-09-24T01:02:38Z"
     },
     {
       "acceptance": [
@@ -434,11 +434,15 @@
     },
     {
       "acceptance": [
-        "2026-08-22〜09-19 の実 CSV で M1=16.97% になる",
+        "2026-08-22〜09-19 の実 Studio CSV で M1=16.97% になる",
         "空欄は null、0 は実測0として保存される",
+        "同じ tenant+channel+week の週次事業CSV再取込で行が増えず上書きされる",
+        "lead_route_rate と inquiry_close_rate が定義どおり計算され、分母0・欠損・targetが0以下または未設定・min_sample未達・週未確定・週末後の取込なしは判定保留になる",
+        "min_sampleの母数がimpressions/impressions/engaged_views/views/inquiriesに固定される",
+        "全原因指標が目標以上なら改善候補を作らない",
         "閲覧者の取込は 403 になる",
         "R2 画像キーが tenants/{tenant_id}/ で始まり公開URLを持たない",
-        "M1〜M10 の計算入力に source=api の行が含まれない"
+        "M1〜M10 と週次診断のYouTube側入力に source=api の行が含まれない"
       ],
       "architecture_refs": [
         "arch-youtube-analytics-system"
@@ -469,9 +473,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9",
-        "evaluator": "dev-graph:dev-graph-integrity-auditor",
-        "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json"
+        "evaluated_digest": "9ba0dc91f8188dc2f9f1463afce3a7bc8cb81a4a80975f95c63dac35de4b6006",
+        "evaluator": "dev-graph:local-targeted-projection-audit",
+        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T15:15:00Z",
@@ -490,7 +494,7 @@
         "mode": "local_only",
         "project_aliases": []
       },
-      "goal": "editor 以上が CSV 3種・字幕・画像を取り込むと、判定規則で正規化された CSV 由来の表と R2 画像が保存され、M1〜M10 が CSV 由来の行だけから計算される",
+      "goal": "editor 以上が Studio CSV 3種・週次事業CSV・字幕・画像を取り込むと、出典別に正規化された表と R2 画像が保存され、YouTube派生指標と週次売上ファネルを再現できる",
       "graph_node_id": "feat-csv-media-ingest",
       "implementation_readiness": {
         "checked_at": "2026-09-21T15:15:00Z",
@@ -507,16 +511,18 @@
       "priority": null,
       "project_id": "youtube-analytics",
       "pull_request_linkages": [],
-      "purpose": "API では得られないユニーク視聴者数や過去分を CSV で取り込み、規約上 CSV 由来だけで計算できる派生指標 M1〜M10 と、心理分析の素材(字幕・画像)を揃える",
+      "purpose": "Studio CSVからYouTube派生指標を、週次事業CSVから売上ファネルの下流実績を取り込み、出典とnull/0を保った再現可能な分析入力を揃える",
       "related_nodes": [
         "spec-youtube-analytics-system"
       ],
       "resource_scope": [],
       "scope_in": [
-        "POST /api/csv による表データ/グラフデータ/合計の3種 CSV 取込と csv_imports 記録",
-        "判定規則(Shorts 判定・空欄と0の区別・集計遅延・合計行の別保存)による正規化",
-        "CSV 由来テーブル(video_period_metrics, video_daily_metrics, channel_daily_metrics)",
-        "metrics/ モジュールの純関数 M1〜M10 と固定値テスト(M1=16.97%)",
+        "POST /api/csv による表データ/グラフデータ/合計の3種 Studio CSV 取込と csv_imports 記録",
+        "MVPで唯一の外部事業データproviderである週次manual CSVの取込(week_start[JST月曜], channel_id, route_label[既定LINE], route_visits, inquiries, closed_deals, revenue_jpy)",
+        "判定規則(Shorts 判定・nullと実測0の区別・集計遅延・合計行の別保存)による正規化",
+        "CSV 由来テーブル(video_period_metrics, video_daily_metrics, channel_daily_metrics, business_funnel_weekly)と funnel_targets(metric_id,target_value,min_sample,effective_from)",
+        "tenant+channel+week単位の冪等upsert、lead_route_rate=route_visits/views*100、inquiry_close_rate=closed_deals/inquiries*100、target_gap=(actual-target)/target と判定保留規則",
+        "metrics/ モジュールの純関数 M1〜M10 と固定値テスト(M1=16.97%)。YouTube側の派生計算はStudio CSV由来のみ",
         "字幕(SRT/VTT/Whisper)の transcripts 保存と画像の縮小・R2 保存(tenants/{tenant_id}/)・media_assets"
       ],
       "scope_out": [
@@ -527,7 +533,7 @@
       "source_lineage": {
         "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
+        "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
         "source_path": "specs/youtube-analytics-system.md",
         "source_plugin": "dev-graph",
         "source_version": "1.0.0"
@@ -548,10 +554,14 @@
     {
       "acceptance": [
         "/yt-analyze 1回で依頼→書き出し→HTML と JSON の反映まで手作業0で完了する",
+        "分析結果に週次5段ファネル・下流結果・目標未達が最大の改善候補、全指標目標達成、または判定保留理由があり、因果を断定しない",
+        "同一tenant+channelの完了済み直近5版だけを履歴に使い、前回仮説の当否・施策効果・参照版番号を新規版へ保存する",
+        "履歴0件は初回分析として成功し、別tenant/channelの履歴は混ざらない",
+        "改善アクションの効果比較に対象ファネル段と下流結果が含まれる",
         "同じ Idempotency-Key の二重送信で版が増えない",
         "過去の版は更新されない",
         "他テナントのトークンでは export できない",
-        "export の各行が source(api|csv)を持つ"
+        "export の各行が source(api|studio_csv|business_csv)を持つ"
       ],
       "architecture_refs": [
         "arch-youtube-analytics-system"
@@ -582,9 +592,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9",
-        "evaluator": "dev-graph:dev-graph-integrity-auditor",
-        "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json"
+        "evaluated_digest": "1757c7940b6cf27b414bb8c540cbdd3f4a7ac1804f767deb1c086d2e026dbfa8",
+        "evaluator": "dev-graph:local-targeted-projection-audit",
+        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T15:15:00Z",
@@ -604,7 +614,7 @@
         "mode": "local_only",
         "project_aliases": []
       },
-      "goal": "Claude Code で /yt-analyze を1回実行すると、個人トークンでデータを書き出し、HTML と結果 JSON がレポートの新しい版として反映される",
+      "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
       "graph_node_id": "feat-skill-analysis-reports",
       "implementation_readiness": {
         "checked_at": "2026-09-21T15:15:00Z",
@@ -621,7 +631,7 @@
       "priority": null,
       "project_id": "youtube-analytics",
       "pull_request_linkages": [],
-      "purpose": "システム内で LLM を呼ばずに、各利用者の Claude Code 上の report-design-system で分析し、その結果を版管理されたレポートとして取り込めるようにする",
+      "purpose": "システム内で LLM を呼ばずに、各利用者の Claude Code 上で売上ファネルの目標差・下流結果・直近5版からの差分を分析し、その結果を版管理されたレポートとして取り込めるようにする",
       "related_nodes": [
         "spec-youtube-analytics-system"
       ],
@@ -629,9 +639,12 @@
       "scope_in": [
         "(tenant_id,user_id)単位の個人トークン発行(平文1回表示・SHA-256 保存)と失効",
         "analysis_requests(待機中→実行中→完了|失敗)と GET/POST /api/analysis-requests",
-        "GET /api/skill/export(行ごとの source 付与・M1〜M10 は CSV 由来のみ)",
+        "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)",
+        "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport",
+        "5つの原因指標と結果指標を問う分析、負のtarget_gap最小を改善候補とし、全指標0以上なら候補なしと示す非因果的な出力",
         "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード",
-        "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較",
+        "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存",
+        "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較",
         "Claude Code 用 /yt-analyze スキルと運営者 Mac の launchd 週次実行"
       ],
       "scope_out": [
@@ -642,7 +655,7 @@
       "source_lineage": {
         "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
+        "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
         "source_path": "specs/youtube-analytics-system.md",
         "source_plugin": "dev-graph",
         "source_version": "1.0.0"
@@ -663,10 +676,14 @@
     {
       "acceptance": [
         "390×844 / 820×1180 / 1440×900 で6画面の主要操作 E2E が通る",
+        "ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である",
+        "登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある",
+        "原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない",
+        "AI分析の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる",
         "M1 区画に開示文が常に出る",
         "同じ日の API と CSV の値が両方のバッジ付きで並ぶ",
         "閲覧者には書込ボタンが出ず、APIも 403 を返す",
-        "改善アクションの逆方向遷移が拒否される"
+        "改善アクションの逆方向遷移が拒否され、対象ファネル段と下流結果を前後比較できる"
       ],
       "architecture_refs": [
         "arch-youtube-analytics-system"
@@ -697,9 +714,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9",
-        "evaluator": "dev-graph:dev-graph-integrity-auditor",
-        "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json"
+        "evaluated_digest": "e45ab702cc3060bb0b8778b7cb68a25dd64abddda00166dfc815bc32fa6a641c",
+        "evaluator": "dev-graph:local-targeted-projection-audit",
+        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T15:15:00Z",
@@ -720,7 +737,7 @@
         "mode": "local_only",
         "project_aliases": []
       },
-      "goal": "スマホ・タブレット・PC のブラウザで6画面の全操作ができ、改善アクションを 未着手→実施中→効果測定中→完了 で管理して次回レポートで前後比較できる",
+      "goal": "スマホ・タブレット・PCで週次売上ファネルの改善候補と次アクションを最初に把握し、対象ファネル段と下流結果を次回レポートで前後比較できる",
       "graph_node_id": "feat-web-screens-actions",
       "implementation_readiness": {
         "checked_at": "2026-09-21T15:15:00Z",
@@ -737,17 +754,18 @@
       "priority": null,
       "project_id": "youtube-analytics",
       "pull_request_linkages": [],
-      "purpose": "集めたデータと分析結果を少数の画面で迷わず見て、改善アクションを実施から効果比較まで管理できるようにする",
+      "purpose": "登録者数などの結果だけでなく、売上に至る週次5段ファネルの目標差から改善候補を選び、アクションと下流結果を追えるようにする",
       "related_nodes": [
         "spec-youtube-analytics-system"
       ],
       "resource_scope": [],
       "scope_in": [
-        "Vite+素の TypeScript の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)",
-        "ダッシュボード4ブロックと『詳しく見る』、出典バッジと M1〜M10 開示文の共通コンポーネント",
-        "動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定",
-        "AI分析画面(依頼/実行状況/レポートの sandbox iframe 表示と版比較)",
-        "actions 集約(一方向遷移・完了時の判定と baseline/result)と GET/PATCH /api/actions/:id",
+        "React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)と ECharts によるグラフ",
+        "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質",
+        "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント",
+        "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定",
+        "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)",
+        "actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id",
         "設定画面(連携・トークン・メンバー欄・最後の収集/取込日時)とテナント切替",
         "幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E"
       ],
@@ -759,7 +777,7 @@
       "source_lineage": {
         "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
+        "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
         "source_path": "specs/youtube-analytics-system.md",
         "source_plugin": "dev-graph",
         "source_version": "1.0.0"
@@ -2025,6 +2043,1288 @@
       "title": "CI/CD とリリース",
       "tracker_binding": "beads",
       "updated_at": "2026-09-21T14:53:23Z"
+    },
+    {
+      "acceptance": [
+        "ログイン画面が docs/screens/01-login.png と同じ並び・文言で表示され、Google ボタンは白地・枠#747775・標準Gロゴになっている",
+        "画面に出る権限一覧は GET /api/auth/config の応答だけから描かれ、/api/auth/login が要求する scope と一致する(新規3行・招待1行)",
+        "同意にチェックするまでボタンは押せず理由文が出る。同意してログインすると consent_records に現行の規約版で1行だけ追記される",
+        "規約の版がサーバの現行版と違う同意では /login?error=CONSENT_OUTDATED に戻り、再同意を求める文言が出る",
+        "YouTube 2スコープのどちらかを拒否してもログインとテナント作成は完了し、youtube_link_status=partial になって、ダッシュボードと設定に再連携バナー(オーナーだけボタン付き)が出る",
+        "GET /api/auth/youtube/connect をオーナー以外が呼ぶと 403 になる",
+        "SPA 本体の応答に指定の CSP と frame-ancestors 'none' などのヘッダが付き、他サイトの iframe には表示されない",
+        "未知のエラーコードや Google の error_description は画面にもURLにも出ない",
+        "360px 幅で横スクロールが出ず、キーボードだけで同意チェックからログインボタンまで操作できる(Playwright 390×844・820×1180・1440×900)",
+        "main への push で D1 マイグレーション(consent_records・youtube_link_status)と deploy が完了する"
+      ],
+      "architecture_refs": [
+        "arch-youtube-analytics-system"
+      ],
+      "artifact_kind": "feature",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "feature",
+          "candidate_path": "features/feat-login-redesign.md",
+          "confidence": 0.95
+        },
+        {
+          "artifact_kind": "issue",
+          "candidate_path": "issues/feat-login-redesign.md",
+          "confidence": 0.2
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "C14 macro 分解で確定仕様(qa-062〜qa-073)から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "manual",
+        "reconciled_at": null,
+        "source": null,
+        "status": "not_applicable"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0cebb55575e920459406972afd4afa1c7fa289a9926d1967db06ec6a622b28a6",
+        "evaluator": "dev-graph:local-targeted-projection-audit",
+        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:06:26Z",
+      "depends_on": [
+        "feat-platform-tenant-auth"
+      ],
+      "domain": "youtube-analytics",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": null,
+      "file_path": "features/feat-login-redesign.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "goal": "ログイン画面が画像どおりの中央カード(製品名 Channel Insight・見出し・権限3行と読み取り専用バッジ・同意チェック・Google ブランド規定どおりのログインボタン・未検証アプリ案内・信頼表示フッター)で表示され、表示される権限と実際に要求するスコープが同じ定義から作られ、同意した規約の版が記録され、部分許可でもログインでき再連携へ案内され、CSP 等のヘッダで画面が守られた状態が main への push で自動デプロイされる",
+      "graph_node_id": "feat-login-redesign",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:10:28Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": null,
+      "phase_ref": null,
+      "priority": null,
+      "project_id": "youtube-analytics",
+      "pull_request_linkages": [],
+      "purpose": "ログイン画面を docs/screens/01-login.png の構成と文言どおりに刷新し、要求する権限・同意の記録・画面の防御を利用者に見える形で一致させて、初めての利用者が安心して Google ログインと YouTube 読取連携を始められるようにする",
+      "related_nodes": [
+        "spec-youtube-analytics-system"
+      ],
+      "resource_scope": [],
+      "scope_in": [
+        "ログイン画面 UI/UX の刷新(web/pages/LoginPage.tsx): 画像どおりの中央カード構成と文言、共通デザイン正本の色(主操作マゼンタ)、Google ブランド規定の Light テーマ固定ボタン、未検証アプリ案内、Google のプライバシーポリシーリンク",
+        "新規モードと招待モードの出し分け(招待はメールアドレス1行だけ・『○○のテナントに招待されています』表示)",
+        "同意前はボタンを押せない状態と理由文、既知コードだけを日本語で出すエラー表示(CONSENT_OUTDATED 追加・未知コードは共通文言)",
+        "権限行の読み取り専用バッジは行内で描画する。共通コンポーネントは TrustFooter(React製ログイン画面) / YouTubeLinkBanner(ダッシュボード・設定の再連携案内)。静的な規約2ページは public/legal.css を共有する",
+        "製品名『Channel Insight』をログイン画面のテキスト・ログイン後のサイドバーテキスト・タブタイトル・規約2ページ・OAuth 同意画面のアプリ名に統一",
+        "GET /api/auth/config(権限一覧・規約の版・招待テナント名)と、表示ラベルを持つ唯一の定義 SCOPE_SETS・LEGAL_VERSIONS",
+        "OAuth callback の順序変更: 付与スコープの検証と保存、youtube_link_status(none/partial/linked)の更新、consent_records への追記、セッション確立",
+        "部分許可時もログインを完了させ、オーナーだけが GET /api/auth/youtube/connect で YouTube 2スコープを再要求できる",
+        "規約改定時は既存セッションを切らず、次回ログインで再同意を求める(source=reconsent)",
+        "D1 マイグレーション: consent_records(追記のみ・(user_id, consented_at) 索引1つ)と tenants.youtube_link_status の追加、アカウント削除時の consent_records 削除",
+        "SPA 本体の応答ヘッダ: 自サイトと Google 認証だけを許可する CSP・frame-ancestors 'none'・nosniff・Referrer-Policy・Permissions-Policy(_headers と API 共通 middleware)",
+        "プライバシーポリシーへの信頼表示3点(読み取り専用スコープ/テナント分離/無料枠運用と有料化の事前告知)の根拠記載",
+        "アクセシビリティとレスポンシブ(360px 横スクロールなし・タップ領域44pt 以上・見た目どおりの Tab 順・マゼンタのフォーカスリング)と Playwright 3サイズ E2E"
+      ],
+      "scope_out": [
+        "ログイン試行の回数制限とそのためのテーブル・Cron(qa-071 で設けないと確定)",
+        "Google OAuth の検証申請手続き(既存の『80人で検証申請』運用のまま)",
+        "テナント作成・招待・役割の仕組みそのもの(feat-platform-tenant-auth で実装済みの土台を使う)",
+        "YouTube データの収集処理(feat-youtube-daily-collection)",
+        "ダッシュボード・設定画面の本体機能(feat-web-screens-actions。本 feature は再連携バナーの差し込みだけを持つ)",
+        "レポート HTML の sandbox iframe 用ヘッダ(既存方針のまま)"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:10:28Z",
+        "origin_kind": "generated",
+        "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "feature",
+        "youtube-analytics",
+        "login"
+      ],
+      "target_date": null,
+      "template_id": "feature",
+      "template_version": "1.0.0",
+      "title": "ログイン画面刷新(Channel Insight)",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:10:28Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P01.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P01.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P01",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P01",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/requirements.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-01-requirements.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p01",
+        "documentation",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "ログイン刷新の要件を実装単位へ確定",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P02.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P01"
+      ],
+      "domain": "backend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P02.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P02",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P02",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/architecture.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-02-architecture.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p02",
+        "backend",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "スコープ定義・同意記録・連携状態の構成設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P03.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P02"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P03.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P03",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P03",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/design-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-03-design-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p03",
+        "security",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "OAuth・同意・ヘッダの設計レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P04.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P03"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P04.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P04",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P04",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "tests/login/",
+        "e2e/login.spec.ts",
+        "docs/feat-login-redesign/test-design.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-04-test-design.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p04",
+        "quality",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入テストと E2E の設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P05.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P04"
+      ],
+      "domain": "frontend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P05.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P05",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P05",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "web/pages/LoginPage.tsx",
+        "web/components/",
+        "web/api.ts",
+        "web/pages/DashboardPage.tsx",
+        "web/pages/SettingsPage.tsx",
+        "web/pages/Shell.tsx",
+        "web/index.html",
+        "web/styles.css",
+        "src/http/",
+        "src/usecases/",
+        "src/repositories/",
+        "migrations/0003_login_consent_youtube_link.sql",
+        "public/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-05-implementation.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p05",
+        "frontend",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "ログイン画面・API・DB・ヘッダの実装",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P06.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P05"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P06.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P06",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P06",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "tests/login/",
+        "e2e/login.spec.ts",
+        "web/",
+        "src/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-06-test-run.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p06",
+        "quality",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テスト実行と不具合修正",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P07.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P06"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P07.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P07",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P07",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/acceptance.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-07-acceptance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p07",
+        "quality",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入確認",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P08.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P07"
+      ],
+      "domain": "data",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P08.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P08",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P08",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "src/",
+        "web/",
+        "migrations/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-08-refactoring-migration.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p08",
+        "data",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "リファクタリングとマイグレーション整理",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P09.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P08"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P09.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P09",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P09",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/qa-report.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-09-quality-assurance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p09",
+        "security",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "セキュリティと品質の保証",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P10.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P09"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P10.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P10",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P10",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/final-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-10-final-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p10",
+        "quality",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "最終レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P11.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P11.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P11",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P11",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "evidence/feat-login-redesign/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-11-evidence.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p11",
+        "documentation",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "証跡の集約",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P12.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "domain": "operations",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P12.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P12",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P12",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-login-redesign/runbook.md",
+        "README.md",
+        "docs/setup/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-12-documentation-operations.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p12",
+        "operations",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "運用手順とドキュメント",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-login-redesign/SYS-LRD-P13.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-login-redesign/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T01:18:10Z",
+      "depends_on": [
+        "SYS-LRD-P11",
+        "SYS-LRD-P12"
+      ],
+      "domain": "infrastructure",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "file_path": "tasks/feat-login-redesign/SYS-LRD-P13.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-LRD-P13",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T01:14:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P13",
+      "priority": null,
+      "project_id": "feature-package-feat-login-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-login-redesign"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T01:18:10Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+        "source_path": ".dev-graph/published/feature-package-feat-login-redesign/task-specs/phase-13-release-deploy.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p13",
+        "infrastructure",
+        "login-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "リリースとデプロイ",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T01:18:10Z"
     }
   ],
   "repository_id": "github:daishiman/youtube-analytics",

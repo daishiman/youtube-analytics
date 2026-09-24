@@ -8,7 +8,7 @@ classification_candidates: [{"artifact_kind": "feature", "confidence": 0.95, "ca
 classification_confidence: 0.95
 classification_reason: "C14 macro 分解で確定仕様から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない"
 completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manual", "reconciled_at": null, "source": null, "status": "not_applicable"}
-confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json", "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9"}
+confirmation_evidence: {"evaluator": "dev-graph:local-targeted-projection-audit", "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json", "evaluated_digest": "e45ab702cc3060bb0b8778b7cb68a25dd64abddda00166dfc815bc32fa6a641c"}
 confirmation_status: "confirmed"
 created_at: "2026-09-21T15:15:00Z"
 depends_on: ["feat-youtube-daily-collection", "feat-csv-media-ingest", "feat-skill-analysis-reports"]
@@ -35,7 +35,7 @@ related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
 scope_in: ["React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)と ECharts によるグラフ", "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質", "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント", "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定", "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)", "actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id", "設定画面(連携・トークン・メンバー欄・最後の収集/取込日時)とテナント切替", "幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E"]
 scope_out: ["収集・取込・スキル連携のサーバ処理(各 feature)", "データ削除と無料枠メーターのサーバ処理(feat-retention-ops)", "専用アプリ"]
-source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
+source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
 tags: ["feature", "youtube-analytics"]
@@ -102,4 +102,4 @@ updated_at: "2026-09-21T15:15:00Z"
 
 exact-13 の task 仕様は system-dev-planner が `--feature-id feat-web-screens-actions --feature-context features/feat-web-screens-actions.context.json` で生成する。本ノードは task を持たない。
 
-本追補はユーザー追加要件である。`source_lineage.source_digest` は手作業で変更せず、次回dev-graph compileで正本から再同期する。
+本追補はユーザー追加要件である。現行正本からの限定ローカル再投影と監査は [再同期記録](../eval-log/dev-graph-targeted-resync-receipt-20260924.json) に記録した。

@@ -1,0 +1,102 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0 で、goal→objective→intent→cell→chapter の参照に dangling は無い。6つの web セルの serves_goals は変わっていない。前回 low の『新しい範囲項目が上位概念に書かれていない』は残っている。requirements_foundation(U1・scope.in・O1〜O5)と 00-requirements-definition.md・index.md には、同意記録と再同意も、製品名『Channel Insight』も出てこない。qa-068 で製品全体の名前にすると決まったので、前回よりも上位概念に書く必要が大きくなった。各章の To-Be/Delta はこの上位概念から作られるため、ログイン刷新の受入条件(同意記録・部分許可・a11y)も入っていない。ただし受入条件は frontend 章の E2E と ui-ux 章の doctrine に書かれているので、深刻度は low のままとする。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "requirements_foundation に『Channel Insight』=0件", "00-requirements-definition.md / index.md の『Channel Insight』=0件", "qa-068 answer『製品全体の名前にする』"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "前回 medium の『D-auth の陳腐化』は直っている。goal_fit は『新規登録(オーナー)は1回の同意で完結し、部分許可でもログインは通して後から再連携できる(qa-065)。招待メンバーはメールだけ(qa-064)』に変わった。caveats には部分許可時のサーバ側スコープ確認と再連携(qa-065)、Google ブランド規定によるボタン色の制約(qa-067)が加わった。6章の『本章に効く確定意思決定』も新しい goal_fit になっている。decisions 6件は、比較案・無料案・TCO・fit・lock-in・evidence・推奨理由・user_decision をすべて保っている。qa-068/069 は利用者が選択肢から選んでおり、AI の推奨だけで確定した決定は無い。残りは low だけである。D-auth.user_decision.qa_refs が qa-014/qa-021 のままで qa-064/065/067 を含まない。recommendation.latest_checked_at も 2026-09-21 のまま更新されていない。",
+      "evidence": ["D-auth.options[google-oauth-published].goal_fit", "D-auth.recommendation.caveats[3..4]", "D-auth.user_decision.qa_refs = [qa-014, qa-021]", "D-auth.recommendation.latest_checked_at = 2026-09-21T09:40:00Z"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。48セルに未収集は無く、category_aggregate は真理値表と一致し、dangling も無い。C07 の判定は loop_pass・final_ready とも PASS。前回指摘のうち、(d) appr-012 の記録と (f) qa-067 の訂正・qa-068・qa-069 は直っている。(e) hearing_progress は一部だけ直った(loop_count=4・complete=true になったが、完了時刻が無い)。(a) qa-063〜066 の answered_at、(b) 6セルの qa_ref が一律 qa-066 である理由、(c) database/backend に qa-067 が無い理由は、どれも直っていない(C07 の判定は medium 1件・low 2件)。sub-input の C06 は総合 FAIL。聞き漏れは qa-068/qa-069 で解消して PASS、早期停止も PASS。一方、誘導質問は FAIL(qa-066 を聞き直しておらず、qa-070 で推奨付きの一括承認をもう一度使った)、トレーサビリティも FAIL。rubric の pass_criteria は『C06 の4軸が健全』を求めるため、この観点は FAIL とする。",
+      "evidence": ["G-matrix-loop / G-matrix / G-matrix-basis / G-foundation exit0", "G-required-info-state exit0 (ungrounded_blocking_items=[])", "C07: loop_pass=PASS final_ready=PASS, medium x1 low x2", "C06: 聞き漏れ PASS / 誘導 FAIL / 早期停止 PASS / トレーサビリティ FAIL", "qa-070 answer『項目ごとの内容確認は行っていない一括承認』"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "前回 high の『規範節に反映されていない』は直っている。機械層では、validate-knowledge-graph の knowledge/doctrine/required-info/cross の4 profile がすべて exit0。意味層では、design_applications 6カテゴリと doctrine_applications 6カテゴリが、qa-062〜070 を引用したうえで具体的な要件へ展開されている。前回、どの章にも無いと指摘した要件は、すべて規範節に入った。database: consent_records の DDL(terms_version・privacy_version・source login|reconsent・追記のみ)、login_rate_limits、tenants.youtube_link_status、oauth_tokens.scope を付与スコープとする意味の明確化。backend: GET /api/auth/config、SCOPE_SETS を唯一の正本にすること、callback の順序、日次 Cron での掃除。security: CSP の全ディレクティブ、frame-ancestors 'none'、IP ハッシュ単位で10分20回のレート制限、既知コードだけのエラー表示。auth: owner-signup/invite のスコープ分岐、include_granted_scopes、CONSENT_OUTDATED と再同意。ui-ux/frontend: Light テーマ固定の #747775、aria-disabled/aria-describedby、role=alert、360px・44pt・キーボード操作、3ビューポートの E2E。上流指針(OWASP ASVS・Clean Architecture の単一定義・Apple HIG)も、汎用のポインタ止まりではなく確定セルの要件に当てはめられている(C15 の意味層も合格)。残りは medium 1件。frontend の doctrine『presentation』は今も『ティール主ボタンに統一』(qa-024)のままで、共通デザイン正本の『主操作=マゼンタ』と、それを採った qa-063 と矛盾している。",
+      "evidence": ["G-knowledge-graph exit0 (5 gates)", "design_applications の qa-06[2-9]/qa-070 参照: database/auth/ui-ux/security/backend/frontend の6カテゴリすべて", "doctrine_applications の [qa-066/qa-070] 追記: auth/security/backend/database/frontend/ui-ux", "frontend.md:39 doctrine『ティール主ボタンに統一』", "docs/screens/prompts/_shared.prompt.txt『マゼンタは1画面で唯一の主操作とフォーカス』"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "前回 high の『出典の誤帰属』は直っている。形式層では、validate-source-citation.py --state が exit0。target 25件と参照25件が1対1で対応し、必須フィールドと host の一致も満たしている。内容鮮度層では、google-signin-branding(2026-07-07)・google-oauth-granular-consent(2026-05-26)・google-oauth-unverified-app(2026-08-19)を公式の現行版と照らし合わせ、どれも一致した。『詳細→移動』の導線が公式出典(answer/7454865 と sensitive-scope-verification)に無いことも改めて確かめた。qa-067.corrections と、auth/ui-ux/security/frontend 章に置かれた訂正ブロック(『訂正側が正』と明記)で、この導線は画像を見て得た観察(qa-062)と訂正されている。規範節(security/ui-ux の qa-070 本文)も『画像由来の文言であり、公式出典の記述ではない』と書き直された。残る medium 1件は C08 の判定である。凍結された qa-067 の回答本文は元の誤った文のまま残っており、訂正ブロックだけで否定している。",
+      "evidence": ["G-source-citation exit0", "targets 25 / references 25", "qa-067.corrections[0] corrected_at 2026-09-24T00:29:21Z", "security design_applications『公式出典の記述ではない』", "C08: 形式層 PASS / 内容鮮度層 PASS, medium x1"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが、verify-completeness.py --input と validate-prompt.py --input の両方を exit0 で通った。R0-foundation の objectives 形状 {id,text,measure} に serves が無い問題(L41)は、plugin 側で今も直っていない(実データの objectives には serves がある)。報告だけにし、この仕様書への差し戻しには含めない。",
+      "evidence": ["G-prompt: 18/18 exit0", "R0-foundation.md L41 objectives `[{id,text,measure}]`"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"], "exit_code": 0},
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"], "exit_code": 0},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"], "exit_code": 0},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"], "exit_code": 0},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "command": ["python3", "skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "command": ["python3", "scripts/validate-knowledge-graph.py", "--profile", "required-info", "--input", "skills/run-system-spec-elicit/references/required-info-catalog.json", "--state", "system-spec/spec-state.json"], "exit_code": 0, "stdout": "ungrounded_blocking_items=[]"},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "command": ["python3", "scripts/validate-spec-doc-sync.py", "--matrix", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--spec-root", "system-spec"], "exit_code": 0},
+    {"id": "G-source-citation", "name": "validate-source-citation --state", "command": ["python3", "scripts/validate-source-citation.py", "--targets", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--state", "system-spec/spec-state.json"], "exit_code": 0},
+    {"id": "G-prompt", "name": "prompt-creator verify-completeness + validate-prompt (18 prompts)", "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "matrix_coverage/hearing 誘導質問・一括承認の再生産(C06)",
+     "observation": "前回の差し戻し(qa-066 の4論点のうち、少なくとも『同意記録と再同意』と『セキュリティ強化』を推奨なしの個別質問で聞き直す。値が決まっていない項目は elicit で確定する)が行われていない。qa-066 は聞き直されていない。代わりに qa-070 が、アシスタントが具体化したプレビュー全体(レート制限値『IPハッシュ単位で10分20回』、CSP の全ディレクティブ、再同意の条件『次回ログインで現行版への再同意・既存セッションは切らない』、consent_records の DDL など)を、推奨付きの二択(このまま承認/先に全文を見たい)でまとめて承認させている。回答には『項目ごとの内容確認は行っていない一括承認』と書かれている。記録は正直だが、セキュリティ上の数値と再同意の方針が、利用者が中立に選んだ値に基づいていない。C06 はこれを high と判定した。",
+     "suggested_fix": "elicit(R3-reask)へ差し戻す。推奨を示さず、次の3点を1問ずつ聞く。(1) ログイン開始のレート制限値(窓の長さと回数、超えたときの挙動)。(2) 規約改定時の再同意の条件(既存セッションを切るか、次回ログインまで待つか)。(3) CSP を SPA 全体に適用するか、ログイン画面だけにするか。回答を design_applications の該当文へ qa_ref として紐づけ直し、qa-070 の承認範囲からこの3点を外す。",
+     "evidence": ["qa-066", "qa-070", "appr-012", "design_applications.security『10分20回』", "design_applications.auth『次回ログイン時に現行版への再同意』"]},
+    {"severity": "medium", "bucket": "matrix_coverage/トレーサビリティ(C06・C07 未是正)",
+     "observation": "qa-063〜066(user-decision)は、今も構造化された answered_at を持たない。provenance に書いた上限値で代用しているだけである。同じロットの qa-068〜070 には answered_at がある。6セル(database/auth/ui-ux/security/backend/frontend の web)の qa_ref は今も一律 qa-066 で、選んだ理由がどこにも書かれていない。design_applications は確定の根拠として『内容承認 qa-070/appr-012』を引いており、セルの qa_ref とずれている。",
+     "suggested_fix": "elicit(C01 の transition writer)で直す。qa-063〜066 に answered_at(provenance に書かれた上限値 2026-09-24T00:05:04Z)を構造化して書く。6セルの qa_ref は、確定の根拠である qa-070 に変えるか、qa-066 を主根拠に選んだ理由を reopen_log に追記する。",
+     "evidence": ["qa_log[qa-063..066] に answered_at キーなし", "matrix.*.web.qa_ref == qa-066 (6セル)", "reopen_log 2026-09-24T00:05:04Z の6件"]},
+    {"severity": "medium", "bucket": "design_knowledge_reflection/frontend の doctrine とデザイン正本の矛盾",
+     "observation": "frontend 章の上流指針の行(doctrine_applications.frontend.presentation)は、今も『FINAL-UI参照の濃紺サイドバー+白カード+ティール主ボタンに統一』(qa-024)のままである。ところが qa-062 で確認した共通デザイン正本 docs/screens/prompts/_shared.prompt.txt は『マゼンタは1画面で唯一の主操作とフォーカス』と定めており、qa-063 は正本を採った。ui-ux 章は『フォーカスリングはマゼンタ』としている。ログイン画面の Google ボタンは例外なので、その他の5画面の主ボタンの色が章によって食い違ったままになる。なお qa-024 の回答自体には『ティール』の語が無い。",
+     "suggested_fix": "compile へ差し戻す。doctrine_applications.frontend.presentation の『ティール主ボタン』を正本(主操作=マゼンタ)に合わせる。根拠として qa-063 と、qa-062 の正本読解を記す。qa-063 が正本の適用をログイン画面だけに限る趣旨なら、elicit で全画面に適用するかを確認する。",
+     "evidence": ["frontend.md:39", "docs/screens/prompts/_shared.prompt.txt", "qa-063 answer『色・ロゴ・背景は現行正本に合わせる』"]},
+    {"severity": "medium", "bucket": "doc_freshness/凍結回答本文に誤帰属が残存(C08)",
+     "observation": "auth.md L360・ui-ux.md L575・security.md L455・frontend.md L532 に引用された qa-067 の回答本文は、誤った一文『…google-oauth-unverified-app 出典の事実として security 章に紐づける』を元のまま残している。直下の訂正ブロック(『訂正側が正』と明記)でだけ否定している。規範節は直っているので実装への影響は小さいが、回答本文だけを読むと誤帰属が残っているように読める。",
+     "suggested_fix": "compile で、章に描画する qa-067 の回答本文の該当文の直後に『(※訂正あり・下記参照)』という注記を入れる。qa_log は不変のままでよい。",
+     "evidence": ["auth.md:360-367", "ui-ux.md:575-582", "security.md:455-462", "frontend.md:532-537"]},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)",
+     "observation": "前回から直っていない。R0-foundation.md(L41)は objectives を {id,text,measure} と定義しており、serves を要求していない。",
+     "suggested_fix": "harness 側で R0-foundation と --require-foundation に objectives[].serves を加える(この仕様書への差し戻しには含めない)。"},
+    {"severity": "low", "bucket": "foundation_trace/新しい範囲項目と製品名の上位概念への未反映",
+     "observation": "同意記録と再同意、ログインのレート制限、製品名『Channel Insight』(qa-068 で製品全体の名前に決まった)は、requirements_foundation(U1・scope.in・objectives)にも 00-requirements-definition.md・index.md にも書かれていない。各章の To-Be/Delta は上位概念から作られるため、ログイン刷新の受入条件が規範の受入表に入っていない。",
+     "suggested_fix": "elicit で、scope.in[0] に『同意の記録と規約改定時の再同意』を加えるかを決め、U1 か index に製品名を書くかも判断する。プレビューを見せて承認を得たうえで、compile で 00-requirements-definition.md・index.md・To-Be/Delta を再生成する。",
+     "evidence": ["requirements_foundation.scope.in[0]", "00-requirements-definition.md『Channel Insight』=0件", "index.md『Channel Insight』=0件"]},
+    {"severity": "low", "bucket": "matrix_coverage/database・backend の qa-067 不参照理由と hearing_progress の時刻(C07)",
+     "observation": "database/backend の qa_refs に qa-067 が無い理由が書かれていない(意匠の話なので、外しておくこと自体は妥当と考えられる)。hearing_progress は loop_count=4・complete=true に更新されたが、ラウンドを終えた時刻が無い。",
+     "suggested_fix": "elicit で、database/backend から qa-067 を外した理由を記す。hearing_progress には completed_at を追加する。"},
+    {"severity": "low", "bucket": "decision_guidance/D-auth の参照と確認日",
+     "observation": "D-auth の goal_fit と caveats は更新されたが、user_decision.qa_refs は [qa-014, qa-021] のままで qa-064/065/067 を含まない。recommendation.latest_checked_at も 2026-09-21 のままである。",
+     "suggested_fix": "elicit/compile で、D-auth.user_decision.qa_refs に qa-064/qa-065/qa-067 を追記し、latest_checked_at を granular consent と branding の確認時刻(2026-09-24T00:07:34Z)に更新する。"},
+    {"severity": "info", "bucket": "確認した観点(是正確認)",
+     "observation": "前回の high 3件のうち2件は直っている。(1) 規範節に反映されていない件: design_applications・doctrine_applications の6カテゴリすべてに、ログイン刷新の具体的な要件が入った。(2) 出典の誤帰属: qa-067.corrections・4章の訂正ブロック・規範節の書き直しで直った。3件目の聞き漏れは、qa-068(製品名)と qa-069(信頼表示と規約の根拠)で解消した。ただし誘導質問の軸は直っていないため、新しい high として残した。medium の D-auth の陳腐化と、appr-012 の記録も直っている。9種の決定論ゲートはすべて exit0 で、C08 は新しい3出典が公式の現行版と一致することを改めて確かめた。qa-068・qa-069 は単一論点の質問で、推奨と異なる案も並べて提示されている。"}
+  ],
+  "gaps": [
+    "[elicit・high] 推奨を示さず、次の3点を1問ずつ聞き直す: ログイン開始のレート制限値、規約改定時の再同意の条件(既存セッションの扱い)、CSP の適用範囲。回答を design_applications の qa_ref に紐づけ直し、qa-070 の一括承認の範囲から外す",
+    "[elicit・medium] qa-063〜066 に answered_at を構造化して書く。6セルの qa_ref を確定の根拠 qa-070 に変えるか、qa-066 を主根拠にした理由を reopen_log に記す",
+    "[compile・medium] doctrine_applications.frontend.presentation の『ティール主ボタン』を、共通デザイン正本(主操作=マゼンタ・qa-063)に合わせる。全画面に適用するかがはっきりしなければ elicit で確認する",
+    "[compile・medium] 章に描画する qa-067 の回答本文の誤帰属の文に『※訂正あり』と注記する",
+    "[elicit/compile・low] 同意記録・再同意と製品名『Channel Insight』を requirements_foundation・00-requirements-definition.md・index.md に反映するかを決め、To-Be/Delta にログイン刷新の受入条件を入れる",
+    "[elicit/compile・low] D-auth.user_decision.qa_refs に qa-064/065/067 を足し、latest_checked_at を更新する。database/backend で qa-067 を外した理由と、hearing_progress.completed_at を記録する",
+    "[harness 修正・報告のみ] R0-foundation と --require-foundation に objectives[].serves を加える"
+  ]
+}

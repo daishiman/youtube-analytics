@@ -1,0 +1,31 @@
+{
+ "skill": "run-dev-graph-status",
+ "recorded_at": "2026-09-24T02:15:00Z",
+ "checklist": [
+  {
+   "item": "許可filterとtag match mode",
+   "status": "pass",
+   "evidence": "eval-log/status-report-20260924.json"
+  },
+  {
+   "item": "schema exit0・root外/dangling 0",
+   "status": "pass",
+   "evidence": "eval-log/status-report-20260924.json"
+  },
+  {
+   "item": "report が snapshot と一致",
+   "status": "pass",
+   "evidence": "eval-log/status-report-20260924.json"
+  },
+  {
+   "item": "該当なしは空成功 (本件は14件)",
+   "status": "pass",
+   "evidence": "eval-log/status-report-20260924.json"
+  },
+  {
+   "item": "前後 digest 同一・外部write 0",
+   "status": "pass",
+   "evidence": "eval-log/status-report-20260924.json"
+  }
+ ]
+}

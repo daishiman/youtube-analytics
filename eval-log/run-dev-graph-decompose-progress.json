@@ -1,39 +1,43 @@
 {
- "skill": "run-dev-graph-decompose",
- "recorded_at": "2026-09-21T15:17:00Z",
- "feature_id": "feat-platform-tenant-auth",
- "feature_context": "features/feat-platform-tenant-auth.context.json",
- "feature_context_sha256": "921630778ada9cc013965d562f034a336daa25039ccf23ff43a059c7773f9f16",
- "checklist": [
-  {
-   "item": "macro result は feature/architecture/depends_on のみ・循環/phase-task 混入0",
-   "status": "pass",
-   "evidence": "eval-log/dev-graph-decompose-audit-20260921.json verdict PASS"
-  },
-  {
-   "item": "draft/unconfirmed の tracker publication 0",
-   "status": "pass",
-   "evidence": "draft は staging のみで監査、commit は confirmed/pass/complete のみ。tracker 投影は sync verb まで未実施"
-  },
-  {
-   "item": "ready feature package が P01..P13 exact 13",
-   "status": "pending",
-   "evidence": "plan verb (run-system-dev-plan) へ handoff"
-  },
-  {
-   "item": "C02 local commit all-or-none・重複0",
-   "status": "pass",
-   "evidence": "1回目 digest 欠落で exit1→12 artifact rollback、2回目 graph_revision 2 applied"
-  },
-  {
-   "item": "beads/github/none 単一 projection authority",
-   "status": "pending",
-   "evidence": "config execution_tracker=beads、sync verb で投影"
-  },
-  {
-   "item": "--dry-run write 0",
-   "status": "not_applicable",
-   "evidence": "本実行は実 commit"
+  "skill": "run-dev-graph-decompose",
+  "recorded_at": "2026-09-24T01:10:46Z",
+  "feature_id": "feat-login-redesign",
+  "feature_context": "features/feat-login-redesign.context.json",
+  "feature_context_sha256": "dccd0e19a54cf9fb4d62009e70ed27bbdc450c80997a720faa242fdc2ad2413b",
+  "checklist": [
+    {
+      "item": "macro result は feature/architecture/depends_on のみ・循環/phase-task 混入0",
+      "status": "pass",
+      "evidence": "eval-log/dev-graph-decompose-audit-20260924.json verdict PASS"
+    },
+    {
+      "item": "draft/unconfirmed の tracker publication 0",
+      "status": "pass",
+      "evidence": "draft は .dev-graph/cache/staging-c14-login のみで監査。commit は confirmed/pass/complete。tracker 投影は sync verb まで未実施"
+    },
+    {
+      "item": "ready feature package が P01..P13 exact 13",
+      "status": "pending",
+      "evidence": "plan verb (run-system-dev-plan) へ handoff"
+    },
+    {
+      "item": "C02 local commit all-or-none・重複0",
+      "status": "pass",
+      "evidence": "1回目は md 未配置で validate exit1 → graph 未変更。2回目 graph_revision 5 applied、validate valid"
+    },
+    {
+      "item": "beads/github/none 単一 projection authority",
+      "status": "pending",
+      "evidence": "config execution_tracker=beads、sync verb で投影"
+    },
+    {
+      "item": "--dry-run write 0",
+      "status": "not_applicable",
+      "evidence": "本実行は実 commit"
+    }
+  ],
+  "previous_run": {
+    "feature_id": "feat-platform-tenant-auth",
+    "recorded_at": "2026-09-21T15:17:00Z"
   }
- ]
 }

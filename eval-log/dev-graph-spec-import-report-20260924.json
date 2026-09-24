@@ -1,0 +1,29 @@
+{
+  "index": "system-spec/index.md",
+  "imported_nodes": [
+    {
+      "graph_node_id": "spec-youtube-analytics-system",
+      "artifact_kind": "specification",
+      "file_path": "specs/youtube-analytics-system.md",
+      "source_path": "system-spec/00-requirements-definition.md",
+      "source_digest": "efb339b71ab83e7bfcc6f73642e5047b392efe7475c6322049e30cdeab0cce96"
+    },
+    {
+      "graph_node_id": "arch-youtube-analytics-system",
+      "artifact_kind": "architecture",
+      "file_path": "architecture/youtube-analytics-system.md",
+      "source_path": "system-spec/index.md",
+      "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656"
+    }
+  ],
+  "source_version": "0.1.14",
+  "evaluated_digest": "122fcda061d8e5d2eccdf627beee44376b51cb5d65eee0826a8ab674a6c5929b",
+  "evidence_ref": "eval-log/completeness-report-20260924-r3.json",
+  "confirmation_status": "confirmed",
+  "evaluation_status": "pass",
+  "readiness": "complete",
+  "graph_revision": 4,
+  "imported_at": "2026-09-24T01:02:38Z",
+  "change_summary": "ログイン画面刷新(docs/screens/01-login.png)の差分仕様 qa-062〜qa-073 を auth/ui-ux/frontend/security/backend/database の6章へ反映した再取込",
+  "previous_report": "eval-log/dev-graph-spec-import-report.json"
+}

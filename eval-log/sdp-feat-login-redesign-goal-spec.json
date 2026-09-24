@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "feature_id": "feat-login-redesign",
+  "feature_context": "features/feat-login-redesign.context.json",
+  "feature_digest": "sha256:dccd0e19a54cf9fb4d62009e70ed27bbdc450c80997a720faa242fdc2ad2413b",
+  "purpose": "ログイン画面を docs/screens/01-login.png の構成と文言どおりに刷新し、要求する権限・同意の記録・画面の防御を利用者に見える形で一致させて、初めての利用者が安心して Google ログインと YouTube 読取連携を始められるようにする",
+  "goal": "ログイン画面が画像どおりの中央カード(製品名 Channel Insight・見出し・権限3行と読み取り専用バッジ・同意チェック・Google ブランド規定どおりのログインボタン・未検証アプリ案内・信頼表示フッター)で表示され、表示される権限と実際に要求するスコープが同じ定義から作られ、同意した規約の版が記録され、部分許可でもログインでき再連携へ案内され、CSP 等のヘッダで画面が守られた状態が main への push で自動デプロイされる",
+  "scope_in": [
+    "ログイン画面 UI/UX の刷新(web/pages/LoginPage.tsx): 画像どおりの中央カード構成と文言、共通デザイン正本の色(主操作マゼンタ)、Google ブランド規定の Light テーマ固定ボタン、未検証アプリ案内、Google のプライバシーポリシーリンク",
+    "新規モードと招待モードの出し分け(招待はメールアドレス1行だけ・『○○のテナントに招待されています』表示)",
+    "同意前はボタンを押せない状態と理由文、既知コードだけを日本語で出すエラー表示(CONSENT_OUTDATED 追加・未知コードは共通文言)",
+    "共通コンポーネント ReadOnlyBadge / TrustFooter(ログインと規約2ページ) / YouTubeLinkBanner(ダッシュボード・設定の再連携案内)",
+    "製品名『Channel Insight』を全画面のサイドバーロゴ・タブタイトル・規約2ページ・OAuth 同意画面のアプリ名に統一",
+    "GET /api/auth/config(権限一覧・規約の版・招待テナント名)と、表示ラベルを持つ唯一の定義 SCOPE_SETS・LEGAL_VERSIONS",
+    "OAuth callback の順序変更: 付与スコープの検証と保存、youtube_link_status(none/partial/linked)の更新、consent_records への追記、セッション確立",
+    "部分許可時もログインを完了させ、オーナーだけが GET /api/auth/youtube/connect で YouTube 2スコープを再要求できる",
+    "規約改定時は既存セッションを切らず、次回ログインで再同意を求める(source=reconsent)",
+    "D1 マイグレーション: consent_records(追記のみ・(user_id, consented_at) 索引1つ)と tenants.youtube_link_status の追加、アカウント削除時の consent_records 削除",
+    "SPA 本体の応答ヘッダ: 自サイトと Google 認証だけを許可する CSP・frame-ancestors 'none'・nosniff・Referrer-Policy・Permissions-Policy(_headers と API 共通 middleware)",
+    "プライバシーポリシーへの信頼表示3点(読み取り専用スコープ/テナント分離/無料枠運用と有料化の事前告知)の根拠記載",
+    "アクセシビリティとレスポンシブ(360px 横スクロールなし・タップ領域44pt 以上・見た目どおりの Tab 順・マゼンタのフォーカスリング)と Playwright 3サイズ E2E"
+  ],
+  "scope_out": [
+    "ログイン試行の回数制限とそのためのテーブル・Cron(qa-071 で設けないと確定)",
+    "Google OAuth の検証申請手続き(既存の『80人で検証申請』運用のまま)",
+    "テナント作成・招待・役割の仕組みそのもの(feat-platform-tenant-auth で実装済みの土台を使う)",
+    "YouTube データの収集処理(feat-youtube-daily-collection)",
+    "ダッシュボード・設定画面の本体機能(feat-web-screens-actions。本 feature は再連携バナーの差し込みだけを持つ)",
+    "レポート HTML の sandbox iframe 用ヘッダ(既存方針のまま)"
+  ],
+  "acceptance": [
+    "ログイン画面が docs/screens/01-login.png と同じ並び・文言で表示され、Google ボタンは白地・枠#747775・標準Gロゴになっている",
+    "画面に出る権限一覧は GET /api/auth/config の応答だけから描かれ、/api/auth/login が要求する scope と一致する(新規3行・招待1行)",
+    "同意にチェックするまでボタンは押せず理由文が出る。同意してログインすると consent_records に現行の規約版で1行だけ追記される",
+    "規約の版がサーバの現行版と違う同意では /login?error=CONSENT_OUTDATED に戻り、再同意を求める文言が出る",
+    "YouTube 2スコープのどちらかを拒否してもログインとテナント作成は完了し、youtube_link_status=partial になって、ダッシュボードと設定に再連携バナー(オーナーだけボタン付き)が出る",
+    "GET /api/auth/youtube/connect をオーナー以外が呼ぶと 403 になる",
+    "SPA 本体の応答に指定の CSP と frame-ancestors 'none' などのヘッダが付き、他サイトの iframe には表示されない",
+    "未知のエラーコードや Google の error_description は画面にもURLにも出ない",
+    "360px 幅で横スクロールが出ず、キーボードだけで同意チェックからログインボタンまで操作できる(Playwright 390×844・820×1180・1440×900)",
+    "main への push で D1 マイグレーション(consent_records・youtube_link_status)と deploy が完了する"
+  ],
+  "architecture_refs": [
+    "architecture/youtube-analytics-system.md",
+    "specs/youtube-analytics-system.md",
+    "system-spec/index.md",
+    "system-spec/00-requirements-definition.md",
+    "system-spec/auth.md",
+    "system-spec/ui-ux.md",
+    "system-spec/frontend.md",
+    "system-spec/security.md",
+    "system-spec/backend.md",
+    "system-spec/database.md"
+  ],
+  "source_lineage": {
+    "source_plugin": "system-spec-harness",
+    "source_version": "0.1.14",
+    "source_paths": [
+      "system-spec/index.md",
+      "system-spec/00-requirements-definition.md",
+      "system-spec/auth.md",
+      "system-spec/ui-ux.md",
+      "system-spec/frontend.md",
+      "system-spec/security.md",
+      "system-spec/backend.md",
+      "system-spec/database.md"
+    ],
+    "completeness_report": "eval-log/completeness-report-20260924-r3.json"
+  },
+  "recorded_at": "2026-09-24T01:14:00Z"
+}

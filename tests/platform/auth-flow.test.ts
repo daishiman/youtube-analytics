@@ -10,7 +10,7 @@ function fakeIdToken(claims: Record<string, unknown>): string {
   return `${enc({ alg: "RS256" })}.${enc(claims)}.sig`;
 }
 
-async function startLogin(query = "consent=1") {
+async function startLogin(query = "consent=1&terms_version=2026-09-24&privacy_version=2026-09-24") {
   const res = await call(`/api/auth/login?${query}`);
   const location = res.headers.get("location") ?? "";
   const cookie = (res.headers.get("set-cookie") ?? "").split(";")[0] ?? "";
@@ -32,7 +32,9 @@ describe("Google ログイン", () => {
     expect(url?.origin + (url?.pathname ?? "")).toBe(
       "https://accounts.google.com/o/oauth2/v2/auth",
     );
-    expect(url?.searchParams.get("scope")).toBe("openid email");
+    expect(url?.searchParams.get("scope")).toBe(
+      "openid email https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly",
+    );
     expect(url?.searchParams.get("code_challenge_method")).toBe("S256");
     expect(url?.searchParams.get("response_type")).toBe("code");
     expect(url?.searchParams.get("state")?.length).toBeGreaterThanOrEqual(43);

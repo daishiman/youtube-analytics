@@ -15,7 +15,7 @@ describe("API の応答ヘッダ", () => {
       const res = await call(path);
       expect(res.headers.get("cache-control")).toBe("no-store");
       expect(res.headers.get("x-content-type-options")).toBe("nosniff");
-      expect(res.headers.get("x-frame-options")).toBe("SAMEORIGIN");
+      expect(res.headers.get("x-frame-options")).toBe("DENY");
     }
   });
 });

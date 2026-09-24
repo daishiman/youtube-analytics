@@ -1,0 +1,19 @@
+{
+  "verb": "render",
+  "scope": "whole-dag",
+  "input": ".dev-graph/state/graph.json",
+  "input_sha256": "4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143",
+  "output": ".dev-graph/render/index.html",
+  "output_sha256": "39da808157931fe788cb3c25a97597f6af865c067a38ac4390c2d16bc1d1ba5f",
+  "nodes": 35,
+  "edges": 35,
+  "feature_progress": {
+    "feat-platform-tenant-auth": "0/13",
+    "feat-login-redesign": "0/13",
+    "others": "0/0 (package 未作成)"
+  },
+  "external_refs": 0,
+  "graph_mutated": false,
+  "rendered_at": "2026-09-24T01:40:00Z",
+  "previous_receipt": "eval-log/render-receipt-20260922.json"
+}

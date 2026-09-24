@@ -8,7 +8,7 @@ classification_candidates: [{"artifact_kind": "feature", "confidence": 0.95, "ca
 classification_confidence: 0.95
 classification_reason: "C14 macro 分解で確定仕様から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない"
 completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manual", "reconciled_at": null, "source": null, "status": "not_applicable"}
-confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json", "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9"}
+confirmation_evidence: {"evaluator": "dev-graph:local-targeted-projection-audit", "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json", "evaluated_digest": "9ba0dc91f8188dc2f9f1463afce3a7bc8cb81a4a80975f95c63dac35de4b6006"}
 confirmation_status: "confirmed"
 created_at: "2026-09-21T15:15:00Z"
 depends_on: ["feat-platform-tenant-auth"]
@@ -35,7 +35,7 @@ related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
 scope_in: ["POST /api/csv による表データ/グラフデータ/合計の3種 Studio CSV 取込と csv_imports 記録", "MVPで唯一の外部事業データproviderである週次manual CSVの取込(week_start[JST月曜], channel_id, route_label[既定LINE], route_visits, inquiries, closed_deals, revenue_jpy)", "判定規則(Shorts 判定・nullと実測0の区別・集計遅延・合計行の別保存)による正規化", "CSV 由来テーブル(video_period_metrics, video_daily_metrics, channel_daily_metrics, business_funnel_weekly)と funnel_targets(metric_id,target_value,min_sample,effective_from)", "tenant+channel+week単位の冪等upsert、lead_route_rate=route_visits/views*100、inquiry_close_rate=closed_deals/inquiries*100、target_gap=(actual-target)/target と判定保留規則", "metrics/ モジュールの純関数 M1〜M10 と固定値テスト(M1=16.97%)。YouTube側の派生計算はStudio CSV由来のみ", "字幕(SRT/VTT/Whisper)の transcripts 保存と画像の縮小・R2 保存(tenants/{tenant_id}/)・media_assets"]
 scope_out: ["API 収集(feat-youtube-daily-collection)", "スキル経由のアップロード API(feat-skill-analysis-reports)", "取込画面の UI(feat-web-screens-actions)"]
-source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
+source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
 tags: ["feature", "youtube-analytics"]
@@ -99,4 +99,4 @@ editor 以上が Studio CSV 3種・週次事業CSV・字幕・画像を取り込
 
 exact-13 の task 仕様は system-dev-planner が `--feature-id feat-csv-media-ingest --feature-context features/feat-csv-media-ingest.context.json` で生成する。本ノードは task を持たない。
 
-本追補はユーザー追加要件である。`source_lineage.source_digest` は手作業で変更せず、次回dev-graph compileで正本から再同期する。
+本追補はユーザー追加要件である。現行正本からの限定ローカル再投影と監査は [再同期記録](../eval-log/dev-graph-targeted-resync-receipt-20260924.json) に記録した。

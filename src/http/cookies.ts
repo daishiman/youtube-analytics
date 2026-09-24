@@ -33,12 +33,22 @@ export function clearSessionCookie(c: Context): void {
   deleteCookie(c, sessionCookieName(c), { path: "/", secure: isHttps(c) });
 }
 
-/** OAuth の往復中だけ使う短命 Cookie（state・PKCE verifier・nonce・招待トークン）。改ざん検出のため HMAC 署名する */
+/**
+ * OAuth の往復中だけ使う短命 Cookie（state・PKCE verifier・nonce・招待トークン・同意した規約の版・再連携の対象）。
+ * 改ざん検出のため HMAC 署名する。callback は URL ではなくこの値だけを信じる
+ */
 export interface OAuthFlow {
   state: string;
   verifier: string;
   nonce: string;
   invite: string | null;
+  /** signup=新規/既存ログイン、invite=招待でのログイン、connect=ログイン中オーナーの再連携 */
+  mode: "signup" | "invite" | "connect";
+  termsVersion?: string;
+  privacyVersion?: string;
+  /** connect のときだけ。開始したときの本人とテナント */
+  userId?: string;
+  tenantId?: string;
 }
 
 export async function writeOAuthCookie(c: Context, secret: string, flow: OAuthFlow): Promise<void> {

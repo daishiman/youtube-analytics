@@ -1,10 +1,24 @@
 // API 呼び出し。状態変更には CSRF 対策の X-Requested-With: yta を必ず付ける（requirements.md §5）
 export type Role = "owner" | "editor" | "viewer";
 
+export type YoutubeLinkStatus = "none" | "partial" | "linked";
+
 export interface TenantSummary {
   tenantId: string;
   name: string;
   role: Role;
+  /** /api/me の currentTenant にだけ付く */
+  youtubeLinkStatus?: YoutubeLinkStatus;
+}
+
+/** /api/auth/config。権限一覧はこの scopes からだけ描画する（要求スコープと同じ定義から出る） */
+export interface AuthConfig {
+  devLogin: boolean;
+  mode: "signup" | "invite";
+  scopes: { id: string; label: string; readOnly: boolean }[];
+  termsVersion: string;
+  privacyVersion: string;
+  inviteTenantName?: string;
 }
 
 export interface Me {
@@ -69,6 +83,8 @@ export async function api<T>(
 /** リダイレクトで戻るエラー（/login?error=CODE 等）の表示文言。API の JSON エラーはサーバの文言を使う */
 export const REDIRECT_MESSAGES: Record<string, string> = {
   CONSENT_REQUIRED: "利用規約とプライバシーポリシーへの同意が必要です。",
+  CONSENT_OUTDATED:
+    "利用規約またはプライバシーポリシーが更新されました。内容を確認して、もう一度同意してください",
   OAUTH_STATE_MISMATCH: "ログインの確認に失敗しました。もう一度ログインしてください。",
   OAUTH_FAILED: "Googleとの通信に失敗しました。時間をおいてもう一度ログインしてください。",
   EMAIL_NOT_VERIFIED: "Googleアカウントのメールアドレスが確認されていません。",
@@ -78,7 +94,16 @@ export const REDIRECT_MESSAGES: Record<string, string> = {
   INVITE_EMAIL_MISMATCH:
     "招待されたメールアドレスと異なるアカウントです。招待を受けたGoogleアカウントでログインし直してください。",
   ALREADY_MEMBER: "すでにこのテナントのメンバーです。",
+  YOUTUBE_LINK_MISMATCH:
+    "ログイン中と別の Google アカウントで許可されたため、連携しませんでした。同じアカウントで「再連携」をやり直してください。",
 };
+
+/** ログイン画面の文言。未知のコードは内容を出さず汎用の文言にする（qa-066） */
+export function loginErrorMessage(code: string): string {
+  return Object.hasOwn(REDIRECT_MESSAGES, code)
+    ? (REDIRECT_MESSAGES[code] as string)
+    : "ログインできませんでした。もう一度お試しください";
+}
 
 export const ROLE_LABELS: Record<Role, string> = {
   owner: "オーナー",

@@ -17,10 +17,10 @@ template_id: "specification"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-report-20260921-r6.json", "evaluated_digest": "513945ca4d1a83bbc4f49ce1a6630c491e2fa5cbe96b2ffdf9bcebe21a754f31"}
-source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/00-requirements-definition.md", "source_version": "0.1.14", "source_digest": "3120625b8dbafc05988e878234f4912600f839feef80e723b97db1d6cbb88843", "imported_at": "2026-09-21T14:36:15Z"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-report-20260924-r3.json", "evaluated_digest": "122fcda061d8e5d2eccdf627beee44376b51cb5d65eee0826a8ab674a6c5929b"}
+source_lineage: {"imported_at": "2026-09-24T01:02:38Z", "origin_kind": "system-spec-harness", "source_digest": "efb339b71ab83e7bfcc6f73642e5047b392efe7475c6322049e30cdeab0cce96", "source_path": "system-spec/00-requirements-definition.md", "source_plugin": "system-spec-harness", "source_version": "0.1.14"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-21T14:36:15Z"
+updated_at: "2026-09-24T01:02:38Z"
 depends_on: []
 related_nodes: ["arch-youtube-analytics-system"]
 resource_scope: []

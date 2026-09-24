@@ -47,12 +47,21 @@ export async function switchTenant(deps: Deps, session: CurrentSession, tenantId
 }
 
 export async function getMe(deps: Deps, session: CurrentSession) {
-  const tenants = await listMyTenants(deps, session.userId);
-  const current = tenants.find((t) => t.tenantId === session.tenantId) ?? null;
+  const memberships = await platform(deps).listMemberships(session.userId);
+  const tenants = memberships.map((m) => ({ tenantId: m.tenant_id, name: m.name, role: m.role }));
+  const current = memberships.find((m) => m.tenant_id === session.tenantId);
   return {
     user: { userId: session.userId, email: session.email },
     tenants,
-    currentTenant: current,
+    // 連携状態は選択中テナントのバナー表示だけに使う（qa-065）
+    currentTenant: current
+      ? {
+          tenantId: current.tenant_id,
+          name: current.name,
+          role: current.role,
+          youtubeLinkStatus: current.youtube_link_status,
+        }
+      : null,
     signupClosed: await isSignupClosed(deps),
   };
 }

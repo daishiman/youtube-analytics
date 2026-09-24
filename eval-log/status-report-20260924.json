@@ -1,0 +1,397 @@
+{
+ "generated_at": "2026-09-24T02:15:00Z",
+ "graph_revision": 6,
+ "graph_digest": "sha256:4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143",
+ "validate_graph_schema": {
+  "exit": 0,
+  "tail": "  \"implementation_readiness\": \"complete\",\n  \"missing_sections\": [],\n  \"schema\": \"/Users/dm/dev/dev/個人開発/harness/plugins/dev-graph/schemas/graph-node.schema.json\",\n  \"valid\": true,\n  \"violations\": []\n}"
+ },
+ "query": {
+  "filters": {
+   "feature_scope": "feat-login-redesign (graph_node_id=feat-login-redesign OR parent_feature=feat-login-redesign)"
+  },
+  "tag_match": "all"
+ },
+ "count": 14,
+ "dangling": [],
+ "outside_root": [],
+ "results": [
+  {
+   "graph_node_id": "feat-login-redesign",
+   "artifact_kind": "feature",
+   "project_id": "youtube-analytics",
+   "domain": "youtube-analytics",
+   "tags": [
+    "feature",
+    "youtube-analytics",
+    "login"
+   ],
+   "file_path": "features/feat-login-redesign.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "feat-platform-tenant-auth"
+   ],
+   "parent_feature": null,
+   "feature_package_id": null,
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": []
+  },
+  {
+   "graph_node_id": "SYS-LRD-P01",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "documentation",
+   "tags": [
+    "p01",
+    "documentation",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P01.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P02"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P02",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "backend",
+   "tags": [
+    "p02",
+    "backend",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P02.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P01"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P03"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P03",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "security",
+   "tags": [
+    "p03",
+    "security",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P03.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P02"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P04"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P04",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "quality",
+   "tags": [
+    "p04",
+    "quality",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P04.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P03"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P05"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P05",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "frontend",
+   "tags": [
+    "p05",
+    "frontend",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P05.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P04"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P06"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P06",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "quality",
+   "tags": [
+    "p06",
+    "quality",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P06.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P05"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P07"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P07",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "quality",
+   "tags": [
+    "p07",
+    "quality",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P07.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P06"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P08"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P08",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "data",
+   "tags": [
+    "p08",
+    "data",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P08.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P07"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P09"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P09",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "security",
+   "tags": [
+    "p09",
+    "security",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P09.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P08"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P10"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P10",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "quality",
+   "tags": [
+    "p10",
+    "quality",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P10.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P09"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P11",
+    "SYS-LRD-P12"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P11",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "documentation",
+   "tags": [
+    "p11",
+    "documentation",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P11.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P10"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P13"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P12",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "operations",
+   "tags": [
+    "p12",
+    "operations",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P12.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P10"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": [
+    "SYS-LRD-P13"
+   ]
+  },
+  {
+   "graph_node_id": "SYS-LRD-P13",
+   "artifact_kind": "task",
+   "project_id": "feature-package-feat-login-redesign",
+   "domain": "infrastructure",
+   "tags": [
+    "p13",
+    "infrastructure",
+    "login-redesign"
+   ],
+   "file_path": "tasks/feat-login-redesign/SYS-LRD-P13.md",
+   "status": "active",
+   "closed_at": null,
+   "depends_on": [
+    "SYS-LRD-P11",
+    "SYS-LRD-P12"
+   ],
+   "parent_feature": "feat-login-redesign",
+   "feature_package_id": "feature-package/feat-login-redesign",
+   "tracker_binding": "beads",
+   "confirmation_status": "confirmed",
+   "evaluation_status": "pass",
+   "readiness": "complete",
+   "beads_linkage": null,
+   "dependents": []
+  }
+ ],
+ "digest_before": "936010a622ea06d0b49e8ffa4a8f5116fb3b48de2391088fe2c9a384dbd94990",
+ "digest_after": "936010a622ea06d0b49e8ffa4a8f5116fb3b48de2391088fe2c9a384dbd94990",
+ "side_effects": 0
+}
