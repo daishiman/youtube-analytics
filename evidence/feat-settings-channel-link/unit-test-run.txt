@@ -1,0 +1,30 @@
+
+ RUN  v4.1.11 /Users/dm/orca/workspaces/YouTube分析/05設定
+
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+
+ Test Files  21 passed (21)
+      Tests  192 passed (192)
+   Start at  16:43:54
+   Duration  5.54s (transform 1.93s, setup 10.36s, import 950ms, tests 4.25s, environment 0ms)
+

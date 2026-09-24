@@ -1,0 +1,20 @@
+{
+ "generated_at": "2026-09-24T01:42:30Z",
+ "graph": ".dev-graph/state/graph.json",
+ "graph_revision": 6,
+ "out": ".dev-graph/render/index.html",
+ "nodes": 35,
+ "edges": 39,
+ "feature_progress": {
+  "feat-platform-tenant-auth": "0/13",
+  "feat-settings-channel-link": "0/13",
+  "aggregate": "0/26"
+ },
+ "input_sha256": "4e06c06af2e3e38d73b37a92d4b2b90bb8df74f6f553ff72d0ce5cc2de1b3316",
+ "output_sha256": "5de85c6e6aa9dbe6a2eb83b7151e0799f8d8ff6bc6145d030ef7166133b99ab2",
+ "external_refs": 0,
+ "svg": 1,
+ "inline_script": 1,
+ "live_trial": "headless Chrome screenshot OK",
+ "graph_unchanged": true
+}

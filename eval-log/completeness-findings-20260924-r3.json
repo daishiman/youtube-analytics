@@ -1,0 +1,124 @@
+{
+  "evaluator": {
+    "name": "assign-system-spec-completeness-evaluator",
+    "version": "0.1.0",
+    "context": "fork"
+  },
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/05設定/system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。U1〜U9 と goal へのトレースは前回から崩れていない。前回 low の2件はどちらも手当てされた。qa-073 には corrections が付き、provenance が『qa-067 に含まれない新しい論点』に直っている。maintenance-ops の設計適用文には『無料枠メーターの警告は qa-072 で70%黄・90%赤の2段に統一し、80%の単独警告は廃止した』と書かれた。ただ、上位概念の O3 の測定基準『無料枠使用率80%超でアラート』(00-requirements-definition.md:38、maintenance-ops.md:573)は更新されていない。同じ章の『80%の単独警告は廃止』と字面で食い違うので medium とする。70%で黄になる以上、80%を超えれば必ず警告は出ており、O3 の基準自体は満たされる。論理的な矛盾ではなく表記の不整合と判断し、この観点は PASS とする。",
+      "evidence": [
+        "G-foundation exit0",
+        "G-doc-sync exit0",
+        "spec-state.qa_log[qa-073].corrections(2026-09-24T00:52:00Z)",
+        "maintenance-ops.md:614『80%の単独警告は廃止した』 vs maintenance-ops.md:573 / 00-requirements-definition.md:38『無料枠使用率80%超でアラート』"
+      ]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "D-auth は前回確認した状態を保っている。採択案の security_fit は force-ssl の段階的認可、caveats は qa-064/qa-073、evidence_refs は sensitive-scope-verification。今回の変更(qa-067 の corrections と qa-070/qa-072 の add-qa-ref)は decisions の比較軸と採択理由を変えないので、後退もない。",
+      "evidence": [
+        "G-foundation exit0(decisions のトレースを含む)"
+      ]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0 だった(--require-complete / --require-basis / --require-foundation、required-info --state の ungrounded_blocking_items は空)。48セルに未収集はない。前回 high(主根拠 qa-067 に訂正注記がない)は解消した。qa_log[qa-067].corrections には次の3点が書かれている。10本=2000units は qa-070 の5本=1,000units に、80/95 は qa-072 の70/90 に置き換えたこと。qa-073 は新しい論点であること。10カテゴリにまたがる承認がこの一件なので主根拠に残し、個別確認は qa_refs で項目ごとに接地したこと。8カテゴリの web セルすべてで qa_refs に qa-070 と qa-072 があり、8章すべてで qa-067 の引用の直後に『訂正あり』のブロックが出ている。古い値は、凍結した記録と訂正注記の中にしか残っていない。sub-input の C06 も PASS だった。4軸すべてで検出はない。corrections は answer 本体を書き換えず注記として足されており、トレーサビリティは保たれている。appr-013 の限定句で、qa-074 が束ね型の承認でないことも確かめた。",
+      "evidence": [
+        "G-matrix exit0",
+        "G-matrix-basis/foundation exit0",
+        "G-required-info-state exit0 (ungrounded_blocking_items=[])",
+        "C07 verdict=PASS(新規 medium 1件は O3 表記。foundation_trace で扱う)",
+        "C06 verdict=PASS(検出0)",
+        "auth.md:60-65 / database.md:60-65 / security.md:59-64 などの訂正ブロック、auth.md:411,423 / database.md:514,526 / security.md:518,530 の qa-070/qa-072 節"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "前回 medium(doctrine に qa-065/qa-074 がない)は解消した。doctrine_applications.frontend.presentation には、次回収集の表示を画像の『毎時』ではなく『毎日 3:00 JST』にすること(qa-065)が具体的に書かれている。auth.authentication には I1 の連携方式(1チャンネルを選ぶ、変更は解除から、字幕の希望者だけ force-ssl を追加)を qa-074/appr-013 として反映した。database.reliability には、チャンネル変更の『解除→旧行を7日以内に削除→再連携』を qa-063/qa-074 として書き、別チャンネルのデータが混ざらないようにする信頼性の要件に落としている。どれも汎用のポインタではなく、確定セルの要件に具体的に当てはめている。knowledge / doctrine / required-info / cross の4 profile はすべて exit0。",
+      "evidence": [
+        "G-knowledge-graph exit0",
+        "spec-state.doctrine_applications.frontend.presentation(qa-065)",
+        "spec-state.doctrine_applications.auth.authentication / database.reliability(qa-074)"
+      ]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層の validate-source-citation は exit0(26 target・26 参照、欠落・孤児・非公式 host は0)。前回 low だった google-oauth-incremental-auth は、curl で取った HTML 全文の『Last updated 2026-09-14 UTC.』が記録と一致した。抜き取りで確かめた google-sensitive-scope-verification(2026-08-19)と youtube-captions-api(2026-09-15)も公式と一致した。",
+      "evidence": [
+        "G-source-citation exit0",
+        "curl 2026-09-24: web-server Last updated 2026-09-14 UTC / sensitive-scope-verification 2026-08-19 UTC / captions/download 2026-09-15 UTC"
+      ]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "plugin の prompt の構成は前回と同じで、7層形式と完了チェックリストを保っている。R0-foundation.md は U9 の concrete_intents の形に serves を持っており(46行目・102行目)、前回の持ち越し指摘は現行版では当たらない。plugin のテストを全件で実行したところ 489 passed / 1 failed だった。失敗は test_chapter_body_and_provenance.py::test_chapter_shows_the_qa_that_names_the_approval。compile-spec-doc.py に未コミットの作業中変更(9/16、_qa_entries_naming の現役/引退の分割)が残っていることが原因とみられる。呼び出し元が報告した『pytest 39 passed』は一部のテストだけを実行した結果と考えられる。仕様書の判定には影響しないので、報告だけにとどめる。",
+      "evidence": [
+        "python3 -m pytest -q(plugin root): 1 failed, 489 passed",
+        "git status: M skills/run-system-spec-compile/scripts/compile-spec-doc.py(mtime 2026-09-16)"
+      ]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-complete --require-basis --require-foundation (C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state (C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"}
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "bucket": "foundation_trace/O3 の測定基準の表記が qa-072 に追いついていない(C07 と C05 がそれぞれ独立に検出)",
+      "observation": "O3『無料枠使用率80%超でアラート』が 00-requirements-definition.md:38 と maintenance-ops.md:573 に残っている。同じ maintenance-ops.md:614 には『80%の単独警告は廃止した(qa-072 で70%黄・90%赤に統一)』とあり、字面が食い違う。70%で黄になるので80%超では必ず警告が出ており、O3 は満たされる。論理的な矛盾ではないが、実装や受入テストで読む人が迷う。前回の提案は『O3 のアラートとバーの色が別物であることを1行書く』だったが、今回は『統一した』という方向で書かれ、O3 の側に手が入っていない。",
+      "suggested_fix": "[elicit(C01 単一 writer)→compile] 次のどちらかにする。(a) O3 の測定基準を『無料枠使用率70%で黄・90%で赤の警告(qa-072)』に直す。requirements_foundation の変更なので、利用者の確認(R4-reopen)を取る。(b) O3 は据え置き、『O3 の80%超は UsageBar の70%黄・90%赤で満たす(80%を超える時点で必ず警告が出ている)』と maintenance-ops に書き足す。",
+      "evidence": [
+        "00-requirements-definition.md:38",
+        "maintenance-ops.md:573",
+        "maintenance-ops.md:614"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "prompt_quality/plugin のテストが1件失敗(報告のみ・仕様書の判定の範囲外)",
+      "observation": "plugin の pytest を全件で実行すると 1 failed / 489 passed だった。失敗は test_chapter_shows_the_qa_that_names_the_approval。compile-spec-doc.py に 2026-09-16 からの未コミット変更(_qa_entries_naming を現役/引退に分割)が残っている。今回の章の再生成がこの作業中の compiler で行われた可能性がある。validate-spec-doc-sync は exit0 なので、章の内容への実害は見つかっていない。",
+      "suggested_fix": "[plugin] compile-spec-doc.py の作業中変更をテストに合わせて仕上げてコミットするか、取り消す。そのあとで全テストを green にする。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/根拠の性質ラベル(持ち越し・範囲外として受け入れ)",
+      "observation": "直接指示の qa-062 と qa-068 に、basis=user-decision から一律に作られる『代替案を見たうえで明示選択』のラベルが付いたまま。呼び出し元は plugin 側の範囲外と判断しており、仕様の中身には影響しない。",
+      "suggested_fix": "[compile(plugin)] provenance が『直接指示』のときは表示ラベルを分ける(別の課題として扱う)。"
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点",
+      "observation": "前回の差し戻し5件を照合した。(1) high: qa-067 の corrections、8つの web セルへの qa-070/qa-072 の add-qa-ref、8章の訂正ブロックで解消した。(2) medium: doctrine の frontend.presentation に qa-065、auth.authentication と database.reliability に qa-074 を具体的に反映して解消した。(3) low: incremental-auth の Last updated 2026-09-14 を C08 が curl で独立に確かめて解消した。(4) low: ラベルの分離は範囲外として持ち越した。(5) low: qa-073 の provenance の訂正は解消した。ただし O3 と閾値の関係は、書き方の向きが変わっただけで O3 の側が残っており、medium として再掲した。C06 は PASS(corrections が answer を改変していないこと、appr-013 の限定句を確認)。",
+      "evidence": [
+        "eval-log/completeness-findings-20260924-r2.json gaps 5件との照合"
+      ]
+    }
+  ],
+  "gaps": [
+    "[elicit→compile/medium] O3 の測定基準『無料枠使用率80%超でアラート』を qa-072(70%黄/90%赤)に合わせて直す(requirements_foundation の変更なので利用者の確認を取る)か、『O3 の80%超は UsageBar の70/90で満たす』と maintenance-ops に書き足す",
+    "[plugin/low] compile-spec-doc.py の未コミット変更を仕上げるか取り消し、plugin の全テスト(現在 1 failed)を green にする",
+    "[compile(plugin)/low・持ち越し] 直接指示(qa-062/qa-068)の根拠の性質ラベルを分ける"
+  ]
+}

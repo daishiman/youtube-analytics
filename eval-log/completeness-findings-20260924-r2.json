@@ -1,0 +1,118 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/05設定/system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "前回の指摘は2件とも直っている。U1 の重複はなくなり、見出しの U1 は1つだけになった。U9 の I1 は qa-074/appr-013 で『チャンネルを1つ選ぶ・1テナント1チャンネル・変更は解除→7日以内削除→再連携・字幕希望者だけ force-ssl を追加』に更新され、00-requirements-definition.md の80行目と承認節(appr-013)に出ている。--require-foundation と validate-spec-doc-sync はどちらも exit0。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "00-requirements-definition.md:80 I1 に qa-063/qa-064/qa-073・qa-074 を反映", "00-requirements-definition.md:95 承認 appr-013"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "D-auth を更新済み。採択案の security_fit は『既定は読取専用。字幕 ON のオーナーだけ youtube.force-ssl(sensitive)を追加同意し、OFF で revoke。restricted には当たらない』になった。comparison_basis.security も force-ssl の段階的認可を含む。caveats には qa-064 と qa-073(一般公開の前に検証を申請し、通るまでは運営者だけが使う)が加わった。evidence_refs には sensitive-scope-verification の公式ページが加わり、user_decision.qa_refs は qa-014/021/064/073。",
+      "evidence": ["G-foundation exit0", "spec-state.decisions[D-auth].recommendation.caveats に qa-064/qa-073", "D-auth.options[0].evidence_refs に sensitive-scope-verification"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(--require-complete/loop/basis、required-info --state では未接地の block item が0)。48セルに未収集はなく、対象外30セルの理由はどれも具体的。sub-input の C06 は PASS で、前回の3件(一括承認による誘導 high、force-ssl の検証要件の聞き漏れ medium、置換元の誤記 low)は qa-069〜073 と qa-064.corrections で解消した。qa-070/072/073 では AI の推奨と違う案が選ばれており、誘導されていない裏付けになっている。一方 C07 は意味層で FAIL(high)とした。8カテゴリの web セルの主根拠(qa_ref)は、束ねた承認 qa-067 のまま残っている。qa-067 の本文には、あとから置き換えた古い値(『1日上限10本=2000units』→qa-070 で5本、『80%黄/95%赤』→qa-072 で70/90)が訂正注記なしで残っている。主根拠を据え置いた理由を書いた reopen_log もない。C05 も独自に確かめた。auth.md・database.md・security.md は qa-070/qa-072 を1件も引いておらず、主根拠として載せた qa-067 の古い値だけが章の中に残っている。",
+      "evidence": ["G-matrix exit0", "G-matrix-loop exit0", "G-matrix-basis exit0", "G-required-info-state exit0 (ungrounded_blocking_items=[])", "C07 verdict=FAIL (high 1 / medium 1 / low 1)", "C06 verdict=PASS (4軸すべて問題なし・low 1)", "spec-state.qa_log[qa-067] に corrections キーなし", "auth.md/database.md/security.md: 『10本』『80%黄』は qa-067 の引用内だけにあり、qa-070/qa-072 への参照は0"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "前回の high 2件と medium 2件はすべて直っている。(1) doctrine_applications.frontend.presentation と frontend.md の39行目は『web/styles.css の既存 CSS 変数(--primary #c4302b ほか)をトークンにし、画像のネイビー/ティールは使わない(qa-068 が qa-024 を置換)』に書き換わり、AppShell/DataTable のカード化まで具体的に書かれている。(2) design_applications は8カテゴリすべてで recorded_at が 2026-09-24T00:35〜37Z になり、qa-062〜074 の内容を確定セル要件として具体的に反映している(例: infrastructure は Cron を増やさず、字幕は1日5本・1,000units(qa-070)。ui-ux は字幕トグルに『1日5本まで』と検証前は『準備中』を表示)。doctrine_applications も8カテゴリすべてが 09-24 付けで、qa-062〜073 の該当項目を持つ。(3) 置換の注記(qa-024→qa-061/068、qa-031→qa-061)は frontend の design_application に移った。(4) 『画面モックを正とする』には『色は CSS 変数(qa-068)、次回収集の文言は毎日 3:00 JST(qa-065)』という例外が ui-ux/frontend の両方に書かれた。知識グラフの4 profile はすべて exit0。存在を確かめただけでなく、確定セルへの具体的な適用まで照合した。",
+      "evidence": ["G-knowledge-graph exit0 (knowledge/doctrine/required-info/cross)", "frontend.md:39 presentation 行", "frontend.md:619 画面モックの例外と置換注記", "ui-ux.md:796 設定画面の design_application(qa-062〜074)", "infrastructure.md:668 字幕は1日5本(qa-070)"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層の validate-source-citation は exit0(26 target・26 参照、欠落・孤児・非公式 host は0)。新しく加わった google-sensitive-scope-verification は公式ページで Last updated 2026-08-19 と記録どおりであることを確かめた。検証要件(ブランド情報・ドメイン確認・同一ドメインのプライバシーポリシー・デモ動画・3〜5営業日)も公式と一致する。抜き取りで確かめた youtube-captions-api(2026-09-15)、channels.list(2026-09-14)、google-oauth2(2026-05-26)、whisper v20250625、ffmpeg 9.0.2 はどれも最新版から遅れていない。google-oauth-incremental-auth は本文の内容は公式と一致したが、ページ末尾の更新日(2026-09-14)は取得した本文が途中で切れていて、今回も独立して確かめられなかった(low)。",
+      "evidence": ["G-source-citation exit0 (C08実行・targets を {\"targets\":[...]} 形式にして回避)", "C08 verdict=PASS (low/INDETERMINATE 1)"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "プラグインの prompt 18本の構成は前回から変わらない。7層形式で、R1/R2 には完了チェックリストがある。前回から残っている plugin 側の問題が2つあるが、報告だけにとどめる。R0-foundation.md 41行目の objectives の形に serves がないこと。validate-source-citation.py に配列の targets をそのまま渡すと AttributeError になること。どちらも今回の仕様書の判定には影響しない。",
+      "evidence": ["skills/*/prompts/*.md = 18本", "R0-foundation.md:41 objectives `[{id,text,measure}]`"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state (C07実行)", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"}
+  ],
+  "findings": [
+    {
+      "severity": "high",
+      "bucket": "matrix_coverage/束ねた承認を主根拠のまま残している(C07)",
+      "observation": "8カテゴリすべての web セルで、主根拠の qa_ref が qa-067 のまま残っている。qa-069〜073 は qa_refs(裏付け)に足されただけ。qa-067 の本文には『字幕 1日上限10本=2000units』と『無料枠 80%黄/95%赤』が残り、これは qa-070(5本)と qa-072(70/90)で置き換わっている。それなのに qa-067 には qa-064 のような corrections がなく、主根拠を据え置いた理由を書いた reopen_log のメモもない(qa-015 を束ねた過去の件ではメモを残している)。C05 も確かめた。auth.md・database.md・security.md は qa-070/qa-072 を1件も引いておらず、章の中にあるのは主根拠として載せた qa-067 の古い値だけである。",
+      "suggested_fix": "[elicit(C01 単一 writer)] qa-067 に corrections を足し、『1日上限10本=2000units は qa-070 で1日5本=1,000units に置換』『80%黄/95%赤は qa-072 で70%黄/90%赤に置換』『force-ssl の検証時期は qa-073 で追加決定』と書く。主根拠を qa-067 のまま残すなら、その理由を reopen_log に残す(qa-015 の件と同じ水準)。そのあと compile で全章を再投影し、qa-067 の引用のすぐ後に訂正注記が出ることを確かめる。",
+      "evidence": ["spec-state.matrix.*.web.qa_ref = qa-067 (8カテゴリ)", "spec-state.qa_log[qa-067] keys に corrections なし", "auth.md:60 / database.md:60 / security.md:59 の qa-067 引用に『10本=2000units』『80%黄/95%赤』"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "design_knowledge_reflection/doctrine に qa-065・qa-074 がない(C07)",
+      "observation": "design_applications には qa-065(ui-ux/frontend)と qa-074(8カテゴリ全部)が入っているが、doctrine_applications には8カテゴリのどこにも qa-065/qa-074 が出てこない。C05 の見方では、qa-065 は画面の文言の差し替え、qa-074 は要件定義の I1 を合わせ直しただけで、上流の原則(HIG/Clean Arch/OWASP/SRE)をどう当てはめるかは変わらない。影響は小さいが、反映しなくてよいと判断した理由がどこにも書かれていない。",
+      "suggested_fix": "[elicit] doctrine_applications の presentation(ui-ux/frontend)に qa-065 の文言方針を足すか、doctrine に影響しない理由を1行書く。qa-074 も同じく扱う。",
+      "evidence": ["spec-state.doctrine_applications.* に qa-065/qa-074 の参照0"]
+    },
+    {
+      "severity": "low",
+      "bucket": "doc_freshness/更新日を確かめられなかった(C08)",
+      "observation": "google-oauth-incremental-auth(developers.google.com/identity/protocols/oauth2/web-server)の last_updated=2026-09-14 は、取得した本文が途中で切れていて、今回も独立して確かめられなかった。本文の内容(include_granted_scopes・revoke エンドポイント・refresh token の条件)は公式と一致している。",
+      "suggested_fix": "[doc-fetch] curl などで HTML 全文を取り、ページ末尾の『Last updated』行をそのまま記録に残す。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/根拠の性質ラベル(前回から持ち越し)",
+      "observation": "直接指示の qa-062 と qa-068 が、frontend.md の482行目と547行目で今も『利用者が代替案を見たうえで明示選択した決定』と表示されている。basis=user-decision から一律に作られる文言で、実態と合っていない。",
+      "suggested_fix": "[compile/plugin] provenance が『直接指示』の場合は『利用者の直接指示』と表示するよう、compiler のラベル生成を分ける。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/C06 sub-input(1つの承認に束ねた確認)",
+      "observation": "qa-074 は、更新後の I1 の全文を質問に入れた2択の承認で、形は qa-067 と同じ。ただ中身は qa-063/069〜073 で個別に決めた内容を文書に反映するだけで、新しい論点は含んでいない。",
+      "suggested_fix": "[elicit] 反映を確かめるだけの束ね型の承認では、『新しい論点は含まない』と qa 本文に書く。"
+    },
+    {
+      "severity": "low",
+      "bucket": "foundation_trace/無料枠の閾値の関係",
+      "observation": "O3 の測定基準は『無料枠使用率80%超でアラート』。設定画面のバーの色は qa-072 で70%黄・90%赤になった。アラート(運用通知)とバーの色(画面表示)は別のしくみなので矛盾ではないが、2つの閾値の関係がどこにも書かれていない。qa-073 も『qa-067一括承認の項目分割』と書かれているが、force-ssl の検証時期は qa-067 に含まれておらず、新しく追加した質問である。",
+      "suggested_fix": "[elicit] O3 のアラート閾値(80%)とバーの色の閾値(70/90)が独立していることを maintenance-ops に1行書く。qa-073 の provenance を『新規論点(C05 差し戻しによる追加)』に直す。"
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点",
+      "observation": "前回の差し戻し9件を照合した。直っていたのは、presentation の配色の書き換え、8カテゴリへの qa-062〜074 の書き戻し(design と doctrine)、一括承認の項目分割(qa-069〜073、うち3件は AI 推奨と違う案を採用)、force-ssl の検証要件(qa-073・sensitive scope・公式 2026-08-19)、D-auth の更新、置換注記の移設、画面モックの例外、I1 の更新と U1 の重複除去、qa-064 の corrections(qa-058→qa-025)。1件は部分的な対応にとどまる。qa_refs を項目単位に付け替えるところで、主根拠の qa-067 に訂正注記がない。章の本文(design_application)は5本・70/90 で統一されている(ui-ux/frontend/infrastructure/maintenance-ops/backend)。",
+      "evidence": ["eval-log/completeness-findings-20260924.json gaps 9件との照合"]
+    },
+    {
+      "severity": "info",
+      "bucket": "prompt_quality/プラグイン側の問題(報告のみ・持ち越し)",
+      "observation": "R0-foundation.md 41行目の objectives の形に serves がない。validate-source-citation.py に targets を配列のまま渡すと AttributeError になる(C08 は {\"targets\":[...]} 形式にして回避した)。",
+      "suggested_fix": "[plugin] objectives の形に serves を足す。validate-source-citation.py が最上位の配列も受け取れるようにする。"
+    }
+  ],
+  "gaps": [
+    "[elicit→compile/high] qa-067 に corrections(10本=2000units→qa-070 の5本=1,000units、80/95→qa-072 の70/90、qa-073 は新しく追加した論点)を足すか、主根拠 qa-067 を据え置く理由を reopen_log に残し、全章を再投影する(特に auth.md/database.md/security.md の qa-067 引用に訂正注記が出ること)",
+    "[elicit/medium] doctrine_applications に qa-065/qa-074 を反映するか、doctrine に影響しない理由を書く",
+    "[doc-fetch/low] google-oauth-incremental-auth のページ末尾にある Last updated を HTML 全文から取り直して記録する",
+    "[compile(plugin)/low] 直接指示(qa-062/qa-068)の根拠の性質ラベルを『利用者の直接指示』に分ける",
+    "[elicit/low] O3 のアラート閾値80%とバーの色の70/90が別物であることを明記し、qa-073 の provenance を新規論点に直す"
+  ]
+}

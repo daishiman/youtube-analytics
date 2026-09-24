@@ -6,18 +6,17 @@
  "scope_in": [
   "cleanup 通の処理(fetched_at 30日超の削除・失敗した削除の再試行・30日超 token 更新失敗の指標削除)",
   "DELETE /api/me/data とテナント全体削除(即時実行+毎日再試行で7日以内)とアカウント削除",
-  "無料枠メーター(Workers/D1/R2/YouTube units・D1 書込行数・テナント数)と80%警告",
-  "runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)"
+  "runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)。『チャンネルを変更する』は feat-settings-channel-link"
  ],
  "scope_out": [
   "収集処理本体(feat-youtube-daily-collection)",
-  "設定画面の UI(feat-web-screens-actions)",
+  "設定画面の UI と無料枠メーター(/api/usage・usage_counters・GraphQL 取得・70%/90%警告)(feat-settings-channel-link)",
+  "チャンネル解除予約の旧 imports と R2 原本の削除実行(feat-settings-channel-link で実装済み)",
   "有料プランへの移行"
  ],
  "acceptance": [
   "fetched_at が30日を超えた行が翌日の cleanup 後に残らない",
   "データ削除の依頼から7日以内に D1 行と R2 画像が0件になる",
-  "使用率80%超でメーターが警告を出す",
   "レポートがコメント本文を複製していない"
  ],
  "architecture_refs": [
@@ -30,5 +29,5 @@
   "system-spec/maintenance-ops.md",
   "system-spec/database.md"
  ],
- "updated_at": "2026-09-21T15:15:00Z"
+ "updated_at": "2026-09-24T01:00:12Z"
 }

@@ -3,6 +3,7 @@ import { newId } from "../lib/crypto";
 import { AppError } from "../lib/errors";
 import { type Deps, iso, maxTenants, platform } from "./common";
 import type { CurrentSession } from "./session";
+import { settingsRepo } from "./settings-common";
 
 export async function listMyTenants(deps: Deps, userId: string) {
   return (await platform(deps).listMemberships(userId)).map((m) => ({
@@ -19,7 +20,7 @@ export async function isSignupClosed(deps: Deps): Promise<boolean> {
 export async function createTenant(deps: Deps, session: CurrentSession, name: unknown) {
   const trimmed = typeof name === "string" ? name.trim() : "";
   if (trimmed.length < 1 || trimmed.length > 60) {
-    throw new AppError("VALIDATION_FAILED", "テナント名は1〜60文字で入力してください");
+    throw new AppError("VALIDATION_FAILED", "ワークスペース名は1〜60文字で入力してください");
   }
   const repo = platform(deps);
   const tenantId = newId();
@@ -49,10 +50,15 @@ export async function switchTenant(deps: Deps, session: CurrentSession, tenantId
 export async function getMe(deps: Deps, session: CurrentSession) {
   const tenants = await listMyTenants(deps, session.userId);
   const current = tenants.find((t) => t.tenantId === session.tenantId) ?? null;
+  // ヘッダーの「最終更新」: 日次収集の最終時刻（未連携・未収集は null）
+  const channel = current
+    ? await settingsRepo(deps, { tenantId: current.tenantId }).getChannel()
+    : null;
   return {
     user: { userId: session.userId, email: session.email },
     tenants,
     currentTenant: current,
     signupClosed: await isSignupClosed(deps),
+    lastUpdatedAt: channel?.last_collected_at ?? null,
   };
 }

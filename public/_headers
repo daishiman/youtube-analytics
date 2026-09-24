@@ -1,7 +1,8 @@
 # Workers 静的アセットの応答ヘッダ（画面・規約ページ）。/api/* は Worker 側の secureHeaders が付ける
+# チャンネルのアイコンは YouTube の画像ホスト（yt3.*）から読む。読めないときは画面側で頭文字に切り替える
 # 規約ページがインライン <style> を持つため style-src だけ 'unsafe-inline' を許可する（スクリプトは自オリジンのみ）
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://yt3.ggpht.com https://yt3.googleusercontent.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin

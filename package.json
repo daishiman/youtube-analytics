@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "pnpm build:web && wrangler dev --port 8791",
+    "preview": "pnpm build:web && wrangler dev",
     "dev:web": "vite",
     "build": "pnpm build:web && wrangler deploy --dry-run --outdir dist/worker",
     "build:web": "vite build",

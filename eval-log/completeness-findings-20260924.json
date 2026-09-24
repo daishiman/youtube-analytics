@@ -1,0 +1,86 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/05設定/system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0 で、U1〜U9 と goal→objective→intent→cell→chapter の間に途切れはない。ただし requirements_foundation には qa-062〜068 が1件も入っていない。U9 I1 は『読取専用で連携する』のままで、1テナント1チャンネルの選択(qa-063)も、希望者だけ force-ssl を追加する字幕 ON(qa-064)も書かれていない。00-requirements-definition.md では U1 の段落が2回出てくる(16行目と18行目)。しかも片方は『目標未達の最大候補』、もう片方は『目標差が最も大きい改善候補』と言い方がずれている。どちらも medium 以下なので観点としては PASS とした。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "requirements_foundation 内の qa-062〜068 の参照 0件", "00-requirements-definition.md L16/L18 に U1 が重複", "00-requirements-definition.md L82 I1"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions は6件すべて confirmed で、2〜3案・無料案・根拠・推奨・注意点がそろっている。利用者が AI 推奨と違う案を選んだ D-transcript=hybrid も記録されている。qa-064 の字幕トグルは D-transcript=hybrid の範囲に収まる。一方、D-auth の security_fit『読取専用スコープのみ』と caveats は force-ssl の追加付与(sensitive scope の同意画面と検証への影響)に合わせて更新されていない(medium)。",
+      "evidence": ["G-foundation exit0", "decisions 内の qa-062〜068 の参照 0件", "D-auth.options[0].security_fit", "D-transcript.user_decision=hybrid(qa-025)"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "C07 は PASS。8カテゴリ×6 platform=48セルで未収集は0。確定24セル・対象外24セルで、qa_ref の参照先切れも0。reopen→qa-067/appr-012→再確定の順序も正しい。--require-complete/loop/basis/foundation と required-info --state はすべて exit0。一方、sub-input の C06 ヒアリング監査は FAIL。1つ目は qa-067 が10種の required_info を1つの2択承認にまとめ、8カテゴリの主根拠になっていること(C06 判定は high)。2つ目は確定セルの中身である design_applications に qa-062〜068 が書き戻されていないこと(high)。rubric の pass_criteria は C06 の4軸が健全であることを求めているので、観点としては FAIL とする。なお C05 の見方では、qa-063〜066 で争点を個別に聞いているため、一括承認の影響は部分的に和らいでいる。",
+      "evidence": ["G-matrix exit0", "G-matrix-loop exit0", "G-matrix-basis exit0", "G-required-info-state exit0", "C07 verdict=PASS", "C06 verdict=FAIL(聞き漏れ FAIL/誘導 FAIL/早期停止 PASS/トレーサビリティ FAIL)"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層は通っている。知識グラフの4 profile は exit0 で、どの章にも doctrine anchor 表と deep knowledge card がある。意味層は FAIL。(1) frontend.md の doctrine anchor『presentation』行が『FINAL-UI参照の濃紺サイドバー+白カード+ティール主ボタン』のまま残っている。これは qa-068(画像のティール・ネイビーは使わず web/styles.css の既存 CSS 変数を使う。実際の --primary は #c4302b)と真っ向から食い違う(high)。(2) design_applications と doctrine_applications は8カテゴリとも qa-062〜068 を1件も含まない。recorded_at は 2026-09-21〜22 で、今回の回答より前。そのため AppShell/共通部品/デザイントークン、channels・oauth_pending・usage_counters、channel-candidates 等のAPI、CF_ANALYTICS_TOKEN・Origin 検査・レート制限・監査ログ、runbook『チャンネルを変更する』は、qa-067 の回答文の引用としてしか章にない。Clean Architecture/OWASP/HIG/SRE の原則にどう当てはめたかは書かれていない(high)。(3) frontend.md の再コンパイルで、qa-024(素のTS)と qa-031(図4種)を qa-061 が置き換えたという履歴注記が消えた(medium)。(4) ui-ux/frontend の『画面モックは docs/screens/*.png を正』に、qa-068 の『画像の色は正としない』という例外が書かれていない(medium)。",
+      "evidence": ["G-knowledge-graph exit0", "frontend.md L39 presentation 行", "web/styles.css --primary:#c4302b", "spec-state.json doctrine_applications.frontend.presentation", "design_applications/doctrine_applications 内の qa-062〜068 の参照 0件", "git diff: frontend.md から『履歴注記』2行が消えた"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層は validate-source-citation が exit0。targets 25件と references 25件が1対1で対応し、非公式 host はなかった。内容層では、新しく足した youtube-channels-list(1 unit・2026-09-14)と cloudflare-graphql-analytics(Account Analytics Read・2026-04-23)を公式の現行ページで確かめ、どちらも一致した。captions.download の 200 units も一致した。google-oauth-incremental-auth は内容は一致したが、last_updated=2026-09-14 をページ上で機械的に確かめられなかった(low)。",
+      "evidence": ["G-source-citation exit0(C08 が実行。targets は {targets:[...]} で包んで渡した)", "C08 verdict=PASS"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の prompt 18本すべてが verify-completeness.py --input と validate-prompt.py --input を exit0 で通った。R0-foundation L41 の objectives に serves がない件は plugin 側の問題で、報告だけにとどめる(前回から持ち越し)。",
+      "evidence": ["G-prompt: 18/18 exit0", "R0-foundation.md L41 objectives [{id,text,measure}]"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "conditions": ["matrix_coverage"], "exit_code": 0},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-source-citation", "name": "validate-source-citation --state (C08実行)", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompts, --input)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "design_knowledge_reflection/配色の食い違い", "observation": "frontend.md の doctrine anchor『presentation』行(spec-state doctrine_applications.frontend.presentation)が『FINAL-UI参照の濃紺サイドバー+白カード+ティール主ボタンに統一』のまま残っている。qa-068 は画像のティール・ネイビーを使わず web/styles.css の既存 CSS 変数を使うと決めており、実際の --primary は #c4302b(赤系)。規範の表が最新の利用者決定と食い違っている。", "suggested_fix": "compile(C03)へ差し戻す。doctrine_applications.frontend.presentation を書き直し、配色は既存 CSS 変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)のトークン経由に限り、部品に直接色コードを書かないことを明記する(qa-068)。そのうえで frontend.md を再コンパイルする。", "evidence": ["frontend.md L39", "web/styles.css L8", "qa-068"]},
+    {"severity": "high", "bucket": "design_knowledge_reflection/設計適用の書き戻し漏れ", "observation": "design_applications と doctrine_applications の8カテゴリすべてで、qa-062〜068 の参照が0件。recorded_at は 2026-09-21〜22 で、今回の回答(2026-09-24)より前。そのため AppShell/共通部品(PageHeader・SectionCard・StatusBadge・DataTable・UsageBar・DropZone・ConfirmDialog・Toast)、1テナント1チャンネル(channels の UNIQUE 制約・同じチャンネルの別テナント連携の拒否)、oauth_pending・granted_scopes、字幕 ON/OFF での force-ssl の段階的認可と revoke、usage_counters・usage_snapshots と Cloudflare GraphQL の1時間キャッシュ、CF_ANALYTICS_TOKEN、Origin 検査、トークン発行のレート制限、監査ログ、runbook『チャンネルを変更する』は、どの章でも『確定内容(質疑録)』の qa-067 引用にしか出てこない。各章の『本章での適用』と doctrine 反映列には入っていない。ポインタは存在するが、原則は具体的に当てはめられていない(C06 F4 と同じ指摘)。", "suggested_fix": "elicit(C01)の単一 writer で、qa-062〜068 を根拠に design_applications.<cat>.text と doctrine_applications.<cat>.<concern>.text を書き戻す。例: frontend=AppShell と共通部品の層構造、database=channels/oauth_pending/usage_* の制約、auth/security=force-ssl の最小付与と revoke・CF トークンの最小権限、maintenance-ops=チャンネル変更 runbook。その後 compile(C03)で全章を再投影する。", "evidence": ["spec-state.json design_applications.*.recorded_at", "doctrine_applications 内の qa-062〜068 の参照 0件", "C06 F4"]},
+    {"severity": "high", "bucket": "matrix_coverage/C06 sub-input(誘導: 多論点の束ね)", "observation": "C06 の判定: qa-067 は10種の required_info_items(api-contract〜security-posture)を1つの『承認/修正して承認』の2択にまとめており、8カテゴリの確定セルの主根拠(qa_ref)になっている。C05 の補足: 争点になりやすいチャンネル数(qa-063)、force-ssl(qa-064)、次回収集の文言(qa-065)、無料枠の表示(qa-066)は個別の3択で聞いてあり、プレビューを見たうえでの承認なので影響は一部和らいでいる。ただ、同じチャンネルの別テナント連携の拒否、再連携は同じチャンネルだけ、トークンは1人5本まで、1日上限10本=2000 units などは個別に確かめられていない。", "suggested_fix": "elicit(C01)R3-reask へ差し戻す。同じチャンネルの別テナント連携の拒否、字幕の1日上限、トークン本数の上限、無料枠の80%黄・95%赤の閾値を分けて短く確認し、qa_refs に項目単位の根拠を足す。", "evidence": ["qa-067.required_info_items(10種)", "matrix.*.web.qa_ref=qa-067"]},
+    {"severity": "medium", "bucket": "matrix_coverage/C06 sub-input(聞き漏れ: force-ssl の検証要件)", "observation": "qa-064 で force-ssl の追加付与を決めたが、Google OAuth 検証への影響を聞いていない。youtube.force-ssl は sensitive scope で、C06 は restricted と書いているが C05 が訂正した。未検証アプリでの表示や上限、検証申請の時期が qa-021 の80人基準と同じでよいかが決まっていない。D-auth の caveats も readonly しか想定していない。", "suggested_fix": "doc-fetch(C02)で Google の sensitive scope 検証要件を公式で確かめ、elicit(C01)で『字幕 ON を一般公開する時期と検証申請の関係』を確定し、D-auth の caveats と security_fit を更新する。", "evidence": ["qa-064", "D-auth.options[0].security_fit=『読取専用スコープのみ』"]},
+    {"severity": "medium", "bucket": "design_knowledge_reflection/置換の履歴注記が消えた", "observation": "今回の再コンパイルで、frontend.md から『履歴注記: qa-024 の素のTypeScript と qa-031 の図4種の限定は qa-061 が置換した』の2行が消えた。qa-024 と qa-031 は注記なしの『裏付け質疑』に並んでおり、実装者が旧方針を規範と読むおそれがある。qa-024 の配色も qa-068 で置き換わっている。", "suggested_fix": "compile(C03)へ差し戻す。置き換えの関係(qa-024→qa-061/qa-068、qa-031→qa-061)を、compiler の正規形で出せる注記(supersedes メタ等)として残す。", "evidence": ["git diff system-spec/frontend.md の『-> 履歴注記』2行", "frontend.md L88, L124"]},
+    {"severity": "medium", "bucket": "design_knowledge_reflection/画面モックを正とする範囲", "observation": "ui-ux/frontend の design_applications は『画面モックは docs/screens/*.png を正』と書いているが、qa-068 は画像を区画・配置・文言の正に限り、色は正としないと決めた。qa-065 も画像の『次回収集…毎時』という文言を置き換えている。例外が書かれていないので、05-settings.png の色と文言がそのまま実装されるおそれがある。", "suggested_fix": "elicit(C01)で design_applications.ui-ux/frontend に『画像は区画・配置・文言の正。色は CSS 変数、次回収集の文言は毎日 3:00 JST(qa-065)』を書き足し、compile で再投影する。", "evidence": ["ui-ux.md L743『画面モックはdocs/screens/*.pngを正』", "qa-065", "qa-068"]},
+    {"severity": "medium", "bucket": "foundation_trace/U9 への反映漏れ", "observation": "requirements_foundation と 00-requirements-definition.md には qa-062〜068 が入っていない。I1 は『YouTubeチャンネルを読取専用で連携する』のままで、1テナント1チャンネルの選択(qa-063)、チャンネル変更時に旧データを7日以内に削除すること、字幕 ON の人だけ force-ssl を追加すること(qa-064)が U9 に出てこない。", "suggested_fix": "elicit(C01)R0-foundation で I1 を『OAuth 後に自分のチャンネルを1つ選んで連携する(1テナント1チャンネル。変更は解除→旧データを7日以内に削除→再連携)。字幕の自動取得は希望者だけ追加許可』に改め、compile で要件定義書と各章の U9 を再投影する。", "evidence": ["00-requirements-definition.md L82", "qa-063", "qa-064"]},
+    {"severity": "medium", "bucket": "decision_guidance/D-auth の更新漏れ", "observation": "D-auth の採択案の security_fit は『読取専用スコープのみ』のまま。qa-064 で force-ssl の段階的認可、qa-066 で Cloudflare の読み取り専用 API トークンが加わったのに、D-auth の caveats と comparison_basis.security が更新されていない。", "suggested_fix": "elicit(C01)R5 で D-auth の caveats に『字幕 ON 時だけ force-ssl を追加。OFF 時は revoke して readonly で再連携(qa-064)』を足し、security_fit を実態に合わせる。", "evidence": ["D-auth.options[0].security_fit", "D-auth.recommendation.caveats"]},
+    {"severity": "low", "bucket": "foundation_trace/U1 の重複", "observation": "00-requirements-definition.md の16行目と18行目に U1 の本質的目的が2回出てくる。言い方も『目標未達の最大候補』と『目標差が最も大きい改善候補』で違う。", "suggested_fix": "compile(C03)の要件定義書テンプレートで U1 を1回だけ出すようにし、用語は qa-060 に合わせて『目標未達の最大候補』にそろえる。", "evidence": ["00-requirements-definition.md L16, L18"]},
+    {"severity": "low", "bucket": "matrix_coverage/トレーサビリティ(置換元の誤記)", "observation": "qa-064 の問いと答えは『qa-058: force-sslは要求しない』を置き換えると書いているが、qa-058 は収集時刻(毎日 JST 3:00)の回答で、force-ssl には触れていない。force-ssl の方針のもとは qa-025(hybrid)と design_applications.auth(『force-sslは追加同意時のみ要求する段階的認可』)で、qa-064 はこれと矛盾せず具体化している。置き換えの関係が事実と合っていない。", "suggested_fix": "elicit(C01)で qa-064 に訂正の注記(corrections)を追記する。『qa-058 ではなく qa-025/D-transcript=hybrid の具体化。置き換えではない』。", "evidence": ["qa-058.answer", "qa-025.answer", "qa-064.answer"]},
+    {"severity": "low", "bucket": "matrix_coverage/根拠の性質ラベル", "observation": "qa-062(利用者の直接指示で、選択肢は出していない)と qa-068(直接指示)が、章では『利用者が代替案を見たうえで明示選択した決定』と表示されている。basis=user-decision から一律に作られる文言で、実態と合っていない。", "suggested_fix": "harness 側で、basis に『直接指示』と『選択肢からの選択』を分けるラベルを設ける(前回の持ち越し。この仕様書への差し戻しには含めない)。", "evidence": ["frontend.md qa-062 の根拠の性質行"]},
+    {"severity": "low", "bucket": "doc_freshness/更新日を確かめられなかった", "observation": "google-oauth-incremental-auth(developers.google.com/identity/protocols/oauth2/web-server)の last_updated=2026-09-14 を、C08 はページ上で機械的に確かめられなかった。検索キャッシュには古い日付も出た。内容(include_granted_scopes/prompt/revoke はスコープ単位で取り消せない)は現行の公式記述と一致している。", "suggested_fix": "doc-fetch(C02)で当該ページの『Last updated』を目で確かめ、last_updated を確定し直す。", "evidence": ["C08 層2"]},
+    {"severity": "info", "bucket": "確認した観点", "observation": "matrix(48セル・未収集0)、reopen_log→qa-067/appr-012→再確定の順序、qa-062〜068 の各章への投影(ui-ux/frontend には qa-068 まで)、新しい出典3件の公式との照合、知識グラフ4 profile、prompt 18本を確認した。qa-063(同じ Google アカウントで複数チャンネル・ブランドアカウントを扱う方法)、qa-065(画像の文言を今の仕様に合わせる)、qa-066(合計値だけを全員に出し、テナント別は出さない)は、それぞれ代替案つきで確定しており、問題はない。", "evidence": ["C07 PASS", "C08 PASS"]},
+    {"severity": "info", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)", "observation": "R0-foundation.md L41 の objectives の形は今も {id,text,measure} で、serves がない(前回から持ち越し)。validate-source-citation.py は --targets に配列そのものを渡すと AttributeError で落ちる(C05 と C08 の実行で再現)。", "suggested_fix": "harness 側で objectives に serves を加え、validate-source-citation の --targets が配列もそのまま受け取れるようにする(この仕様書への差し戻しには含めない)。"}
+  ],
+  "gaps": [
+    "[compile/high] frontend.md の doctrine『presentation』行の『濃紺サイドバー+白カード+ティール主ボタン』を qa-068(既存 CSS 変数のトークンだけを使う)に合わせて書き直す(もとの doctrine_applications.frontend.presentation も elicit で直す)",
+    "[elicit→compile/high] 8カテゴリの design_applications と doctrine_applications に qa-062〜068(AppShell と共通部品、1テナント1チャンネルの制約、force-ssl の段階的認可と revoke、無料枠の計測、CF_ANALYTICS_TOKEN、Origin 検査、レート制限、監査ログ、チャンネル変更 runbook)を書き戻し、全章を再投影する",
+    "[elicit/high(C06)] qa-067 の一括承認から、同じチャンネルの別テナント連携の拒否、字幕の1日上限、トークン本数の上限、無料枠の閾値を分けて確認し、qa_refs を項目単位にする",
+    "[doc-fetch→elicit/medium] force-ssl(sensitive scope)の Google 検証要件を公式で確かめ、字幕 ON を一般公開する条件を確定し、D-auth の caveats と security_fit を更新する",
+    "[compile/medium] frontend.md に qa-024→qa-061/qa-068 と qa-031→qa-061 の置き換えの注記を戻す",
+    "[elicit/medium] ui-ux/frontend の『画面モックを正』に例外を書き足す(色は CSS 変数、次回収集の文言は qa-065)",
+    "[elicit→compile/medium] U9 I1 に1テナント1チャンネルの選択と字幕の追加許可を反映し、00-requirements-definition.md の U1 の重複を直す",
+    "[elicit/low] qa-064 の置換元の誤記(qa-058→qa-025)に訂正の注記を足す。[doc-fetch/low] google-oauth-incremental-auth の last_updated を目で確かめる"
+  ]
+}

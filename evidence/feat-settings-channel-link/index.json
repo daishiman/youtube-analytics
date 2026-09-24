@@ -1,0 +1,345 @@
+{
+  "feature_id": "feat-settings-channel-link",
+  "feature_package_id": "feature-package/feat-settings-channel-link",
+  "task_id": "SYS-SCL-P11",
+  "generated_at": "2026-09-24",
+  "environment": "local (wrangler dev, http://localhost:8792)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、preview 環境と Actions の実行は未確認。初回 deploy 後に acceptance.md の preview 列を埋める",
+  "quality_gates": {
+    "typecheck": {
+      "result": "pass",
+      "path": "evidence/feat-settings-channel-link/typecheck.txt"
+    },
+    "lint": {
+      "result": "pass (warnings 0)",
+      "path": "evidence/feat-settings-channel-link/lint.txt"
+    },
+    "check_repo": {
+      "result": "pass (5 issues resolved: qa-061 re-projection via user-approved R4-reopen + reconfirm with identical cell; 2 resync digests refreshed with provenance)",
+      "path": "evidence/feat-settings-channel-link/check-repo.txt"
+    },
+    "unit_test": {
+      "result": "pass (21 files / 192 tests)",
+      "path": "evidence/feat-settings-channel-link/unit-test-run.txt"
+    },
+    "e2e": {
+      "result": "pass (79 passed / 2 skipped)",
+      "path": "evidence/feat-settings-channel-link/e2e-run.txt"
+    }
+  },
+  "acceptance": [
+    {
+      "id": "AC1",
+      "criterion": "6区画を画像の順に並べ、閲覧者にはメンバー区画と書込ボタンを出さない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/settings.test.ts",
+          "note": "8件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "区画の順、閲覧者の出し分け"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/settings-owner-desktop.png",
+          "note": "オーナー"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/settings-viewer-desktop.png",
+          "note": "閲覧者"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC2",
+      "criterion": "OAuth 後の候補から選んで連携し、別テナントが連携済みなら 409",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/youtube-link.test.ts",
+          "note": "16件（Google は差し替え）"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "チャンネル選択で 409"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC3",
+      "criterion": "再連携は同じチャンネルだけ。変更は、解除 → 7日以内の削除 → 再連携の順",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/youtube-link.test.ts",
+          "note": "CHANNEL_MISMATCH、削除予約"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC4",
+      "criterion": "字幕 ON で force-ssl を追加（1日5本）、OFF で revoke。検証前は運営者以外「準備中」",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/captions.test.ts",
+          "note": "10件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "準備中で押せない"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC5",
+      "criterion": "名前なしでは発行できず、6本目は 409。平文は1回だけ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/tokens.test.ts",
+          "note": "7件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "6本目 409、平文1回"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC6",
+      "criterion": "使用量が 70% で黄、90% で赤。1時間キャッシュ、内訳なし",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/usage.test.ts",
+          "note": "7件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "黄、赤、緑"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC7",
+      "criterion": "取込履歴に最新20件と失敗理由を出す",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/imports.test.ts",
+          "note": "7件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "失敗理由の表示"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC8",
+      "criterion": "共通 Header/Footer をログイン画面と静的ページを含む全画面で共有する",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "/login、/privacy、/terms の共通フッター"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/login-mobile.png",
+          "note": "ログイン"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/privacy-mobile.png",
+          "note": "プライバシーポリシー"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/e2e-run.txt",
+          "note": "3サイズ、79件成功、2件スキップ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC9",
+      "criterion": "各操作を audit_log に1件ずつ残し、Origin が違う書込は拒否する",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/settings.test.ts",
+          "note": "全書込 × 別 Origin で 403、拒否は監査に残らない"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/unit-test-run.txt",
+          "note": "21ファイル、192件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC10",
+      "criterion": "390×844、820×1180、1440×900 で主要操作の E2E が通る",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "playwright.config.ts",
+          "note": "mobile、tablet、desktop の3プロジェクト"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/settings-owner-mobile.png",
+          "note": "mobile"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/settings-owner-tablet.png",
+          "note": "tablet"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-settings-channel-link/e2e-run.txt",
+          "note": "3サイズ、79件成功、2件スキップ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-settings-channel-link/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC11",
+      "criterion": "(qa-075) YouTube 連携はテナントの Google Cloud クライアントで行い、未登録なら連携できない。シークレットは暗号化し返さない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/settings/google-client.test.ts",
+          "note": "12件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/settings.spec.ts",
+          "note": "接続情報の4件×3サイズ"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/google-client-owner-desktop.png",
+          "note": "未登録（seed テナントA）"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-settings-channel-link/google-client-owner-mobile.png",
+          "note": "390px"
+        },
+        {
+          "kind": "spec",
+          "path": "system-spec/spec-state.json",
+          "note": "qa-075"
+        }
+      ]
+    }
+  ]
+}

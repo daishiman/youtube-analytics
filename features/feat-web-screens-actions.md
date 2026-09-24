@@ -1,5 +1,5 @@
 ---
-acceptance: ["390×844 / 820×1180 / 1440×900 で6画面の主要操作 E2E が通る", "ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である", "登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある", "原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない", "AI分析の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる", "M1 区画に開示文が常に出る", "同じ日の API と CSV の値が両方のバッジ付きで並ぶ", "閲覧者には書込ボタンが出ず、APIも 403 を返す", "改善アクションの逆方向遷移が拒否され、対象ファネル段と下流結果を前後比較できる"]
+acceptance: ["390×844 / 820×1180 / 1440×900 で設定画面を除く5画面の主要操作 E2E が通る", "ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である", "登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある", "原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない", "AI分析の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる", "M1 区画に開示文が常に出る", "同じ日の API と CSV の値が両方のバッジ付きで並ぶ", "閲覧者には書込ボタンが出ず、APIも 403 を返す", "改善アクションの逆方向遷移が拒否され、対象ファネル段と下流結果を前後比較できる"]
 architecture_refs: ["arch-youtube-analytics-system"]
 artifact_kind: "feature"
 artifact_subtypes: []
@@ -11,7 +11,7 @@ completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manu
 confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260921.json", "evaluated_digest": "93222146ee6089f0c1ef0c6fcc62e9250c03338dfe9e49a328952d6fef7749b9"}
 confirmation_status: "confirmed"
 created_at: "2026-09-21T15:15:00Z"
-depends_on: ["feat-youtube-daily-collection", "feat-csv-media-ingest", "feat-skill-analysis-reports"]
+depends_on: ["feat-youtube-daily-collection", "feat-csv-media-ingest", "feat-skill-analysis-reports", "feat-settings-channel-link"]
 domain: "youtube-analytics"
 evaluation_status: "pass"
 execution_contexts: []
@@ -33,8 +33,8 @@ pull_request_linkages: []
 purpose: "登録者数などの結果だけでなく、売上に至る週次5段ファネルの目標差から改善候補を選び、アクションと下流結果を追えるようにする"
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
-scope_in: ["React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)と ECharts によるグラフ", "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質", "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント", "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定", "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)", "actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id", "設定画面(連携・トークン・メンバー欄・最後の収集/取込日時)とテナント切替", "幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E"]
-scope_out: ["収集・取込・スキル連携のサーバ処理(各 feature)", "データ削除と無料枠メーターのサーバ処理(feat-retention-ops)", "専用アプリ"]
+scope_in: ["React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション)と ECharts によるグラフ。共通レイアウトと設定画面は feat-settings-channel-link の AppShell・共通部品を使う", "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質", "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント", "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定", "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)", "actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id", "幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E"]
+scope_out: ["収集・取込・スキル連携のサーバ処理(各 feature)", "データ削除と無料枠メーターのサーバ処理(feat-retention-ops)", "専用アプリ", "設定画面・共通レイアウト(AppShell/Header/Footer)・共通部品・テナント切替(feat-settings-channel-link)"]
 source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
@@ -44,7 +44,7 @@ template_id: "feature"
 template_version: "1.0.0"
 title: "6画面のWeb UIと改善アクション管理"
 tracker_binding: "beads"
-updated_at: "2026-09-21T15:15:00Z"
+updated_at: "2026-09-24T01:00:12Z"
 ---
 
 # 目的
@@ -59,13 +59,12 @@ updated_at: "2026-09-21T15:15:00Z"
 
 ### 含む
 
-- React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)と ECharts によるグラフ
+- React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション)と ECharts によるグラフ。共通レイアウトと設定画面は feat-settings-channel-link の AppShell・共通部品を使う
 - ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質
 - 原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント
 - 動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定
 - AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)
 - actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id
-- 設定画面(連携・トークン・メンバー欄・最後の収集/取込日時)とテナント切替
 - 幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E
 
 ### 含まない
@@ -73,10 +72,11 @@ updated_at: "2026-09-21T15:15:00Z"
 - 収集・取込・スキル連携のサーバ処理(各 feature)
 - データ削除と無料枠メーターのサーバ処理(feat-retention-ops)
 - 専用アプリ
+- 設定画面・共通レイアウト(AppShell/Header/Footer)・共通部品・テナント切替(feat-settings-channel-link)
 
 ## 受入
 
-- 390×844 / 820×1180 / 1440×900 で6画面の主要操作 E2E が通る
+- 390×844 / 820×1180 / 1440×900 で設定画面を除く5画面の主要操作 E2E が通る
 - ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である
 - 登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある
 - 原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない
@@ -97,6 +97,7 @@ updated_at: "2026-09-21T15:15:00Z"
 - feat-youtube-daily-collection
 - feat-csv-media-ingest
 - feat-skill-analysis-reports
+- feat-settings-channel-link
 
 ## Handoff
 

@@ -10,7 +10,8 @@ async function devLogin(page: Page, email: string, invite?: string) {
 
 async function logout(page: Page) {
   await page.goto("/");
-  await page.getByRole("button", { name: "ログアウト" }).click();
+  await page.getByRole("button", { name: "アカウントメニュー" }).click();
+  await page.getByRole("menuitem", { name: "ログアウト" }).click();
   await expect(page).toHaveURL(/\/login$/);
 }
 
@@ -29,7 +30,7 @@ test("ログイン画面: 同意するまで Google ログインは押せず、�
   await page.goto("/privacy");
   await expect(
     page.getByText(
-      "オーナーが招待したメンバーには、そのテナントのチャンネルのデータが表示されます。",
+      "オーナーが招待したメンバーには、そのワークスペースのチャンネルのデータが表示されます。",
     ),
   ).toBeVisible();
 });
@@ -42,15 +43,29 @@ test("未ログインで保護画面を開くとログイン画面へ戻る", as
 test("閲覧者には書込ボタンが出ない", async ({ page }) => {
   await devLogin(page, "viewer@example.com");
   await expect(page.getByText("あなたの役割: 閲覧者")).toBeVisible();
-  await page.getByRole("navigation").getByRole("link", { name: "設定" }).click();
-  await expect(page.getByRole("cell", { name: "owner@example.com" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "外す" })).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: "メンバーを招待" })).toHaveCount(0);
+  await page
+    .getByRole("navigation", { name: "メイン" })
+    .getByRole("link", { name: "設定" })
+    .click();
+  await expect(page.getByRole("heading", { name: "YouTube連携" })).toBeVisible();
+  // メンバー区画はオーナーだけ。閲覧者は書込ボタン（連携・取込・発行・削除）も出ない
+  await expect(page.getByRole("heading", { name: /^メンバー/ })).toHaveCount(0);
+  await expect(page.getByRole("cell", { name: "owner@example.com" })).toHaveCount(0);
+  for (const name of [
+    "YouTubeと連携",
+    "再連携",
+    "連携解除",
+    "新しいトークンを発行",
+    "データを削除",
+  ]) {
+    await expect(page.getByRole("button", { name })).toHaveCount(0);
+  }
+  await expect(page.getByRole("tablist", { name: "取込の種類" })).toHaveCount(0);
 });
 
-test("テナントを切り替えると役割が変わる", async ({ page }) => {
+test("ワークスペースを切り替えると役割が変わる", async ({ page }) => {
   await devLogin(page, "owner@example.com");
-  const select = page.getByLabel("テナント切替");
+  const select = page.getByLabel("ワークスペース切替");
   await select.selectOption({ label: "テストチャンネルA（オーナー）" });
   await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
   await select.selectOption({ label: "別チャンネルB（閲覧者）" });
@@ -66,7 +81,10 @@ test("初回ログイン → 招待 → 別アカウントは拒否 → 本人�
 
   await devLogin(page, ownerEmail);
   await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
-  await page.getByRole("navigation").getByRole("link", { name: "設定" }).click();
+  await page
+    .getByRole("navigation", { name: "メイン" })
+    .getByRole("link", { name: "設定" })
+    .click();
   await page.getByLabel("招待するメールアドレス").fill(invitee);
   await page.getByLabel("招待する役割").selectOption("editor");
   await page.getByRole("button", { name: "招待リンクを発行" }).click();

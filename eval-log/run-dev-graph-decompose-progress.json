@@ -1,39 +1,43 @@
 {
  "skill": "run-dev-graph-decompose",
- "recorded_at": "2026-09-21T15:17:00Z",
- "feature_id": "feat-platform-tenant-auth",
- "feature_context": "features/feat-platform-tenant-auth.context.json",
- "feature_context_sha256": "921630778ada9cc013965d562f034a336daa25039ccf23ff43a059c7773f9f16",
+ "recorded_at": "2026-09-24T01:13:00Z",
+ "feature_id": "feat-settings-channel-link",
+ "feature_context": "features/feat-settings-channel-link.context.json",
+ "feature_context_sha256": "7012b9ad2dfcea19a4a0df2cd2745a22d91951c8333440b36d7311ba28498e12",
+ "graph_revision": 5,
  "checklist": [
   {
    "item": "macro result は feature/architecture/depends_on のみ・循環/phase-task 混入0",
    "status": "pass",
-   "evidence": "eval-log/dev-graph-decompose-audit-20260921.json verdict PASS"
+   "evidence": "eval-log/dev-graph-decompose-audit-20260924.json verdict PASS (3周目)"
   },
   {
    "item": "draft/unconfirmed の tracker publication 0",
    "status": "pass",
-   "evidence": "draft は staging のみで監査、commit は confirmed/pass/complete のみ。tracker 投影は sync verb まで未実施"
+   "evidence": "新ノードは draft で監査し digest 一致後に confirmed へ昇格。tracker 投影は sync verb まで未実施"
   },
   {
    "item": "ready feature package が P01..P13 exact 13",
    "status": "pending",
-   "evidence": "plan verb (run-system-dev-plan) へ handoff"
+   "evidence": "plan verb (run-system-dev-plan --feature-id feat-settings-channel-link) へ handoff"
   },
   {
    "item": "C02 local commit all-or-none・重複0",
    "status": "pass",
-   "evidence": "1回目 digest 欠落で exit1→12 artifact rollback、2回目 graph_revision 2 applied"
+   "evidence": "stage→監査→decomp_apply.py で graph.json を tmp→rename 置換、graph_revision 5、validate-graph-schema valid=true"
   },
   {
    "item": "beads/github/none 単一 projection authority",
    "status": "pending",
-   "evidence": "config execution_tracker=beads、sync verb で投影"
+   "evidence": "tracker_binding=beads、sync verb で投影"
   },
   {
    "item": "--dry-run write 0",
    "status": "not_applicable",
    "evidence": "本実行は実 commit"
   }
+ ],
+ "carried_over": [
+  "feat-csv-media-ingest/feat-skill-analysis-reports/feat-web-screens-actions の graph node と md/context の既存乖離(2da45b2 由来)"
  ]
 }

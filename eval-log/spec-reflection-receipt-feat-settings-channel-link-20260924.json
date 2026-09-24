@@ -1,0 +1,46 @@
+{
+  "receipt_kind": "spec-reflection",
+  "graph_node_id": "feat-settings-channel-link",
+  "beads_id": "yta-rh8",
+  "recorded_at": "2026-09-24T09:19:55Z",
+  "impact": [
+    {
+      "change": "利用者向け表記を『テナント』→『ワークスペース』、設定画面に Google Cloud 準備手順(8手順)",
+      "spec_impact": true,
+      "qa_ref": "qa-076",
+      "flow": "apply-spec-transition chunk(add-qa-ref ui-ux.web/frontend.web) → compile-spec-doc compile → specs/architecture 要約追記 → dev-graph spec import(graph_revision 7)"
+    },
+    {
+      "change": "ワークスペースごとの Google Cloud OAuth クライアント(tenant_google_clients・/api/youtube/google-client)",
+      "spec_impact": true,
+      "qa_ref": "qa-075",
+      "flow": "system-spec の章は反映済み。今回 specs/・architecture/・features/ の要約へ未反映分を追記"
+    },
+    {
+      "change": "チャンネル解除後の旧データ掃除の書込ゲート(migrations 0005/0006: import_generation・lease_token/lease_until/target_generation・専用 Queue)",
+      "spec_impact": false,
+      "reason": "qa-063/qa-069 で確定済みの『解除→旧データ7日以内削除→再連携』を、実装側で安全にする細部(二重実行と新連携への混入を防ぐ)。外部から見える振る舞い・API・画面・保持期間は変わらないため、設計は docs/feat-settings-channel-link/architecture.md と runbook.md に記録し、仕様章は変更しない"
+    }
+  ],
+  "gates": {
+    "validate-coverage-matrix(final+basis+foundation)": "exit0",
+    "compile-spec-doc": "exit0(変更2章)",
+    "validate-graph-schema": "valid",
+    "validate-system-plan": "violations 0",
+    "check:repo": "OK"
+  },
+  "evidence_ref": "eval-log/completeness-findings-20260924-r4.json",
+  "import_report": "eval-log/dev-graph-spec-import-report-20260924.json",
+  "digests": {
+    "system-spec/ui-ux.md": "35d70f9ef8ffeb44e91ad6076b8453964c4c91ccbb0dc0e69edef0575242bf04",
+    "system-spec/frontend.md": "001e19c6dc081a5b190c577ee21979f7491dccdd1fee075288b87815ef2d7421",
+    "system-spec/spec-state.json": "eecbf355fa39ad5a03550b429c2af550a8132694bec3f968bdce76df6d5b5d40",
+    "specs/youtube-analytics-system.md": "38eecd95cddc3b3bcd8610375a9fdba7cb8a52438456024352ec6f19d23950ea",
+    "architecture/youtube-analytics-system.md": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b",
+    "architecture/graph.json": "68d47fca24dc6b1dddd865c7b5807026620d5e76c6055c25191ba64f380a0f40",
+    ".dev-graph/state/graph.json": "4908c56136658531856699bb6bfbef19fce0a11d6f8ecd0360a8aeecd4d54881",
+    "features/feat-settings-channel-link.md": "06884f15c0e10e442ab2206c17d3c38e54da598ff4d6468f78bf013cb59efd53",
+    "features/feat-settings-channel-link.context.json": "a273cbc9d2113a684002a52802d5bf7b6be24d1968d8cfb3d9c838aa7c48895b",
+    "docs/feat-settings-channel-link/requirements.md": "116a6d25dec95b91e36dce530ba075535da9c957bdfec3264942468238825a73"
+  }
+}

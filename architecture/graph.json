@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "derived_from": ".dev-graph/state/graph.json",
-  "derived_graph_revision": 3,
+  "derived_graph_revision": 7,
   "nodes": [
     {
       "id": "arch-youtube-analytics-system",
       "kind": "architecture",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "1e14f8c1c409db25e5f9ce94791bb2a75abb3dc0dfc63430c65bdca6d96463f5",
+      "sha256": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b",
       "evaluation_status": "pass"
     },
     {

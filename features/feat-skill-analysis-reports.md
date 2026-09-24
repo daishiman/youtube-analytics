@@ -34,7 +34,7 @@ purpose: "システム内で LLM を呼ばずに、各利用者の Claude Code �
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
 scope_in: ["(tenant_id,user_id)単位の個人トークン発行(平文1回表示・SHA-256 保存)と失効", "analysis_requests(待機中→実行中→完了|失敗)と GET/POST /api/analysis-requests", "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)", "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport", "5つの原因指標と結果指標を問う分析、負のtarget_gap最小を改善候補とし、全指標0以上なら候補なしと示す非因果的な出力", "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード", "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存", "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較", "Claude Code 用 /yt-analyze スキルと運営者 Mac の launchd 週次実行"]
-scope_out: ["レポート閲覧画面と改善アクション画面(feat-web-screens-actions)", "アプリ内 LLM 呼出し", "因果推論・予測"]
+scope_out: ["レポート閲覧画面と改善アクション画面(feat-web-screens-actions)", "アプリ内 LLM 呼出し", "因果推論・予測", "トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)"]
 source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
@@ -44,7 +44,7 @@ template_id: "feature"
 template_version: "1.0.0"
 title: "Claude Code連携とAI分析レポート"
 tracker_binding: "beads"
-updated_at: "2026-09-21T15:15:00Z"
+updated_at: "2026-09-24T01:00:12Z"
 ---
 
 # 目的
@@ -74,6 +74,7 @@ Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・�
 - レポート閲覧画面と改善アクション画面(feat-web-screens-actions)
 - アプリ内 LLM 呼出し
 - 因果推論・予測
+- トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)
 
 ## 受入
 

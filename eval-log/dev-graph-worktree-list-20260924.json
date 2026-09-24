@@ -1,0 +1,12 @@
+{
+  "base_branch": "main",
+  "branch": "daishiman/05設定",
+  "events": [],
+  "git_common_dir": "/Users/dm/dev/dev/個人開発/YouTube分析/.git",
+  "head_sha": "5f978daed080c7af52846a07267a1cc93c134d59",
+  "leases": [],
+  "repo_root": "/Users/dm/orca/workspaces/YouTube分析/05設定",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "workspace_identity": null,
+  "worktree_id": "wt_5bc18df4770a0fd2"
+}

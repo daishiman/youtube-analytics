@@ -1,5 +1,5 @@
 ---
-acceptance: ["fetched_at が30日を超えた行が翌日の cleanup 後に残らない", "データ削除の依頼から7日以内に D1 行と R2 画像が0件になる", "使用率80%超でメーターが警告を出す", "レポートがコメント本文を複製していない"]
+acceptance: ["fetched_at が30日を超えた行が翌日の cleanup 後に残らない", "データ削除の依頼から7日以内に D1 行と R2 画像が0件になる", "レポートがコメント本文を複製していない"]
 architecture_refs: ["arch-youtube-analytics-system"]
 artifact_kind: "feature"
 artifact_subtypes: []
@@ -33,8 +33,8 @@ pull_request_linkages: []
 purpose: "YouTube API 規約の保持期間・削除義務を自動で守り、無料枠を超えずに運用を続けられるようにする"
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
-scope_in: ["cleanup 通の処理(fetched_at 30日超の削除・失敗した削除の再試行・30日超 token 更新失敗の指標削除)", "DELETE /api/me/data とテナント全体削除(即時実行+毎日再試行で7日以内)とアカウント削除", "無料枠メーター(Workers/D1/R2/YouTube units・D1 書込行数・テナント数)と80%警告", "runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)"]
-scope_out: ["収集処理本体(feat-youtube-daily-collection)", "設定画面の UI(feat-web-screens-actions)", "有料プランへの移行"]
+scope_in: ["cleanup 通の処理(fetched_at 30日超の削除・失敗した削除の再試行・30日超 token 更新失敗の指標削除)", "DELETE /api/me/data とテナント全体削除(即時実行+毎日再試行で7日以内)とアカウント削除", "runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)。『チャンネルを変更する』は feat-settings-channel-link"]
+scope_out: ["収集処理本体(feat-youtube-daily-collection)", "設定画面の UI と無料枠メーター(/api/usage・usage_counters・GraphQL 取得・70%/90%警告)(feat-settings-channel-link)", "チャンネル解除予約の旧 imports と R2 原本の削除実行(feat-settings-channel-link で実装済み)", "有料プランへの移行"]
 source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
@@ -44,7 +44,7 @@ template_id: "feature"
 template_version: "1.0.0"
 title: "保持・削除と運用監視"
 tracker_binding: "beads"
-updated_at: "2026-09-21T15:15:00Z"
+updated_at: "2026-09-24T01:00:12Z"
 ---
 
 # 目的
@@ -61,20 +61,19 @@ YouTube API 規約の保持期間・削除義務を自動で守り、無料枠�
 
 - cleanup 通の処理(fetched_at 30日超の削除・失敗した削除の再試行・30日超 token 更新失敗の指標削除)
 - DELETE /api/me/data とテナント全体削除(即時実行+毎日再試行で7日以内)とアカウント削除
-- 無料枠メーター(Workers/D1/R2/YouTube units・D1 書込行数・テナント数)と80%警告
-- runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)
+- runbook 7本(OAuth 再連携・無料枠超過・スキル更新・R2 逼迫・テナント別DB移行・割り当て確認・Reporting 60日欠損の CSV 補填)。『チャンネルを変更する』は feat-settings-channel-link
 
 ### 含まない
 
 - 収集処理本体(feat-youtube-daily-collection)
-- 設定画面の UI(feat-web-screens-actions)
+- 設定画面の UI と無料枠メーター(/api/usage・usage_counters・GraphQL 取得・70%/90%警告)(feat-settings-channel-link)
+- チャンネル解除予約の旧 `imports` と R2 原本の削除実行(feat-settings-channel-link で実装済み)
 - 有料プランへの移行
 
 ## 受入
 
 - fetched_at が30日を超えた行が翌日の cleanup 後に残らない
 - データ削除の依頼から7日以内に D1 行と R2 画像が0件になる
-- 使用率80%超でメーターが警告を出す
 - レポートがコメント本文を複製していない
 
 ## アーキテクチャ参照

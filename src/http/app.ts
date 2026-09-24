@@ -5,6 +5,7 @@ import { AppError } from "../lib/errors";
 import { apiRoutes } from "./api-routes";
 import { authRoutes } from "./auth-routes";
 import { type AppEnv, authGate, csrfGuard, depsMiddleware } from "./middleware";
+import { settingsRoutes } from "./settings-routes";
 
 export const app = new Hono<AppEnv>();
 
@@ -22,6 +23,7 @@ app.get("/api/health", async (c) => {
 
 app.route("/api/auth", authRoutes);
 app.route("/api", apiRoutes);
+app.route("/api", settingsRoutes);
 
 app.notFound((c) => {
   const err = new AppError("NOT_FOUND");

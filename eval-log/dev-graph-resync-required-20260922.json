@@ -4,8 +4,19 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "3d02f48f10ce31fcb7eb8b181f84c7d28e7a7942c9126fef7e01834ca64b1f53",
-  "current_architecture_digest": "1e14f8c1c409db25e5f9ce94791bb2a75abb3dc0dfc63430c65bdca6d96463f5",
+  "current_source_digest": "38eecd95cddc3b3bcd8610375a9fdba7cb8a52438456024352ec6f19d23950ea",
+  "current_architecture_digest": "e6858f5ee4d5b45b42b5247a3bc6478c5f52cbe4a0eeb423adda0a491d160e4b",
+  "digest_refresh_evidence": {
+    "refreshed_at": "2026-09-24",
+    "reason": "feat-settings-channel-link の追補（qa-062〜qa-074）で仕様の compile と dev-graph の spec import を実行し、specs と architecture を再生成したため。続けて qa-075/qa-076 の追補で specs と architecture を再更新した",
+    "generated_by": [
+      ".dev-graph/state/graph.json",
+      "architecture/graph.json",
+      "eval-log/completeness-findings-20260924-r4.json",
+      "eval-log/dev-graph-spec-import-report-20260924.json"
+    ],
+    "note": "affected_features 3件の task 計画の再生成は未実施のため、status は required のまま"
+  },
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",

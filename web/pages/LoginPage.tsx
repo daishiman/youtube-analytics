@@ -2,6 +2,7 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { ApiError, api, REDIRECT_MESSAGES } from "../api";
+import { PublicLayout } from "../components/PublicLayout";
 
 export function LoginPage() {
   const [params] = useSearchParams();
@@ -40,7 +41,7 @@ export function LoginPage() {
   }
 
   return (
-    <main className="center">
+    <PublicLayout>
       <section className="card narrow">
         <h1>YouTube分析</h1>
         <p className="muted">Google アカウントでログインします。</p>
@@ -96,6 +97,6 @@ export function LoginPage() {
           </form>
         )}
       </section>
-    </main>
+    </PublicLayout>
   );
 }

@@ -15,7 +15,7 @@ serves_goals: [G1, G2, G4]
 
 | プラットフォーム | 状態 | 根拠 |
 |---|---|---|
-| Web (web) | 確定 | 確定質疑: qa-054。裏付け質疑 (`qa_refs`): `qa-003`, `qa-010`, `qa-014`, `qa-016`, `qa-020`, `qa-015`, `qa-035`, `qa-037`, `qa-038`, `qa-026`, `qa-042`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-041`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-055`, `qa-056`, `qa-057`, `qa-058`, `qa-059` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G2, G4 |
+| Web (web) | 確定 | 確定質疑: qa-067。裏付け質疑 (`qa_refs`): `qa-054`, `qa-003`, `qa-010`, `qa-014`, `qa-016`, `qa-020`, `qa-015`, `qa-035`, `qa-037`, `qa-038`, `qa-026`, `qa-042`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-041`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-055`, `qa-056`, `qa-057`, `qa-058`, `qa-059`, `qa-062`, `qa-063`, `qa-064`, `qa-065`, `qa-066`, `qa-069`, `qa-074`, `qa-070`, `qa-072`, `qa-075` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G2, G4 |
 | モバイル (mobile) | 対象外 | 理由: mobile: 端末内にデータを保存しない。スマホ・タブレットのブラウザからWeb経由でD1/R2を読み書きする(qa-036で中立に再確認) |
 | タブレット (tablet) | 対象外 | 理由: tablet: 端末内にデータを保存しない。スマホ・タブレットのブラウザからWeb経由でD1/R2を読み書きする(qa-036で中立に再確認) |
 | デスクトップ (Windows) (desktop-windows) | 対象外 | 理由: desktop-windows: Claude Code連携スキルは一時ファイル(書き出しCSV・字幕・切り出し画像)のみ扱い、永続データはWeb側D1/R2だけに置くためローカルDBを持たない(qa-015『DB/画面なし』・qa-026) |
@@ -36,8 +36,8 @@ serves_goals: [G1, G2, G4]
 
 | 設計 concern | 上流の正本 (authority) | 導く範囲 | 出典 | 最終確認 | 本章の確定セルへの反映 |
 |---|---|---|---|---|---|
-| data-access | Robert C. Martin — Clean Architecture | 永続化を境界の外側へ追い出し interface adapter で隔離する | Clean Architecture — gateways/repositories boundary | 2026-07-12 | [qa-020/qa-026] D1はrepositories(metricsRepo/reportsRepo/actionsRepo/mediaRepo)に、R2はmediaStoreアダプタに閉じ込め、ユースケース層はD1/R2 APIを直接呼ばない。各repoはuser_idを必須引数に取る。 |
-| reliability | Google SRE | SLO/エラーバジェット・冗長性・スケーリング・監視の上流指針 | https://sre.google/books/ | 2026-07-12 | [qa-020/qa-018/qa-049/qa-052/qa-058] D1 Free枠上限到達時はクエリがエラーになるため、収集はupsertで再実行可能にし失敗したテナントは Queues の自動再試行(最大3回・10分間隔)で再取得する(qa-049/qa-058)。値が変わった行だけ書き、D1の書込10万行/日に対してテナント上限100で余裕を残す(qa-052)。週次でwrangler d1 exportをGitHub Actionsで取得しバックアップとする。 |
+| data-access | Robert C. Martin — Clean Architecture | 永続化を境界の外側へ追い出し interface adapter で隔離する | Clean Architecture — gateways/repositories boundary | 2026-07-12 | [qa-020/qa-026] D1はrepositories(metricsRepo/reportsRepo/actionsRepo/mediaRepo)に、R2はmediaStoreアダプタに閉じ込め、ユースケース層はD1/R2 APIを直接呼ばない。各repoはuser_idを必須引数に取る。 channelsRepo(1テナント1チャンネル。channel_id の UNIQUE 違反を ChannelTakenError に変換・qa-069)、oauthPendingRepo、usageRepo(usage_counters/usage_snapshots)、auditRepo を加え、同じく tenant_id を必須引数とする。 |
+| reliability | Google SRE | SLO/エラーバジェット・冗長性・スケーリング・監視の上流指針 | https://sre.google/books/ | 2026-07-12 | [qa-020/qa-018/qa-049/qa-052/qa-058] D1 Free枠上限到達時はクエリがエラーになるため、収集はupsertで再実行可能にし失敗したテナントは Queues の自動再試行(最大3回・10分間隔)で再取得する(qa-049/qa-058)。値が変わった行だけ書き、D1の書込10万行/日に対してテナント上限100で余裕を残す(qa-052)。週次でwrangler d1 exportをGitHub Actionsで取得しバックアップとする。 チャンネル変更は連携解除→旧チャンネルの行を7日以内に削除→再連携の順で行い、別チャンネルのデータが混ざらないようにする(qa-063/qa-074)。 |
 
 > **未記入** の行は、上流の正本を掲げただけで本章の確定内容へ反映した箇所を示せていない。表への出現は反映の証拠ではない。
 
@@ -49,7 +49,24 @@ serves_goals: [G1, G2, G4]
 
 - 資するゴール: G1, G2, G4
 
-#### 主たる接地根拠: `qa-054`
+#### 主たる接地根拠: `qa-067`
+
+**問**
+
+設定画面・チャンネル紐付け・共通レイアウトの詳細設計(画面に見えないバックエンド/DB/セキュリティ/運用を含む)をこの内容で確定してよいか
+
+**答**
+
+この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [共通レイアウト] AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新=収集/取込の新しい方・期間28日/90日/1年/任意を?period=で全画面共有・アバターメニュー)+main+Footer(3バッジ『OAuthは読み取り専用(字幕ON時は字幕のみ追加許可)』『データは利用者ごとに分離』『無料枠で運用』+プライバシーポリシー|利用規約。ログイン・静的ページも同じFooter)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone(+ファイル選択ボタン)/ConfirmDialog(危険操作は名前入力)/Toast/デザイントークン。[設定画面] 順序 YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ・既存qa-041〜)→無料枠の使用状況→データを削除。連携カード=アイコン・チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日3:00 JST)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。チャンネル選択=OAuth(prompt=select_account consent)→channels.list mine=true→1つ選択→確定。ブランドアカウントはGoogleのアカウント選択で選ぶ旨を案内。同じチャンネルが別テナントに連携済みなら拒否。再連携は同じチャンネルのみ、変更は連携解除から。字幕ON=追加同意→新着動画の字幕を毎日収集で取得(1日上限10本=2000units)、OFF=revoke→読み取り専用で再連携。取込=タブ別DropZoneと履歴(ファイル名/期間/行数/取込日時/状態+失敗理由・最新20件)。トークン=名前必須・平文は発行時1回表示・1人5本まで・失効は確認付き。無料枠=YouTube Data API units/D1書込/D1容量/R2容量/Workersリクエスト+テナント数、80%黄/95%赤。[バックエンド] GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel, POST /api/youtube/reconnect, DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。[DB] channels(UNIQUE tenant_id・UNIQUE channel_id・status)/oauth_pending(10分・暗号化)/oauth_tokens.granted_scopes/tenants.captions_auto/skill_tokens.name/imports(kind統合)/usage_counters/usage_snapshots/audit_log。[セキュリティ] 連携・解除・字幕・削除はオーナーのみ/force-sslはcaptions.downloadだけ/CF_ANALYTICS_TOKEN(Account Analytics Read)はWorkers Secrets/Origin検査/トークン発行のレート制限/監査ログ。[インフラ・運用] Cronは増やさない(無料枠の外部値は画面表示時に1時間キャッシュ)/runbook『チャンネルを変更する』を追加
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:52:00Z` — 承認内容のうち2つの値は、その後の個別確認で置き換えた。(1) 字幕自動取得の『1日上限10本=2000units』→ qa-070 で『1日5本=1,000units』。(2) 無料枠バーの『80%黄/95%赤』→ qa-072 で『70%黄/90%赤』。現行の規範は qa-070/qa-072 の値で、qa-067 のその他の承認内容は変更なし。qa-069(別テナント連携の拒否)・qa-071(トークン1人5本)は qa-067 の値を個別に確認したもので変更なし。qa-073(force-ssl の検証を字幕トグル公開前に申請)は qa-067 に含まれない新しい論点。主根拠(qa_ref)を qa-067 のまま残すのは、10カテゴリにまたがる詳細設計の承認がこの一件で、個別確認の qa-069〜073 は qa_refs に追加して項目単位の根拠にしているため
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:09:29Z)
+
+#### 裏付け質疑: `qa-054`
 
 **問**
 
@@ -397,6 +414,131 @@ qa-058 に合わせた改訂(収集を毎日JST 3:00の Cron 1回+Cloudflare Que
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(改訂箇所をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-21T14:24:26Z)
 
+#### 裏付け質疑: `qa-062`
+
+**問**
+
+設定画面をどう変えるか(利用者の追加指示)
+
+**答**
+
+docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カード: チャンネル名・登録者数・状態バッジ・次回収集・付与スコープ・字幕自動取得トグル・再連携・連携解除 / データ取込: CSV・字幕(SRT・VTT)・画像のタブとドロップ領域と取込履歴表 / Claude Code連携トークン: 名前・作成日・最終使用・失効と新規発行 / 無料枠の使用状況: YouTube Data API・D1書込・D1容量・R2画像・Workersリクエストのバー / データを削除)。画面に見えないバックエンド・設定・追加機能も定義する。YouTubeのどのアカウント(チャンネル)と紐付けるかの設定を追加する。ヘッダーとフッターは共通化し、共通化できる部分は全て共通化する
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 利用者のチャット原文による直接指示(画像添付 docs/screens/05-settings.png)。時刻はセッション内で最初に date -u で実測した値(指示時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-063`
+
+**問**
+
+1つのテナントに紐付けるYouTubeチャンネルの数と、切り替え時の扱いはどうするか(Googleアカウントは複数のチャンネル/ブランドアカウントを持てる)
+
+**答**
+
+1テナント1チャンネル。OAuth後にチャンネル一覧(channels.list mine=true)から1つ選ぶ。別チャンネルへ変えるときは連携解除→旧データを7日以内削除→再連携。提示した他の案: 1テナント複数チャンネル / 1チャンネル・切替時は旧データ保持
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-064`
+
+**問**
+
+画像の『字幕を自動取得する(youtube.force-ssl)』トグルは確定仕様(qa-058: force-sslは要求しない)と矛盾する。どうするか
+
+**答**
+
+画像通りトグルを実装する。既定OFF。ONにした人だけ追加同意(incremental authorization)でforce-sslを付与しcaptions.download(1本200units)を使う。OFFに戻すとforce-sslを含むトークンをrevokeし読み取り専用で再連携する(qa-058の『force-sslは要求しない』を置換)。提示した他の案: トグルは表示のみ(準備中) / トグルを置かない
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:33:05Z` — 本文の『qa-058: force-sslは要求しない』は置換元の誤記。qa-058 は収集時刻(毎日 JST 3:00)の回答で force-ssl に触れていない。force-ssl の方針の出所は qa-025(D-transcript=hybrid)と design_applications.auth の『force-sslは追加同意時のみ要求する段階的認可』であり、qa-064 はそれを置換せず具体化したもの(トグル既定OFF・ON時だけ追加同意・OFFでrevoke)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-065`
+
+**問**
+
+画像の『次回収集 9/27(日) 毎時』は旧仕様(週1回・日曜毎時)の文言で、確定仕様は『毎日JST 3:00』。どちらに合わせるか
+
+**答**
+
+現行仕様の毎日JST 3:00で表示する(例『次回収集 9/25(木) 3:00 毎日』)。画像の文言だけ差し替え、収集スケジュールは変えない。提示した他の案: 画像通り週1回・毎時に戻す
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-066`
+
+**問**
+
+『無料枠の使用状況』はシステム全体の値。誰に表示し、どう計測するか
+
+**答**
+
+全員に表示し、テナント横断の個別情報は出さず合計だけを出す。YouTube Data API unitsとD1書込行数はアプリ内カウンタで計測し、D1容量・R2容量・Workersリクエスト数は読み取り専用トークンでCloudflare GraphQL Analytics APIから取得して1時間キャッシュする。提示した他の案: 運営者だけに表示 / 自前計測のみ
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 選択肢提示(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:06:45Z)
+
+#### 裏付け質疑: `qa-069`
+
+**問**
+
+同じYouTubeチャンネルを別テナントが連携しようとした場合どうするか(qa-067一括承認からの項目分割)
+
+**答**
+
+拒否する。1チャンネルは1テナントにだけ連携でき、先に連携した側が連携解除するまで後から来た側はエラーにする(channels.channel_id の UNIQUE 制約とAPIの409で強制)。提示した他の案: 許可する(各テナントが別々に収集)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-067一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
+
+#### 裏付け質疑: `qa-074`
+
+**問**
+
+要件定義書 U9 の I1 を『Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する』へ更新してよいか
+
+**答**
+
+この内容で更新する。提示した他の案: I1は変えない
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:33:05Z)
+
+#### 裏付け質疑: `qa-070`
+
+**問**
+
+字幕自動取得(captions.download 1本200units)の1日の上限本数(qa-067一括承認からの項目分割)
+
+**答**
+
+1日5本(1,000units/日)。qa-067 承認内容の『1日上限10本=2000units』をこの値で置換する。上限を超えた新着動画は翌日以降の毎日収集へ持ち越す。提示した他の案: 1日10本(推奨)/1日20本
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-067一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
+
+#### 裏付け質疑: `qa-072`
+
+**問**
+
+無料枠の使用状況バーの警告色の閾値(qa-067一括承認からの項目分割)
+
+**答**
+
+70%で黄・90%で赤。qa-067 承認内容の『80%黄/95%赤』をこの値で置換する。提示した他の案: 80%黄・95%赤(推奨)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-067一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
+
+#### 裏付け質疑: `qa-075`
+
+**問**
+
+YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クライアントを、アプリ共通の1つにするか、テナントごとに利用者が自分の Google Cloud プロジェクトのものを持ち込むか(利用者ごとに API の使用先=プロジェクト・クォータ・同意画面が異なるため)
+
+**答**
+
+テナントごとに必須で持ち込む。オーナーが設定画面で自分の Google Cloud プロジェクトの OAuth クライアントID とクライアントシークレットを登録するまで『連携』ボタンは押せない。チャンネル連携・コールバック・トークン交換・更新・revoke・字幕の追加同意は、そのテナントのクライアントで行う。Googleログイン自体はテナントが決まる前なのでアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し、画面・APIには返さない。登録の変更・削除は既存の連携トークンを無効にするため『要再連携』にする。これにより D-auth の『ログインとYouTube連携を1回の同意で完結』と、クォータ・100人上限をアプリ共通で数える前提(qa-021)は、YouTube連携についてはテナントごとのプロジェクト単位に置き換わる。提示した他の案: アプリ共通のクライアントのまま(推奨)/ 任意で持ち込み(未登録なら共通を使う)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(AI推奨表示あり)。利用者の発話『テナントごとに各ユーザーごとで設定できるように…ユーザーごとによってこのAPI使う先が違う』を受けた質問。回答後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T07:28:46Z)
+
 ## To-Be / Delta
 
 > 本章の**規範**。上位概念 (要件定義書 U3 ゴール / U4 目標 / U9 具体的やりたいこと) を本章の serves_goals で絞り込んだ射影であり、設計知識 card (非規範の参考資料) とは役割が異なる。As-Is (現行実装の姿) は spec-state.json の管轄外のため本節では断定せず、到達点と、その到達を判定する観測点だけを規範として置く。
@@ -404,7 +546,7 @@ qa-058 に合わせた改訂(収集を毎日JST 3:00の Cron 1回+Cloudflare Que
 ### 到達すべき状態 (To-Be)
 
 - **G1**: YouTube Analyticsの実績データ(API連携+CSV取込+字幕・画像ファイル)をテナントごとに継続的に収集・集計できる
-- **G2**: Claude Code上で実行したreport-design-systemの分析結果に週次の売上ファネル5段と下流結果を含め、システムへ反映して閲覧・管理・効果比較できる
+- **G2**: Claude Code上で実行したreport-design-systemの分析結果(HTML・結論/要因の要約・改善アクション)がシステムへ反映され、直近5回の分析履歴を踏まえながら週次の5段階原因指標と下流の結果指標を分けて閲覧し、目標未達の最大候補を管理・効果比較できる
 - **G4**: 他の利用者にも提供でき、利用者ごとに作られるテナントの単位でデータを分け、そのテナントのメンバー(オーナー/編集者/閲覧者)だけが権限の範囲でアクセスできる
 
 ### 受入条件 (Delta の判定点)
@@ -412,34 +554,19 @@ qa-058 に合わせた改訂(収集を毎日JST 3:00の Cron 1回+Cloudflare Que
 | 目標 | 到達点 | 達成の観測点 (measure) |
 |---|---|---|
 | O1 | 全テナントの定期収集(毎日1回JST 3:00。Analytics APIは直近7日を取り直し、インプレッション・CTRはReporting APIから取得)がCloudflare Cron Triggersで自動実行される | 28日連続で、毎日09:00 JST時点で当日の収集が終わっていないテナント0件 |
-| O2 | Claude Codeからの1回のスキル実行でデータ取得→分析(数値・心理・週次売上ファネル)→システム反映まで完了する | 5つの原因指標と結果指標、目標差が最大の改善候補または判定保留理由を表示し、初期設定後の分析反映までの手作業ステップ0 |
+| O2 | Claude Codeからの1回のスキル実行でデータ取得→分析(数値・心理・週次ファネル)→システム反映まで完了する | 初期設定後、反映までの手作業ステップ0。判定可能な週は5原因指標のactual/target/target_gapと目標未達の改善候補1件を表示し、判定不能または全指標目標達成の週はその理由を表示する |
 | O4 | テナント間のデータ越境と権限外の操作をなくす | 認可テストで他テナントのデータ(D1行・R2画像)取得成功0件、閲覧者の書込操作成功0件 |
 
 ### 本章がかなえる具体的やりたいこと (U9)
 
-- **I1**: Googleでログインし、YouTubeチャンネルを読取専用で連携する
-- **I2**: YouTube Studio CSV3種と週次事業CSVを手動取込し、出典、nullと実測0を保って保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算し、週次売上ファネルと結果指標を分けてダッシュボードへ渡す
+- **I1**: Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する(qa-063/qa-064/qa-073・qa-074で更新)
+- **I2**: YouTube Studio CSV(表データ/グラフデータ/合計)と週次事業CSVを手動取込し、出典付きで保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算する。事業CSVと同一週Studio CSVから導線誘導率=route_visits/views×100、問い合わせ→成約率=closed_deals/inquiries×100を計算し、週次5段階原因指標と結果指標をダッシュボードに分けて表示する
 - **I3**: Cronで毎日1回、Analytics API(日別指標・動画別・流入元・視聴者属性・維持率)とReporting API(インプレッション・CTR)から取得し、出典(API)付きで保存する
-- **I4**: Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータと週次売上ファネルを取得し、目標差が最大の改善候補・判定保留理由・下流結果を含むHTMLをアップロードする
+- **I4**: Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする
 - **I5**: 運営者はlaunchdで週次にI4を自動実行する。一般利用者は手動実行
-- **I6**: 改善アクションを対象ファネル段付きで管理し、次回レポートで対象原因指標と売上・成約数等の下流結果を前後比較する
+- **I6**: 改善アクションを対象ファネル段付きで未着手/実施中/効果測定中/完了として管理し、次回レポートで対象原因指標と売上・成約数等の下流結果を前後比較する
 - **I9**: 字幕・画像・コメント・維持曲線を取り込み、Claude Codeで人の考え・感情・行動を推定した心理分析レポートを作る
 - **I10**: 初回ログインで自分のテナントが作られ、招待リンクでメンバーを追加してオーナー/編集者/閲覧者の権限で共有する
-
-### 週次売上ファネル追補（ユーザー追加要件）
-
-- `business_funnel_weekly`: `tenant_id, channel_id, week_start, route_label, route_visits, inquiries, closed_deals, revenue_jpy, imported_at, imported_by`。`week_start` はJST月曜、`route_label` は省略時 `LINE`。主キーは `(tenant_id, channel_id, week_start)` とし、同じ週の再取込は同一キーを上書きする冪等upsertとして扱う。数値の空欄はnull、0は実測0として区別する。
-- `funnel_targets`: `tenant_id, channel_id, metric_id, target_value, min_sample, effective_from`。主キーは `(tenant_id, channel_id, metric_id, effective_from)`。対象週以前で最新の設定を使う。`metric_id` は `impressions | ctr | weighted_retention_m1 | lead_route_rate | inquiry_close_rate` の閉列挙とする。
-- `lead_route_rate = route_visits / views * 100`。`views` は同じ `tenant_id, channel_id, week_start` に属するStudio CSV由来の週次視聴回数だけを使う。`inquiry_close_rate = closed_deals / inquiries * 100`。
-- `target_gap = (actual - target_value) / target_value`。`target_value > 0`かつ判定可能で、`target_gap < 0`の原因指標だけを候補にし、その中で最小のものを「最大の改善候補」とする。全指標が0以上なら「全指標目標達成」とし、候補を作らない。因果関係は表さない。
-- `min_sample`と比較する`sample_count`は、`impressions=impressions`、`ctr=impressions`、`weighted_retention_m1=engaged_views`、`lead_route_rate=views`、`inquiry_close_rate=inquiries`とする。
-- 選択週はJST月曜00:00から翌月曜00:00まで。翌月曜を迎えていない、またはStudio CSV・週次事業CSVのいずれかの最新取込が週末より前なら鮮度不足とする。過去の確定週に一律TTLは設けない。
-- 分母0、入力欠損、`target_value <= 0`またはtarget未設定、`min_sample`未達、鮮度不足はnullのまま判定保留にし、理由コードをAPI・レポートへ渡す。売上・成約数・登録者数は結果指標であり、登録者数は参考表示とする。
-- `inquiry_close_rate`は同一週集計の運用スナップショットで、問い合わせ発生週へ成約を帰属するコホート率ではない。APIはこの意味を`rate_basis=same_week_snapshot`として返す。
-- 分析履歴パックは既存の`reports`、`findings`、`actions`を`tenant_id + channel_id`で絞り、完了済みレポートを新しい順に最大5版だけ射影する。履歴専用の重複テーブルを増やさず、返却した版番号を新規レポートの`history_versions_used`に保存する。
-- MVPの外部事業データproviderは週次manual CSVのみ。YouTube API由来行から新しい率を計算せず、M1と`views`は既存どおりStudio CSV由来に限定する。
-
-この追補により既存テーブルを削除・統合しない。次回dev-graph compileで正本digestと派生feature/taskを再同期する。
 
 ### 本章に効く確定意思決定
 
@@ -459,15 +586,30 @@ qa-058 に合わせた改訂(収集を毎日JST 3:00の Cron 1回+Cloudflare Que
   - 採択: 両方に対応(既定は手元取込、希望者だけ追加同意でAPI自動取得) (`hybrid`)
   - 目的適合: readonly利用者と自動化希望者の両方を満たす
 
+### 週次売上ファネル追補（ユーザー追加要件）
+
+- `business_funnel_weekly`: `tenant_id, channel_id, week_start, route_label, route_visits, inquiries, closed_deals, revenue_jpy, imported_at, imported_by`。`week_start` はJST月曜、`route_label` は省略時 `LINE`。主キーは `(tenant_id, channel_id, week_start)` とし、同じ週の再取込は同一キーを上書きする冪等upsertとして扱う。数値の空欄はnull、0は実測0として区別する。
+- `funnel_targets`: `tenant_id, channel_id, metric_id, target_value, min_sample, effective_from`。主キーは `(tenant_id, channel_id, metric_id, effective_from)`。対象週以前で最新の設定を使う。`metric_id` は `impressions | ctr | weighted_retention_m1 | lead_route_rate | inquiry_close_rate` の閉列挙とする。
+- `lead_route_rate = route_visits / views * 100`。`views` は同じ `tenant_id, channel_id, week_start` に属するStudio CSV由来の週次視聴回数だけを使う。`inquiry_close_rate = closed_deals / inquiries * 100`。
+- `target_gap = (actual - target_value) / target_value`。`target_value > 0`かつ判定可能で、`target_gap < 0`の原因指標だけを候補にし、その中で最小のものを「最大の改善候補」とする。全指標が0以上なら「全指標目標達成」とし、候補を作らない。因果関係は表さない。
+- `min_sample`と比較する`sample_count`は、`impressions=impressions`、`ctr=impressions`、`weighted_retention_m1=engaged_views`、`lead_route_rate=views`、`inquiry_close_rate=inquiries`とする。
+- 選択週はJST月曜00:00から翌月曜00:00まで。翌月曜を迎えていない、またはStudio CSV・週次事業CSVのいずれかの最新取込が週末より前なら鮮度不足とする。過去の確定週に一律TTLは設けない。
+- 分母0、入力欠損、`target_value <= 0`またはtarget未設定、`min_sample`未達、鮮度不足はnullのまま判定保留にし、理由コードをAPI・レポートへ渡す。売上・成約数・登録者数は結果指標であり、登録者数は参考表示とする。
+- `inquiry_close_rate`は同一週集計の運用スナップショットで、問い合わせ発生週へ成約を帰属するコホート率ではない。APIはこの意味を`rate_basis=same_week_snapshot`として返す。
+- 分析履歴パックは既存の`reports`、`findings`、`actions`を`tenant_id + channel_id`で絞り、完了済みレポートを新しい順に最大5版だけ射影する。履歴専用の重複テーブルを増やさず、返却した版番号を新規レポートの`history_versions_used`に保存する。
+- MVPの外部事業データproviderは週次manual CSVのみ。YouTube API由来行から新しい率を計算せず、M1と`views`は既存どおりStudio CSV由来に限定する。
+
+この追補により既存テーブルを削除・統合しない。次回dev-graph compileで正本digestと派生feature/taskを再同期する。
+
 ## 適用された設計知識
 
 > 以下の deep knowledge card は設計判断を支援する**非規範の参考資料**であり、実装済み・検証済みの証拠ではない。カード内の `採否: applied` は設計採用を意味し、実装状態は意味しない。規範となる差分は本章の To-Be / Delta 節と参照先仕様で管理する。
 
 ### 本章での適用
 
-[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-020] 保存先はD1(構造化データ)+R2(画像)(qa-026でD1のみから変更)。基本11テーブル: users / channels / oauth_tokens / daily_metrics(PK tenant_id,channel_id,date) / video_metrics / csv_imports / analysis_requests(A-0001形式, 待機中|実行中|完了|失敗) / reports(版管理, html≤2,000,000 bytes) / findings / actions(未着手|実施中|効果測定中|完了, 判定 効果あり|不明|効果なし) / skill_tokens。[qa-025/026/027/029の機能決定に伴う追加テーブル(列はAI設計)] video_period_metrics(表データ.csvの21列を期間付きで保存。空欄=null・0=実測0を区別) / video_daily_metrics(グラフデータ.csv) / channel_daily_metrics(合計.csv) / video_angles(切り口: つまずき解決型|是非・意見型|追加型, 確定者) / retention_points(video_id, elapsed_ratio, audience_watch_ratio, relative_retention) / transcripts(video_id, source srt|vtt|whisper|captions_api, start_ms, end_ms, text) / media_assets(video_id, kind thumbnail|scene|screenshot, at_ms, r2_key, width, height, bytes) / comments(comment_id, video_id, published_at, text, like_count) / comment_emotions(comment_id, emotion Plutchik8種, intent 質問|共感|反論|体験談, report_id) / psych_findings(report_id, layer 考え|感情|行動, claim, evidence_json, counter_hypothesis, confidence)。全業務テーブルにtenant_id(操作した人のuser_idも保持)。設計知識(DDD)の適用: 集約は『レポート版(reports+findings+psych_findings+comment_emotions)』と『改善アクション(actions)』の2つに分け、版は追記のみ(過去版を更新しない)を不変条件とする。actionsの状態遷移は 未着手→実施中→効果測定中→完了 の一方向のみ許し、完了時に判定(効果あり/不明/効果なし)とbaseline/resultを必須にする。video_anglesは利用者確定後に再分析で上書きしない。[qa-035] 指標以外のAPIデータを持つ行(videosのタイトル等・comments・APIで取った字幕)にfetched_atを持たせ、30日超の行を掃除できるようにする。レポート版にはコメント本文を持たず、comment_idで参照する。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 追加テーブル: tenants(tenant_id, name, db_binding 既定'DB', created_by, created_at, deleted_at) / tenant_members(tenant_id, user_id, role owner|editor|viewer, joined_at, PK tenant_id,user_id) / tenant_invites(invite_id, tenant_id, email, role editor|viewer, token_hash SHA-256, expires_at 発行+7日, accepted_at, revoked_at, created_by)。既存の全業務テーブル(channels〜psych_findings・skill_tokens・oauth_tokens)にtenant_idを持たせ、主キーと索引の先頭をtenant_idにする(daily_metrics は PK tenant_id,channel_id,date)。user_idは『操作した人』の記録として残す(reports/actions/csv_importsの作成者)。R2キーは tenants/<tenant_id>/… で分ける。将来の分割: tenants.db_binding から参照先D1を決める解決関数を1か所だけに置く(既定は全テナント同じDB)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典で表を分ける(qa-054): API由来=daily_metrics(PK tenant_id,channel_id,date,content_type。content_typeはcreatorContentType)・video_metrics(PK tenant_id,video_id,date。単日指定の動画別クエリを毎日積み上げる)・traffic_source_daily(PK tenant_id,date,source_type)・audience_demographics(PK tenant_id,snapshot_date,age_group,gender)・video_reach_daily(PK tenant_id,video_id,date。video_thumbnail_impressions と video_thumbnail_impressions_ctr をAPIの値のまま保存し、CTRを自前計算しない・report_id と fetched_at を持つ)。CSV由来=既存の video_period_metrics / video_daily_metrics / channel_daily_metrics(csv_import_id を持つ)。同じ日・同じ指標でも上書きせず両方残す。派生指標M1〜M10はCSV由来の表だけから計算する(qa-053)。書込量の抑制: upsert前に値を比べ、変わった行だけ書く。索引は主キーのみ(索引の更新も書込行数に数えるため)。tenants に reporting_job_id と reporting_created_after、last_collected_date を追加。
+[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-020] 保存先はD1(構造化データ)+R2(画像)(qa-026でD1のみから変更)。基本11テーブル: users / channels / oauth_tokens / daily_metrics(PK tenant_id,channel_id,date) / video_metrics / csv_imports / analysis_requests(A-0001形式, 待機中|実行中|完了|失敗) / reports(版管理, html≤2,000,000 bytes) / findings / actions(未着手|実施中|効果測定中|完了, 判定 効果あり|不明|効果なし) / skill_tokens。[qa-025/026/027/029の機能決定に伴う追加テーブル(列はAI設計)] video_period_metrics(表データ.csvの21列を期間付きで保存。空欄=null・0=実測0を区別) / video_daily_metrics(グラフデータ.csv) / channel_daily_metrics(合計.csv) / video_angles(切り口: つまずき解決型|是非・意見型|追加型, 確定者) / retention_points(video_id, elapsed_ratio, audience_watch_ratio, relative_retention) / transcripts(video_id, source srt|vtt|whisper|captions_api, start_ms, end_ms, text) / media_assets(video_id, kind thumbnail|scene|screenshot, at_ms, r2_key, width, height, bytes) / comments(comment_id, video_id, published_at, text, like_count) / comment_emotions(comment_id, emotion Plutchik8種, intent 質問|共感|反論|体験談, report_id) / psych_findings(report_id, layer 考え|感情|行動, claim, evidence_json, counter_hypothesis, confidence)。全業務テーブルにtenant_id(操作した人のuser_idも保持)。設計知識(DDD)の適用: 集約は『レポート版(reports+findings+psych_findings+comment_emotions)』と『改善アクション(actions)』の2つに分け、版は追記のみ(過去版を更新しない)を不変条件とする。actionsの状態遷移は 未着手→実施中→効果測定中→完了 の一方向のみ許し、完了時に判定(効果あり/不明/効果なし)とbaseline/resultを必須にする。video_anglesは利用者確定後に再分析で上書きしない。[qa-035] 指標以外のAPIデータを持つ行(videosのタイトル等・comments・APIで取った字幕)にfetched_atを持たせ、30日超の行を掃除できるようにする。レポート版にはコメント本文を持たず、comment_idで参照する。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 追加テーブル: tenants(tenant_id, name, db_binding 既定'DB', created_by, created_at, deleted_at) / tenant_members(tenant_id, user_id, role owner|editor|viewer, joined_at, PK tenant_id,user_id) / tenant_invites(invite_id, tenant_id, email, role editor|viewer, token_hash SHA-256, expires_at 発行+7日, accepted_at, revoked_at, created_by)。既存の全業務テーブル(channels〜psych_findings・skill_tokens・oauth_tokens)にtenant_idを持たせ、主キーと索引の先頭をtenant_idにする(daily_metrics は PK tenant_id,channel_id,date)。user_idは『操作した人』の記録として残す(reports/actions/csv_importsの作成者)。R2キーは tenants/<tenant_id>/… で分ける。将来の分割: tenants.db_binding から参照先D1を決める解決関数を1か所だけに置く(既定は全テナント同じDB)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典で表を分ける(qa-054): API由来=daily_metrics(PK tenant_id,channel_id,date,content_type。content_typeはcreatorContentType)・video_metrics(PK tenant_id,video_id,date。単日指定の動画別クエリを毎日積み上げる)・traffic_source_daily(PK tenant_id,date,source_type)・audience_demographics(PK tenant_id,snapshot_date,age_group,gender)・video_reach_daily(PK tenant_id,video_id,date。video_thumbnail_impressions と video_thumbnail_impressions_ctr をAPIの値のまま保存し、CTRを自前計算しない・report_id と fetched_at を持つ)。CSV由来=既存の video_period_metrics / video_daily_metrics / channel_daily_metrics(csv_import_id を持つ)。同じ日・同じ指標でも上書きせず両方残す。派生指標M1〜M10はCSV由来の表だけから計算する(qa-053)。書込量の抑制: upsert前に値を比べ、変わった行だけ書く。索引は主キーのみ(索引の更新も書込行数に数えるため)。tenants に reporting_job_id と reporting_created_after、last_collected_date を追加。[利用者確定 qa-062〜qa-066・qa-068〜qa-074・内容承認 qa-067/appr-012・I1更新 qa-074/appr-013 設定画面・チャンネル紐付け・共通レイアウト] channels(tenant_id UNIQUE・channel_id UNIQUE・title・thumbnail_url・subscriber_count(表示のみ)・status=正常/要再連携/未連携・connected_at)で1テナント1チャンネルを表す(qa-063)。channel_id の UNIQUE で同じチャンネルの別テナント連携を DB でも拒否する(qa-069)。oauth_pending(state・PKCE verifier・候補チャンネル一覧を暗号化・有効10分)で OAuth 後のチャンネル選択を保持し、確定時に削除する。oauth_tokens.granted_scopes に付与スコープを保存し、字幕トグルは tenants.captions_auto(既定0)に持つ(qa-064)。skill_tokens に name(必須)を追加し、発行はユーザーごとに5本まで(qa-071)。CSV・字幕・画像の取込履歴は imports(kind・file_name・period・rows・status・error・created_at)へ統合し、設定画面は最新20件を読む。無料枠は usage_counters(日付×種類の自前カウンタ: YouTube units・字幕取得本数)と usage_snapshots(Cloudflare GraphQL の取得値の1時間キャッシュ)に分ける(qa-066)。連携・解除・字幕切替・トークン発行/失効・削除は audit_log(tenant_id・user_id・action・at)に残す。チャンネル変更は連携解除で旧チャンネルの行を7日以内に削除してから新チャンネルを連携する(qa-063/qa-074)。
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-21T14:10:14Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-24T00:35:04Z)
 
 ### Domain-Driven Design — deep knowledge card
 

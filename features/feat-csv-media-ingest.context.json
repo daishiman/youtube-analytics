@@ -4,7 +4,7 @@
  "purpose": "Studio CSVからYouTube派生指標を、週次事業CSVから売上ファネルの下流実績を取り込み、出典とnull/0を保った再現可能な分析入力を揃える",
  "goal": "editor 以上が Studio CSV 3種・週次事業CSV・字幕・画像を取り込むと、出典別に正規化された表と R2 画像が保存され、YouTube派生指標と週次売上ファネルを再現できる",
  "scope_in": [
-  "POST /api/csv による表データ/グラフデータ/合計の3種 Studio CSV 取込と csv_imports 記録",
+  "設定画面の POST /api/imports が Studio CSV・字幕・画像の原本受付と imports.import_id 発行の正本。POST /api/csv を残す場合も同じ受付処理を使い、Studio CSV 3種の csv_imports は imports.import_id に紐付く",
   "MVPで唯一の外部事業データproviderである週次manual CSVの取込(week_start[JST月曜], channel_id, route_label[既定LINE], route_visits, inquiries, closed_deals, revenue_jpy)",
   "判定規則(Shorts 判定・nullと実測0の区別・集計遅延・合計行の別保存)による正規化",
   "CSV 由来テーブル(video_period_metrics, video_daily_metrics, channel_daily_metrics, business_funnel_weekly)と funnel_targets(metric_id,target_value,min_sample,effective_from)",
@@ -15,7 +15,7 @@
  "scope_out": [
   "API 収集(feat-youtube-daily-collection)",
   "スキル経由のアップロード API(feat-skill-analysis-reports)",
-  "取込画面の UI(feat-web-screens-actions)"
+  "取込画面の UI と imports 履歴 API(GET/POST /api/imports)(feat-settings-channel-link)"
  ],
  "acceptance": [
   "2026-08-22〜09-19 の実 Studio CSV で M1=16.97% になる",
@@ -26,10 +26,12 @@
   "全原因指標が目標以上なら改善候補を作らない",
   "閲覧者の取込は 403 になる",
   "R2 画像キーが tenants/{tenant_id}/ で始まり公開URLを持たない",
-  "M1〜M10 と週次診断のYouTube側入力に source=api の行が含まれない"
+  "M1〜M10 と週次診断のYouTube側入力に source=api の行が含まれない",
+  "取込受付1件に対して解析結果が imports.import_id で追跡でき、解析の成功・失敗・行数・期間が同じ imports 履歴に反映される"
  ],
  "depends_on": [
-  "feat-platform-tenant-auth"
+  "feat-platform-tenant-auth",
+  "feat-settings-channel-link"
  ],
  "architecture_refs": [
   "architecture/youtube-analytics-system.md",
@@ -41,5 +43,5 @@
   "system-spec/security.md",
   "system-spec/maintenance-ops.md"
  ],
- "updated_at": "2026-09-21T15:15:00Z"
+ "updated_at": "2026-09-24T01:00:12Z"
 }

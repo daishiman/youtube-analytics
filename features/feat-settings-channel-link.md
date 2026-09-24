@@ -1,0 +1,119 @@
+---
+acceptance: ["参照画像の5カードにメンバー管理を加えた6区画が指定順に表示され、閲覧者にはメンバー区画と書込ボタンが出ない", "OAuth 後に channels.list mine=true の候補から1チャンネルを選んで紐付けられ、別テナントが連携済みのチャンネルは409になる", "再連携は同じチャンネルでだけ成功し、別チャンネルへの変更は連携解除→旧データ削除完了→新連携の順でしかできない", "字幕トグル ON で force-ssl が granted_scopes に加わり新着字幕が1日5本までに止まり、OFF で revoke され読み取り専用に戻る。検証前は運営者テナントのオーナー以外に『準備中』が出る", "トークンは名前なしで発行できず、6本目は409、平文は発行直後の1回だけ表示される", "共通枠の使用量バーが70%で黄・90%で赤になり、GraphQL 取得値は1時間キャッシュされる。YouTube API・D1書込・字幕取得は計測が揃うまで未取得と表示する", "取込履歴に最新20件と失敗理由が出る", "共通 Header/Footer がログイン・静的ページを含む全画面で同一で、ページ固有の色指定が既存CSS変数以外0件", "設定・連携・トークン・削除の各操作が audit_log に1件ずつ残り、Origin 不一致の書込は拒否される", "390×844 / 820×1180 / 1440×900 で設定画面の主要操作 E2E が通る"]
+architecture_refs: ["arch-youtube-analytics-system"]
+artifact_kind: "feature"
+artifact_subtypes: []
+beads_linkage: null
+classification_candidates: [{"artifact_kind": "feature", "candidate_path": "features/feat-settings-channel-link.md", "confidence": 0.95}, {"artifact_kind": "issue", "candidate_path": "issues/feat-settings-channel-link.md", "confidence": 0.2}]
+classification_confidence: 0.95
+classification_reason: "C14 macro 分解で確定仕様から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない"
+completion_evidence: {"completed_at": null, "evidence_refs": [], "policy": "manual", "reconciled_at": null, "source": null, "status": "not_applicable"}
+confirmation_evidence: {"evaluator": "dev-graph:dev-graph-integrity-auditor", "evidence_ref": "eval-log/dev-graph-decompose-audit-20260924.json", "evaluated_digest": "d609b5b1106b27ddfbe1f8b23fdd32932e765d5fa4af45a365676de6f1f736ea"}
+confirmation_status: "confirmed"
+created_at: "2026-09-24T01:00:12Z"
+depends_on: ["feat-platform-tenant-auth", "feat-youtube-daily-collection", "feat-skill-analysis-reports", "feat-retention-ops"]
+domain: "youtube-analytics"
+evaluation_status: "pass"
+execution_contexts: []
+feature_package_id: null
+file_path: "features/feat-settings-channel-link.md"
+github_project_linkages: []
+github_publication: {"labels": [], "milestone": null, "mode": "local_only", "project_aliases": []}
+goal: "参照画像の5カードにメンバー管理を4番目として加えた6区画が指定順に並び、既存CSS変数の配色のまま動き、1テナント1チャンネルの紐付け・字幕トグル・トークン・使用量・監査記録がサーバ側の制約付きで働く"
+graph_node_id: "feat-settings-channel-link"
+implementation_readiness: {"status": "complete", "missing_sections": [], "checked_at": "2026-09-24T01:00:12Z"}
+issue_linkage: null
+iteration: null
+owners: ["daishiman"]
+parent_feature: null
+phase_ref: null
+priority: null
+project_id: "youtube-analytics"
+pull_request_linkages: []
+purpose: "オーナーがどの YouTube チャンネルを分析対象にしているかを設定画面で確かめ・選び・切り替えられ、全画面が同じヘッダー/フッターと共通部品で一貫して見えるようにする"
+related_nodes: ["spec-youtube-analytics-system"]
+resource_scope: []
+scope_in: ["共通レイアウト AppShell(Sidebar: ロゴ・テナント切替・ナビ5項目、幅900px未満は下部タブ / Header: 画面名・最終更新・期間 ?period= 共有・アバターメニュー / main / Footer: 3バッジ+プライバシーポリシー|利用規約)をログイン・静的ページを含む全画面で共有", "共通部品 PageHeader/SectionCard/StatusBadge/DataTable/UsageBar/DropZone/ConfirmDialog/Toast。色は web/styles.css の既存CSS変数だけを使い画像の色は採用しない", "設定画面6区画を指定順に実装。GET /api/settings は5区画のデータを取得し、メンバー区画は既存の独立APIでオーナーだけに表示", "YouTube連携カード: チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST)・最終収集/最終CSV取込・付与スコープ・再連携・連携解除", "チャンネル紐付け: POST /api/youtube/connect→GET /api/oauth/callback(oauth_pending 10分・暗号化)→GET /api/youtube/channel-candidates(channels.list mine=true)→POST /api/youtube/channel で1チャンネル選択。channels は UNIQUE tenant_id・UNIQUE channel_id で別テナント連携済みは409", "POST /api/youtube/reconnect は同じチャンネルだけ許可、DELETE /api/youtube/connection は revoke と旧データの削除予約。未完了予約中は OAuth 開始・戻り・確定を拒否し、チャンネル変更は解除→旧データ削除完了→新連携の順", "字幕自動取得トグル PUT /api/youtube/captions-auto(既定OFF・ON で incremental authorization により youtube.force-ssl を追加し granted_scopes を保存、OFF で revoke→読み取り専用で再連携)と収集時の新着字幕取得を1日5本(1,000units)まで", "force-ssl の検証申請が通るまでは運営者テナントのオーナーだけがトグルを操作でき、他の利用者には『準備中』と表示する機能フラグ", "データ取込区画: CSV/字幕(SRT・VTT)/画像のタブ別 DropZone と GET/POST /api/imports(kind 統合の imports 履歴・最新20件・失敗理由)", "チャンネル解除予約の実行: 専用 Queue と毎日の Cron で旧 imports と旧世代 R2 原本を削除し、完了時点の空確認後だけ done_at を記録する。取込中は intent と世代照合で旧データの新連携への混入を防ぐ", "Claude Code連携トークン区画: GET/POST/DELETE /api/skill-tokens に名前必須(skill_tokens.name)・1人5本まで(6本目は409)・平文は発行時1回表示・失効は ConfirmDialog 付き", "無料枠の使用状況区画: GET /api/usage。D1容量・R2容量・Workersリクエストは CF_ANALYTICS_TOKEN で GraphQL Analytics API から取得し usage_snapshots に1時間キャッシュし、70%で黄・90%で赤。YouTube API・D1書込・字幕取得は計測が揃うまで未取得で示す", "データを削除区画の UI と POST /api/tenant/delete の呼出し(削除処理本体は feat-retention-ops)", "設定・連携・トークン・削除の操作を audit_log に記録、書込系はオーナーのみ・Origin 検査・レート制限", "runbook『チャンネルを変更する』と設定画面の Playwright 3サイズ E2E", "YouTube連携の OAuth クライアントをテナントごとに必須で持ち込む(qa-075): GET/PUT/DELETE /api/youtube/google-client と tenant_google_clients(シークレットは TOKEN_ENC_KEY で暗号化・画面/APIに返さない)。未登録のあいだは連携ボタンを押せず、クライアントIDの変更・削除は既存連携を『要再連携』にする", "利用者向けの表記を『ワークスペース』にし、設定画面に Google Cloud Console の準備手順(8手順+よくあるエラーの対処)を表示する(qa-076)"]
+scope_out: ["日次収集ジョブ本体と refresh token の暗号化保存・更新(feat-youtube-daily-collection)", "CSV/字幕/画像の解析・正規化・保存処理(feat-csv-media-ingest)", "個人トークンの検証とスキル連携 API(feat-skill-analysis-reports)", "テナント・メンバー・招待のサーバ処理(feat-platform-tenant-auth)", "テナント全削除と30日保持の cleanup 実行処理(feat-retention-ops)", "ダッシュボード/動画/AI分析/改善アクション画面の中身(feat-web-screens-actions)", "1テナントで複数チャンネルを同時に紐付けること", "画像の配色の採用と新しい色トークンの追加"]
+source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "371fcdea7c894e4c4b3b6f5caf1bdfbe6a425b042f72fbf3f542a8ab9fad7546", "imported_at": "2026-09-24T01:00:12Z"}
+start_date: null
+status: "active"
+tags: ["feature", "youtube-analytics"]
+target_date: null
+template_id: "feature"
+template_version: "1.0.0"
+title: "設定画面・YouTubeチャンネル紐付け・共通レイアウト"
+tracker_binding: "beads"
+updated_at: "2026-09-24T09:18:34Z"
+---
+# 目的
+
+オーナーがどの YouTube チャンネルを分析対象にしているかを設定画面で確かめ・選び・切り替えられ、全画面が同じヘッダー/フッターと共通部品で一貫して見えるようにする(資するゴール: G1, G2, G4)
+
+## 到達状態
+
+参照画像の5カードにメンバー管理を4番目として加えた6区画が指定順に並び、既存CSS変数の配色のまま動く。1テナント1チャンネルの紐付け・字幕トグル・トークン・使用量・監査記録がサーバ側の制約付きで働く。
+
+## スコープ
+
+### 含む
+
+- 共通レイアウト AppShell(Sidebar: ロゴ・テナント切替・ナビ5項目、幅900px未満は下部タブ / Header: 画面名・最終更新・期間 ?period= 共有・アバターメニュー / main / Footer: 3バッジ+プライバシーポリシー|利用規約)をログイン・静的ページを含む全画面で共有
+- 共通部品 PageHeader/SectionCard/StatusBadge/DataTable/UsageBar/DropZone/ConfirmDialog/Toast。色は web/styles.css の既存CSS変数だけを使い画像の色は採用しない
+- 設定画面6区画を指定順に実装する。GET /api/settings はメンバー以外の5区画のデータを一括取得し、メンバー区画は既存の独立APIでオーナーだけに表示する
+- YouTube連携カード: チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST)・最終収集/最終CSV取込・付与スコープ・再連携・連携解除
+- チャンネル紐付け: POST /api/youtube/connect→GET /api/oauth/callback(oauth_pending 10分・暗号化)→GET /api/youtube/channel-candidates(channels.list mine=true)→POST /api/youtube/channel で1チャンネル選択。channels は UNIQUE tenant_id・UNIQUE channel_id で別テナント連携済みは409
+- POST /api/youtube/reconnect は同じチャンネルだけ許可、DELETE /api/youtube/connection は revoke と旧データの削除予約。未完了予約中は OAuth 開始・戻り・確定を拒否し、チャンネル変更は解除→旧データ削除完了→新連携の順
+- 字幕自動取得トグル PUT /api/youtube/captions-auto(既定OFF・ON で incremental authorization により youtube.force-ssl を追加し granted_scopes を保存、OFF で revoke→読み取り専用で再連携)と収集時の新着字幕取得を1日5本(1,000units)まで
+- force-ssl の検証申請が通るまでは運営者テナントのオーナーだけがトグルを操作でき、他の利用者には『準備中』と表示する機能フラグ
+- データ取込区画: CSV/字幕(SRT・VTT)/画像のタブ別 DropZone と GET/POST /api/imports(kind 統合の imports 履歴・最新20件・失敗理由)
+- チャンネル解除予約の実行: 専用 Queue と毎日の Cron で旧 imports と旧世代 R2 原本を削除し、完了時点の空確認後だけ done_at を記録する。取込中は intent と世代照合で旧データの新連携への混入を防ぐ
+- Claude Code連携トークン区画: GET/POST/DELETE /api/skill-tokens に名前必須(skill_tokens.name)・1人5本まで(6本目は409)・平文は発行時1回表示・失効は ConfirmDialog 付き
+- 無料枠の使用状況区画: GET /api/usage。D1容量・R2容量・Workersリクエストは CF_ANALYTICS_TOKEN で GraphQL Analytics API から取得し usage_snapshots に1時間キャッシュし、70%で黄・90%で赤。YouTube API・D1書込・字幕取得は計測が揃うまで未取得で示す
+- データを削除区画の UI と POST /api/tenant/delete の呼出し(削除処理本体は feat-retention-ops)
+- 設定・連携・トークン・削除の操作を audit_log に記録、書込系はオーナーのみ・Origin 検査・レート制限
+- runbook『チャンネルを変更する』と設定画面の Playwright 3サイズ E2E
+- YouTube連携の OAuth クライアントをテナントごとに必須で持ち込む(qa-075): GET/PUT/DELETE /api/youtube/google-client と tenant_google_clients(シークレットは TOKEN_ENC_KEY で暗号化・画面/APIに返さない)。未登録のあいだは連携ボタンを押せず、クライアントIDの変更・削除は既存連携を『要再連携』にする
+- 利用者向けの表記を『ワークスペース』にし、設定画面に Google Cloud Console の準備手順(8手順+よくあるエラーの対処)を表示する(qa-076)
+
+### 含まない
+
+- 日次収集ジョブ本体と refresh token の暗号化保存・更新(feat-youtube-daily-collection)
+- CSV/字幕/画像の解析・正規化・保存処理(feat-csv-media-ingest)
+- 個人トークンの検証とスキル連携 API(feat-skill-analysis-reports)
+- テナント・メンバー・招待のサーバ処理(feat-platform-tenant-auth)
+- テナント全削除と30日保持の cleanup 実行処理(feat-retention-ops)
+- ダッシュボード/動画/AI分析/改善アクション画面の中身(feat-web-screens-actions)
+- 1テナントで複数チャンネルを同時に紐付けること
+- 画像の配色の採用と新しい色トークンの追加
+
+## 受入
+
+- 参照画像の5カードにメンバー管理を加えた6区画が指定順に表示され、閲覧者にはメンバー区画と書込ボタンが出ない
+- OAuth 後に channels.list mine=true の候補から1チャンネルを選んで紐付けられ、別テナントが連携済みのチャンネルは409になる
+- 再連携は同じチャンネルでだけ成功し、別チャンネルへの変更は連携解除→旧データ削除完了→新連携の順でしかできない
+- 字幕トグル ON で force-ssl が granted_scopes に加わり新着字幕が1日5本までに止まり、OFF で revoke され読み取り専用に戻る。検証前は運営者テナントのオーナー以外に『準備中』が出る
+- トークンは名前なしで発行できず、6本目は409、平文は発行直後の1回だけ表示される
+- 共通枠の使用量バーが70%で黄・90%で赤になり、GraphQL 取得値は1時間キャッシュされる。YouTube API・D1書込・字幕取得は計測が揃うまで未取得と表示する
+- 取込履歴に最新20件と失敗理由が出る
+- 共通 Header/Footer がログイン・静的ページを含む全画面で同一で、ページ固有の色指定が既存CSS変数以外0件
+- 設定・連携・トークン・削除の各操作が audit_log に1件ずつ残り、Origin 不一致の書込は拒否される
+- 390×844 / 820×1180 / 1440×900 で設定画面の主要操作 E2E が通る
+
+## アーキテクチャ参照
+
+- arch-youtube-analytics-system(architecture/youtube-analytics-system.md)
+- spec-youtube-analytics-system(specs/youtube-analytics-system.md)
+- 根拠章: system-spec/ui-ux.md, system-spec/frontend.md, system-spec/backend.md, system-spec/auth.md, system-spec/security.md, system-spec/database.md, system-spec/maintenance-ops.md(qa-062〜qa-074)
+- 画面: docs/screens/05-settings.png
+
+## 機能間依存
+
+- feat-platform-tenant-auth
+- feat-youtube-daily-collection
+- feat-skill-analysis-reports
+- feat-retention-ops（旧データ削除成功後の `done_at` が新連携の解除条件）
+
+## Handoff
+
+exact-13 の task 仕様は system-dev-planner が `--feature-id feat-settings-channel-link --feature-context features/feat-settings-channel-link.context.json` で生成する。本ノードは task を持たない。

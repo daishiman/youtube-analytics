@@ -25,11 +25,11 @@ export function CreateTenantForm({ onCreated }: { onCreated: () => Promise<void>
         maxLength={60}
         value={name}
         onChange={(event) => setName(event.target.value)}
-        placeholder="テナント名（1〜60文字）"
-        aria-label="新しいテナント名"
+        placeholder="ワークスペース名（1〜60文字）"
+        aria-label="新しいワークスペース名"
       />
       <button type="submit" className="button primary">
-        テナントを作成
+        ワークスペースを作成
       </button>
       {error && (
         <p role="alert" className="alert">

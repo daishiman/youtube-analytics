@@ -4,7 +4,7 @@
  "purpose": "YouTube Analytics/Reporting/Data API の公式値をテナントごとに毎日自動で集め、分析とダッシュボードが常に最新の実績を使えるようにする",
  "goal": "owner が YouTube を読取専用で連携すると、毎日 JST 3:00 の Cron が Queues 経由で全テナントを1テナント1実行で収集し、API 由来の表へ出典 api 付きで保存される",
  "scope_in": [
-  "owner による YouTube 読取連携(youtube.readonly yt-analytics.readonly, offline)と refresh token の AES-256-GCM 暗号化保存・連携解除の revoke",
+  "owner による YouTube 読取連携(youtube.readonly yt-analytics.readonly, offline)と refresh token の AES-256-GCM 暗号化保存・連携解除の revoke(連携の入口と1チャンネル選択は feat-settings-channel-link)",
   "連携完了時の Reporting API jobs.create(channel_reach_basic_a1)と job_id 保存",
   "Cron `0 18 * * *` から collect-queue へ tenant ごとの collect 通と cleanup 1通を sendBatch",
   "consumer(max_batch_size=1)の collectTenantDaily: Analytics D-7〜D-1 再取得・動画別 D-3 単日・流入元・属性・維持率",
@@ -16,7 +16,7 @@
   "CSV 取込と派生指標(feat-csv-media-ingest)",
   "cleanup 通の処理内容(feat-retention-ops)",
   "収集結果の画面表示(feat-web-screens-actions)",
-  "captions.download(youtube.force-ssl)の追加同意"
+  "チャンネル候補の選択・変更フロー、字幕トグルと captions.download(youtube.force-ssl)の追加同意・1日5本の字幕取得(feat-settings-channel-link)"
  ],
  "acceptance": [
   "Cron 1回で対象テナント数+1通が collect-queue に入る",
@@ -35,5 +35,5 @@
   "system-spec/auth.md",
   "system-spec/database.md"
  ],
- "updated_at": "2026-09-21T15:15:00Z"
+ "updated_at": "2026-09-24T01:00:12Z"
 }

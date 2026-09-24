@@ -22,7 +22,11 @@ describe("ルート網羅", () => {
       const tenantScopedByPath = route.path.startsWith("/api/tenants/:id/");
       expect(route.tenantScoped, route.path).toBe(tenantScopedByPath);
 
-      if (!tenantScopedByPath) {
+      if (route.kind.startsWith("session-")) {
+        // 設定画面の API はパスにテナント ID を持たず、セッションの選択中テナントだけを対象にする
+        expect(tenantScopedByPath, route.path).toBe(false);
+        expect(route.path.includes(":id"), route.path).toBe(false);
+      } else if (!tenantScopedByPath) {
         expect(route.kind, route.path).toBe("self");
       } else if (route.method === "GET" && route.path.endsWith("/members")) {
         expect(route.kind, route.path).toBe("read");

@@ -1,14 +1,16 @@
 import { defineConfig } from "@playwright/test";
 
-// 正本 frontend 章の3サイズ（スマホ・タブレット・PC）で E2E を回す
+// 正本 frontend 章の3サイズ（スマホ・タブレット・PC）で E2E を回す。
+// E2E_PORT は別の worktree が 8791 を使っているときの逃げ道（既定 8791）
+const port = process.env.E2E_PORT ?? "8791";
+
 export default defineConfig({
   testDir: "e2e",
-  use: { baseURL: "http://localhost:8791" },
+  use: { baseURL: `http://localhost:${port}` },
   webServer: {
     // CI（.dev.vars なし）でも開発用ログインと seed アカウントで画面を回す。ローカルは起動中の pnpm dev を再利用する
-    command:
-      "pnpm db:migrate:local && pnpm db:seed:local && pnpm build:web && pnpm wrangler dev --port 8791 --var DEV_LOGIN:1 --var TOKEN_ENC_KEY:e2e-only-not-secret",
-    url: "http://localhost:8791/api/health",
+    command: `pnpm db:migrate:local && pnpm db:seed:local && pnpm build:web && pnpm wrangler dev --port ${port} --var DEV_LOGIN:1 --var TOKEN_ENC_KEY:e2e-only-not-secret`,
+    url: `http://localhost:${port}/api/health`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

@@ -8,7 +8,7 @@ export type InvitableRole = (typeof INVITABLE_ROLES)[number];
 
 /**
  * 操作 → 許可する役割。
- * - owner: 全操作・招待・役割変更・テナント削除
+ * - owner: 全操作・招待・役割変更・テナント削除・YouTube 連携と字幕設定（settings.manage）
  * - editor: 取込・分析依頼・結果取込・アクション更新（content.write。後続 feature が使う）
  * - viewer: 閲覧のみ
  */
@@ -18,6 +18,7 @@ export const PERMISSIONS = {
   "content.write": ["owner", "editor"],
   "members.manage": ["owner"],
   "invites.manage": ["owner"],
+  "settings.manage": ["owner"],
 } as const satisfies Record<string, readonly Role[]>;
 
 export type Permission = keyof typeof PERMISSIONS;

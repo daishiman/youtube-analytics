@@ -16,6 +16,12 @@ run_worker_first = ["/api/*"]
 MAX_TENANTS = "100"
 # Google Cloud の OAuth クライアントID（非秘密）。本番値へ置き換える
 GOOGLE_CLIENT_ID = "183283977516-m8erkdffia1u9eonfj60g0ims3h3csav.apps.googleusercontent.com"
+# 字幕の自動取得（youtube.force-ssl）。Google の OAuth 検証が通るまで "0"（運営テナント以外は「準備中」）。通ったら "1"
+FORCE_SSL_VERIFIED = "0"
+# 運営テナントの tenant_id（検証前でも字幕トグルを試せるテナント）。本番のテナントを作成後に値を入れる
+# OPERATOR_TENANT_ID = ""
+# 無料枠表示の Cloudflare アカウントID（非秘密）。API トークンは `wrangler secret put CF_ANALYTICS_TOKEN`
+# CF_ACCOUNT_ID = ""
 
 [[d1_databases]]
 binding = "DB"
@@ -32,8 +38,20 @@ bucket_name = "youtube-analytics-media"
 binding = "COLLECT_QUEUE"
 queue = "collect-queue"
 
-# Cron は scheduled/consumer の実処理が揃う feat-youtube-daily-collection で追加する。
-# 空のトリガーを先に登録せず、アカウント共通の Free 枠を消費しない。
+[[queues.producers]]
+binding = "CLEANUP_QUEUE"
+queue = "channel-cleanup-queue"
+
+[[queues.consumers]]
+queue = "channel-cleanup-queue"
+max_batch_size = 1
+max_concurrency = 1
+max_retries = 10
+retry_delay = 60
+
+# Queue 送信失敗時も削除予約を回収する。Cron は UTC、18:00 UTC = 翌日 03:00 JST。
+[triggers]
+crons = ["0 18 * * *"]
 
 [observability]
 enabled = true
