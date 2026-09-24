@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "3d02f48f10ce31fcb7eb8b181f84c7d28e7a7942c9126fef7e01834ca64b1f53",
-  "current_architecture_digest": "1e14f8c1c409db25e5f9ce94791bb2a75abb3dc0dfc63430c65bdca6d96463f5",
+  "current_source_digest": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+  "current_architecture_digest": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -18,5 +18,12 @@
   ],
   "unaffected_current_package": "feat-platform-tenant-auth",
   "gate": "上記3 featureのtask計画を生成する前にsystem-spec compile/evaluateとdev-graph compile/decomposeを実行し、architecture projection、source_lineage digest、state graphを正本から再生成する",
-  "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。"
+  "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。",
+  "digest_refresh_log": [
+    {
+      "refreshed_at": "2026-09-24",
+      "by_feature": "feat-login-redesign",
+      "note": "qa-062〜qa-073 を system-spec の正規フローで正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    }
+  ]
 }

@@ -1,0 +1,152 @@
+{
+  "children": [
+    {
+      "bd_issue_id": "yta-0sg.1",
+      "depends_on": [],
+      "description": "dev-graph task SYS-LRD-P01 (tasks/feat-login-redesign/SYS-LRD-P01.md)",
+      "graph_node_id": "SYS-LRD-P01",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P01",
+      "title": "P01 ログイン刷新の要件を実装単位へ確定"
+    },
+    {
+      "bd_issue_id": "yta-0sg.2",
+      "depends_on": [
+        "SYS-LRD-P01"
+      ],
+      "description": "dev-graph task SYS-LRD-P02 (tasks/feat-login-redesign/SYS-LRD-P02.md)",
+      "graph_node_id": "SYS-LRD-P02",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P02",
+      "title": "P02 スコープ定義・同意記録・連携状態の構成設計"
+    },
+    {
+      "bd_issue_id": "yta-0sg.3",
+      "depends_on": [
+        "SYS-LRD-P02"
+      ],
+      "description": "dev-graph task SYS-LRD-P03 (tasks/feat-login-redesign/SYS-LRD-P03.md)",
+      "graph_node_id": "SYS-LRD-P03",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P03",
+      "title": "P03 OAuth・同意・ヘッダの設計レビュー"
+    },
+    {
+      "bd_issue_id": "yta-0sg.4",
+      "depends_on": [
+        "SYS-LRD-P03"
+      ],
+      "description": "dev-graph task SYS-LRD-P04 (tasks/feat-login-redesign/SYS-LRD-P04.md)",
+      "graph_node_id": "SYS-LRD-P04",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P04",
+      "title": "P04 受入テストと E2E の設計"
+    },
+    {
+      "bd_issue_id": "yta-0sg.5",
+      "depends_on": [
+        "SYS-LRD-P04"
+      ],
+      "description": "dev-graph task SYS-LRD-P05 (tasks/feat-login-redesign/SYS-LRD-P05.md)",
+      "graph_node_id": "SYS-LRD-P05",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P05",
+      "title": "P05 ログイン画面・API・DB・ヘッダの実装"
+    },
+    {
+      "bd_issue_id": "yta-0sg.6",
+      "depends_on": [
+        "SYS-LRD-P05"
+      ],
+      "description": "dev-graph task SYS-LRD-P06 (tasks/feat-login-redesign/SYS-LRD-P06.md)",
+      "graph_node_id": "SYS-LRD-P06",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P06",
+      "title": "P06 テスト実行と不具合修正"
+    },
+    {
+      "bd_issue_id": "yta-0sg.7",
+      "depends_on": [
+        "SYS-LRD-P06"
+      ],
+      "description": "dev-graph task SYS-LRD-P07 (tasks/feat-login-redesign/SYS-LRD-P07.md)",
+      "graph_node_id": "SYS-LRD-P07",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P07",
+      "title": "P07 受入確認"
+    },
+    {
+      "bd_issue_id": "yta-0sg.8",
+      "depends_on": [
+        "SYS-LRD-P07"
+      ],
+      "description": "dev-graph task SYS-LRD-P08 (tasks/feat-login-redesign/SYS-LRD-P08.md)",
+      "graph_node_id": "SYS-LRD-P08",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P08",
+      "title": "P08 リファクタリングとマイグレーション整理"
+    },
+    {
+      "bd_issue_id": "yta-0sg.9",
+      "depends_on": [
+        "SYS-LRD-P08"
+      ],
+      "description": "dev-graph task SYS-LRD-P09 (tasks/feat-login-redesign/SYS-LRD-P09.md)",
+      "graph_node_id": "SYS-LRD-P09",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P09",
+      "title": "P09 セキュリティと品質の保証"
+    },
+    {
+      "bd_issue_id": "yta-0sg.10",
+      "depends_on": [
+        "SYS-LRD-P09"
+      ],
+      "description": "dev-graph task SYS-LRD-P10 (tasks/feat-login-redesign/SYS-LRD-P10.md)",
+      "graph_node_id": "SYS-LRD-P10",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P10",
+      "title": "P10 最終レビュー"
+    },
+    {
+      "bd_issue_id": "yta-0sg.11",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "description": "dev-graph task SYS-LRD-P11 (tasks/feat-login-redesign/SYS-LRD-P11.md)",
+      "graph_node_id": "SYS-LRD-P11",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P11",
+      "title": "P11 証跡の集約"
+    },
+    {
+      "bd_issue_id": "yta-0sg.12",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "description": "dev-graph task SYS-LRD-P12 (tasks/feat-login-redesign/SYS-LRD-P12.md)",
+      "graph_node_id": "SYS-LRD-P12",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P12",
+      "title": "P12 運用手順とドキュメント"
+    },
+    {
+      "bd_issue_id": "yta-0sg.13",
+      "depends_on": [
+        "SYS-LRD-P11",
+        "SYS-LRD-P12"
+      ],
+      "description": "dev-graph task SYS-LRD-P13 (tasks/feat-login-redesign/SYS-LRD-P13.md)",
+      "graph_node_id": "SYS-LRD-P13",
+      "parent_feature": "feat-login-redesign",
+      "phase_ref": "P13",
+      "title": "P13 リリースとデプロイ"
+    }
+  ],
+  "feature": {
+    "bd_issue_id": "yta-0sg",
+    "description": "dev-graph feature feat-login-redesign",
+    "graph_node_id": "feat-login-redesign",
+    "title": "ログイン画面刷新(Channel Insight)"
+  }
+}

@@ -24,8 +24,8 @@ export function ShellFrame({
   return (
     <div className="shell">
       <aside className="sidebar">
-        <NavLink className="brand" to="/" aria-label="YouTube分析 ホーム">
-          YouTube分析
+        <NavLink className="brand" to="/" aria-label="Channel Insight ホーム">
+          Channel Insight
         </NavLink>
         {me.tenants.length > 0 && (
           <label className="field">

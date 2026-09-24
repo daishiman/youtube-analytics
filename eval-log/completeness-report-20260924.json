@@ -1,0 +1,103 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。今回のログイン画面刷新(qa-062〜067)は6つの web セルの serves_goals(G1/G2/G4)を変えておらず、goal→objective→intent→cell→chapter の参照に dangling は無い。ただし、画像どおりの文言を採ったことで製品表記が『Channel Insight』に変わる点と、同意の版・日時の記録と再同意という新しい範囲項目は、U1/scope.in/O5 のどこにも書かれていない(low)。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "requirements_foundation は今回差分なし", "qa-063 answer『レイアウトと文言は画像どおり』"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions 6件は、比較案・無料案・TCO・fit・lock-in・公式 evidence・推奨理由・user_decision をすべて保っている。qa-063〜066 は AskUserQuestion の選択肢から利用者が選んだもので、qa-063 では推奨と異なる案が選ばれており、AI 推奨だけで確定した決定は無い。ただし D-auth の goal_fit『ログインとYouTube連携を1回の同意で完結』と caveats が、qa-064(招待経由はメールだけ)・qa-065(部分許可でもログインは通す)・granular consent に合わせて更新されていない(medium)。",
+      "evidence": ["decisions[] は今回差分なし", "D-auth.options[google-oauth-published].goal_fit", "qa-064", "qa-065", "qa-067"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。48セルの内訳は確定24・対象外24・未収集0。C07 は loop_pass・final_ready ともに PASS で、medium 2件・low 1件を出した(qa-063〜066 に answered_at が無い、6セルの qa_ref が一律 qa-066 で選んだ理由が書かれていない、database/backend の qa_refs に qa-067 が無い)。一方、sub-input の C06 は総合 FAIL(聞き漏れ・誘導質問・トレーサビリティの3軸が FAIL)。rubric は『C06 の4軸が健全』を pass_criteria に含むため、この観点は FAIL とする。",
+      "evidence": ["G-matrix-loop exit0", "G-matrix exit0", "G-matrix-basis exit0", "G-required-info-state exit0", "C07: loop_pass=PASS final_ready=PASS, medium x2 low x1", "C06: 聞き漏れ FAIL / 誘導 FAIL / 早期停止 PASS(留意) / トレーサビリティ FAIL"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層は PASS。validate-knowledge-graph の knowledge/doctrine/required-info/cross 4 profile はすべて exit0 で、6章とも設計知識ポインタと doctrine 表を持つ。意味層は FAIL。正本 spec-state の design_applications・doctrine_applications は6カテゴリとも更新されておらず、qa-062〜067 の参照は0件。刷新の内容は、各章の『確定内容(質疑録)』に質疑の原文として引用されているだけで、規範節(本章での適用・上流指針の反映列・To-Be/Delta)には入っていない。そのため次の具体要件がどの章にも無い。同意記録のテーブルと列(規約の版・日時)と再同意の条件、権限一覧を返すスコープ定義 API、付与スコープを保存する列と include_granted_scopes、招待経由と新規オーナーでのスコープ分岐、CSP・frame-ancestors の指定値、ログイン開始のレート制限値、統一エラー表示の仕様、Google ボタンの Light テーマ固定、360px・44pt・キーボード操作。さらに auth 章の本章での適用と D-auth は、今も『1回の同意で完結』のままである。",
+      "evidence": ["G-knowledge-graph exit0", "design_applications / doctrine_applications の qa-06[2-7] 参照 = 0件", "grep: frame-ancestors / レート制限 / 規約の版 / include_granted_scopes / #747775 は章本文の規範節に0件", "auth.md『本章での適用』は qa-059 までの内容で止まっている"]
+    },
+    "doc_freshness": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層: validate-source-citation.py --state は exit0 で、target 25件と参照25件が1対1で対応している。内容鮮度層: 新しく入った google-signin-branding(2026-07-07)・google-oauth-granular-consent(2026-05-26)・google-oauth-unverified-app(2026-08-19)の3件は、日付・色・余白・100人上限のいずれも公式の現行版と一致した。ただし、auth/ui-ux 章が『google-oauth-unverified-app 出典の事実』としている未検証アプリ画面の『詳細→移動』導線は、記録された summary にも、source_url とヘルプ answer/7454865 の再照合結果にも書かれていない。出所は画像を見て得た観察(qa-062)であり、出典の裏付けが無い(C08 の判定は high・FAIL)。",
+      "evidence": ["G-source-citation exit0", "targets 25 / references 25", "fetched-references.json google-oauth-unverified-app.summary に『詳細』『移動』の記述なし", "qa-067 answer"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが、verify-completeness.py --input と validate-prompt.py --input の両方を exit0 で通った。R0-foundation の objectives 形状 {id,text,measure} に serves が無い問題(L41)は、plugin 側で今も直っていない。報告だけにし、この仕様書への差し戻しには含めない。",
+      "evidence": ["G-prompt: 18/18 exit0"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"], "exit_code": 0},
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"], "exit_code": 0},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"], "exit_code": 0},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "command": ["python3", "scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"], "exit_code": 0},
+    {"id": "G-knowledge-graph", "name": "aggregate-completeness --knowledge-graph (knowledge/doctrine/required-info/cross)", "command": ["python3", "skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "command": ["python3", "scripts/validate-knowledge-graph.py", "--profile", "required-info", "--input", "required-info-catalog.json", "--state", "system-spec/spec-state.json"], "exit_code": 0, "stdout": "ungrounded_blocking_items=[]"},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "command": ["python3", "scripts/validate-spec-doc-sync.py", "--matrix", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--spec-root", "system-spec"], "exit_code": 0},
+    {"id": "G-source-citation", "name": "validate-source-citation --state (C08 実行)", "command": ["python3", "scripts/validate-source-citation.py", "--targets", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--state", "system-spec/spec-state.json"], "exit_code": 0},
+    {"id": "G-prompt", "name": "prompt-creator verify-completeness + validate-prompt (18 prompts)", "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "design_knowledge_reflection/ログイン刷新の規範節への未反映",
+     "observation": "6章を再確定したのに、正本 spec-state の design_applications・doctrine_applications が一切更新されていない(qa-062〜067 の参照0件)。刷新の中身は、章の『確定内容(質疑録)』に質疑の原文として引用されているだけで、実装の根拠になる規範節(本章での適用・上流指針の反映列・To-Be/Delta)に具体要件が無い。例: database に同意記録テーブル(規約の版・同意日時・user_id・tenant_id)が無い。backend に権限一覧を返すスコープ定義 API と、付与スコープの検証・保存が無い。security に CSP/frame-ancestors の値、ログイン開始のレート制限値、統一エラー表示が無い。frontend/ui-ux に Google ボタン Light 固定、同意前の主ボタン無効、360px/44pt/キーボード操作が無い。auth に招待経由と新規オーナーのスコープ分岐と include_granted_scopes が無い。存在確認だけで PASS にしない、という原則(Goodhart 防止)に照らして FAIL。",
+     "suggested_fix": "compile へ差し戻す。qa-062〜067 を6カテゴリの design_applications(本章での適用)と doctrine_applications(OWASP ASVS=同意記録・CSP・レート制限・スコープ検証、Apple HIG=44pt・キーボード・無効状態の理由表示)へ具体的に展開し、再 compile する。値が決まっていない項目(レート制限値・CSP ディレクティブ・再同意の条件)は elicit で確定させる。To-Be/Delta にはログイン刷新の受入条件を加える。",
+     "evidence": ["system-spec/auth.md『本章での適用』", "spec-state.json design_applications / doctrine_applications"]},
+    {"severity": "high", "bucket": "doc_freshness/出典の裏付け不整合(C08)",
+     "observation": "auth.md・ui-ux.md(qa-067)は、未検証アプリ画面の『詳細』→『移動』導線を『google-oauth-unverified-app 出典の事実』としている。しかし、その出典の summary にも、公式ページ(sensitive-scope-verification・answer/7454865)の再照合結果にも、この導線は書かれていない。実際の出所は画像を見て得た観察(qa-062)である。",
+     "suggested_fix": "doc-fetch へ差し戻す。未検証アプリ画面の操作導線を説明する Google の公式一次情報(例: Google Cloud ヘルプの unverified app screen の説明)を取得して summary に加える。取得できなければ、elicit/compile で qa-067 の表現を『画像の観察と一般的な挙動に基づく』に直し、出典の事実とは書かない。",
+     "evidence": ["fetched-references.json: google-oauth-unverified-app.summary", "auth.md L360 / ui-ux.md L575"]},
+    {"severity": "high", "bucket": "matrix_coverage/hearing 聞き漏れ(C06)",
+     "observation": "C06 は、qa-062 で見つけた差分のうち、ブランド名『Channel Insight』への改称・見出しと説明の文言・フッターの信頼表示(『無料枠で運用』など)・検証前アプリの注意文言・同意文言の順序を、専用の質問なしに処理したと判定した。評価者の見解: 文言とレイアウトは、qa-063 の選ばれた案『レイアウトと文言は画像どおり』で明示的に選ばれている。残る実質的な聞き漏れは次の2つである。(1) 製品名の変更がログイン画面以外(OAuth 同意画面のアプリ名、規約ページ、各画面の表記)に及ぶか。(2) フッターの主張(無料枠で運用・データは利用者ごとに分離)を、公開する約束として出してよいか。",
+     "suggested_fix": "elicit で追加質問する(R3-reask)。(1) 製品名『Channel Insight』を製品全体の名前として採るか(OAuth 同意画面・規約・index の表記を変えるか)。(2) フッターの信頼表示3点を、公開する約束として出すか。",
+     "evidence": ["qa-062 (1)(5)", "qa-063 answer"]},
+    {"severity": "medium", "bucket": "matrix_coverage/hearing 誘導質問(C06)",
+     "observation": "qa-066 は、規模もリスクも違う4つの論点(同意記録・スコープ表示の一致・セキュリティ強化・アクセシビリティ)を、推奨を示したうえで1問の複数選択にまとめており、結果は『全4件選択』だった。論点ごとに是非を考えてもらう形になっていない疑いがある。",
+     "suggested_fix": "elicit で聞き直す。範囲が大きい『同意記録と再同意』と『セキュリティ強化』だけでも、推奨を示さない個別の質問で確認し直す。"},
+    {"severity": "medium", "bucket": "matrix_coverage/トレーサビリティ(C06・C07)",
+     "observation": "qa-063〜066 は user-decision なのに answered_at が無く、provenance に上限値を書いているだけである。今回の6セル一括再確定に対応する approval_log の記録も無い(C07 は、ゲート違反ではないため info と判定)。6セルの qa_ref はすべて qa-066 で、選んだ理由が reopen_log に無い。database/backend の qa_refs に qa-067 が無い理由も書かれていない。",
+     "suggested_fix": "elicit(C01 の transition writer)で直す。answered_at(または answered_at_upper_bound)を構造化して書き、主根拠を選んだ理由を追記するか、qa_ref をカテゴリごとに分ける(frontend/ui-ux/security=qa-067 など)。必要に応じて appr-012 を記録する。"},
+    {"severity": "medium", "bucket": "decision_guidance/D-auth の陳腐化",
+     "observation": "D-auth の goal_fit『ログインとYouTube連携を1回の同意で完結』と caveats は、qa-064(招待経由はメールのスコープだけ)・qa-065(部分許可でもログインは通し、あとで再連携を促す)・granular consent(include_granted_scopes)を反映していない。",
+     "suggested_fix": "elicit/compile で直す。D-auth の caveats に、招待経由のスコープ分岐・部分許可時の扱い・付与スコープのサーバ検証を加え、goal_fit の表現を改める。"},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)",
+     "observation": "前回から直っていない。R0-foundation.md(L41)は objectives を {id,text,measure} と定義しており、serves を要求していない。",
+     "suggested_fix": "harness 側で R0-foundation と --require-foundation に objectives[].serves を加える(この仕様書への差し戻しには含めない)。"},
+    {"severity": "low", "bucket": "foundation_trace/新しい範囲項目の上位概念への未反映",
+     "observation": "同意の版・日時の記録と再同意、製品表記『Channel Insight』は、上位概念(U1・scope.in・O5)に書かれていない。gate は通っているが、範囲の拡張が要件定義書から追えない。",
+     "suggested_fix": "elicit で、scope.in の1つ目の項目(Googleログイン)に『同意の記録と規約改定時の再同意』を足すか判断し、プレビューを見せて承認を得る。"},
+    {"severity": "low", "bucket": "matrix_coverage/hearing_progress",
+     "observation": "reopen から再確定までを経ても hearing_progress は loop_count=1・タイムスタンプ無しのままで、このラウンドを完了したことを記録から確かめられない。",
+     "suggested_fix": "elicit で、reopen ラウンドが完了したときに hearing_progress を更新する。"},
+    {"severity": "info", "bucket": "確認した観点(正常)",
+     "observation": "C07 の loop_pass・final_ready と全決定論ゲート(9種)は exit0。新しく入った3出典(branding 2026-07-07・granular consent 2026-05-26・unverified app 2026-08-19)は、色(#FFFFFF/#747775/#1F1F1F・#131314・#F2F2F2)・余白(12/10/12px)・100人上限まで公式の現行版と一致した。qa-063 では推奨と異なる案が選ばれており、推奨の丸呑みではない。qa-067 が Google ブランド規定を根拠に、qa-063 をボタンにだけ適用しないとした判断は、公式規定に正しく基づいている。"}
+  ],
+  "gaps": [
+    "[compile・high] qa-062〜067 を6カテゴリの design_applications・doctrine_applications と To-Be/Delta の具体要件(同意記録テーブル、スコープ定義 API、付与スコープの保存、招待時のスコープ分岐、CSP・frame-ancestors、レート制限、エラー統一、Google ボタン Light 固定、a11y 要件)へ展開し、再 compile する",
+    "[doc-fetch・high] 未検証アプリ画面の『詳細→移動』導線の公式一次情報を取得して google-oauth-unverified-app に加える。取得できなければ、qa-067 と章の『出典の事実』という表現を直す",
+    "[elicit・high] 製品名『Channel Insight』を製品全体に採るかと、フッターの信頼表示を公開する約束として出すかを、追加質問で確定する",
+    "[elicit・medium] qa-066 の4論点のうち、少なくとも『同意記録と再同意』と『セキュリティ強化』を、推奨を示さない個別の質問で確認し直す。値が決まっていない項目(レート制限値・CSP・再同意の条件)も確定する",
+    "[elicit・medium] qa-063〜066 の answered_at を構造化して書く。6セルの qa_ref を選んだ理由を記すか、カテゴリごとに分ける。必要なら appr-012 を記録する",
+    "[elicit/compile・medium] D-auth の goal_fit と caveats を qa-064/065/067 に合わせて更新する",
+    "[harness 修正・報告のみ] R0-foundation と --require-foundation に objectives[].serves を加える"
+  ]
+}

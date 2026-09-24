@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "handoff_target": "task-graph",
+  "feature_id": "feat-login-redesign",
+  "generated_at": "2026-09-24T01:24:00Z",
+  "graph_snapshot": {
+    "path": ".dev-graph/state/graph.json",
+    "graph_revision": 6,
+    "digest": "sha256:4a2214f0cc40b091c7ba5d276ce96d91044c5ee1dae6e17d451bcee102015143"
+  },
+  "requirements_document": {
+    "path": ".dev-graph/handoffs/requirements-feat-login-redesign.md",
+    "digest": "sha256:08ffd8fad5851e8fe6f0b6b0b5750067260887f162c5626c55275f0a383dd083"
+  },
+  "package": {
+    "path": ".dev-graph/published/feature-package-feat-login-redesign",
+    "published_digest": "sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+    "promotion_receipt": {
+      "path": ".dev-graph/published/feature-package-feat-login-redesign/atomic-promotion-receipt.json",
+      "digest": "sha256:c497500553712ca647d6304dadc2ea557e767d7cd1c795f6d7b4bdbf0cab8b77"
+    },
+    "system_build_handoff": {
+      "path": ".dev-graph/published/feature-package-feat-login-redesign/system-build-handoff.json",
+      "digest": "sha256:c707beb71fb535a6c911e12ea660c1f8eed6cce59016ad851bb652623cce2ffb"
+    },
+    "registration_manifest": {
+      "path": ".dev-graph/published/feature-package-feat-login-redesign/dev-graph-registration.json",
+      "digest": "sha256:2303bc548272606e2bd36dcb211b32fa916afc23c5f0002e4ae2351fe3ae400a"
+    },
+    "registration_receipt": {
+      "path": ".dev-graph/state/receipts/pkg-feat-login-redesign.json",
+      "digest": "sha256:58b1aedd2d767a5dfc657d1782af748dd0a9902e7ab8a52f2f91e6f5599462b6"
+    }
+  },
+  "feature_context": {
+    "path": "features/feat-login-redesign.context.json",
+    "digest": "sha256:dccd0e19a54cf9fb4d62009e70ed27bbdc450c80997a720faa242fdc2ad2413b"
+  },
+  "gates": {
+    "c11_graph_schema": "pass",
+    "c02_saved_state": "pass",
+    "validate_system_plan": "pass",
+    "plan_evaluator": "PASS"
+  },
+  "missing_sections": [],
+  "self_generated_code_files": 0,
+  "start_gate": {
+    "depends_on_feature": "feat-platform-tenant-auth",
+    "current_status": "active",
+    "effect": "P01 は依存 feature done まで ready にならない"
+  },
+  "note": "task node は register-package 済み (graph revision 6)。build 着手は graph を正本とする"
+}

@@ -1,0 +1,15 @@
+/* 規約ページ（privacy.html / terms.html）の共通スタイル。CSP の style-src 'self' に合わせて外部ファイルにする */
+body {
+  font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  line-height: 1.8;
+  color: #1c2430;
+  background: #fff;
+}
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; margin-top: 2rem; }
+code { overflow-wrap: anywhere; }
+.brand { font-weight: 700; color: #1c2430; text-decoration: none; }
+a:focus-visible { outline: 3px solid #d6247a; outline-offset: 2px; }

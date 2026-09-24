@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_kind": "spec-reflection",
+  "recorded_at": "2026-09-24",
+  "branch": "devgraph/feat-login-redesign",
+  "base_branch": "main",
+  "graph_node_id": "feat-login-redesign",
+  "feature_package_id": "feature-package/feat-login-redesign",
+  "beads_ids": [
+    "yta-0sg",
+    "yta-0sg.1",
+    "yta-0sg.2",
+    "yta-0sg.3",
+    "yta-0sg.4",
+    "yta-0sg.5",
+    "yta-0sg.6",
+    "yta-0sg.7",
+    "yta-0sg.8",
+    "yta-0sg.9",
+    "yta-0sg.10",
+    "yta-0sg.11",
+    "yta-0sg.12",
+    "yta-0sg.13"
+  ],
+  "scope": "ログイン画面刷新（SYS-LRD-P01〜P13）の実装・テスト・運用文書と、その根拠になった qa-062〜qa-073 の仕様反映",
+  "spec_impact": "reflected_in_this_change_none_additional",
+  "decision": "仕様への影響は qa-062〜qa-073 として system-spec の正規フロー（elicit→doc-fetch→compile→evaluate、単一 writer）で本変更内に反映済み。レビュー時点の実装差分に、これ以上の仕様追加は不要",
+  "reflected_to": [
+    "system-spec/auth.md",
+    "system-spec/ui-ux.md",
+    "system-spec/frontend.md",
+    "system-spec/backend.md",
+    "system-spec/database.md",
+    "system-spec/security.md",
+    "system-spec/spec-state.json",
+    "system-spec/index.md",
+    "specs/youtube-analytics-system.md",
+    "architecture/youtube-analytics-system.md",
+    "architecture/graph.json",
+    "features/feat-login-redesign.md",
+    "features/feat-login-redesign.context.json",
+    "tasks/feat-login-redesign/"
+  ],
+  "why_no_further_edit": [
+    "linked の判定を『YouTube 2 スコープ＋同じ利用者の保存済み refresh token』に厳しくした点は、仕様（2 スコープのどちらかが欠けたら partial、再連携で回復）の目的＝収集できる状態だけを linked と呼ぶ、の範囲内の設計判断。docs/feat-login-redesign/requirements.md と architecture.md に記録済み。次に auth 章を reopen するときに文言を足す候補",
+    "ライトテーマ固定・製品ロゴ画像を使わずテキストの製品名にした点は、ui-ux 章の画面構成（docs/screens/01-login.png に合わせる）の範囲内の見た目の判断",
+    "google-oauth.ts でトークン交換失敗の種別をサーバログへ出す変更は、画面・URL に出さない qa-066 の方針に沿った運用上の追加で、仕様の変更ではない"
+  ],
+  "resync_gate": {
+    "file": "eval-log/dev-graph-resync-required-20260922.json",
+    "action": "current_source_digest / current_architecture_digest を正本の現在値へ更新し digest_refresh_log に記録（PR #2 の前例と同じ）。status・generated_from_digest・affected_features は変更していない",
+    "pending": "旧3 feature と feat-login-redesign の graph node 内容の再投影（C14 正式再分解）は未実施。eval-log/feat-login-redesign-resync-preview-20260924.md 参照"
+  },
+  "digests_at_review": {
+    "specs/youtube-analytics-system.md": "d6de25985e32386005cf3cf107fd78762db92774d4fe19ba562de59ab7807466",
+    "architecture/youtube-analytics-system.md": "da8f498c37defb09146630f6b7dd3caa6efb4e8d7d56c1e55339a645e777c220",
+    "architecture/graph.json": "0643db144ccb8eead08529e8880f584a64c5de2404631ed270a0b0084377a090",
+    "system-spec/index.md": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656",
+    "system-spec/auth.md": "5c7bc25beba0858f121ff76c05df9ad24eadbf73c9a168ce7aa495bc96e2aa73",
+    "system-spec/ui-ux.md": "4df4fa497bbd79341afa6b58a0b27ceff6f1f3a7af714d61a3c2094762378389",
+    "system-spec/frontend.md": "c52c288c863668a2b0d78dbeb4e0217e64c8ea5d5d405ce728f636fdb3303d2d",
+    "system-spec/backend.md": "cd84f5491cb771e202616573a482d559a77863ada1e42395964f1debb04f1f84",
+    "system-spec/database.md": "da5d6fe8215b37a355de5ddf3d6995e6a1ca1c760435538fe00d1a7d8fbc36a7",
+    "system-spec/security.md": "64be67e651aa4779d32b8d7638ac23ff8df667c6361d3da5dbeddbfa8fe71a02",
+    "system-spec/spec-state.json": "50994ab962358dfa64c35cbfe30d645e0bad2a64988082402e9d57769f354304",
+    "features/feat-login-redesign.md": "2d39b0b033566f4d0c71cf67604e94bfe8d2fd71a50354c93b957ddf49eec9d5",
+    "features/feat-login-redesign.context.json": "5ee5b13d90eb0bfe25118d69aee6306d4de09c99032df61707ff3393f4a49435"
+  },
+  "quality_gates": {
+    "lint": "pass (71 files)",
+    "typecheck": "pass",
+    "test": "124/124",
+    "e2e": "69/69 (skip 0, mobile/tablet/desktop)",
+    "build_web": "pass",
+    "check_repo": "OK",
+    "check_release": "OK",
+    "audit": "No known vulnerabilities found",
+    "git_diff_check": "clean",
+    "not_run": [
+      "preview/本番での実 Google 確認（P07 §3・merge とデプロイ後）",
+      "P13 のデプロイ"
+    ]
+  },
+  "evidence": "evidence/feat-login-redesign/index.json"
+}

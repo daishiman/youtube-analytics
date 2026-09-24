@@ -1,0 +1,37 @@
+== 空の D1 へ migration（--persist-to <scratchpad>/mig-1790229448）
+Migrations to be applied:
+│ 0001_platform.sql                             │
+│ 0002_user_preferences_and_session_cleanup.sql │
+│ 0003_login_consent_youtube_link.sql           │
+│ 0001_platform.sql                             │ ✅     │
+│ 0002_user_preferences_and_session_cleanup.sql │ 🕒️    │
+│ 0003_login_consent_youtube_link.sql           │ 🕒️    │
+│ 0001_platform.sql                             │ ✅     │
+│ 0002_user_preferences_and_session_cleanup.sql │ ✅     │
+│ 0003_login_consent_youtube_link.sql           │ 🕒️    │
+│ 0001_platform.sql                             │ ✅     │
+│ 0002_user_preferences_and_session_cleanup.sql │ ✅     │
+│ 0003_login_consent_youtube_link.sql           │ ✅     │
+== seed
+🚣 21 commands executed successfully.
+== 再適用
+✅ No migrations to apply!
+== 連携状態
+    "results": [
+        "name": "テストチャンネルA",
+        "youtube_link_status": "linked"
+        "name": "別チャンネルB",
+        "youtube_link_status": "partial"
+        "name": "一部許可チャンネルP",
+        "youtube_link_status": "partial"
+    "success": true,
+    "meta": {
+      "duration": 0
+
+== 既存データのある D1（sqlite3 で再現: 0001 → 0002 → 変更前 HEAD の seed → 0003）
+before 0003: tenants=2
+0003 applied: OK
+tenant|テストチャンネルA|none
+tenant|別チャンネルB|none
+consent_records|0
+oauth_tokens|0

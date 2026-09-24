@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-LRD-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-LRD-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P01"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P02"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P03"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P04"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P05"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P06"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P07"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P08"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P09"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ]
+    },
+    {
+      "id": "SYS-LRD-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-login-redesign",
+      "parent_feature": "feat-login-redesign",
+      "depends_on": [
+        "SYS-LRD-P11",
+        "SYS-LRD-P12"
+      ]
+    }
+  ]
+}

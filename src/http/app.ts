@@ -5,14 +5,21 @@ import { AppError } from "../lib/errors";
 import { apiRoutes } from "./api-routes";
 import { authRoutes } from "./auth-routes";
 import { type AppEnv, authGate, csrfGuard, depsMiddleware } from "./middleware";
+import { SECURITY_HEADERS } from "./security-headers";
 
 export const app = new Hono<AppEnv>();
 
-// API 応答は利用者ごとの内容なので共有キャッシュ・ブラウザキャッシュに残さない。画面側のヘッダは public/_headers
-app.use("/api/*", secureHeaders({ crossOriginResourcePolicy: "same-origin" }), async (c, next) => {
-  await next();
-  c.header("Cache-Control", "no-store");
-});
+// API 応答は利用者ごとの内容なので共有キャッシュ・ブラウザキャッシュに残さない。
+// CSP などは画面側（public/_headers）と同じ SECURITY_HEADERS を、secureHeaders の既定値より後に上書きする
+app.use(
+  "/api/*",
+  async (c, next) => {
+    await next();
+    for (const [name, value] of Object.entries(SECURITY_HEADERS)) c.header(name, value);
+    c.header("Cache-Control", "no-store");
+  },
+  secureHeaders({ crossOriginResourcePolicy: "same-origin" }),
+);
 app.use("/api/*", depsMiddleware, authGate, csrfGuard);
 
 app.get("/api/health", async (c) => {

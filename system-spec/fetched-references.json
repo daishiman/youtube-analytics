@@ -220,6 +220,36 @@
       "last_updated": "2026-04-21",
       "latest_checked_at": "2026-09-21T14:25:35Z",
       "summary": "Cloudflare Queues の上限。Workers Free でも利用でき、メッセージ保持は Free では24時間固定。consumer の1バッチ最大100通、再試行最大100回、送信・再試行の遅延最大24時間、consumer の実行時間15分。料金ページ(同日更新)では Free は1日1万操作まで。設定ページ(同日更新)は『Each batch delivery constitutes a separate consumer Worker invocation.』とし、max_batch_size=1 で1通=1実行になる(qa-058の根拠)。"
+    },
+    {
+      "target_id": "google-signin-branding",
+      "retrieved_at": "2026-09-24T00:07:34Z",
+      "source_url": "https://developers.google.com/identity/branding-guidelines",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-07-07",
+      "latest_checked_at": "2026-09-24T00:07:34Z",
+      "summary": "Sign in with Google ボタン: 標準カラーの『G』ロゴ必須(白地・サイズ/色の改変禁止)。塗りは Light(#FFFFFF/枠#747775/文字#1F1F1F)・Dark(#131314/枠#8E918F/文字#E3E3E3)・Neutral(#F2F2F2/枠なし/文字#1F1F1F)の3種のみ。文言は『Sign in with Google』等を現地語化可。Web の余白はロゴ前12px・ロゴ後10px・文字後12px。単色G・独自アイコン・『Google』単独表記は禁止。他のサードパーティログインと同等以上の目立ち方にする。"
+    },
+    {
+      "target_id": "google-oauth-granular-consent",
+      "retrieved_at": "2026-09-24T00:07:34Z",
+      "source_url": "https://developers.google.com/identity/protocols/oauth2/resources/granular-permissions",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-05-26",
+      "latest_checked_at": "2026-09-24T00:07:34Z",
+      "summary": "複数の非ログインスコープ(またはログイン+非ログイン)を要求すると同意画面にチェックボックスが出て、利用者は一部だけ許可できる。アプリはトークン応答の scope で付与を必ず確認し、拒否されたスコープに依存する機能を無効化して段階的に縮退する。再要求は利用者がその機能を使う意思を示したときだけ。段階的認可を推奨し include_granted_scopes=true で既存付与を保持。古いクライアントIDは enable_granular_consent=true が必要な場合がある。"
+    },
+    {
+      "target_id": "google-oauth-unverified-app",
+      "retrieved_at": "2026-09-24T00:07:34Z",
+      "source_url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/sensitive-scope-verification",
+      "official_publisher": "Google",
+      "official_host": "developers.google.com",
+      "last_updated": "2026-08-19",
+      "latest_checked_at": "2026-09-24T00:07:34Z",
+      "summary": "sensitive/restricted スコープを要求するアプリは原則として検証が必要(通常3-5営業日)。未検証アプリには未検証アプリ画面と利用者数上限がかかる。例外は既知の利用者だけの個人利用・開発/テスト用など。併せて取得した Google Cloud ヘルプ(support.google.com/cloud/answer/7454865, 更新日表示なし)は、未検証アプリ画面を表示したアプリの新規利用者を累計100人に制限すると記載。"
     }
   ]
 }

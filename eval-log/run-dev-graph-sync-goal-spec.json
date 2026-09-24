@@ -1,0 +1,6 @@
+{
+ "skill": "run-dev-graph-sync",
+ "original_goal": "tracker_binding別のauthorityに従いローカルtask graphとBeadsまたはGitHub Issues/PRを同期し、Projects Statusはローカルから一方向投影、merged evidenceとworktree eventはdefault branch側task仕様へ収束した状態になっている",
+ "original_goal_hash": "ab2f296e0c39c58a4ea7f3a58096f702728aa38be198eaff465ce9d5970b8c43",
+ "recorded_at": "2026-09-24T01:36:00Z"
+}

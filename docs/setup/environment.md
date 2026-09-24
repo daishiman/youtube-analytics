@@ -51,7 +51,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 1. **Cloudflare API トークン**: ダッシュボード → My Profile → API Tokens → 「Edit Cloudflare Workers」テンプレートに D1 Edit・Queues Edit を追加し、対象アカウントを上記個人アカウントに限定して発行。`gh secret set CLOUDFLARE_API_TOKEN -R daishiman/youtube-analytics`
 2. **Google Cloud**（SYS-PTA-P05 の受入前まで）:
    1. プロジェクト作成、YouTube Data API v3 / YouTube Analytics API / YouTube Reporting API を有効化
-   2. OAuth 同意画面を External・本番公開（未検証）で作成、スコープ `openid email`（YouTube 連携スコープは feat-youtube-daily-collection で追加）
+   2. OAuth 同意画面を External・本番公開（未検証）で作成、アプリ名 `Channel Insight`、スコープ `openid email` と `youtube.readonly`・`yt-analytics.readonly`（新規ログインで要求。feat-login-redesign）
    3. OAuth クライアント（Web）を作成し、承認済みリダイレクト URI に `https://youtube-analytics.<subdomain>.workers.dev/api/auth/callback` と `http://localhost:8791/api/auth/callback` を登録
    4. `wrangler.toml` の `GOOGLE_CLIENT_ID` を置換、`pnpm wrangler secret put GOOGLE_CLIENT_SECRET`
 3. **規約ページの確定**: `public/privacy.html` と `public/terms.html` の「草案」表示を消し、運営者名、連絡先、施行日を記入する（owner-manual-setup.mdx 6.5 節）

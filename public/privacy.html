@@ -3,34 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>プライバシーポリシー | YouTube分析</title>
-    <style>
-      body { font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif; max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; line-height: 1.8; color: #1c2430; background: #fff; }
-      h1 { font-size: 1.5rem; } h2 { font-size: 1.15rem; margin-top: 2rem; }
-    </style>
+    <title>プライバシーポリシー | Channel Insight</title>
+    <link rel="stylesheet" href="/legal.css" />
   </head>
-  <body>
+  <body data-version="2026-09-24">
+    <p><a class="brand" href="/login">Channel Insight</a></p>
     <h1>プライバシーポリシー</h1>
-    <p>施行日: 2026年9月24日</p>
+    <p>
+      運営者: 万壽本　大嗣<br />
+      施行日: 2026年9月24日
+    </p>
 
     <h2>1. 取得する情報</h2>
     <ul>
-      <li>Google アカウントのメールアドレスと、その確認状態（Google ログイン時。スコープは <code>openid</code> と <code>email</code>）</li>
+      <li>Google アカウントのメールアドレスと、その確認状態（スコープ <code>openid</code> と <code>email</code>）</li>
       <li>所属するテナント（チャンネルの作業場所）と役割（オーナー・編集者・閲覧者）</li>
       <li>ログインのためのセッション情報（Cookie。サーバ側にはハッシュ値のみを保存）</li>
-      <li>オーナーが YouTube と連携した場合の、そのチャンネルの分析データ（連携機能の提供開始時に本ポリシーを更新します）</li>
+      <li>新しくテナントを作る方のログイン時に、YouTube の次の2つの権限を読み取り専用で求めます。どちらも閲覧だけで、動画の投稿・編集・削除はできません。
+        <ul>
+          <li>YouTubeチャンネル情報の閲覧（<code>https://www.googleapis.com/auth/youtube.readonly</code>）</li>
+          <li>YouTube Analyticsレポートの閲覧（<code>https://www.googleapis.com/auth/yt-analytics.readonly</code>）</li>
+        </ul>
+        招待されたメンバーのログインでは、メールアドレス以外は求めません。一部の権限を許可しなかった場合もログインでき、あとから設定画面の「再連携」で追加できます。
+      </li>
+      <li>上記の許可にもとづく更新用トークン（暗号化して保存し、平文では保存しません）と、そのチャンネルの分析データ</li>
+      <li>利用規約とプライバシーポリシーに同意した版と日時（規約が改定されたときに、次回ログインで同意し直していただくため）</li>
     </ul>
 
     <h2>2. 利用目的</h2>
     <p>ログインと本人確認、テナントとメンバーの管理、YouTube チャンネルの分析結果の表示のためにだけ利用します。広告や第三者への販売には利用しません。</p>
 
-    <h2>3. 共有される範囲</h2>
+    <h2>3. 安全のための約束</h2>
+    <ul>
+      <li><strong>OAuthは読み取り専用</strong>です。本サービスがあなたの YouTube チャンネルを変更することはありません。</li>
+      <li><strong>データは利用者ごとに分離</strong>して保存し、テナントのメンバー以外には表示しません。</li>
+      <li>本サービスはクラウドの<strong>無料枠で運用</strong>しており、利用料金はかかりません。</li>
+    </ul>
+
+    <h2>4. 共有される範囲</h2>
     <p><strong>テナントのオーナーが招待したメンバーには、そのテナントのチャンネルのデータが表示されます。</strong>招待はオーナーが指定したメールアドレスの Google アカウントでのみ受理でき、メンバーの役割（編集者・閲覧者）に応じて操作できる範囲が異なります。</p>
 
-    <h2>4. Google の API サービスの利用</h2>
+    <h2>5. Google の API サービスの利用</h2>
     <p>本サービスは YouTube API Services を利用します。本サービスの利用には <a href="https://www.youtube.com/t/terms" rel="noreferrer">YouTube 利用規約</a>への同意が必要です。Google による情報の取扱いは <a href="https://policies.google.com/privacy" rel="noreferrer">Google プライバシーポリシー</a>をご覧ください。連携の解除は <a href="https://security.google.com/settings/security/permissions" rel="noreferrer">Google のセキュリティ設定</a>からも行えます。</p>
 
-    <h2>5. 保存と削除</h2>
+    <h2>6. 保存と削除</h2>
     <ul>
       <li>セッションは最長30日で失効します。ログアウトすると直ちに無効になります。</li>
       <li>招待リンクは7日で失効し、1回だけ使えます。サーバには招待トークンのハッシュ値のみを保存します。</li>
@@ -38,10 +54,10 @@
       <li>データ削除の依頼を受けた場合は、7日以内に削除します（設定画面の「データを削除」は連携機能とあわせて提供します）。</li>
     </ul>
 
-    <h2>6. Cookie</h2>
+    <h2>7. Cookie</h2>
     <p>ログイン状態の維持と、ログイン処理の改ざん防止のためにだけ Cookie を使います。解析や広告の Cookie は使いません。</p>
 
-    <h2>7. お問い合わせ</h2>
+    <h2>8. お問い合わせ</h2>
     <p>
       運営者: 万壽本　大嗣<br />
       メール: <a href="mailto:manjumoto.daishi@senpai-lab.com">manjumoto.daishi@senpai-lab.com</a>

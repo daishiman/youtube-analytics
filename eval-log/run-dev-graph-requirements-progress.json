@@ -1,16 +1,17 @@
 {
  "skill": "run-dev-graph-requirements",
- "recorded_at": "2026-09-21T14:58:00Z",
+ "feature_id": "feat-login-redesign",
+ "recorded_at": "2026-09-24T01:24:00Z",
  "checklist": [
   {
    "item": "lineage closure 欠落0",
    "status": "pass",
-   "evidence": "spec/arch lineage digest一致、feature context digest=package source_feature_digest"
+   "evidence": "spec/arch/feature 2/task 13 の lineage 揃い、feature context digest=package source_feature_digest"
   },
   {
    "item": "C11 report と C02 saved state/digest 一致",
    "status": "pass",
-   "evidence": "validate-graph-schema complete / evaluated spec-state digest 513945ca 一致"
+   "evidence": "validate-graph-schema valid / task evaluated_digest=sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
   },
   {
    "item": "missing_sections 全件表示",
@@ -20,7 +21,7 @@
   {
    "item": "同一snapshot digestで requirements/handoff 生成",
    "status": "pass",
-   "evidence": ".dev-graph/handoffs/requirements-handoff-feat-platform-tenant-auth.json"
+   "evidence": ".dev-graph/handoffs/requirements-handoff-feat-login-redesign.json"
   },
   {
    "item": "実装code生成0",

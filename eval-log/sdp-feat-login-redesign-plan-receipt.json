@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "sdp-feat-login-redesign-r1",
+  "feature_id": "feat-login-redesign",
+  "delivery_choice": "standard",
+  "choice_basis": "利用者の11 verb 一括実行指示(各 verb の完了条件充足で次へ)に基づき standard 相当として記録。個別の選択入力ではない",
+  "published": ".dev-graph/published/feature-package-feat-login-redesign",
+  "published_digest": "sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7",
+  "findings": "eval-log/sdp-feat-login-redesign-plan-findings.json",
+  "verdict": "PASS",
+  "follow_ups": [
+    "task-spec 参照情報へ architecture/youtube-analytics-system.md と specs/youtube-analytics-system.md を追加(evaluator low)",
+    "受入10項目の番号単位対応表は P01 で docs/feat-login-redesign/requirements.md として作成(evaluator low)"
+  ],
+  "registration_receipt": ".dev-graph/state/receipts/pkg-feat-login-redesign.json",
+  "graph_revision": 6,
+  "lock": "released",
+  "recorded_at": "2026-09-24T01:20:00Z"
+}

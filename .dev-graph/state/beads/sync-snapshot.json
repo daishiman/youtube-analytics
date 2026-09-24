@@ -1,5 +1,5 @@
 {
-  "graph_revision": null,
+  "graph_revision": 6,
   "issue_prefix": "yta",
   "nodes": [
     {
@@ -172,8 +172,133 @@
       ],
       "graph_node_id": "SYS-PTA-P13",
       "graph_status": "active"
+    },
+    {
+      "artifact_kind": "feature",
+      "bd_issue_id": "yta-0sg",
+      "depends_on": [
+        "feat-platform-tenant-auth"
+      ],
+      "graph_node_id": "feat-login-redesign",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.1",
+      "depends_on": [],
+      "graph_node_id": "SYS-LRD-P01",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.2",
+      "depends_on": [
+        "SYS-LRD-P01"
+      ],
+      "graph_node_id": "SYS-LRD-P02",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.3",
+      "depends_on": [
+        "SYS-LRD-P02"
+      ],
+      "graph_node_id": "SYS-LRD-P03",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.4",
+      "depends_on": [
+        "SYS-LRD-P03"
+      ],
+      "graph_node_id": "SYS-LRD-P04",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.5",
+      "depends_on": [
+        "SYS-LRD-P04"
+      ],
+      "graph_node_id": "SYS-LRD-P05",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.6",
+      "depends_on": [
+        "SYS-LRD-P05"
+      ],
+      "graph_node_id": "SYS-LRD-P06",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.7",
+      "depends_on": [
+        "SYS-LRD-P06"
+      ],
+      "graph_node_id": "SYS-LRD-P07",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.8",
+      "depends_on": [
+        "SYS-LRD-P07"
+      ],
+      "graph_node_id": "SYS-LRD-P08",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.9",
+      "depends_on": [
+        "SYS-LRD-P08"
+      ],
+      "graph_node_id": "SYS-LRD-P09",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.10",
+      "depends_on": [
+        "SYS-LRD-P09"
+      ],
+      "graph_node_id": "SYS-LRD-P10",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.11",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "graph_node_id": "SYS-LRD-P11",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.12",
+      "depends_on": [
+        "SYS-LRD-P10"
+      ],
+      "graph_node_id": "SYS-LRD-P12",
+      "graph_status": "active"
+    },
+    {
+      "artifact_kind": "task",
+      "bd_issue_id": "yta-0sg.13",
+      "depends_on": [
+        "SYS-LRD-P11",
+        "SYS-LRD-P12"
+      ],
+      "graph_node_id": "SYS-LRD-P13",
+      "graph_status": "active"
     }
   ],
   "schema_version": "1.0.0",
-  "synced_at": "2026-09-21T15:09:50Z"
+  "synced_at": "2026-09-24T01:35:00Z"
 }

@@ -1,0 +1,379 @@
+{
+  "feature_id": "feat-login-redesign",
+  "feature_package_id": "feature-package/feat-login-redesign",
+  "task_id": "SYS-LRD-P11",
+  "generated_at": "2026-09-24",
+  "environment": "local (wrangler dev, http://localhost:8791)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、preview 環境・実 Google アカウント・Actions の実行は未確認。merge とデプロイの後に acceptance.md §3 と P13 で確認する",
+  "acceptance": [
+    {
+      "id": "AC1",
+      "criterion": "画像どおりの並び・文言、Google ボタンは白地・枠 #747775・標準 G ロゴ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A1 要素の順序と Light テーマ"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/smoke.spec.ts",
+          "note": "見出し"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-desktop.png",
+          "note": "desktop"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-tablet.png",
+          "note": "tablet"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-mobile.png",
+          "note": "mobile"
+        },
+        {
+          "kind": "reference",
+          "path": "docs/screens/01-login.png",
+          "note": "比較元の画像"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/login-948-production-like.png",
+          "note": "画像と同じ948px幅での本番相当表示の比較"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC2",
+      "criterion": "権限一覧は /api/auth/config だけから描き、要求 scope と一致（新規3行・招待1行）",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/config-and-scopes.test.ts",
+          "note": "5 件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A2"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-invite-desktop.png",
+          "note": "招待はメールアドレス1行"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC3",
+      "criterion": "同意まで押せず理由文を示し、ログインで現行版の consent_records を1行追記",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/consent.test.ts",
+          "note": "A3 3 件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A3"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC4",
+      "criterion": "古い版の同意は CONSENT_OUTDATED で再同意を求める",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/consent.test.ts",
+          "note": "A4 2 件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A4"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-consent-outdated.png",
+          "note": "再同意の案内"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC5",
+      "criterion": "部分許可でもログインとテナント作成が完了し、partial でバナー（ボタンはオーナーだけ）",
+      "verdict_local": "pass_local_preview_pending",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/callback-scopes.test.ts",
+          "note": "A5 5 件"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A5 2 件"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/dashboard-partial-owner.png",
+          "note": "オーナーに再連携バナー"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC6",
+      "criterion": "オーナー以外の connect は 403",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/youtube-connect.test.ts",
+          "note": "5 件"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC7",
+      "criterion": "CSP と frame-ancestors 'none' などが付き、他サイトの iframe に出ない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/security-headers.test.ts",
+          "note": "3 件"
+        },
+        {
+          "kind": "test",
+          "path": "tests/platform/health.test.ts",
+          "note": "X-Frame-Options DENY"
+        },
+        {
+          "kind": "header-log",
+          "path": "evidence/feat-login-redesign/P09-headers.txt",
+          "note": "curl -I の実応答"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC8",
+      "criterion": "未知コードと error_description が画面にも URL にも出ない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/callback-scopes.test.ts",
+          "note": "A8"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A6"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-test-run.txt",
+          "note": "pnpm test 124/124 成功（verbose）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC9",
+      "criterion": "360px で横スクロールなし、キーボードだけで操作（3 サイズ）",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/login.spec.ts",
+          "note": "A8・A9"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-login-redesign/screenshots/login-narrow360.png",
+          "note": "360px"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-login-redesign/P06-e2e-run.txt",
+          "note": "pnpm e2e 69/69 成功、skip 0（mobile・tablet・desktop）"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC10",
+      "criterion": "main への push で D1 migration と deploy が完了",
+      "verdict_local": "pending",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/login/storage.test.ts",
+          "note": "migration 0003 の制約 3 件"
+        },
+        {
+          "kind": "migration-log",
+          "path": "evidence/feat-login-redesign/P08-migration.txt",
+          "note": "空 DB と既存 DB へのローカル適用"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-login-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    }
+  ],
+  "quality": [
+    {
+      "kind": "lint-log",
+      "path": "evidence/feat-login-redesign/P09-lint.txt",
+      "note": "71 files、指摘 0"
+    },
+    {
+      "kind": "typecheck-log",
+      "path": "evidence/feat-login-redesign/P09-typecheck.txt",
+      "note": "エラー 0"
+    },
+    {
+      "kind": "audit-log",
+      "path": "evidence/feat-login-redesign/P09-audit.txt",
+      "note": "No known vulnerabilities found"
+    },
+    {
+      "kind": "report",
+      "path": "docs/feat-login-redesign/qa-report.md",
+      "note": "品質・セキュリティ・アクセシビリティ・マイグレーション"
+    },
+    {
+      "kind": "design",
+      "path": "docs/feat-login-redesign/test-design.md",
+      "note": "受入とテストの対応"
+    },
+    {
+      "kind": "review",
+      "path": "docs/feat-login-redesign/final-review.md",
+      "note": "scope_out 0 件、未解決の指摘 0 件"
+    },
+    {
+      "kind": "runbook",
+      "path": "docs/feat-login-redesign/runbook.md",
+      "note": "運用手順・ローカルテストアカウント・ロールバック"
+    }
+  ],
+  "redaction": "ログ中の一時ディレクトリの絶対パスは <scratchpad> に置換済み。秘密値はログに含まない"
+}

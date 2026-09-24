@@ -2,6 +2,7 @@ import { type FormEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useOutletContext } from "react-router";
 import { api, type Member, type PendingInvite, ROLE_LABELS, type Role } from "../api";
 import { CreateTenantForm } from "../components/CreateTenantForm";
+import { YouTubeLinkBanner } from "../components/YouTubeLinkBanner";
 import { errorText, type ShellContext } from "./shell-context";
 
 interface TenantResources {
@@ -122,6 +123,7 @@ function TenantSettings({
 
   return (
     <>
+      <YouTubeLinkBanner tenant={tenant} />
       <section className="card">
         <h1>メンバー（{tenant.name}）</h1>
         {error && (

@@ -17,10 +17,10 @@ template_id: "architecture"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-report-20260921-r6.json", "evaluated_digest": "513945ca4d1a83bbc4f49ce1a6630c491e2fa5cbe96b2ffdf9bcebe21a754f31"}
-source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "6a63b1daef2c0fc1124963fce58d577bd684474487d8b44a94ec5cafd98915dc", "imported_at": "2026-09-21T14:36:15Z"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-report-20260924-r3.json", "evaluated_digest": "122fcda061d8e5d2eccdf627beee44376b51cb5d65eee0826a8ab674a6c5929b"}
+source_lineage: {"imported_at": "2026-09-24T01:02:38Z", "origin_kind": "system-spec-harness", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "source_path": "system-spec/index.md", "source_plugin": "system-spec-harness", "source_version": "0.1.14"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-21T14:36:15Z"
+updated_at: "2026-09-24T01:02:38Z"
 depends_on: []
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []

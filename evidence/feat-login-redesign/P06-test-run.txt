@@ -1,0 +1,152 @@
+
+ RUN  v4.1.11 <repo>
+
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > 同意なしのログイン開始は同意を求めてログイン画面へ戻す 6ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > ログイン開始は PKCE(S256)・state・nonce 付きで Google へ送り、署名付き短命 Cookie を置く 6ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > state が一致しないコールバックは拒否する 3ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > Cookie がないコールバック（別ブラウザからの注入）は拒否する 1ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > 正しいコールバックでコードを交換し、初回テナントを作ってセッション Cookie を発行する 26ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > aud が違う・nonce が違う・メール未確認の ID トークンは受け付けない 8ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > token endpoint の通信失敗は OAUTH_FAILED としてログイン画面へ戻す 1ms
+ ✓ tests/platform/auth-flow.test.ts > Google ログイン > token endpoint の不正 JSON は OAUTH_FAILED としてログイン画面へ戻す 1ms
+ ✓ tests/platform/auth-flow.test.ts > セッション Cookie（https） > https では __Host- 接頭辞と Secure を付ける 11ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN が無ければ 404（本番の既定） 0ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN=1 でも localhost 以外のホストでは 404 1ms
+ ✓ tests/platform/auth-flow.test.ts > 開発専用ログイン > DEV_LOGIN=1 かつ localhost ならログインできる 9ms
+ ✓ tests/login/storage.test.ts > migration 0003 > youtube_link_status は none / partial / linked 以外を拒否し、既定は none 37ms
+ ✓ tests/login/storage.test.ts > migration 0003 > consent_records.source は login / reconsent 以外を拒否する 10ms
+ ✓ tests/login/storage.test.ts > migration 0003 > deleteConsentRecords はその利用者の同意記録だけを消す 22ms
+ ✓ tests/login/storage.test.ts > refresh token の暗号化 > AES-GCM で往復でき、毎回違う暗号文になり、別の鍵では復号できない 2ms
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+ ✓ tests/login/consent.test.ts > A3 同意してからログインする > consent=1 がなければ CONSENT_REQUIRED でログイン画面へ戻す 5ms
+ ✓ tests/login/consent.test.ts > A3 同意してからログインする > ログインが成功すると現行版の同意が1行追記され、2回目も追記される（更新しない） 37ms
+ ✓ tests/login/consent.test.ts > A3 同意してからログインする > 失敗したログイン（state 不一致）では同意を記録しない 3ms
+ ✓ tests/login/consent.test.ts > A4 規約の版が変わったら再同意させる > 版がない・古い /login は CONSENT_OUTDATED でログイン画面へ戻す 1ms
+ ✓ tests/login/consent.test.ts > A4 規約の版が変わったら再同意させる > 前回と違う版に同意した場合は source=reconsent で記録する 25ms
+ ✓ tests/login/consent.test.ts > 開発用ログインでの同意 > 画面から送られた現行版の同意を記録する 10ms
+ ✓ tests/login/consent.test.ts > 開発用ログインでの同意 > 古い版は CONSENT_OUTDATED で拒否する 1ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 初回ログインで tenants 1件と owner 1件が作られ、/api/me に現れる 29ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 2回目以降のログインでは増えない 16ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 同じ利用者の並行ログインでも1組だけ 40ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > メール未確認の Google アカウントはログインできず、何も作られない 2ms
+ ✓ tests/platform/a2-first-login.test.ts > A2 初回ログインのテナント自動作成 > 長いメールlocal-partからも60文字以内のtenant名だけを作る 8ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限ちょうどまでは作られ、上限に達すると初回ログインでも作らない 36ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限到達後はテナント追加 API も 403 SIGNUP_CLOSED（受付停止メッセージ） 13ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限到達後でも招待による参加はできる（上限の対象外） 22ms
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 残り1枠に別人が同時に初回ログインしても、作られるのは1件だけ 31ms
+ ✓ tests/login/youtube-connect.test.ts > A6 再連携 > 未ログインは 401 7ms
+ ✓ tests/login/youtube-connect.test.ts > A6 再連携 > 編集者・閲覧者は 403 FORBIDDEN 48ms
+ ✓ tests/login/youtube-connect.test.ts > A6 再連携 > オーナーは YouTube の2スコープを追加許可で要求する 10ms
+ ✓ tests/login/youtube-connect.test.ts > A6 再連携 > 同じ本人で許可されたら linked にし、新しいセッションは発行しない 23ms
+ ✓ tests/login/youtube-connect.test.ts > A6 再連携 > 別の Google アカウントで戻ってきたら保存せず YOUTUBE_LINK_MISMATCH を出す 11ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は PATCH /api/tenants/:id/members/:userId で 403 FORBIDDEN 4ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は DELETE /api/tenants/:id/members/:userId で 403 FORBIDDEN 1ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は GET /api/tenants/:id/invites で 403 FORBIDDEN 3ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は POST /api/tenants/:id/invites で 403 FORBIDDEN 1ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer は DELETE /api/tenants/:id/invites/:inviteId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は PATCH /api/tenants/:id/members/:userId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は DELETE /api/tenants/:id/members/:userId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は GET /api/tenants/:id/invites で 403 FORBIDDEN 5ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は POST /api/tenants/:id/invites で 403 FORBIDDEN 1ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > editor は DELETE /api/tenants/:id/invites/:inviteId で 403 FORBIDDEN 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > 403 の後も対象は変わっていない（owner は owner のまま・招待は未使用のまま） 2ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 招待されたのと別のアカウントでは参加できない（ログイン時・ログイン後の両方） 43ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > メールの大文字小文字の違いは同一とみなす 27ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 1回限り: 使用済みの招待は再利用できない 22ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 取り消した招待は使えない 20ms
+Using secrets defined in .dev.vars
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 両方の YouTube スコープが付与されたら linked にし、refresh token を暗号化して保存する 39ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 初回に両スコープだけ返り refresh token がない場合は partial のままログインし、再連携で修復できる 24ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > YouTube スコープの一部だけ許可されてもログインとテナント作成は完了し、partial を保存する 13ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > scope が返らないときは partial とみなす 14ms
+Using secrets defined in .dev.vars
+ ✓ tests/platform/a5-tenant-limit.test.ts > A5 MAX_TENANTS による受付停止 > 上限未満ならテナント追加 API で2つ目を作れ、作成者が owner になる 26ms
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > viewer と editor もメンバー一覧は読める 11ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 役割による 403 > 役割変更は次の要求から効く（editor→viewer→書込 403 / viewer→owner→書込可） 25ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > t1 の owner が t2 のテナントID・資源IDで全テナント API を呼ぶと、すべて 404 9ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 自テナントのパスに他テナントの userId・inviteId を混ぜても 404 7ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 所属していないテナントへは切り替えられない（404） 2ms
+ ✓ tests/platform/a3-authorization.test.ts > A3 他テナントの資源は 404（越境成功0件） > 越境の試行後も t2 のデータは変わっていない 4ms
+ ✓ tests/platform/a3-authorization.test.ts > CSRF 対策 > X-Requested-With がない書込は 403 CSRF_REJECTED 3ms
+ ✓ tests/platform/a3-authorization.test.ts > CSRF 対策 > 別オリジンからの書込は 403 CSRF_REJECTED 2ms
+Using secrets defined in .dev.vars
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 7日の期限を過ぎた招待は使えない 23ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 平文トークンは保存せず SHA-256 だけを持つ 8ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > ログイン前のプレビューはテナント名・役割・伏せ字メールだけを返す 8ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > すでにメンバーなら 409 ALREADY_MEMBER で、招待は消費しない 8ms
+ ✓ tests/platform/a4-invite.test.ts > A4 招待 > 招待できる役割は editor と viewer だけ 6ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > 最後の owner は降格・削除・脱退できない（409 LAST_OWNER） 17ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > owner はメンバーを削除でき、削除されたメンバーはそのテナントに入れなくなる 25ms
+ ✓ tests/platform/a4-invite.test.ts > メンバーの役割変更・削除・脱退と最後の owner > viewer は自分で脱退できる 25ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 2回目の同意で refresh token が返らなくても、保存済みの値を残す 29ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 別の所有者への付与では前の所有者の refresh token を引き継がない 38ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 招待でのログインではトークンも連携状態も触らない 21ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 最後に選んだテナントが閲覧先でも、所有先が一つならその所有先に付与を保存する 24ms
+ ✓ tests/login/callback-scopes.test.ts > A5 付与されたスコープと連携状態 > 閲覧先を選択し所有先が複数ある場合は、付与先を推測せずログインする 40ms
+ ✓ tests/login/callback-scopes.test.ts > A8 エラー内容を漏らさない > Google が error と error_description を返しても、OAUTH_FAILED だけにする 0ms
+Using secrets defined in .dev.vars
+Using secrets defined in .dev.vars
+ ✓ tests/platform/health.test.ts > GET /api/health > ログインなしで D1 に到達して ok を返す 5ms
+ ✓ tests/platform/health.test.ts > API の応答ヘッダ > エラー応答を含め no-store と nosniff・フレーム禁止を付ける 1ms
+Using secrets defined in .dev.vars
+ ✓ tests/platform/queue-handler.test.ts > 未実装の日次収集 > 処理と終端契約が揃うまで Cron と consumer を構成にも handler にも公開しない 1ms
+ ✓ tests/login/config-and-scopes.test.ts > A2 権限表示と要求スコープの一致 > 新規ログインの config は読み取り専用の3行と現行の規約の版を返す 4ms
+ ✓ tests/login/config-and-scopes.test.ts > A2 権限表示と要求スコープの一致 > 新規ログインで Google へ要求するスコープは config の行と同じ組で、オフライン・同意画面・追加許可を指定する 1ms
+ ✓ tests/login/config-and-scopes.test.ts > A2 権限表示と要求スコープの一致 > 招待の config はメールアドレス1行だけで、招待元のテナント名を返す 11ms
+ ✓ tests/login/config-and-scopes.test.ts > A2 権限表示と要求スコープの一致 > 招待でのログインは YouTube のスコープを要求しない（openid email のみ・オフラインなし） 12ms
+ ✓ tests/login/config-and-scopes.test.ts > A2 権限表示と要求スコープの一致 > 使えない招待トークンでも招待の組で表示し、テナント名は出さない 2ms
+ ✓ tests/platform/session-lifecycle.test.ts > sessionとtenant選好のlifecycle > logoutでsessionを削除しても最後に選んだtenantを次回loginで復元する 19ms
+ ✓ tests/platform/session-lifecycle.test.ts > sessionとtenant選好のlifecycle > expired session cleanupは1 loginあたり100件に制限する 14ms
+ ✓ tests/platform/seed.test.ts > ローカル seed > 2回流しても同じ件数になり、テストアカウントの役割と招待が想定どおり 24ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/me は Cookie なしで 401 UNAUTHENTICATED 4ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/session/tenant は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/invites/accept は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants/:id/members は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > PATCH /api/tenants/:id/members/:userId は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > DELETE /api/tenants/:id/members/:userId は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants/:id/leave は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > GET /api/tenants/:id/invites は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > POST /api/tenants/:id/invites は Cookie なしで 401 UNAUTHENTICATED 1ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > DELETE /api/tenants/:id/invites/:inviteId は Cookie なしで 401 UNAUTHENTICATED 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > CSRF ヘッダなしの書込でも、未ログインなら 401 を先に返す 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 未登録の /api/* パスも未ログインなら 401 0ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > でたらめなセッション Cookie は 401 2ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 期限切れセッションは 401 9ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > ログアウト後のセッションは 401 10ms
+ ✓ tests/platform/a1-unauthenticated.test.ts > A1 未ログインは 401 > 公開 API（health・招待プレビュー）はログインなしで 401 にならない 2ms
+ ✓ tests/login/security-headers.test.ts > A7 セキュリティヘッダ > CSP は自サイトと Google 認証だけを許可し、埋め込みを禁止する 1ms
+ ✓ tests/login/security-headers.test.ts > A7 セキュリティヘッダ > public/_headers の値は SECURITY_HEADERS と完全に一致する 1ms
+ ✓ tests/login/security-headers.test.ts > A7 セキュリティヘッダ > API の応答にも同じヘッダが付き、キャッシュされない 3ms
+ ✓ tests/login/security-headers.test.ts > 規約ページ > privacy.html はインライン style を持たず legal.css を読み、製品名と現行版を載せる 0ms
+ ✓ tests/login/security-headers.test.ts > 規約ページ > terms.html はインライン style を持たず legal.css を読み、製品名と現行版を載せる 0ms
+ ✓ tests/login/security-headers.test.ts > 規約ページ > プライバシーポリシーは要求する読み取り専用スコープと信頼表示3つの根拠を載せる 0ms
+ ✓ tests/platform/release-readiness.test.mjs > release readiness の Worker Secret 検査 > 必要なruntime secret名が揃っていれば値を扱わず合格する 1ms
+ ✓ tests/platform/release-readiness.test.mjs > release readiness の Worker Secret 検査 > CLI失敗と不正JSONをfail-closedにする 0ms
+ ✓ tests/platform/release-readiness.test.mjs > release readiness の Worker Secret 検査 > 不足するruntime secret名だけを報告する 0ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy は main への push で起動する 1ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy は D1 マイグレーション適用 → Worker デプロイの順で実行する 0ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy の認証情報は GitHub Secrets から渡し、直書きしない 1ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > deploy gate はAPI認証後にWorker runtime secret名を取得し、値を出力しない 0ms
+ ✓ tests/platform/a6-workflows.test.ts > A6 デプロイ用ワークフロー > PR では lint・typecheck・test・dry-run を回す 0ms
+ ✓ tests/platform/routes-coverage.test.ts > ルート網羅 > 登録済みの全 API ルートが A1/A3 の表に載っている 2ms
+ ✓ tests/platform/routes-coverage.test.ts > ルート網羅 > pathとmethodから導くtenant scope・write分類にmetadataが一致する 0ms
+
+ Test Files  19 passed (19)
+      Tests  124 passed (124)
+   Start at  15:55:25
+   Duration  5.26s (transform 1.78s, setup 8.71s, import 975ms, tests 1.35s, environment 2ms)
+

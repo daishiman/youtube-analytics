@@ -237,7 +237,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 1. https://console.cloud.google.com/auth/overview を開く。
 2. 「Google Auth Platform はまだ構成されていません」と出たら **「開始」**（Get started）を押す。
 3. **アプリ情報**
-   - 「アプリ名」: `YouTube分析`
+   - 「アプリ名」: `Channel Insight`（ログイン画面、規約ページ、タブのタイトルと同じ製品名）
    - 「ユーザー サポートメール」: 自分の Gmail を選ぶ
    - **「次へ」**
 4. **対象**（Audience）: **「外部」**（External）を選ぶ →「次へ」。自分以外の Google アカウントでもログインできるようにするため。
@@ -251,7 +251,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 
    | 欄 | 入れる値 |
    |---|---|
-   | アプリ名 | `YouTube分析` |
+   | アプリ名 | `Channel Insight` |
    | ユーザー サポートメール | 自分の Gmail |
    | アプリのホームページ | `https://youtube-analytics.daishimanju.workers.dev` |
    | アプリのプライバシー ポリシーへのリンク | `https://youtube-analytics.daishimanju.workers.dev/privacy` |
@@ -282,12 +282,16 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 
 1. https://console.cloud.google.com/auth/scopes を開く。
 2. **「スコープを追加または削除」** を押す。
-3. 一覧から次の 2 つにだけチェックを入れる。
+3. 一覧から次の 4 つにだけチェックを入れる（一覧にないときは「手動でスコープを追加」に URL を貼る）。
    - `openid`
    - `.../auth/userinfo.email`
+   - `https://www.googleapis.com/auth/youtube.readonly`
+   - `https://www.googleapis.com/auth/yt-analytics.readonly`
 4. **「更新」** →画面下の **「保存」** を押す。
 
-> YouTube のスコープはここでは追加しない（feat-youtube-daily-collection で追加する）。`openid` と `email` は「機密性の低いスコープ」なので、Google の審査なしで公開できる。
+> 新規ログイン（テナントを作る人）は、この 4 つをまとめて求める（feat-login-redesign）。招待で参加する人には `openid` と `email` だけを求める。
+>
+> YouTube の 2 つは読み取り専用だが「機密性の高いスコープ」に当たる。Google の検証を受けるまでは、ログイン時に「このアプリは Google で確認されていません」と出て、新しく使える人数にも上限がある。検証申請はしない方針（利用者が 80 人に近づいたら申請する運用）なので、この表示は想定どおり。ログイン画面の「このアプリはGoogleの検証前です」の案内がこれに当たる。
 
 ### 4.4 対象（Audience）を本番にする
 
@@ -296,7 +300,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
    - 「テスト中」のままだと、「テストユーザー」に追加した人しかログインできない。テスト中のまま試す場合は、同じ画面の「テストユーザー」→ **「+ Add users」** でメールを追加する。
 
 - [ ] ブランディングに 3 つの URL を入れた
-- [ ] スコープは `openid` と `userinfo.email` だけ
+- [ ] スコープは `openid`、`userinfo.email`、`youtube.readonly`、`yt-analytics.readonly` の 4 つだけ
 - [ ] 公開ステータスが「本番環境」
 
 ---
@@ -357,7 +361,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 
 | 行 | 変更前 | 変更後（例） |
 |---|---|---|
-| 6 | `<title>プライバシーポリシー（草案） \| YouTube分析</title>` | `<title>プライバシーポリシー \| YouTube分析</title>` |
+| 6 | `<title>プライバシーポリシー（草案） \| YouTube分析</title>` | `<title>プライバシーポリシー \| Channel Insight</title>` |
 | 15 | `<p class="draft">草案です。公開前に…記入します。</p>` | `<p>施行日: 2026年10月1日　運営者: 〇〇（屋号または氏名）</p>` |
 | 46 | `<p>（運営者の連絡先を公開前に記入）</p>` | `<p>運営者: 〇〇<br>連絡先: support-xxxx@gmail.com</p>` |
 
@@ -365,7 +369,7 @@ Google のログイン画面に出るアプリ名や、誰がログインでき�
 
 | 行 | 変更前 | 変更後（例） |
 |---|---|---|
-| 6 | `<title>利用規約（草案） \| YouTube分析</title>` | `<title>利用規約 \| YouTube分析</title>` |
+| 6 | `<title>利用規約（草案） \| YouTube分析</title>` | `<title>利用規約 \| Channel Insight</title>` |
 | 15 | `<p class="draft">草案です。公開前に…記入します。</p>` | `<p>施行日: 2026年10月1日　運営者: 〇〇（屋号または氏名）</p>` |
 
 - 他人に使わせる前に、法務の専門家に確認してもらうことを勧める（とくに第 5 条の免責）。
@@ -593,8 +597,9 @@ Rollback はコードだけを戻す。D1 に当てたマイグレーション�
 2. `<本番URL>/login` を開く。
    - 「開発用ログイン」の欄が **出ない** こと（出たら `DEV_LOGIN` を本番に登録してしまっているので、`pnpm wrangler secret delete DEV_LOGIN`）。
    - 同意にチェックするまで「Google でログイン」が押せないこと。
-3. 同意にチェック →「Google でログイン」→ Google の画面で自分のアカウントを選ぶ → 「YouTube分析 がアクセスをリクエストしています」で **「続行」**。
-   - 「このアプリは Google で確認されていません」と出たら、「詳細」→「YouTube分析（安全ではないページ）に移動」で進める（4.4 のとおり、審査していないため。機密性の低いスコープだけなので問題はない）。
+3. 同意にチェック →「Googleでログイン」→ Google の画面で自分のアカウントを選ぶ → 「Channel Insight がアクセスをリクエストしています」で、YouTube の 2 項目にチェックを入れて **「続行」**。
+   - 「このアプリは Google で確認されていません」と出たら、「詳細」→「Channel Insight（安全ではないページ）に移動」で進める（4.3 のとおり、検証を受けていないため。求めるのは読み取り専用のスコープだけ）。
+   - YouTube の項目のチェックを外して続けてもログインはできる。その場合はダッシュボードに「YouTube 連携が未完了です」と「再連携」が出る（`docs/feat-login-redesign/runbook.md` §5）。
 4. ダッシュボードに「あなたの役割: オーナー」と出れば成功。
 5. 招待の確認（A4）には、Google アカウントが **2 つ**必要になる（招待する側と、される側）。予備のアカウントがなければ https://accounts.google.com/signup で作る。そのうえで、`docs/feat-platform-tenant-auth/acceptance.md` の 3 節（A1〜A6）を試し、結果の「preview」列を埋める。これはエージェントに頼んでもよい。
 

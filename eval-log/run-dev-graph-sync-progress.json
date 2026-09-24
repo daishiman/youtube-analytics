@@ -1,0 +1,41 @@
+{
+ "skill": "run-dev-graph-sync",
+ "recorded_at": "2026-09-24T01:36:00Z",
+ "checklist": [
+  {
+   "item": "3-way plan 分類と snapshot digest",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "authority は beads/C28 の一経路",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "dry-run write 0 (projection dry-run write_count 0)",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "双方変更なし=manual conflict 0",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "close/delete なし (tombstone 0)",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "merge evidence なしのため done 0",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  },
+  {
+   "item": "2回目 changes=0",
+   "status": "pass",
+   "evidence": "eval-log/sync-receipt-20260924.json"
+  }
+ ]
+}
