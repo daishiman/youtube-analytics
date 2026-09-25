@@ -1,5 +1,7 @@
 // 無料枠の使用状況。Cloudflare の値はアカウント全体、YouTube の割当は各 Google Cloud プロジェクトごと
+
 import { fetchCfUsage } from "../adapters/cf-analytics";
+import { TENANT_LABEL } from "../domain/labels";
 import { type Deps, iso, maxTenants } from "./common";
 import { CAPTION_DAILY_LIMIT, usageRepo } from "./settings-common";
 
@@ -75,8 +77,8 @@ export async function getUsage(deps: Deps): Promise<UsageItem[]> {
       "回",
     ),
     // 5本の上限はテナントごと。集計処理のない全体カウンタをこの上限と比較しない。
-    item("captions", "字幕取得（本日・ワークスペースごと）", null, CAPTION_DAILY_LIMIT, "本"),
-    item("tenants", "ワークスペース数", tenants, maxTenants(deps.env), "件"),
+    item("captions", `字幕取得（本日・${TENANT_LABEL}ごと）`, null, CAPTION_DAILY_LIMIT, "本"),
+    item("tenants", `${TENANT_LABEL}数`, tenants, maxTenants(deps.env), "件"),
   ];
   try {
     const [cf, tenants] = await Promise.all([cfSnapshots(deps), usageRepo(deps).tenantCount()]);

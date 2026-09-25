@@ -1,0 +1,361 @@
+{
+  "request_id": "A-0001",
+  "version": 2,
+  "title": "週次分析 v2（2026-08-03〜2026-08-30）",
+  "summary": "2026-08-24週の5原因指標のうち、目標との差が最も大きいのは流入段のクリック率（実績 4.19%・目標 5.00%・目標比 ▲16.2%）でした。",
+  "conclusion": "次の一手は流入段（クリック率）の改善候補を試すことです。売上・成約との関係は施策後の効果測定で確かめます。",
+  "brief": {
+    "question": "対象週の売上ファネルで、目標未達が最大の原因指標はどれか",
+    "reader": "チャンネル運営者",
+    "decision": "次の1週間で、どのファネル段の施策を1件試すか",
+    "hypotheses": [
+      {
+        "id": "H1",
+        "claim": "最大の改善候補の指標は、判定できた週の半分以上で目標を下回っている",
+        "falsifier": "候補指標が目標を下回った週が、判定できた週の半分未満",
+        "alternative": false
+      },
+      {
+        "id": "H2",
+        "claim": "最大の改善候補の未達は、対象週だけの一時的な下振れである",
+        "falsifier": "候補指標が目標を下回った週が、判定できた週の半分以上",
+        "alternative": true
+      }
+    ]
+  },
+  "results": {
+    "status": "改善候補あり",
+    "candidate": {
+      "stage": "流入",
+      "metric": "ctr",
+      "target_gap": -0.16214689265536714
+    },
+    "target_week": "2026-08-24",
+    "funnel": [
+      {
+        "metric": "impressions",
+        "label": "インプレッション",
+        "stage": "露出",
+        "unit": "回",
+        "actual": 17700,
+        "target": 15000,
+        "target_gap": 0.18,
+        "pending_reason": null
+      },
+      {
+        "metric": "ctr",
+        "label": "クリック率",
+        "stage": "流入",
+        "unit": "%",
+        "actual": 4.189265536723164,
+        "target": 5,
+        "target_gap": -0.16214689265536714,
+        "pending_reason": null
+      },
+      {
+        "metric": "m1",
+        "label": "加重平均視聴率",
+        "stage": "維持",
+        "unit": "%",
+        "actual": 33.41730558598029,
+        "target": 35,
+        "target_gap": -0.045219840400563226,
+        "pending_reason": null
+      },
+      {
+        "metric": "lead_route_rate",
+        "label": "導線誘導率",
+        "stage": "導線",
+        "unit": "%",
+        "actual": 2.027027027027027,
+        "target": 1.5,
+        "target_gap": 0.3513513513513515,
+        "pending_reason": null
+      },
+      {
+        "metric": "inquiry_close_rate",
+        "label": "問い合わせ→成約率（同週）",
+        "stage": "成約",
+        "unit": "%",
+        "actual": 25,
+        "target": 25,
+        "target_gap": 0,
+        "pending_reason": null
+      }
+    ],
+    "pending_reasons": [],
+    "downstream": {
+      "inquiries": 8,
+      "closed_deals": 2,
+      "revenue_jpy": 470000,
+      "subscribers": 26
+    },
+    "weekly": [
+      {
+        "week": "2026-08-03",
+        "impressions": 13600,
+        "ctr": 4.763235294117647,
+        "m1": 33.45205479452055,
+        "lead_route_rate": 2.2033898305084745,
+        "inquiry_close_rate": 33.33333333333333,
+        "views": 1180,
+        "engaged_views": 1030,
+        "route_visits": 26,
+        "inquiries": 6,
+        "closed_deals": 2,
+        "revenue_jpy": 480000,
+        "subscribers": 27
+      },
+      {
+        "week": "2026-08-10",
+        "impressions": 13700,
+        "ctr": 4.668613138686132,
+        "m1": 33.560709413369715,
+        "lead_route_rate": 2.3728813559322033,
+        "inquiry_close_rate": 28.57142857142857,
+        "views": 1180,
+        "engaged_views": 1030,
+        "route_visits": 28,
+        "inquiries": 7,
+        "closed_deals": 2,
+        "revenue_jpy": 500000,
+        "subscribers": 26
+      },
+      {
+        "week": "2026-08-17",
+        "impressions": 17600,
+        "ctr": 4.602840909090909,
+        "m1": 33.97613466865545,
+        "lead_route_rate": 1.914191419141914,
+        "inquiry_close_rate": 37.5,
+        "views": 1515,
+        "engaged_views": 1323,
+        "route_visits": 29,
+        "inquiries": 8,
+        "closed_deals": 3,
+        "revenue_jpy": 720000,
+        "subscribers": 30
+      },
+      {
+        "week": "2026-08-24",
+        "impressions": 17700,
+        "ctr": 4.189265536723164,
+        "m1": 33.41730558598029,
+        "lead_route_rate": 2.027027027027027,
+        "inquiry_close_rate": 25,
+        "views": 1480,
+        "engaged_views": 1290,
+        "route_visits": 30,
+        "inquiries": 8,
+        "closed_deals": 2,
+        "revenue_jpy": 470000,
+        "subscribers": 26
+      }
+    ],
+    "channel_metrics": {
+      "M1": 33.614915826947446,
+      "M2": 2839.0000000000005,
+      "M3": 0.5301587301587303,
+      "M4": 0.9290382819794585,
+      "M5": 0.8726423902894491,
+      "M6": 2123.333333333333,
+      "M7": 20.35480859010271,
+      "M8": 0.05527777777777778,
+      "M9": [
+        {
+          "video_id": "v_long_a",
+          "share": 0.18759811616954475
+        },
+        {
+          "video_id": "v_long_b",
+          "share": 0.47095761381475676
+        },
+        {
+          "video_id": "v_long_c",
+          "share": 0.34144427001569866
+        }
+      ],
+      "M10": 0.374789996818123,
+      "video_count": 3
+    },
+    "hypotheses": [
+      {
+        "id": "H1",
+        "判定": "採用",
+        "数字": {
+          "判定週数": 4,
+          "未達週数": 4,
+          "未達の割合": 1
+        },
+        "理由": null
+      },
+      {
+        "id": "H2",
+        "判定": "棄却",
+        "数字": {
+          "判定週数": 4,
+          "未達週数": 4,
+          "未達の割合": 1
+        },
+        "理由": null
+      }
+    ],
+    "sources_used": {
+      "cause_metrics": "studio_csv",
+      "business": "business_csv",
+      "excluded": "api"
+    }
+  },
+  "history_review": {
+    "first_analysis": false,
+    "versions_used": [1],
+    "previous_hypotheses": [
+      {
+        "version": 1,
+        "hypothesis_id": "H1",
+        "title": "最大の改善候補の指標は、判定できた週の半分以上で目標を下回っている",
+        "previous_verdict": "保留",
+        "current_verdict": "採用",
+        "review": "同じ反証条件で今回の期間を再判定"
+      },
+      {
+        "version": 1,
+        "hypothesis_id": "H2",
+        "title": "最大の改善候補の未達は、対象週だけの一時的な下振れである",
+        "previous_verdict": "保留",
+        "current_verdict": "棄却",
+        "review": "同じ反証条件で今回の期間を再判定"
+      }
+    ],
+    "action_effects": [
+      {
+        "action_id": "act_fixture_1",
+        "title": "サムネイルの文字量を減らす",
+        "stage": "流入",
+        "metric": "ctr",
+        "baseline": 4.4,
+        "current": 4.189265536723164,
+        "delta": -0.21073446327683598,
+        "week": "2026-08-24",
+        "downstream": {
+          "inquiries": 8,
+          "closed_deals": 2,
+          "revenue_jpy": 470000
+        },
+        "status": "効果測定中",
+        "report_id": "r_fixture_v1"
+      }
+    ],
+    "changes": {
+      "compared_version": 1,
+      "previous_candidate": {
+        "stage": "流入",
+        "metric": "ctr"
+      },
+      "current_candidate": {
+        "stage": "流入",
+        "metric": "ctr"
+      },
+      "same_candidate": true,
+      "downstream_delta": {
+        "inquiries": 2,
+        "closed_deals": 0,
+        "revenue_jpy": 20000
+      }
+    }
+  },
+  "findings": [
+    {
+      "kind": "factor",
+      "title": "クリック率の目標比 ▲16.2%",
+      "fact": "2026-08-24週のクリック率は 4.19%（目標 5.00%、目標比 ▲16.2%）",
+      "interpretation": "流入段は目標を下回っており、改善候補の比較対象になります（相関や因果は判定していません）",
+      "stage": "流入",
+      "metric": "ctr",
+      "evidence": {
+        "week": "2026-08-24",
+        "actual": 4.189265536723164,
+        "target": 5,
+        "target_gap": -0.16214689265536714
+      }
+    },
+    {
+      "kind": "factor",
+      "title": "加重平均視聴率の目標比 ▲4.5%",
+      "fact": "2026-08-24週の加重平均視聴率は 33.42%（目標 35.00%、目標比 ▲4.5%）",
+      "interpretation": "維持段は目標を下回っており、改善候補の比較対象になります（相関や因果は判定していません）",
+      "stage": "維持",
+      "metric": "m1",
+      "evidence": {
+        "week": "2026-08-24",
+        "actual": 33.41730558598029,
+        "target": 35,
+        "target_gap": -0.045219840400563226
+      }
+    },
+    {
+      "kind": "factor",
+      "title": "問い合わせ→成約率（同週）の目標比 +0.0%",
+      "fact": "2026-08-24週の問い合わせ→成約率（同週）は 25.00%（目標 25.00%、目標比 +0.0%）",
+      "interpretation": "成約段は目標以上で、今週の改善候補からは外します",
+      "stage": "成約",
+      "metric": "inquiry_close_rate",
+      "evidence": {
+        "week": "2026-08-24",
+        "actual": 25,
+        "target": 25,
+        "target_gap": 0
+      }
+    },
+    {
+      "kind": "hypothesis",
+      "hypothesis_id": "H1",
+      "title": "最大の改善候補の指標は、判定できた週の半分以上で目標を下回っている",
+      "falsifier": "候補指標が目標を下回った週が、判定できた週の半分未満",
+      "verdict": "採用",
+      "stage": "流入",
+      "metric": "ctr",
+      "evidence": {
+        "判定週数": 4,
+        "未達週数": 4,
+        "未達の割合": 1,
+        "reason": null
+      }
+    },
+    {
+      "kind": "hypothesis",
+      "hypothesis_id": "H2",
+      "title": "最大の改善候補の未達は、対象週だけの一時的な下振れである",
+      "falsifier": "候補指標が目標を下回った週が、判定できた週の半分以上",
+      "verdict": "棄却",
+      "stage": "流入",
+      "metric": "ctr",
+      "evidence": {
+        "判定週数": 4,
+        "未達週数": 4,
+        "未達の割合": 1,
+        "reason": null
+      }
+    }
+  ],
+  "psych_findings": [],
+  "comment_emotions": [],
+  "ideas": [
+    {
+      "title": "流入段（クリック率）の改善案を1件選んで試す",
+      "stage": "流入",
+      "metric": "ctr",
+      "options": ["タイトル案", "台本", "サムネイル", "導線", "問い合わせ対応"]
+    }
+  ],
+  "actions": [
+    {
+      "title": "流入段のクリック率を目標 5.00% へ近づける施策を1件試す",
+      "stage": "流入",
+      "metric": "ctr",
+      "baseline_value": 4.189266,
+      "target_value": 5
+    }
+  ],
+  "report_html": "<!doctype html>\n<html lang=\"ja\"><head><meta charset=\"utf-8\"><title>週次分析 v2</title></head><body><h1>週次分析 v2</h1><p>見本（本物は report-design-system の build 合格 HTML）</p></body></html>\n"
+}

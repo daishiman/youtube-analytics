@@ -1,5 +1,7 @@
 // 設定画面「データを削除」区画（危険操作）。テナント名で確認し、削除依頼を予約する
+
 import { useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { api } from "../../api";
 import { formatDateTime } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -65,7 +67,7 @@ export function DeleteSection({
           データを削除
         </button>
       ) : (
-        <p className="small muted">削除はワークスペースのオーナーが行います。</p>
+        <p className="small muted">削除は{TENANT_LABEL}のオーナーが行います。</p>
       )}
       <ConfirmDialog
         open={open}

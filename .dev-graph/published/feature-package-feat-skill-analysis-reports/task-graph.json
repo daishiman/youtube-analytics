@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-SAR-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-SAR-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P01"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P02"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P03"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P04"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P05"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P06"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P07"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P08"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P09"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "depends_on": [
+        "SYS-SAR-P11",
+        "SYS-SAR-P12"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 // ログイン後のセッション境界。画面レイアウトは AppShell、テナント固有データは各画面に委譲する。
+
 import { useCallback, useEffect, useState } from "react";
 import { Outlet, useNavigate, useSearchParams } from "react-router";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { ApiError, api, type Me, REDIRECT_MESSAGES } from "../api";
 import { AppShell } from "../components/AppShell";
 import { ConfirmDialog } from "../components/ConfirmDialog";
@@ -115,7 +117,7 @@ export function Shell() {
     >
       {switchingTenant ? (
         <p className="muted" role="status">
-          ワークスペースを切り替えています…
+          {TENANT_LABEL}を切り替えています…
         </p>
       ) : tenant ? (
         <Outlet key={tenant.tenantId} context={{ me, reload } satisfies ShellContext} />
@@ -135,7 +137,7 @@ export function Shell() {
       {tenant && (
         <ConfirmDialog
           open={dialog === "leave"}
-          title="このワークスペースから脱退"
+          title={`この${TENANT_LABEL}から脱退`}
           confirmLabel="脱退する"
           danger
           busy={leaving}
@@ -163,17 +165,12 @@ function AddTenantDialog({
   onCreated: () => Promise<void>;
 }) {
   return (
-    <Modal open={open} title="ワークスペースを追加" onClose={onClose}>
+    <Modal open={open} title={`${TENANT_LABEL}を追加`} onClose={onClose} closeLabel="閉じる">
       {signupClosed ? (
         <p className="alert">現在新規の受付を停止しています。</p>
       ) : (
         <CreateTenantForm onCreated={onCreated} />
       )}
-      <div className="row dialog-actions">
-        <button type="button" className="button" onClick={onClose}>
-          閉じる
-        </button>
-      </div>
     </Modal>
   );
 }
@@ -182,14 +179,14 @@ function AddTenantDialog({
 function NoTenant({ me, reload }: ShellContext) {
   return (
     <section className="card">
-      <h1>所属しているワークスペースがありません</h1>
+      <h1>所属している{TENANT_LABEL}がありません</h1>
       {me.signupClosed ? (
         <p className="alert">
-          現在新規の受付を停止しています。既存ワークスペースのオーナーから招待を受けてください。
+          現在新規の受付を停止しています。既存{TENANT_LABEL}のオーナーから招待を受けてください。
         </p>
       ) : (
         <>
-          <p className="muted">招待を受けるか、自分のワークスペースを作成してください。</p>
+          <p className="muted">招待を受けるか、自分の{TENANT_LABEL}を作成してください。</p>
           <CreateTenantForm onCreated={reload} />
         </>
       )}

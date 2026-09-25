@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
-  "current_architecture_digest": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf",
+  "current_source_digest": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd",
+  "current_architecture_digest": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -18,6 +18,10 @@
   ],
   "unaffected_current_package": "feat-platform-tenant-auth",
   "gate": "上記3 featureのtask計画を生成する前にsystem-spec compile/evaluateとdev-graph compile/decomposeを実行し、architecture projection、source_lineage digest、state graphを正本から再生成する",
+  "boundary_audit": "docs/feat-ai-analysis-screen/c14-boundary-audit.md",
+  "boundary_audit_status": "旧3 featureと設定featureの担当先に4件の矛盾がある。隔離したC14 dry-runの初回は見落とし、4件を明示した再試行は修正案を出したが、正式な一括登録と公開済みpackageの再評価は未完了",
+  "tooling_blocker": "dev-graph 0.1.11 の C02 は既存13 task IDの内容差分を拒否し、既存featureのMarkdown/context/state graph/source lineageを一括更新する独立CLIもない。system-dev-planner 0.1.11 のC11は世代別公開先を使えるが、C02の検証付き原子的世代交代が必要",
+  "scope_decision_20260925": "利用者の選択により、今回の作業はこのワークツリーの監査まで。共有プラグインの改修と正式再同期ゲートの完了処理は行わない",
   "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。",
   "digest_refresh_log": [
     {

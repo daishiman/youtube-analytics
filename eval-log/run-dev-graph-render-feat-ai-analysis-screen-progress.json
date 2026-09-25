@@ -1,0 +1,32 @@
+{
+ "skill": "run-dev-graph-render",
+ "recorded_at": "2026-09-24T23:04:45Z",
+ "output": ".dev-graph/render/index.html",
+ "checklist": [
+  {
+   "item": "schema PASS・output が repo 内",
+   "status": "pass",
+   "evidence": "graph rev 11 / .dev-graph/render/index.html"
+  },
+  {
+   "item": "counts が graph と一致",
+   "status": "pass",
+   "evidence": "nodes 63 edges 67 / feat-ai-analysis-screen 0/13"
+  },
+  {
+   "item": "外部参照0・SVG と inline JS 実在",
+   "status": "pass",
+   "evidence": "external=0 svg=True script=True"
+  },
+  {
+   "item": "receipt digest 一致",
+   "status": "pass",
+   "evidence": "in 89f262432942… out b2fdbcc53154…"
+  },
+  {
+   "item": "browser live trial",
+   "status": "pass",
+   "evidence": "scratchpad:render.png"
+  }
+ ]
+}

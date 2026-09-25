@@ -1,9 +1,13 @@
 // ログイン後の全画面に共通の枠（サイドバー＋ヘッダー＋本文＋フッター）。qa-074・qa-075
 // 900px 未満はサイドバーのナビを画面下部のタブへ切り替える
+
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation, useSearchParams } from "react-router";
+import { NavLink, useLocation } from "react-router";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { type Me, ROLE_LABELS } from "../api";
+import { usePeriod } from "../period";
 import { type IconName, NavIcon } from "./NavIcon";
+import { PeriodSelector } from "./PeriodSelector";
 import { SiteFooter } from "./SiteFooter";
 
 export const NAV_ITEMS: { to: string; label: string; icon: IconName }[] = [
@@ -13,13 +17,6 @@ export const NAV_ITEMS: { to: string; label: string; icon: IconName }[] = [
   { to: "/actions", label: "改善アクション", icon: "bulb" },
   { to: "/settings", label: "設定", icon: "gear" },
 ];
-
-export const PERIODS = [
-  { key: "28d", label: "28日" },
-  { key: "90d", label: "90日" },
-  { key: "1y", label: "1年" },
-  { key: "custom", label: "任意" },
-] as const;
 
 export function screenName(pathname: string): string {
   const hit = NAV_ITEMS.find((item) =>
@@ -83,9 +80,9 @@ export function AppShell({
         </NavLink>
         {me.tenants.length > 0 && (
           <label className="field">
-            <span className="small muted">ワークスペース</span>
+            <span className="small muted">{TENANT_LABEL}</span>
             <select
-              aria-label="ワークスペース切替"
+              aria-label={`${TENANT_LABEL}切替`}
               value={me.currentTenant?.tenantId ?? ""}
               disabled={switchingTenant}
               onChange={(event) => void onSwitchTenant(event.target.value)}
@@ -131,8 +128,7 @@ export function AppShell({
 
 function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
   const { pathname } = useLocation();
-  const [params] = useSearchParams();
-  const period = params.get("period") ?? "28d";
+  const { period, setPeriod } = usePeriod();
 
   return (
     <header className="app-header">
@@ -141,18 +137,8 @@ function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
         <span>最終更新</span>
         <span>{formatDateTime(me.lastUpdatedAt)}</span>
       </p>
-      <nav className="period-tabs" aria-label="期間">
-        {PERIODS.map((p) => (
-          <Link
-            key={p.key}
-            to={`?period=${p.key}`}
-            className={p.key === period ? "active" : undefined}
-            aria-current={p.key === period ? "true" : undefined}
-          >
-            {p.label}
-          </Link>
-        ))}
-      </nav>
+      {/* 期間は ?period= で全画面共有。ほかのクエリ（?request= など）は残す。 */}
+      <PeriodSelector variant="header" period={period} setPeriod={setPeriod} />
       <AccountMenu me={me} {...actions} />
     </header>
   );
@@ -201,11 +187,11 @@ function AccountMenu({ me, onLogout, onAddTenant, onLeaveTenant }: ShellActions 
         <div className="menu" role="menu" aria-label="アカウントメニュー">
           <p className="small muted menu-email">{me.user.email}</p>
           <button type="button" role="menuitem" onClick={pick(onAddTenant)}>
-            ワークスペースを追加
+            {TENANT_LABEL}を追加
           </button>
           {me.currentTenant && (
             <button type="button" role="menuitem" onClick={pick(onLeaveTenant)}>
-              このワークスペースから脱退
+              この{TENANT_LABEL}から脱退
             </button>
           )}
           <button type="button" role="menuitem" onClick={pick(() => void onLogout())}>

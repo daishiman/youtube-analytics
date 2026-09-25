@@ -173,17 +173,20 @@ select {
   gap: 0.5rem;
   color: var(--muted);
 }
-.period-tabs a {
+.period-tabs button {
   padding: 0.25rem 0.75rem;
+  border: none;
   border-radius: 999px;
-  text-decoration: none;
+  background: none;
+  font: inherit;
   font-size: 0.9rem;
   color: var(--muted);
+  cursor: pointer;
 }
 .main-nav a.active {
   color: var(--text);
 }
-.period-tabs a.active {
+.period-tabs button.active {
   background: var(--primary);
   color: #fff;
 }
@@ -1223,4 +1226,300 @@ h4 {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+}
+
+/* ── AI分析画面（docs/screens/03-ai-analysis.png・qa-089〜qa-097） ── */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.row.tight {
+  gap: 0.35rem;
+}
+.row.wrap {
+  flex-wrap: wrap;
+}
+.grow {
+  flex: 1 1 12rem;
+}
+textarea {
+  font: inherit;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  width: 100%;
+  resize: vertical;
+}
+textarea.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+}
+.link-button {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-button[aria-current="true"] {
+  font-weight: 700;
+}
+.button.small {
+  padding: 0.3rem 0.7rem;
+  word-break: normal;
+}
+.counter {
+  align-self: flex-end;
+  font-size: 0.85rem;
+}
+.note {
+  font-size: 0.9rem;
+}
+fieldset.field {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.segment {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.segment button {
+  font: inherit;
+  border: none;
+  background: var(--card);
+  color: var(--text);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+.segment button + button {
+  border-left: 1px solid var(--line);
+}
+.segment button.active {
+  background: var(--accent-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+.analysis-request-grid,
+.analysis-report-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+.analysis-report-grid {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+.data-summary {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+.data-summary h3 {
+  margin-top: 0;
+}
+.kv {
+  margin: 0 0 0.75rem;
+}
+.kv-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.kv-row dd {
+  margin: 0;
+  text-align: right;
+}
+.date-range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.date-range .row {
+  align-items: flex-end;
+}
+.manual-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 8rem;
+}
+.progress-track {
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+}
+.progress-danger .progress-fill {
+  background: var(--danger);
+}
+.progress-muted .progress-fill {
+  background: var(--muted);
+}
+.progress-value {
+  font-size: 0.85rem;
+  min-width: 2.5rem;
+  text-align: right;
+}
+.clamp {
+  display: inline-block;
+  max-width: 22rem;
+  overflow-wrap: anywhere;
+}
+.request-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+.report-list tr.selected {
+  background: var(--accent-bg);
+}
+.report-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.report-head h3 {
+  margin: 0 0 0.25rem;
+}
+/* .row input の flex（横並び用）が縦並びの .field 内で高さに効かないようにする */
+.report-toolbar input {
+  flex: none;
+}
+.report-toolbar .check,
+.report-head > .button {
+  flex: none;
+  white-space: nowrap;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+.meta div {
+  display: flex;
+  gap: 0.35rem;
+}
+.meta dt {
+  color: var(--muted);
+}
+.meta dd {
+  margin: 0;
+}
+.report-detail h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+}
+.changes,
+.psych-box,
+.candidate {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg);
+}
+.changes ul,
+.psych-box ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.checklist,
+.version-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.card-lite {
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+.card-lite p {
+  margin: 0.2rem 0;
+}
+.report-frame {
+  width: 100%;
+  min-height: 32rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+}
+.diff-table tr.changed th {
+  color: var(--primary);
+}
+.analysis-page {
+  /* 下部の選択中の依頼バーに本文が隠れないようにする */
+  padding-bottom: 4.5rem;
+}
+.selection-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  box-shadow: 0 -2px 0 var(--line);
+}
+.selection-bar .progress {
+  flex: 1 1 8rem;
+}
+.selection-text {
+  flex: 2 1 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 899px) {
+  .analysis-request-grid,
+  .analysis-report-grid {
+    grid-template-columns: 1fr;
+  }
+  .report-head {
+    flex-direction: column;
+  }
+  .clamp {
+    max-width: none;
+  }
+  /* 下部タブ（main-nav・約3.6rem）の上に固定する */
+  .selection-bar {
+    position: fixed;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(3.8rem + env(safe-area-inset-bottom, 0px));
+  }
+  .analysis-page {
+    padding-bottom: 8rem;
+  }
 }

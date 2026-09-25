@@ -31,6 +31,42 @@ jobs:
       # バインディング解決とバンドルだけを検証し、Cloudflare へは送らない
       - run: pnpm build
 
+  # 空 DB への全件適用と、既存 DB（0007 まで適用済み）への差分適用の両方を確かめる
+  migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:migrations -- --base 0007
+
+  # /yt-analyze の検査（因果の断定の走査・report-design-system の無改変・スタブ相手のフィクスチャ実行）。外部へは接続しない
+  # 無改変は git log で取込後のコミットを数えて判定するので、履歴をすべて取得する（浅い clone では常に1件になり素通りする）
+  skill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:skill
+
+  # 週次分析の launchd 定義（ops/launchd/*.plist）を macOS の plutil で検査する
+  launchd:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: plutil -lint ops/launchd/*.plist
+
   e2e:
     runs-on: ubuntu-latest
     steps:

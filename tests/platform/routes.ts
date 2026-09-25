@@ -86,6 +86,37 @@ export const PROTECTED_ROUTES: ProtectedRoute[] = [
     kind: "session-read",
   },
   { method: "POST", path: "/api/tenant/delete", tenantScoped: false, kind: "session-owner" },
+  { method: "GET", path: "/api/analysis-requests", tenantScoped: false, kind: "session-read" },
+  { method: "POST", path: "/api/analysis-requests", tenantScoped: false, kind: "session-writer" },
+  ...(
+    [
+      ["GET", "/api/analysis-requests/:requestId", "session-read"],
+      ["GET", "/api/analysis-requests/:requestId/prompt", "session-read"],
+      ["POST", "/api/analysis-requests/:requestId/cancel", "session-writer"],
+      ["POST", "/api/analysis-requests/:requestId/retry", "session-writer"],
+      ["GET", "/api/analysis/data-summary", "session-read"],
+      ["GET", "/api/reports", "session-read"],
+      ["GET", "/api/reports/diff", "session-read"],
+      ["POST", "/api/reports/import", "session-writer"],
+      ["GET", "/api/reports/:reportId", "session-read"],
+      ["PUT", "/api/reports/:reportId/archive", "session-writer"],
+      ["DELETE", "/api/reports/:reportId/archive", "session-writer"],
+      ["POST", "/api/reports/:reportId/actions", "session-writer"],
+    ] as const
+  ).map(([method, path, kind]) => ({ method, path, tenantScoped: false, kind })),
+];
+
+/**
+ * Claude Code スキル連携 API（Bearer 個人トークン専用。セッション cookie・CSRF の対象外）。
+ * 認可は tests/skill-analysis/skill-api.test.ts が検査する
+ */
+export const SKILL_ROUTES: { method: ProtectedRoute["method"]; path: string; write: boolean }[] = [
+  { method: "GET", path: "/api/skill/export", write: false },
+  { method: "POST", path: "/api/skill/requests", write: true },
+  { method: "PATCH", path: "/api/skill/requests/:id", write: true },
+  { method: "POST", path: "/api/skill/reports", write: true },
+  { method: "POST", path: "/api/skill/transcripts", write: true },
+  { method: "POST", path: "/api/skill/media", write: true },
 ];
 
 /** 設定画面の API（セッションの選択中テナントが対象） */
@@ -104,9 +135,18 @@ export const PUBLIC_ROUTES = [
 
 export function fill(
   path: string,
-  ids: { id?: string; userId?: string; inviteId?: string; tokenId?: string },
+  ids: {
+    id?: string;
+    userId?: string;
+    inviteId?: string;
+    tokenId?: string;
+    requestId?: string;
+    reportId?: string;
+  },
 ): string {
   return path
+    .replace(":requestId", ids.requestId ?? "A-9999")
+    .replace(":reportId", ids.reportId ?? "00000000-0000-0000-0000-000000000004")
     .replace(":tokenId", ids.tokenId ?? "00000000-0000-0000-0000-000000000003")
     .replace(":id", ids.id ?? "00000000-0000-0000-0000-000000000000")
     .replace(":userId", ids.userId ?? "00000000-0000-0000-0000-000000000001")
@@ -118,12 +158,15 @@ export function bodyFor(route: ProtectedRoute): unknown {
   if (route.method === "GET") return undefined;
   if (route.method === "DELETE" && route.path !== "/api/youtube/connection") return undefined;
   if (route.path.endsWith("/members/:userId")) return { role: "viewer" };
+  if (route.path.endsWith("/actions")) return { keys: ["a1"] };
   if (route.path.endsWith("/invites")) return { email: "someone@example.com", role: "viewer" };
   if (route.path === "/api/tenants") return { name: "テスト" };
   if (route.path === "/api/session/tenant")
     return { tenantId: "00000000-0000-0000-0000-000000000000" };
   if (route.path === "/api/invites/accept") return { token: "x".repeat(43) };
   if (route.path === "/api/skill-tokens") return { name: "テスト用" };
+  if (route.path === "/api/analysis-requests")
+    return { period_start: "2026-08-01", period_end: "2026-08-28" };
   if (route.path === "/api/youtube/channel") return { channelId: "UC_test" };
   if (route.path === "/api/youtube/captions-auto") return { enabled: true };
   if (route.path === "/api/youtube/google-client")

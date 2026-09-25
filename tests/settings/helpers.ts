@@ -9,9 +9,9 @@ import {
 } from "../../src/adapters/google-youtube";
 import type { Bindings } from "../../src/env";
 import { app } from "../../src/index";
-import { call, type LoggedIn, ORIGIN } from "../platform/helpers";
+import { call, type LoggedIn, ORIGIN, type Owner } from "../platform/helpers";
 
-export type Owner = LoggedIn & { tenantId: string };
+export { auditCount, type Owner } from "../platform/helpers";
 
 export interface FakeChannel {
   id: string;
@@ -154,15 +154,6 @@ export async function upload(
     { method: "POST", headers: { cookie: user.cookie, "x-requested-with": "yta" }, body: form },
     env,
   );
-}
-
-export async function auditCount(tenantId: string, action: string): Promise<number> {
-  const row = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM audit_log WHERE tenant_id = ?1 AND action = ?2",
-  )
-    .bind(tenantId, action)
-    .first<{ n: number }>();
-  return row?.n ?? 0;
 }
 
 export async function tenantName(tenantId: string): Promise<string> {

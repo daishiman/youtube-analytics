@@ -1,0 +1,37 @@
+{
+ "generated_at": "2026-09-25T00:47:01Z",
+ "binding": "beads",
+ "authority": "C28 bd-bridge only (GitHub mutation 0)",
+ "workspace_id": "bdw_fed24357d2d6746d79913637",
+ "feature_id": "feat-skill-analysis-reports",
+ "plan": {
+  "imports": 0,
+  "exports": {
+   "created_issues": 13,
+   "reused_epic": "yta-ufd",
+   "created_edges": 13
+  },
+  "conflicts": 0,
+  "tombstones": 0,
+  "pending_retry": 0,
+  "done_transitions": 0
+ },
+ "mutations": [
+  {
+   "op": "create projection",
+   "preview": ".artifact-delivery/external-mutation/preview-5e22ef35606c421888f668487ce813a4.json",
+   "authorization": ".artifact-delivery/external-mutation/authorization-4752011cb27d4fe99b5da06b1ac49fd6.json",
+   "result": "epic yta-ufd (idempotent 再利用) + yta-ufd.1..13, 機能内 blocks edge 13, parity 13/13 confirmed"
+  }
+ ],
+ "second_pass": {
+  "method": "scratchpad/sar_second_pass.py: snapshot 全 74 node の external_ref・blocks edge・parent を bd show と突合 (read-only)",
+  "changes": 0
+ },
+ "snapshot": {
+  "path": ".dev-graph/state/beads/sync-snapshot.json",
+  "graph_revision": 14,
+  "nodes": 74,
+  "digest": "sha256:c97e46dc2376e02c7aeeeabed1dcfd0cbc8b8dbeb01fca3155b3ab6749710a69"
+ }
+}

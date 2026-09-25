@@ -1,0 +1,32 @@
+{
+ "skill": "run-dev-graph-schedule",
+ "recorded_at": "2026-09-24T16:04:12Z",
+ "output": "eval-log/dev-graph-schedule-feat-ai-analysis-screen-20260924.json",
+ "checklist": [
+  {
+   "item": "candidate confirmed/pass/complete・依存done・lease無し",
+   "status": "pass",
+   "evidence": "bd ready ∩ parity confirmed: feat-platform-tenant-auth, SYS-PTA-P01 / leases=[]"
+  },
+  {
+   "item": "feature/task 別 batch",
+   "status": "pass",
+   "evidence": "batches.features=[[feat-platform-tenant-auth]], batches.tasks=[[SYS-PTA-P01]]"
+  },
+  {
+   "item": "同一batch resource_scope 重複0",
+   "status": "pass",
+   "evidence": "conflicts=[]"
+  },
+  {
+   "item": "branch devgraph/<id> と public claim command",
+   "status": "pass",
+   "evidence": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>"
+  },
+  {
+   "item": "graph/tracker/lease digest 不変",
+   "status": "pass",
+   "evidence": "before/after sha256 一致 (read-only)"
+  }
+ ]
+}

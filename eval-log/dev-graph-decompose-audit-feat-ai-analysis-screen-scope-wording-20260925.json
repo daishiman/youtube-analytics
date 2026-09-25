@@ -1,0 +1,75 @@
+{
+  "verdict": "PASS",
+  "evaluated_digest": "06489dabdcfa3ccf364a90f3343d8f89452b6591295ffd437cade7e79194b871",
+  "checks": [
+    {
+      "id": "digest_recomputation",
+      "status": "PASS",
+      "detail": "aia-stage-manifest.json の files[3](.dev-graph/state/graph.json, features/feat-ai-analysis-screen.context.json, features/feat-ai-analysis-screen.md)をソートし、各ファイルの sha256 を relpath\\tsha256\\n で連結して sha256 した再計算値は 06489dabdcfa3ccf364a90f3343d8f89452b6591295ffd437cade7e79194b871 で、manifest の evaluated_digest と完全一致した。"
+    },
+    {
+      "id": "diff_scope_limited_to_expected_fields",
+      "status": "PASS",
+      "detail": "repo(graph_revision 13)と stage(graph_revision 14)を graph_node_id 単位で全76ノード比較。差分ノードは feat-ai-analysis-screen の1件のみで、変更フィールドは scope_in(1項目)・updated_at・confirmation_status(confirmed→draft)・evaluation_status(pass→pending)・confirmation_evidence(evaluator/evidence_ref/evaluated_digest が全て null 化)の5フィールドに限定された。指示にある『4項目』のうち confirmation_status と evaluation_status は別フィールドとして数えているが内容は完全に一致。goal・scope_out・acceptance・depends_on・title・その他75ノードは repo と1バイトも変わっていない。"
+    },
+    {
+      "id": "graph_revision_increment",
+      "status": "PASS",
+      "detail": "graph_revision は repo=13 → stage=14 のみで、二重加算や飛び番はない。"
+    },
+    {
+      "id": "cross_artifact_consistency",
+      "status": "PASS",
+      "detail": "stage 側で md frontmatter#scope_in・md 本文(## スコープ > ### 含む)の該当箇条書き・context.json#scope_in・graph node#scope_in の4者を突き合わせ、全て新文言で完全一致した。"
+    },
+    {
+      "id": "wording_intent_consistency",
+      "status": "PASS",
+      "detail": "新文言『…のエンドポイント本体(呼出し元の /yt-analyze が request_id 無し起動時に依頼を自動作成するクライアント側分岐は feat-skill-analysis-reports が実装する)』は、.dev-graph/published/feature-package-feat-skill-analysis-reports/goal-spec.json#source_lineage.weekly_run_boundary_note(『.claude/skills/yt-analyze/ の排他 write_scope と request_id 無し起動時のクライアント側分岐は SAR が実装し、POST /api/skill/requests のエンドポイント本体は feat-ai-analysis-screen(SYS-AIA-P05)が持つ』)と役割分担の向きが一致する。同ファイル plan-findings.json の low finding(severity=low, bucket=cross-package-scope-wording-ambiguity)が推奨した言い換え(『POST /api/skill/requests のエンドポイント本体(呼出し元の /yt-analyze は feat-skill-analysis-reports が実装する)』)とほぼ同義であり、この low finding への対応として整合する。feat-skill-analysis-reports の graph node#scope_in にも request_id無し起動の分岐に相当する記述はなく(export/ingestReport/launchd 週次実行のみ)、AIA の scope_out[0](『…本 feature は取消・自動作成・アーカイブ除外の差分だけを持つ』)とも矛盾しない。write_scope の実体(担当範囲)は変更されておらず、文言変更のみであることを確認した。"
+    },
+    {
+      "id": "dag_cycle_and_dangling_check",
+      "status": "PASS",
+      "detail": "stage 側 graph.json の全76ノードについて depends_on の dangling 参照・重複 graph_node_id・DFS による循環検出を行い、いずれも0件だった。"
+    },
+    {
+      "id": "phase_task_contamination_check",
+      "status": "PASS",
+      "detail": "feat-ai-analysis-screen の artifact_kind は 'feature' で classification_reason に『phase task 粒度ではない』と明記されている。parent_feature=feat-ai-analysis-screen の子ノードは artifact_kind='task' の SYS-AIA-P01..P13 のみ13件で、phase task の生成責務や本文が macro feature ノード自体に混入している箇所はない。"
+    },
+    {
+      "id": "exact13_package_consistency",
+      "status": "PASS",
+      "detail": "graph 上の子タスク13件(SYS-AIA-P01..P13)は phase_ref P01..P13、parent_feature=feat-ai-analysis-screen、feature_package_id=feature-package/feat-ai-analysis-screen で exact-set かつ一致。今回の stage 差分にはこの13件・pkg-feat-ai-analysis-screen.json receipt(applied_count=13, expected_count=13, phase_refs P01..P13, parent_feature 一致)を含まないため、receipt との不整合は生じていない。"
+    },
+    {
+      "id": "schema_validation_equivalent",
+      "status": "PASS",
+      "detail": "validate-graph-schema.py はstage単体(3ファイルのみ)に対して repo-root=stage で実行すると他75ノードの artifact_missing が大量発生するため、read-only scratch 上に repo 全体を複製し、stage の3ファイルだけを上書きした一時ツリーに対して手動実行した(repo・stage 本体は未変更)。結果、missing_sections=0、violations は feat-ai-analysis-screen に対する3件(active_not_ready、confirmation_status期待値違反、evaluation_status期待値違反)のみで、これは confirmation_status=draft/evaluation_status=pending への意図的な差し戻し(監査待ち状態)による想定内の指摘であり、他ノードやDAG構造・path containment に関する違反は0件だった。"
+    },
+    {
+      "id": "published_package_staleness",
+      "status": "INFO",
+      "detail": "findings を参照。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "observation": "AIA の published package(.dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json)の scope_in は旧文言のままで、feature_context.feature_digest(sha256:9cb2f8b7...)・feature_definition.evaluated_digest(sha256:30582d22...)は今回の stage 後の feat-ai-analysis-screen.md/context.json のバイト列と一致しない(旧 confirmation_evidence.evaluated_digest と同値であり、stage 後は confirmation_evidence 自体が null 化されているため両者とも束縛が切れる)。テキストレベルでの source-binding digest は stale である。",
+        "evidence": [".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#feature_context.feature_digest", ".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#feature_definition.evaluated_digest", ".dev-graph/state/receipts/pkg-feat-ai-analysis-screen.json"]
+    },
+    {
+      "severity": "low",
+      "observation": "上記 staleness は write_scope・実装範囲(実体)を変えない文言修正が理由であり、published package の P01..P13 task-specs(write_scope・acceptance・DAG)自体は今回の変更の影響を受けていない。したがって『再 plan(P01..P13 の再生成)』までは必須ではないが、goal-spec.json の scope_in テキストと SAR 側 plan-findings.json の low finding(cross-package-scope-wording-ambiguity)を解消済みとして扱うには、最低限 goal-spec.json の該当箇所と source_lineage の digest 束縛を再同期(regenerate または manual patch)する必要がある。放置すると、次回 SAR 側の promotion/staleness チェックや第三者レビューが published goal-spec.json を読んだ際に旧文言の曖昧さが再燃するリスクがある。",
+      "evidence": [".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json#findings[0]", ".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#scope_in"]
+    },
+    {
+      "severity": "info",
+      "observation": "confirmation_status=draft / evaluation_status=pending / confirmation_evidence 全null化は、今回の変更が『前回確認済みの内容から逸脱したため再確認が必要』という意図的な状態遷移であり、graph 構造上の欠陥ではない。監査完了後に新たな confirmation_evidence(本監査への evidence_ref)を伴って confirmed/pass へ戻す運用が必要。",
+      "evidence": ["features/feat-ai-analysis-screen.md#confirmation_status", "features/feat-ai-analysis-screen.md#evaluation_status", "features/feat-ai-analysis-screen.md#confirmation_evidence"]
+    }
+  ],
+  "auditor": "dev-graph:dev-graph-integrity-auditor",
+  "audited_at": "2026-09-25T00:00:00Z"
+}

@@ -2,7 +2,7 @@
 import { requirePermission, type TenantContext } from "../domain/tenant-context";
 import { newId, randomToken, sha256Hex } from "../lib/crypto";
 import { AppError } from "../lib/errors";
-import { type Deps, iso } from "./common";
+import { type Deps, iso, platform } from "./common";
 import { audit, rateLimit, settingsRepo } from "./settings-common";
 
 /** 1人あたりの有効トークン上限（テナントをまたいで数える） */
@@ -50,4 +50,27 @@ export async function revokeSkillToken(deps: Deps, ctx: TenantContext, tokenId: 
   // 他人のトークン・存在しないトークンは区別せず 404
   if (changed === 0) throw new AppError("NOT_FOUND");
   await audit(deps, ctx, "token.revoke", tokenId);
+}
+
+/**
+ * Authorization: Bearer yta_… を SHA-256 で照合し、失効していない・テナントが生きている・
+ * 発行者がまだメンバーであるトークンだけを受ける。役割は要求ごとに tenant_members から読み直す
+ */
+export async function resolveSkillToken(
+  deps: Deps,
+  authorization: string | undefined,
+): Promise<TenantContext> {
+  const m = authorization?.match(/^Bearer\s+(yta_[A-Za-z0-9_-]{16,200})\s*$/);
+  if (!m?.[1])
+    throw new AppError(
+      "UNAUTHENTICATED",
+      "設定画面で発行した個人トークンを Authorization: Bearer で送ってください",
+    );
+  const row = await platform(deps).authenticateSkillToken(await sha256Hex(m[1]), iso(deps.now));
+  if (!row)
+    throw new AppError(
+      "UNAUTHENTICATED",
+      "個人トークンが無効か失効しています。設定画面で発行し直してください",
+    );
+  return { tenantId: row.tenant_id, userId: row.user_id, role: row.role };
 }

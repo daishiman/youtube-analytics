@@ -1,0 +1,21 @@
+{
+  "api_version": 1,
+  "generated_at": "2026-09-01T00:30:00.000Z",
+  "request": {
+    "request_id": "A-0001",
+    "period_start": "2026-08-03",
+    "period_end": "2026-08-30",
+    "instruction": "週次ファネルの改善候補を確認したい",
+    "status": "実行中"
+  },
+  "channel": {
+    "channel_id": "UC_fixture_channel",
+    "title": "フィクスチャチャンネル"
+  },
+  "next_version": 1,
+  "idempotency_key": "A-0001:v1",
+  "rows": [],
+  "targets": [],
+  "analysis_history": [],
+  "action_effects": []
+}

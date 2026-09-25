@@ -24,6 +24,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings src/worker-configuration.d.ts",
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
     "db:seed:local": "wrangler d1 execute DB --local --file scripts/seed-local.sql",
+    "check:migrations": "node scripts/check-migrations.mjs",
+    "check:skill": "node scripts/skill-analysis/check-no-causal-language.mjs && node scripts/skill-analysis/check-rds-unmodified.mjs && node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample --with-stub && (node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample --with-stub=403; test $? -eq 4)",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
     "deploy": "pnpm build:web && wrangler deploy"
   },

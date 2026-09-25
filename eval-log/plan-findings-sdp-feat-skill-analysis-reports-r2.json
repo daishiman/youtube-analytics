@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-skill-analysis-reports-r1",
+  "evaluated_digest": "sha256:4347094c5a6e5e812397bf5b6e4815dff848773187a56efa5c2794d58a2cb073",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "FAIL",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "FAIL",
+      "summary": "r1のhigh finding(scope_inのlaunchd週次実行とscope_outのPOST /api/skill/requests除外が両立しない)自体は解消した。P01/P02/P05/P12は launchd 週次実行の範囲を『既存request_idを指定した/yt-analyze起動設定』までに限定し、request_id無し起動時の依頼自動作成とPOST /api/skill/requestsを一貫してfeat-ai-analysis-screenの差分と明記している。しかしこの再設計は、goal-spec.json#invisible_requirements_grounding が明示的に接地根拠として引用する system-spec/00-requirements-definition.md L84 I5『運営者はlaunchdで週次にI4を自動実行する。自動実行ではスキルが個人トークンで依頼を作ってから分析する(qa-095)』、および system-spec/backend.md の qa-095 確定記述『/yt-analyze は request_id 無しで起動されたときこの API で依頼を作ってから GET /api/skill/export?request_id= を呼ぶ』と正面から矛盾する。この確定仕様は『/yt-analyze というスキル自身が無引数起動時に依頼を作る』ことを要求しているが、P05は『Claude Code用 /yt-analyzeスキル(request_id引数必須)』とし、request_id無し起動時の依頼自動作成を/yt-analyzeの実装から完全に除外した。goal-spec.jsonはI5/qa-095を自らの根拠として維持したまま(invisible_requirements_added の該当項目を修正していない)、task-specs側だけがこれと矛盾する設計へ変更されており、goal-spec内部(根拠節)とtask-specs(実装範囲)の間に新しい矛盾が生じている。",
+      "evidence": [
+        "goal-spec.json#invisible_requirements_grounding",
+        "system-spec/00-requirements-definition.md#I5",
+        "system-spec/backend.md (qa-095確定記述)",
+        "task-specs/phase-01-requirements.md#目的",
+        "task-specs/phase-05-implementation.md#成果物"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "FAIL",
+      "summary": "P01..P13 exact-setは揃い(gate:deterministic-validation)、必須sectionは非空でplaceholderは検出しなかった。acceptance 12項目とP04/P06/P07の検証手段は依然として1対1対応している。r1のlow finding(diff -rの取込元が絶対パス固定)も解消した(check-rds-unmodified.mjsは.claude/report-design-system.ORIGIN.mdの『取込元』行またはRDS_ORIGIN環境変数から解決し、取込元不在時はgit log/git diff --exit-codeへフォールバックする)。しかし、system-spec/backend.mdが確定する『/yt-analyzeがrequest_id無しで起動されたときPOST /api/skill/requestsで依頼を作ってから分析する』という自動実行の中核経路の実装先が、本feature(SAR)とfeat-ai-analysis-screen(AIA)のどちらの write_scope にも存在しない。SARはこの経路を.claude/skills/yt-analyze/(SAR排他write_scope)から明示的に除外し、AIAへ委譲したが、AIAの実際のtask-specs(phase-01/02/05等)にはPOST /api/skill/requestsの実装や.claude/skills/yt-analyze/の変更が一件も現れず(.dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs 内で『yt-analyze』表記が現れるのはphase-03の設計レビュー受入(403応答の設計確認)だけ)、AIAのwrite_scope(phase-05: web/, src/, migrations/, public/privacy.html, public/terms.html)は.claude/skills/yt-analyze/を含まない。したがって『自動実行ではスキルが依頼を作ってから分析する』というI5/qa-095の中核機能は、SAR・AIAいずれのpackageでも実装される計画になっておらず、acceptance12項目には現れない見えない要件(invisible_requirements_grounding記載の『運営者Macのlaunchdによる週次実行』全体)が実装単位に写像されないまま漏れている。",
+      "evidence": [
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-12-documentation-operations.md#受入",
+        "goal-spec.json#invisible_requirements_grounding",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md#Write scope",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-03-design-review.md"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "feature-package.json/workstream-inventory.json/task-graph.json/system-build-handoff.jsonは全て同一13件・同一phase_ref・同一feature_package_id(feature-package/feat-skill-analysis-reports)/parent_feature(feat-skill-analysis-reports)で一致した。staging-manifest.json記載のfiles 17件全てのsha256を実ファイルから再計算し、記載値と完全一致した(本評価が独自に再計算した値であり、r1やgoal-spec由来の数値を再利用していない)。validate-system-plan.pyのvalidated_digest(sha256:4347094c5a6e5e812397bf5b6e4815dff848773187a56efa5c2794d58a2cb073)はstaging-manifest.json#canonical_digestおよび依頼書記載の期待digestと完全一致する。P05/P08のmigrations暫定番号(0011〜0015)と確定規則(『実装着手時にorigin/mainと依存feature作業ブランチのmigrations/を再走査し最大番号+1から連番で採番し直し、renumberの記録を残す』)は両phaseで同一文言のまま維持されている。skill_tokensは既存のmigrations/0001_platform.sqlを再利用する設計のままで、二重実装は見当たらない。",
+      "evidence": [
+        "staging-manifest.json",
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "task-specs/phase-05-implementation.md#Architecture and deploy unit",
+        "task-specs/phase-08-refactoring-migration.md#Architecture and deploy unit",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "FAIL",
+      "summary": "task-graph.jsonのnode/edgeはP01→P02→…→P13の前向き直線DAGで、機械的な循環・後方edge・cross-feature task参照は検出しなかった(gate:deterministic-validation)。intra-feature DAG自体は正しい。しかしC1/C2で指摘した通り、SARはlaunchd週次実行(scope_in)の機能的な成立に不可欠な『/yt-analyzeのrequest_id無し起動時の依頼自動作成』をfeat-ai-analysis-screenへ全面委譲しているが、AIAのwrite_scopeは.claude/skills/yt-analyze/を含まず、AIAのtask-specsにもこの実装が計画されていない。goal-spec.json#source_lineage.dependency_noteはfeat-youtube-daily-collectionとfeat-csv-media-ingestのみを前提境界として挙げ、この機能依存の起点であるfeat-ai-analysis-screenを明記していない(P12のrunbook受入項目は運用手順上の前提として言及しているが、source_lineageのdependency_noteやtask-graph.jsonのcross-feature依存としては接地されていない)。intra-feature DAGの形式は正しくても、scope_inで宣言した『運営者Macのlaunchd週次実行』を実際に成立させる依存関係(SARの/yt-analyzeがAIAの未実装経路を呼ぶ前提)がどの package のDAG/lineageにも実在しないため、依存関係の整合性は package の主張と一致しない。",
+      "evidence": [
+        "task-graph.json",
+        "goal-spec.json#source_lineage",
+        "task-specs/phase-12-documentation-operations.md#目的",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#scope_in",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md#Write scope",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/03ai分析",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-skill-analysis-reports-r1"
+      ],
+      "exit_code": 0,
+      "conditions": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:4347094c5a6e5e812397bf5b6e4815dff848773187a56efa5c2794d58a2cb073\",\n  \"feature_package_id\": \"feature-package/feat-skill-analysis-reports\",\n  \"parent_feature\": \"feat-skill-analysis-reports\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "aa3a7a41416586df9ae4059bbe1675b92777203b8f39460d7726fd585e2220b4"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "16c0e332c7ff71cecb2837fbe70c13aca2b2f16067c98844cc2715f533de9054"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "c2695b5ffb45f55cedea82af15f9188ba2987a0dd7bb0ed4780438966035298f"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "e895ba9c3230e33939cfc98b17fd2f25b10a59ca9dd490490ea107ddabeae87a"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "ba519a4b68ef9d2ba30633f82d93b0c2605a0c69524431652e0804f9cc2c70f2"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "c587fa5f2ebb6b882c333d038fbb80af6186425304039b97d709c153d0170ab9"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "9394bda606ca958cb5a90c3ee1a7cb57300ef0daeb9b276093653230404afefd"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "74dfa56ffdf4848ab660653963673b54f30bce5787679b4f9d71828d65057f01"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "32681d333c5b0d214d18843a29ac72be2177ab16d84eb2599ec66b318f6cf178"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "2f8eebfedd733eeae45bdb56c4b6a2bc1d1457c0aa4e1df8f9ab3c8488da4eec"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "0608e57d1b297bf20f9ee4f91fbd5138c37e49364014ed00c97c4164e274fc54"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "68840dcd099561312b8327b6a8b57768359e77be32fd3b50719a076d82c1881c"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "4795073f0402a74136327704f8c31c14a59c9efcd23b2bd7c949e2a00f5d7f53"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "05fea09bdcd1d212a9050f945f460b5b7522947a8c77444193d9f3c3c9390d37"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "013d4503134d29feff021c283bb640e703dc7d00812c311a8e58d5f131ebca06"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "7ad15d9057dda2b6d85f44d18c10406939d7ad74552237d69f4c9c9bedb355c9"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "c16a6d6c83dcf5b0b253ad1d2c979e21c6f9747016405490756259e39ef90859"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "16740c2b4d1599f6f6652983998441dc16257a9783608410ab5a73207d5742fb"
+    }
+  ],
+  "staleness_rule": "本評価はstaging-manifest.jsonのcanonical_digest(sha256:4347094c5a6e5e812397bf5b6e4815dff848773187a56efa5c2794d58a2cb073)に対してのみ有効である。staging配下のいずれかのファイルが変更されdigestが再計算された場合、このplan-findings.jsonは無効(stale)とみなし、同一digestで再評価するまでpromotionに使用してはならない。",
+  "findings": [
+    {
+      "severity": "high",
+      "bucket": "cross-feature-capability-gap",
+      "observation": "r1のhigh finding(scope_in/scope_outの直接矛盾)を解消するためP01/P02/P05/P12は『launchd週次実行=既存request_idを渡すだけ』に範囲を狭め、『request_id無し起動時の依頼自動作成とPOST /api/skill/requests』をfeat-ai-analysis-screenの差分として一貫して明記した。しかしsystem-spec/00-requirements-definition.md L84 I5および system-spec/backend.md 確定記述(qa-095)は『/yt-analyze は request_id 無しで起動されたときこの API で依頼を作ってから…呼ぶ』ことを要求しており、これは.claude/skills/yt-analyze/自体の変更を必要とする。.claude/skills/yt-analyze/への書込は本featureのwrite_scope(phase-05)だけが持ち、feat-ai-analysis-screen(.dev-graph/published/feature-package-feat-ai-analysis-screen)のwrite_scope(phase-05: web/, src/, migrations/, public/privacy.html, public/terms.html)には含まれない。加えてAIA側のtask-specsにもPOST /api/skill/requestsの実装や/yt-analyzeの改修が一件も計画されていない(phase-03の設計レビューで403応答の設計に触れるのみ)。結果として、I5/qa-095が要求する『自動実行時にスキルが依頼を作ってから分析する』という中核機能は、SAR・AIAいずれのpackageにも実装先が存在せず、goal-spec.json#invisible_requirements_grounding が自らの根拠として引用するI5と、実際のtask-specsの実装範囲が矛盾したまま残る。本featureのP05/P12で.claude/skills/yt-analyze/に『request_id無し起動をサポートしfeat-ai-analysis-screenのAPIを呼ぶ』経路自体は自featureで実装し、feat-ai-analysis-screen側はPOST /api/skill/requestsエンドポイント本体の実装だけを担う、という書込境界の再分割を推奨する。",
+      "evidence": [
+        "system-spec/00-requirements-definition.md#I5",
+        "system-spec/backend.md (qa-095確定記述)",
+        "goal-spec.json#invisible_requirements_grounding",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-12-documentation-operations.md#目的",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md#Write scope"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability-dependency-declaration",
+      "observation": "goal-spec.json#source_lineage.dependency_noteはfeat-youtube-daily-collectionとfeat-csv-media-ingestのみを前提境界として挙げ、launchd週次実行の完全自動化に必要なfeat-ai-analysis-screenへの機能依存を明記していない。P12のrunbookは『本番launchctl bootstrap有効化はfeat-ai-analysis-screenがPOST /api/skill/requestsとrequest_id無し起動経路を出荷した後の運用前提条件』と運用手順としては明記しているが、dependency_noteやtask-graph.jsonのcross-feature依存としては接地されていない。dependency_noteにfeat-ai-analysis-screenへの機能依存(launchd週次実行の完全自動化に限る)を追記することを推奨する。",
+      "evidence": [
+        "goal-spec.json#source_lineage",
+        "task-specs/phase-12-documentation-operations.md#受入"
+      ]
+    }
+  ]
+}

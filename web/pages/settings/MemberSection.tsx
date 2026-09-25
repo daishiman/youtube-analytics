@@ -1,5 +1,7 @@
 // 設定画面「メンバー」区画（オーナーだけに表示）。メンバー一覧・役割変更・外す・招待
+
 import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { api, type Member, type PendingInvite, ROLE_LABELS, type Role } from "../../api";
 import { formatDate } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -216,7 +218,9 @@ export function MemberSection({
         }}
         onCancel={() => setRemoving(null)}
       >
-        <p>{removing?.email} をこのワークスペースから外します。</p>
+        <p>
+          {removing?.email} をこの{TENANT_LABEL}から外します。
+        </p>
       </ConfirmDialog>
     </SectionCard>
   );

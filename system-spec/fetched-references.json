@@ -62,13 +62,13 @@
     },
     {
       "target_id": "youtube-analytics-api",
-      "retrieved_at": "2026-09-21T09:50:59Z",
+      "retrieved_at": "2026-09-24T14:48:15Z",
       "source_url": "https://developers.google.com/youtube/analytics/reference/reports/query",
       "official_publisher": "Google",
       "official_host": "developers.google.com",
       "last_updated": "2026-09-16",
-      "latest_checked_at": "2026-09-21T09:50:59Z",
-      "summary": "reports.queryはyt-analytics.readonly(収益はmonetary)に加えyoutube.readonlyスコープが必要。"
+      "latest_checked_at": "2026-09-24T14:48:15Z",
+      "summary": "reports.queryの認可スコープはyt-analytics.readonly(収益はyt-analytics-monetary.readonly)。加えてページ冒頭に『API requests to this method now require access to the https://www.googleapis.com/auth/youtube.readonly scope』とあり、youtube.readonlyも必要(2026-09-24に原文を再照合し従来の記載と一致することを確認)。"
     },
     {
       "target_id": "github-actions",
@@ -92,13 +92,13 @@
     },
     {
       "target_id": "gemini-api",
-      "retrieved_at": "2026-09-21T09:51:01Z",
+      "retrieved_at": "2026-09-24T14:48:15Z",
       "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
       "official_publisher": "Google",
       "official_host": "ai.google.dev",
-      "last_updated": "2026-09-16",
-      "latest_checked_at": "2026-09-21T09:51:01Z",
-      "summary": "AI Studio利用は無料。最新Flash/Flash-LiteにFree tierあり(Pro最新は無し)。Free tierの入力は製品改善に使われ得る。比較記録として採用せず。"
+      "last_updated": "2026-09-24",
+      "latest_checked_at": "2026-09-24T14:48:15Z",
+      "summary": "AI Studio利用は全提供地域で無料。最新Flash(Gemini 3.8 Flash)とFlash-Lite(Gemini 3.5 Flash-Lite)にFree tierあり、Pro最新(Gemini 3.1 Pro Preview)は無し。Free tierの入力は製品改善に使われ得る。比較記録として採用せず。"
     },
     {
       "target_id": "claude-code",
@@ -183,13 +183,13 @@
     },
     {
       "target_id": "youtube-api-developer-policies",
-      "retrieved_at": "2026-09-21T12:46:20Z",
+      "retrieved_at": "2026-09-24T14:48:15Z",
       "source_url": "https://developers.google.com/youtube/terms/developer-policies",
       "official_publisher": "Google",
       "official_host": "developers.google.com",
       "last_updated": "2026-09-14",
-      "latest_checked_at": "2026-09-21T12:46:20Z",
-      "summary": "III.A.2: 機能利用前にプライバシーポリシーへの同意を求め、常に目立つ位置で参照可能にし、Google Privacy Policyへリンクする。III.D.2.3: 認可の取消手段を用意し、取消から7日以内に保存データを削除。III.E.4.g: 利用者のデータ削除依頼を受け付け7日以内に削除。"
+      "latest_checked_at": "2026-09-24T14:48:15Z",
+      "summary": "III.A.2: 機能利用前にプライバシーポリシーへの同意を求め、常に目立つ位置で参照可能にし、Google Privacy Policyへリンクする。III.D.2.c(Revocation).i: 認可の取消手段を用意し、取消時はトークンを直ちにrevokeし、取消から7暦日以内に保存データを削除(旧記載のIII.D.2.3は番号表記の誤り。ページ自身の(III.A.2.i)型の英字・ローマ数字表記に合わせて訂正)。III.E.4.g: 利用者のデータ削除依頼を受け付け7暦日以内に削除。"
     },
     {
       "target_id": "youtube-reporting-api",

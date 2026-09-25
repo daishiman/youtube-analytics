@@ -1,0 +1,45 @@
+{
+  "verdict": "PASS",
+  "evaluated_digest": "514510cff3ebe47f93470df0ce57f8025042fa6a5296aa32eee8dac234c06525",
+  "checks": [
+    {
+      "id": "manifest-digest",
+      "result": "pass",
+      "evidence": "stage 配下4ファイル(.dev-graph/state/graph.json, docs/analysis/dashboard-analysis-catalog.md, features/feat-skill-analysis-reports.context.json, features/feat-skill-analysis-reports.md)から sha256(relpath\\tsha256(file)\\n) を relpath 昇順で連結し再計算した digest が manifest の evaluated_digest (514510cff3ebe47f93470df0ce57f8025042fa6a5296aa32eee8dac234c06525) と完全一致した。"
+    },
+    {
+      "id": "dag",
+      "result": "pass",
+      "evidence": "repo graph(revision 11, node数63)に stage graph(revision 12, node数63)を重ねたところ、node id の増減は0件、変更ノードは feat-skill-analysis-reports の1件のみ。stage graph 全体(63ノード)に対し DFS で循環検出を実施し cycles=0件、dangling depends_on=0件、重複 id=0件を確認した。当該ノードの depends_on は ['feat-youtube-daily-collection','feat-csv-media-ingest'] のままで repo/stage 間で無変更(changed-fields 一覧に depends_on が含まれない)。"
+    },
+    {
+      "id": "no-phase-task",
+      "result": "pass",
+      "evidence": "stage graph.json と repo graph.json の node id 差分は added=0件・removed=0件・changed=1件(feat-skill-analysis-reports のみ)。当該ノードの artifact_kind は 'feature' のまま、parent_feature/feature_package_id も null のままで、phase/task 粒度のノードや責務混入は検出されなかった。"
+    },
+    {
+      "id": "scope-coverage",
+      "result": "pass",
+      "evidence": "00-requirements-definition.md (system-spec 配下) の U1(essential_purpose)・G2・I4・D-ai-engine の各項目はいずれも Claude Code 上の report-design-system スキルを AI 分析エンジンとして既定・確定(confirmed)しており、stage の goal/scope_in/scope_out 追記内容(report.mjs init→brief.json/analysis.mjs→build、catalog §6 の組み立て)と矛盾しない。backend.md (system-spec 配下) の qa-007 記述とも整合。feat-ai-analysis-screen.context.json の scope_out には『個人トークンの検証・GET /api/skill/export・POST /api/skill/reports の ingestReport 本体と analysis_history の射影本体・launchd 週次実行の設定』はfeat-skill-analysis-reports 側と明記され、feat-web-screens-actions にも report-design-system 内部処理への言及なし。両 feature ファイルに 'report-design-system' の言及は0件で重複なし。scope_out に『因果推論・予測』が維持されている。"
+    },
+    {
+      "id": "context-schema",
+      "result": "pass",
+      "evidence": "stage features/feat-skill-analysis-reports.context.json は必須10キー(graph_node_id, artifact_kind, purpose, goal, scope_in, scope_out, acceptance, depends_on, architecture_refs, updated_at)を全て保持(repo版と同数・同キー構成)。stage の md frontmatter・context.json・graph node 間でgoal/scope_in/scope_out/acceptance/updated_at が完全一致(MATCH)。context.json の architecture_refs 11件(architecture/youtube-analytics-system.md, specs/youtube-analytics-system.md, system-spec index.md, system-spec 00-requirements-definition.md, system-spec backend.md, system-spec security.md, system-spec database.md, system-spec maintenance-ops.md はいずれも system-spec 配下, docs/analysis/dashboard-analysis-catalog.md, .claude/skills/report-design-system/SKILL.md, .claude/report-design-system.ORIGIN.md)は全て repo 上に実在を確認した。graph node 側 architecture_refs フィールドが node-id 形式('arch-youtube-analytics-system')でありcontext.json のファイルパス形式と異なる点は repo 既存(変更前)から同じパターンであり本変更由来の不整合ではない。"
+    },
+    {
+      "id": "skill-fact",
+      "result": "pass",
+      "evidence": "repo の .claude/skills/report-design-system/SKILL.md に init/build コマンド(node $R init, node $R build)と『brief.json、analysis.mjs を作る』『analysis.mjs に計算・判定・文言・図を集約する』の記述を確認。scripts/report.mjs にコマンド定義(init/check/build/verify/done)を確認。mannWhitney/rateCI は references/statistics.md, scripts/stats.mjs, scripts/selftest.mjs, scripts/new-report.mjs, prompts/analyst.md に実在。.claude/report-design-system.ORIGIN.md も実在し、取込元・取込方式(vendoring, 無改変)・更新方法(diff -r で丸ごと差し替え)を記載。docs/analysis/dashboard-analysis-catalog.md の stage diff は §6 に『生成』の1行のみ追加しており、記載内容(report.mjs init/build、brief.json/analysis.mjs)は上記実在ファイルと一致する。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "infra-script-missing",
+      "severity": "info",
+      "node_id": null,
+      "evidence": "指定された validate-graph-schema.py (scripts 配下) と graph-node.schema.json (schemas 配下) は本 repo に存在しない(scripts 配下には validate-repository-consistency.py のみ確認)。この監査では代替として手動での JSON 構造検証・DFS 循環検出・duplicate id 検証を実施し、判定不能をPASS扱いにはしていない。",
+      "suggested_fix": "スキーマ正本を用いた自動検証を行いたい場合は該当スクリプトとスキーマファイルを repo に追加することを検討。"
+    }
+  ]
+}

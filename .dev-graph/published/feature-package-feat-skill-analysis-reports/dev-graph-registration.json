@@ -1,0 +1,1181 @@
+{
+  "schema_version": "1.0.0",
+  "source_digest": "sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+  "promotion_receipt": ".dev-graph/published/feature-package-feat-skill-analysis-reports/atomic-promotion-receipt.json",
+  "feature_package_id": "feature-package/feat-skill-analysis-reports",
+  "parent_feature": "feat-skill-analysis-reports",
+  "expected_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "binding_intents": {
+    "SYS-SAR-P01": "beads",
+    "SYS-SAR-P02": "beads",
+    "SYS-SAR-P03": "beads",
+    "SYS-SAR-P04": "beads",
+    "SYS-SAR-P05": "beads",
+    "SYS-SAR-P06": "beads",
+    "SYS-SAR-P07": "beads",
+    "SYS-SAR-P08": "beads",
+    "SYS-SAR-P09": "beads",
+    "SYS-SAR-P10": "beads",
+    "SYS-SAR-P11": "beads",
+    "SYS-SAR-P12": "beads",
+    "SYS-SAR-P13": "beads"
+  },
+  "nodes": [
+    {
+      "graph_node_id": "SYS-SAR-P01",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "個人トークン認証・分析依頼・スキル連携API・履歴・レポート版・launchd週次実行の要件を実装単位へ確定",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/requirements.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P01",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P02",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "個人トークンBearer認証・分析依頼・スキル連携API・DBスキーマの設計",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "api",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P01"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/architecture.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P02",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P03",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テナント境界・トークン失効・二重送信防止・非因果出力の設計レビュー",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P02"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/design-review.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P03",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P04",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入12項目・履歴境界・再現性・因果断定検知のテスト設計",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P03"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "tests/skill-analysis/",
+        "tests/fixtures/skill-analysis-sample/",
+        "scripts/skill-analysis/",
+        "docs/feat-skill-analysis-reports/test-design.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P04",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P05",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "Bearer認証・分析依頼/スキル連携API・DB新規テーブル・/yt-analyzeスキル・launchd週次実行の実装",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "backend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "backend",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P04"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/(追加する5本。ファイル名と番号は成果物節の確定規則で決め、計画時点の暫定番号は0011〜0015)",
+        ".claude/skills/yt-analyze/",
+        "ops/launchd/"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P05",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P06",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テスト実行と不具合修正",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P05"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "tests/skill-analysis/",
+        "scripts/skill-analysis/",
+        "src/"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P06",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P07",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入確認",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P06"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/acceptance.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P07",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P08",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "共通化の整理とマイグレーション整理",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "data",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P07"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P08",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P09",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "セキュリティと品質の保証",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P08"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/qa-report.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P09",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P10",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "最終レビュー",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P09"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/final-review.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P10",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P11",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "証跡の集約",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "evidence/feat-skill-analysis-reports/"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P11",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P12",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "運用手順『launchd週次実行の監視と障害対応』とドキュメント",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "operations",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/runbook.md",
+        "README.md"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P12",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-SAR-P13",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "CI/CD とリリース",
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "skill-analysis-reports"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-25T00:09:44Z",
+      "updated_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P11",
+        "SYS-SAR-P12"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "phase_ref": "P13",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "imported_at": "2026-09-25T00:09:44Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    }
+  ]
+}

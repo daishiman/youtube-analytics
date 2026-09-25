@@ -1,0 +1,24 @@
+{
+  "receipt_kind": "id-renumber-for-merge",
+  "graph_node_id": "feat-skill-analysis-reports",
+  "beads_id": "yta-ufd",
+  "recorded_at": "2026-09-25T02:30:00Z",
+  "reason": "計画時（tasks/feat-skill-analysis-reports）は migrations 0008〜0010 を feat-ai-analysis-screen が先に取る前提で 0011〜0015 を割り当てていた。実装は SAR→AIA の順で行い、main の最終番号が 0007 だったため、適用順（依頼→版→アクション→心理/感情→文字起こし/画像）どおり 0008 から詰めて採番した",
+  "mapping": {
+    "migrations": {
+      "0011_analysis_requests.sql": "0008_analysis_requests.sql",
+      "0012_reports_findings.sql": "0009_reports_findings.sql",
+      "0013_actions.sql": "0010_actions.sql",
+      "0014_psych_findings_comment_emotions.sql": "0011_psych_findings_comment_emotions.sql",
+      "0015_transcripts_media_assets.sql": "0012_transcripts_media_assets.sql"
+    }
+  },
+  "related": "eval-log/renumber-receipt-feat-ai-analysis-screen-20260925.json（AIA 側は後ろの 0013〜0015 へ）",
+  "not_rewritten": [
+    ".dev-graph/published/**（digest 固定の公開 package）",
+    ".dev-graph/state/receipts/**・.dev-graph/handoffs/**",
+    "tasks/**（計画時の暫定番号のまま。本 receipt の mapping で読み替える）",
+    "eval-log/** の過去の記録",
+    "Beads issue の本文"
+  ]
+}

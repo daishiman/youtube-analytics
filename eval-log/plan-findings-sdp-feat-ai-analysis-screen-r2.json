@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-ai-analysis-screen-r1",
+  "evaluated_digest": "sha256:107638bce3396c4d2f470909b2aeeb215f552626a382217ada076387a7e7af67",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec・workstream-inventory.json・task-graph.json・system-build-handoff.json・goal-spec.json 間で task_id(SYS-AIA-P01〜P13)・phase_ref・feature_package_id/parent_feature(feat-ai-analysis-screen)・repository_id(github:daishiman/youtube-analytics)が一貫している。各 task のスコープ外一覧は goal-spec.json#scope_out(個人トークン検証・スキル本体/analysis_history射影本体・週次実行設定・改善アクション画面/actions状態遷移・共通レイアウト新設・OAuthクライアント見直し・アプリ内LLM/因果推論の停止・新色トークン)と完全一致し、相互矛盾は検出しなかった。r1 で指摘した事項に対する修正(P05/P08のマイグレーション確定規則、P04/P06/P07のポーリング・900px・qa-092テストケース)も他 phase の記述や scope_out・acceptance と矛盾していない。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-05-implementation.md#スコープ外",
+        "task-specs/phase-10-final-review.md#受入",
+        "goal-spec.json#scope_out"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "P01..P13 exact-set が揃い、各 phase の Machine-readable registration fields/目的/背景/前提条件/Workstream applicability/成果物/Verification and evidence/Rollout and rollback/Handoff/参照情報の全 section が非空で placeholder は検出しなかった。r1 の high finding(migrations/0008〜0010の採番確定規則の欠落)は、P05に『実装着手時に origin/main と依存 feature ブランチの migrations/ を再走査し最大番号+1から連番で採番し直す』『衝突時は renumber-receipt に記録する(feat-settings-channel-link の実績フォーマットに準拠)』という具体的規則が追加され、P08に衝突再検査・P13に依存feature番号帯より後ろであることのCI前確認が追加されたことで解消した。r1 の medium finding(ポーリング制御・900px breakpoint がテストケースとして明示されていない)は P04 に『ポーリングの開始・停止』『幅900px未満の表示切替』を独立した受入項目として明記し、P06/P07 にも実データ・preview環境での個別合格を要求する形で解消した。r1 の low finding(qa-092単独のテストケース欠如)も P04/P06 に『qa-092(取込先のrequest_id未指定時の挙動)を独立したテストケースとして検証する』と明記され解消した。goal-spec.json#screen_mock_grounding.invisible_requirements_added の10項目(取消状態遷移・409・429・監査ログ・422/2,000,000 bytes・sandbox iframe・URL状態・ポーリング・表示語置換・マイグレーション・E2E3サイズ)はすべて P01〜P13 のいずれかの受入/検証項目へ写像されている。",
+      "evidence": [
+        "task-specs/phase-04-test-design.md#受入",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-06-test-run.md#受入",
+        "task-specs/phase-07-acceptance.md#受入",
+        "task-specs/phase-08-refactoring-migration.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#Architecture and deploy unit",
+        "goal-spec.json#screen_mock_grounding.invisible_requirements_added",
+        "eval-log/renumber-receipt-feat-settings-channel-link-20260924.json"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "feature-package.json の task_spec_paths/task_node_ids、workstream-inventory.json の task id/graph_node_registration.file_path(tasks/feat-ai-analysis-screen/SYS-AIA-Pxx.md)、task-graph.json の node id、system-build-handoff.json の execution_tasks が全て同一の13件・同一 phase_ref・同一 parent_feature/feature_package_id/repository_id で一致した。staging-manifest.json 記載の全17ファイルの sha256 を実ファイルから再計算し完全一致、staging 改変・drift は検出しなかった。validate-system-plan.py の validated_digest(sha256:107638bce3396c4d2f470909b2aeeb215f552626a382217ada076387a7e7af67)は staging-manifest.json#canonical_digest および依頼で指示された最新 canonical_digest と完全一致する(r1評価時の digest sha256:ea8d1a8...から更新済み、staleness なし)。",
+      "evidence": [
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "staging-manifest.json",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→…→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向き DAG で、循環・後方 edge・別 feature task 参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致し、feature 間依存(feat-skill-analysis-reports/feat-web-screens-actions/feat-settings-channel-link)は P01/P05/P08/P13 の Entry gate・前提条件・compatibility 節での参照のみに留まり、task node へは直接コピーされていない。",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/03ai分析",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-ai-analysis-screen-r1"
+      ],
+      "exit_code": 0,
+      "conditions": ["C1", "C2", "C3", "C4"],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:107638bce3396c4d2f470909b2aeeb215f552626a382217ada076387a7e7af67\",\n  \"feature_package_id\": \"feature-package/feat-ai-analysis-screen\",\n  \"parent_feature\": \"feat-ai-analysis-screen\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "f3b56e56682d297e4463989fbba9d89908cae0b7910f4a8d90f1eb74f800d757"
+    },
+    {
+      "path": "goal-spec.json",
+      "sha256": "3898702309b14d2a6c0af0d6e02cd12e783a2c0f3160dc460d520670e09015d2"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "8eb5313cdc6e52fb7e0fdc752297eeb8a421552375cab48d82492a9f9f31e076"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "9cb472ff746c588df3f3b9cfa158e6e4a250e9a1b26257e1fc8104f8a53154be"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "fdb977484a74041e54604cb6c674581d97f0005b454a81ef282421ba9a0b7475"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "4cedc129a253418b70659e0e81b970843b694b65a6803a3785c0eab4a76fa033"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "402a40910d9fcc506245e9b8d03d1cadfb2990fe61779092020eae13d5727d07"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "2254a3cd641f71cc6a24650c5d43a2fca6d099eaaaa41bafc1fc28ba57a0381b"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "fb691a1993c92a3c0b2e705c398c8b1a9ad467cc0c1dfe378cca9934d27449ea"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "c9573af9deba49d59179e69971adef343358f9eb4e161255e4dacaf997dead96"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "9f2280c624d496d0f3c17494b1037584d6dd4eba7347a1ad23f355b18ccccad3"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "bf199ca91d62c6f1248636be8795d0d9cbab6bac6f905eb5beecd7da2a741d4b"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "e8a33d11073e75251d725d979575aff50629cf16eebb7a0c09169c8d2c6e5992"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "2fac7adc1b1f19f047db5108abe82f205787a0897ee643acc38cd428df9d5c0c"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "fc693d5af0a939f7c55d131715651d652e5c1ce2fb11277d9af7c7f6aa3633c5"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "42304836b45be7676005e3c32cdda7b2dc11b563735e79ddb96d0a77d83382a8"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "c340c0c20a6400316b9e0ed9345f6499dd8e2691d0103c4408ced2e564ff8af5"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "7258077fd3f1ff726e470e8c00fab48557eb31e54b1eccd104b959bcda6cf137"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "1c1110a22c72cdd72afbb73ad75837a66d1fa975dfa345301fbfa13d51923510"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:107638bce3396c4d2f470909b2aeeb215f552626a382217ada076387a7e7af67)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "workstream-inventory.json の SYS-AIA-P05.write_scope は『migrations/0008_analysis_requests_extension.sql(暫定番号、確定規則は成果物節を参照)』のように、実在パスと注記文が同一文字列に結合されており、この配列要素自体は実装時に作られる実ファイルパス(migrations/0008_analysis_requests_extension.sql)と一致しない。P05のtask-spec本文#成果物には確定規則が別途明記されているため意味的な欠落ではないが、write_scope を機械的にファイルパス集合として突き合わせる用途(worktree lease境界・resource_scope検査等)では、この注記付き文字列は実在パスとして解決できない。",
+      "evidence": [
+        "task-specs/phase-05-implementation.md#成果物(Write scope)"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "goal-spec.json#screen_mock_grounding.invisible_requirements_added の一部項目が引用する行番号(system-spec/00-requirements-definition.md L711、system-spec/backend.md L639)は、現在の00-requirements-definition.mdが128行しかなくL711が存在せず、backend.md L639は取消/409とは無関係なqa-082(字幕自動取得の1日上限本数)の記述であるため、実際の根拠箇所(backend.mdの『[利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面]』ブロック、行759付近)とずれている。取消状態遷移・409の内容自体は正しく、13本のtask-specはqa番号(qa-089等)で参照しているため実害はないが、goal-spec.json側の行番号引用は stale であり是正すべき。",
+      "evidence": [
+        "goal-spec.json#screen_mock_grounding.invisible_requirements_added",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md#L759"
+      ]
+    }
+  ]
+}

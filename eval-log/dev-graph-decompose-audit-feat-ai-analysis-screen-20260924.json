@@ -1,0 +1,47 @@
+{
+  "verdict": "PASS",
+  "graph_digest": "30582d220dcc63c82d16fbb120f5bb60ac8720b995a4baabd8cf26e2b10d5222",
+  "checks": [
+    {
+      "id": "manifest-digest",
+      "result": "pass",
+      "evidence": "再生成後の stage配下19ファイルの relpath\\tsha256\\n をソート連結して再計算した sha256 = 30582d220dcc63c82d16fbb120f5bb60ac8720b995a4baabd8cf26e2b10d5222 が decomp-stage-manifest.json の evaluated_digest(staged_at=2026-09-24T15:12:01Z)と完全一致。"
+    },
+    {
+      "id": "dag",
+      "result": "pass",
+      "evidence": "overlay graph.json (nodes=50, graph_revision=10) 全体で DFS 循環検査を実施し循環0件。depends_on 参照先は全て graph_node_id 集合に含まれ dangling 0件。新規 feat-ai-analysis-screen.depends_on=[feat-skill-analysis-reports, feat-web-screens-actions, feat-settings-channel-link] は3件とも実在し前回監査から変更なし。"
+    },
+    {
+      "id": "no-phase-task",
+      "result": "pass",
+      "evidence": "repo(49ノード)とstage(50ノード)を graph_node_id で差集合した結果、追加は feat-ai-analysis-screen(feature)1件のみ、変更は feat-web-screens-actions/feat-skill-analysis-reports(既存feature)2件のみ。artifact_kind分布は task:39, feature:9, specification:1, architecture:1、graph_node_id が P\\\\d{2} 完全一致に該当するノードは0件。"
+    },
+    {
+      "id": "scope-coverage",
+      "result": "pass",
+      "evidence": "qa-089〜qa-097 が feat-ai-analysis-screen.md の scope_in/acceptance に個別対応する記述として存在(前回監査から内容変更なし)。feat-web-screens-actions は scope_in/acceptance から AI分析関連行を削除し scope_out に移管を明記、feat-skill-analysis-reports は scope_out に AI分析画面向け差分(取消・自動作成・アーカイブ除外・JSON取込)を追加済みで、3ノード間の scope 重複・欠落は検出されない。"
+    },
+    {
+      "id": "context-schema",
+      "result": "pass",
+      "evidence": "feat-ai-analysis-screen.context.json は必須10キー(graph_node_id, artifact_kind, purpose, goal, scope_in, scope_out, acceptance, architecture_refs, updated_at, depends_on)を全て保持。md frontmatter と graph.json ノードを全キー比較し差分0件。context.json の architecture_refs 12件は overlay 上で全件実在確認済み(前回監査から変更なし)。"
+    },
+    {
+      "id": "diff-only",
+      "result": "pass",
+      "evidence": "是正版を repo と再 diff。feat-web-screens-actions.md/feat-skill-analysis-reports.md は scope_in・scope_out・acceptance・updated_at の該当行のみの差分。feat-web-screens-actions.context.json/feat-skill-analysis-reports.context.json は インデント=1・末尾改行なしの既存書式に統一され、diffが scope_in/scope_out の該当行1〜2行と updated_at 1行のみに縮小(前回指摘の全行差分は解消)。graph.json ノード差分も同キー(feat-web-screens-actionsはacceptance/scope_in/scope_out/updated_at、feat-skill-analysis-reportsはscope_out/updated_at)に限定。他47ノードは repo と完全一致(diff 0件)。"
+    },
+    {
+      "id": "placeholder",
+      "result": "pass",
+      "evidence": "stage配下 features/*.md, features/*.context.json, graph.json を対象に TODO|TBD|placeholder|プレースホルダ|未定 を大小文字無視で検索し、PlaceholderPage(既存コンポーネント名)・A-xxxx(依頼ID採番の記法)を除き該当0件。"
+    },
+    {
+      "id": "schema",
+      "result": "pass",
+      "evidence": "validate-graph-schema.py --graph ov/.dev-graph/state/graph.json --repo-root ov の実行結果は valid=true, violations=[], implementation_readiness=complete, missing_sections=[]。"
+    }
+  ],
+  "findings": []
+}

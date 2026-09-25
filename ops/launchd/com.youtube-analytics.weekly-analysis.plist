@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  週次 AI 分析（/yt-analyze）を毎週月曜 09:00 に起動する LaunchAgent。
+  launchd は Mac のローカル時刻で動くため、Mac のタイムゾーンを Asia/Tokyo（JST）にしておくこと。
+  __REPO_ROOT__ と __HOME__ は設置時に置き換える（ops/launchd/README.md の「設置」）。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.youtube-analytics.weekly-analysis</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__REPO_ROOT__/ops/launchd/run-weekly-analysis.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>WorkingDirectory</key>
+  <string>__REPO_ROOT__</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__HOME__/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>YTA_REPO_ROOT</key>
+    <string>__REPO_ROOT__</string>
+    <key>YTA_LOG_DIR</key>
+    <string>__HOME__/Library/Logs/youtube-analytics</string>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/youtube-analytics/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/youtube-analytics/launchd.err.log</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>

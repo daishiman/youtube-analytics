@@ -1,0 +1,1183 @@
+{
+  "schema_version": "1.0.0",
+  "source_digest": "sha256:0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+  "promotion_receipt": ".dev-graph/published/feature-package-feat-ai-analysis-screen/atomic-promotion-receipt.json",
+  "feature_package_id": "feature-package/feat-ai-analysis-screen",
+  "parent_feature": "feat-ai-analysis-screen",
+  "expected_count": 13,
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "binding_intents": {
+    "SYS-AIA-P01": "beads",
+    "SYS-AIA-P02": "beads",
+    "SYS-AIA-P03": "beads",
+    "SYS-AIA-P04": "beads",
+    "SYS-AIA-P05": "beads",
+    "SYS-AIA-P06": "beads",
+    "SYS-AIA-P07": "beads",
+    "SYS-AIA-P08": "beads",
+    "SYS-AIA-P09": "beads",
+    "SYS-AIA-P10": "beads",
+    "SYS-AIA-P11": "beads",
+    "SYS-AIA-P12": "beads",
+    "SYS-AIA-P13": "beads"
+  },
+  "nodes": [
+    {
+      "graph_node_id": "SYS-AIA-P01",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "AI分析画面の要件を実装単位へ確定",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/requirements.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P01",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P02",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "AnalysisPage・分析API・DB拡張の設計",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "api",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P01"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/architecture.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P02",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P03",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "取消・409・権限境界・監査ログの設計レビュー",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P02"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/design-review.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P03",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P04",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入テスト・状態遷移テスト・3サイズE2Eの設計",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P03"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "docs/feat-ai-analysis-screen/test-design.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P04",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P05",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "AnalysisPage・分析/レポートAPI・DB拡張・表示語置換の実装",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "frontend",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "frontend",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P04"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P05",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P06",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "テスト実行と不具合修正",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P05"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "src/",
+        "web/"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P06",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P07",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "受入確認",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P06"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/acceptance.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P07",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P08",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "共通化の整理とマイグレーション整理",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "data",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P07"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P08",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P09",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "セキュリティと品質の保証",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "security",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P08"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/qa-report.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P09",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P10",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "最終レビュー",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "quality",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P09"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/final-review.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P10",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P11",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "証跡の集約",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "documentation",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "evidence/feat-ai-analysis-screen/"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P11",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P12",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "運用手順『AI分析の取消と再実行を扱う』とドキュメント",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "operations",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/runbook.md",
+        "README.md"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P12",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    },
+    {
+      "graph_node_id": "SYS-AIA-P13",
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "title": "CI/CD とリリース",
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "domain": "infrastructure",
+      "status": "active",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "ai-analysis-screen"
+      ],
+      "priority": null,
+      "start_date": null,
+      "target_date": null,
+      "iteration": null,
+      "created_at": "2026-09-24T15:54:55Z",
+      "updated_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P11",
+        "SYS-AIA-P12"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "phase_ref": "P13",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md",
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "confirmation_status": "confirmed",
+      "evaluation_status": "pass",
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json",
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+      },
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "imported_at": "2026-09-24T15:54:55Z"
+      },
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "confidence": 0.95,
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md"
+        }
+      ],
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "issue_linkage": null,
+      "tracker_binding": "repo-config-default",
+      "beads_linkage": null,
+      "github_project_linkages": [],
+      "pull_request_linkages": [],
+      "execution_contexts": [],
+      "completion_evidence": {
+        "policy": "linked_pr_merged_all",
+        "status": "in_progress",
+        "source": null,
+        "completed_at": null,
+        "reconciled_at": null,
+        "evidence_refs": []
+      },
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1234 @@
+{
+  "schema_version": "1.0.0",
+  "feature_package_id": "feature-package/feat-skill-analysis-reports",
+  "parent_feature": "feat-skill-analysis-reports",
+  "repo_context": {
+    "config_path": ".dev-graph/config.json",
+    "repo_identity": "github:daishiman/youtube-analytics",
+    "root_resolution_source": "explicit-cli"
+  },
+  "source_lineage": {
+    "source_plugin": "system-spec-harness",
+    "source_version": "0.1.0",
+    "compile_entrypoint": "run-system-spec-compile",
+    "completeness_entrypoint": "assign-system-spec-completeness-evaluator",
+    "source_paths": [
+      "system-spec/index.md",
+      "system-spec/00-requirements-definition.md",
+      "system-spec/backend.md",
+      "system-spec/auth.md",
+      "system-spec/security.md",
+      "system-spec/database.md",
+      "system-spec/maintenance-ops.md",
+      "architecture/youtube-analytics-system.md",
+      "specs/youtube-analytics-system.md",
+      "docs/analysis/dashboard-analysis-catalog.md",
+      ".claude/skills/report-design-system/SKILL.md",
+      ".claude/report-design-system.ORIGIN.md"
+    ],
+    "confirmed": true
+  },
+  "tasks": [
+    {
+      "id": "SYS-SAR-P01",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "個人トークン認証・分析依頼・スキル連携API・履歴・レポート版・launchd週次実行の要件を実装単位へ確定",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P01",
+      "depends_on": [],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/requirements.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P01 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "features/feat-skill-analysis-reports.md の scope_in 11項目と acceptance 12項目のすべてに、requirements.md 上で根拠章・区画/API・検証方法が1対1で対応している",
+        "個人トークン発行/失効(feat-settings-channel-link)・POST /api/skill/requestsのエンドポイント本体/依頼取消/進捗段階(feat-ai-analysis-screen)・週次集計/Studio CSV由来テーブル(feat-youtube-daily-collection, feat-csv-media-ingest)を、この feature が実装しない前提境界として requirements.md に明記している",
+        "docs/analysis/dashboard-analysis-catalog.md §6 の JSON 形(brief/results/history_review/psych_findings/ideas/actions/report_html)を取込先の正本として requirements.md に固定している",
+        "requirements.md に、I5/qa-095の要素(依頼の自動作成・実行中で作成・request_id必須のexport)ごとに担当側(SARのクライアント=.claude/skills/yt-analyze/ か AIAのエンドポイント本体=SYS-AIA-P05のsrc/)を1行ずつ対応させた表があり、SARが/yt-analyzeのrequest_id無し起動分岐(個人トークンでPOST /api/skill/requestsを呼ぶクライアント処理)を実装することが明記されている"
+      ],
+      "verification": [
+        "requirements.md の対応表の行数が scope_in11件+acceptance12件=23件と一致することを目視確認する",
+        "requirements.md 内の qa-番号参照(qa-021・qa-025〜029・qa-035・qa-037・qa-053・qa-054・qa-060・qa-083・qa-089〜097・appr-015・appr-016)がすべて system-spec/*.md に実在することを grep で確認する"
+      ],
+      "rollback": "requirements.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P01",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P01"
+      }
+    },
+    {
+      "id": "SYS-SAR-P02",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "個人トークンBearer認証・分析依頼・スキル連携API・DBスキーマの設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "api",
+      "build_target_kind": "application-code",
+      "phase_ref": "P02",
+      "depends_on": [
+        "SYS-SAR-P01"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/architecture.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P02 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "/api/skill/* すべてがBearer個人トークン(SHA-256一致・tenant_id+user_id束縛・失効拒否)を必須とする設計になっている",
+        "GET /api/skill/export の応答が行ごとにsource(api|studio_csv|business_csv)を持ち、M1〜M10と週次診断のYouTube側入力はstudio_csv由来行からのみ計算する設計になっている",
+        "analysis_history は同一tenant_id+channel_idの完了済みレポートを新しい順に最大5件返し、履歴0件でも初回分析として正常処理する設計になっている",
+        "analysis_requests テーブルは待機中→実行中→完了|失敗の一方向遷移のみを持ち、取消状態・created_via列は含まない(feat-ai-analysis-screen側の差分としてscope_outに明記済み)",
+        "reports/findings/psych_findings/comment_emotions は追記専用(UPDATE禁止)の不変条件を持ち、history_versions_used列を持つ設計になっている",
+        "POST /api/skill/reports の Idempotency-Key が request_id+版番号から導出され、同一キーの二重送信で版が増えない設計になっている",
+        "新規テーブル(analysis_requests/reports/findings/psych_findings/comment_emotions/transcripts/media_assets/actions)のマイグレーション暫定番号が0011番台から始まり、依存 feature(feat-youtube-daily-collection、feat-csv-media-ingest)の計画後に確定する暫定番号。実装着手時に origin/main と依存 feature 作業ブランチの migrations/ を再走査し最大番号+1 から連番で採番し直し、renumber の記録を残すという確定規則が明記されている",
+        "/api/skill/* (Bearer個人トークン、request_id指定済みの実行経路専用、SARのsrc/が実装)と /api/analysis-requests (セッション+content.write、画面駆動の依頼作成・一覧専用)の認証方式の違いが設計に明記され、Bearer個人トークンで /api/analysis-requests を呼び出す経路、および SARのsrc/がPOST /api/skill/requestsのサーバ側ルート(エンドポイント本体)を実装する設計のいずれも含まれていない",
+        ".claude/skills/yt-analyze/ がクライアントとして個人トークンでPOST /api/skill/requestsを呼び出す際のリクエスト/レスポンス契約(201とrequest_id、403/404の応答)がbackend.mdの定義と一致する形で設計に固定されている"
+      ],
+      "verification": [
+        "architecture.md の API 一覧が scope_in のスキル連携API・分析依頼APIと過不足なく一致することを確認する"
+      ],
+      "rollback": "architecture.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P02",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P02"
+      },
+      "secondary_workstreams": [
+        "backend",
+        "data",
+        "security"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P03",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "テナント境界・トークン失効・二重送信防止・非因果出力の設計レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P03",
+      "depends_on": [
+        "SYS-SAR-P02"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/design-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P03 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "他テナントの個人トークンでGET /api/skill/exportを呼んだ場合に403または404になる設計をレビューで確認している(TenantScopedRepositoryがtenant_id無しのクエリを組めない設計方針)",
+        "失効済み(revoked_at IS NOT NULL)の個人トークンによる全 /api/skill/* 呼出しが401になる設計をレビューしている",
+        "POST /api/skill/reports の同一Idempotency-Keyでの二重送信が新規版を作らず既存版を返す設計をレビューしている",
+        "reports/findings/psych_findings/comment_emotions へのUPDATE文がusecase層のどこにも存在しない設計(追記専用)をレビューしている",
+        "target_gapが負の原因指標の中で最小値のみを改善候補とし、全指標のtarget_gapが0以上なら候補なしとする非因果的な出力ロジックの設計をレビューしている。因果を示唆する語(原因/引き起こす等)を出力テンプレートから排除する設計になっている",
+        "各操作(export/依頼作成/レポート取込/トークン検証失敗)のaudit_log記録の設計に high の是正事項が0件、またはP05の実装範囲へ取り込み済みである",
+        "Bearer個人トークンでGET/POST /api/analysis-requests(セッション+content.write専用)を呼び出せる経路、およびSARのsrc/がPOST /api/skill/requestsのサーバ側ルート(エンドポイント本体)を実装する経路が設計上どこにも存在しないことをレビューで確認している。.claude/skills/yt-analyze/ がクライアントとしてPOST /api/skill/requestsを呼び出すこと自体は除外対象ではなく、この呼出しが正しくAIAのエンドポイントへ向かう設計になっていることをレビューしている"
+      ],
+      "verification": [
+        "design-review.md のレビュー表の全行に判定と根拠がある"
+      ],
+      "rollback": "design-review.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P03",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P03"
+      },
+      "secondary_workstreams": [
+        "api"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P04",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "受入12項目・履歴境界・再現性・因果断定検知のテスト設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P04",
+      "depends_on": [
+        "SYS-SAR-P03"
+      ],
+      "write_scope": [
+        "tests/skill-analysis/",
+        "tests/fixtures/skill-analysis-sample/",
+        "scripts/skill-analysis/",
+        "docs/feat-skill-analysis-reports/test-design.md"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P04 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "acceptance 12項目それぞれに少なくとも1つのテストケースまたは検証スクリプトがある",
+        "run-yt-analyze-fixture.mjs のテストは、request_id明示ありのドライラン(--request-id 引数)と、request_id無し起動でskill-requests-stub-serverを介してPOST /api/skill/requestsを呼ぶドライランの両方をカバーする",
+        "skill-requests-stub-serverが403または404を返す場合にrunnerが非0で終了し理由メッセージを表示することを検証するテストケースがある"
+      ],
+      "verification": [
+        "pnpm test でテストが列挙され、実装前は失敗する"
+      ],
+      "rollback": "tests/skill-analysis/, tests/fixtures/skill-analysis-sample/, scripts/skill-analysis/ の追加分を削除する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P04",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P04"
+      },
+      "secondary_workstreams": [
+        "backend",
+        "data"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P05",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "Bearer認証・分析依頼/スキル連携API・DB新規テーブル・/yt-analyzeスキル・launchd週次実行の実装",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "backend",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "backend",
+      "build_target_kind": "application-code",
+      "phase_ref": "P05",
+      "depends_on": [
+        "SYS-SAR-P04"
+      ],
+      "write_scope": [
+        "src/",
+        "migrations/(追加する5本。ファイル名と番号は成果物節の確定規則で決め、計画時点の暫定番号は0011〜0015)",
+        ".claude/skills/yt-analyze/",
+        "ops/launchd/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P05 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "P04 のテストがすべて通る",
+        ".claude/skills/report-design-system/ 配下に一切書き込みが発生していない(git diff --stat の対象に含まれない)",
+        ".claude/skills/yt-analyze/ は .claude/skills/report-design-system を無改変のまま呼び出すだけで、YouTube向けの差分は /yt-analyze と brief.json・analysis.mjs 側だけにある",
+        "ops/launchd/run-weekly-analysis.sh は通常運用時はrequest_idを渡さずに/yt-analyzeを起動し、/yt-analyzeが個人トークンでPOST /api/skill/requestsを呼んで依頼を作成する。GET/POST /api/analysis-requestsは呼び出さない",
+        "SARのsrc/にPOST /api/skill/requestsのサーバ側ルート(エンドポイント本体)が存在しない"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local",
+        "node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample（request_id無し起動、スタブサーバ経由でPOST /api/skill/requestsを呼ぶ）",
+        "node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample --request-id （fixtureで事前作成したrequest_id）",
+        "plutil -lint ops/launchd/com.youtube-analytics.weekly-analysis.plist"
+      ],
+      "rollback": "機能ブランチの revert とローカル D1 の再作成",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P05",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P05"
+      },
+      "secondary_workstreams": [
+        "api",
+        "data",
+        "security",
+        "documentation"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P06",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "テスト実行と不具合修正",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P06",
+      "depends_on": [
+        "SYS-SAR-P05"
+      ],
+      "write_scope": [
+        "tests/skill-analysis/",
+        "scripts/skill-analysis/",
+        "src/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P06 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "失敗0件・スキップ0件"
+      ],
+      "verification": [
+        "pnpm test -- --reporter=verbose",
+        "node scripts/skill-analysis/verify-analysis-reproducibility.mjs tests/fixtures/skill-analysis-sample --compare-with （直前にPOSTした結果JSON）",
+        "node .claude/skills/report-design-system/scripts/check-report.mjs tests/fixtures/skill-analysis-sample && node scripts/skill-analysis/check-no-causal-language.mjs tests/fixtures/skill-analysis-sample",
+        "node scripts/skill-analysis/check-rds-unmodified.mjs（取込元パスは.claude/report-design-system.ORIGIN.mdの「取込元」行またはRDS_ORIGIN環境変数から解決し、取込元が参照できない場合は取込コミット以降のgit logとgit diff --exit-codeで判定する）",
+        "node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample（request_id無し起動、スタブサーバ経由）",
+        "node scripts/skill-analysis/run-yt-analyze-fixture.mjs tests/fixtures/skill-analysis-sample --request-id （fixtureで事前作成したrequest_id）",
+        "スタブサーバが403/404を返すケースでrunnerが非0終了することを実行して確認する"
+      ],
+      "rollback": "修正コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P06",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P06"
+      },
+      "secondary_workstreams": [
+        "backend"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P07",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "受入確認",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P07",
+      "depends_on": [
+        "SYS-SAR-P06"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/acceptance.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P07 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "acceptance 12項目すべてが合格"
+      ],
+      "verification": [
+        "preview環境相当(ローカルD1+fixture)での手動確認と自動テストの両方を記録"
+      ],
+      "rollback": "不合格項目を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P07",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P07"
+      }
+    },
+    {
+      "id": "SYS-SAR-P08",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "共通化の整理とマイグレーション整理",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "data",
+      "build_target_kind": "application-code",
+      "phase_ref": "P08",
+      "depends_on": [
+        "SYS-SAR-P07"
+      ],
+      "write_scope": [
+        "src/",
+        "migrations/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P08 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "振る舞い変更0件(P06 のテストが引き続き green)",
+        "空の D1 へ、その時点で確定しているマイグレーション番号(計画時点の暫定番号は0011〜0015)が順に成功する",
+        "番号の重複検査を実行し、衝突がない、または衝突を付け替えて eval-log/renumber-receipt-feat-skill-analysis-reports-実施日.json に記録済みである"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local を空 DB で実行"
+      ],
+      "rollback": "整理コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P08",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P08"
+      },
+      "secondary_workstreams": [
+        "backend"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P09",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "セキュリティと品質の保証",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P09",
+      "depends_on": [
+        "SYS-SAR-P08"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/qa-report.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P09 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "high 以上の脆弱性0件",
+        "個人トークン平文がリポジトリ・ログ・依頼プロンプトに現れない",
+        ".claude/skills/report-design-system/ が check-rds-unmodified.mjs の判定基準(取込元とのdiff、またはgit履歴上の無変更)を満たし無改変のままである",
+        "Bearer個人トークンで GET/POST /api/analysis-requests を呼び出せる経路、および SARのsrc/にPOST /api/skill/requestsのサーバ側ルート(エンドポイント本体)がコード上どこにも存在しない。.claude/skills/yt-analyze/ がクライアントとしてPOST /api/skill/requestsを呼び出すことはこの受入の除外対象ではない"
+      ],
+      "verification": [
+        "pnpm lint",
+        "npx tsc --noEmit",
+        "pnpm audit --audit-level=high",
+        "node scripts/skill-analysis/check-rds-unmodified.mjs（取込元パスは.claude/report-design-system.ORIGIN.mdの「取込元」行またはRDS_ORIGIN環境変数から解決し、取込元が参照できない場合は取込コミット以降のgit logとgit diff --exit-codeで判定する）"
+      ],
+      "rollback": "qa-report.md の是正事項を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P09",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P09"
+      },
+      "secondary_workstreams": [
+        "quality"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P10",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "最終レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P10",
+      "depends_on": [
+        "SYS-SAR-P09"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/final-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P10 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "scope_out に当たる変更0件(トークン管理画面・依頼取消・POST /api/skill/requestsのサーバ側ルート(エンドポイント本体)・週次集計/Studio CSVテーブルの新規作成・report-design-system本体の改変のいずれも含まない。.claude/skills/yt-analyze/ がクライアントとしてPOST /api/skill/requestsを呼ぶことは本featureのscope_inであり除外対象ではない)",
+        "未解決のレビュー指摘0件"
+      ],
+      "verification": [
+        "git diff の全ファイルを scope_in と対応付ける"
+      ],
+      "rollback": "指摘を該当 phase へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P10",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P10"
+      }
+    },
+    {
+      "id": "SYS-SAR-P11",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "証跡の集約",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P11",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "write_scope": [
+        "evidence/feat-skill-analysis-reports/"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P11 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "acceptance 12項目すべてに証跡がある"
+      ],
+      "verification": [
+        "index.json の全参照先ファイルが実在することを確認"
+      ],
+      "rollback": "index.json を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P11",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P11"
+      }
+    },
+    {
+      "id": "SYS-SAR-P12",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "運用手順『launchd週次実行の監視と障害対応』とドキュメント",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "operations",
+      "build_target_kind": "application-code",
+      "phase_ref": "P12",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "write_scope": [
+        "docs/feat-skill-analysis-reports/runbook.md",
+        "README.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P12 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "初見の担当者が runbook だけでlaunchd週次実行の失敗調査・個人トークン失効時の対応・レポート取込失敗の再試行を行える",
+        "runbookに、launchd runnerは通常運用時はrequest_idを渡さずに/yt-analyzeを起動し、/yt-analyzeが個人トークンでPOST /api/skill/requestsを呼んで依頼を作成すること(dry-run/テスト用にrequest_idを明示指定するオプションもある)が明記されている",
+        "runbookに、本番launchctl bootstrap有効化はfeat-ai-analysis-screenがPOST /api/skill/requestsのエンドポイント本体(SYS-AIA-P05のsrc/)を出荷した後の運用前提条件であること(task依存関係やDAG上のdepends_onではなく、運用手順上の前提として)が明記されている",
+        "runbookに、POST /api/skill/requestsが403(content.write喪失等)または404(未出荷)を返す場合の障害対応手順(エラーメッセージの確認・AIA側出荷状況の確認)が記載されている"
+      ],
+      "verification": [
+        "runbook の手順をローカル環境で1回通す(launchd job の手動起動含む)",
+        "plutil -lint ops/launchd/com.youtube-analytics.weekly-analysis.plist を実行し、構文と週次スケジュール値(StartCalendarInterval等)が意図通りであることを確認する"
+      ],
+      "rollback": "ドキュメントを直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P12",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P12"
+      },
+      "secondary_workstreams": [
+        "documentation"
+      ]
+    },
+    {
+      "id": "SYS-SAR-P13",
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "parent_feature": "feat-skill-analysis-reports",
+      "title": "CI/CD とリリース",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "skill-analysis-reports"
+      ],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "workstream_kind": "infrastructure",
+      "build_target_kind": "application-code",
+      "phase_ref": "P13",
+      "depends_on": [
+        "SYS-SAR-P11",
+        "SYS-SAR-P12"
+      ],
+      "write_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md",
+        "architecture/youtube-analytics-system.md",
+        "specs/youtube-analytics-system.md",
+        "docs/analysis/dashboard-analysis-catalog.md",
+        ".claude/skills/report-design-system/SKILL.md",
+        ".claude/report-design-system.ORIGIN.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P13 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "main への push で、P08 時点で確定したマイグレーション番号(計画時点の暫定番号は0011〜0015)の適用と deploy が完了する",
+        "CI の migration 適用が、空 DB からの全件適用と既存 DB への差分適用の両方で通る",
+        "PR で lint/test が必須チェックになっている",
+        "release-condition に、本番launchctl bootstrap有効化はfeat-ai-analysis-screenがPOST /api/skill/requestsのエンドポイント本体(SYS-AIA-P05のsrc/)を出荷した後の運用前提条件であることが明記されており、task-graph.json にはこの前提に対応するdepends_on/edgeが追加されていない(SAR→AIA方向のfeature間依存edgeは循環を生むため作らない)"
+      ],
+      "verification": [
+        "Actions の実行ログで migrations apply と deploy の成功を確認",
+        "CI で空 DB からの全マイグレーション適用と、既存 DB への差分マイグレーション適用の両方を実行し、いずれも成功する",
+        "plutil -lint ops/launchd/com.youtube-analytics.weekly-analysis.plist をデプロイ成果物に対して実行する"
+      ],
+      "rollback": "直前の Workers バージョンへ wrangler rollback し、マイグレーションは前方修正で戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-SAR-P13",
+        "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md",
+        "parent_feature": "feat-skill-analysis-reports",
+        "feature_package_id": "feature-package/feat-skill-analysis-reports",
+        "phase_ref": "P13"
+      },
+      "secondary_workstreams": [
+        "operations"
+      ]
+    }
+  ]
+}

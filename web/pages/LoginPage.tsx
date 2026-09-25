@@ -1,7 +1,9 @@
 // ログイン（docs/screens/01-login.png）: 権限一覧は /api/auth/config から描画し、同意してから Google ログインへ進む。
 // 「Googleでログイン」は Google ブランド規定の Light テーマ固定（qa-067）。開発時だけ開発用ログインも出す
+
 import { type FormEvent, type ReactElement, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { ApiError, type AuthConfig, api, loginErrorMessage, REDIRECT_MESSAGES } from "../api";
 import { AlertIcon, ChartIcon, MailIcon, PlayIcon } from "../components/LoginIcons";
 import { TrustFooter } from "../components/TrustFooter";
@@ -15,7 +17,7 @@ const SCOPE_ICONS: Record<string, () => ReactElement> = {
 const CONFIG_FAILED = "設定を読み込めませんでした。ページを再読み込みしてください";
 const DESCRIPTIONS: Record<AuthConfig["mode"], string> = {
   signup: "Googleアカウントでログインすると、YouTube Analyticsの読み取り連携も同時に行います",
-  invite: "招待されたワークスペースに参加します。読み取るのはメールアドレスだけです",
+  invite: `招待された${TENANT_LABEL}に参加します。読み取るのはメールアドレスだけです`,
 };
 
 export function LoginPage() {
@@ -122,7 +124,7 @@ function LoginView({ invite, errorCode }: { invite: string; errorCode: string })
           )}
           {config?.inviteTenantName && (
             <p className="invite-note">
-              {config.inviteTenantName}のワークスペースに招待されています
+              {config.inviteTenantName}の{TENANT_LABEL}に招待されています
             </p>
           )}
           <h1 id="login-heading">

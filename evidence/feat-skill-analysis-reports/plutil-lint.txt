@@ -1,0 +1,3 @@
+ops/launchd/com.youtube-analytics.weekly-analysis.plist: OK
+exit=0
+bash -n exit=0

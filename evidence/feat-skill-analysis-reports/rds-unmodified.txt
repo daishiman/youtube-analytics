@@ -1,0 +1,3 @@
+無改変: 取込元（.claude/report-design-system.ORIGIN.md）と diff -r で一致しました
+  取込元: <取込元リポジトリ>/.claude/skills/report-design-system
+exit=0
