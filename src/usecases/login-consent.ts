@@ -1,11 +1,9 @@
 // ログイン時の「何を要求し、何に同意したか」の唯一の定義元（正本 auth 章 qa-064・qa-065・qa-073）。
 // 画面の権限一覧（/api/auth/config）と Google へ要求するスコープは、どちらもこの SCOPE_SETS から作る
+import { SCOPE_ANALYTICS_READONLY, SCOPE_YOUTUBE_READONLY } from "../domain/google-scopes";
 import { newId } from "../lib/crypto";
 import { type Deps, iso, platform } from "./common";
 import { encryptToken } from "./token-crypto";
-
-export const YOUTUBE_READONLY = "https://www.googleapis.com/auth/youtube.readonly";
-export const YT_ANALYTICS_READONLY = "https://www.googleapis.com/auth/yt-analytics.readonly";
 
 export interface ScopeSet {
   scopes: readonly string[];
@@ -15,7 +13,10 @@ export interface ScopeSet {
 
 /** signup=新規・オーナーのログインと再連携、invite=招待でのログイン（メールだけ） */
 export const SCOPE_SETS = {
-  signup: { scopes: ["openid", "email", YOUTUBE_READONLY, YT_ANALYTICS_READONLY], offline: true },
+  signup: {
+    scopes: ["openid", "email", SCOPE_YOUTUBE_READONLY, SCOPE_ANALYTICS_READONLY],
+    offline: true,
+  },
   invite: { scopes: ["openid", "email"], offline: false },
 } as const satisfies Record<string, ScopeSet>;
 
@@ -23,8 +24,8 @@ export type LoginMode = keyof typeof SCOPE_SETS;
 
 /** 画面に出す権限の行（表示順）。openid は利用者に見せる権限ではないので行にしない */
 const SCOPE_ROWS: readonly { id: string; label: string }[] = [
-  { id: YOUTUBE_READONLY, label: "YouTubeチャンネル情報の閲覧" },
-  { id: YT_ANALYTICS_READONLY, label: "YouTube Analyticsレポートの閲覧" },
+  { id: SCOPE_YOUTUBE_READONLY, label: "YouTubeチャンネル情報の閲覧" },
+  { id: SCOPE_ANALYTICS_READONLY, label: "YouTube Analyticsレポートの閲覧" },
   { id: "email", label: "メールアドレス" },
 ];
 
@@ -48,7 +49,7 @@ export type YoutubeLinkStatus = "none" | "partial" | "linked";
 /** Google が返した実スコープに読み取り2権限が含まれるか確認する */
 export function hasYoutubeReadScopes(scope: string | null): boolean {
   const granted = new Set((scope ?? "").split(/\s+/).filter(Boolean));
-  return granted.has(YOUTUBE_READONLY) && granted.has(YT_ANALYTICS_READONLY);
+  return granted.has(SCOPE_YOUTUBE_READONLY) && granted.has(SCOPE_ANALYTICS_READONLY);
 }
 
 export interface Grant {

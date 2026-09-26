@@ -1,7 +1,7 @@
-// テナントごとの Google Cloud OAuth クライアント（qa-087）。YouTube 連携の OAuth はこのクライアントで行い、
-// Google ログインはアプリ共通のクライアント（env.GOOGLE_CLIENT_ID/SECRET）のまま。
+// 通常はテナントごとの Google Cloud OAuth クライアント（qa-087）を YouTube 連携に使う。
+// 指定テナントだけは既存のアプリ共通クライアントを使い、Google ログインは引き続き共通クライアントを使う。
 // シークレットは TOKEN_ENC_KEY で暗号化して保存し、API・画面・監査ログには出さない
-import { revokeGoogleToken } from "../adapters/google-youtube";
+import { refreshYoutubeAccessToken, revokeGoogleToken } from "../adapters/google-youtube";
 import { requirePermission, type TenantContext } from "../domain/tenant-context";
 import { decryptText, encryptText } from "../lib/crypto";
 import { AppError } from "../lib/errors";
@@ -12,11 +12,13 @@ import { audit, settingsRepo } from "./settings-common";
 const CLIENT_ID_PATTERN = /^\d+-[a-z0-9]+\.apps\.googleusercontent\.com$/;
 const SECRET_MIN = 10;
 const SECRET_MAX = 200;
+const MANAGED_OWNER_EMAIL = "manjumoto.daishi@senpai-lab.com";
 
 export interface GoogleClientSummary {
   configured: boolean;
   clientId: string | null;
   updatedAt: string | null;
+  source?: "managed";
 }
 
 export interface OAuthClient {
@@ -24,10 +26,40 @@ export interface OAuthClient {
   clientSecret: string;
 }
 
+/** 管理型の接続情報は、固定したテナント ID と確認済みオーナーのメールが一致した場合だけ使う。 */
+async function isManagedTenant(deps: Deps, ctx: Pick<TenantContext, "tenantId">): Promise<boolean> {
+  return (
+    Boolean(deps.env.MANAGED_YOUTUBE_TENANT_ID) &&
+    deps.env.MANAGED_YOUTUBE_TENANT_ID === ctx.tenantId &&
+    (await settingsRepo(deps, ctx).isCreatedByVerifiedOwnerEmail(MANAGED_OWNER_EMAIL))
+  );
+}
+
+function managedOAuthClient(deps: Deps): OAuthClient | null {
+  const clientId = deps.env.GOOGLE_CLIENT_ID?.trim() ?? "";
+  const clientSecret = deps.env.GOOGLE_CLIENT_SECRET?.trim() ?? "";
+  if (
+    !CLIENT_ID_PATTERN.test(clientId) ||
+    clientSecret.length < SECRET_MIN ||
+    clientSecret.length > SECRET_MAX ||
+    /\s/.test(clientSecret)
+  )
+    return null;
+  return { clientId, clientSecret };
+}
+
 export async function googleClientSummary(
   deps: Deps,
   ctx: Pick<TenantContext, "tenantId">,
 ): Promise<GoogleClientSummary> {
+  if (await isManagedTenant(deps, ctx)) {
+    return {
+      configured: managedOAuthClient(deps) !== null,
+      clientId: null,
+      updatedAt: null,
+      source: "managed",
+    };
+  }
   const row = await settingsRepo(deps, ctx).getGoogleClient();
   return {
     configured: Boolean(row),
@@ -41,12 +73,29 @@ export async function tenantOAuthClient(
   deps: Deps,
   ctx: Pick<TenantContext, "tenantId">,
 ): Promise<OAuthClient> {
+  if (await isManagedTenant(deps, ctx)) {
+    const client = managedOAuthClient(deps);
+    if (!client) throw new AppError("GOOGLE_CLIENT_NOT_CONFIGURED");
+    return client;
+  }
   const row = await settingsRepo(deps, ctx).getGoogleClient();
   if (!row) throw new AppError("GOOGLE_CLIENT_NOT_CONFIGURED");
   return {
     clientId: row.client_id,
     clientSecret: await decryptText(deps.env.TOKEN_ENC_KEY, row.client_secret_enc),
   };
+}
+
+/** 収集の通で使う access token。refresh token が消えていれば（解除後など）null */
+export async function getLinkAccessToken(
+  deps: Deps,
+  ctx: Pick<TenantContext, "tenantId">,
+): Promise<string | null> {
+  const enc = await settingsRepo(deps, ctx).getRefreshTokenEnc();
+  if (!enc) return null;
+  const client = await tenantOAuthClient(deps, ctx);
+  const refreshToken = await decryptText(deps.env.TOKEN_ENC_KEY, enc);
+  return refreshYoutubeAccessToken({ ...client, refreshToken });
 }
 
 function parseInput(input: unknown): OAuthClient {
@@ -93,6 +142,7 @@ export async function saveGoogleClient(
   input: unknown,
 ): Promise<GoogleClientSummary> {
   requirePermission(ctx, "settings.manage");
+  if (await isManagedTenant(deps, ctx)) throw new AppError("FORBIDDEN");
   const next = parseInput(input);
   const repo = settingsRepo(deps, ctx);
   const current = await repo.getGoogleClient();
@@ -117,6 +167,7 @@ export async function deleteGoogleClient(
   ctx: TenantContext,
 ): Promise<GoogleClientSummary> {
   requirePermission(ctx, "settings.manage");
+  if (await isManagedTenant(deps, ctx)) throw new AppError("FORBIDDEN");
   const repo = settingsRepo(deps, ctx);
   if (!(await repo.getGoogleClient())) throw new AppError("NOT_FOUND");
   await revokeStored(deps, ctx);

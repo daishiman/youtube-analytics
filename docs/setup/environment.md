@@ -40,6 +40,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e
 | R2 | `wrangler.toml` の binding と bucket_name |
 | Queue | `wrangler.toml` の producer binding。consumer はまだ構成しない |
 | GitHub Secrets | `.github/workflows/deploy.yml` が要求する名前。値の有無は GitHub 側で確認 |
+| 指定テナントの YouTube OAuth | [youtube-managed-oauth.md](youtube-managed-oauth.md)。既存の Worker Secret と Google Cloud の追加設定、画面での認可を確認 |
 | ローカル検証 | `package.json` の `lint`、`typecheck`、`test`、`build`、`e2e`、`check:repo` |
 
 再作成は `scripts/setup-cloudflare.sh`（冪等）。

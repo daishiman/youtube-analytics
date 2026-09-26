@@ -1,7 +1,7 @@
 // qa-087: テナントごとに Google Cloud OAuth クライアントを持ち込む（登録は必須・シークレットは返さない）
 import { env } from "cloudflare:workers";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { addMember, call, count, expectError, newOwner } from "../platform/helpers";
+import { addMember, call, count, expectError, login, newOwner } from "../platform/helpers";
 import {
   auditCount,
   callback,
@@ -26,8 +26,8 @@ interface GoogleClientBody {
   updatedAt: string | null;
 }
 
-async function settingsOf(cookie: string) {
-  const res = await call("/api/settings", { cookie });
+async function settingsOf(cookie: string, runtime?: Partial<typeof env>) {
+  const res = await call("/api/settings", { cookie, env: runtime });
   expect(res.status).toBe(200);
   return (await res.json()) as {
     youtube: { status: string; googleClient: GoogleClientBody };
@@ -239,5 +239,93 @@ describe("テナントの Google Cloud クライアント", () => {
     expect((await settingsOf(b.cookie)).youtube.googleClient.configured).toBe(false);
     const res = await call("/api/youtube/connect", { method: "POST", cookie: b.cookie, body: {} });
     await expectError(res, 409, "GOOGLE_CLIENT_NOT_CONFIGURED");
+  });
+
+  it("指定メールの確認済みオーナーかつ固定テナント ID にだけ管理型クライアントを適用する", async () => {
+    const owner = await login("manjumoto.daishi@senpai-lab.com", {
+      env: { MAX_TENANTS: "1000000" },
+    });
+    if (!owner.tenantId) throw new Error("対象テナントが作成されませんでした");
+    const other = await newOwner("gc-other-managed");
+    const managed = {
+      MANAGED_YOUTUBE_TENANT_ID: owner.tenantId,
+      GOOGLE_CLIENT_ID: OTHER_CLIENT.clientId,
+      GOOGLE_CLIENT_SECRET: OTHER_CLIENT.clientSecret,
+    };
+
+    const summary = await settingsOf(owner.cookie, managed);
+    expect(summary.youtube.googleClient).toEqual({
+      configured: true,
+      clientId: null,
+      updatedAt: null,
+      source: "managed",
+    });
+    expect(JSON.stringify(summary)).not.toContain(OTHER_CLIENT.clientSecret);
+    expect(await storedClient(owner.tenantId)).toBeNull();
+
+    const missingSecret = { ...managed, GOOGLE_CLIENT_SECRET: "" };
+    expect((await settingsOf(owner.cookie, missingSecret)).youtube.googleClient).toMatchObject({
+      configured: false,
+      source: "managed",
+    });
+    await expectError(
+      await call("/api/youtube/connect", {
+        method: "POST",
+        cookie: owner.cookie,
+        body: {},
+        env: missingSecret,
+      }),
+      409,
+      "GOOGLE_CLIENT_NOT_CONFIGURED",
+    );
+
+    const google = fakeGoogle();
+    const connect = await call("/api/youtube/connect", {
+      method: "POST",
+      cookie: owner.cookie,
+      body: {},
+      env: managed,
+    });
+    expect(connect.status).toBe(200);
+    const url = new URL(((await connect.json()) as { url: string }).url);
+    expect(url.searchParams.get("client_id")).toBe(OTHER_CLIENT.clientId);
+    const state = url.searchParams.get("state") ?? "";
+    expect(await callback(owner, { code: "c", state }, managed)).toBe("/settings?select=channel");
+    expect(google.tokenRequests[0]?.get("client_secret")).toBe(OTHER_CLIENT.clientSecret);
+
+    await expectError(
+      await call("/api/youtube/google-client", {
+        method: "PUT",
+        cookie: owner.cookie,
+        body: TEST_CLIENT,
+        env: managed,
+      }),
+      403,
+      "FORBIDDEN",
+    );
+    await expectError(
+      await call("/api/youtube/google-client", {
+        method: "DELETE",
+        cookie: owner.cookie,
+        env: managed,
+      }),
+      403,
+      "FORBIDDEN",
+    );
+
+    const mismatched = { ...managed, MANAGED_YOUTUBE_TENANT_ID: other.tenantId };
+    expect((await settingsOf(other.cookie, mismatched)).youtube.googleClient.configured).toBe(
+      false,
+    );
+    await expectError(
+      await call("/api/youtube/connect", {
+        method: "POST",
+        cookie: other.cookie,
+        body: {},
+        env: mismatched,
+      }),
+      409,
+      "GOOGLE_CLIENT_NOT_CONFIGURED",
+    );
   });
 });

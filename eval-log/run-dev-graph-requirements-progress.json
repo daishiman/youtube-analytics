@@ -1,32 +1,46 @@
 {
  "skill": "run-dev-graph-requirements",
- "feature_id": "feat-login-redesign",
- "recorded_at": "2026-09-24T01:24:00Z",
+ "feature_id": "feat-dashboard-redesign",
+ "recorded_at": "2026-09-24T15:51:38Z",
+ "verdict": "pass",
+ "handoff_target": "task-graph",
+ "handoffs_emitted": 1,
+ "graph_snapshot": {
+  "path": ".dev-graph/state/graph.json",
+  "graph_revision": 12,
+  "digest": "sha256:d9053e183bce9e373297d1903b47365bf948964f81fbdcee19d33b9c7ad7554a"
+ },
+ "feature_context": {
+  "path": "features/feat-dashboard-redesign.context.json",
+  "digest": "sha256:ea08f0145c002c8c1b5fd1af622abc4f862d907ea2c6d3c4e76ded225bd78ff0"
+ },
+ "gates": {
+  "c11_graph_schema": "pass(valid, complete, violations 0)",
+  "c02_saved_state": "complete/pass/confirmed x14",
+  "validate_system_plan": "pass sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+ },
+ "missing_sections": [],
+ "handoff": ".dev-graph/handoffs/requirements-handoff-feat-dashboard-redesign.json",
  "checklist": [
   {
    "item": "lineage closure 欠落0",
-   "status": "pass",
-   "evidence": "spec/arch/feature 2/task 13 の lineage 揃い、feature context digest=package source_feature_digest"
+   "status": "pass"
   },
   {
-   "item": "C11 report と C02 saved state/digest 一致",
-   "status": "pass",
-   "evidence": "validate-graph-schema valid / task evaluated_digest=sha256:29168572259f12bd579bfd638d8873c2d090a586c249d7502922bbf951df0cf7"
+   "item": "C11 report と C02 saved state が一致",
+   "status": "pass"
   },
   {
-   "item": "missing_sections 全件表示",
-   "status": "pass",
-   "evidence": "0件"
+   "item": "missing_sections 全件表示(0件)",
+   "status": "pass"
   },
   {
-   "item": "同一snapshot digestで requirements/handoff 生成",
-   "status": "pass",
-   "evidence": ".dev-graph/handoffs/requirements-handoff-feat-login-redesign.json"
+   "item": "全 gate PASS 時だけ同一 snapshot digest で handoff 生成",
+   "status": "pass"
   },
   {
-   "item": "実装code生成0",
-   "status": "pass",
-   "evidence": "md/json のみ"
+   "item": "実装 code 生成 0件",
+   "status": "pass"
   }
  ]
 }

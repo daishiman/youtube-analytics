@@ -136,7 +136,7 @@ main への push（＝ PR の merge）で `deploy` ワークフローが走り�
 | `main` | `src/index.ts` | 入口。現在は`fetch`（API）だけを持つ |
 | `compatibility_date` | `2026-08-22` | 実行環境の版。上げるのは wrangler 更新時だけ |
 | `[assets]` | `directory = ./dist/web`、`not_found_handling = single-page-application`、`run_worker_first = ["/api/*"]` | 画面は静的配信。`/api/*` だけ Worker が先に受ける。それ以外の未知パスは `index.html` を返す（React Router のため） |
-| `[vars] MAX_TENANTS` | `"100"` | テナント数の上限。非秘密なのでファイルに書く |
+| `[vars] MAX_TENANTS` | `"75"` | テナント数の上限。非秘密なのでファイルに書く。Queue の無料枠（安全予算8,000操作/日）に収まる数で、上げる前に `tests/platform/queue-budget.test.ts` が通るか確かめる |
 | `[vars] GOOGLE_CLIENT_ID` | 6 節で置換する | 非秘密。**シークレットはここに書かない** |
 | `[[d1_databases]]` | binding `DB`、`youtube-analytics-db`、`database_id = 91996166-…` | 本番 DB。`migrations_dir = migrations` |
 | `[[r2_buckets]]` | binding `MEDIA`、`youtube-analytics-media` | 画像置き場（この feature では宣言だけ） |
@@ -560,7 +560,7 @@ deploy が緑になったら、ダッシュボードで Worker を開いて確�
 
 | タブ | 見るところ | 期待する表示 |
 |---|---|---|
-| Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=100` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
+| Settings → Bindings（Variables and Secrets を含む） | binding の一覧 | `DB`（D1、`youtube-analytics-db`）、`MEDIA`（R2）、`COLLECT_QUEUE`（Queue）、`ASSETS`。変数に `MAX_TENANTS=75` と `GOOGLE_CLIENT_ID`、Secret に `GOOGLE_CLIENT_SECRET` と `TOKEN_ENC_KEY`（値は `Value encrypted` と表示され、中身は見えない） |
 | Settings → Domains & Routes | 公開先 | `youtube-analytics.daishimanju.workers.dev` が Enabled。カスタムドメインは付けない |
 | Settings → Trigger Events（Cron Triggers） | 定期実行 | 現在は未構成で一覧が空。日次収集 feature で実処理と同時に `0 18 * * *` を追加する |
 | Settings → Trigger Events（Queue Consumers） | 消費者 | 現在は未構成で一覧が空。日次収集 feature で処理・終端失敗契約と同時に追加する |
@@ -621,7 +621,7 @@ Rollback はコードだけを戻す。D1 に当てたマイグレーション�
 | Google で「アクセスをブロック: このアプリは…テスト中」 | 4.4 が「テスト中」のまま | 「アプリを公開」するか、テストユーザーに追加する |
 | ログイン後に `/login?error=OAUTH_FAILED` | クライアント ID かシークレットの誤り | 6 の値と 7 の Secret を見直す（`pnpm wrangler secret put GOOGLE_CLIENT_SECRET` で上書きできる） |
 | ログイン後に `/login?error=OAUTH_STATE_MISMATCH` | ログイン画面を 10 分以上放置した | もう一度ログインする |
-| 「現在新規の受付を停止しています」 | テナント数が `MAX_TENANTS`（100）に達した | `runbook.md` の 6.1 |
+| 「現在新規の受付を停止しています」 | テナント数が `MAX_TENANTS`（75）に達した | `runbook.md` の 6.1 |
 | Cloudflare の画面で「Wrangler の構成が検出されませんでした」 | Git 連携（Create an app）の画面を開いている | 「戻る」で抜ける。この方式は使わない（1.5.1） |
 | Cloudflare の画面で「Your GitHub authorization has expired」 | 同上 | 再認可も GitHub App の再インストールも不要。画面を閉じる |
 | `youtube-analytics` が Workers & Pages に見当たらない | まだ一度も deploy していない | 11 の deploy が緑になると現れる。急ぐなら手元で `pnpm run deploy` |

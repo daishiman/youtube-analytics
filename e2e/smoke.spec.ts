@@ -1,12 +1,6 @@
 // 画面の E2E（3サイズ）。開発用ログイン（DEV_LOGIN=1・localhost）と scripts/seed-local.sql のアカウントを使う
 import { expect, type Page, test } from "@playwright/test";
-
-async function devLogin(page: Page, email: string, invite?: string) {
-  await page.goto(invite ? `/login?invite=${invite}` : "/login");
-  await page.getByLabel("プライバシーポリシーと利用規約に同意します").check();
-  await page.getByLabel("開発用ログインのメールアドレス").fill(email);
-  await page.getByRole("button", { name: "開発用ログイン" }).click();
-}
+import { CONSENT, devLogin } from "./helpers";
 
 async function logout(page: Page) {
   await page.goto("/");
@@ -27,7 +21,7 @@ test("ログイン画面: 同意するまで Google ログインは押せず、�
   ).toBeVisible();
   const google = page.getByRole("button", { name: "Googleでログイン" });
   await expect(google).toHaveAttribute("aria-disabled", "true");
-  await page.getByLabel("プライバシーポリシーと利用規約に同意します").check();
+  await page.getByLabel(CONSENT).check();
   await expect(google).toHaveAttribute("aria-disabled", "false");
   await page.goto("/privacy");
   await expect(

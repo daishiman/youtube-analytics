@@ -17,10 +17,10 @@ template_id: "specification"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-findings-20260924-r4.json", "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100"}
-source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/00-requirements-definition.md", "source_version": "0.1.14", "source_digest": "3cce8b44a7a66f5daca0a87a309c14bb4ec4a2ed40f448de71332d4ed077cac0", "imported_at": "2026-09-24T09:17:58Z"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-report-20260924-r8.json", "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908"}
+source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/00-requirements-definition.md", "source_version": "0.1.14", "source_digest": "bc1f7f1ae798c52877c539d679fdbfdae1889208d86a278291eb42bde1480549", "imported_at": "2026-09-26T01:03:10Z"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-24T09:17:58Z"
+updated_at: "2026-09-26T01:03:10Z"
 depends_on: []
 related_nodes: ["arch-youtube-analytics-system"]
 resource_scope: []
@@ -47,7 +47,9 @@ completion_evidence: {"policy": "manual", "status": "not_applicable", "source": 
 implementation_readiness: {"status": "complete", "missing_sections": [], "checked_at": "2026-09-24T09:17:58Z"}
 ---
 
-正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-findings-20260924-r3.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。2026-09-24 に設定画面(docs/screens/05-settings.png)・YouTubeチャンネル紐付け・共通レイアウト(qa-074〜qa-086/appr-013・appr-014)を正規フローで取り込んだ。同日、テナントごとの Google Cloud OAuth クライアント(qa-087)と、利用者向け表記『ワークスペース』・Google Cloud 準備手順(qa-088)を追補した。
+正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-findings-20260924-r3.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。2026-09-24 に設定画面(docs/screens/05-settings.png)・YouTubeチャンネル紐付け・共通レイアウト(qa-074〜qa-086/appr-013・appr-014)を正規フローで取り込んだ。同日、テナントごとの Google Cloud OAuth クライアント(qa-087)と、利用者向け表記『ワークスペース』・Google Cloud 準備手順(qa-088)を追補した。2026-09-24 にダッシュボード刷新(docs/screens/02-dashboard.png・qa-089〜qa-099/appr-015)を正規フロー(completeness r8 PASS)で取り込み、main(PR #6)取込時に番号を付け替え(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)、期間切替を共通ヘッダーの ?period= に統一した(qa-099)。
+
+**字幕予算の現行訂正（2026-09-25）**: qa-082 の当時の「5本＝1,000 units」は字幕一覧の50 units/動画を含まなかった。利用者の追加決定で1,000 units枠を維持し、一覧50＋取得200 units/本として最大4本/日とする。収集本体とテナント別4本上限はローカル実装済み。実チャンネル検証までトグルを準備中とし、`CAPTIONS_COLLECTION_READY` を環境に設定しない。
 
 # 目的と成功状態
 
@@ -75,7 +77,7 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 - 収集: Analytics API で直近7日を毎日取り直し、動画別は D-3 単日クエリで積み上げ、インプレッション・CTR は Reporting API(channel_reach_basic_a1)から取得する(backend.md / infrastructure.md)。
 - 取込: 表データ/グラフデータ/合計の3種Studio CSVを既存の判定規則で正規化する。週次事業CSVは `week_start`(JST月曜), `channel_id`, `route_label`(既定LINE), `route_visits`, `inquiries`, `closed_deals`, `revenue_jpy` を受け、nullと0を区別して tenant+channel+week 単位で冪等に上書きする。
 - 分析連携: /api/skill/export がYouTubeデータ、週次ファネル、目標、判定保留理由、同一テナント/チャンネルの完了済み直近5版の分析履歴パックを出典付きで書き出し、/api/skill/reports が前回仮説の当否・施策効果・ファネル段・改善候補・下流結果・参照版番号を含む版を追記だけで受ける。
-- 画面: ログイン/ダッシュボード/動画/AI分析/改善アクション/設定の6枚+静的ページ2枚(ui-ux.md)。ダッシュボード先頭4ブロックは結果サマリー、週次5段ファネル、目標未達が最大の改善候補+次のアクション(または全指標目標達成)、12週推移+データ品質とし、動画別実績は動画画面または詳細へ置く。
+- 画面: ログイン/ダッシュボード/動画/AI分析/改善アクション/設定の6枚+静的ページ2枚(ui-ux.md)。ダッシュボードは docs/screens/02-dashboard.png を正本とし(qa-089〜092)、ヘッダ(データ収集の最終成功)・共通ヘッダーの期間(?period=7d/28d/90d/1y/任意・既定28日 qa-099)・対象セレクタ(チャンネル全体/動画。動画は既定で直近公開10本、件数上限なし qa-094/096)・KPI4枚・日次推移・構成比・動画別の実績・最新AI分析・実施中の改善アクション・『詳しく見る』(週次5段ファネル一式を移設)の順に並べる(ui-ux.md)。
 - 管理: テナント・メンバー・招待、データ削除、無料枠メーター。
 - 設定画面(qa-074/qa-079): 順序は YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除。連携カードはチャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST・qa-077)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。取込はCSV/字幕(SRT・VTT)/画像のタブ別ドロップ領域と履歴(最新20件・失敗理由)。トークンは名前必須・平文は発行時1回表示・1人5本まで(6本目は409・qa-083)・失効は確認付き。
 - 共通レイアウト(qa-079): AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新・期間 ?period= 共有・アバターメニュー)+main+Footer(3バッジ+プライバシーポリシー|利用規約。ログイン・静的ページも同じ)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable/UsageBar/DropZone/ConfirmDialog/Toast。色は web/styles.css の既存CSS変数だけを使い、画像の色は採用しない(qa-080)。
@@ -83,14 +85,14 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 ## 非機能要件
 
 - 費用: Cloudflare Free / Google Cloud 無料 / GitHub 無料枠で完全無料。無料枠使用率の警告は70%で黄・90%で赤(qa-084。O3の80%超アラートはこの2段で満たす)。
-- 規模: テナント上限 MAX_TENANTS=100(D1 書込10万行/日に収める)。
+- 規模: テナント上限 MAX_TENANTS=75(Queue 安全予算8,000操作/日と D1 書込10万行/日に収める。1連携あたり約34通≒約102操作/日。qa-100 で qa-052 の100から変更)。
 - 性能: 1テナントの収集を1回の Queue consumer 実行に収め、サブリクエスト上限50件内(約16件)。
 - 表示: 幅360px以上で全操作、タップ領域44pt以上、各画面で最初に見える情報ブロックは4つ以内(O5)。
 - 規約: YouTube API Developer Policies III.A.2 / III.D.2.3 / III.E.4 を遵守する(security.md)。
 
 ## UI・状態遷移
 
-6画面の構成・スマホ幅の下部タブ切替は system-spec/ui-ux.md を正とする。ダッシュボードの先頭4ブロックは結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補と次のアクション(または全指標目標達成)、12週推移とデータ品質。各原因指標は actual / target / target_gap または判定保留理由を示し、因果関係を断定しない。状態遷移: 分析依頼 待機中→実行中→完了|失敗、改善アクション 未着手→実施中→効果測定中→完了(一方向・完了時に判定 効果あり|不明|効果なし と baseline/result 必須)、テナントの collection_status(ok|failed)。
+6画面の構成・スマホ幅の下部タブ切替は system-spec/ui-ux.md を正とする。ダッシュボードは問い『今週、何が効きましたか？』の下に KPI4枚(前期比は記号と色・出典バッジ・M1開示文)、日次推移、チャンネル全体と動画ごとのバランス(構成比)、動画別の実績(サムネイルは自サイト経由・未保存は代替表示 qa-095)、最新AI分析、実施中の改善アクションを置き、週次5段ファネル(結果サマリー・改善候補または全指標目標達成・12週推移・データ品質)は『詳しく見る』へ移す。空状態は5種。ファネルの各原因指標は actual / target / target_gap または判定保留理由を示し、因果関係を断定しない。状態遷移: 分析依頼 待機中→実行中→完了|失敗、改善アクション 未着手→実施中→効果測定中→完了(一方向・完了時に判定 効果あり|不明|効果なし と baseline/result 必須)、テナントの collection_status(ok|failed)。
 
 ## ビジネスルールと検証
 
@@ -102,7 +104,7 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 
 ## API契約
 
-Hono v4 on Workers の REST。画面用: GET /api/me, GET /api/dashboard(週次ファネルと判定保留理由を含む), POST /api/csv(Studio CSVまたは週次事業CSV), GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff), GET/PATCH /api/actions/:id, GET /api/videos, GET /api/videos/:id, PUT /api/videos/:id/angle, DELETE /api/me/data。テナント: GET/POST /api/tenants, POST /api/session/tenant, POST/DELETE /api/tenants/:id/invites, POST /api/invites/accept, PATCH/DELETE /api/tenants/:id/members/:userId, POST /api/tenants/:id/leave。設定・連携(qa-079): GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel(別テナント連携済みは409・qa-081), POST /api/youtube/reconnect(同じチャンネルのみ), DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。スキル連携(個人トークン): GET /api/skill/export, PATCH /api/skill/requests/:id, POST /api/skill/reports, POST /api/skill/transcripts, POST /api/skill/media。操作単位の契約は下の「API: 共通契約」節。
+Hono v4 on Workers の REST。画面用: GET /api/me, GET /api/dashboard?period=7d|28d|90d|1y|custom&from&to&scope=channel|videos&video_ids=(読取専用の集約。video_ids は json_each で単一バインド、他テナント ID は黙って除外 qa-097), GET /api/dashboard/funnel?week=(週次ファネルと判定保留理由・遅延取得), GET /api/media/thumbnails/:video_id(テナント確認のうえ R2 から配信・Cache-Control: private), POST /api/csv(Studio CSVまたは週次事業CSV), GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff), GET/PATCH /api/actions/:id, GET /api/videos, GET /api/videos/:id, PUT /api/videos/:id/angle, DELETE /api/me/data。テナント: GET/POST /api/tenants, POST /api/session/tenant, POST/DELETE /api/tenants/:id/invites, POST /api/invites/accept, PATCH/DELETE /api/tenants/:id/members/:userId, POST /api/tenants/:id/leave。設定・連携(qa-079): GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel(別テナント連携済みは409・qa-081), POST /api/youtube/reconnect(同じチャンネルのみ), DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。スキル連携(個人トークン): GET /api/skill/export, PATCH /api/skill/requests/:id, POST /api/skill/reports, POST /api/skill/transcripts, POST /api/skill/media。操作単位の契約は下の「API: 共通契約」節。
 
 ## データモデル
 
@@ -110,7 +112,7 @@ D1 の業務テーブル(users, tenants, tenant_members, tenant_invites, channel
 
 ## 認証・認可
 
-Google OAuth 2.0 Authorization Code + PKCE。scope は openid email youtube.readonly yt-analytics.readonly、access_type=offline(字幕の captions.download を望む利用者だけ youtube.force-ssl を追加同意)。字幕自動取得トグルは既定OFF、ONで incremental authorization により force-ssl を追加し新着動画の字幕を1日5本(1,000units)まで取得、OFFで revoke→読み取り専用で再連携する(qa-076/qa-082)。force-ssl は sensitive scope のため、トグルの一般公開前に検証を申請し、通るまでは運営者テナントのオーナーだけが操作でき他の利用者には『準備中』と表示する(qa-085)。YouTube連携(連携・コールバック・トークン交換/更新・revoke・字幕の追加同意)は、テナントのオーナーが設定画面で登録した自分の Google Cloud プロジェクトの OAuth クライアントで行い、未登録のあいだは連携を始められない。Googleログインはアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し画面・APIに返さない。クライアントIDの変更・削除は既存連携を『要再連携』にする。設定画面には初めての人向けの8手順の準備ガイドを表示する(qa-087/qa-088)。連携・解除・字幕・削除はオーナーのみ。セッションは256bit ランダムIDの HttpOnly/Secure/SameSite=Lax Cookie・30日。Claude Code 用個人トークンは (tenant_id, user_id) ごとに発行し SHA-256 で保存、権限は発行者の役割の範囲。全APIで tenant_id はセッション/トークンから導き、tenant_members で役割を確認する(auth.md / security.md)。
+Google OAuth 2.0 Authorization Code + PKCE。scope は openid email youtube.readonly yt-analytics.readonly、access_type=offline(字幕の captions.download を望む利用者だけ youtube.force-ssl を追加同意)。字幕自動取得トグルは既定OFF、ONで incremental authorization により force-ssl を追加し新着動画の字幕を1日最大4本・字幕用予算1,000 units（captions.list 50 + captions.download 200 units/本）まで取得、OFFで revoke→読み取り専用で再連携する(qa-076/qa-082)。force-ssl は sensitive scope のため、トグルの一般公開前に検証を申請し、通るまでは運営者テナントのオーナーだけが操作でき他の利用者には『準備中』と表示する(qa-085)。YouTube連携(連携・コールバック・トークン交換/更新・revoke・字幕の追加同意)は、テナントのオーナーが設定画面で登録した自分の Google Cloud プロジェクトの OAuth クライアントで行い、未登録のあいだは連携を始められない。Googleログインはアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し画面・APIに返さない。クライアントIDの変更・削除は既存連携を『要再連携』にする。設定画面には初めての人向けの8手順の準備ガイドを表示する(qa-087/qa-088)。連携・解除・字幕・削除はオーナーのみ。セッションは256bit ランダムIDの HttpOnly/Secure/SameSite=Lax Cookie・30日。Claude Code 用個人トークンは (tenant_id, user_id) ごとに発行し SHA-256 で保存、権限は発行者の役割の範囲。全APIで tenant_id はセッション/トークンから導き、tenant_members で役割を確認する(auth.md / security.md)。
 
 ## エラー・例外・回復
 
@@ -118,7 +120,7 @@ Google OAuth 2.0 Authorization Code + PKCE。scope は openid email youtube.read
 
 ## イベント・非同期処理
 
-Cron Trigger は `0 18 * * *`(UTC 18:00 = JST 3:00)の1本だけ。Cron はテナントごとの collect 通と cleanup 1通を Cloudflare Queues の collect-queue へ sendBatch で入れるだけで、consumer(max_batch_size=1)が1通=1テナントで collectTenantDaily を実行する。cleanup は fetched_at が30日を超えた指標以外のAPIデータの削除・失敗した削除の再試行・30日超 token 更新失敗の利用者の指標削除を担う。
+Cron Trigger は `0 18 * * *`(UTC 18:00 = JST 3:00)の1本だけ。Cron はテナントごとの collect 通と cleanup 1通を Cloudflare Queues の collect-queue へ sendBatch で入れるだけで、consumer(max_batch_size=1)が1通=1テナントで collectTenantDaily を実行する。cleanup は fetched_at が30日を超えた指標以外のAPIデータ(サムネイルの media_assets 行と R2 オブジェクトを含む。R2 delete() はテナントごとに1回・1実行12テナントまで)の削除・失敗した削除の再試行・30日超 token 更新失敗の利用者の指標削除を担う。サムネイルの取り直しは収集の通が数えて別の thumbnail 通(1通15件・1日最大3通、subrequest 46件以内)で行う(qa-098)。
 
 ## 可観測性
 
@@ -135,8 +137,9 @@ GitHub Actions: pull_request で lint/test/`wrangler deploy --dry-run`、main �
 - 収集: 28日連続で 09:00 JST 時点の未完了テナント0件(O1)。
 - 数値: M1=16.97% 固定値テスト。
 - 週次ファネル: 同一 tenant+channel+week の再取込が重複せず、nullと0を維持し、2つの率とtarget_gapを固定値で検算する。分母0・欠損・targetが0以下または未設定・min_sample未達・週未確定・週末後の取込なしの各ケースが判定保留になり、全指標が目標以上なら改善候補を作らないことを確認する。
-- 設定画面: 画像の区画・配置・文言どおりの6区画順、チャンネル選択と別テナント連携の409、再連携が同じチャンネルに限られること、字幕トグルON/OFFでのスコープ付与とrevoke・1日5本上限・未検証時の『準備中』表示、トークン6本目の409と平文の1回表示、使用量バーの70%黄/90%赤、共通 Header/Footer が全画面(ログイン・静的ページを含む)で同一であること、色が既存CSS変数だけであること。
-- UI/分析: 先頭4ブロックの順序、登録者数が参考結果である表示、改善候補が因果断定でない表示、対象ファネル段と下流結果を含むアクション前後比較を確認する。
+- 設定画面: 画像の区画・配置・文言どおりの6区画順、チャンネル選択と別テナント連携の409、再連携が同じチャンネルに限られること、字幕トグルON/OFFでのスコープ付与とrevoke・1日4本／1,000 units上限・未検証時の『準備中』表示、トークン6本目の409と平文の1回表示、使用量バーの70%黄/90%赤、共通 Header/Footer が全画面(ログイン・静的ページを含む)で同一であること、色が既存CSS変数だけであること。
+- ダッシュボード: 02-dashboard.png どおりの並び、共通ヘッダーの期間(?period=)と対象セレクタ(既定で直近10本)の切替、video_ids 101本以上でも 200、他テナント ID の黙った除外、30日超サムネイルの削除と代替表示を確認する。
+- UI/分析: 『詳しく見る』内の週次ファネルで、登録者数が参考結果である表示、改善候補が因果断定でない表示、対象ファネル段と下流結果を含むアクション前後比較を確認する。
 
 ## 未決事項
 

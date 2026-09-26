@@ -1,0 +1,208 @@
+
+Running 204 tests using 5 workers
+
+[1/204] [mobile] › e2e/smoke.spec.ts:15:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[2/204] [mobile] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[3/204] [mobile] › e2e/login.spec.ts:9:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[4/204] [mobile] › e2e/dashboard.spec.ts:15:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[5/204] [mobile] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[6/204] [mobile] › e2e/login.spec.ts:38:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[7/204] [mobile] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+[8/204] [mobile] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[9/204] [mobile] › e2e/smoke.spec.ts:34:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[10/204] [mobile] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[11/204] [mobile] › e2e/smoke.spec.ts:39:1 › 閲覧者には書込ボタンが出ない
+[12/204] [mobile] › e2e/login.spec.ts:54:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[13/204] [mobile] › e2e/dashboard.spec.ts:42:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[14/204] [mobile] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[15/204] [mobile] › e2e/login.spec.ts:66:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[16/204] [mobile] › e2e/login.spec.ts:74:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[17/204] [mobile] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[18/204] [mobile] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[19/204] [mobile] › e2e/smoke.spec.ts:62:1 › ワークスペースを切り替えると役割が変わる
+[20/204] [mobile] › e2e/login.spec.ts:83:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[21/204] [mobile] › e2e/dashboard.spec.ts:53:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[22/204] [mobile] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[23/204] [mobile] › e2e/login.spec.ts:116:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[24/204] [mobile] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[25/204] [mobile] › e2e/smoke.spec.ts:72:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[26/204] [mobile] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+[27/204] [mobile] › e2e/login.spec.ts:130:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[28/204] [mobile] › e2e/dashboard.spec.ts:71:3 › ダッシュボード › 前期の日次欠測では変化率を保留し今期の動画候補を残す
+[29/204] [mobile] › e2e/login.spec.ts:144:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[30/204] [mobile] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[31/204] [mobile] › e2e/login.spec.ts:154:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[32/204] [mobile] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+[33/204] [mobile] › e2e/login.spec.ts:171:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[34/204] [mobile] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[35/204] [mobile] › e2e/dashboard.spec.ts:85:3 › ダッシュボード › 今期の日次が欠測なら動画候補も保留する
+[36/204] [mobile] › e2e/login.spec.ts:180:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[37/204] [mobile] › e2e/settings.spec.ts:340:1 › 字幕の自動取得: 既にONのワークスペースは準備中でもOFFにできる
+[38/204] [mobile] › e2e/settings.spec.ts:354:1 › 字幕の自動取得: 接続情報が未登録でも既存ONはOFFにできる
+[39/204] [mobile] › e2e/dashboard.spec.ts:98:3 › ダッシュボード › 全動画の実測視聴回数が0なら欠測と区別する
+[40/204] [mobile] › e2e/login.spec.ts:190:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[41/204] [mobile] › e2e/settings.spec.ts:367:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[42/204] [tablet] › e2e/dashboard.spec.ts:15:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[43/204] [mobile] › e2e/dashboard.spec.ts:112:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[44/204] [mobile] › e2e/settings.spec.ts:414:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[45/204] [tablet] › e2e/login.spec.ts:9:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[46/204] [mobile] › e2e/login.spec.ts:202:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[47/204] [mobile] › e2e/settings.spec.ts:455:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+[48/204] [mobile] › e2e/dashboard.spec.ts:122:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[49/204] [tablet] › e2e/login.spec.ts:38:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[50/204] [tablet] › e2e/dashboard.spec.ts:42:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[51/204] [mobile] › e2e/settings.spec.ts:503:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[52/204] [tablet] › e2e/login.spec.ts:54:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[53/204] [mobile] › e2e/settings.spec.ts:523:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+[54/204] [tablet] › e2e/login.spec.ts:66:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[55/204] [tablet] › e2e/dashboard.spec.ts:53:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[56/204] [tablet] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[57/204] [mobile] › e2e/dashboard.spec.ts:136:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[58/204] [tablet] › e2e/login.spec.ts:74:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[59/204] [mobile] › e2e/settings.spec.ts:557:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[60/204] [tablet] › e2e/login.spec.ts:83:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[61/204] [mobile] › e2e/settings.spec.ts:580:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[62/204] [tablet] › e2e/dashboard.spec.ts:71:3 › ダッシュボード › 前期の日次欠測では変化率を保留し今期の動画候補を残す
+[63/204] [tablet] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+[64/204] [mobile] › e2e/settings.spec.ts:590:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[65/204] [tablet] › e2e/login.spec.ts:116:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[66/204] [tablet] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[67/204] [mobile] › e2e/dashboard.spec.ts:153:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[68/204] [mobile] › e2e/settings.spec.ts:600:1 › 連携解除はワークスペース名の入力で確定する
+[69/204] [tablet] › e2e/login.spec.ts:130:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[70/204] [tablet] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[71/204] [tablet] › e2e/dashboard.spec.ts:85:3 › ダッシュボード › 今期の日次が欠測なら動画候補も保留する
+[72/204] [tablet] › e2e/login.spec.ts:144:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[73/204] [mobile] › e2e/settings.spec.ts:613:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[74/204] [tablet] › e2e/login.spec.ts:154:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[75/204] [mobile] › e2e/settings.spec.ts:632:3 › /login: 共通フッターが同じ文言で出る
+[76/204] [tablet] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[77/204] [mobile] › e2e/dashboard.spec.ts:168:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[78/204] [tablet] › e2e/login.spec.ts:171:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[79/204] [mobile] › e2e/settings.spec.ts:632:3 › /privacy: 共通フッターが同じ文言で出る
+[80/204] [tablet] › e2e/dashboard.spec.ts:98:3 › ダッシュボード › 全動画の実測視聴回数が0なら欠測と区別する
+[81/204] [mobile] › e2e/settings.spec.ts:632:3 › /terms: 共通フッターが同じ文言で出る
+[82/204] [tablet] › e2e/login.spec.ts:180:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[83/204] [mobile] › e2e/settings.spec.ts:645:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+[84/204] [tablet] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[85/204] [mobile] › e2e/dashboard.spec.ts:187:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[86/204] [tablet] › e2e/login.spec.ts:190:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[87/204] [tablet] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+[88/204] [tablet] › e2e/dashboard.spec.ts:112:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[89/204] [tablet] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[90/204] [tablet] › e2e/dashboard.spec.ts:122:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[91/204] [tablet] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+[92/204] [mobile] › e2e/dashboard.spec.ts:220:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[93/204] [tablet] › e2e/login.spec.ts:202:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[94/204] [tablet] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[95/204] [tablet] › e2e/settings.spec.ts:340:1 › 字幕の自動取得: 既にONのワークスペースは準備中でもOFFにできる
+[96/204] [tablet] › e2e/smoke.spec.ts:15:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[97/204] [tablet] › e2e/dashboard.spec.ts:136:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[98/204] [tablet] › e2e/settings.spec.ts:354:1 › 字幕の自動取得: 接続情報が未登録でも既存ONはOFFにできる
+[99/204] [mobile] › e2e/dashboard.spec.ts:256:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[100/204] [tablet] › e2e/smoke.spec.ts:34:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[101/204] [tablet] › e2e/settings.spec.ts:367:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[102/204] [tablet] › e2e/smoke.spec.ts:39:1 › 閲覧者には書込ボタンが出ない
+[103/204] [tablet] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[104/204] [tablet] › e2e/settings.spec.ts:414:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[105/204] [tablet] › e2e/dashboard.spec.ts:153:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[106/204] [mobile] › e2e/dashboard.spec.ts:310:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[107/204] [tablet] › e2e/smoke.spec.ts:62:1 › ワークスペースを切り替えると役割が変わる
+[108/204] [tablet] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[109/204] [tablet] › e2e/settings.spec.ts:455:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+[110/204] [mobile] › e2e/dashboard.spec.ts:317:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[111/204] [tablet] › e2e/dashboard.spec.ts:168:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[112/204] [tablet] › e2e/settings.spec.ts:503:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[113/204] [mobile] › e2e/dashboard.spec.ts:324:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[114/204] [tablet] › e2e/smoke.spec.ts:72:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[115/204] [tablet] › e2e/settings.spec.ts:523:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+[116/204] [tablet] › e2e/dashboard.spec.ts:187:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[117/204] [tablet] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[118/204] [mobile] › e2e/dashboard.spec.ts:335:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[119/204] [tablet] › e2e/settings.spec.ts:557:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[120/204] [tablet] › e2e/settings.spec.ts:580:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[121/204] [tablet] › e2e/dashboard.spec.ts:220:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[122/204] [tablet] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[123/204] [tablet] › e2e/settings.spec.ts:590:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[124/204] [mobile] › e2e/dashboard.spec.ts:377:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[125/204] [tablet] › e2e/settings.spec.ts:600:1 › 連携解除はワークスペース名の入力で確定する
+[126/204] [tablet] › e2e/settings.spec.ts:613:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[127/204] [tablet] › e2e/settings.spec.ts:632:3 › /login: 共通フッターが同じ文言で出る
+[128/204] [desktop] › e2e/dashboard.spec.ts:15:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[129/204] [tablet] › e2e/settings.spec.ts:632:3 › /privacy: 共通フッターが同じ文言で出る
+[130/204] [tablet] › e2e/settings.spec.ts:632:3 › /terms: 共通フッターが同じ文言で出る
+[131/204] [desktop] › e2e/login.spec.ts:9:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[132/204] [tablet] › e2e/settings.spec.ts:645:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+[133/204] [desktop] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[134/204] [desktop] › e2e/dashboard.spec.ts:42:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[135/204] [desktop] › e2e/login.spec.ts:38:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[136/204] [desktop] › e2e/login.spec.ts:54:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[137/204] [desktop] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+[138/204] [desktop] › e2e/dashboard.spec.ts:53:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[139/204] [desktop] › e2e/login.spec.ts:66:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[140/204] [desktop] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[141/204] [desktop] › e2e/login.spec.ts:74:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[142/204] [desktop] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[143/204] [desktop] › e2e/login.spec.ts:83:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[144/204] [desktop] › e2e/dashboard.spec.ts:71:3 › ダッシュボード › 前期の日次欠測では変化率を保留し今期の動画候補を残す
+[145/204] [desktop] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[146/204] [desktop] › e2e/login.spec.ts:116:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[147/204] [desktop] › e2e/login.spec.ts:130:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[148/204] [tablet] › e2e/dashboard.spec.ts:256:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[149/204] [desktop] › e2e/dashboard.spec.ts:85:3 › ダッシュボード › 今期の日次が欠測なら動画候補も保留する
+[150/204] [desktop] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[151/204] [desktop] › e2e/login.spec.ts:144:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[152/204] [desktop] › e2e/login.spec.ts:154:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[153/204] [desktop] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[154/204] [desktop] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+[155/204] [desktop] › e2e/login.spec.ts:171:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[156/204] [desktop] › e2e/dashboard.spec.ts:98:3 › ダッシュボード › 全動画の実測視聴回数が0なら欠測と区別する
+[157/204] [tablet] › e2e/dashboard.spec.ts:310:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[158/204] [desktop] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[159/204] [desktop] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+[160/204] [desktop] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[161/204] [desktop] › e2e/login.spec.ts:180:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[162/204] [desktop] › e2e/dashboard.spec.ts:112:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[163/204] [desktop] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[164/204] [tablet] › e2e/dashboard.spec.ts:317:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[165/204] [desktop] › e2e/login.spec.ts:190:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[166/204] [desktop] › e2e/settings.spec.ts:340:1 › 字幕の自動取得: 既にONのワークスペースは準備中でもOFFにできる
+[167/204] [desktop] › e2e/dashboard.spec.ts:122:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[168/204] [tablet] › e2e/dashboard.spec.ts:324:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[169/204] [desktop] › e2e/settings.spec.ts:354:1 › 字幕の自動取得: 接続情報が未登録でも既存ONはOFFにできる
+[170/204] [desktop] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[171/204] [desktop] › e2e/settings.spec.ts:367:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[172/204] [desktop] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[173/204] [tablet] › e2e/dashboard.spec.ts:335:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[174/204] [desktop] › e2e/settings.spec.ts:414:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[175/204] [desktop] › e2e/login.spec.ts:202:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[176/204] [desktop] › e2e/smoke.spec.ts:15:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[177/204] [desktop] › e2e/dashboard.spec.ts:136:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[178/204] [tablet] › e2e/dashboard.spec.ts:377:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[179/204] [desktop] › e2e/smoke.spec.ts:34:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[180/204] [desktop] › e2e/settings.spec.ts:455:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+[181/204] [desktop] › e2e/smoke.spec.ts:39:1 › 閲覧者には書込ボタンが出ない
+[182/204] [desktop] › e2e/settings.spec.ts:503:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[183/204] [desktop] › e2e/dashboard.spec.ts:153:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[184/204] [desktop] › e2e/settings.spec.ts:523:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+[185/204] [desktop] › e2e/smoke.spec.ts:62:1 › ワークスペースを切り替えると役割が変わる
+[186/204] [desktop] › e2e/settings.spec.ts:557:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[187/204] [desktop] › e2e/dashboard.spec.ts:168:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[188/204] [desktop] › e2e/settings.spec.ts:580:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[189/204] [desktop] › e2e/smoke.spec.ts:72:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[190/204] [desktop] › e2e/settings.spec.ts:590:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[191/204] [desktop] › e2e/settings.spec.ts:600:1 › 連携解除はワークスペース名の入力で確定する
+[192/204] [desktop] › e2e/dashboard.spec.ts:187:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[193/204] [desktop] › e2e/settings.spec.ts:613:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[194/204] [desktop] › e2e/settings.spec.ts:632:3 › /login: 共通フッターが同じ文言で出る
+[195/204] [desktop] › e2e/dashboard.spec.ts:220:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[196/204] [desktop] › e2e/settings.spec.ts:632:3 › /privacy: 共通フッターが同じ文言で出る
+[197/204] [desktop] › e2e/settings.spec.ts:632:3 › /terms: 共通フッターが同じ文言で出る
+[198/204] [desktop] › e2e/settings.spec.ts:645:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+[199/204] [desktop] › e2e/dashboard.spec.ts:256:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[200/204] [desktop] › e2e/dashboard.spec.ts:310:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[201/204] [desktop] › e2e/dashboard.spec.ts:317:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[202/204] [desktop] › e2e/dashboard.spec.ts:324:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[203/204] [desktop] › e2e/dashboard.spec.ts:335:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[204/204] [desktop] › e2e/dashboard.spec.ts:377:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+  204 passed (28.6s)

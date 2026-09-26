@@ -1,6 +1,8 @@
 # ダッシュボード・分析解析カタログ（CSV起点）
 
-- 位置づけ: ダッシュボード画面と AI 分析（Claude Code の report-design-system skill）で**あらかじめ決めておく内容**の正本。
+> **画面構成の履歴資料**: 本書の第3節と `docs/screens/prompts/02-dashboard.prompt.txt` は初期の週次ファネル案です。現在のダッシュボード画面・期間・集計対象は `docs/feat-dashboard-redesign/requirements.md` と `system-spec/ui-ux.md` の qa-089〜qa-099 を正本とします。M1 の計算式は本書第2節が定義しますが、現行の `video_daily_metrics` だけでは必要な総再生時間と動画長を保持していません。取込機能の実装時に列・算式をそろえる必要があります。
+
+- 位置づけ: CSV 指標と AI 分析（Claude Code の report-design-system skill）で**あらかじめ決めておく内容**の正本。画面構成は上記の現行要件を優先する。
 - 基準データ: YouTube Studio「コンテンツ」エクスポート（`表データ.csv` / `グラフデータ.csv` / `合計.csv`）と、既存分析 `yt-report/2026-09-manju-youtube-start`（brief / results / ideas / analysis.mjs）。
 - 取込ルール: CSV は読み取り専用で取り込み、D1 に正規化保存する。元ファイルは加工しない。
 
@@ -40,13 +42,15 @@
 
 ### 2.1 週次売上ファネル
 
-原因指標は、インプレッション / CTR / 加重平均視聴率M1 / 導線誘導率 / 問い合わせ→成約率の5つ。導線名の既定表示はLINEだが、保存値`route_label`で差し替えられる。結果指標は売上、成約数、登録者数（参考）として原因指標と分ける。週次診断では週境界と出典を揃えるため、YouTube側の5原因指標と`views`はStudio CSVだけを使い、API値は詳細画面の公式参考値として混ぜない。
+原因指標は、インプレッション / CTR / 加重平均視聴率M1 / 導線誘導率 / 問い合わせ→成約率の5つ。導線名の既定表示はLINEだが、保存値`route_label`で差し替えられる。結果指標は売上、成約数、登録者数（参考）として原因指標と分ける。週次診断では週境界と出典を揃えるため、YouTube側の原因指標と`views`はStudio CSVだけを使い、API値は詳細画面の公式参考値として混ぜない。
+
+実サンプルのStudio「合計.csv」は2列でインプレッション・CTRを含まないため、現行の取込だけでは5原因指標は揃わない。該当段は入力欠損として判定を保留し、API値や別期間の値から推測して補わない。
 
 - `lead_route_rate = route_visits / views * 100`。`views` は同じJST週のStudio CSV由来値だけを使う。
 - `inquiry_close_rate = closed_deals / inquiries * 100`。
 - `target_gap = (actual - target) / target`。`target > 0`かつ判定可能で、`target_gap < 0`の原因指標だけを候補にし、その中で最小のものを「最大の改善候補」とする。全指標が0以上なら「全指標目標達成」とし、無理に改善候補を作らない。因果関係や売上への寄与を断定しない。
 - `min_sample`と比較する`sample_count`は、インプレッション=インプレッション数、CTR=インプレッション数、M1=エンゲージビュー数、導線誘導率=同週視聴回数、問い合わせ→成約率=問い合わせ数とする。
-- 選択週はJST月曜00:00〜翌月曜00:00。翌月曜を迎えていない週、またはStudio CSV・週次事業CSVのいずれかの最新取込が週末より前なら鮮度不足とする。過去の確定週に一律TTLは設けない。
+- 選択週はJST月曜00:00〜翌月曜00:00。翌月曜を迎えていない週、Studio合計CSVの日次7日が欠ける週、M1に使う動画日次の平均視聴率と視聴回数が7日分揃わない週は判定保留とする。Studio合計の日次各行、M1の両入力列に紐づく取込、週次事業CSVのいずれかが週末より前なら鮮度不足とする。過去の確定週に一律TTLは設けない。
 - 分母0、入力欠損、`target <= 0`またはtarget未設定、`funnel_targets.min_sample`未達、鮮度不足のいずれかは判定保留とし、0へ丸めない。判定保留理由を画面と分析出力に残す。
 - `inquiry_close_rate`は同一週の問い合わせ数と成約数を比べる運用スナップショット（`rate_basis=same_week_snapshot`）であり、問い合わせ発生週に成約を帰属するコホート成約率ではない。画面では「問い合わせ→成約率（同週）」と表示する。
 - `funnel_targets` は `metric_id, target_value, min_sample, effective_from` を持ち、対象週に有効な最新設定を使う。

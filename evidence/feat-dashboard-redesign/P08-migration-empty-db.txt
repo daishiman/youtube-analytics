@@ -1,0 +1,22 @@
+# SYS-DBR-P08 空の D1 への migration と seed の冪等性（2026-09-25 00:33 JST・ローカル）
+# 環境: wrangler 4.136.1、--local --persist-to <scratchpad>/emptydb2（既存の .wrangler 状態を使わない空の DB）
+
+## 1. npx wrangler d1 migrations apply DB --local --persist-to <空ディレクトリ>
+0001_platform.sql                             ✅
+0002_user_preferences_and_session_cleanup.sql ✅
+0003_login_consent_youtube_link.sql           ✅
+0004_settings_channel_link.sql                ✅
+0005_tenant_google_client.sql                 ✅
+0006_channel_deletion_gate.sql                ✅
+0007_channel_cleanup_write_gate.sql           ✅
+0008_dashboard_media_assets.sql               ✅   (15 commands executed successfully)
+
+## 2. seed（scripts/seed-local.sql）を2回続けて流す
+1回目: 🚣 65 commands executed successfully.
+2回目: 🚣 65 commands executed successfully.   ← 先頭で seed-% の行を消してから入れ直すので、2回目も同じ件数になる
+
+## 3. 2回目のあとの件数（--json）
+videos=12, video_metrics=419, daily_metrics=90, reports=2, actions=3, funnel_weeks=13
+idx_media_assets_kind_fetched の存在: 1
+
+判定: 合格（空の DB に 0001〜0008 を順に適用でき、seed は冪等）

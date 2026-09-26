@@ -1,22 +1,22 @@
-// 設定画面「データを削除」区画（危険操作）。テナント名で確認し、削除依頼を予約する
+// 設定画面「データを削除」区画。名前で確定し、依頼直後に対象の利用を止める
 import { useState } from "react";
 import { api } from "../../api";
-import { formatDateTime } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { SectionCard } from "../../components/SectionCard";
 import { useToast } from "../../components/Toast";
+import { formatDateTime } from "../../format";
 import { errorText } from "../shell-context";
 
 export function DeleteSection({
   tenantName,
   deletion,
   canManage,
-  onChanged,
+  onDeleted,
 }: {
   tenantName: string;
   deletion: { dueAt: string } | null;
   canManage: boolean;
-  onChanged: () => Promise<void>;
+  onDeleted: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -33,7 +33,7 @@ export function DeleteSection({
       });
       setOpen(false);
       toast(`削除依頼を受け付けました。削除期限: ${formatDateTime(dueAt)}`);
-      await onChanged();
+      await onDeleted();
     } catch (err) {
       setError(errorText(err));
     } finally {
@@ -46,7 +46,7 @@ export function DeleteSection({
       id="delete"
       title="データを削除"
       tone="danger"
-      description="保存したデータ（指標・レポート・画像）の削除依頼を受け付けます。自動削除の実行は準備中です"
+      description="依頼後すぐにこのワークスペースを利用できなくし、保存した指標・レポート・画像を7日以内に削除します"
     >
       {deletion ? (
         <p className="alert">

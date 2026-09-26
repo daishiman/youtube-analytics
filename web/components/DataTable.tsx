@@ -13,17 +13,27 @@ export function DataTable<T>({
   rows,
   rowKey,
   empty,
+  layout = "cards",
+  className,
 }: {
   caption: string;
   columns: Column<T>[];
   rows: T[];
-  rowKey: (row: T) => string;
+  rowKey: (row: T, index: number) => string;
   empty: string;
+  /** 可変列CSVのような横長の表は、小画面でも列見出しを保って横スクロールする。 */
+  layout?: "cards" | "scroll";
+  /** 画面固有の見た目を足すクラス（例: video-table） */
+  className?: string;
 }) {
   if (rows.length === 0) return <p className="muted">{empty}</p>;
   return (
     <div className="table-wrap">
-      <table className="data-table">
+      <table
+        className={["data-table", layout === "scroll" && "scroll-table", className]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <caption className="visually-hidden">{caption}</caption>
         <thead>
           <tr>
@@ -35,8 +45,8 @@ export function DataTable<T>({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
-            <tr key={rowKey(row)}>
+          {rows.map((row, index) => (
+            <tr key={rowKey(row, index)}>
               {columns.map((c) => (
                 <td key={c.key} data-label={c.label}>
                   {c.render(row)}

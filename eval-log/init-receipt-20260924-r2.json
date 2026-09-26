@@ -1,0 +1,19 @@
+{
+  "verb": "init",
+  "skill": "run-dev-graph-init",
+  "plugin_version": "dev-graph@harness-local 0.1.11",
+  "executed_at": "2026-09-24",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "head_sha": "074636d497906d1484c77f6ea8f25066017ee745",
+  "trigger": "02-dashboard redesign (docs/screens/02-dashboard.png)",
+  "created": [".dev-graph/cache/"],
+  "preserved": [".dev-graph/config.json", ".dev-graph/state/graph.json", ".dev-graph/locks/", ".dev-graph/templates/ (all digest-identical to plugin templates)", "issues/", "tasks/", "specs/", "architecture/", "features/", "docs/"],
+  "migration_preview": [],
+  "hook_source": "plugin",
+  "project_fallback_settings_changed": false,
+  "github": {"enabled": false, "token_stored": false, "node_ids_stored": false},
+  "schema_result": {"valid": true, "violations": [], "missing_sections": []},
+  "second_run_planned_changes": 0,
+  "choice": "accept-as-is",
+  "result": "PASS"
+}

@@ -1,0 +1,26 @@
+{
+  "auditor": "dev-graph:dev-graph-integrity-auditor",
+  "scope": "C14 decompose preview independent audit (graph_revision 8 -> 9 candidate): feat-dashboard-redesign / feat-web-screens-actions",
+  "audited_at": "2026-09-24T10:14:55Z",
+  "graph_digest": "333cdb9313a2e5f9099b759785a202c21597585d98d5a75ef25638234482dc56",
+  "verdict": "PASS",
+  "checks": [
+    {"id": "macro-dag-cycle-and-edge-existence", "result": "PASS", "evidence": "preview 36ノードで dangling 参照0件・循環0件。macro 層(feature/architecture/specification 10ノード)でも循環0件。feat-dashboard-redesign.depends_on 5件はすべて実在ノード"},
+    {"id": "macro-micro-boundary", "result": "PASS", "evidence": "feat-dashboard-redesign は parent_feature=null・phase_ref=null。scope/acceptance は feature 粒度で P01..P13 相当の混入なし。rev8→9 の差分は新規1・更新1・graph_revision のみで task/parent_feature 付きノードの新規生成0件"},
+    {"id": "handoff-completeness-no-duplication", "result": "PASS", "evidence": "他33ノードは byte-identical。feat-web-screens-actions の旧『ダッシュボード先頭4ブロック』記述は md/context.json 双方から消え、scope_out に移管先を明記。新 feature の scope_in と重複なし"},
+    {"id": "three-way-field-consistency", "result": "PASS (advisory finding あり)", "evidence": "md frontmatter・graph node・context.json で purpose/goal/scope_in/scope_out/acceptance/architecture_refs が一致。context.json の architecture_refs 形式が他 feature 慣行と異なる(finding #1)"},
+    {"id": "spec-conformance-qa074-083", "result": "PASS", "evidence": "対象セレクタ既定直近10本・上限なし(qa-081)、構成比、GET /api/dashboard 集約と json_each 単一バインド(qa-083)、ファネルの遅延取得、自サイト経由サムネイルで CSP 不変(qa-080)、他テナント ID の黙った除外(qa-082)などが仕様本文と一致。仕様外の追加要素なし"},
+    {"id": "tracker-and-lineage-binding", "result": "PASS", "evidence": "tracker_binding=beads、implementation_readiness=complete、source_digest=dc931acd91cef9dd74da3b457eea4442d702c2337c4dc3c12bf9ce5cc3bcf698 が specs/youtube-analytics-system.md の現 sha256 と一致"},
+    {"id": "schema-validation", "result": "PASS (想定内エラーのみ)", "evidence": "preview への validate-graph-schema は artifact_missing(新 md が本番 path に未配置)1件のみ。他 violation 0件"}
+  ],
+  "findings": [
+    {"node": "feat-dashboard-redesign", "severity": "medium", "detail": "context.json の architecture_refs が node id のみで、他 feature の context.json が採る file-path 列挙形式と異なり、system-spec 章が含まれない", "suggested_fix": "architecture/specs/system-spec index・00・ui-ux・frontend・backend・security・database・infrastructure の file-path 列挙に揃える"},
+    {"node": "feat-web-screens-actions", "severity": "low", "detail": "scope/acceptance を変更したのに confirmation_evidence が旧評価のまま", "suggested_fix": "rev9 適用時に本監査レポートで更新する"},
+    {"node": "feat-dashboard-redesign", "severity": "low", "detail": "confirmation_evidence が preview 用の仮置きを指している", "suggested_fix": "rev9 適用時に本監査レポートへ差し替える"}
+  ],
+  "resolutions": [
+    {"finding": 1, "status": "fixed", "detail": "commit 時に context.json の architecture_refs を file-path 10件の列挙へ変更(graph node 側は他 feature と同じく node id のまま)。三者一致の検査対象である scope/acceptance 等は不変"},
+    {"finding": 2, "status": "fixed", "detail": "commit 時に feat-web-screens-actions の confirmation_evidence を本レポートへ更新"},
+    {"finding": 3, "status": "fixed", "detail": "commit 時に feat-dashboard-redesign の confirmation_evidence を本レポートへ差し替え"}
+  ]
+}

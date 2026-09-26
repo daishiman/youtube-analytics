@@ -13,10 +13,15 @@ not_found_handling = "single-page-application"
 run_worker_first = ["/api/*"]
 
 [vars]
-MAX_TENANTS = "100"
+# テナント上限。1テナント1連携で Queue の固定分が安全予算8,000ops/日に収まる数（src/usecases/queue-budget.ts・tests/platform/queue-budget.test.ts）
+MAX_TENANTS = "75"
 # Google Cloud の OAuth クライアントID（非秘密）。本番値へ置き換える
 GOOGLE_CLIENT_ID = "183283977516-m8erkdffia1u9eonfj60g0ims3h3csav.apps.googleusercontent.com"
-# 字幕の自動取得（youtube.force-ssl）。Google の OAuth 検証が通るまで "0"（運営テナント以外は「準備中」）。通ったら "1"
+# 既存の Google OAuth クライアントを YouTube 連携にも使うテナント。ID 自体は秘密ではない。
+MANAGED_YOUTUBE_TENANT_ID = "eb994133-b9c9-4377-96c9-33d66ae9939a"
+# 字幕の自動取得（youtube.force-ssl）。収集処理（captions-collector）は実装済みだが、運用開始の判断まで
+# CAPTIONS_COLLECTION_READY は設定しない（未設定 = 全テナント準備中で、候補の送信も取得もしない）。
+# FORCE_SSL_VERIFIED は Google の OAuth 検証が通るまで "0"。通ったら "1"（READY="1" のときだけ効く）。
 FORCE_SSL_VERIFIED = "0"
 # 運営テナントの tenant_id（検証前でも字幕トグルを試せるテナント）。本番のテナントを作成後に値を入れる
 # OPERATOR_TENANT_ID = ""
@@ -42,6 +47,18 @@ queue = "collect-queue"
 binding = "CLEANUP_QUEUE"
 queue = "channel-cleanup-queue"
 
+# サムネイルの取り直し（qa-098）。収集の通とは別の通にし、1通15件で1実行の subrequest 50件に収める
+[[queues.producers]]
+binding = "THUMBNAIL_QUEUE"
+queue = "thumbnail-queue"
+
+[[queues.consumers]]
+queue = "collect-queue"
+max_batch_size = 1
+max_concurrency = 1
+max_retries = 3
+retry_delay = 600
+
 [[queues.consumers]]
 queue = "channel-cleanup-queue"
 max_batch_size = 1
@@ -49,7 +66,15 @@ max_concurrency = 1
 max_retries = 10
 retry_delay = 60
 
-# Queue 送信失敗時も削除予約を回収する。Cron は UTC、18:00 UTC = 翌日 03:00 JST。
+[[queues.consumers]]
+queue = "thumbnail-queue"
+max_batch_size = 1
+max_concurrency = 1
+max_retries = 2
+retry_delay = 300
+
+# Queue 送信失敗時も削除予約を回収する。日次 API 収集と30日超のサムネイル削除も同じ Cron で行う。
+# Cron は UTC、18:00 UTC = 翌日 03:00 JST。
 [triggers]
 crons = ["0 18 * * *"]
 

@@ -1,0 +1,32 @@
+{
+  "verb": "node",
+  "feature_id": "feat-dashboard-redesign",
+  "mode": "apply",
+  "preceded_by": "dry-run (diffs 0, writes 0)",
+  "nodes": [
+    "SYS-DBR-P01",
+    "SYS-DBR-P02",
+    "SYS-DBR-P03",
+    "SYS-DBR-P04",
+    "SYS-DBR-P05",
+    "SYS-DBR-P06",
+    "SYS-DBR-P07",
+    "SYS-DBR-P08",
+    "SYS-DBR-P09",
+    "SYS-DBR-P10",
+    "SYS-DBR-P11",
+    "SYS-DBR-P12",
+    "SYS-DBR-P13"
+  ],
+  "expected_count": 13,
+  "applied_changes": 0,
+  "reason": "tasks/feat-dashboard-redesign/sys-dbr-p01..p13.md と graph node の 40 field×13 が一致済み。冪等のため書込なし",
+  "c11": {
+    "valid": true,
+    "violations": 0,
+    "implementation_readiness": "complete"
+  },
+  "graph_revision": 12,
+  "graph_sha256": "d9053e183bce9e373297d1903b47365bf948964f81fbdcee19d33b9c7ad7554a",
+  "at": "2026-09-24T15:49:19Z"
+}

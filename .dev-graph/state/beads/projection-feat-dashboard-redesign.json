@@ -1,0 +1,138 @@
+{
+ "feature": {
+  "graph_node_id": "feat-dashboard-redesign",
+  "title": "ダッシュボード刷新(今週、何が効きましたか?)",
+  "description": "dev-graph feature feat-dashboard-redesign"
+ },
+ "children": [
+  {
+   "graph_node_id": "SYS-DBR-P01",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P01",
+   "title": "ダッシュボード刷新の要件を実装単位へ確定",
+   "depends_on": [],
+   "description": "dev-graph task SYS-DBR-P01 (tasks/feat-dashboard-redesign/sys-dbr-p01.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P02",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P02",
+   "title": "集約API・ファネルAPI・サムネイルAPI・データモデルの構成設計",
+   "depends_on": [
+    "SYS-DBR-P01"
+   ],
+   "description": "dev-graph task SYS-DBR-P02 (tasks/feat-dashboard-redesign/sys-dbr-p02.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P03",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P03",
+   "title": "テナント境界・キャッシュ・CSP・Cron予算の設計レビュー",
+   "depends_on": [
+    "SYS-DBR-P02"
+   ],
+   "description": "dev-graph task SYS-DBR-P03 (tasks/feat-dashboard-redesign/sys-dbr-p03.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P04",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P04",
+   "title": "受入テストとPlaywright E2Eの設計",
+   "depends_on": [
+    "SYS-DBR-P03"
+   ],
+   "description": "dev-graph task SYS-DBR-P04 (tasks/feat-dashboard-redesign/sys-dbr-p04.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P05",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P05",
+   "title": "ダッシュボードUI・集約API・ファネルAPI・サムネイル配信・Cronの実装",
+   "depends_on": [
+    "SYS-DBR-P04"
+   ],
+   "description": "dev-graph task SYS-DBR-P05 (tasks/feat-dashboard-redesign/sys-dbr-p05.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P06",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P06",
+   "title": "テスト実行と不具合修正",
+   "depends_on": [
+    "SYS-DBR-P05"
+   ],
+   "description": "dev-graph task SYS-DBR-P06 (tasks/feat-dashboard-redesign/sys-dbr-p06.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P07",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P07",
+   "title": "受入確認",
+   "depends_on": [
+    "SYS-DBR-P06"
+   ],
+   "description": "dev-graph task SYS-DBR-P07 (tasks/feat-dashboard-redesign/sys-dbr-p07.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P08",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P08",
+   "title": "重複ロジックの整理とマイグレーション健全性確認",
+   "depends_on": [
+    "SYS-DBR-P07"
+   ],
+   "description": "dev-graph task SYS-DBR-P08 (tasks/feat-dashboard-redesign/sys-dbr-p08.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P09",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P09",
+   "title": "セキュリティ・アクセシビリティ・運用保証",
+   "depends_on": [
+    "SYS-DBR-P08"
+   ],
+   "description": "dev-graph task SYS-DBR-P09 (tasks/feat-dashboard-redesign/sys-dbr-p09.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P10",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P10",
+   "title": "最終レビュー",
+   "depends_on": [
+    "SYS-DBR-P09"
+   ],
+   "description": "dev-graph task SYS-DBR-P10 (tasks/feat-dashboard-redesign/sys-dbr-p10.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P11",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P11",
+   "title": "証跡の集約",
+   "depends_on": [
+    "SYS-DBR-P10"
+   ],
+   "description": "dev-graph task SYS-DBR-P11 (tasks/feat-dashboard-redesign/sys-dbr-p11.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P12",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P12",
+   "title": "運用手順とドキュメント",
+   "depends_on": [
+    "SYS-DBR-P10"
+   ],
+   "description": "dev-graph task SYS-DBR-P12 (tasks/feat-dashboard-redesign/sys-dbr-p12.md)"
+  },
+  {
+   "graph_node_id": "SYS-DBR-P13",
+   "parent_feature": "feat-dashboard-redesign",
+   "phase_ref": "P13",
+   "title": "リリースとデプロイ",
+   "depends_on": [
+    "SYS-DBR-P11",
+    "SYS-DBR-P12"
+   ],
+   "description": "dev-graph task SYS-DBR-P13 (tasks/feat-dashboard-redesign/sys-dbr-p13.md)"
+  }
+ ]
+}

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router";
 import { api, DONE_MESSAGES, REDIRECT_MESSAGES, type Settings } from "../api";
+import { Alert, Loading } from "../components/Alert";
 import { PageHeader } from "../components/PageHeader";
 import { useToast } from "../components/Toast";
 import { DeleteSection } from "./settings/DeleteSection";
@@ -89,11 +90,7 @@ function TenantSettings({
   return (
     <>
       <PageHeader title="設定" lead="連携・取込・データ管理を設定します" />
-      {redirectError && (
-        <p role="alert" className="alert">
-          {redirectError}
-        </p>
-      )}
+      <Alert>{redirectError}</Alert>
       <div className="settings-sections">
         {ready ? (
           <>
@@ -118,17 +115,13 @@ function TenantSettings({
           </>
         ) : state.status === "error" ? (
           <div>
-            <p role="alert" className="alert">
-              {state.message}
-            </p>
+            <Alert>{state.message}</Alert>
             <button type="button" className="button" onClick={() => void load()}>
               再試行
             </button>
           </div>
         ) : (
-          <p className="muted" role="status">
-            設定を読み込んでいます…
-          </p>
+          <Loading>設定を読み込み中…</Loading>
         )}
         {/* メンバーは別 API で独立。設定の取得に失敗しても管理できるよう、常に同じ位置に置く */}
         {isOwner && <MemberSection me={me} reload={reload} tenant={tenant} />}
@@ -139,7 +132,7 @@ function TenantSettings({
               tenantName={ready.tenant.name}
               deletion={ready.deletion}
               canManage={ready.permissions.manageSettings}
-              onChanged={load}
+              onDeleted={reload}
             />
           </>
         )}

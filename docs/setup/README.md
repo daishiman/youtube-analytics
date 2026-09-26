@@ -1,11 +1,12 @@
 # セットアップ文書の入口
 
-最終更新: 2026-09-23。**まずこのページを見て、自分がどこから始めればよいかを決める。**
+最終更新: 2026-09-25。**まずこのページを見て、自分がどこから始めればよいかを決める。** 2節以降の状態表は基盤構築時点の記録であり、指定テナントの現行手順は下の専用文書を参照する。
 
 ## 1. どの文書を読むか
 
 | 目的 | 文書 |
 |---|---|
+| `manjumoto.daishi@senpai-lab.com` のテナントで YouTube API を使うための設定と確認 | **[youtube-managed-oauth.md](youtube-managed-oauth.md)**（現行の専用手順） |
 | 公開までに自分で行う設定を、1 手順ずつ実行する | **[owner-manual-setup.mdx](owner-manual-setup.mdx)**（本編。画面の場所、URL、入力値まで） |
 | 構成と現況、残課題の全体像を知る | [environment.md](environment.md) |
 | 公開後の日々の運用（上限変更、招待の取消、障害時、ロールバック） | [../feat-platform-tenant-auth/runbook.md](../feat-platform-tenant-auth/runbook.md) |

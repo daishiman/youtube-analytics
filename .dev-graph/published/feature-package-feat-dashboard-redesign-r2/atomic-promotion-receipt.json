@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "status": "promoted",
+  "promoted_at": "2026-09-24T15:08:34Z",
+  "repo_identity": "github:daishiman/youtube-analytics",
+  "staging_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "evaluated_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "published_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "implementation_readiness": "complete",
+  "quality_conditions": {
+    "no_contradiction": "PASS",
+    "no_missing": "PASS",
+    "consistent": "PASS",
+    "dependency_integrity": "PASS"
+  },
+  "promotion_method": "same-filesystem-atomic-rename",
+  "registration_manifest": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/dev-graph-registration.json"
+}

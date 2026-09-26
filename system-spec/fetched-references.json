@@ -2,13 +2,13 @@
   "references": [
     {
       "target_id": "cloudflare-workers",
-      "retrieved_at": "2026-09-21T09:50:54Z",
+      "retrieved_at": "2026-09-24T09:16:10Z",
       "source_url": "https://developers.cloudflare.com/workers/platform/limits/",
       "official_publisher": "Cloudflare",
       "official_host": "developers.cloudflare.com",
       "last_updated": "2026-09-05",
-      "latest_checked_at": "2026-09-21T09:50:54Z",
-      "summary": "Workers Free: 100,000リクエスト/日、HTTP/Cron 1回あたりCPU 10ms、サブリクエスト50、メモリ128MB。超過はError 1027。"
+      "latest_checked_at": "2026-09-24T09:16:10Z",
+      "summary": "Workers Free: 100,000リクエスト/日、HTTP/Cron 1回あたりCPU 10ms、サブリクエスト50、メモリ128MB。超過はError 1027。 subrequest は Fetch API と R2・KV・D1 など Cloudflare サービスへの呼び出しを数え、Queues の send()/sendBatch() も含む(サムネイル取り直しの1実行予算の根拠)。"
     },
     {
       "target_id": "cloudflare-d1",
@@ -183,13 +183,13 @@
     },
     {
       "target_id": "youtube-api-developer-policies",
-      "retrieved_at": "2026-09-21T12:46:20Z",
+      "retrieved_at": "2026-09-24T09:04:29Z",
       "source_url": "https://developers.google.com/youtube/terms/developer-policies",
       "official_publisher": "Google",
       "official_host": "developers.google.com",
       "last_updated": "2026-09-14",
-      "latest_checked_at": "2026-09-21T12:46:20Z",
-      "summary": "III.A.2: 機能利用前にプライバシーポリシーへの同意を求め、常に目立つ位置で参照可能にし、Google Privacy Policyへリンクする。III.D.2.3: 認可の取消手段を用意し、取消から7日以内に保存データを削除。III.E.4.g: 利用者のデータ削除依頼を受け付け7日以内に削除。"
+      "latest_checked_at": "2026-09-24T09:04:29Z",
+      "summary": "III.A.2: 機能利用前にプライバシーポリシーへの同意を求め、常に目立つ位置で参照可能にし、Google Privacy Policyへリンクする。III.D.2.3: 認可の取消手段を用意し、取消から7日以内に保存データを削除。III.E.4.g: 利用者のデータ削除依頼を受け付け7日以内に削除。 III.E.4: Analytics API 以外の認可データ(自チャンネルの動画サムネイル等)は必要な間だけ保存でき、30暦日を超えたら削除または取り直す。保存した API データは現行データと一致させる合理的努力が必要。"
     },
     {
       "target_id": "youtube-reporting-api",
@@ -290,6 +290,89 @@
       "last_updated": "2026-08-19",
       "latest_checked_at": "2026-09-24T00:37:09Z",
       "summary": "sensitive scope を使うアプリの検証要件: 同意画面のブランド情報(アプリ名・サポートメール・ホームページ・プライバシーポリシー URI)、Search Console でのドメイン所有確認、ホームページと同一ドメインのプライバシーポリシー(Google ユーザーデータの扱いを開示)、スコープごとの利用理由、OAuth 付与の流れを英語で示すデモ動画(YouTube 限定公開)。審査は通常3〜5営業日。未検証アプリは付与できる Google アカウント数に上限がある。youtube.force-ssl を字幕トグルで使うため、一般公開前に検証を申請する(qa-085)"
+    },
+    {
+      "target_id": "apache-echarts",
+      "retrieved_at": "2026-09-24T08:51:35Z",
+      "source_url": "https://echarts.apache.org/en/changelog.html",
+      "official_publisher": "Apache Software Foundation",
+      "official_host": "echarts.apache.org",
+      "version": "6.1.0",
+      "last_updated": "2026-05-18",
+      "latest_checked_at": "2026-09-24T08:51:35Z",
+      "summary": "Apache ECharts の公式 changelog。最新は v6.1.0 (2026-05-18)。ダッシュボードの KPI 推移線・日次推移・構成比グラフはサーバが返すグラフ仕様 JSON(option)を ECharts で描画し、ECharts は遅延読込する。"
+    },
+    {
+      "target_id": "react",
+      "retrieved_at": "2026-09-24T08:51:35Z",
+      "source_url": "https://react.dev/versions",
+      "official_publisher": "Meta",
+      "official_host": "react.dev",
+      "version": "19.3",
+      "last_updated": "2026-09-09",
+      "latest_checked_at": "2026-09-24T08:51:35Z",
+      "summary": "React 公式の版一覧。最新は 19.3 (v19.3.0, 2026-09-09)。ダッシュボード SPA の画面は React で構成し、区画ごとのエラー境界と遅延読込(lazy/Suspense)を使う。"
+    },
+    {
+      "target_id": "vite",
+      "retrieved_at": "2026-09-24T08:51:35Z",
+      "source_url": "https://vite.dev/releases",
+      "official_publisher": "VoidZero Inc. and Vite contributors",
+      "official_host": "vite.dev",
+      "version": "8.3",
+      "latest_checked_at": "2026-09-24T08:51:35Z",
+      "summary": "Vite 公式のリリース方針。vite@8.3 が通常パッチ対象の最新、7.3/8.2 は重要修正とセキュリティ修正、6.4/8.1 はセキュリティ修正のみ。ページに日付の記載は無い。SPA のビルドと ECharts の動的 import によるコード分割に使う。"
+    },
+    {
+      "target_id": "react-router",
+      "retrieved_at": "2026-09-24T08:51:35Z",
+      "source_url": "https://reactrouter.com/changelog",
+      "official_publisher": "React Router project (remix-run)",
+      "official_host": "reactrouter.com",
+      "version": "8.4.0",
+      "last_updated": "2026-09-15",
+      "latest_checked_at": "2026-09-24T08:51:35Z",
+      "summary": "React Router 公式 changelog。最新は v8.4.0 (2026-09-15)。Framework/Data/Declarative の3モードがある。ダッシュボードの期間(range/from/to)と対象(scope/video_ids)は URL クエリを唯一の画面状態として保持し、再読込・共有で再現する。"
+    },
+    {
+      "target_id": "playwright",
+      "retrieved_at": "2026-09-24T09:05:17Z",
+      "source_url": "https://playwright.dev/docs/release-notes",
+      "official_publisher": "Microsoft",
+      "official_host": "playwright.dev",
+      "version": "1.63",
+      "latest_checked_at": "2026-09-24T09:05:17Z",
+      "summary": "Playwright 公式リリースノート。最新は Version 1.63(ページに日付の記載なし)。E2E の受入基盤として 390×844・820×1180・1440×900 の3サイズ(qa-036)で主要操作を検証する。"
+    },
+    {
+      "target_id": "cloudflare-d1-limits",
+      "retrieved_at": "2026-09-24T09:16:10Z",
+      "source_url": "https://developers.cloudflare.com/d1/platform/limits/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-04-21",
+      "latest_checked_at": "2026-09-24T09:16:10Z",
+      "summary": "D1 の制限表(Workers Free): アカウントあたり10データベース、1データベース最大500MB、1クエリあたり bound parameters 最大100、SQL 文最大100,000 bytes(100KB)、Worker 1回の呼び出しあたりクエリ50。video_ids を json_each への単一バインドで渡す規則と、DB 数・容量の設計の根拠。"
+    },
+    {
+      "target_id": "wrangler",
+      "retrieved_at": "2026-09-24T09:16:10Z",
+      "source_url": "https://developers.cloudflare.com/workers/wrangler/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-09-15",
+      "latest_checked_at": "2026-09-24T09:16:10Z",
+      "summary": "Wrangler は Cloudflare Developer Platform の CLI で Worker プロジェクトを管理する。ページに版番号の記載は無く、導入は wrangler@latest、Node.js は Current/Active/Maintenance を支持(install-and-update ページ 2026-07-21 更新)。デプロイ(GitHub Actions)・Secrets 登録・D1 マイグレーションとバックアップに使う。"
+    },
+    {
+      "target_id": "cloudflare-r2-workers-api",
+      "retrieved_at": "2026-09-24T09:28:11Z",
+      "source_url": "https://developers.cloudflare.com/r2/api/workers/workers-api-reference/",
+      "official_publisher": "Cloudflare",
+      "official_host": "developers.cloudflare.com",
+      "last_updated": "2026-07-31",
+      "latest_checked_at": "2026-09-24T09:28:11Z",
+      "summary": "R2 の Workers バインディング API リファレンス。delete() はキーの配列を受け取り、『Up to 1000 keys may be deleted per call.』(1回最大1,000キー)。Cron 役割①でテナントごとの期限切れサムネイルを1回の delete にまとめる規則の根拠。"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "graph_revision": 8,
+  "graph_revision": 13,
   "nodes": [
     {
       "acceptance": [],
@@ -32,9 +32,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100",
+        "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-findings-20260924-r4.json"
+        "evidence_ref": "eval-log/completeness-report-20260924-r8.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -76,9 +76,9 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-24T09:17:58Z",
+        "imported_at": "2026-09-26T01:03:10Z",
         "origin_kind": "system-spec-harness",
-        "source_digest": "3cce8b44a7a66f5daca0a87a309c14bb4ec4a2ed40f448de71332d4ed077cac0",
+        "source_digest": "bc1f7f1ae798c52877c539d679fdbfdae1889208d86a278291eb42bde1480549",
         "source_path": "system-spec/00-requirements-definition.md",
         "source_plugin": "system-spec-harness",
         "source_version": "0.1.14"
@@ -96,7 +96,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム 要件・機能仕様",
       "tracker_binding": "none",
-      "updated_at": "2026-09-24T09:17:58Z"
+      "updated_at": "2026-09-26T01:03:10Z"
     },
     {
       "acceptance": [],
@@ -133,9 +133,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100",
+        "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-findings-20260924-r4.json"
+        "evidence_ref": "eval-log/completeness-report-20260924-r8.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -177,7 +177,7 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-24T09:17:58Z",
+        "imported_at": "2026-09-24T14:40:00Z",
         "origin_kind": "system-spec-harness",
         "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656",
         "source_path": "system-spec/index.md",
@@ -197,7 +197,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム アーキテクチャ",
       "tracker_binding": "none",
-      "updated_at": "2026-09-24T09:17:58Z"
+      "updated_at": "2026-09-24T14:40:00Z"
     },
     {
       "acceptance": [
@@ -678,9 +678,9 @@
     },
     {
       "acceptance": [
+        "ダッシュボード以外の5画面が共通土台(ルーティング・下部タブ・出典バッジ・M1〜M10 開示文)の上で表示され、ダッシュボード本体は feat-dashboard-redesign の受入で検証される",
+        "登録者数は参考の結果指標として表示され、動画画面に動画ごとの詳細実績(維持曲線・心理・コメント)がある",
         "390×844 / 820×1180 / 1440×900 で設定画面を除く5画面の主要操作 E2E が通る",
-        "ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である",
-        "登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある",
         "原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない",
         "AI分析の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる",
         "M1 区画に開示文が常に出る",
@@ -717,9 +717,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "e45ab702cc3060bb0b8778b7cb68a25dd64abddda00166dfc815bc32fa6a641c",
-        "evaluator": "dev-graph:local-targeted-projection-audit",
-        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
+        "evaluated_digest": "5c3104c48ffc4054a64f720fe7ecb9af21e7a204418cfd0d078db9283d30d4e7",
+        "evaluator": "dev-graph:dev-graph-integrity-auditor",
+        "evidence_ref": "eval-log/dev-graph-decompose-audit-20260924-r2.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T15:15:00Z",
@@ -744,7 +744,7 @@
       "goal": "スマホ・タブレット・PCで週次売上ファネルの改善候補と次アクションを最初に把握し、対象ファネル段と下流結果を次回レポートで前後比較できる",
       "graph_node_id": "feat-web-screens-actions",
       "implementation_readiness": {
-        "checked_at": "2026-09-21T15:15:00Z",
+        "checked_at": "2026-09-24T10:16:21Z",
         "missing_sections": [],
         "status": "complete"
       },
@@ -764,8 +764,8 @@
       ],
       "resource_scope": [],
       "scope_in": [
+        "SPA の共通土台(ルーティング・サイドバー/下部タブ・出典バッジと M1〜M10 開示文の共通コンポーネント・ECharts 共通ラッパ)。ダッシュボード画面本体は feat-dashboard-redesign へ移管(qa-089〜098)",
         "React+Vite+React Router の SPA(ログイン/ダッシュボード/動画/AI分析/改善アクション)と ECharts によるグラフ。共通レイアウトと設定画面は feat-settings-channel-link の AppShell・共通部品を使う",
-        "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質",
         "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント",
         "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定",
         "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)",
@@ -776,6 +776,7 @@
         "収集・取込・スキル連携のサーバ処理(各 feature)",
         "データ削除と無料枠メーターのサーバ処理(feat-retention-ops)",
         "専用アプリ",
+        "ダッシュボード画面の本体・GET /api/dashboard・GET /api/dashboard/funnel・サムネイル配信(feat-dashboard-redesign へ移管)",
         "設定画面・共通レイアウト(AppShell/Header/Footer)・共通部品・テナント切替(feat-settings-channel-link)"
       ],
       "source_lineage": {
@@ -783,8 +784,8 @@
         "source_plugin": "dev-graph",
         "source_path": "specs/youtube-analytics-system.md",
         "source_version": "1.0.0",
-        "source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
-        "imported_at": "2026-09-21T15:15:00Z"
+        "source_digest": "dc931acd91cef9dd74da3b457eea4442d702c2337c4dc3c12bf9ce5cc3bcf698",
+        "imported_at": "2026-09-24T10:16:21Z"
       },
       "start_date": null,
       "status": "active",
@@ -797,7 +798,7 @@
       "template_version": "1.0.0",
       "title": "6画面のWeb UIと改善アクション管理",
       "tracker_binding": "beads",
-      "updated_at": "2026-09-24T01:00:12Z"
+      "updated_at": "2026-09-24T14:40:00Z"
     },
     {
       "acceptance": [
@@ -4606,6 +4607,1303 @@
       "title": "CI/CD とリリース",
       "tracker_binding": "beads",
       "updated_at": "2026-09-24T01:20:21Z"
+    },
+    {
+      "acceptance": [
+        "ダッシュボードが docs/screens/02-dashboard.png と同じ区画の並びで、既存のインディゴ/マゼンタ配色のまま表示される",
+        "共通ヘッダーの期間は 7日/28日/90日/1年/任意 の5つで ?period= 省略時は28日になり、切り替えると KPI・推移・前期比がすべて同じ期間で再計算され、対象の選択は保たれる。許可外の period、任意期間の366日以上、from>to は 400 になる(qa-099)",
+        "対象セレクタで『動画を選ぶ』を選ぶと公開日の新しい順に直近10本が既定で選ばれ、外す・追加・入れ替えができ、11本以上も選べる(上限なし)。KPI と推移はその動画群の合計になり、推移に動画ごとの線が重なる",
+        "動画別の実績は直近公開10本を既定表示し、視聴回数順へ並べ替えられ、『構成比』に切り替えると動画別上位+その他・切り口別・Shorts/長尺・新作/過去作の内訳と上位3本の占有率が出る",
+        "KPI カードに出典バッジと M1 開示文が常に出て、前期比の上下が記号と色の両方で表される",
+        "『詳しく見る』のファネルを開いたときだけ GET /api/dashboard/funnel が呼ばれ、actual/target/target_gap または判定保留理由と改善候補(非因果)が従来どおり表示される",
+        "未連携・未収集・CSV未取込・レポート0件・アクション0件の各状態で、対応する空状態の文言と次の一手が出る",
+        "閲覧者には CSV取込ボタンとアクションの…メニューが出ず、書込系 API は 403 を返す。他テナントや存在しない video_ids を渡すと黙って除外され、自テナント分だけの集計で 200 が返る(存在の有無を応答で区別しない)",
+        "GET /api/dashboard の応答に Cache-Control: private, no-store が付き、CSP の img-src は 'self' data: のまま変わらず、サムネイルは GET /api/media/thumbnails/:video_id から自サイト経由で表示され、他テナントの video_id では取得できない",
+        "360px 幅で横スクロールが出ず、Playwright 390×844・820×1180・1440×900 の3サイズで主要操作の E2E が通る",
+        "video_ids を101本以上指定しても GET /api/dashboard が 200 を返す(json_each で単一バインドし、D1 の bound parameters 上限100に当たらない)",
+        "thumbnail 通1通の subrequest が50件以内に収まり、URL が変わった動画と fetched_at が25日を超えた動画が古い順に取り直され、30日を超えたサムネイルは Cron 役割①で R2 と media_assets から削除されて代替表示になる",
+        "動画が1,100本を超えるテナントでは公開日の新しい順に1,000本だけがサムネイル保存の対象になり、それより古い動画は取得されず代替表示になる"
+      ],
+      "architecture_refs": [
+        "arch-youtube-analytics-system"
+      ],
+      "artifact_kind": "feature",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "feature",
+          "candidate_path": "features/feat-dashboard-redesign.md",
+          "confidence": 0.95
+        },
+        {
+          "artifact_kind": "issue",
+          "candidate_path": "issues/feat-dashboard-redesign.md",
+          "confidence": 0.2
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "C14 macro 分解で確定仕様(qa-089〜qa-098、completeness r8 PASS)から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "manual",
+        "reconciled_at": null,
+        "source": null,
+        "status": "not_applicable"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "5c3104c48ffc4054a64f720fe7ecb9af21e7a204418cfd0d078db9283d30d4e7",
+        "evaluator": "dev-graph:dev-graph-integrity-auditor",
+        "evidence_ref": "eval-log/dev-graph-decompose-audit-20260924-r2.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:16:21Z",
+      "depends_on": [
+        "feat-youtube-daily-collection",
+        "feat-csv-media-ingest",
+        "feat-skill-analysis-reports",
+        "feat-web-screens-actions",
+        "feat-login-redesign",
+        "feat-settings-channel-link"
+      ],
+      "domain": "youtube-analytics",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": null,
+      "file_path": "features/feat-dashboard-redesign.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "goal": "ダッシュボードが画像どおりの順(ヘッダ(共通ヘッダーの期間切替 ?period=)・対象セレクタ・問い・KPI 4枚・日次推移・動画別の実績と構成比・最新AI分析・実施中の改善アクション・詳しく見る)で、既存のインディゴ/マゼンタ配色のまま表示され、読み取り専用の集約 API GET /api/dashboard の1回取得で描かれ、チャンネル全体と選んだ動画(既定は公開日の新しい順に直近10本・外す/追加/入れ替え可・上限なし)を切り替えて比べられ、週次売上ファネル一式は『詳しく見る』から遅延取得で見られ、テナント境界・閲覧者の読み取り専用・自サイト経由のサムネイル配信(CSP は変えない)・キャッシュ禁止で守られた状態が main への push で自動デプロイされる",
+      "graph_node_id": "feat-dashboard-redesign",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T10:16:21Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": null,
+      "phase_ref": null,
+      "priority": null,
+      "project_id": "youtube-analytics",
+      "pull_request_linkages": [],
+      "purpose": "ダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする",
+      "related_nodes": [
+        "spec-youtube-analytics-system"
+      ],
+      "resource_scope": [],
+      "scope_in": [
+        "ダッシュボード UI の刷新(web/pages/DashboardPage.tsx の仮画面を置換): ヘッダ(パンくず・『データ収集: 毎日 3:00(Cloudflare Cron) 最終成功 日付』・CSV取込ボタンは編集者以上のみ・アバター)と既存インディゴ/マゼンタ配色",
+        "期間は全画面共通の AppShell ヘッダーの切替に統一し(qa-099)、ヘッダーの PERIODS に 7日を加えて 7d/28d/90d/1y/custom(?period= 省略時は28日・任意は最大365日)とする。ダッシュボードは ?period= を読むだけでページ内の期間タブは置かない。前期(直前の同日数)と比較し、対象(scope/video_ids)はダッシュボード固有の URL クエリで保持して期間を切り替えても保つ(期間リンクは既存クエリを保持して period だけ差し替える)",
+        "対象セレクタ: チャンネル全体(既定)/動画を選ぶ(公開日の新しい順に直近10本を既定選択・外す/追加/入れ替え可・上限なし、qa-096)。動画選択時は KPI と推移をその動画群の合計にし、推移に動画ごとの線を重ねる",
+        "問い『今週、何が効きましたか?』と KPI 4枚(値・推移線・前期比を記号と色で二重表現・出典バッジ・M1 開示文)",
+        "日次推移グラフ(ECharts 遅延読込・今期実線/前期点線/公開日マーカー・文字要約と表切替)",
+        "動画別の実績: 直近公開10本を既定表示・視聴回数順への並べ替え・行押下で動画詳細へ遷移・『表/構成比』切替(動画別上位+その他/切り口別/Shorts・長尺/新作・過去作と上位3本の占有率)",
+        "最新AI分析カード(題名・版・結論・発見3つ・『レポートを開く』)と実施中/効果測定中の改善アクションカード(指標の基準値→最新値・期間・…メニューは編集者以上)",
+        "『詳しく見る』区画: ファネル(旧ダッシュボード先頭4ブロックの週次売上ファネル一式を移設し判定ロジックは維持)/切り口別/視聴者の形/Shorts/データ品質",
+        "空状態5種(未連携・未収集・CSV未取込・レポート0件・アクション0件)と区画ごとの読込中・エラー表示(1区画の失敗で全画面を落とさない)",
+        "読み取り専用の集約 API GET /api/dashboard?period=7d|28d|90d|1y|custom&from&to&scope=channel|videos&video_ids=(全画面共通の ?period= をそのまま受け、省略時 28d・custom は from/to 必須で最大365日、qa-099): KPI・推移のグラフ仕様 JSON・動画別の実績・構成比・最新AI分析要約・改善アクション・最終収集時刻・空状態フラグを daily_metrics/video_metrics/reports/actions から tenant_id で絞って返す。入力検証失敗は 400。video_ids は件数上限なしのため JSON 配列1個を json_each で展開して1パラメータでバインドする(D1 bound parameters 最大100)",
+        "週次売上ファネルの分離 API GET /api/dashboard/funnel?week= (既存の actual/target/target_gap・判定保留・改善候補ロジックを移設)",
+        "サムネイル配信 GET /api/media/thumbnails/:video_id: Data API の snippet.thumbnails から R2(media_assets, fetched_at・source_url 列を追加)へ保存したものを、テナント所属を確かめて自サイトから配る(Cache-Control: private)。未保存時は代替表示(qa-095)。取り直しは収集とは別の thumbnail 通(1通15件・1日最大3通、URL 変化と fetched_at 25日超を古い順)で行い、30日超は Cron 役割①で R2 と行を削除する(YouTube API Developer Policies III.E.4、Workers Free subrequest 50)。取り直しは fetched_at 無し→URL 変化→fetched_at の古い順。1,100本超のテナントは公開日の新しい順に1,000本だけを保存対象にする。Cron 役割①の削除はテナントごとに R2 delete() 1回へまとめ、1実行12テナントまで(qa-098)",
+        "セキュリティ: テナント境界(他テナントや存在しない video_ids は黙って除外し自テナント分だけで 200、qa-097)・閲覧者は読むだけ(書込系はサーバで編集者以上を強制)・AI要約と動画タイトルはテキスト描画のみ・CSP は img-src 'self' data: のまま変えない(qa-095)・集約応答は Cache-Control: private, no-store",
+        "アクセシビリティとレスポンシブ(360px 横スクロールなし・タップ領域44pt 以上・グラフの文字要約と表切替)と Playwright 3サイズ(390×844・820×1180・1440×900) E2E"
+      ],
+      "scope_out": [
+        "YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)",
+        "Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)",
+        "AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)",
+        "動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)",
+        "画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)",
+        "YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T10:16:21Z",
+        "origin_kind": "generated",
+        "source_digest": "dc931acd91cef9dd74da3b457eea4442d702c2337c4dc3c12bf9ce5cc3bcf698",
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "feature",
+        "youtube-analytics",
+        "dashboard"
+      ],
+      "target_date": null,
+      "template_id": "feature",
+      "template_version": "1.0.0",
+      "title": "ダッシュボード刷新(今週、何が効きましたか?)",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T14:45:00Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p01.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p01.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P01",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P01",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/requirements.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-01-requirements.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p01",
+        "documentation",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "ダッシュボード刷新の要件を実装単位へ確定",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p02.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P01"
+      ],
+      "domain": "backend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p02.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P02",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P02",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/architecture.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-02-architecture.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p02",
+        "backend",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "集約API・ファネルAPI・サムネイルAPI・データモデルの構成設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p03.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P02"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p03.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P03",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P03",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/design-review.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-03-design-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p03",
+        "security",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テナント境界・キャッシュ・CSP・Cron予算の設計レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p04.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P03"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p04.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P04",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P04",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "tests/dashboard/",
+        "e2e/dashboard.spec.ts",
+        "docs/feat-dashboard-redesign/test-design.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-04-test-design.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p04",
+        "quality",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入テストとPlaywright E2Eの設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p05.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P04"
+      ],
+      "domain": "frontend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p05.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P05",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P05",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "web/components/AppShell.tsx",
+        "web/pages/DashboardPage.tsx",
+        "web/pages/dashboard/",
+        "web/components/",
+        "web/api.ts",
+        "web/styles.css",
+        "src/http/dashboard-routes.ts",
+        "src/http/app.ts",
+        "src/usecases/dashboard*.ts",
+        "src/usecases/thumbnails.ts",
+        "src/repositories/dashboard-repository.ts",
+        "src/lib/errors.ts",
+        "src/index.ts",
+        "src/env.ts",
+        "migrations/0008_dashboard_media_assets.sql",
+        "scripts/seed-local.sql",
+        "wrangler.toml",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-05-implementation.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p05",
+        "frontend",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "ダッシュボードUI・集約API・ファネルAPI・サムネイル配信・Cronの実装",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p06.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P05"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p06.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P06",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P06",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "tests/dashboard/",
+        "e2e/dashboard.spec.ts",
+        "web/",
+        "src/"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-06-test-run.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p06",
+        "quality",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テスト実行と不具合修正",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p07.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P06"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p07.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P07",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P07",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/acceptance.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-07-acceptance.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p07",
+        "quality",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入確認",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p08.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P07"
+      ],
+      "domain": "data",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p08.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P08",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P08",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "src/",
+        "web/",
+        "migrations/",
+        "scripts/seed-local.sql"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-08-refactoring-migration.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p08",
+        "data",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "重複ロジックの整理とマイグレーション健全性確認",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p09.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P08"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p09.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P09",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P09",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/qa-report.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-09-quality-assurance.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p09",
+        "security",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "セキュリティ・アクセシビリティ・運用保証",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p10.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P09"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p10.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P10",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P10",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/final-review.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-10-final-review.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p10",
+        "quality",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "最終レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p11.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P10"
+      ],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p11.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P11",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P11",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "evidence/feat-dashboard-redesign/"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-11-evidence.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p11",
+        "documentation",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "証跡の集約",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p12.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P10"
+      ],
+      "domain": "operations",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p12.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P12",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P12",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        "docs/feat-dashboard-redesign/runbook.md",
+        "README.md"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-12-documentation-operations.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p12",
+        "operations",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "運用手順とドキュメント",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-dashboard-redesign/sys-dbr-p13.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への1対1写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/plan-findings.json",
+        "evaluated_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T10:58:07Z",
+      "depends_on": [
+        "SYS-DBR-P11",
+        "SYS-DBR-P12"
+      ],
+      "domain": "infrastructure",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "file_path": "tasks/feat-dashboard-redesign/sys-dbr-p13.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-DBR-P13",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-24T14:50:00Z"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-dashboard-redesign",
+      "phase_ref": "P13",
+      "priority": null,
+      "project_id": "feature-package-feat-dashboard-redesign",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-dashboard-redesign"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "source_lineage": {
+        "origin_kind": "system-dev-planner",
+        "source_plugin": "system-dev-planner",
+        "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-13-release-deploy.md",
+        "source_version": "0.1.0",
+        "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+        "imported_at": "2026-09-24T15:08:34Z"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p13",
+        "infrastructure",
+        "dashboard-redesign"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "リリースとデプロイ",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:08:34Z"
     }
   ],
   "repository_id": "github:daishiman/youtube-analytics",

@@ -1,0 +1,70 @@
+{
+ "imports": [],
+ "exports": [
+  {
+   "op": "create-projection",
+   "epic": "yta-1y6",
+   "children": {
+    "SYS-DBR-P01": "yta-1y6.1",
+    "SYS-DBR-P02": "yta-1y6.2",
+    "SYS-DBR-P03": "yta-1y6.3",
+    "SYS-DBR-P04": "yta-1y6.4",
+    "SYS-DBR-P05": "yta-1y6.5",
+    "SYS-DBR-P06": "yta-1y6.6",
+    "SYS-DBR-P07": "yta-1y6.7",
+    "SYS-DBR-P08": "yta-1y6.8",
+    "SYS-DBR-P09": "yta-1y6.9",
+    "SYS-DBR-P10": "yta-1y6.10",
+    "SYS-DBR-P11": "yta-1y6.11",
+    "SYS-DBR-P12": "yta-1y6.12",
+    "SYS-DBR-P13": "yta-1y6.13"
+   }
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-04l",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-9tm",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-ufd",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-7o5",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-0sg",
+   "idempotent": false
+  },
+  {
+   "op": "dep-add",
+   "issue": "yta-1y6",
+   "depends_on": "yta-rh8",
+   "idempotent": false
+  }
+ ],
+ "conflicts": [],
+ "tombstones": [],
+ "pending_retry": [],
+ "parity": {
+  "checked": 14,
+  "failed": []
+ },
+ "duplicates": [],
+ "graph_revision": 12,
+ "recorded_at": "2026-09-24T15:55:10Z"
+}

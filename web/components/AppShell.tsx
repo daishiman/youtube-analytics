@@ -3,18 +3,21 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useSearchParams } from "react-router";
 import { type Me, ROLE_LABELS } from "../api";
+import { formatDateTime } from "../format";
+import { Alert } from "./Alert";
 import { type IconName, NavIcon } from "./NavIcon";
 import { SiteFooter } from "./SiteFooter";
 
-export const NAV_ITEMS: { to: string; label: string; icon: IconName }[] = [
+export const NAV_ITEMS: { to: string; label: string; icon: IconName; comingSoon?: boolean }[] = [
   { to: "/", label: "ダッシュボード", icon: "home" },
-  { to: "/videos", label: "動画", icon: "video" },
-  { to: "/analysis", label: "AI分析", icon: "chart" },
-  { to: "/actions", label: "改善アクション", icon: "bulb" },
+  { to: "/videos", label: "動画", icon: "video", comingSoon: true },
+  { to: "/analysis", label: "AI分析", icon: "chart", comingSoon: true },
+  { to: "/actions", label: "改善アクション", icon: "bulb", comingSoon: true },
   { to: "/settings", label: "設定", icon: "gear" },
 ];
 
 export const PERIODS = [
+  { key: "7d", label: "7日" },
   { key: "28d", label: "28日" },
   { key: "90d", label: "90日" },
   { key: "1y", label: "1年" },
@@ -28,28 +31,8 @@ export function screenName(pathname: string): string {
   return hit?.label ?? "";
 }
 
-/** 日時を JST で「2026年9月21日 10:24」の形に。値が無いときは「—」 */
-export function formatDateTime(iso: string | null | undefined): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
-  return new Intl.DateTimeFormat("ja-JP", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(d);
-}
-
-/** 日付だけを JST で「2026/9/21」の形に */
-export function formatDate(iso: string | null | undefined): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
-  return new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo" }).format(d);
-}
+// 範囲外の設定画面（TokenSection・MemberSection）がここから読むため再公開する
+export { formatDate, formatDateTime } from "../format";
 
 interface ShellActions {
   onLogout: () => Promise<void>;
@@ -75,9 +58,39 @@ export function AppShell({
   children,
   ...actions
 }: AppShellProps) {
+  const shellRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+    const sidebar = sidebarRef.current;
+    const header = shell?.querySelector<HTMLElement>(".app-header");
+    const nav = sidebar?.querySelector<HTMLElement>(".main-nav");
+    if (!shell || !sidebar || !header || !nav) return;
+    // 下部タブ（900px未満）はラベルが折り返すと高くなる。Shell の外にあるトーストも使うので root に置く
+    const root = document.documentElement;
+    const updateOffset = () => {
+      shell.style.setProperty(
+        "--mobile-sidebar-height",
+        `${sidebar.getBoundingClientRect().height}px`,
+      );
+      shell.style.setProperty("--app-header-height", `${header.getBoundingClientRect().height}px`);
+      root.style.setProperty("--mobile-nav-height", `${nav.getBoundingClientRect().height}px`);
+    };
+    const observer = new ResizeObserver(updateOffset);
+    observer.observe(sidebar);
+    observer.observe(header);
+    observer.observe(nav);
+    updateOffset();
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--mobile-nav-height");
+    };
+  }, []);
+
   return (
-    <div className="shell">
-      <aside className="sidebar">
+    <div className="shell" ref={shellRef}>
+      <aside className="sidebar" ref={sidebarRef}>
         <NavLink className="brand" to="/" aria-label="Channel Insight ホーム">
           Channel Insight
         </NavLink>
@@ -104,6 +117,7 @@ export function AppShell({
             <NavLink key={item.to} to={item.to} end={item.to === "/"}>
               <NavIcon name={item.icon} />
               <span>{item.label}</span>
+              {item.comingSoon && <span className="nav-coming-soon">準備中</span>}
             </NavLink>
           ))}
         </nav>
@@ -111,22 +125,25 @@ export function AppShell({
       <div className="main-column">
         <AppHeader me={me} {...actions} />
         <main className="content">
-          {notice && (
-            <p role="alert" className="alert">
-              {notice}
-            </p>
-          )}
-          {error && (
-            <p role="alert" className="alert">
-              {error}
-            </p>
-          )}
+          <Alert>{notice}</Alert>
+          <Alert>{error}</Alert>
           {children}
         </main>
         <SiteFooter />
       </div>
     </div>
   );
+}
+
+/** 既存のクエリ（scope・video_ids など）を残し、期間だけを差し替えたリンク先（qa-099） */
+export function periodHref(params: URLSearchParams, key: string): string {
+  const next = new URLSearchParams(params);
+  next.set("period", key);
+  if (key !== "custom") {
+    next.delete("from");
+    next.delete("to");
+  }
+  return `?${next.toString()}`;
 }
 
 function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
@@ -138,14 +155,14 @@ function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
     <header className="app-header">
       <p className="header-title">{screenName(pathname)}</p>
       <p className="header-updated small muted">
-        <span>最終更新</span>
+        <span>基本日次の最終成功</span>
         <span>{formatDateTime(me.lastUpdatedAt)}</span>
       </p>
       <nav className="period-tabs" aria-label="期間">
         {PERIODS.map((p) => (
           <Link
             key={p.key}
-            to={`?period=${p.key}`}
+            to={periodHref(params, p.key)}
             className={p.key === period ? "active" : undefined}
             aria-current={p.key === period ? "true" : undefined}
           >
@@ -153,8 +170,49 @@ function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
           </Link>
         ))}
       </nav>
+      {period === "custom" && <CustomRangeForm />}
       <AccountMenu me={me} {...actions} />
     </header>
+  );
+}
+
+/** 任意期間の開始日・終了日（最大365日。範囲の検証は API が行い、400 の文言を画面に出す） */
+function CustomRangeForm() {
+  const [params, setParams] = useSearchParams();
+  const [from, setFrom] = useState(params.get("from") ?? "");
+  const [to, setTo] = useState(params.get("to") ?? "");
+
+  useEffect(() => {
+    setFrom(params.get("from") ?? "");
+    setTo(params.get("to") ?? "");
+  }, [params]);
+
+  return (
+    <form
+      className="custom-range"
+      aria-label="任意の期間"
+      onSubmit={(event) => {
+        event.preventDefault();
+        const next = new URLSearchParams(params);
+        next.set("period", "custom");
+        next.set("from", from);
+        next.set("to", to);
+        setParams(next);
+      }}
+    >
+      <label>
+        <span className="visually-hidden">開始日</span>
+        <input type="date" required value={from} onChange={(e) => setFrom(e.target.value)} />
+      </label>
+      <span aria-hidden="true">〜</span>
+      <label>
+        <span className="visually-hidden">終了日</span>
+        <input type="date" required value={to} onChange={(e) => setTo(e.target.value)} />
+      </label>
+      <button type="submit" className="button">
+        適用
+      </button>
+    </form>
   );
 }
 

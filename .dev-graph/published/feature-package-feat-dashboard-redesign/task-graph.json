@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-DBR-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-DBR-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P01"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P02"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P03"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P04"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P05"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P06"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P07"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P08"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P09"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P10"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P10"
+      ]
+    },
+    {
+      "id": "SYS-DBR-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-dashboard-redesign",
+      "parent_feature": "feat-dashboard-redesign",
+      "depends_on": [
+        "SYS-DBR-P11",
+        "SYS-DBR-P12"
+      ]
+    }
+  ]
+}

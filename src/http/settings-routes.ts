@@ -3,8 +3,9 @@ import type { Context } from "hono";
 import { Hono } from "hono";
 import type { TenantContext } from "../domain/tenant-context";
 import { AppError } from "../lib/errors";
+import { previewCsvImport } from "../usecases/csv-preview";
 import { deleteGoogleClient, saveGoogleClient } from "../usecases/google-client";
-import { createImport, listImports } from "../usecases/imports";
+import { createImport, getStudioImportMapping, listImports } from "../usecases/imports";
 import { getSettings, requestTenantDeletion } from "../usecases/settings";
 import { issueSkillToken, listSkillTokens, revokeSkillToken } from "../usecases/skill-tokens";
 import { getUsage } from "../usecases/usage";
@@ -98,6 +99,24 @@ settingsRoutes.get("/oauth/callback", async (c) => {
 
 settingsRoutes.get("/imports", async (c) =>
   c.json({ imports: await listImports(c.get("deps"), sessionTenant(c)) }),
+);
+
+settingsRoutes.get("/imports/:importId/preview", async (c) => {
+  const offset = c.req.query("offset");
+  const limit = c.req.query("limit");
+  return c.json(
+    await previewCsvImport(
+      c.get("deps"),
+      sessionTenant(c),
+      c.req.param("importId"),
+      offset === undefined ? 0 : Number(offset),
+      limit === undefined ? 50 : Number(limit),
+    ),
+  );
+});
+
+settingsRoutes.get("/imports/:importId/mapping", async (c) =>
+  c.json(await getStudioImportMapping(c.get("deps"), sessionTenant(c), c.req.param("importId"))),
 );
 
 settingsRoutes.post("/imports", async (c) => {

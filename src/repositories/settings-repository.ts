@@ -1,5 +1,6 @@
 // 設定画面の永続化。テナント配下の表は生成時に tenant_id を固定し、全クエリの WHERE に入れる（TenantScopedRepository と同じ規則）
 
+import { channelMetadataExpired, EXPIRED_CHANNEL_TITLE } from "../domain/channel-metadata";
 import type { ImportKind } from "../domain/import-rules";
 import type { TenantContext } from "../domain/tenant-context";
 
@@ -35,7 +36,14 @@ export interface ImportRow {
   rows: number | null;
   status: ImportStatus;
   error: string | null;
+  has_original: number;
   created_at: string;
+}
+
+export interface CsvImportSourceRow {
+  file_name: string;
+  r2_key: string;
+  status: ImportStatus;
 }
 
 export interface SkillTokenRow {
@@ -76,14 +84,20 @@ export class SettingsRepository {
       .first();
   }
 
-  async getChannel(): Promise<ChannelRow | null> {
-    return this.db
+  async getChannel(now = new Date()): Promise<ChannelRow | null> {
+    const row = await this.db
       .prepare(
-        `SELECT channel_id, title, thumbnail_url, subscriber_count, status, connected_at, last_collected_at
+        `SELECT channel_id, title, thumbnail_url, subscriber_count, status, connected_at,
+                last_collected_at, metadata_fetched_at
            FROM channels WHERE tenant_id = ?1`,
       )
       .bind(this.tenantId)
-      .first<ChannelRow>();
+      .first<ChannelRow & { metadata_fetched_at: string | null }>();
+    if (!row) return null;
+    const { metadata_fetched_at: fetchedAt, ...channel } = row;
+    return channelMetadataExpired(fetchedAt ?? channel.connected_at, now)
+      ? { ...channel, title: EXPIRED_CHANNEL_TITLE, thumbnail_url: null, subscriber_count: null }
+      : channel;
   }
 
   async getGrantedScopes(): Promise<string[]> {
@@ -119,8 +133,10 @@ export class SettingsRepository {
       await this.db.batch([
         this.db
           .prepare(
-            `INSERT INTO channels (tenant_id, channel_id, title, thumbnail_url, subscriber_count, status, connected_by, connected_at)
-             VALUES (?1, ?2, ?3, ?4, ?5, '正常', ?6, ?7)`,
+            `INSERT INTO channels
+               (tenant_id, channel_id, title, thumbnail_url, subscriber_count, status,
+                connected_by, connected_at, metadata_fetched_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, '正常', ?6, ?7, ?7)`,
           )
           .bind(
             this.tenantId,
@@ -225,6 +241,22 @@ export class SettingsRepository {
   }
 
   // ---- テナントの Google Cloud OAuth クライアント（qa-087） ----
+
+  /** 管理型クライアントの適用先を、テナント ID と確認済み作成者の現在のメールの両方で照合する。 */
+  async isCreatedByVerifiedOwnerEmail(email: string): Promise<boolean> {
+    const row = await this.db
+      .prepare(
+        `SELECT 1 FROM tenants t
+         JOIN users u ON u.user_id = t.created_by
+         JOIN tenant_members m ON m.tenant_id = t.tenant_id AND m.user_id = u.user_id
+         WHERE t.tenant_id = ?1 AND t.deleted_at IS NULL
+           AND u.deleted_at IS NULL AND u.email_verified = 1
+           AND lower(u.email) = ?2 AND m.role = 'owner'`,
+      )
+      .bind(this.tenantId, email)
+      .first();
+    return row !== null;
+  }
 
   async getGoogleClient(): Promise<GoogleClientRow | null> {
     return this.db
@@ -367,12 +399,23 @@ export class SettingsRepository {
   async listImports(limit = 20): Promise<ImportRow[]> {
     const { results } = await this.db
       .prepare(
-        `SELECT import_id, kind, file_name, period, rows, status, error, created_at
+        `SELECT import_id, kind, file_name, period, rows, status, error,
+                CASE WHEN r2_key IS NOT NULL THEN 1 ELSE 0 END AS has_original, created_at
            FROM imports WHERE tenant_id = ?1 ORDER BY created_at DESC, import_id DESC LIMIT ?2`,
       )
       .bind(this.tenantId, limit)
       .all<ImportRow>();
     return results;
+  }
+
+  async getCsvImportSource(importId: string): Promise<CsvImportSourceRow | null> {
+    return this.db
+      .prepare(
+        `SELECT file_name, r2_key, status FROM imports
+          WHERE tenant_id = ?1 AND import_id = ?2 AND kind = 'csv' AND r2_key IS NOT NULL`,
+      )
+      .bind(this.tenantId, importId)
+      .first<CsvImportSourceRow>();
   }
 
   async lastCsvImportAt(): Promise<string | null> {
@@ -539,17 +582,31 @@ export class SettingsRepository {
 
   async requestTenantDeletion(input: {
     deletionId: string;
+    auditId: string;
     userId: string;
     now: string;
     dueAt: string;
   }): Promise<void> {
-    await this.db
-      .prepare(
-        `INSERT INTO data_deletions (deletion_id, tenant_id, scope, requested_by, requested_at, due_at)
-         VALUES (?1, ?2, 'tenant', ?3, ?4, ?5)`,
-      )
-      .bind(input.deletionId, this.tenantId, input.userId, input.now, input.dueAt)
-      .run();
+    // 予約と利用停止を同じ D1 batch で確定する。次の要求から旧データを読ませない。
+    await this.db.batch([
+      this.db
+        .prepare(
+          `INSERT INTO audit_log (audit_id, tenant_id, user_id, action, at)
+           SELECT ?1, tenant_id, ?2, 'tenant.delete', ?3 FROM tenants
+            WHERE tenant_id = ?4 AND deleted_at IS NULL`,
+        )
+        .bind(input.auditId, input.userId, input.now, this.tenantId),
+      this.db
+        .prepare(
+          `INSERT INTO data_deletions (deletion_id, tenant_id, scope, requested_by, requested_at, due_at)
+           SELECT ?1, tenant_id, 'tenant', ?2, ?3, ?4 FROM tenants
+            WHERE tenant_id = ?5 AND deleted_at IS NULL`,
+        )
+        .bind(input.deletionId, input.userId, input.now, input.dueAt, this.tenantId),
+      this.db
+        .prepare("UPDATE tenants SET deleted_at = ?2 WHERE tenant_id = ?1 AND deleted_at IS NULL")
+        .bind(this.tenantId, input.now),
+    ]);
   }
 
   async audit(input: {

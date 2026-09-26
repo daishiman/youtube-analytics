@@ -22,11 +22,11 @@ function settings(role: Role, overrides: Record<string, unknown> = {}) {
         subscriberCount: 12345,
         connectedAt: "2026-09-01T00:00:00.000Z",
       },
-      nextCollection: "毎日 3:00 JST",
+      collectionStatus: "チャンネル・動画日次を毎日3:00 JSTに収集",
       lastCollectedAt: "2026-09-24T03:00:00.000Z",
       lastCsvImportAt: "2026-09-20T10:00:00.000Z",
       scopes: ["youtube.readonly", "yt-analytics.readonly"],
-      captions: { enabled: false, availability: "preparing", dailyLimit: 5 },
+      captions: { enabled: false, availability: "preparing", dailyLimit: 4 },
       googleClient: {
         configured: true,
         clientId: "123456789012-seedclient.apps.googleusercontent.com",
@@ -43,6 +43,7 @@ function settings(role: Role, overrides: Record<string, unknown> = {}) {
         rows: 31,
         status: "完了",
         error: null,
+        has_original: 1,
         created_at: "2026-09-20T10:00:00.000Z",
       },
       {
@@ -53,6 +54,7 @@ function settings(role: Role, overrides: Record<string, unknown> = {}) {
         rows: null,
         status: "失敗",
         error: "見出し行に「日付」がありません",
+        has_original: 0,
         created_at: "2026-09-19T10:00:00.000Z",
       },
     ],
@@ -88,7 +90,7 @@ function settings(role: Role, overrides: Record<string, unknown> = {}) {
         key: "captions",
         label: "字幕取得（本日・ワークスペースごと）",
         used: null,
-        limit: 5,
+        limit: 4,
         unit: "本",
         level: "unknown",
       },
@@ -145,8 +147,8 @@ test("オーナー: メンバー管理を加えた6区画が指定順に並ぶ",
     "データを削除",
   ]);
   await expect(page.getByText("テストチャンネルA")).toBeVisible();
-  await expect(page.locator("#youtube dl").filter({ hasText: "次回収集" })).toContainText(
-    "毎日 3:00 JST",
+  await expect(page.locator("#youtube dl").filter({ hasText: "収集状況" })).toContainText(
+    "チャンネル・動画日次を毎日3:00 JSTに収集",
   );
   await expect(page.getByRole("list", { name: "付与スコープ" })).toContainText("youtube.readonly");
 });
@@ -177,6 +179,38 @@ test("取込履歴は失敗理由を表示する", async ({ page }) => {
   await expect(history).toContainText("見出し行に「日付」がありません");
 });
 
+test("CSV原本の全列をページ送りで確認でき、解析状態を混同しない", async ({ page }) => {
+  await mockApp(page, "editor");
+  await page.route("**/api/imports/imp-1/preview?*", (route) => {
+    const offset = Number(new URL(route.request().url()).searchParams.get("offset"));
+    return route.fulfill({
+      json: {
+        importId: "imp-1",
+        fileName: "studio-2026-08.csv",
+        status: "完了",
+        headers: ["動画のタイトル", "視聴回数", "未定義の新しい列"],
+        rows: offset === 0 ? [["A動画", "123", "値A"]] : [["B動画", "456", "値B"]],
+        totalRows: 51,
+        offset,
+        limit: 50,
+      },
+    });
+  });
+  await page.goto("/settings");
+  await page
+    .getByRole("table", { name: "取込履歴" })
+    .getByRole("button", { name: "全列を見る" })
+    .click();
+  const preview = page.getByRole("table", { name: "studio-2026-08.csv のCSV原本" });
+  await expect(preview).toContainText("未定義の新しい列");
+  await expect(preview).toContainText("値A");
+  await page.getByRole("button", { name: "次の50行" }).click();
+  await expect(preview).toContainText("値B");
+  await expect(
+    page.getByText("指標への反映状況は取込履歴の状態を確認してください。"),
+  ).toBeVisible();
+});
+
 test("取込タブの受付形式が揃い、選んだCSVを送信できる", async ({ page }) => {
   await mockApp(page, "editor");
   let uploadCount = 0;
@@ -190,7 +224,9 @@ test("取込タブの受付形式が揃い、選んだCSVを送信できる", as
   await page.goto("/settings");
   const fileInput = page.locator('input[type="file"]');
   await expect(fileInput).toHaveAttribute("accept", ".csv");
-  await expect(page.getByText("YouTube Studio から書き出した CSV .csv（5MBまで）")).toBeVisible();
+  await expect(
+    page.getByText("YouTube Studio のCSV、または事業週次CSV .csv（5MBまで）"),
+  ).toBeVisible();
   await fileInput.setInputFiles({
     name: "report.csv",
     mimeType: "text/csv",
@@ -207,6 +243,51 @@ test("取込タブの受付形式が揃い、選んだCSVを送信できる", as
   await expect(
     page.getByText("サムネイルなどの画像 .png / .jpg / .jpeg / .webp（10MBまで）"),
   ).toBeVisible();
+});
+
+test("Studio CSV の対応列と未対応列・期間未確定を確認する", async ({ page }) => {
+  const imported = {
+    ...settings("editor").imports[0],
+    mapped_columns: 2,
+    unmapped_columns: 1,
+    unresolved_rows: 1,
+    period_status: "unknown",
+  };
+  await mockApp(page, "editor", { imports: [imported] });
+  await page.route("**/api/imports/imp-1/mapping", (route) =>
+    route.fulfill({
+      json: {
+        importId: "imp-1",
+        studioKind: "table",
+        mappedColumns: 2,
+        unmappedColumns: 1,
+        unresolvedRows: 1,
+        periodStatus: "unknown",
+        columns: [
+          {
+            ordinal: 0,
+            header: "コンテンツ",
+            mappingKey: "videoId",
+            unit: "video_id",
+            status: "mapped",
+          },
+          { ordinal: 1, header: "視聴回数", mappingKey: "views", unit: "count", status: "mapped" },
+          { ordinal: 2, header: "新しい列", mappingKey: null, unit: null, status: "unmapped" },
+        ],
+      },
+    }),
+  );
+  await page.goto("/settings");
+  await expect(page.locator("#imports")).toContainText("既知列を取込");
+  await page.getByRole("button", { name: "列の対応" }).click();
+  const panel = page.locator("#csv-mapping-heading").locator("..");
+  await expect(panel).toContainText("期間が特定できない表");
+  await expect(page.getByRole("table", { name: "studio-2026-08.csv の列の対応" })).toContainText(
+    "新しい列",
+  );
+  await expect(page.getByRole("table", { name: "studio-2026-08.csv の列の対応" })).toContainText(
+    "未対応",
+  );
 });
 
 test("CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す", async ({ page }) => {
@@ -251,7 +332,36 @@ test("字幕の自動取得: 運営ワークスペース以外は準備中で押
   await mockApp(page, "owner");
   await page.goto("/settings");
   await expect(page.getByRole("switch", { name: "字幕を自動取得する" })).toBeDisabled();
-  await expect(page.locator("#youtube").getByText("準備中")).toBeVisible();
+  await expect(page.locator("#youtube").getByText("準備中", { exact: true })).toBeVisible();
+  await expect(page.locator("#youtube")).toContainText("現在、字幕の収集機能は利用できません");
+  await expect(page.locator("#youtube")).toContainText("1日4本");
+});
+
+test("字幕の自動取得: 既にONのワークスペースは準備中でもOFFにできる", async ({ page }) => {
+  const base = settings("owner");
+  await mockApp(page, "owner", {
+    youtube: {
+      ...base.youtube,
+      captions: { enabled: true, availability: "preparing", dailyLimit: 4 },
+    },
+  });
+  await page.goto("/settings");
+  const toggle = page.getByRole("switch", { name: "字幕を自動取得する" });
+  await expect(toggle).toBeChecked();
+  await expect(toggle).toBeEnabled();
+});
+
+test("字幕の自動取得: 接続情報が未登録でも既存ONはOFFにできる", async ({ page }) => {
+  const base = settings("owner");
+  await mockApp(page, "owner", {
+    youtube: {
+      ...base.youtube,
+      captions: { enabled: true, availability: "preparing", dailyLimit: 4 },
+      googleClient: { configured: false, clientId: null, updatedAt: null },
+    },
+  });
+  await page.goto("/settings");
+  await expect(page.getByRole("switch", { name: "字幕を自動取得する" })).toBeEnabled();
 });
 
 test("チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する", async ({
@@ -408,6 +518,63 @@ test("Google Cloud 登録済み: クライアントIDだけ出し、シークレ
   );
   await expect(section.getByLabel("クライアントシークレット")).toHaveValue("");
   await expect(section.getByText("今の連携は「要再連携」になります")).toBeVisible();
+});
+
+test("事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める", async ({
+  page,
+}) => {
+  const base = settings("owner");
+  await mockApp(page, "owner", {
+    youtube: {
+      ...base.youtube,
+      status: "未連携",
+      channel: null,
+      googleClient: {
+        source: "managed",
+        configured: true,
+        clientId: null,
+        updatedAt: null,
+      },
+    },
+  });
+  await page.goto("/settings");
+  const section = page.locator("#youtube");
+  await expect(section.locator(".google-client-head .badge")).toHaveText("✓事前設定済み");
+  await expect(
+    section.getByText("接続情報は事前に設定されています", { exact: false }),
+  ).toBeVisible();
+  await expect(
+    section.getByText("分析するチャンネルへの読み取り許可", { exact: false }),
+  ).toBeVisible();
+  await expect(section.getByRole("button", { name: "YouTubeと連携" })).toBeEnabled();
+  await expect(section.getByLabel("クライアントID")).toHaveCount(0);
+  await expect(section.getByLabel("クライアントシークレット")).toHaveCount(0);
+  await expect(section.getByRole("button", { name: "変更" })).toHaveCount(0);
+  await expect(section.getByRole("button", { name: "削除" })).toHaveCount(0);
+  await expect(section.locator("details.guide")).toHaveCount(0);
+});
+
+test("事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す", async ({
+  page,
+}) => {
+  const base = settings("owner");
+  await mockApp(page, "owner", {
+    youtube: {
+      ...base.youtube,
+      status: "未連携",
+      channel: null,
+      googleClient: { ...NO_CLIENT, source: "managed" },
+    },
+  });
+  await page.goto("/settings");
+  const section = page.locator("#youtube");
+  await expect(section.locator(".google-client-head .badge")).toHaveText("!設定確認が必要");
+  await expect(
+    section.getByRole("alert").filter({ hasText: "事前設定された接続情報を現在利用できません。" }),
+  ).toBeVisible();
+  await expect(section.getByRole("button", { name: "YouTubeと連携" })).toBeDisabled();
+  await expect(section.getByLabel("クライアントID")).toHaveCount(0);
+  await expect(section.locator("details.guide")).toHaveCount(0);
 });
 
 test("Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す", async ({ page }) => {

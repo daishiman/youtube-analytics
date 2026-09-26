@@ -1,0 +1,24 @@
+{
+  "receipt_kind": "id-renumber-for-merge",
+  "graph_node_id": "feat-dashboard-redesign",
+  "recorded_at": "2026-09-24T14:45:00Z",
+  "reason": "main（PR #6 feat-settings-channel-link）が同じ日に qa-074〜qa-088・appr-013・appr-014・migrations/0004〜0007 を先に使って merge 済み。公開済みの main の番号を正とし、本 feature 側を後ろへずらした",
+  "mapping": {
+    "qa": "qa-074〜qa-083 → qa-089〜qa-098（+15。例: qa-080 → qa-095、qa-083 → qa-098）",
+    "approval": {"appr-013": "appr-015"},
+    "migrations": {"0004_dashboard_media_assets.sql": "0008_dashboard_media_assets.sql"},
+    "new_decision": "qa-099（期間切替を共通ヘッダーの ?period= に統一。ヘッダーの期間に 7d を追加し 7d/28d/90d/1y/custom・既定 28d・任意は最大365日。GET /api/dashboard の range= は period= に読み替える）"
+  },
+  "merge_method": {
+    "system-spec/spec-state.json": "base 074636d・本 feature 側・origin/main の 3-way 意味マージ。qa_log/approval_log/reopen_log/targets は main の後ろに本 feature の追加分を置き、design/doctrine の本文は main の本文に本 feature の追記を付け替えてつなぐ。衝突 0",
+    "system-spec/*.md": "マージ済み spec-state から compile-spec-doc.py で再生成",
+    ".dev-graph/state/graph.json": "graph_node_id 単位の 3-way。graph_revision は max(10, 8)+1 = 11",
+    "features/feat-web-screens-actions.*・architecture/・specs/": "main 版を土台に本 feature 側の変更を当て直した"
+  },
+  "not_rewritten": [
+    ".dev-graph/published/feature-package-feat-dashboard-redesign/（digest 固定の旧世代。plan 再実行で新世代を公開する）",
+    ".dev-graph/state/receipts/**・.dev-graph/handoffs/**",
+    "eval-log/** の過去の記録（completeness-report r4〜r8・sdp-feat-dashboard-redesign-* などは旧番号のまま。本 receipt の mapping で読み替える）",
+    "Beads issue の本文"
+  ]
+}

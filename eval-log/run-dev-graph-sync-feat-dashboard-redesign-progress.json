@@ -1,0 +1,42 @@
+{
+ "skill": "run-dev-graph-sync",
+ "feature_id": "feat-dashboard-redesign",
+ "recorded_at": "2026-09-24T15:55:23Z",
+ "checklist": [
+  {
+   "item": "3-way plan 分類と snapshot digest",
+   "status": "pass",
+   "evidence": "eval-log/dev-graph-sync-feat-dashboard-redesign-20260925.json exports=7 (create-projection + feature dep-add 6)"
+  },
+  {
+   "item": "mutation authority 一経路",
+   "status": "pass",
+   "evidence": "tracker_binding=beads、bd-bridge 経由のみ"
+  },
+  {
+   "item": "dry-run write 0",
+   "status": "pass",
+   "evidence": "create --projection-manifest --dry-run write_count=0"
+  },
+  {
+   "item": "双方変更 manual conflict",
+   "status": "pass",
+   "evidence": "conflicts=[] (新規投影のみ)"
+  },
+  {
+   "item": "close/delete は tombstone",
+   "status": "pass",
+   "evidence": "tombstones=[] 物理削除0"
+  },
+  {
+   "item": "merge evidence のみ done",
+   "status": "pass",
+   "evidence": "DBR 全 node status=active、PR 未作成のため done 反映0"
+  },
+  {
+   "item": "2回目 changes=0",
+   "status": "pass",
+   "evidence": "parity checked=14 failed=0、external_ref 重複0 (再 create は重複を生むため実行せず parity で冪等性を確認)"
+  }
+ ]
+}

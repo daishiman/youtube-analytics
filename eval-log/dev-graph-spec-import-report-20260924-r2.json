@@ -1,0 +1,30 @@
+{
+  "index": "system-spec/index.md",
+  "imported_nodes": [
+    {
+      "graph_node_id": "spec-youtube-analytics-system",
+      "artifact_kind": "specification",
+      "file_path": "specs/youtube-analytics-system.md",
+      "source_path": "system-spec/00-requirements-definition.md",
+      "source_digest": "0243af531310624eae5f8fb8a3d4cee4a83518ec2b9d7d8fb4ab987606731f64"
+    },
+    {
+      "graph_node_id": "arch-youtube-analytics-system",
+      "artifact_kind": "architecture",
+      "file_path": "architecture/youtube-analytics-system.md",
+      "source_path": "system-spec/index.md",
+      "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656"
+    }
+  ],
+  "source_version": "0.1.14",
+  "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908",
+  "evidence_ref": "eval-log/completeness-report-20260924-r8.json",
+  "confirmation_status": "confirmed",
+  "evaluation_status": "pass",
+  "readiness": "complete",
+  "graph_revision": 8,
+  "imported_at": "2026-09-24T10:07:38Z",
+  "change_summary": "ダッシュボード刷新(docs/screens/02-dashboard.png)の差分仕様 qa-074〜qa-083 を ui-ux/frontend/backend/security/database/infrastructure へ反映した再取込。specs/architecture 本文の旧『先頭4ブロック』定義を置換",
+  "previous_report": "eval-log/dev-graph-spec-import-report-20260924.json",
+  "c02_writer": "run-dev-graph-node update"
+}

@@ -1,0 +1,293 @@
+[WebServer] (node:45260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45261) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45326) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45338) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45447) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45459) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45499) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+[WebServer] (node:45520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:45526) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] ▲ [WARNING] Scheduled Workers are not automatically triggered during local development.
+[WebServer] 
+[WebServer]   To manually trigger a scheduled event, run:
+[WebServer]     curl "http://localhost:8899/cdn-cgi/local/scheduled"
+[WebServer]   For more details, see https://developers.cloudflare.com/workers/configuration/cron-triggers/#test-cron-triggers-locally
+[WebServer] 
+[WebServer] 
+
+
+Running 192 tests using 5 workers
+
+(node:45596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:45589) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:45597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:45594) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:45595) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/192] [mobile] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[2/192] [mobile] › e2e/smoke.spec.ts:21:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[3/192] [mobile] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[4/192] [mobile] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[5/192] [mobile] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[6/192] [mobile] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[7/192] [mobile] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+[8/192] [mobile] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[9/192] [mobile] › e2e/smoke.spec.ts:40:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[10/192] [mobile] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[11/192] [mobile] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[12/192] [mobile] › e2e/smoke.spec.ts:45:1 › 閲覧者には書込ボタンが出ない
+[13/192] [mobile] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[14/192] [mobile] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[15/192] [mobile] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[16/192] [mobile] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[17/192] [mobile] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[18/192] [mobile] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[19/192] [mobile] › e2e/smoke.spec.ts:68:1 › ワークスペースを切り替えると役割が変わる
+[20/192] [mobile] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[21/192] [mobile] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[22/192] [mobile] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[23/192] [mobile] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[24/192] [mobile] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[25/192] [mobile] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[26/192] [mobile] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+[27/192] [mobile] › e2e/smoke.spec.ts:78:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[28/192] [mobile] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[29/192] [mobile] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+[30/192] [mobile] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[31/192] [mobile] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[32/192] [mobile] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[33/192] [mobile] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+(node:45803) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[34/192] [mobile] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[35/192] [mobile] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[36/192] [tablet] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[37/192] [mobile] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[38/192] [mobile] › e2e/settings.spec.ts:338:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[39/192] [mobile] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[40/192] [mobile] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[41/192] [mobile] › e2e/settings.spec.ts:385:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[42/192] [tablet] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[43/192] [mobile] › e2e/settings.spec.ts:426:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+(node:45848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[44/192] [mobile] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[45/192] [tablet] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[46/192] [tablet] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[47/192] [mobile] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[48/192] [mobile] › e2e/settings.spec.ts:474:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[49/192] [tablet] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[50/192] [mobile] › e2e/settings.spec.ts:494:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+[51/192] [tablet] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+(node:45913) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[52/192] [tablet] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[53/192] [mobile] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[54/192] [mobile] › e2e/settings.spec.ts:528:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[55/192] [tablet] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[56/192] [mobile] › e2e/settings.spec.ts:551:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[57/192] [tablet] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[58/192] [tablet] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[59/192] [tablet] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[60/192] [mobile] › e2e/settings.spec.ts:561:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[61/192] [mobile] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[62/192] [tablet] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[63/192] [tablet] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+[64/192] [mobile] › e2e/settings.spec.ts:571:1 › 連携解除はワークスペース名の入力で確定する
+[65/192] [tablet] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[66/192] [tablet] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[67/192] [tablet] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[68/192] [mobile] › e2e/settings.spec.ts:584:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[69/192] [mobile] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[70/192] [tablet] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[71/192] [tablet] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[72/192] [mobile] › e2e/settings.spec.ts:603:3 › /login: 共通フッターが同じ文言で出る
+[73/192] [tablet] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[74/192] [mobile] › e2e/settings.spec.ts:603:3 › /privacy: 共通フッターが同じ文言で出る
+[75/192] [tablet] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[76/192] [mobile] › e2e/settings.spec.ts:603:3 › /terms: 共通フッターが同じ文言で出る
+[77/192] [tablet] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[78/192] [mobile] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[79/192] [mobile] › e2e/settings.spec.ts:616:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+[80/192] [tablet] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[81/192] [tablet] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[82/192] [tablet] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[83/192] [tablet] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[84/192] [mobile] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[85/192] [tablet] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[86/192] [tablet] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[87/192] [tablet] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+(node:46117) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[88/192] [tablet] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[89/192] [mobile] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[90/192] [tablet] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[91/192] [tablet] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+[92/192] [tablet] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[93/192] [tablet] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[94/192] [mobile] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[95/192] [tablet] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[96/192] [tablet] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[97/192] [tablet] › e2e/settings.spec.ts:338:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[98/192] [tablet] › e2e/smoke.spec.ts:21:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[99/192] [tablet] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[100/192] [mobile] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[101/192] [tablet] › e2e/settings.spec.ts:385:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[102/192] [tablet] › e2e/smoke.spec.ts:40:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[103/192] [tablet] › e2e/smoke.spec.ts:45:1 › 閲覧者には書込ボタンが出ない
+[104/192] [tablet] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[105/192] [mobile] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[106/192] [tablet] › e2e/settings.spec.ts:426:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+[107/192] [tablet] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[108/192] [tablet] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[109/192] [tablet] › e2e/smoke.spec.ts:68:1 › ワークスペースを切り替えると役割が変わる
+[110/192] [mobile] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[111/192] [tablet] › e2e/settings.spec.ts:474:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[112/192] [tablet] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[113/192] [tablet] › e2e/settings.spec.ts:494:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+(node:46244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[114/192] [tablet] › e2e/smoke.spec.ts:78:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[115/192] [tablet] › e2e/settings.spec.ts:528:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[116/192] [desktop] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[117/192] [tablet] › e2e/settings.spec.ts:551:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[118/192] [tablet] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+(node:46258) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[119/192] [desktop] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[120/192] [tablet] › e2e/settings.spec.ts:561:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[121/192] [tablet] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[122/192] [tablet] › e2e/settings.spec.ts:571:1 › 連携解除はワークスペース名の入力で確定する
+[123/192] [desktop] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[124/192] [desktop] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[125/192] [tablet] › e2e/settings.spec.ts:584:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[126/192] [tablet] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[127/192] [desktop] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[128/192] [tablet] › e2e/settings.spec.ts:603:3 › /login: 共通フッターが同じ文言で出る
+[129/192] [desktop] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[130/192] [tablet] › e2e/settings.spec.ts:603:3 › /privacy: 共通フッターが同じ文言で出る
+[131/192] [desktop] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[132/192] [tablet] › e2e/settings.spec.ts:603:3 › /terms: 共通フッターが同じ文言で出る
+[133/192] [tablet] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[134/192] [desktop] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[135/192] [tablet] › e2e/settings.spec.ts:616:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+(node:46321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[136/192] [desktop] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[137/192] [desktop] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+[138/192] [desktop] › e2e/settings.spec.ts:137:1 › オーナー: メンバー管理を加えた6区画が指定順に並ぶ
+[139/192] [tablet] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[140/192] [desktop] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[141/192] [desktop] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[142/192] [desktop] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[143/192] [desktop] › e2e/settings.spec.ts:156:1 › 閲覧者: メンバー区画と書込ボタンが出ない
+(node:46351) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[144/192] [desktop] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[145/192] [desktop] › e2e/shell-state.spec.ts:58:3 › Shell の回復可能な tenant context › /api/me の初回失敗から画面再読込なしで再試行できる
+[146/192] [desktop] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[147/192] [desktop] › e2e/settings.spec.ts:174:1 › 取込履歴は失敗理由を表示する
+[148/192] [desktop] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+(node:46379) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[149/192] [desktop] › e2e/settings.spec.ts:182:1 › CSV原本の全列をページ送りで確認でき、解析状態を混同しない
+[150/192] [desktop] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[151/192] [desktop] › e2e/smoke.spec.ts:21:1 › ログイン画面: 同意するまで Google ログインは押せず、規約ページへリンクする
+[152/192] [desktop] › e2e/shell-state.spec.ts:86:3 › Shell の回復可能な tenant context › tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない
+[153/192] [desktop] › e2e/settings.spec.ts:214:1 › 取込タブの受付形式が揃い、選んだCSVを送信できる
+[154/192] [desktop] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[155/192] [desktop] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[156/192] [desktop] › e2e/settings.spec.ts:248:1 › Studio CSV の対応列と未対応列・期間未確定を確認する
+[157/192] [desktop] › e2e/smoke.spec.ts:40:1 › 未ログインで保護画面を開くとログイン画面へ戻る
+[158/192] [desktop] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[159/192] [desktop] › e2e/smoke.spec.ts:45:1 › 閲覧者には書込ボタンが出ない
+[160/192] [desktop] › e2e/settings.spec.ts:293:1 › CSV の取得元に、連携中チャンネルの Studio 画面へのリンクを出す
+[161/192] [desktop] › e2e/shell-state.spec.ts:118:3 › Shell の回復可能な tenant context › tenant A で発行した招待 URL を tenant B に持ち越さない
+[162/192] [desktop] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[163/192] [desktop] › e2e/settings.spec.ts:307:1 › 未連携なら CSV の取得元リンクの代わりに案内文を出す
+[164/192] [desktop] › e2e/smoke.spec.ts:68:1 › ワークスペースを切り替えると役割が変わる
+[165/192] [desktop] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[166/192] [desktop] › e2e/settings.spec.ts:317:1 › 無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使用率は推定しない
+[167/192] [desktop] › e2e/shell-state.spec.ts:153:3 › Shell の回復可能な tenant context › 自己 role 変更後は me を先に更新し owner UI を残さない
+[168/192] [desktop] › e2e/settings.spec.ts:331:1 › 字幕の自動取得: 運営ワークスペース以外は準備中で押せない
+[169/192] [desktop] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[170/192] [desktop] › e2e/smoke.spec.ts:78:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[171/192] [desktop] › e2e/settings.spec.ts:338:1 › チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する
+[172/192] [desktop] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[173/192] [desktop] › e2e/settings.spec.ts:385:1 › トークン: 6本目は 409、発行時の平文は1回だけ表示する
+[174/192] [desktop] › e2e/settings.spec.ts:426:1 › Google Cloud 未登録: 登録欄とリダイレクト URI を出し、連携ボタンは押せない
+[175/192] [desktop] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[176/192] [desktop] › e2e/settings.spec.ts:474:1 › Google Cloud 登録済み: クライアントIDだけ出し、シークレットは表示しない
+[177/192] [desktop] › e2e/settings.spec.ts:494:1 › 事前設定済みのワークスペース: 接続情報の入力・変更を求めず YouTube の許可へ進める
+[178/192] [desktop] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[179/192] [desktop] › e2e/settings.spec.ts:528:1 › 事前設定の接続情報が未反映なら、登録フォームを出さずに利用できない状態を示す
+[180/192] [desktop] › e2e/settings.spec.ts:551:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[181/192] [desktop] › e2e/settings.spec.ts:561:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[182/192] [desktop] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[183/192] [desktop] › e2e/settings.spec.ts:571:1 › 連携解除はワークスペース名の入力で確定する
+[184/192] [desktop] › e2e/settings.spec.ts:584:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[185/192] [desktop] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[186/192] [desktop] › e2e/settings.spec.ts:603:3 › /login: 共通フッターが同じ文言で出る
+[187/192] [desktop] › e2e/settings.spec.ts:603:3 › /privacy: 共通フッターが同じ文言で出る
+[188/192] [desktop] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[189/192] [desktop] › e2e/settings.spec.ts:603:3 › /terms: 共通フッターが同じ文言で出る
+[190/192] [desktop] › e2e/settings.spec.ts:616:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+[191/192] [desktop] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[192/192] [desktop] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+  192 passed (28.2s)

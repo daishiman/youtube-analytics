@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "derived_from": ".dev-graph/state/graph.json",
-  "derived_graph_revision": 8,
+  "derived_graph_revision": 13,
   "nodes": [
     {
       "id": "arch-youtube-analytics-system",
       "kind": "architecture",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf",
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b",
       "evaluation_status": "pass"
     },
     {
@@ -16,7 +16,7 @@
       "subtype": "frontend",
       "parent": "arch-youtube-analytics-system",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf"
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b"
     },
     {
       "id": "arch-youtube-analytics-system#backend",
@@ -24,7 +24,7 @@
       "subtype": "backend",
       "parent": "arch-youtube-analytics-system",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf"
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b"
     },
     {
       "id": "arch-youtube-analytics-system#infrastructure",
@@ -32,7 +32,7 @@
       "subtype": "infrastructure",
       "parent": "arch-youtube-analytics-system",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf"
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b"
     },
     {
       "id": "arch-youtube-analytics-system#data",
@@ -40,7 +40,7 @@
       "subtype": "data",
       "parent": "arch-youtube-analytics-system",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf"
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b"
     },
     {
       "id": "arch-youtube-analytics-system#security",
@@ -48,7 +48,7 @@
       "subtype": "security",
       "parent": "arch-youtube-analytics-system",
       "file_path": "architecture/youtube-analytics-system.md",
-      "sha256": "44202e52429640c629e2fc2a5a174f07adcb640270f162bfbbe25ffddb22b4cf"
+      "sha256": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b"
     }
   ]
 }

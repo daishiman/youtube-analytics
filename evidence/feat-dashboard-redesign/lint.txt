@@ -1,0 +1,5 @@
+
+> youtube-analytics@ lint /Users/dm/orca/workspaces/YouTube分析/02ダッシュボード
+> biome check .
+
+Checked 209 files in 128ms. No fixes applied.

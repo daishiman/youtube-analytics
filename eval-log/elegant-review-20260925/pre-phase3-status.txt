@@ -1,0 +1,161 @@
+ M .dev-graph/render/index.html
+ M .dev-graph/state/current.json
+ M .dev-graph/state/graph.json
+ M .dev.vars.example
+ M README.md
+ M architecture/graph.json
+ M architecture/youtube-analytics-system.md
+ M docs/analysis/dashboard-analysis-catalog.md
+ M docs/feat-settings-channel-link/runbook.md
+ M docs/product/backlog.md
+ M docs/screens/prompts/02-dashboard.prompt.txt
+ M docs/setup/README.md
+ M docs/setup/environment.md
+ M e2e/settings.spec.ts
+ M e2e/shell-state.spec.ts
+ M eval-log/dev-graph-resync-required-20260922.json
+ M eval-log/run-dev-graph-decompose-intermediate.jsonl
+ M eval-log/run-dev-graph-decompose-progress.json
+ M eval-log/run-dev-graph-node-intermediate.jsonl
+ M eval-log/run-dev-graph-requirements-intermediate.jsonl
+ M eval-log/run-dev-graph-requirements-progress.json
+ M eval-log/run-dev-graph-system-spec-intermediate.jsonl
+ M eval-log/run-dev-graph-system-spec-progress.json
+ M features/feat-web-screens-actions.context.json
+ M features/feat-web-screens-actions.md
+ M package.json
+ M pnpm-lock.yaml
+ M scripts/seed-local.sql
+ M scripts/setup-cloudflare.sh
+ M specs/youtube-analytics-system.md
+ M src/adapters/google-youtube.ts
+ M src/env.ts
+ M src/http/app.ts
+ M src/http/settings-routes.ts
+ M src/index.ts
+ M src/repositories/settings-repository.ts
+ M src/usecases/channel-cleanup.ts
+ M src/usecases/google-client.ts
+ M src/usecases/imports.ts
+ M src/usecases/settings-common.ts
+ M src/usecases/settings.ts
+ M system-spec/auth.md
+ M system-spec/backend.md
+ M system-spec/database.md
+ M system-spec/fetched-references.json
+ M system-spec/frontend.md
+ M system-spec/infrastructure.md
+ M system-spec/security.md
+ M system-spec/spec-state.json
+ M system-spec/ui-ux.md
+ M tests/platform/queue-handler.test.ts
+ M tests/platform/routes.ts
+ M tests/settings/channel-cleanup.test.ts
+ M tests/settings/google-client.test.ts
+ M tests/settings/imports.test.ts
+ M tests/settings/settings.test.ts
+ M tests/settings/youtube-link.test.ts
+ M web/api.ts
+ M web/components/AppShell.tsx
+ M web/components/DataTable.tsx
+ M web/pages/DashboardPage.tsx
+ M web/pages/settings/GoogleClientPanel.tsx
+ M web/pages/settings/ImportSection.tsx
+ M web/pages/settings/UsageSection.tsx
+ M web/pages/settings/YouTubeSection.tsx
+ M web/styles.css
+ M wrangler.toml
+?? .dev-graph/cache/
+?? .dev-graph/handoffs/requirements-feat-dashboard-redesign.md
+?? .dev-graph/handoffs/requirements-handoff-feat-dashboard-redesign.json
+?? .dev-graph/published/feature-package-feat-dashboard-redesign-r2/
+?? .dev-graph/published/feature-package-feat-dashboard-redesign/
+?? .dev-graph/state/beads/projection-feat-dashboard-redesign.json
+?? .dev-graph/state/promotion-intents/6a6b47f20d9cf5245c8da24ec6c254de648cc7af1576f83e66212f6bcc1f7691.json
+?? .dev-graph/state/promotion-intents/8e348b88e840a24253bfc86afe17d9842014d73ed644b29636d3031c1dc4c1a3.json
+?? .dev-graph/state/receipts/pkg-feat-dashboard-redesign-r2.json
+?? .dev-graph/state/receipts/pkg-feat-dashboard-redesign.json
+?? docs/analysis/studio-csv-sample-audit-20260925.md
+?? docs/analysis/youtube-official-data-scope.md
+?? docs/feat-dashboard-redesign/
+?? docs/setup/youtube-managed-oauth.md
+?? e2e/dashboard.spec.ts
+?? eval-log/completeness-report-20260924-r4.json
+?? eval-log/completeness-report-20260924-r5.json
+?? eval-log/completeness-report-20260924-r6.json
+?? eval-log/completeness-report-20260924-r7.json
+?? eval-log/completeness-report-20260924-r8.json
+?? eval-log/dev-graph-decompose-audit-20260924-r2.json
+?? eval-log/dev-graph-node-receipt-feat-dashboard-redesign-20260925.json
+?? eval-log/dev-graph-spec-import-report-20260924-r2.json
+?? eval-log/dev-graph-sync-feat-dashboard-redesign-20260925.json
+?? eval-log/elegant-review-20260925/
+?? eval-log/init-receipt-20260924-r2.json
+?? eval-log/readiness-sdp-feat-dashboard-redesign-r1.json
+?? eval-log/readiness-sdp-feat-dashboard-redesign-r2.json
+?? eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json
+?? eval-log/run-dev-graph-sync-feat-dashboard-redesign-goal-spec.json
+?? eval-log/run-dev-graph-sync-feat-dashboard-redesign-intermediate.jsonl
+?? eval-log/run-dev-graph-sync-feat-dashboard-redesign-progress.json
+?? eval-log/sdp-feat-dashboard-redesign-goal-spec.json
+?? eval-log/sdp-feat-dashboard-redesign-plan-findings-r2.json
+?? eval-log/sdp-feat-dashboard-redesign-plan-findings.json
+?? eval-log/sdp-feat-dashboard-redesign-plan-receipt.json
+?? eval-log/validation-sdp-feat-dashboard-redesign-r1.json
+?? eval-log/validation-sdp-feat-dashboard-redesign-r2.json
+?? evidence/feat-dashboard-redesign/
+?? features/feat-dashboard-redesign.context.json
+?? features/feat-dashboard-redesign.md
+?? migrations/0008_dashboard_media_assets.sql
+?? migrations/0009_video_content_types.sql
+?? migrations/0010_reporting_raw.sql
+?? migrations/0011_analytics_raw.sql
+?? migrations/0012_studio_csv.sql
+?? migrations/0013_reporting_reach_stage.sql
+?? migrations/0014_studio_csv_metric_provenance.sql
+?? src/adapters/google-analytics-dimensions.ts
+?? src/adapters/google-analytics.ts
+?? src/adapters/google-data-videos.ts
+?? src/adapters/google-reporting-jobs.ts
+?? src/adapters/google-reporting.ts
+?? src/domain/business-csv.ts
+?? src/domain/collection-status.ts
+?? src/domain/csv-table.ts
+?? src/domain/dashboard-period.ts
+?? src/domain/funnel.ts
+?? src/domain/studio-csv.ts
+?? src/domain/video-content-type.ts
+?? src/http/analytics-raw-routes.ts
+?? src/http/dashboard-routes.ts
+?? src/http/reporting-routes.ts
+?? src/http/reporting-sync-routes.ts
+?? src/repositories/analytics-raw-repository.ts
+?? src/repositories/business-csv-repository.ts
+?? src/repositories/dashboard-repository.ts
+?? src/repositories/reporting-repository.ts
+?? src/repositories/studio-csv-repository.ts
+?? src/repositories/youtube-collector-repository.ts
+?? src/usecases/analytics-dimensions.ts
+?? src/usecases/csv-preview.ts
+?? src/usecases/dashboard.ts
+?? src/usecases/funnel.ts
+?? src/usecases/report-types.ts
+?? src/usecases/reporting-normalize.ts
+?? src/usecases/reporting-sync.ts
+?? src/usecases/thumbnails.ts
+?? src/usecases/youtube-collector.ts
+?? tasks/feat-dashboard-redesign/
+?? tests/dashboard/
+?? tests/platform/analytics-dimensions.test.ts
+?? tests/platform/google-analytics-video.test.ts
+?? tests/platform/report-types.test.ts
+?? tests/platform/reporting-sync.test.ts
+?? tests/platform/youtube-collector.test.ts
+?? tests/settings/business-csv-import.test.ts
+?? tests/settings/csv-preview-route.test.ts
+?? tests/settings/csv-preview.test.ts
+?? tests/settings/studio-csv-domain.test.ts
+?? tests/settings/studio-csv-import.test.ts
+?? web/components/EChart.tsx
+?? web/components/echarts-setup.ts
+?? web/pages/dashboard/

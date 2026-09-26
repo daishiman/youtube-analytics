@@ -2,10 +2,11 @@
 // 連携の OAuth はこのクライアントで行う（ログインはアプリ共通のまま）。シークレットは送るだけで、画面には戻らない
 import { type FormEvent, useState } from "react";
 import { api, type GoogleClientSummary } from "../../api";
-import { formatDateTime } from "../../components/AppShell";
+import { Alert } from "../../components/Alert";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useToast } from "../../components/Toast";
+import { formatDateTime } from "../../format";
 import { errorText } from "../shell-context";
 import { GoogleCloudSetupGuide } from "./GoogleCloudSetupGuide";
 
@@ -34,7 +35,8 @@ export function GoogleClientPanel({
   const [busy, setBusy] = useState(false);
   const toast = useToast();
   const redirectUri = youtubeRedirectUri(window.location.origin);
-  const showForm = canManage && (!client.configured || editing);
+  const managed = client.source === "managed";
+  const showForm = !managed && canManage && (!client.configured || editing);
 
   async function run(action: () => Promise<void>) {
     setError("");
@@ -79,17 +81,38 @@ export function GoogleClientPanel({
       <div className="google-client-head">
         <h3>Google Cloud の接続情報</h3>
         <StatusBadge tone={client.configured ? "ok" : "warn"}>
-          {client.configured ? "登録済み" : "未登録"}
+          {managed
+            ? client.configured
+              ? "事前設定済み"
+              : "設定確認が必要"
+            : client.configured
+              ? "登録済み"
+              : "未登録"}
         </StatusBadge>
       </div>
-      <p className="small muted">
-        YouTube と連携するには、あなた自身の Google Cloud（Google
-        の開発者向けサービス・無料）で作った「接続情報」（クライアントID
-        とシークレット）が必要です。YouTube からデータを取る回数の上限も、あなたの Google Cloud
-        のものを使います。このアプリへのログインには使いません。作り方は下の「準備手順」を見てください。
-      </p>
+      {managed ? (
+        client.configured ? (
+          <p className="small muted">
+            このワークスペースの接続情報は事前に設定されています。Google Cloud
+            の接続情報を入力する必要はありません。
+            {!linked &&
+              "下の「YouTubeと連携」から、分析するチャンネルへの読み取り許可を行ってください。"}
+          </p>
+        ) : (
+          <Alert small>
+            事前設定された接続情報を現在利用できません。運用担当者に設定の確認を依頼してください。
+          </Alert>
+        )
+      ) : (
+        <p className="small muted">
+          YouTube と連携するには、あなた自身の Google Cloud（Google
+          の開発者向けサービス・無料）で作った「接続情報」（クライアントID
+          とシークレット）が必要です。YouTube からデータを取る回数の上限も、あなたの Google Cloud
+          のものを使います。このアプリへのログインには使いません。作り方は下の「準備手順」を見てください。
+        </p>
+      )}
 
-      {client.configured && !editing && (
+      {!managed && client.configured && !editing && (
         <dl className="facts">
           <div>
             <dt>クライアントID</dt>
@@ -106,11 +129,7 @@ export function GoogleClientPanel({
         </dl>
       )}
 
-      {error && (
-        <p role="alert" className="alert">
-          {error}
-        </p>
-      )}
+      <Alert>{error}</Alert>
 
       {showForm ? (
         <form className="google-client-form" onSubmit={save}>
@@ -186,7 +205,7 @@ export function GoogleClientPanel({
           </div>
           <GoogleCloudSetupGuide redirectUri={redirectUri} defaultOpen={!client.configured} />
         </form>
-      ) : client.configured && canManage ? (
+      ) : !managed && client.configured && canManage ? (
         <div className="row">
           <button type="button" className="button" disabled={busy} onClick={openForm}>
             変更
@@ -201,33 +220,36 @@ export function GoogleClientPanel({
           </button>
         </div>
       ) : (
+        !managed &&
         !client.configured && (
           <p className="small muted">接続情報はワークスペースのオーナーが登録します。</p>
         )
       )}
 
-      <ConfirmDialog
-        open={confirming}
-        title="Google Cloud の接続情報を削除"
-        confirmLabel="削除"
-        danger
-        busy={busy}
-        error={error}
-        onConfirm={() =>
-          void run(async () => {
-            await api<GoogleClientSummary>("/api/youtube/google-client", { method: "DELETE" });
-            setConfirming(false);
-            toast("Google Cloud の接続情報を削除しました。");
-            await onChanged();
-          })
-        }
-        onCancel={() => setConfirming(false)}
-      >
-        <p>
-          登録し直すまで、YouTube 連携の開始・再連携ができなくなります。
-          {linked && "連携中のチャンネルは Google の許可を取り消し、「要再連携」になります。"}
-        </p>
-      </ConfirmDialog>
+      {!managed && (
+        <ConfirmDialog
+          open={confirming}
+          title="Google Cloud の接続情報を削除"
+          confirmLabel="削除"
+          danger
+          busy={busy}
+          error={error}
+          onConfirm={() =>
+            void run(async () => {
+              await api<GoogleClientSummary>("/api/youtube/google-client", { method: "DELETE" });
+              setConfirming(false);
+              toast("Google Cloud の接続情報を削除しました。");
+              await onChanged();
+            })
+          }
+          onCancel={() => setConfirming(false)}
+        >
+          <p>
+            登録し直すまで、YouTube 連携の開始・再連携ができなくなります。
+            {linked && "連携中のチャンネルは Google の許可を取り消し、「要再連携」になります。"}
+          </p>
+        </ConfirmDialog>
+      )}
     </div>
   );
 }

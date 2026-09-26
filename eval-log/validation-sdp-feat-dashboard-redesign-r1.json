@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "status": "pass",
+  "validated_digest": "sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a",
+  "feature_package_id": "feature-package/feat-dashboard-redesign",
+  "parent_feature": "feat-dashboard-redesign",
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "violations": []
+}

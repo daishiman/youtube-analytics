@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "sdp-feat-dashboard-redesign-r1",
+  "feature_id": "feat-dashboard-redesign",
+  "delivery_choice": "standard",
+  "choice_basis": "利用者の11 verb 一括実行指示(各 verb の完了条件充足で次へ)に基づき standard 相当として記録。個別の選択入力ではない",
+  "published": ".dev-graph/published/feature-package-feat-dashboard-redesign",
+  "published_digest": "sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a",
+  "findings": "eval-log/sdp-feat-dashboard-redesign-plan-findings.json",
+  "verdict": "PASS",
+  "follow_ups": [],
+  "promotion_retries": [
+    "evaluated_inputs の staging-manifest.json sha256 転記誤りを evaluator が再計算で訂正",
+    "conditions evidence を evaluated_inputs 範囲内へ evaluator が付け替え(評価内容・verdict 不変)"
+  ],
+  "registration_receipt": ".dev-graph/state/receipts/pkg-feat-dashboard-redesign.json",
+  "graph_revision": 10,
+  "task_artifacts": "tasks/feat-dashboard-redesign/sys-dbr-p01..p13.md は register-package が生成しないため node verb で実体化する(validate artifact_missing 13件)",
+  "lock": "released",
+  "recorded_at": "2026-09-24T11:00:00Z"
+}

@@ -1,5 +1,5 @@
 ---
-acceptance: ["fetched_at が30日を超えた行が翌日の cleanup 後に残らない", "データ削除の依頼から7日以内に D1 行と R2 画像が0件になる", "レポートがコメント本文を複製していない"]
+acceptance: ["30日超のData API表示値は読取時に隠れ、翌日の cleanup で消去される。動画ID・指標行は残し、期限切れサムネイルは R2 と media_assets から削除される", "データ削除の依頼から7日以内に D1 行と R2 画像が0件になる", "レポートがコメント本文を複製していない"]
 architecture_refs: ["arch-youtube-analytics-system"]
 artifact_kind: "feature"
 artifact_subtypes: []
@@ -72,7 +72,8 @@ YouTube API 規約の保持期間・削除義務を自動で守り、無料枠�
 
 ## 受入
 
-- fetched_at が30日を超えた行が翌日の cleanup 後に残らない
+- 30日超のData API動画・チャンネル表示値は読取時に隠れ、翌日の cleanup で消去される。動画IDと指標行は残す
+- 期限切れサムネイルは R2 と `media_assets` から削除され、1回の処理上限を超えた残件も cleanup Queue で続けて処理される
 - データ削除の依頼から7日以内に D1 行と R2 画像が0件になる
 - レポートがコメント本文を複製していない
 
