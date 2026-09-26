@@ -15,6 +15,8 @@ export interface CallOptions {
   /** false で CSRF 用ヘッダを付けない */
   csrf?: boolean;
   env?: Partial<Bindings>;
+  /** JSON にせずそのまま送る本文（構文誤りの検査用） */
+  rawBody?: string;
 }
 
 export async function call(path: string, opts: CallOptions = {}): Promise<Response> {
@@ -25,9 +27,20 @@ export async function call(path: string, opts: CallOptions = {}): Promise<Respon
   if (method !== "GET" && opts.csrf !== false) headers["x-requested-with"] = "yta";
   return app.request(
     `${ORIGIN}${path}`,
-    { method, headers, body: opts.body === undefined ? undefined : JSON.stringify(opts.body) },
+    {
+      method,
+      headers,
+      body: opts.rawBody ?? (opts.body === undefined ? undefined : JSON.stringify(opts.body)),
+    },
     { ...env, ...opts.env },
   );
+}
+
+export const json = async <T>(res: Response) => (await res.json()) as T;
+
+/** セッション cookie 付きの POST（本文の既定は空オブジェクト） */
+export function post(path: string, cookie: string, body: unknown = {}): Promise<Response> {
+  return call(path, { method: "POST", cookie, body });
 }
 
 export async function expectError(res: Response, status: number, code: string): Promise<void> {
@@ -53,6 +66,9 @@ export interface LoggedIn {
   inviteError?: string;
 }
 
+/** テナントを持つ利用者（owner に限らず、メンバーにも使う） */
+export type Owner = LoggedIn & { tenantId: string };
+
 export async function login(
   email: string,
   opts: { inviteToken?: string; env?: Partial<Bindings>; emailVerified?: boolean } = {},
@@ -73,17 +89,13 @@ export async function login(
 }
 
 /** 初回ログインで自分のテナントを持つ owner（上限は十分大きくする） */
-export async function newOwner(prefix = "owner"): Promise<LoggedIn & { tenantId: string }> {
+export async function newOwner(prefix = "owner"): Promise<Owner> {
   const user = await login(uniqueEmail(prefix), { env: { MAX_TENANTS: "1000000" } });
   if (!user.tenantId) throw new Error("テナントが作られませんでした");
   return { ...user, tenantId: user.tenantId };
 }
 
-export async function issueInvite(
-  owner: LoggedIn & { tenantId: string },
-  email: string,
-  role: "editor" | "viewer",
-) {
+export async function issueInvite(owner: Owner, email: string, role: "editor" | "viewer") {
   const res = await call(`/api/tenants/${owner.tenantId}/invites`, {
     method: "POST",
     cookie: owner.cookie,
@@ -97,13 +109,13 @@ export async function issueInvite(
 }
 
 /** owner のテナントへ招待経由でメンバーを追加し、そのメンバーのログイン状態を返す */
-export async function addMember(owner: LoggedIn & { tenantId: string }, role: "editor" | "viewer") {
+export async function addMember(owner: Owner, role: "editor" | "viewer") {
   const email = uniqueEmail(role);
   const { token } = await issueInvite(owner, email, role);
   const member = await login(email, { inviteToken: token });
   expect(member.outcome).toBe("invite_accepted");
   expect(member.tenantId).toBe(owner.tenantId);
-  return member as LoggedIn & { tenantId: string };
+  return member as Owner;
 }
 
 export async function count(sql: string, ...params: unknown[]): Promise<number> {
@@ -111,4 +123,12 @@ export async function count(sql: string, ...params: unknown[]): Promise<number> 
     .bind(...params)
     .first<{ n: number }>();
   return row?.n ?? 0;
+}
+
+export function auditCount(tenantId: string, action: string): Promise<number> {
+  return count(
+    "SELECT COUNT(*) AS n FROM audit_log WHERE tenant_id = ?1 AND action = ?2",
+    tenantId,
+    action,
+  );
 }

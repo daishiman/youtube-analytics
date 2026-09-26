@@ -1,0 +1,13 @@
+[128/138] [desktop] › e2e/smoke.spec.ts:45:1 › 閲覧者には書込ボタンが出ない
+[129/138] [desktop] › e2e/settings.spec.ts:413:1 › Google Cloud 未登録のまま連携中: 再連携と字幕は押せず、案内を出す
+[130/138] [desktop] › e2e/smoke.spec.ts:68:1 › チャンネル管理を切り替えると役割が変わる
+[131/138] [desktop] › e2e/settings.spec.ts:423:1 › Google Cloud の接続情報: 閲覧者には登録欄・変更ボタンを出さない
+[132/138] [desktop] › e2e/settings.spec.ts:433:1 › 連携解除はチャンネル管理名の入力で確定する
+[133/138] [desktop] › e2e/smoke.spec.ts:78:1 › 初回ログイン → 招待 → 別アカウントは拒否 → 本人は参加
+[134/138] [desktop] › e2e/settings.spec.ts:446:1 › 旧チャンネルの削除待ちは期限を示し、新しい連携を始められない
+[135/138] [desktop] › e2e/settings.spec.ts:465:3 › /login: 共通フッターが同じ文言で出る
+[136/138] [desktop] › e2e/settings.spec.ts:465:3 › /privacy: 共通フッターが同じ文言で出る
+[137/138] [desktop] › e2e/settings.spec.ts:465:3 › /terms: 共通フッターが同じ文言で出る
+[138/138] [desktop] › e2e/settings.spec.ts:478:1 › ログイン後の全画面に同じヘッダー・フッターが出る
+  138 passed (17.7s)
+exit=0

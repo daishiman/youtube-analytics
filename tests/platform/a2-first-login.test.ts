@@ -75,6 +75,6 @@ describe("A2 初回ログインのテナント自動作成", () => {
       .bind(user.userId)
       .first<{ name: string }>();
     expect(Array.from(row?.name ?? "")).toHaveLength(60);
-    expect(row?.name.endsWith("のワークスペース")).toBe(true);
+    expect(row?.name.endsWith("のチャンネル管理")).toBe(true);
   });
 });

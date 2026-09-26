@@ -1,5 +1,5 @@
-// ダッシュボード（docs/screens/02-dashboard.png が正本）。期間は共通ヘッダーの ?period= を読むだけ（qa-099）。
-// 対象はチャンネル全体か選んだ動画（既定は直近公開10本・上限なし: qa-096）
+// ダッシュボード（docs/screens/02-dashboard.png が正本）。期間は共通ヘッダーの ?period= を読むだけ（qa-109）。
+// 対象はチャンネル全体か選んだ動画（既定は直近公開10本・上限なし: qa-106）
 import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext, useSearchParams } from "react-router";
 import { type DashboardResponse, ROLE_LABELS } from "../api";
@@ -238,7 +238,7 @@ function ScopeSelector({
   );
 }
 
-/** 空状態（未連携・未収集・CSV未取込）。AI分析・アクションの空状態は右カラムの各カードが出す（qa-091 の5種） */
+/** 空状態（未連携・未収集・CSV未取込）。AI分析・アクションの空状態は右カラムの各カードが出す（qa-101 の5種） */
 function EmptyStates({ data }: { data: DashboardResponse }) {
   const e = data.empty;
   if (e.notLinked) {

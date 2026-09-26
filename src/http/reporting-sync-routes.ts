@@ -4,7 +4,7 @@ import type { ReportingMessage } from "../env";
 import { AppError } from "../lib/errors";
 import { ReportingRepository } from "../repositories/reporting-repository";
 import type { AppEnv } from "./middleware";
-import { sessionTenant } from "./settings-routes";
+import { sessionTenant } from "./middleware";
 
 export const reportingSyncRoutes = new Hono<AppEnv>();
 

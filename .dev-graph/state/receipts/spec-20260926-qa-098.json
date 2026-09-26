@@ -1,0 +1,51 @@
+{
+  "receipt_kind": "spec-reflect",
+  "verb": "spec",
+  "recorded_at": "2026-09-25T22:28:45Z",
+  "graph_revision": 14,
+  "graph_digest": "067e101cd1528921774c7bce35535b83ef077fef6830b8a2b60b623e2e9826fb",
+  "trigger": "SYS-SAR-P01..P13（yta-ufd.1〜.13）と SYS-AIA-P01..P13（yta-c0a.1〜.13）の実装で見つかった、仕様との食い違い2点",
+  "decision": {
+    "qa_id": "qa-098",
+    "basis": "user-decision",
+    "answered_at": "2026-09-25T07:23:56Z",
+    "items": [
+      "取込本文の上限を 2,000,000 bytes から 3,500,000 bytes に変更（REPORT_BODY_MAX_BYTES。スキルの POST /api/skill/reports と画面取込で共通）。report_html 単体の 2,000,000 bytes（REPORT_HTML_MAX_BYTES）は変えない。qa-094 の但し書きに当たる見直し",
+      "結果 JSON の正本を docs/analysis/dashboard-analysis-catalog.md §6 から、スキルの compute.mjs（buildReportJson）の実出力に変更。取込時に src/domain/report-schema.ts の parseReport で検査し、合わなければ 422"
+    ]
+  },
+  "spec_reflection": {
+    "writer": "system-spec-harness run-system-spec-elicit apply-spec-transition.py chunk（add-qa-ref・set-design-application）",
+    "compile": "system-spec-harness run-system-spec-compile compile-spec-doc.py（10ファイル再生成）",
+    "changed_chapters": ["system-spec/security.md", "system-spec/backend.md", "system-spec/spec-state.json"],
+    "gates": {
+      "coverage_final": "exit0（--require-complete --require-basis --require-foundation）",
+      "source_citation_IN1": "exit0",
+      "required_info_ungrounded_blocking_items": [],
+      "compile": "exit0"
+    },
+    "evaluated_digest": "8d973984df57c76f0c86da08698236a5865d5dc0719fdf576879beb38e4afaf2",
+    "evaluated_digest_definition": "sha256 of sorted lines 'relpath\\tsha256\\n' over system-spec/*.md + spec-state.json + fetched-references.json",
+    "previous_evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094"
+  },
+  "graph_import": {
+    "reimport_required": false,
+    "reason": "spec と arch ノードの lineage が束縛する source（00-requirements-definition.md・index.md）と、ノードファイル（specs/・architecture/）の digest が前回の取込（spec-20260924-ai-analysis.json）と一致する。qa-098 は backend・security 章の『本章での適用』だけを変え、要件定義書と index は変わらない",
+    "lineage_check": [
+      {"graph_node_id": "spec-youtube-analytics-system", "source_path": "system-spec/00-requirements-definition.md", "source_digest": "d0e8b68964d98aac2d55a96769477c2c986198bb0ce0c281eef1855a10f7d768", "node_file_digest": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd", "match": true},
+      {"graph_node_id": "arch-youtube-analytics-system", "source_path": "system-spec/index.md", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "node_file_digest": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b", "match": true}
+    ],
+    "specs_architecture_text": "変更なし。specs/youtube-analytics-system.md の『レポートHTMLは2,000,000 bytes 以下』は report_html 単体の上限で、qa-098 後も正しい"
+  },
+  "downstream_reflection": [
+    {"path": "features/feat-ai-analysis-screen.md", "kind": "addendum", "note": "末尾に『補遺（2026-09-26・qa-098）』を追記。本文と context.json は feature_digest の束縛があるため変えない"},
+    {"path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md", "kind": "annotation", "note": "受入の『取込2,000,000 bytes上限』に qa-098 の見直しを注記"},
+    {"path": "docs/feat-ai-analysis-screen/requirements.md", "kind": "update", "note": "qa 表に qa-098 の行を追加し、§3 の決定に qa 番号を付けた"}
+  ],
+  "no_spec_impact": [
+    {"change": "補足指示の上限を countChars（コードポイント単位）で数える", "reason": "既存の『1000字』を忠実に実装したもので、値も意味も変えない"},
+    {"change": "版一覧の LIKE 検索を最新200版に限る不具合の修正", "reason": "qa-094 で承認済みの『LIKE は最新200版』に実装を合わせた"},
+    {"change": "取込の idempotency・404『未提供』の廃止・日時表記の統一", "reason": "既存 API 契約と ui-ux の表記規則の範囲内の実装修正"},
+    {"change": "usecase の集約単位での3分割・トークン照合の PlatformRepository への移動", "reason": "内部構造の整理で、API・表・権限境界は変えない"}
+  ]
+}

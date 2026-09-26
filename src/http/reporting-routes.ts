@@ -2,7 +2,7 @@
 import { Hono } from "hono";
 import { getReportTypes } from "../usecases/report-types";
 import type { AppEnv } from "./middleware";
-import { sessionTenant } from "./settings-routes";
+import { sessionTenant } from "./middleware";
 
 export const reportingRoutes = new Hono<AppEnv>();
 

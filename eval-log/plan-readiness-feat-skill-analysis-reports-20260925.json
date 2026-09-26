@@ -1,0 +1,63 @@
+{
+  "status": "complete",
+  "missing_sections": [],
+  "checked_at": "2026-09-24T23:17:01Z",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "system_spec_root": "system-spec",
+  "architecture_root": "architecture",
+  "completeness_report": "eval-log/system-spec-completeness-ai-analysis-r2.json",
+  "source_pin": {
+    "plugin": "system-spec-harness",
+    "version": "0.1.14",
+    "compile_entrypoint": "run-system-spec-compile",
+    "completeness_entrypoint": "assign-system-spec-completeness-evaluator",
+    "source_digest": "sha256:6a6ae6e166e7edeb669acd7776a915ecb528d90a6c60a8125186c046af08fbac"
+  },
+  "probes": {
+    "system_spec_index": {
+      "path": "system-spec/index.md",
+      "exists": true,
+      "non_empty": true,
+      "placeholder_free": true,
+      "heading_count": 5,
+      "verified": true,
+      "detail": ""
+    },
+    "requirements_definition": {
+      "path": "system-spec/00-requirements-definition.md",
+      "exists": true,
+      "non_empty": true,
+      "placeholder_free": true,
+      "heading_count": 18,
+      "verified": true,
+      "detail": ""
+    },
+    "architecture_graph": {
+      "path": "architecture/graph.json",
+      "exists": true,
+      "non_empty": true,
+      "placeholder_free": true,
+      "heading_count": 0,
+      "verified": true,
+      "detail": ""
+    },
+    "completeness_evaluation": {
+      "path": "eval-log/system-spec-completeness-ai-analysis-r2.json",
+      "exists": true,
+      "non_empty": true,
+      "placeholder_free": true,
+      "heading_count": 0,
+      "verified": true,
+      "detail": "OK: レポート形状と総合判定整合を満たす (verdict=PASS)"
+    },
+    "source_plugin_manifest": {
+      "path": "/Users/dm/dev/dev/個人開発/harness/plugins/system-spec-harness/references/package-contract.json",
+      "exists": true,
+      "non_empty": true,
+      "placeholder_free": true,
+      "heading_count": 0,
+      "verified": true,
+      "detail": "pinned producer manifest+sidecar matched"
+    }
+  }
+}

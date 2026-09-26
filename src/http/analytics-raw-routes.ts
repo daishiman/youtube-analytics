@@ -7,7 +7,7 @@ import { requirePermission } from "../domain/tenant-context";
 import { AppError } from "../lib/errors";
 import { AnalyticsRawRepository } from "../repositories/analytics-raw-repository";
 import type { AppEnv } from "./middleware";
-import { sessionTenant } from "./settings-routes";
+import { sessionTenant } from "./middleware";
 
 export const analyticsRawRoutes = new Hono<AppEnv>();
 

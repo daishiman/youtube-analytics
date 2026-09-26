@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "handoff_target": "task-graph",
+  "feature_id": "feat-ai-analysis-screen",
+  "generated_at": "2026-09-24T15:59:41Z",
+  "graph_snapshot": {
+    "path": ".dev-graph/state/graph.json",
+    "graph_revision": 11,
+    "digest": "sha256:89f262432942723401d47d0b1cef174e25c9f91b4a90b2597c9feff49ae824c7"
+  },
+  "requirements_document": {
+    "path": ".dev-graph/handoffs/requirements-feat-ai-analysis-screen.md",
+    "digest": "sha256:fce3cdaa1f26016083efb84d513df1f394128d97a03be2b843e70b0560db4886"
+  },
+  "package": {
+    "path": ".dev-graph/published/feature-package-feat-ai-analysis-screen",
+    "published_digest": "sha256:0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+    "promotion_receipt": {
+      "path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/atomic-promotion-receipt.json",
+      "digest": "sha256:c5aeed7b59c3438b00ecd0770fd17a32a3ea6cd5524cff2c5db57bf8d6530e1a"
+    },
+    "system_build_handoff": {
+      "path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/system-build-handoff.json",
+      "digest": "sha256:53dba52f5f99c5fbc08a0f31b8e5e86483a0644bf8ed5a05ca7a9819508dc78e"
+    },
+    "registration_manifest": {
+      "path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/dev-graph-registration.json",
+      "digest": "sha256:d9e8c3d830aa0d445dfc35bd4e5921b22cdf8b2064da39a6f264d667bcaff7f3"
+    }
+  },
+  "feature_context": {
+    "path": "features/feat-ai-analysis-screen.context.json",
+    "digest": "sha256:6fbb3ee72e9153bfd1f6f2bf0e96f7a7473bf55aac5b32dbcc0489c9fbd9b40d",
+    "planner_input": {
+      "path": ".dev-graph/handoffs/plan-input-feat-ai-analysis-screen.context.json",
+      "digest": "sha256:9cb2f8b73d22d818820484a8f2419afee45e30314c47623642bef7d8f5a33a2a",
+      "projection": "depends_on を除く9フィールド・値一致"
+    }
+  },
+  "gates": {
+    "c11_graph_schema": "pass",
+    "c02_saved_state": "pass",
+    "validate_system_plan": "pass",
+    "plan_evaluator": "PASS"
+  },
+  "missing_sections": [],
+  "self_generated_code_files": 0,
+  "note": "register-package 済み (graph rev 11, SYS-AIA-P01..P13 登録済み)。build 着手はこの graph を正本とする"
+}

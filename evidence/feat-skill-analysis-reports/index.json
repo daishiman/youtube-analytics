@@ -1,0 +1,280 @@
+{
+  "feature_id": "feat-skill-analysis-reports",
+  "feature_package_id": "feature-package/feat-skill-analysis-reports",
+  "task_id": "SYS-SAR-P11",
+  "generated_at": "2026-09-25",
+  "environment": "local (wrangler dev, http://localhost:8793, DEV_LOGIN=1)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、preview 環境・Actions・実際の claude -p 実行と launchd の定時起動は未確認",
+  "known_limits": [
+    "analysis_export_rows / analysis_export_targets は未分解の収集 feature が作るため、実 dev の書き出しは0行で常に判定保留の版になる"
+  ],
+  "quality_gates": {
+    "typecheck": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/typecheck.txt"
+    },
+    "lint": {
+      "result": "pass (154 files)",
+      "path": "evidence/feat-skill-analysis-reports/lint.txt"
+    },
+    "unit_test": {
+      "result": "pass (35 files / 375 tests)",
+      "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt"
+    },
+    "e2e": {
+      "result": "pass (138 passed)",
+      "path": "evidence/feat-skill-analysis-reports/e2e-playwright.txt"
+    },
+    "skill_e2e": {
+      "result": "pass (exit 0)",
+      "path": "evidence/feat-skill-analysis-reports/e2e-run.txt"
+    },
+    "reproducibility": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/reproducibility.txt"
+    },
+    "no_causal": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/no-causal-language.txt"
+    },
+    "rds_unmodified": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/rds-unmodified.txt"
+    },
+    "plutil": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/plutil-lint.txt"
+    },
+    "migrations": {
+      "result": "pass",
+      "path": "evidence/feat-skill-analysis-reports/migrations-empty-db.txt"
+    }
+  },
+  "acceptance": [
+    {
+      "id": "AC1",
+      "criterion": "/yt-analyze を1回実行するだけで、依頼 → export → HTML と JSON の反映まで手作業なしで終わる",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "run-log",
+          "path": "evidence/feat-skill-analysis-reports/e2e-run.txt",
+          "note": "実サーバ A-0011 v3（HTTP 201・exit 0）とフィクスチャ（201/403/404 → exit 0/4/5）"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-skill-analysis-reports/live-run-owner-desktop.png",
+          "note": "A-0011 が完了・自動・100%"
+        },
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/plutil-lint.txt",
+          "note": "launchd plist の plutil -lint と bash -n"
+        },
+        {
+          "kind": "code",
+          "path": ".claude/skills/yt-analyze/SKILL.md",
+          "note": "スキル本体"
+        }
+      ]
+    },
+    {
+      "id": "AC2",
+      "criterion": "週次5段ファネル・下流結果・改善候補（全指標目標達成または判定保留の理由）があり、因果を断定しない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "run-log",
+          "path": "evidence/feat-skill-analysis-reports/e2e-run.txt",
+          "note": "実サーバ A-0011 v3（HTTP 201・exit 0）とフィクスチャ（201/403/404 → exit 0/4/5）"
+        },
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/reproducibility.txt",
+          "note": "候補選択を含む結果 JSON が再計算と完全一致"
+        },
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "全指標目標達成・判定保留も受ける"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC3",
+      "criterion": "同じ tenant と channel の完了済み直近5版だけを使い、前回仮説の当否・施策効果・参照版を保存する",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "直近5版・参照版の保存"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC4",
+      "criterion": "履歴0件は初回分析として成功し、別の tenant/channel の履歴は混ざらない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "初回分析・他テナント非混在"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC5",
+      "criterion": "改善アクションの効果比較に、対象ファネル段と下流結果が含まれる",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "段・指標・baseline・result と downstream の値"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC6",
+      "criterion": "同じ Idempotency-Key の二重送信で版が増えない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/reports.test.ts",
+          "note": "二重送信"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC7",
+      "criterion": "過去の版は更新されない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/reports.test.ts",
+          "note": "過去版の不変"
+        },
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/migrations-empty-db.txt",
+          "note": "空DBへ全件・差分適用"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC8",
+      "criterion": "他テナントのトークンでは export できない",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "他テナントは 404"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC9",
+      "criterion": "export の各行が source（api|studio_csv|business_csv）を持つ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "source と期間・チャンネルの絞り込み"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-skill-analysis-reports/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC10",
+      "criterion": "report_html は report.mjs build の合格物で、結果 JSON の数値は analysis.mjs を再実行した値と一致する",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/reproducibility.txt",
+          "note": "sample・empty・実サーバ送信済みが完全一致"
+        },
+        {
+          "kind": "run-log",
+          "path": "evidence/feat-skill-analysis-reports/e2e-run.txt",
+          "note": "実サーバ A-0011 v3（HTTP 201・exit 0）とフィクスチャ（201/403/404 → exit 0/4/5）"
+        }
+      ]
+    },
+    {
+      "id": "AC11",
+      "criterion": "事実と解釈を分け、仮説に反証条件と判定を付ける。因果の断定は0件",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/no-causal-language.txt",
+          "note": "10ファイルで検出0件"
+        },
+        {
+          "kind": "run-log",
+          "path": "evidence/feat-skill-analysis-reports/e2e-run.txt",
+          "note": "実サーバ A-0011 v3（HTTP 201・exit 0）とフィクスチャ（201/403/404 → exit 0/4/5）"
+        }
+      ]
+    },
+    {
+      "id": "AC12",
+      "criterion": "report-design-system は取込元と diff -r で一致し、無改変のまま",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-skill-analysis-reports/rds-unmodified.txt",
+          "note": "無改変・exit 0"
+        }
+      ]
+    }
+  ]
+}

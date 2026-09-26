@@ -1,8 +1,8 @@
--- ダッシュボード刷新（feat-dashboard-redesign / system-spec qa-089〜qa-099・appr-015）
+-- ダッシュボード刷新（feat-dashboard-redesign / system-spec qa-099〜qa-109・appr-017）
 -- ダッシュボードが「読む」表を、database 章の列定義に沿って用意する。
 -- 書き込む処理（毎日収集・CSV取込・AI分析の受理・改善アクションの状態遷移）は上流 feature が作る。
 -- 本 migration は読み取りに要る列だけを置き、上流 feature は ALTER TABLE ADD COLUMN で列を足して引き継ぐ。
--- 索引は主キーだけにする（索引の更新も D1 の書込行数に数えるため）。例外は media_assets の取り直し用索引（qa-098）。
+-- 索引は主キーだけにする（索引の更新も D1 の書込行数に数えるため）。例外は media_assets の取り直し用索引（qa-108）。
 
 -- 動画の基本情報（Data API videos.list 由来。30日で取り直す API データなので fetched_at を持つ・qa-035）
 CREATE TABLE IF NOT EXISTS videos (
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS videos (
   title         TEXT NOT NULL,
   published_at  TEXT NOT NULL,              -- UTC ISO8601
   content_type  TEXT NOT NULL DEFAULT 'long' CHECK (content_type IN ('shorts', 'long')),
-  thumbnail_url TEXT,                        -- snippet.thumbnails の元 URL（表示には使わず R2 経由で配る・qa-095）
+  thumbnail_url TEXT,                        -- snippet.thumbnails の元 URL（表示には使わず R2 経由で配る・qa-105）
   fetched_at    TEXT NOT NULL,
   PRIMARY KEY (tenant_id, video_id)
 );
@@ -91,67 +91,26 @@ CREATE TABLE IF NOT EXISTS channel_daily_metrics (
   PRIMARY KEY (tenant_id, channel_id, date)
 );
 
--- レポート版（追記のみ）
-CREATE TABLE IF NOT EXISTS reports (
-  tenant_id  TEXT NOT NULL REFERENCES tenants (tenant_id),
-  report_id  TEXT NOT NULL,
-  channel_id TEXT NOT NULL,
-  version    INTEGER NOT NULL,
-  title      TEXT NOT NULL,
-  conclusion TEXT,
-  status     TEXT NOT NULL DEFAULT '完了' CHECK (status IN ('待機中', '実行中', '完了', '失敗')),
-  created_by TEXT,
-  created_at TEXT NOT NULL,
-  PRIMARY KEY (tenant_id, report_id)
-);
+-- レポート版（reports/findings）・改善アクション（actions）・画像（media_assets）は main の AI分析（0009・0010・0012）が
+-- 作る。ダッシュボードはそれを読むだけにし、サムネイルの取り直しに要る2列と索引だけをここで足す。
 
-CREATE TABLE IF NOT EXISTS findings (
-  tenant_id  TEXT NOT NULL REFERENCES tenants (tenant_id),
-  finding_id TEXT NOT NULL,
-  report_id  TEXT NOT NULL,
-  ordinal    INTEGER NOT NULL,
-  claim      TEXT NOT NULL,
-  PRIMARY KEY (tenant_id, finding_id)
-);
-
--- 改善アクション（未着手→実施中→効果測定中→完了 の一方向。遷移 API は feat-web-screens-actions）
-CREATE TABLE IF NOT EXISTS actions (
-  tenant_id      TEXT NOT NULL REFERENCES tenants (tenant_id),
-  action_id      TEXT NOT NULL,
-  channel_id     TEXT NOT NULL,
-  title          TEXT NOT NULL,
-  status         TEXT NOT NULL CHECK (status IN ('未着手', '実施中', '効果測定中', '完了')),
-  metric_label   TEXT,
-  baseline_value REAL,
-  latest_value   REAL,
-  unit           TEXT,
-  started_at     TEXT,
-  ends_at        TEXT,
-  verdict        TEXT CHECK (verdict IS NULL OR verdict IN ('効果あり', '不明', '効果なし')),
-  created_by     TEXT,
-  created_at     TEXT NOT NULL,
-  PRIMARY KEY (tenant_id, action_id)
-);
-
--- 画像（R2 のキーは tenants/<tenant_id>/…）。kind=thumbnail は asset_id を 'thumbnail:<video_id>' に固定し、
--- 動画1本につき1行にする。thumbnail 行は fetched_at（R2 へ保存した実時刻）と source_url を必須にする（qa-098）
-CREATE TABLE IF NOT EXISTS media_assets (
-  tenant_id    TEXT NOT NULL REFERENCES tenants (tenant_id),
-  asset_id     TEXT NOT NULL,
-  video_id     TEXT NOT NULL,
-  kind         TEXT NOT NULL CHECK (kind IN ('thumbnail', 'scene', 'screenshot')),
-  at_ms        INTEGER,
-  r2_key       TEXT NOT NULL,
-  content_type TEXT,
-  width        INTEGER,
-  height       INTEGER,
-  bytes        INTEGER,
-  source_url   TEXT,
-  fetched_at   TEXT,
-  PRIMARY KEY (tenant_id, asset_id),
-  CHECK (kind <> 'thumbnail' OR (source_url IS NOT NULL AND fetched_at IS NOT NULL))
-);
+-- 画像（R2 のキーは tenants/<tenant_id>/…）。ダッシュボードが YouTube から取り置くサムネイルは asset_id を
+-- 'thumbnail:<video_id>' に固定して動画1本につき1行にし、fetched_at（R2 へ保存した実時刻）と source_url を必須にする（qa-108）。
+-- /yt-analyze が送る画像（kind=thumbnail を含む・asset_id は乱数）は出所の列を持たないので、この条件の対象外にする。
+-- ALTER TABLE では CHECK を足せないため、INSERT/UPDATE の trigger で同じ条件を守る
+ALTER TABLE media_assets ADD COLUMN source_url TEXT;
+ALTER TABLE media_assets ADD COLUMN fetched_at TEXT;
 CREATE INDEX IF NOT EXISTS idx_media_assets_kind_fetched ON media_assets (tenant_id, kind, fetched_at);
+CREATE TRIGGER media_assets_thumbnail_provenance_insert BEFORE INSERT ON media_assets
+WHEN NEW.asset_id = 'thumbnail:' || NEW.video_id AND (NEW.source_url IS NULL OR NEW.fetched_at IS NULL)
+BEGIN
+  SELECT RAISE(ABORT, 'thumbnail requires source_url and fetched_at');
+END;
+CREATE TRIGGER media_assets_thumbnail_provenance_update BEFORE UPDATE ON media_assets
+WHEN NEW.asset_id = 'thumbnail:' || NEW.video_id AND (NEW.source_url IS NULL OR NEW.fetched_at IS NULL)
+BEGIN
+  SELECT RAISE(ABORT, 'thumbnail requires source_url and fetched_at');
+END;
 
 -- 週次事業 CSV（week_start は JST 月曜。空欄は NULL、0 は実測 0）
 CREATE TABLE IF NOT EXISTS business_funnel_weekly (

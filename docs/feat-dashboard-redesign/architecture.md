@@ -2,7 +2,7 @@
 
 > 本書の上流 feature への引き継ぎは初回設計時点のもの。後続で収集・CSV取込を同じワークツリーに追加した。現況は `data-coverage-audit.md` を参照。
 
-最終更新: 2026-09-25。根拠章は ui-ux、frontend、backend、database、security、infrastructure（qa-089〜qa-099）。
+最終更新: 2026-09-25。根拠章は ui-ux、frontend、backend、database、security、infrastructure（qa-099〜qa-109）。
 
 ## 1. 画面の部品境界
 
@@ -32,13 +32,13 @@
 | `GET /api/media/thumbnails/:video_id` | 動画 ID | 画像の本体（R2） | `Cache-Control: private, max-age=3600`、`X-Content-Type-Options: nosniff` |
 
 - 入力検証は D1 に触れる前に行い、違反は 400 を返す。未ログインは 401。
-- 他テナントの ID や存在しない `video_ids` は黙って除外する（qa-097）。サムネイルは、他テナント、30日超、未保存、不正な ID のどれでも同じ 404 を返し、存在の有無を区別させない。
+- 他テナントの ID や存在しない `video_ids` は黙って除外する（qa-107）。サムネイルは、他テナント、30日超、未保存、不正な ID のどれでも同じ 404 を返し、存在の有無を区別させない。
 - `app.ts` の `/api/*` 共通処理は既定で `no-store` を付ける。ルートが `private` で始まる Cache-Control を付けたときだけ、それを残す。
 - 画面の「基本日次収集の最終成功」はチャンネルの基本日次系列だけの時刻。収集状態の失敗表示は基本日次・Reporting・属性のいずれかを含み、共通ヘッダーの「最終更新」とは別の値である。Analytics 日次の末日が未返却なら 0 として補わず、期間の判断欄の前期比較を保留する。
 - 固定期間の末日は現行チャンネルの基本日次 all 系列で視聴回数がある最新日（JSTの昨日を上限）へ合わせる。日次データがなければJSTの昨日、任意期間なら指定日を使う。Analytics日次は太平洋時間の日付で、事業CSVのJST週へ変換して合算しない。
 - 週次ファネルは、Studio合計の日次7日、M1に使う動画日次7日と各列の取込出典、週次事業CSVの鮮度を確認してから判定する。欠測や週末前の取込は保留する。判定条件の正本は [分析カタログ](../analysis/dashboard-analysis-catalog.md) の2.1節。
 
-## 4. データモデル（`migrations/0008_dashboard_media_assets.sql`）
+## 4. データモデル（`migrations/0016_dashboard_media_assets.sql`）
 
 ダッシュボードが読む表を、database 章の列定義に沿って先に作る。書き込む処理は上流 feature が作り、列が足りなければ `ALTER TABLE ADD COLUMN` で引き継ぐ（migration の先頭に注記した）。
 

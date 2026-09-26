@@ -42,7 +42,7 @@ A5 だけを3サイズ×20回繰り返して60件すべて成功（`e2e-login-a5
 
 ## 4. 仕様と派生物の同期
 
-- qa-099（期間は共通ヘッダーに統一）を仕様へ反映し、`system-spec/*.md`、`specs/youtube-analytics-system.md`、`architecture/youtube-analytics-system.md` の派生 digest を揃えた。`pnpm check:repo` が成功。
+- qa-109（期間は共通ヘッダーに統一）を仕様へ反映し、`system-spec/*.md`、`specs/youtube-analytics-system.md`、`architecture/youtube-analytics-system.md` の派生 digest を揃えた。`pnpm check:repo` が成功。
 - 既存の `e2e/shell-state.spec.ts` は、共通ヘッダーの期間に 7日が増えたことに合わせて期待値を直した。
 
 ## 5. 手動で確かめたこと

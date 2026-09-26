@@ -1,0 +1,13 @@
+## sample
+入力: tests/fixtures/skill-analysis-sample/export-v1.json
+一致: 別プロセスで2回計算した結果 JSON（report_html 除く・5906文字）が完全一致しました
+exit=0
+## empty
+入力: tests/fixtures/skill-analysis-empty/export-v1.json
+一致: 別プロセスで2回計算した結果 JSON（report_html 除く・1750文字）が完全一致しました
+exit=0
+## 実サーバ送信済み（A-0011 v3）と再計算
+入力: <scratchpad>/yt-runs/A-0011-v3/2026-09-yt-a-0011-v3/export.json
+一致: 別プロセスで2回計算した結果 JSON（report_html 除く・1597文字）が完全一致しました
+一致: 送信済みの結果 JSON（<scratchpad>/yt-runs/A-0011-v3/2026-09-yt-a-0011-v3/posted-result.json）と再計算の結果が完全一致しました
+exit=0

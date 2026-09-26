@@ -20,7 +20,7 @@ Web フロントエンドは React + Vite + React Router の SPA を Workers の
 
 | プラットフォーム | 状態 | 根拠 |
 |---|---|---|
-| Web (web) | 確定 | 確定質疑: qa-092。裏付け質疑 (`qa_refs`): `qa-016`, `qa-024`, `qa-029`, `qa-030`, `qa-031`, `qa-015`, `qa-032`, `qa-033`, `qa-034`, `qa-037`, `qa-038`, `qa-039`, `qa-040`, `qa-036`, `qa-041`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-042`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-055`, `qa-056`, `qa-057`, `qa-058`, `qa-059`, `qa-054`, `qa-061`, `qa-062`, `qa-063`, `qa-064`, `qa-065`, `qa-067`, `qa-068`, `qa-069`, `qa-070`, `qa-071`, `qa-072`, `qa-073`, `qa-074`, `qa-075`, `qa-076`, `qa-077`, `qa-078`, `qa-080`, `qa-084`, `qa-082`, `qa-087`, `qa-088`, `qa-066`, `qa-089`, `qa-090`, `qa-091`, `qa-093`, `qa-094`, `qa-095`, `qa-096`, `qa-099` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G2, G4, G5 |
+| Web (web) | 確定 | 確定質疑: qa-097。裏付け質疑 (`qa_refs`): `qa-016`, `qa-024`, `qa-029`, `qa-030`, `qa-031`, `qa-015`, `qa-032`, `qa-033`, `qa-034`, `qa-037`, `qa-038`, `qa-039`, `qa-040`, `qa-036`, `qa-041`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-042`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-055`, `qa-056`, `qa-057`, `qa-058`, `qa-059`, `qa-054`, `qa-061`, `qa-062`, `qa-063`, `qa-064`, `qa-065`, `qa-067`, `qa-068`, `qa-069`, `qa-070`, `qa-071`, `qa-072`, `qa-073`, `qa-074`, `qa-075`, `qa-076`, `qa-077`, `qa-078`, `qa-080`, `qa-084`, `qa-082`, `qa-087`, `qa-088`, `qa-079`, `qa-089`, `qa-090`, `qa-091`, `qa-092`, `qa-093`, `qa-095`, `qa-096`, `qa-066`, `qa-099`, `qa-100`, `qa-101`, `qa-103`, `qa-104`, `qa-105`, `qa-106`, `qa-109`, `qa-102` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G2, G4, G5 |
 | モバイル (mobile) | 対象外 | 理由: mobile: ネイティブアプリを実装しない。スマホ・タブレットは frontend.web のレスポンシブSPAで全操作する(qa-036で中立に再確認) |
 | タブレット (tablet) | 対象外 | 理由: tablet: ネイティブアプリを実装しない。スマホ・タブレットは frontend.web のレスポンシブSPAで全操作する(qa-036で中立に再確認) |
 | デスクトップ (Windows) (desktop-windows) | 対象外 | 理由: desktop-windows: Claude Code側はDBも画面も持たない(qa-015)。PCでもブラウザのWeb版を使い(qa-036『専用アプリは作らない』)、Claude CodeはCLIで動かすためデスクトップ用画面を作らない |
@@ -42,7 +42,7 @@ Web フロントエンドは React + Vite + React Router の SPA を Workers の
 | 設計 concern | 上流の正本 (authority) | 導く範囲 | 出典 | 最終確認 | 本章の確定セルへの反映 |
 |---|---|---|---|---|---|
 | presentation | Apple Human Interface Guidelines | 画面設計・操作フロー・情報階層・アクセシビリティの上流原則 | https://developer.apple.com/design/human-interface-guidelines | 2026-07-12 | [qa-024→qa-063/qa-080/qa-030/qa-036/qa-074] 配色は web/styles.css の CSS 変数(--bg/--card/--text/--muted/--line/--primary/--magenta/--indigo/--accent-bg/--danger/--alert-bg)をトークンとして使い、部品への色コード直書きはしない(qa-080)。変数の値は共通デザイン正本に従い、主操作とフォーカス=マゼンタ(--primary=--magenta)、見出し・リンク=インディゴ(qa-063 が qa-024 のティールを置換)。6画面は AppShell の同一レイアウト骨格(サイドバー+ヘッダー+本文+フッター)を共有し(qa-030/qa-074)、メニューはログイン後の5つ(ダッシュボード・動画・AI分析・改善アクション・設定)で固定。情報は『最初に見える要点』と『詳しく見る』の2段に分ける。スマホ・タブレット幅でも全操作をでき(qa-036)、表は DataTable が縦積みカードに変換する。 画像の文言は正とするが、次回収集の表示は画像の『毎時』ではなく『毎日 3:00 JST』とする(qa-077)。 [qa-066/qa-070] ログイン画面の状態(押せない理由・エラー)を aria-disabled・aria-describedby・role=alert で支援技術へ伝える。 |
-| application-architecture | Robert C. Martin — Clean Architecture | レイヤ境界・依存方向 (内向き)・ユースケース中心設計 | Clean Architecture (2017), the Dependency Rule | 2026-07-12 | [qa-024/qa-032/qa-033/qa-031/qa-061] 画面はpages/*(6つ: login・dashboard・videos・ai-analysis・actions・settings)+静的ページ2枚(privacy・terms)と、api client層の2層に分け、画面からfetchを直接呼ばずapi client経由にする。状態はURLクエリ(期間・選択ID)とサーバ応答だけで持ち、グローバルストアを置かない。画面は React コンポーネントで組み、グラフは ECharts を包む汎用グラフ部品1つに集約して、API が返すグラフ仕様JSONを描くだけにする(図の型を画面コードに持たない・qa-061)。(層の分け方は qa-037 で承認) [qa-066] ログイン画面の権限一覧は api client 経由で /api/auth/config から取得し、画面側に定義を持たない。 共通レイアウトと共通部品(AppShell・PageHeader・SectionCard・StatusBadge・DataTable・UsageBar・DropZone・ConfirmDialog・Toast)を components/ に集約し、pages は組み合わせるだけにする(qa-074)。設定画面のデータは GET /api/settings 1回で api client から取得する。 [qa-092/qa-095/qa-096] ダッシュボードは集計をサーバ(GET /api/dashboard)へ寄せ、画面はグラフ仕様 JSON を描くだけの薄い表示層にする。期間・対象・選択動画は URL クエリを唯一の画面状態とし、ECharts とファネル区画は遅延読込で初期表示を軽くする。区画ごとに読込・エラー境界を分け、1区画の失敗を全体へ波及させない。 |
+| application-architecture | Robert C. Martin — Clean Architecture | レイヤ境界・依存方向 (内向き)・ユースケース中心設計 | Clean Architecture (2017), the Dependency Rule | 2026-07-12 | [qa-024/qa-032/qa-033/qa-031/qa-061] 画面はpages/*(6つ: login・dashboard・videos・ai-analysis・actions・settings)+静的ページ2枚(privacy・terms)と、api client層の2層に分け、画面からfetchを直接呼ばずapi client経由にする。状態はURLクエリ(期間・選択ID)とサーバ応答だけで持ち、グローバルストアを置かない。画面は React コンポーネントで組み、グラフは ECharts を包む汎用グラフ部品1つに集約して、API が返すグラフ仕様JSONを描くだけにする(図の型を画面コードに持たない・qa-061)。(層の分け方は qa-037 で承認) [qa-066] ログイン画面の権限一覧は api client 経由で /api/auth/config から取得し、画面側に定義を持たない。 共通レイアウトと共通部品(AppShell・PageHeader・SectionCard・StatusBadge・DataTable・UsageBar・DropZone・ConfirmDialog・Toast)を components/ に集約し、pages は組み合わせるだけにする(qa-074)。設定画面のデータは GET /api/settings 1回で api client から取得する。 [qa-102/qa-105/qa-106] ダッシュボードは集計をサーバ(GET /api/dashboard)へ寄せ、画面はグラフ仕様 JSON を描くだけの薄い表示層にする。期間・対象・選択動画は URL クエリを唯一の画面状態とし、ECharts とファネル区画は遅延読込で初期表示を軽くする。区画ごとに読込・エラー境界を分け、1区画の失敗を全体へ波及させない。 |
 
 > **未記入** の行は、上流の正本を掲げただけで本章の確定内容へ反映した箇所を示せていない。表への出現は反映の証拠ではない。
 
@@ -54,22 +54,17 @@ Web フロントエンドは React + Vite + React Router の SPA を Workers の
 
 - 資するゴール: G2, G4, G5
 
-#### 主たる接地根拠: `qa-092`
+#### 主たる接地根拠: `qa-097`
 
 **問**
 
-ダッシュボード刷新の詳細仕様(アシスタントが qa-089〜qa-091 の骨格から具体化した UI・API・セキュリティ・品質の内容。プレビューを提示)を仕様の規範節へ入れてよいか
+要件定義書の制約(U7 の Google 行)と具体的にやりたいこと I4/I5 を、qa-087(テナントごとの OAuth クライアント)と AI分析画面の新しい流れ(qa-093・qa-095)に合わせて改訂する案を承認するか
 
 **答**
 
-このまま承認: プレビューの内容を ui-ux/frontend/backend/security 各章の規範節へ入れる。内容: ヘッダ(パンくず・『データ収集: 毎日 3:00(Cloudflare Cron) 最終成功 日付』・CSV取込は閲覧者に出さない・アバター)、期間タブ 直近7日(既定)/28日/任意(最大90日・前期は直前の同じ日数)、問い『今週、何が効きましたか？』、KPI4枚+推移線+前期比(上下は記号と色)+出典バッジ+M1開示文、日次推移(ECharts)、動画別の実績 上位8本(行→動画詳細)、最新AI分析+『レポートを開く』、実施中の改善アクション(実施中/効果測定中・指標 基準値→最新値・期間・…メニューは編集者以上)、『詳しく見る』(ファネル=週次売上ファネル一式を移設/切り口別/視聴者の形/Shorts/データ品質)、空状態5種。GET /api/dashboard?range=7d|28d|custom&from&to を読取専用の集約APIにしグラフは仕様JSON、入力検証と400、ファネルは GET /api/dashboard/funnel?week= で遅延取得。テナント境界・閲覧者は読むだけ・AI要約はテキストでのみ描画・CSP img-src に https://i.ytimg.com だけ追加・Cache-Control: private, no-store。グラフの文字要約と表切替・360px・44pt・ECharts 遅延読込・Playwright 3サイズ。項目ごとの内容確認は行っていない一括承認であり、実装で食い違いが見つかれば個別に見直す。提示した他の案: 先に全文を見たい
+この内容で承認(改訂案をプレビュー表示)。U7: ログインはアプリ共通の OAuth クライアント(openid/email/profile のみ・機密スコープなし)。YouTube連携は各テナントが自分の Google Cloud プロジェクトの OAuth クライアントを登録して行い(qa-087)、同意画面の検証要否と API クォータ(10,000 units/日)はそのプロジェクト単位で数える。I4: AI分析画面で依頼 A-xxxx を作り、コピーしたプロンプトを Claude Code に貼り付けて実行する(/yt-analyze)。結果は自動送信、または画面へ JSON を貼り付けて取り込む。I5: qa-095 の回答に合わせて、自動実行ではスキルが依頼を作ってから分析すると書き直す。O2(スキル実行から反映まで手作業0)は、自動送信の経路では変わらないため改訂しない。提示した他の案: 修正してから承認
 
-> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
-> 本文中の記述と食い違う場合は、訂正側が正である。
->
-> - `2026-09-24T08:48:39Z` — 承認範囲の縮小: プレビュー中の『CSP img-src に https://i.ytimg.com だけ追加』は推奨付きの一括承認だったため本承認の範囲から外し、推奨なしの個別質問 qa-095 で『自サイト経由で配る(R2 保存・CSP は 'self' data: のまま)』と確定し直した。『他テナントの video_ids は除外または 404 相当』の二択は qa-097 で『黙って除外』に確定した。
-
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:22:23Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。改訂案の全文をプレビューで提示 / 回答時刻: 2026-09-24T14:45:59Z)
 
 #### 裏付け質疑: `qa-016`
 
@@ -766,6 +761,108 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 利用者の発話『テナントっていう記述方法、一般ユーザーには伝わりにくいので、もっとわかりやすく記述しておいてほしいです』と、初めての人向け Google Cloud 準備手順の依頼を受けた決定。語の選定(ワークスペース)はエージェントが提示し、利用者が確認のうえ commit/PR を指示した。記録時刻は date -u の実測値(決定時刻の上限値) / 回答時刻: 2026-09-24T09:16:24Z)
 
+#### 裏付け質疑: `qa-079`
+
+**問**
+
+設定画面・チャンネル紐付け・共通レイアウトの詳細設計(画面に見えないバックエンド/DB/セキュリティ/運用を含む)をこの内容で確定してよいか
+
+**答**
+
+この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [共通レイアウト] AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新=収集/取込の新しい方・期間28日/90日/1年/任意を?period=で全画面共有・アバターメニュー)+main+Footer(3バッジ『OAuthは読み取り専用(字幕ON時は字幕のみ追加許可)』『データは利用者ごとに分離』『無料枠で運用』+プライバシーポリシー|利用規約。ログイン・静的ページも同じFooter)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone(+ファイル選択ボタン)/ConfirmDialog(危険操作は名前入力)/Toast/デザイントークン。[設定画面] 順序 YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ・既存qa-041〜)→無料枠の使用状況→データを削除。連携カード=アイコン・チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日3:00 JST)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。チャンネル選択=OAuth(prompt=select_account consent)→channels.list mine=true→1つ選択→確定。ブランドアカウントはGoogleのアカウント選択で選ぶ旨を案内。同じチャンネルが別テナントに連携済みなら拒否。再連携は同じチャンネルのみ、変更は連携解除から。字幕ON=追加同意→新着動画の字幕を毎日収集で取得(1日上限10本=2000units)、OFF=revoke→読み取り専用で再連携。取込=タブ別DropZoneと履歴(ファイル名/期間/行数/取込日時/状態+失敗理由・最新20件)。トークン=名前必須・平文は発行時1回表示・1人5本まで・失効は確認付き。無料枠=YouTube Data API units/D1書込/D1容量/R2容量/Workersリクエスト+テナント数、80%黄/95%赤。[バックエンド] GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel, POST /api/youtube/reconnect, DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。[DB] channels(UNIQUE tenant_id・UNIQUE channel_id・status)/oauth_pending(10分・暗号化)/oauth_tokens.granted_scopes/tenants.captions_auto/skill_tokens.name/imports(kind統合)/usage_counters/usage_snapshots/audit_log。[セキュリティ] 連携・解除・字幕・削除はオーナーのみ/force-sslはcaptions.downloadだけ/CF_ANALYTICS_TOKEN(Account Analytics Read)はWorkers Secrets/Origin検査/トークン発行のレート制限/監査ログ。[インフラ・運用] Cronは増やさない(無料枠の外部値は画面表示時に1時間キャッシュ)/runbook『チャンネルを変更する』を追加
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T00:52:00Z` — 承認内容のうち2つの値は、その後の個別確認で置き換えた。(1) 字幕自動取得の『1日上限10本=2000units』→ qa-082 で『1日5本=1,000units』。(2) 無料枠バーの『80%黄/95%赤』→ qa-084 で『70%黄/90%赤』。現行の規範は qa-082/qa-084 の値で、qa-079 のその他の承認内容は変更なし。qa-081(別テナント連携の拒否)・qa-083(トークン1人5本)は qa-079 の値を個別に確認したもので変更なし。qa-085(force-ssl の検証を字幕トグル公開前に申請)は qa-079 に含まれない新しい論点。主根拠(qa_ref)を qa-079 のまま残すのは、10カテゴリにまたがる詳細設計の承認がこの一件で、個別確認の qa-081〜085 は qa_refs に追加して項目単位の根拠にしているため
+> - `2026-09-25T05:57:37Z` — 字幕予算の追加決定: qa-082の当時の5本=1,000 unitsはcaptions.listの50 units/動画を除外していた。利用者は1,000 units枠の維持と最大4本/日を選択。captions.list 50 + captions.download 200 units/本を両方計上する。2026-09-24の訂正記録は履歴として保持し、本訂正が字幕の現行値を定める。
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:09:29Z)
+
+#### 裏付け質疑: `qa-089`
+
+**問**
+
+AI分析画面(03-ai-analysis.png)の『実行中』の依頼をキャンセルしたとき、どう扱うか(Claude Code は利用者の PC で動くため、Web から処理そのものは止められない)
+
+**答**
+
+取消状態にし以後の送信を拒否する。analysis_requests の状態に『取消』を加え、待機中・実行中のどちらからでも取り消せる。取消後に Claude Code から届く進捗・結果は409で受け付けず、Claude Code 側は次の送信時に『取消されました』と表示して止まる。提示した他の案: 待機中だけ取り消せる
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T14:28:20Z)
+
+#### 裏付け質疑: `qa-090`
+
+**問**
+
+アーカイブしたレポートを、次の分析に渡す『直近5版の履歴(analysis_history)』に含めるか
+
+**答**
+
+履歴から外す。アーカイブは参考にしたくない版をレポート一覧と analysis_history から外す手段とし、削除はしない。『アーカイブを表示』で見られ、元に戻すこともできる。提示した他の案: 一覧から隠すだけで履歴には含める
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T14:28:20Z)
+
+#### 裏付け質疑: `qa-091`
+
+**問**
+
+レポートの『改善アクションに登録』は、どのアクションを登録するか
+
+**答**
+
+選んだものを登録する。次に取るべきアクションの各行にチェックを付けられ、初期状態は主対象の1件だけにチェックが入る。同じ版の同じアクションは二重登録しない。提示した他の案: 全件まとめて登録
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T14:28:20Z)
+
+#### 裏付け質疑: `qa-092`
+
+**問**
+
+Web 画面の『結果の取り込み』に JSON を貼り付けたとき、どの依頼に紐付けるか
+
+**答**
+
+選択中の依頼に紐付ける。下部バーで選んでいる依頼(A-xxxx)の結果として取り込み、その依頼を『完了』にする。依頼を選んでいなければ、取込と同時に完了済みの依頼を1件作る。提示した他の案: 依頼に紐付けず独立の版として取り込む
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T14:28:20Z)
+
+#### 裏付け質疑: `qa-093`
+
+**問**
+
+AI分析画面(docs/screens/03-ai-analysis.png)の詳細設計(画面に見えないバックエンド/DB/セキュリティを含む)をこの内容で確定してよいか
+
+**答**
+
+この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析画面は docs/screens/03-ai-analysis.png の区画・配置・文言を正とする(色は既存の CSS 変数・qa-080)。結果JSONの形は画像内の例(summary/findings/actions)ではなく docs/analysis/dashboard-analysis-catalog.md §6 の正本(brief/results/history_review/psych_findings/ideas/actions/report_html)に従う。冒頭は見出し『AI分析』・問い『AIに分析を依頼し、根拠と版を確認しますか?』・説明1行・右上に『AI分析の使い方』リンク。①依頼: 分析対象期間(最新28日/90日/1年/任意。任意は開始日・終了日を選び最長1年・未来日不可)と期間の表示、補足指示(最大1000字・文字数表示)、この画面で唯一の主ボタン『Claude Code用プロンプトをコピー』(押すと依頼 A-xxxx を作りプロンプトを生成してクリップボードへコピーし Toast で知らせる)。右に『使用するデータ』表(対象期間・日別指標・動画・字幕・場面画像・コメント・CSV取込の件数)と副ボタン『使用データを確認』(内訳モーダル)。注記『データは自動送信されません。コピーしたプロンプトをClaude Codeに貼り付けて実行してください』。②実行状況: 表の列は ID・ステータス・対象期間・作成日時・進捗(バーと%)・依頼内容・操作。状態は 待機中/実行中/完了/失敗/取消(qa-089)で、操作は 待機中・実行中=キャンセル(確認付き)/完了=詳細/失敗・取消=再実行(同じ条件で新しいIDを作る)。失敗は原因1行と対処1行を詳細に出す。③レポート: 左にレポート一覧(検索=レポート名・要約、『アーカイブを表示』、列は版・作成日時・レポート名・対象期間)と『結果の取り込み』(JSON貼付欄・構文/スキーマの誤りを『JSONの形式が正しくありません N行目』と対処1行で表示・副ボタン『結果を取り込む』と『クリア』。取込先は選択中の依頼で、未選択なら完了済みの依頼を1件作る・qa-092)。右にレポート詳細(レポート名・版・最新版バッジ・作成日時・対象期間・作成元・ステータス、右上に『アーカイブ』/『元に戻す』)。要約の先頭に『前回からの変化』(参照した直近版・前回仮説の当否・施策効果・変化した原因指標。履歴0件は『初回分析』)→週次5段ファネル→下流結果→目標未達が最大の改善候補(または全指標目標達成/判定保留)を置き、因果を断定しない。タブは 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート。要約タブに主な発見(番号付き3件)、『視聴者心理(推定)』の小枠(考え→感情→行動を1行ずつ・推定バッジ・確信度%)、次に取るべきアクション(主対象1件を先頭。各行にチェック、初期は主対象だけチェック・qa-091)と副ボタン『改善アクションに登録』(登録済みの行は『登録済み』表示)、レポートの版履歴(v3/v2/v1)と副ボタン『2つの版を比較』(2版を選び差分を並べて表示)。アーカイブした版は一覧から消え『アーカイブを表示』で見え、次の分析の履歴にも使わない(qa-090)。画面下部に選択中の依頼バー(ID・依頼内容・進捗バー・%・『詳細を開く』)を常に表示する。閲覧者には コピー/キャンセル/再実行/取込/アーカイブ/アクション登録 のボタンを出さず、一覧・詳細・比較の閲覧だけにする。幅900px未満では2カラムを縦積みにし、表はカード化、下部バーは下部タブの上に固定する。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] /analysis を AnalysisPage(web/pages)として実装し、PlaceholderPage を置き換える。構成部品は RequestPanel(期間セグメント・任意期間の DateRangePicker・補足指示・コピー)/DataSummaryCard(+DataSummaryModal)/RequestStatusTable(DataTable を使い進捗は ProgressBar)/ReportList(検索入力は300msデバウンス・アーカイブ切替)/ResultImportPanel(貼付欄とエラー表示)/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar。共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Modal/Toast)を再利用し、新しい共通部品として ProgressBar と DateRangePicker を components に追加する。期間はヘッダーの ?period= と共有し、任意期間は ?period=custom&from=&to= で持ち、AppShell の『任意』でも同じ DateRangePicker を開く。選択中の依頼は ?request=A-xxxx、選択中のレポートは ?report=<id>&v=<版> で URL に持ち、再読込でも復元する。実行中または待機中の依頼がある間だけ GET /api/analysis-requests を10秒ごとに再取得し、document.visibilityState が hidden の間は止める。クリップボードは navigator.clipboard.writeText を使い、失敗時はプロンプトを選択状態のテキスト欄で表示して手動コピーに切り替える。JSON の構文チェックは送信前にブラウザでも行い(JSON.parse の位置から行番号を出す)、最終判定はサーバの検証結果に従う。HTMLレポートは sandbox 属性付き iframe(srcdoc・allow-scripts なし)で表示する。web/api.ts に分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)を追加し、エラーは既存の {error:{code,message,hint}} 形式を表示する。Playwright で 390×844 / 820×1180 / 1440×900 の3サイズに依頼→コピー→取込→登録→比較→アーカイブの E2E を追加する。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] 画面用API(セッション・content.write は owner/editor): POST /api/analysis-requests(period_start/period_end/instruction。A-xxxx を採番し待機中で作る) / GET /api/analysis-requests(最新20件・cursor) / GET /api/analysis-requests/:id / GET /api/analysis-requests/:id/prompt(Claude Code用プロンプト本文: 依頼ID・期間・補足指示・export の取得手順と送信先を含み、トークン平文は含めない) / POST /api/analysis-requests/:id/cancel(待機中・実行中→取消・qa-089) / POST /api/analysis-requests/:id/retry(失敗・取消の依頼と同じ条件で新しい依頼を作り retry_of を記録) / GET /api/analysis/data-summary?from=&to=(日別指標行数・動画本数・字幕本数・場面画像枚数・コメント件数・CSV取込件数と内訳)。レポート: GET /api/reports?q=&archived=0|1&cursor= / GET /api/reports/:id(?version=) / GET /api/reports/diff?a=&b= / POST /api/reports/import(貼付JSONを POST /api/skill/reports と同じ ingestReport で取り込む。request_id 指定時はその依頼を完了にし、未指定なら完了済みの依頼を1件作る・qa-092。検証エラーは 422 で {code:'INVALID_REPORT_JSON', line, message, hint}) / PUT・DELETE /api/reports/:id/archive(アーカイブ・元に戻す。qa-090) / POST /api/reports/:id/actions({keys:[...]} で選んだアクションだけを改善アクションとして登録。同じ版の同じアクションは登録済みを返し二重に作らない・qa-091)。スキル連携API(個人トークン): PATCH /api/skill/requests/:id に progress(0-100)・stage(1:データ取得/2:分析・HTML生成/3:反映)・status・error を受け、取消済みの依頼への PATCH と POST /api/skill/reports は 409 REQUEST_CANCELED を返す(Claude Code 側は『取消されました』を表示して止まる)。状態遷移は analysis-request 集約内で 待機中→実行中→完了|失敗|取消 の一方向だけを許し、完了・失敗・取消からは動かさない(再実行は新しい依頼)。analysis_history の直近5版はアーカイブされた版を除いて選ぶ(qa-090)。usecase は createAnalysisRequest/cancelAnalysisRequest/retryAnalysisRequest/getAnalysisPrompt/getDataSummary/importReport/archiveReport/registerReportActions に分け、アクション登録は『改善アクション』集約だけを書き、レポート版は読むだけにする。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] analysis_requests(tenant_id, request_id 'A-0001' 形式・テナント内連番, channel_id, period_start, period_end, instruction(≤1000字), status 待機中|実行中|完了|失敗|取消, progress 0-100, stage 0-3, error, retry_of, report_id, created_by, created_at, started_at, finished_at, canceled_at, canceled_by。PK tenant_id,request_id)。取消は qa-089 で追加した終端状態で、終端からは更新しない。report_archives(tenant_id, report_id, archived_by, archived_at。PK tenant_id,report_id)を別表で持ち、reports は追記のみの不変条件を保つ(アーカイブ解除は行の削除)。レポート一覧と analysis_history は report_archives に無い版だけを読む(qa-090)。actions に source_report_id と source_key(レポート JSON の actions 内の位置から作るキー)を加え、UNIQUE(tenant_id, source_report_id, source_key) で同じ版の同じアクションの二重登録を DB でも防ぐ(qa-091)。レポート名と要約の検索は D1 の LIKE(テナント内・最新200版まで)で行い、全文検索索引は作らない(書込行数の節約)。取込・取消・アーカイブ・アクション登録は既存の audit_log に1行ずつ残す。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析の全APIは TenantContext 必須で、他テナントの依頼・レポートIDは存在しないものとして404を返す。書込系(依頼作成・キャンセル・再実行・取込・アーカイブ・アクション登録)は content.write(owner/editor)だけに許し、閲覧者は403。セッション側の書込は既存の Origin 検査を通す。取込JSONは 2,000,000 bytes 以下・スキーマ検証(カタログ§6)を通ったものだけを保存し、report_html は保存時に加工せず、表示は sandbox 属性付き iframe(allow-scripts・allow-same-origin を付けない)と CSP で隔離する。プロンプトには個人トークンの平文や他テナントの情報を含めず、Claude Code は利用者が設定画面で発行したトークンを使う。スキル連携APIは Bearer トークンを SHA-256 で照合し、依頼が同じテナントのものであることを確かめ、取消済みの依頼への送信は 409 で拒否する(qa-089)。依頼作成は1ユーザー1分あたり10件まで(超過は429)とし、依頼・取込・取消・アーカイブ・アクション登録は audit_log に残す。
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T14:30:59Z)
+
+#### 裏付け質疑: `qa-095`
+
+**問**
+
+launchd の週次自動実行(I5)では Web 画面で依頼 A-xxxx を作らずに Claude Code が動く。このとき依頼をどう扱うか
+
+**答**
+
+スキル側で依頼を自動作成する。POST /api/skill/requests を追加し、個人トークンで依頼を『実行中』として作る(作成元=自動)。実行状況の表に週次分も並び、取消・進捗・履歴の仕組みをそのまま使う。/yt-analyze は依頼IDなしで起動されたときこの API で依頼を作ってから export を呼び、export の request_id は必須のままとする。提示した他の案: 依頼なしで実行可(request_id を省略可にする)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。推奨表示なしの2択 / 回答時刻: 2026-09-24T14:45:59Z)
+
+#### 裏付け質疑: `qa-096`
+
+**問**
+
+qa-088 で利用者に見せる語を『ワークスペース』にしたが比べた候補が記録されていない。利用者に見せる語をどれにするか(候補: ワークスペース/チーム/チャンネル管理)
+
+**答**
+
+チャンネル管理。画面・メール文面・APIのエラーメッセージ・利用規約・プライバシーポリシーで『テナント』『ワークスペース』を使わず『チャンネル管理』と表記する(1テナント1チャンネルのため)。qa-088 の表記の決定をこれで置き換える。コード識別子・DB・開発者向け文書は tenant/テナントのまま。qa-088 のうち Google Cloud 準備手順の部分は変えない。提示した他の案: ワークスペース(現状維持)/チーム
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。推奨表示なしの3択 / 回答時刻: 2026-09-24T14:45:59Z)
+
 #### 裏付け質疑: `qa-066`
 
 **問**
@@ -783,7 +880,7 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答時刻は未計測で、記録書込時刻 2026-09-24T00:05:04Z が上限値 / 回答時刻: 2026-09-24T00:04:42Z)
 
-#### 裏付け質疑: `qa-089`
+#### 裏付け質疑: `qa-099`
 
 **問**
 
@@ -795,7 +892,7 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - (根拠の性質: コード・設定・公式文書で検証できる観測事実 / 出所: 既存コード・仕様の読解 (web/pages/DashboardPage.tsx, web/styles.css, src/http/api-routes.ts, ui-ux/backend/security 各章, docs/screens/prompts/02-dashboard.prompt.txt, features/feat-web-screens-actions.md) と画像の目視)
 
-#### 裏付け質疑: `qa-090`
+#### 裏付け質疑: `qa-100`
 
 **問**
 
@@ -807,7 +904,7 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答時刻は未計測で、記録書込時刻 2026-09-24T08:19:04Z が上限値 / 回答時刻: 2026-09-24T08:19:04Z)
 
-#### 裏付け質疑: `qa-091`
+#### 裏付け質疑: `qa-101`
 
 **問**
 
@@ -819,7 +916,7 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答時刻は未計測で、記録書込時刻 2026-09-24T08:19:04Z が上限値 / 回答時刻: 2026-09-24T08:19:04Z)
 
-#### 裏付け質疑: `qa-093`
+#### 裏付け質疑: `qa-103`
 
 **問**
 
@@ -827,11 +924,11 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 **答**
 
-対象セレクタ+バランス切替: 期間タブの隣に『対象: チャンネル全体(既定)/動画を選ぶ』を置く。動画を選ぶと KPI4枚と日次推移は選んだ動画の合計になり、日次推移には動画ごとの線が重なる(チャンネル全体では合計線のみ)。動画別の実績に『表/構成比』の切替を加え、構成比では期間内の視聴回数の内訳を 動画別(上位+その他)・切り口別・Shorts/長尺・新作/過去作 で示し、上位3本の占有率を添える。利用者の問題提起『動画一つ一つの結果になるのか。複数の動画があり、チャンネル全体でのバランスも見たい』への回答として提示(選択本数の上限は qa-094 で改訂)。提示した他の案: バランス表示だけ追加 / 動画選択だけ追加
+対象セレクタ+バランス切替: 期間タブの隣に『対象: チャンネル全体(既定)/動画を選ぶ』を置く。動画を選ぶと KPI4枚と日次推移は選んだ動画の合計になり、日次推移には動画ごとの線が重なる(チャンネル全体では合計線のみ)。動画別の実績に『表/構成比』の切替を加え、構成比では期間内の視聴回数の内訳を 動画別(上位+その他)・切り口別・Shorts/長尺・新作/過去作 で示し、上位3本の占有率を添える。利用者の問題提起『動画一つ一つの結果になるのか。複数の動画があり、チャンネル全体でのバランスも見たい』への回答として提示(選択本数の上限は qa-104 で改訂)。提示した他の案: バランス表示だけ追加 / 動画選択だけ追加
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 利用者のチャット原文による問題提起 → AskUserQuestion / 選択肢提示あり(推奨案明示)。回答時刻は未計測で、記録書込時刻 2026-09-24T08:25:09Z が上限値 / 回答時刻: 2026-09-24T08:25:09Z)
 
-#### 裏付け質疑: `qa-094`
+#### 裏付け質疑: `qa-104`
 
 **問**
 
@@ -844,11 +941,11 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 > **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
 > 本文中の記述と食い違う場合は、訂正側が正である。
 >
-> - `2026-09-24T08:48:39Z` — 解釈の訂正: アシスタントが付け足した『上限は10本』は qa-096 で利用者が否定し、上限は設けない(既定で直近10本を選ぶだけで11本以上も追加可)と確定した。『表の既定を直近公開10本』は qa-096 で利用者が確認した。
+> - `2026-09-24T08:48:39Z` — 解釈の訂正: アシスタントが付け足した『上限は10本』は qa-106 で利用者が否定し、上限は設けない(既定で直近10本を選ぶだけで11本以上も追加可)と確定した。『表の既定を直近公開10本』は qa-106 で利用者が確認した。
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 利用者のチャット原文による直接指示(選択肢提示なし)。answered_at はメッセージ受信直後に date -u で実測した時刻。解釈はアシスタントが記述し最終報告で明示する / 回答時刻: 2026-09-24T08:25:38Z)
 
-#### 裏付け質疑: `qa-095`
+#### 裏付け質疑: `qa-105`
 
 **問**
 
@@ -858,9 +955,9 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 自サイト経由で配る
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 推奨を付けない選択肢提示・1問ずつ(completeness r4 の差し戻しによる qa-092 からの切り出し)。answered_at は回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:48:39Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 推奨を付けない選択肢提示・1問ずつ(completeness r4 の差し戻しによる qa-102 からの切り出し)。answered_at は回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:48:39Z)
 
-#### 裏付け質疑: `qa-096`
+#### 裏付け質疑: `qa-106`
 
 **問**
 
@@ -870,9 +967,9 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 上限は設けない(最初に選ぶのは直近10本だけで、11本以上も追加できる。表の最初の表示は直近10本)
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 推奨を付けない選択肢提示・1問ずつ(completeness r4 の差し戻しによる qa-094 の解釈確認)。answered_at は回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:48:39Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 推奨を付けない選択肢提示・1問ずつ(completeness r4 の差し戻しによる qa-104 の解釈確認)。answered_at は回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:48:39Z)
 
-#### 裏付け質疑: `qa-099`
+#### 裏付け質疑: `qa-109`
 
 **問**
 
@@ -883,6 +980,23 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 共通ヘッダーに統一: ヘッダーの期間に『7日』を足して(7日/28日/90日/1年/任意)ダッシュボードもヘッダーの ?period= を使う。ページ内タブは置かない。提示した他の案: ダッシュボードだけ画像どおり(?range=・他画面は ?period=) / 両方を ?period= で連動(画面ごとに選べる値が異なる)。既定値 28日・任意期間の上限365日はこの選択に合わせてアシスタントが導いた値(1年を選べる以上、任意期間も1年まで許し、既定はヘッダーの選択表示と一致させる)。
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: 2026-09-24 AskUserQuestion(main=PR #6 設定画面の取込で qa 番号と期間仕様が衝突したため)。利用者が3択から『共通ヘッダーに統一』を選択。 / 回答時刻: 2026-09-24T14:28:35Z)
+
+#### 裏付け質疑: `qa-102`
+
+**問**
+
+ダッシュボード刷新の詳細仕様(アシスタントが qa-099〜qa-101 の骨格から具体化した UI・API・セキュリティ・品質の内容。プレビューを提示)を仕様の規範節へ入れてよいか
+
+**答**
+
+このまま承認: プレビューの内容を ui-ux/frontend/backend/security 各章の規範節へ入れる。内容: ヘッダ(パンくず・『データ収集: 毎日 3:00(Cloudflare Cron) 最終成功 日付』・CSV取込は閲覧者に出さない・アバター)、期間タブ 直近7日(既定)/28日/任意(最大90日・前期は直前の同じ日数)、問い『今週、何が効きましたか？』、KPI4枚+推移線+前期比(上下は記号と色)+出典バッジ+M1開示文、日次推移(ECharts)、動画別の実績 上位8本(行→動画詳細)、最新AI分析+『レポートを開く』、実施中の改善アクション(実施中/効果測定中・指標 基準値→最新値・期間・…メニューは編集者以上)、『詳しく見る』(ファネル=週次売上ファネル一式を移設/切り口別/視聴者の形/Shorts/データ品質)、空状態5種。GET /api/dashboard?range=7d|28d|custom&from&to を読取専用の集約APIにしグラフは仕様JSON、入力検証と400、ファネルは GET /api/dashboard/funnel?week= で遅延取得。テナント境界・閲覧者は読むだけ・AI要約はテキストでのみ描画・CSP img-src に https://i.ytimg.com だけ追加・Cache-Control: private, no-store。グラフの文字要約と表切替・360px・44pt・ECharts 遅延読込・Playwright 3サイズ。項目ごとの内容確認は行っていない一括承認であり、実装で食い違いが見つかれば個別に見直す。提示した他の案: 先に全文を見たい
+
+> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
+> 本文中の記述と食い違う場合は、訂正側が正である。
+>
+> - `2026-09-24T08:48:39Z` — 承認範囲の縮小: プレビュー中の『CSP img-src に https://i.ytimg.com だけ追加』は推奨付きの一括承認だったため本承認の範囲から外し、推奨なしの個別質問 qa-105 で『自サイト経由で配る(R2 保存・CSP は 'self' data: のまま)』と確定し直した。『他テナントの video_ids は除外または 404 相当』の二択は qa-107 で『黙って除外』に確定した。
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion / 選択肢提示あり(推奨案明示)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T08:22:23Z)
 
 ## To-Be / Delta
 
@@ -906,8 +1020,8 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 - **I1**: Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する(qa-075/qa-076/qa-085・qa-086で更新)
 - **I2**: YouTube Studio CSV(表データ/グラフデータ/合計)と週次事業CSVを手動取込し、出典付きで保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算する。事業CSVと同一週Studio CSVから導線誘導率=route_visits/views×100、問い合わせ→成約率=closed_deals/inquiries×100を計算し、週次5段階原因指標と結果指標をダッシュボードに分けて表示する
-- **I4**: Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする
-- **I5**: 運営者はlaunchdで週次にI4を自動実行する。一般利用者は手動実行
+- **I4**: AI分析画面で依頼A-xxxxを作り、コピーしたプロンプトをClaude Codeに貼り付けて /yt-analyze を実行する。スキルはシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作る。結果は自動送信、または画面へJSONを貼り付けて取り込む(qa-093・qa-097)
+- **I5**: 運営者はlaunchdで週次にI4を自動実行する。自動実行ではスキルが個人トークンで依頼を作ってから分析する(qa-095)。一般利用者は画面から依頼して手動実行する
 - **I6**: 改善アクションを対象ファネル段付きで未着手/実施中/効果測定中/完了として管理し、次回レポートで対象原因指標と売上・成約数等の下流結果を前後比較する
 - **I8**: 画面はログイン/ダッシュボード/動画/AI分析(レポート)/改善アクション/設定の6枚+規約の静的ページ2枚に絞る(qa-030)
 - **I9**: 字幕・画像・コメント・維持曲線を取り込み、Claude Codeで人の考え・感情・行動を推定した心理分析レポートを作る
@@ -923,7 +1037,7 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
   - 目的適合: 画像をレポート画面で見られるため心理分析(サムネ訴求・離脱場面)の根拠提示に適合しG1/G2/G4を満たす
 - **D-auth**: Web画面のログインとYouTube連携の認証をどうするか
   - 採択: Google OAuth一本(同意画面を本番公開・未検証) (`google-oauth-published`)
-  - 目的適合: 新規登録(オーナー)はログインとYouTube連携を1回の同意で完結し、部分許可でもログインは通して後から再連携できる(qa-065)。招待メンバーはメールだけを要求する(qa-064)。G1/G4に適合
+  - 目的適合: ログインはアプリ共通クライアントでメールだけを要求し(qa-064)、YouTube連携はテナントが登録した自分のGoogle CloudプロジェクトのOAuthクライアントで別の同意として行う(qa-087)。部分許可でもログインは通して後から再連携できる(qa-065)。G1/G4に適合
 - **D-transcript**: 動画の文字起こし(字幕)をどう取得するか
   - 採択: 両方に対応(既定は手元取込、希望者だけ追加同意でAPI自動取得) (`hybrid`)
   - 目的適合: readonly利用者と自動化希望者の両方を満たす
@@ -949,13 +1063,13 @@ YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クラ�
 
 ### 本章での適用
 
-[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-024→qa-061] Workersの静的アセットとして配信するVite+React(React Router)のSPA(ルートは6画面+静的ページ2枚のみ・qa-030)。Next.js は採用しない(管理画面のみでSSR/SEO不要・Workers無料枠と OpenNext の制約・API/Cron/Queue は Hono 側・qa-061)。グラフは Apache ECharts を唯一の描画ライブラリとし、サーバが返すグラフ仕様JSON(図の型・系列・軸・データ)を汎用のグラフ部品1つで描画する。図の種類は仕様JSONの追加だけで増やせる(qa-061 が qa-031 の4種限定を置換。最初に見える区画の折れ線・横棒・行内の横棒・小さな推移線は既定の図として維持)。スマホ幅ではサイドバーを下部タブに切替え、全操作をできるようにする(qa-036)。レポートHTMLはsandbox iframeで本体DOMと分離。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする。ただし色は画像に従わず既存の CSS 変数(qa-080)、05-settings.png の次回収集の文言は『毎日 3:00 JST』(qa-077)とする。[qa-029/qa-027] ダッシュボードの9区画とAI分析の心理・感情・離脱場面区画はカタログの派生指標定義(M1〜M10)をAPIから受け取り表示するだけとし、ブラウザ側で指標を再計算しない(計算式の二重化を防ぐ)。場面画像はR2の短期URLを遅延読込する。端末幅での確認は Playwright の 390×844(スマホ)・820×1180(タブレット)・1440×900(PC)の3サイズで主要操作のE2Eを回す(qa-036)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 選択中のテナントはセッションで持ち、切替時は画面を再取得する。役割に応じてボタンを出し分ける(サーバ側でも拒否する)。E2Eに『閲覧者の書込が403』『他テナントのIDを指定すると404』『招待リンクを別アカウントで開くと参加できない』を加える。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典バッジ(API/CSV)と M1〜M10 区画の開示文は共通コンポーネントにし、値の表示と必ず一緒に出す(付け忘れを防ぐ)。E2Eに『M1区画に開示文がある』『API と CSV の値が同じ日にあると両方バッジ付きで出る』『上限到達時に新規テナントが作れない』を加える。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] web/pages/LoginPage.tsx を刷新する。権限一覧と規約版は表示時に GET /api/auth/config から api client 経由で取得し、画面に権限を直書きしない(表示と要求スコープの一致・qa-066)。取得に失敗したらボタンを押せない状態にし、再読込を促す。ボタンは button 要素で aria-disabled と aria-describedby(理由文)を持ち、同意したら consent=1・terms_version・privacy_version をクエリに付けて /api/auth/login へ遷移する。招待トークンがあれば invite を付け、config も ?invite= 付きで取得する(招待モード)。/login?error=CODE は web/api.ts の REDIRECT_MESSAGES にある既知コードだけを日本語で role=alert 表示し、未知コードは『ログインできませんでした。もう一度お試しください』に統一する。追加コード: CONSENT_OUTDATED『利用規約またはプライバシーポリシーが更新されました。内容を確認して、もう一度同意してください』。背景装飾とロゴマーク画像は置かない。Google の G ロゴは公式配布の SVG をそのまま静的アセットとして同梱する。権限行の読み取り専用バッジは行内で描画する。共通コンポーネント: TrustFooter(React製ログイン画面で使用)、YouTubeLinkBanner(ダッシュボード・設定)。静的な規約2ページは public/legal.css を共有する。E2E(Playwright 390×844・820×1180・1440×900): 新規モードで3権限と3バッジが出る / 招待モードではメールだけ / 同意前はボタンが押せず理由が出る / error=CONSENT_OUTDATED と未知コードの表示 / 部分許可後にダッシュボードへ再連携バナーが出る / 360px幅で横スクロールが出ない / キーボードだけでチェックからボタンまで操作できる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 置換関係: qa-024(素の TypeScript・画像由来の配色)は qa-061(React+Vite SPA)と qa-080(既存 CSS 変数の配色)が、qa-031(図4種限定)は qa-061 が置換した。qa-024・qa-031 は当時の選択記録で、現行の規範ではない。共通化: AppShell(Sidebar/Header/main/Footer)を全ルートの親レイアウトにし、ログイン・静的ページも同じ Footer を使う(qa-074)。共通部品 PageHeader・SectionCard・StatusBadge・DataTable(900px未満でカード化)・UsageBar(70%黄/90%赤・qa-084)・DropZone(+ファイル選択ボタン)・ConfirmDialog(危険操作は名前入力)・Toast を components/ に置き、画面は組み合わせるだけにする。色は web/styles.css の CSS 変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、部品に色コードを直書きしない(qa-080)。期間は ?period= で全画面共有する。E2E に『別テナント連携済みチャンネルの選択で409を表示』『6本目のトークン発行でエラー表示』『検証前は運営者以外の字幕トグルが準備中』を加える。
+[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-024→qa-061] Workersの静的アセットとして配信するVite+React(React Router)のSPA(ルートは6画面+静的ページ2枚のみ・qa-030)。Next.js は採用しない(管理画面のみでSSR/SEO不要・Workers無料枠と OpenNext の制約・API/Cron/Queue は Hono 側・qa-061)。グラフは Apache ECharts を唯一の描画ライブラリとし、サーバが返すグラフ仕様JSON(図の型・系列・軸・データ)を汎用のグラフ部品1つで描画する。図の種類は仕様JSONの追加だけで増やせる(qa-061 が qa-031 の4種限定を置換。最初に見える区画の折れ線・横棒・行内の横棒・小さな推移線は既定の図として維持)。スマホ幅ではサイドバーを下部タブに切替え、全操作をできるようにする(qa-036)。レポートHTMLはsandbox iframeで本体DOMと分離。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする。ただし色は画像に従わず既存の CSS 変数(qa-080)、05-settings.png の次回収集の文言は『毎日 3:00 JST』(qa-077)とする。[qa-029/qa-027] ダッシュボードの9区画とAI分析の心理・感情・離脱場面区画はカタログの派生指標定義(M1〜M10)をAPIから受け取り表示するだけとし、ブラウザ側で指標を再計算しない(計算式の二重化を防ぐ)。場面画像はR2の短期URLを遅延読込する。端末幅での確認は Playwright の 390×844(スマホ)・820×1180(タブレット)・1440×900(PC)の3サイズで主要操作のE2Eを回す(qa-036)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 選択中のテナントはセッションで持ち、切替時は画面を再取得する。役割に応じてボタンを出し分ける(サーバ側でも拒否する)。E2Eに『閲覧者の書込が403』『他テナントのIDを指定すると404』『招待リンクを別アカウントで開くと参加できない』を加える。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典バッジ(API/CSV)と M1〜M10 区画の開示文は共通コンポーネントにし、値の表示と必ず一緒に出す(付け忘れを防ぐ)。E2Eに『M1区画に開示文がある』『API と CSV の値が同じ日にあると両方バッジ付きで出る』『上限到達時に新規テナントが作れない』を加える。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] web/pages/LoginPage.tsx を刷新する。権限一覧と規約版は表示時に GET /api/auth/config から api client 経由で取得し、画面に権限を直書きしない(表示と要求スコープの一致・qa-066)。取得に失敗したらボタンを押せない状態にし、再読込を促す。ボタンは button 要素で aria-disabled と aria-describedby(理由文)を持ち、同意したら consent=1・terms_version・privacy_version をクエリに付けて /api/auth/login へ遷移する。招待トークンがあれば invite を付け、config も ?invite= 付きで取得する(招待モード)。/login?error=CODE は web/api.ts の REDIRECT_MESSAGES にある既知コードだけを日本語で role=alert 表示し、未知コードは『ログインできませんでした。もう一度お試しください』に統一する。追加コード: CONSENT_OUTDATED『利用規約またはプライバシーポリシーが更新されました。内容を確認して、もう一度同意してください』。背景装飾とロゴマーク画像は置かない。Google の G ロゴは公式配布の SVG をそのまま静的アセットとして同梱する。権限行の読み取り専用バッジは行内で描画する。共通コンポーネント: TrustFooter(React製ログイン画面で使用)、YouTubeLinkBanner(ダッシュボード・設定)。静的な規約2ページは public/legal.css を共有する。E2E(Playwright 390×844・820×1180・1440×900): 新規モードで3権限と3バッジが出る / 招待モードではメールだけ / 同意前はボタンが押せず理由が出る / error=CONSENT_OUTDATED と未知コードの表示 / 部分許可後にダッシュボードへ再連携バナーが出る / 360px幅で横スクロールが出ない / キーボードだけでチェックからボタンまで操作できる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 置換関係: qa-024(素の TypeScript・画像由来の配色)は qa-061(React+Vite SPA)と qa-080(既存 CSS 変数の配色)が、qa-031(図4種限定)は qa-061 が置換した。qa-024・qa-031 は当時の選択記録で、現行の規範ではない。共通化: AppShell(Sidebar/Header/main/Footer)を全ルートの親レイアウトにし、ログイン・静的ページも同じ Footer を使う(qa-074)。共通部品 PageHeader・SectionCard・StatusBadge・DataTable(900px未満でカード化)・UsageBar(70%黄/90%赤・qa-084)・DropZone(+ファイル選択ボタン)・ConfirmDialog(危険操作は名前入力)・Toast を components/ に置き、画面は組み合わせるだけにする。色は web/styles.css の CSS 変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、部品に色コードを直書きしない(qa-080)。期間は ?period= で全画面共有する。E2E に『別テナント連携済みチャンネルの選択で409を表示』『6本目のトークン発行でエラー表示』『検証前は運営者以外の字幕トグルが準備中』を加える。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] /analysis を AnalysisPage(web/pages)として実装し、PlaceholderPage を置き換える。構成部品は RequestPanel(期間セグメント・任意期間の DateRangePicker・補足指示・コピー)/DataSummaryCard(+DataSummaryModal)/RequestStatusTable(DataTable を使い進捗は ProgressBar)/ReportList(検索入力は300msデバウンス・アーカイブ切替)/ResultImportPanel(貼付欄とエラー表示)/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar。共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Modal/Toast)を再利用し、新しい共通部品として ProgressBar と DateRangePicker を components に追加する。期間はヘッダーの ?period= と共有し、任意期間は ?period=custom&from=&to= で持ち、AppShell の『任意』でも同じ DateRangePicker を開く。選択中の依頼は ?request=A-xxxx、選択中のレポートは ?report=<id>&v=<版> で URL に持ち、再読込でも復元する。実行中または待機中の依頼がある間だけ GET /api/analysis-requests を10秒ごとに再取得し、document.visibilityState が hidden の間は止める。クリップボードは navigator.clipboard.writeText を使い、失敗時はプロンプトを選択状態のテキスト欄で表示して手動コピーに切り替える。JSON の構文チェックは送信前にブラウザでも行い(JSON.parse の位置から行番号を出す)、最終判定はサーバの検証結果に従う。HTMLレポートは sandbox 属性付き iframe(srcdoc・allow-scripts なし)で表示する。web/api.ts に分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)を追加し、エラーは既存の {error:{code,message,hint}} 形式を表示する。Playwright で 390×844 / 820×1180 / 1440×900 の3サイズに依頼→コピー→取込→登録→比較→アーカイブの E2E を追加する。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] web/ 配下の利用者向け文言(AppShell・CreateTenantForm・InvitePage・LoginPage・Shell・settings/*・YouTubeLinkBanner など)とサーバのエラーメッセージ(src/lib/errors.ts・src/usecases/*)の『ワークスペース』を『チャンネル管理』へ置き換え、表示名は1か所の定数から引く(qa-096)。RequestStatusTable は created_via='skill' の行に『自動』バッジを出す(qa-095)。
 
-[利用者確定 qa-090/qa-093/qa-094/qa-095/qa-096・観測 qa-089・内容承認 qa-092/appr-015 ダッシュボード刷新] web/pages/DashboardPage.tsx の仮画面を、GET /api/dashboard の1回取得で描く読み取り専用画面へ置き換える。期間(7d/28d/custom)と対象(channel / videos=直近公開10本を既定選択・上限なし)は URL クエリで保持し再読込・共有で再現する。グラフは ECharts を遅延読込し、サーバが返す仕様 JSON をそのまま描画する(クライアントで集計しない)。「詳しく見る」のファネル区画は開いたときだけ GET /api/dashboard/funnel?week= を遅延取得する。AI 要約・動画タイトルはテキストとしてのみ描画し HTML として解釈しない。閲覧者には CSV取込・アクションの…メニューを描画しない(表示制御は補助で、権限の正本はサーバ)。空状態5種・読込中・エラーを区画ごとに独立して出し、1区画の失敗で全画面を落とさない。Playwright で 360/768/1280px の3サイズを検証する。動画サムネイルは i.ytimg.com から直接読まず、自サイトの GET /api/media/thumbnails/:video_id から表示する(qa-095)。未保存のときは代替表示を出す。 [既存確定 qa-036 との整合] 360px は横スクロールを出さない最小幅の条件で、E2E は qa-036 の Playwright 390×844・820×1180・1440×900 の3サイズで回す(上の『360/768/1280px』の記述はこれに読み替える)。
+[利用者確定 qa-100/qa-103/qa-104/qa-105/qa-106・観測 qa-099・内容承認 qa-102/appr-017 ダッシュボード刷新] web/pages/DashboardPage.tsx の仮画面を、GET /api/dashboard の1回取得で描く読み取り専用画面へ置き換える。期間(7d/28d/custom)と対象(channel / videos=直近公開10本を既定選択・上限なし)は URL クエリで保持し再読込・共有で再現する。グラフは ECharts を遅延読込し、サーバが返す仕様 JSON をそのまま描画する(クライアントで集計しない)。「詳しく見る」のファネル区画は開いたときだけ GET /api/dashboard/funnel?week= を遅延取得する。AI 要約・動画タイトルはテキストとしてのみ描画し HTML として解釈しない。閲覧者には CSV取込・アクションの…メニューを描画しない(表示制御は補助で、権限の正本はサーバ)。空状態5種・読込中・エラーを区画ごとに独立して出し、1区画の失敗で全画面を落とさない。Playwright で 360/768/1280px の3サイズを検証する。動画サムネイルは i.ytimg.com から直接読まず、自サイトの GET /api/media/thumbnails/:video_id から表示する(qa-105)。未保存のときは代替表示を出す。 [既存確定 qa-036 との整合] 360px は横スクロールを出さない最小幅の条件で、E2E は qa-036 の Playwright 390×844・820×1180・1440×900 の3サイズで回す(上の『360/768/1280px』の記述はこれに読み替える)。
 
-[利用者確定 qa-099 期間切替の統一(main 取込時の衝突解消)] 期間は AppShell ヘッダーの ?period= を唯一の状態とし、DashboardPage は useSearchParams で読むだけにする(ページ内の期間タブは作らない)。ヘッダーの PERIODS に 7d を加え 7d/28d/90d/1y/custom の5つにする。対象(scope/video_ids)は引き続きダッシュボード固有の URL クエリで保持し、期間を切り替えても対象の選択を保つ(期間リンクは既存クエリを保持して period だけ差し替える)。本段落は上のダッシュボード刷新段落の『期間(7d/28d/custom)』を置き換える。
+[利用者確定 qa-109 期間切替の統一(main 取込時の衝突解消)] 期間は AppShell ヘッダーの ?period= を唯一の状態とし、DashboardPage は useSearchParams で読むだけにする(ページ内の期間タブは作らない)。ヘッダーの PERIODS に 7d を加え 7d/28d/90d/1y/custom の5つにする。対象(scope/video_ids)は引き続きダッシュボード固有の URL クエリで保持し、期間を切り替えても対象の選択を保つ(期間リンクは既存クエリを保持して period だけ差し替える)。本段落は上のダッシュボード刷新段落の『期間(7d/28d/custom)』を置き換える。
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-24T14:29:00Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-26T04:56:33Z)
 
 ### Clean Architecture — deep knowledge card
 

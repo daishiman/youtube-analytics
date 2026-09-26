@@ -1,4 +1,4 @@
-// GET /api/dashboard の集約（qa-093〜qa-099）。読み取り専用で、D1 はチャンネル・動画一覧、
+// GET /api/dashboard の集約（qa-103〜qa-109）。読み取り専用で、D1 はチャンネル・動画一覧、
 // 期間集計 batch、サイド情報 batch を読む。グラフは描画ライブラリに依存しない仕様 JSON で返す
 
 import { COLLECTION_STATUS_TEXT } from "../domain/collection-status";
@@ -9,6 +9,7 @@ import {
   resolvePeriod,
 } from "../domain/dashboard-period";
 import { API_DATA_MAX_AGE_DAYS } from "../domain/data-retention";
+import { CAUSE_METRIC_INFO, isCauseMetric } from "../domain/report-schema";
 import { can, requirePermission, type TenantContext } from "../domain/tenant-context";
 import { DAY_MS } from "../domain/time";
 import { type VideoContentType, videoContentTypeLabel } from "../domain/video-content-type";
@@ -117,8 +118,6 @@ export interface DashboardResponse {
     baselineValue: number | null;
     latestValue: number | null;
     unit: string | null;
-    startedAt: string | null;
-    endsAt: string | null;
   }[];
   videoOptions: { videoId: string; title: string; publishedAt: string }[];
   empty: {
@@ -139,7 +138,7 @@ export interface DashboardQuery {
   video_ids?: string | null;
 }
 
-/** video_ids（カンマ区切り）を検証して重複を除く。形式違反は 400。件数の上限は設けない（qa-096） */
+/** video_ids（カンマ区切り）を検証して重複を除く。形式違反は 400。件数の上限は設けない（qa-106） */
 export function parseVideoIds(raw: string | null | undefined): string[] | null {
   if (raw === null || raw === undefined) return null;
   const ids = raw
@@ -372,7 +371,7 @@ export async function getDashboard(
   const freshSince = iso(new Date(deps.now.getTime() - THUMBNAIL_TTL_DAYS * DAY_MS));
   const allVideos = await repo.videos(channel.channel_id, freshSince);
   const known = new Map(allVideos.map((v) => [v.video_id, v]));
-  // 他テナント・存在しない ID は黙って除外する（qa-097）。省略時は公開日の新しい順に10本
+  // 他テナント・存在しない ID は黙って除外する（qa-107）。省略時は公開日の新しい順に10本
   const isDefault = requestedIds === null;
   const selectedIds = isDefault
     ? allVideos.slice(0, DEFAULT_SELECTION).map((v) => v.video_id)
@@ -485,17 +484,18 @@ export async function getDashboard(
           createdAt: side.report.created_at,
         }
       : null,
-    actions: side.actions.map((a) => ({
-      actionId: a.action_id,
-      title: a.title,
-      status: a.status,
-      metricLabel: a.metric_label,
-      baselineValue: a.baseline_value,
-      latestValue: a.latest_value,
-      unit: a.unit,
-      startedAt: a.started_at,
-      endsAt: a.ends_at,
-    })),
+    actions: side.actions.map((a) => {
+      const info = isCauseMetric(a.metric) ? CAUSE_METRIC_INFO[a.metric] : null;
+      return {
+        actionId: a.action_id,
+        title: a.title,
+        status: a.status,
+        metricLabel: info?.label ?? null,
+        baselineValue: a.baseline_value,
+        latestValue: a.result_value,
+        unit: info?.unit ?? null,
+      };
+    }),
     videoOptions: allVideos.map((v) => ({
       videoId: v.video_id,
       title: v.title,

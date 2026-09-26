@@ -298,6 +298,67 @@ BEGIN
   SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
 END;
 
+-- AI分析（main の 0008〜0015）の表も同じく止める
+CREATE TRIGGER analysis_requests_block_tenant_deletion_insert
+BEFORE INSERT ON analysis_requests
+WHEN EXISTS (
+  SELECT 1 FROM tenants WHERE tenant_id = NEW.tenant_id AND deleted_at IS NOT NULL
+) OR EXISTS (
+  SELECT 1 FROM data_deletions WHERE tenant_id = NEW.tenant_id
+    AND scope = 'tenant' AND done_at IS NULL
+)
+BEGIN
+  SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
+END;
+
+CREATE TRIGGER transcripts_block_tenant_deletion_insert
+BEFORE INSERT ON transcripts
+WHEN EXISTS (
+  SELECT 1 FROM tenants WHERE tenant_id = NEW.tenant_id AND deleted_at IS NOT NULL
+) OR EXISTS (
+  SELECT 1 FROM data_deletions WHERE tenant_id = NEW.tenant_id
+    AND scope = 'tenant' AND done_at IS NULL
+)
+BEGIN
+  SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
+END;
+
+CREATE TRIGGER psych_findings_block_tenant_deletion_insert
+BEFORE INSERT ON psych_findings
+WHEN EXISTS (
+  SELECT 1 FROM tenants WHERE tenant_id = NEW.tenant_id AND deleted_at IS NOT NULL
+) OR EXISTS (
+  SELECT 1 FROM data_deletions WHERE tenant_id = NEW.tenant_id
+    AND scope = 'tenant' AND done_at IS NULL
+)
+BEGIN
+  SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
+END;
+
+CREATE TRIGGER comment_emotions_block_tenant_deletion_insert
+BEFORE INSERT ON comment_emotions
+WHEN EXISTS (
+  SELECT 1 FROM tenants WHERE tenant_id = NEW.tenant_id AND deleted_at IS NOT NULL
+) OR EXISTS (
+  SELECT 1 FROM data_deletions WHERE tenant_id = NEW.tenant_id
+    AND scope = 'tenant' AND done_at IS NULL
+)
+BEGIN
+  SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
+END;
+
+CREATE TRIGGER report_archives_block_tenant_deletion_insert
+BEFORE INSERT ON report_archives
+WHEN EXISTS (
+  SELECT 1 FROM tenants WHERE tenant_id = NEW.tenant_id AND deleted_at IS NOT NULL
+) OR EXISTS (
+  SELECT 1 FROM data_deletions WHERE tenant_id = NEW.tenant_id
+    AND scope = 'tenant' AND done_at IS NULL
+)
+BEGIN
+  SELECT RAISE(ABORT, 'TENANT_DELETION_PENDING');
+END;
+
 CREATE TRIGGER business_funnel_weekly_block_tenant_deletion_insert
 BEFORE INSERT ON business_funnel_weekly
 WHEN EXISTS (

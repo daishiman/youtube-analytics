@@ -1,10 +1,14 @@
-// ダッシュボードの読み取り専用クエリ（qa-093〜qa-098）。生成時に tenant_id を固定し、全クエリの WHERE に入れる。
+// ダッシュボードの読み取り専用クエリ（qa-103〜qa-108）。生成時に tenant_id を固定し、全クエリの WHERE に入れる。
 // 選んだ動画は JSON 配列1個を json_each で展開して1パラメータでバインドする
-// （D1 は1クエリのバインド上限が100・件数の上限を設けないため・qa-098）
+// （D1 は1クエリのバインド上限が100・件数の上限を設けないため・qa-108）
 
 import { channelMetadataExpired, EXPIRED_CHANNEL_TITLE } from "../domain/channel-metadata";
 import type { TenantContext } from "../domain/tenant-context";
 import type { VideoContentType } from "../domain/video-content-type";
+
+// レポート版は追記のみで、アーカイブは report_archives の行の有無で表す（AI分析の一覧と同じ見え方にする）
+const NOT_ARCHIVED =
+  "NOT EXISTS (SELECT 1 FROM report_archives a WHERE a.tenant_id = r.tenant_id AND a.report_id = r.report_id)";
 
 export interface ChannelRow {
   channel_id: string;
@@ -79,16 +83,14 @@ export interface ReportRow {
   created_at: string;
 }
 
+/** actions は main の AI分析（0010）の表。指標の表示名と単位は CAUSE_METRIC_INFO から引く */
 export interface ActionRow {
   action_id: string;
   title: string;
   status: "実施中" | "効果測定中";
-  metric_label: string | null;
+  metric: string;
   baseline_value: number | null;
-  latest_value: number | null;
-  unit: string | null;
-  started_at: string | null;
-  ends_at: string | null;
+  result_value: number | null;
 }
 
 export interface FunnelDailyRow {
@@ -297,33 +299,33 @@ export class DashboardRepository {
     };
   }
 
-  /** 最新の完了レポート・主な発見3つ・実施中/効果測定中のアクション・APIデータ有無を1回の batch で読む */
+  /** 最新のレポート版（アーカイブを除く）・主な発見3つ・実施中/効果測定中のアクション・APIデータ有無を1回の batch で読む */
   async sideData(channelId: string) {
     const t = this.tenantId;
     const res = await this.db.batch([
       this.db
         .prepare(
-          `SELECT report_id, version, title, conclusion, created_at FROM reports
-            WHERE tenant_id = ?1 AND channel_id = ?2 AND status = '完了'
-            ORDER BY created_at DESC, version DESC LIMIT 1`,
+          `SELECT report_id, version, title, conclusion, created_at FROM reports r
+            WHERE tenant_id = ?1 AND channel_id = ?2 AND ${NOT_ARCHIVED}
+            ORDER BY version DESC LIMIT 1`,
         )
         .bind(t, channelId),
       this.db
         .prepare(
-          `SELECT f.report_id, f.claim FROM findings f
+          `SELECT f.report_id, f.title FROM findings f
             WHERE f.tenant_id = ?1 AND f.report_id = (
-                    SELECT report_id FROM reports
-                     WHERE tenant_id = ?1 AND channel_id = ?2 AND status = '完了'
-                     ORDER BY created_at DESC, version DESC LIMIT 1)
-            ORDER BY f.ordinal LIMIT 3`,
+                    SELECT report_id FROM reports r
+                     WHERE tenant_id = ?1 AND channel_id = ?2 AND ${NOT_ARCHIVED}
+                     ORDER BY version DESC LIMIT 1)
+            ORDER BY f.finding_no LIMIT 3`,
         )
         .bind(t, channelId),
       this.db
         .prepare(
-          `SELECT action_id, title, status, metric_label, baseline_value, latest_value, unit, started_at, ends_at
+          `SELECT action_id, title, status, metric, baseline_value, result_value
              FROM actions
             WHERE tenant_id = ?1 AND channel_id = ?2 AND status IN ('実施中', '効果測定中')
-            ORDER BY CASE status WHEN '実施中' THEN 0 ELSE 1 END, started_at DESC, action_id`,
+            ORDER BY CASE status WHEN '実施中' THEN 0 ELSE 1 END, updated_at DESC, action_id`,
         )
         .bind(t, channelId),
       this.db
@@ -336,7 +338,7 @@ export class DashboardRepository {
     ]);
     return {
       report: rowsOf<ReportRow>(res[0])[0] ?? null,
-      findings: rowsOf<{ claim: string }>(res[1]).map((r) => r.claim),
+      findings: rowsOf<{ title: string }>(res[1]).map((r) => r.title),
       actions: rowsOf<ActionRow>(res[2]),
       hasApi: Boolean(rowsOf<{ has_api: number }>(res[3])[0]?.has_api),
     };

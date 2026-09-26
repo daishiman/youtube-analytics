@@ -102,17 +102,23 @@ async function addChannelData(owner: LoggedIn & { tenantId: string }) {
       "INSERT INTO channel_daily_metrics (tenant_id, channel_id, date) VALUES (?1, ?2, '2026-09-20')",
     ).bind(t, channel),
     env.DB.prepare(
-      "INSERT INTO reports (tenant_id, report_id, channel_id, version, title, created_at) VALUES (?1, 'old-report', ?2, 1, 'old', ?3)",
+      `INSERT INTO reports (tenant_id, report_id, channel_id, request_id, version, title, conclusion, outcome,
+         period_start, period_end, brief_json, results_json, history_review_json, report_html, idempotency_key,
+         created_by, created_at)
+       VALUES (?1, 'old-report', ?2, 'old-request', 1, 'old', 'old', '判定保留', '2026-09-01', '2026-09-20',
+         '{}', '{}', '{}', '', 'old-report', 'old-user', ?3)`,
     ).bind(t, channel, NOW.toISOString()),
     env.DB.prepare(
-      "INSERT INTO findings (tenant_id, finding_id, report_id, ordinal, claim) VALUES (?1, 'old-finding', 'old-report', 0, 'old')",
+      "INSERT INTO findings (tenant_id, report_id, finding_no, kind, title) VALUES (?1, 'old-report', 1, 'factor', 'old')",
     ).bind(t),
     env.DB.prepare(
-      "INSERT INTO actions (tenant_id, action_id, channel_id, title, status, created_at) VALUES (?1, 'old-action', ?2, 'old', '実施中', ?3)",
+      `INSERT INTO actions (tenant_id, action_id, channel_id, report_id, title, stage, metric, status, created_by, created_at, updated_at)
+       VALUES (?1, 'old-action', ?2, 'old-report', 'old', '流入', 'ctr', '実施中', 'old-user', ?3, ?3)`,
     ).bind(t, channel, NOW.toISOString()),
     env.DB.prepare(
-      "INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key) VALUES (?1, 'old-scene', ?2, 'scene', 'old-key')",
-    ).bind(t, video),
+      `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, created_at)
+       VALUES (?1, 'old-scene', ?2, 'scene', 'old-key', 'image/jpeg', 8, ?3)`,
+    ).bind(t, video, NOW.toISOString()),
     env.DB.prepare(
       "INSERT INTO business_funnel_weekly (tenant_id, channel_id, week_start, imported_at) VALUES (?1, ?2, '2026-09-21', ?3)",
     ).bind(t, channel, NOW.toISOString()),

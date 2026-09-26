@@ -1,4 +1,4 @@
-// GET /api/dashboard/funnel（qa-093・qa-060）: 直近の完了週・12週の履歴・鮮度・入力検証
+// GET /api/dashboard/funnel（qa-103・qa-060）: 直近の完了週・12週の履歴・鮮度・入力検証
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import { addDays, jstStartIso } from "../../src/domain/dashboard-period";

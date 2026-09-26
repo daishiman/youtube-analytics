@@ -1,4 +1,4 @@
-// GET /api/dashboard（qa-089〜qa-097）: 既定10本・KPI・前期比・他テナント除外・入力検証・空状態・権限
+// GET /api/dashboard（qa-099〜qa-107）: 既定10本・KPI・前期比・他テナント除外・入力検証・空状態・権限
 
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
@@ -22,7 +22,7 @@ describe("GET /api/dashboard", () => {
     const { res, body } = await get("/api/dashboard", owner.cookie);
 
     expect(res.headers.get("cache-control")).toBe("private, no-store");
-    // サムネイルは自サイト経由なので、CSP に YouTube の画像ホストを足さない（qa-095）
+    // サムネイルは自サイト経由なので、CSP に YouTube の画像ホストを足さない（qa-105）
     const imgSrc = res.headers
       .get("content-security-policy")
       ?.split(";")
@@ -352,7 +352,7 @@ describe("GET /api/dashboard", () => {
     expect(channelWithOnlyShortsCsv.empty.noCsv).toBe(true);
   });
 
-  it("最新の完了レポート（発見3件）と実施中・効果測定中のアクションだけを返す", async () => {
+  it("アーカイブを除いた最新のレポート版（発見3件）と実施中・効果測定中のアクションだけを返す", async () => {
     const owner = await newOwner();
     await seedDashboard({
       tenantId: owner.tenantId,
@@ -365,6 +365,12 @@ describe("GET /api/dashboard", () => {
     expect(body.latestReport?.title).toBe("最新レポート");
     expect(body.latestReport?.findings).toEqual(["発見1", "発見2", "発見3"]);
     expect(body.actions.map((a) => a.status).sort()).toEqual(["効果測定中", "実施中"].sort());
+    expect(body.actions.find((a) => a.actionId === "a1")).toMatchObject({
+      metricLabel: "クリック率",
+      unit: "%",
+      baselineValue: 4,
+      latestValue: 5.5,
+    });
     expect(body.empty.noReports).toBe(false);
     expect(body.empty.noActions).toBe(false);
   });

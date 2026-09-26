@@ -1,0 +1,138 @@
+{
+  "feature": {
+    "graph_node_id": "feat-skill-analysis-reports",
+    "title": "Claude Code連携とAI分析レポート",
+    "description": "dev-graph feature feat-skill-analysis-reports"
+  },
+  "children": [
+    {
+      "graph_node_id": "SYS-SAR-P01",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P01",
+      "title": "個人トークン認証・分析依頼・スキル連携API・履歴・レポート版・launchd週次実行の要件を実装単位へ確定",
+      "depends_on": [],
+      "description": "dev-graph task SYS-SAR-P01 (tasks/feat-skill-analysis-reports/SYS-SAR-P01.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P02",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P02",
+      "title": "個人トークンBearer認証・分析依頼・スキル連携API・DBスキーマの設計",
+      "depends_on": [
+        "SYS-SAR-P01"
+      ],
+      "description": "dev-graph task SYS-SAR-P02 (tasks/feat-skill-analysis-reports/SYS-SAR-P02.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P03",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P03",
+      "title": "テナント境界・トークン失効・二重送信防止・非因果出力の設計レビュー",
+      "depends_on": [
+        "SYS-SAR-P02"
+      ],
+      "description": "dev-graph task SYS-SAR-P03 (tasks/feat-skill-analysis-reports/SYS-SAR-P03.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P04",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P04",
+      "title": "受入12項目・履歴境界・再現性・因果断定検知のテスト設計",
+      "depends_on": [
+        "SYS-SAR-P03"
+      ],
+      "description": "dev-graph task SYS-SAR-P04 (tasks/feat-skill-analysis-reports/SYS-SAR-P04.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P05",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P05",
+      "title": "Bearer認証・分析依頼/スキル連携API・DB新規テーブル・/yt-analyzeスキル・launchd週次実行の実装",
+      "depends_on": [
+        "SYS-SAR-P04"
+      ],
+      "description": "dev-graph task SYS-SAR-P05 (tasks/feat-skill-analysis-reports/SYS-SAR-P05.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P06",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P06",
+      "title": "テスト実行と不具合修正",
+      "depends_on": [
+        "SYS-SAR-P05"
+      ],
+      "description": "dev-graph task SYS-SAR-P06 (tasks/feat-skill-analysis-reports/SYS-SAR-P06.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P07",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P07",
+      "title": "受入確認",
+      "depends_on": [
+        "SYS-SAR-P06"
+      ],
+      "description": "dev-graph task SYS-SAR-P07 (tasks/feat-skill-analysis-reports/SYS-SAR-P07.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P08",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P08",
+      "title": "共通化の整理とマイグレーション整理",
+      "depends_on": [
+        "SYS-SAR-P07"
+      ],
+      "description": "dev-graph task SYS-SAR-P08 (tasks/feat-skill-analysis-reports/SYS-SAR-P08.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P09",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P09",
+      "title": "セキュリティと品質の保証",
+      "depends_on": [
+        "SYS-SAR-P08"
+      ],
+      "description": "dev-graph task SYS-SAR-P09 (tasks/feat-skill-analysis-reports/SYS-SAR-P09.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P10",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P10",
+      "title": "最終レビュー",
+      "depends_on": [
+        "SYS-SAR-P09"
+      ],
+      "description": "dev-graph task SYS-SAR-P10 (tasks/feat-skill-analysis-reports/SYS-SAR-P10.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P11",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P11",
+      "title": "証跡の集約",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "description": "dev-graph task SYS-SAR-P11 (tasks/feat-skill-analysis-reports/SYS-SAR-P11.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P12",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P12",
+      "title": "運用手順『launchd週次実行の監視と障害対応』とドキュメント",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "description": "dev-graph task SYS-SAR-P12 (tasks/feat-skill-analysis-reports/SYS-SAR-P12.md)"
+    },
+    {
+      "graph_node_id": "SYS-SAR-P13",
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P13",
+      "title": "CI/CD とリリース",
+      "depends_on": [
+        "SYS-SAR-P11",
+        "SYS-SAR-P12"
+      ],
+      "description": "dev-graph task SYS-SAR-P13 (tasks/feat-skill-analysis-reports/SYS-SAR-P13.md)"
+    }
+  ]
+}

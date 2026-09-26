@@ -10,11 +10,11 @@ export {
   fakeGoogle,
   type GoogleFake,
   linkChannel,
-  type Owner,
   registerGoogleClient,
   startOAuth,
   TEST_CLIENT,
 } from "../helpers/google";
+export { auditCount, type Owner } from "../platform/helpers";
 
 /** multipart で取込ファイルを送る */
 export async function upload(
@@ -30,15 +30,6 @@ export async function upload(
     { method: "POST", headers: { cookie: user.cookie, "x-requested-with": "yta" }, body: form },
     env,
   );
-}
-
-export async function auditCount(tenantId: string, action: string): Promise<number> {
-  const row = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM audit_log WHERE tenant_id = ?1 AND action = ?2",
-  )
-    .bind(tenantId, action)
-    .first<{ n: number }>();
-  return row?.n ?? 0;
 }
 
 export async function tenantName(tenantId: string): Promise<string> {

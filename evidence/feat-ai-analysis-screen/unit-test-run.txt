@@ -1,0 +1,10 @@
+
+ RUN  v4.1.11 /Users/dm/orca/workspaces/YouTube分析/03ai分析
+
+
+ Test Files  35 passed (35)
+      Tests  375 passed (375)
+   Start at  13:38:04
+   Duration  12.81s (transform 3.80s, setup 28.41s, import 3.46s, tests 10.06s, environment 1ms)
+
+exit=0

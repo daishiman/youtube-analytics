@@ -1,0 +1,138 @@
+{
+ "feature": {
+  "graph_node_id": "feat-ai-analysis-screen",
+  "title": "AI分析画面(依頼・実行状況・レポート管理)と週次自動実行の依頼作成",
+  "description": "dev-graph feature feat-ai-analysis-screen"
+ },
+ "children": [
+  {
+   "graph_node_id": "SYS-AIA-P01",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P01",
+   "title": "AI分析画面の要件を実装単位へ確定",
+   "depends_on": [],
+   "description": "dev-graph task SYS-AIA-P01 (tasks/feat-ai-analysis-screen/SYS-AIA-P01.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P02",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P02",
+   "title": "AnalysisPage・分析API・DB拡張の設計",
+   "depends_on": [
+    "SYS-AIA-P01"
+   ],
+   "description": "dev-graph task SYS-AIA-P02 (tasks/feat-ai-analysis-screen/SYS-AIA-P02.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P03",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P03",
+   "title": "取消・409・権限境界・監査ログの設計レビュー",
+   "depends_on": [
+    "SYS-AIA-P02"
+   ],
+   "description": "dev-graph task SYS-AIA-P03 (tasks/feat-ai-analysis-screen/SYS-AIA-P03.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P04",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P04",
+   "title": "受入テスト・状態遷移テスト・3サイズE2Eの設計",
+   "depends_on": [
+    "SYS-AIA-P03"
+   ],
+   "description": "dev-graph task SYS-AIA-P04 (tasks/feat-ai-analysis-screen/SYS-AIA-P04.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P05",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P05",
+   "title": "AnalysisPage・分析/レポートAPI・DB拡張・表示語置換の実装",
+   "depends_on": [
+    "SYS-AIA-P04"
+   ],
+   "description": "dev-graph task SYS-AIA-P05 (tasks/feat-ai-analysis-screen/SYS-AIA-P05.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P06",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P06",
+   "title": "テスト実行と不具合修正",
+   "depends_on": [
+    "SYS-AIA-P05"
+   ],
+   "description": "dev-graph task SYS-AIA-P06 (tasks/feat-ai-analysis-screen/SYS-AIA-P06.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P07",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P07",
+   "title": "受入確認",
+   "depends_on": [
+    "SYS-AIA-P06"
+   ],
+   "description": "dev-graph task SYS-AIA-P07 (tasks/feat-ai-analysis-screen/SYS-AIA-P07.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P08",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P08",
+   "title": "共通化の整理とマイグレーション整理",
+   "depends_on": [
+    "SYS-AIA-P07"
+   ],
+   "description": "dev-graph task SYS-AIA-P08 (tasks/feat-ai-analysis-screen/SYS-AIA-P08.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P09",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P09",
+   "title": "セキュリティと品質の保証",
+   "depends_on": [
+    "SYS-AIA-P08"
+   ],
+   "description": "dev-graph task SYS-AIA-P09 (tasks/feat-ai-analysis-screen/SYS-AIA-P09.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P10",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P10",
+   "title": "最終レビュー",
+   "depends_on": [
+    "SYS-AIA-P09"
+   ],
+   "description": "dev-graph task SYS-AIA-P10 (tasks/feat-ai-analysis-screen/SYS-AIA-P10.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P11",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P11",
+   "title": "証跡の集約",
+   "depends_on": [
+    "SYS-AIA-P10"
+   ],
+   "description": "dev-graph task SYS-AIA-P11 (tasks/feat-ai-analysis-screen/SYS-AIA-P11.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P12",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P12",
+   "title": "運用手順『AI分析の取消と再実行を扱う』とドキュメント",
+   "depends_on": [
+    "SYS-AIA-P10"
+   ],
+   "description": "dev-graph task SYS-AIA-P12 (tasks/feat-ai-analysis-screen/SYS-AIA-P12.md)"
+  },
+  {
+   "graph_node_id": "SYS-AIA-P13",
+   "parent_feature": "feat-ai-analysis-screen",
+   "phase_ref": "P13",
+   "title": "CI/CD とリリース",
+   "depends_on": [
+    "SYS-AIA-P11",
+    "SYS-AIA-P12"
+   ],
+   "description": "dev-graph task SYS-AIA-P13 (tasks/feat-ai-analysis-screen/SYS-AIA-P13.md)"
+  }
+ ]
+}

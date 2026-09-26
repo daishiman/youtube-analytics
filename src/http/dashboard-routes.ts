@@ -1,11 +1,11 @@
-// ダッシュボードの API（qa-093〜qa-099）。読み取り専用で、対象はセッションで選択中のテナントだけ。
+// ダッシュボードの API（qa-103〜qa-109）。読み取り専用で、対象はセッションで選択中のテナントだけ。
 // 応答は利用者ごとの内容なので Cache-Control: private を付け、共有キャッシュに残さない
 import { Hono } from "hono";
 import { getDashboard } from "../usecases/dashboard";
 import { getFunnel } from "../usecases/funnel";
 import { getThumbnail } from "../usecases/thumbnails";
 import type { AppEnv } from "./middleware";
-import { sessionTenant } from "./settings-routes";
+import { sessionTenant } from "./middleware";
 
 export const dashboardRoutes = new Hono<AppEnv>();
 

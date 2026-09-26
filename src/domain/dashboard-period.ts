@@ -1,4 +1,4 @@
-// ダッシュボードの期間（qa-099）。全画面共通のヘッダーの ?period= をそのまま受ける。
+// ダッシュボードの期間（qa-109）。全画面共通のヘッダーの ?period= をそのまま受ける。
 // 日付文字列は YYYY-MM-DD。固定期間の末日は取得済みAnalytics日次（PT）に合わせる。
 // 事業CSVの週境界はJSTとして別に扱う。
 import { AppError } from "../lib/errors";

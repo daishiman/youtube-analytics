@@ -1,6 +1,8 @@
 // 招待リンク: 「○○に招待されています」を表示し、ログイン済みなら参加、未ログインならログインへ
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { ApiError, api, type Me, REDIRECT_MESSAGES, ROLE_LABELS, type Role } from "../api";
 import { PublicLayout } from "../components/PublicLayout";
 
@@ -59,7 +61,7 @@ export function InvitePage() {
   return (
     <PublicLayout>
       <section className="card narrow">
-        <h1>ワークスペースへの招待</h1>
+        <h1>{TENANT_LABEL}への招待</h1>
         {loading && <p className="muted">確認中…</p>}
         {error && (
           <p role="alert" className="alert">

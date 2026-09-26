@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>feature-package-feat-ai-analysis-screen · タスク仕様書ブラウザ</title>
+<style>
+:root{--ink:#242330;--muted:#666477;--paper:#f6f3ec;--panel:#fffdf7;--line:#ded8cb;--navy:#26334a;--blue:#376b8c;--green:#27745c;--shadow:0 10px 30px rgba(45,42,50,.08)}
+*{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.8}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline} code{font-family:"SFMono-Regular",Consolas,monospace;font-size:.88em;background:#efeadf;padding:.05em .35em;border-radius:5px;overflow-wrap:anywhere}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;min-height:100vh}
+.spec-nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:var(--navy);color:#eef2f5;padding:20px 14px}
+.spec-nav a{display:block;color:#d7dde3;padding:5px 10px;border-radius:8px;font-size:.9rem;overflow-wrap:anywhere} .spec-nav a:hover{background:rgba(255,255,255,.08);text-decoration:none} .spec-nav a.active{background:var(--blue);color:#fff}
+.nav-home{font-weight:800;margin-bottom:10px} .nav-ext{color:#bfe3d3!important;font-weight:700} .nav-group{margin:14px 0} .nav-grp{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#9fb0bd;padding:0 10px;margin-bottom:4px}
+main{padding:34px clamp(18px,4vw,56px);width:min(920px,100%);margin:auto}
+.spec-page[hidden]{display:none} .spec-page:target{display:block}
+.spec-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px} .back{font-weight:700} .grp{font-size:.78rem;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+h1{font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.25;margin:.2em 0 .1em} .spec-src{color:var(--muted);font-size:.85rem;margin:.2em 0 1.2em} .lead{color:var(--muted);max-width:60ch}
+.spec-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:0 0 24px} .meta-pair{display:flex;gap:8px;font-size:.85rem;border-bottom:1px dotted var(--line);padding-bottom:5px} .meta-pair dt{color:var(--muted);font-weight:700;min-width:110px;margin:0} .meta-pair dd{margin:0;overflow-wrap:anywhere}
+.spec-body h2{font-size:1.4rem;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--line)} .spec-body h3{font-size:1.15rem;margin:1.3em 0 .4em;color:var(--navy)} .spec-body h4{margin:1.1em 0 .3em}
+.spec-body ul,.spec-body ol{padding-left:1.4rem} .spec-body li{margin:.3em 0} .spec-body pre{background:#2a2735;color:#f3f1ea;padding:16px;border-radius:12px;overflow:auto;font-size:.82rem} .spec-body pre code{background:none;color:inherit;padding:0}
+.spec-body blockquote{border-left:4px solid var(--green);margin:1em 0;padding:.4em 1em;background:#eef4f1;color:#33463f;border-radius:0 10px 10px 0} .tbl{overflow:auto;margin:1em 0} .spec-body table{width:100%;border-collapse:collapse;font-size:.9rem} .spec-body th,.spec-body td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top} .spec-body th{background:var(--panel)} .spec-body hr{border:none;border-top:1px solid var(--line);margin:1.6em 0}
+.pn-row{display:flex;justify-content:space-between;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)} .pn{font-weight:700}
+.idx-group{margin:1.4em 0} .idx-group h2{font-size:1.1rem;border-bottom:2px solid var(--line);padding-bottom:.25em} .idx-group ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px} .idx-group li a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.spec-nav{position:static;height:auto;max-height:220px}}
+@media print{.spec-nav{display:none}.spec-page[hidden]{display:block!important}.pn-row,.spec-top .back{display:none}body{background:#fff}}
+</style></head>
+<body>
+<div class="layout">
+<nav class="spec-nav"><a class="nav-home" href="#index">🏠 一覧トップ</a><div class="nav-group"><span class="nav-grp">関連レポート</span><a class="nav-ext" href="plan-structure-report.html">📊 構造・依存レポート</a></div><div class="nav-group"><span class="nav-grp">タスク別仕様書</span><a href="#task-phase-01-requirements">phase-01-requirements</a><a href="#task-phase-02-architecture">phase-02-architecture</a><a href="#task-phase-03-design-review">phase-03-design-review</a><a href="#task-phase-04-test-design">phase-04-test-design</a><a href="#task-phase-05-implementation">phase-05-implementation</a><a href="#task-phase-06-test-run">phase-06-test-run</a><a href="#task-phase-07-acceptance">phase-07-acceptance</a><a href="#task-phase-08-refactoring-migration">phase-08-refactoring-migration</a><a href="#task-phase-09-quality-assurance">phase-09-quality-assurance</a><a href="#task-phase-10-final-review">phase-10-final-review</a><a href="#task-phase-11-evidence">phase-11-evidence</a><a href="#task-phase-12-documentation-operations">phase-12-documentation-operations</a><a href="#task-phase-13-release-deploy">phase-13-release-deploy</a></div></nav>
+<main><section class="spec-page spec-index" id="index" hidden><h1>feature-package-feat-ai-analysis-screen · タスク仕様書ブラウザ</h1><p class="lead">各仕様書のタイトルをクリックすると本文へ移動します。ブラウザの「戻る」でこの一覧へ戻れます。左のサイドバーからも直接ジャンプできます。</p><div class="idx-group"><h2>タスク別仕様書</h2><ul><li><a href="#task-phase-01-requirements">phase-01-requirements</a></li><li><a href="#task-phase-02-architecture">phase-02-architecture</a></li><li><a href="#task-phase-03-design-review">phase-03-design-review</a></li><li><a href="#task-phase-04-test-design">phase-04-test-design</a></li><li><a href="#task-phase-05-implementation">phase-05-implementation</a></li><li><a href="#task-phase-06-test-run">phase-06-test-run</a></li><li><a href="#task-phase-07-acceptance">phase-07-acceptance</a></li><li><a href="#task-phase-08-refactoring-migration">phase-08-refactoring-migration</a></li><li><a href="#task-phase-09-quality-assurance">phase-09-quality-assurance</a></li><li><a href="#task-phase-10-final-review">phase-10-final-review</a></li><li><a href="#task-phase-11-evidence">phase-11-evidence</a></li><li><a href="#task-phase-12-documentation-operations">phase-12-documentation-operations</a></li><li><a href="#task-phase-13-release-deploy">phase-13-release-deploy</a></li></ul></div></section><section class="spec-page" id="task-phase-01-requirements" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-01-requirements</h1><p class="spec-src">出典: <code>phase-01-requirements.md</code></p><div class="spec-body"><h2>SYS-AIA-P01 AI分析画面の要件を実装単位へ確定</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P01</li><li>phase_ref: P01</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p01, documentation, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: documentation</li><li>build_target_kind: application-code</li><li>depends_on: なし(feature起点)</li><li>classification: confidence 0.95 / P01 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P01.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>features/feat-ai-analysis-screen.md の scope_in 14項目・acceptance 13項目・screen_mock_grounding の可視/不可視要件を、P02以降が参照できる根拠付きの実装単位一覧(docs/feat-ai-analysis-screen/requirements.md)として確定した状態にする。</p>
+<h3>背景</h3>
+<p>feat-ai-analysis-screen は G1・G2・G4に資する機能であり、画面モック(docs配下)と要件定義・backend・ui-ux各章の質疑応答がその確定仕様である。画面には現れない取消・409・429・監査ログ・アーカイブ除外・二重登録防止などの制約は仕様文書側にのみ存在するため、実装着手前にそれらを一覧化して見落としを防ぐ必要がある。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: なし(feature起点)</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: 主。feature定義と確定仕様のQ&amp;Aを対応表として requirements.md にまとめる</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/requirements.md</li><li>Consumed artifacts: features/feat-ai-analysis-screen.context.json、画面モック、分析カタログドキュメント</li><li>Write scope: docs/feat-ai-analysis-screen/requirements.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: requirements.md の対応表の行数が scope_in14件+acceptance13件=27件と一致することを目視確認する</li><li>検証: requirements.md 内の qa-番号参照がすべて system-spec/00-requirements-definition.md・backend.md・ui-ux.md に実在することを grep で確認する</li><li>受入: features/feat-ai-analysis-screen.md の scope_in 14項目と acceptance 13項目のすべてに、requirements.md 上で根拠章・区画/API・検証方法が1対1で対応している</li><li>受入: qa-089〜qa-097・appr-015・appr-016 の裏付け質疑がそれぞれどの受入項目の根拠かを requirements.md の対応表に明記している</li><li>受入: docs/analysis/dashboard-analysis-catalog.md §6 の JSON 形(brief/results/history_review/psych_findings/ideas/actions/report_html)を取込先の正本として requirements.md に固定している</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: requirements.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P02</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#index">← 前の仕様書</a><a class="pn" href="#task-phase-02-architecture">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-02-architecture" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-02-architecture</h1><p class="spec-src">出典: <code>phase-02-architecture.md</code></p><div class="spec-body"><h2>SYS-AIA-P02 AnalysisPage・分析API・DB拡張の設計</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P02</li><li>phase_ref: P02</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p02, api, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: api</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P01</li><li>classification: confidence 0.95 / P02 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P02.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>AnalysisPage の画面構成、画面用API・レポートAPI・スキル連携API差分、analysis_requests/report_archives/actions拡張のデータモデルを、実装着手前に一意に定まった設計として docs/feat-ai-analysis-screen/architecture.md に確定させる。</p>
+<h3>背景</h3>
+<p>本feature は基盤の分析依頼テーブル(別featureが所有)・改善アクション集約(別featureが所有)・共通レイアウト/共通部品(別featureが所有)に依存するため、これらの境界を越えずに画面用API・拡張カラム・アーカイブテーブルの設計を行う必要がある。承認済みのQ&amp;A回答がAPI一覧とDBスキーマの正本である。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P01</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: 副。AnalysisPage の区画・共通部品(ProgressBar/DateRangePicker)構成</li><li>Backend: 副。usecase/repository層の責務分割設計</li><li>API: 主。画面用API・レポートAPI・スキル連携API差分のエンドポイント設計</li><li>Data: 副。分析依頼拡張・アーカイブテーブル・アクション拡張のデータモデル設計</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: 副。権限境界・Origin検査・rate limitの設計反映</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/architecture.md</li><li>Consumed artifacts: docs/feat-ai-analysis-screen/requirements.md</li><li>Write scope: docs/feat-ai-analysis-screen/architecture.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: architecture.md の API 一覧が scope_in の画面用API・レポートAPI・スキル連携API差分と過不足なく一致することを確認する</li><li>受入: 全 API(画面用・レポート用・スキル連携差分)が TenantContext 必須の設計になっており、他テナントの依頼・レポートIDが404になる設計を持つ</li><li>受入: analysis_requests の一方向遷移(待機中→実行中→完了|失敗|取消)と終端不変(qa-089)を集約内不変条件として設計している</li><li>受入: ProgressBar・DateRangePicker の共通部品化と URL 状態(?request=、?report=&amp;v=、?period=custom&amp;from=&amp;to=)の設計がある</li><li>受入: 共通部品の色指定が既存 CSS 変数名だけで記述されている(qa-080)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: architecture.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P03</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-01-requirements">← 前の仕様書</a><a class="pn" href="#task-phase-03-design-review">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-03-design-review" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-03-design-review</h1><p class="spec-src">出典: <code>phase-03-design-review.md</code></p><div class="spec-body"><h2>SYS-AIA-P03 取消・409・権限境界・監査ログの設計レビュー</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P03</li><li>phase_ref: P03</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p03, security, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: security</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P02</li><li>classification: confidence 0.95 / P03 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P03.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>取消・409・権限境界(content.write/他テナント404/Origin検査/429)・監査ログ・422取込検証という不可視要件が設計に漏れなく反映されていることをレビューで確認し、是正が必要な項目を0件にする。</p>
+<h3>背景</h3>
+<p>状態遷移の不変条件・二重登録防止・request_id無し取込・発行者権限喪失時の403は画面には現れない裏側の制約であり、設計レビューで見落とすと本番で不正な状態遷移や二重登録が発生する。P02の設計をこれらのQ&amp;Aと突き合わせて是正する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P02</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: 副。409/429/422の応答契約レビュー</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: 主。取消409・権限境界・Origin検査・監査ログ・422検証のレビュー</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/design-review.md</li><li>Consumed artifacts: docs/feat-ai-analysis-screen/architecture.md</li><li>Write scope: docs/feat-ai-analysis-screen/design-review.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: design-review.md のレビュー表の全行に判定と根拠がある</li><li>受入: 取消済み依頼への PATCH /api/skill/requests/:id と POST /api/skill/reports が409 REQUEST_CANCELEDになる設計をレビューで確認している(qa-089)</li><li>受入: content.write(owner/editor)以外の書込403・他テナント404・Origin検査・1ユーザー1分10件の429・取込2,000,000 bytes上限・各操作のaudit_log記録の設計に high の是正事項が0件、またはP05の実装範囲へ取り込み済みである</li><li>受入: POST /api/skill/requests の発行者が content.write を失った場合に403になる設計をレビューしている(qa-095)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: design-review.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P04</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-02-architecture">← 前の仕様書</a><a class="pn" href="#task-phase-04-test-design">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-04-test-design" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-04-test-design</h1><p class="spec-src">出典: <code>phase-04-test-design.md</code></p><div class="spec-body"><h2>SYS-AIA-P04 受入テスト・状態遷移テスト・3サイズE2Eの設計</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P04</li><li>phase_ref: P04</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p04, quality, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P03</li><li>classification: confidence 0.95 / P04 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P04.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>受入13項目・状態遷移(待機中→実行中→完了|失敗|取消)・409/429/422・アクション二重登録防止・3サイズ表示を検証するテストコードとE2Eシナリオを、実装前に失敗する形で用意する。</p>
+<h3>背景</h3>
+<p>state machineや409/429/422のような裏側の制約はUIの見た目だけでは検証できないため、実装前にテストとして固定し、実装がその制約を満たすかどうかを機械的に判定できるようにする。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P03</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: 副。E2Eシナリオが辿るAnalysisPage操作の設計</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: 主。受入・状態遷移・409/429/422・二重登録防止・3サイズE2Eのテスト設計</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: application</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>tests/analysis/</li><li>e2e/analysis.spec.ts</li><li>docs/feat-ai-analysis-screen/test-design.md</li><li>Consumed artifacts: docs/feat-ai-analysis-screen/design-review.md</li><li>Write scope: tests/analysis/, e2e/analysis.spec.ts, docs/feat-ai-analysis-screen/test-design.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test でテストが列挙され、実装前は失敗する</li><li>受入: 受入13項目それぞれに少なくとも1つのテストケースがある</li><li>受入: analysis_requests の一方向遷移・終端不変・409 REQUEST_CANCELED・429・422 INVALID_REPORT_JSON・UNIQUE(tenant_id,source_report_id,source_key)二重登録防止の各テストケースが揃っている(qa-089〜qa-091)</li><li>受入: qa-092(取込先の request_id 未指定時の挙動)を独立したテストケースとして検証する。request_id 指定時はその依頼が完了になること、未指定時は完了済み依頼が1件作られ created_via=&#x27;import&#x27; になることの両方をそれぞれ検証する</li><li>受入: ポーリングの開始・停止を個別のテストケースとして検証する。待機中・実行中の行が0件なら停止すること、document.visibilityState=hidden の間は停止すること、visible に戻ると再開すること、取得間隔が10秒であることをそれぞれ検証する</li><li>受入: 幅900px未満の表示切替を個別のテストケースとして検証する。2カラムが縦に積まれること、表がカードになること、下部バーが下部タブの上に固定されることを、それぞれ390×844と820×1180の両サイズで検証する</li><li>受入: Playwright の390×844/820×1180/1440×900の3サイズで依頼→コピー→取込→登録→比較→アーカイブのE2Eシナリオが定義されている</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: tests/analysis/ と e2e/analysis.spec.ts の追加分を削除する</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P05</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-03-design-review">← 前の仕様書</a><a class="pn" href="#task-phase-05-implementation">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-05-implementation" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-05-implementation</h1><p class="spec-src">出典: <code>phase-05-implementation.md</code></p><div class="spec-body"><h2>SYS-AIA-P05 AnalysisPage・分析/レポートAPI・DB拡張・表示語置換の実装</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P05</li><li>phase_ref: P05</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p05, frontend, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: frontend</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P04</li><li>classification: confidence 0.95 / P05 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P05.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>AnalysisPage・共通部品(ProgressBar/DateRangePicker)・分析/レポートAPI・analysis_requests/report_archives/actions拡張・利用者向け表記統一を実装し、P04のテストが通る状態にする。</p>
+<h3>背景</h3>
+<p>P01〜P04で確定した要件・設計・テストに基づき、AnalysisPage/API/DBの実コードを作成する。基盤の分析依頼・レポートテーブルの存在を前提に、拡張列・アーカイブテーブル・アクション拡張を追加する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P04</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li><li>マイグレーション適用前提: 依存 feature(feat-skill-analysis-reports, feat-web-screens-actions)が作る analysis_requests / reports / actions の各テーブルが先に存在すること。本 task の3件は、それらを ALTER または参照する形で、依存 feature のマイグレーションより後ろの番号で適用する</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: 主。AnalysisPage・共通部品・表記統一の実装</li><li>Backend: 副。usecase/repository層の実装</li><li>API: 副。画面用API・レポートAPI・スキル連携API差分の実装</li><li>Data: 副。追加マイグレーションの実装</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: 副。権限境界・Origin検査・rate limit・監査ログの実装</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: application</li><li>Compatibility/migration/backfill: 追加する3件のマイグレーションは追加のみで既存テーブルを壊さない。基盤feature が作成する分析依頼・レポートテーブルの存在を前提にALTER/新規テーブルを追加する。3件は依存 feature(feat-skill-analysis-reports, feat-web-screens-actions)が作る analysis_requests / reports / actions のテーブルが先に存在する前提のもとで、それらより後ろの番号で適用する</li></ul>
+<h3>成果物</h3>
+<ul><li>web/pages/AnalysisPage.tsx</li><li>web/components/(ProgressBar/DateRangePicker)</li><li>src/http/ の分析関連ルート</li><li>src/usecases/ の分析関連usecase</li><li>migrations/0008_analysis_requests_extension.sql（計画時点の暫定番号。実装着手時に下記の確定規則で番号を確定する）</li><li>migrations/0009_report_archives.sql（同上、計画時点の暫定番号）</li><li>migrations/0010_actions_source_report.sql（同上、計画時点の暫定番号）</li><li>マイグレーション番号の確定規則:</li><li>実装着手時に origin/main の migrations/ と、依存 feature(feat-skill-analysis-reports, feat-web-screens-actions)の作業ブランチの migrations/ を確認し、それらの現存最大番号+1 から3件を連番で採番し直す</li><li>着手前に番号の重複を検査する。rebase/merge によって他ブランチが同じ番号帯を先に採番していたことが判明した場合は、本 task のファイル名とマイグレーション内参照を空き番号へ付け替える</li><li>付け替えを行った場合は、eval-log/renumber-receipt-feat-ai-analysis-screen-実施日.json（実施日は付け替えを行った日の YYYYMMDD。形式は eval-log/renumber-receipt-feat-settings-channel-link-20260924.json に準じる: receipt_kind/graph_node_id/beads_id/recorded_at/reason/mapping/not_rewritten）に記録する</li><li>Consumed artifacts: docs/feat-ai-analysis-screen/test-design.md、先行 task の成果物</li><li>Write scope: web/, src/, migrations/(追加する3本。ファイル名と番号は成果物節の確定規則で決め、計画時点の暫定番号は0008〜0010), public/privacy.html, public/terms.html</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test</li><li>検証: npx wrangler d1 migrations apply DB --local</li><li>検証: pnpm exec playwright test e2e/analysis.spec.ts</li><li>受入: P04 のテストがすべて通る</li><li>受入: ページ固有の色指定が既存 CSS 変数以外0件である(qa-080)</li><li>受入: 利用者に見える画面・APIエラー・規約2ページに『ワークスペース』『テナント』が0件で『チャンネル管理』に揃っている(qa-096)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 機能ブランチの revert とローカル D1 の再作成</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P06</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-04-test-design">← 前の仕様書</a><a class="pn" href="#task-phase-06-test-run">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-06-test-run" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-06-test-run</h1><p class="spec-src">出典: <code>phase-06-test-run.md</code></p><div class="spec-body"><h2>SYS-AIA-P06 テスト実行と不具合修正</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P06</li><li>phase_ref: P06</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p06, quality, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P05</li><li>classification: confidence 0.95 / P06 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P06.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>P04で用意したテスト・E2Eを実行し、失敗を0件まで解消したうえで、状態遷移・二重登録防止・アーカイブ除外の不変条件が実データで成立することを確認する。</p>
+<h3>背景</h3>
+<p>実装直後は環境差やタイミング依存の不具合が残りやすいため、P04のテスト・E2Eを実行して実データで不変条件を検証し、修正を反映する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P05</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: 副。画面側の不具合修正</li><li>Backend: 副。API/DB側の不具合修正</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: 主。P04テスト・E2Eの実行と不具合修正</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: application</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>tests/analysis/ 実行結果</li><li>e2e/analysis.spec.ts 実行結果</li><li>Consumed artifacts: P05 の実装成果物</li><li>Write scope: tests/analysis/, e2e/analysis.spec.ts, src/, web/</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test -- --reporter=verbose</li><li>検証: pnpm exec playwright test e2e/analysis.spec.ts</li><li>受入: 失敗0件・スキップ0件(P04のポーリング開始/停止テスト・900px未満の表示切替テスト・qa-092の単独テストケースを含む)</li><li>受入: 同じ版の同じアクションの二重登録0件(qa-091)、アーカイブ済み版のanalysis_history混入0件(qa-090)、request_id未指定取込での完了済み依頼1件作成・created_via=&#x27;import&#x27;の実データ成立(qa-092)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 修正コミットを revert する</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P07</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-05-implementation">← 前の仕様書</a><a class="pn" href="#task-phase-07-acceptance">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-07-acceptance" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-07-acceptance</h1><p class="spec-src">出典: <code>phase-07-acceptance.md</code></p><div class="spec-body"><h2>SYS-AIA-P07 受入確認</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P07</li><li>phase_ref: P07</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p07, quality, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P06</li><li>classification: confidence 0.95 / P07 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P07.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>acceptance 13項目それぞれについて、実装済みの画面・APIで合格したことを記録し、未合格が残っていない状態にする。</p>
+<h3>背景</h3>
+<p>実装・テストが完了した時点で、goal-spec の acceptance 13項目それぞれが実際に満たされているかを画面とAPIの両方で確認する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P06</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: 主。acceptance 13項目の合格確認</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/acceptance.md</li><li>Consumed artifacts: P06 のテスト結果</li><li>Write scope: docs/feat-ai-analysis-screen/acceptance.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: preview 環境で手動確認と自動テストの両方を記録</li><li>受入: 受入13項目すべてが合格</li><li>受入: goal-spec の invisible_requirements_added にあるポーリングの開始・停止条件(待機中・実行中0件で停止、hidden で停止、visible 復帰で再開、10秒間隔)と、幅900px未満の表示切替(2カラム縦積み・表のカード化・下部バー固定)が、preview 環境の手動確認で個別に合格している</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 不合格項目を P05 へ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P08</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-06-test-run">← 前の仕様書</a><a class="pn" href="#task-phase-08-refactoring-migration">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-08-refactoring-migration" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-08-refactoring-migration</h1><p class="spec-src">出典: <code>phase-08-refactoring-migration.md</code></p><div class="spec-body"><h2>SYS-AIA-P08 共通化の整理とマイグレーション整理</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P08</li><li>phase_ref: P08</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p08, data, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: data</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P07</li><li>classification: confidence 0.95 / P08 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P08.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>実装で生じた重複・仮実装をリファクタリングし、追加マイグレーションを最終形へ整理したうえで、P06のテストが引き続き green であることを確認する。</p>
+<h3>背景</h3>
+<p>実装フェーズでは速度優先で重複コードやマイグレーションの仮置きが生じやすいため、リリース前に整理し保守性を確保する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P07</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: 副。重複コードの整理</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: 主。追加マイグレーションの整理</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: application</li><li>Compatibility/migration/backfill: 追加マイグレーションの整理は空DBへの適用順序を変えない範囲に限る。P05で採番したマイグレーション番号(計画時点の暫定番号は0008〜0010)は、依存 feature(feat-skill-analysis-reports, feat-web-screens-actions)側の番号帯と衝突していないかを本 task で再確認し、衝突があれば P05 の確定規則(origin/main と依存 feature ブランチの migrations/ を再走査し既存最大番号+1から連番で振り直す)に従って付け替える</li></ul>
+<h3>成果物</h3>
+<ul><li>整理後の web/, src/, migrations/(P05で確定したマイグレーション番号。計画時点の暫定番号は0008〜0010)</li><li>マイグレーション番号の衝突検査: 実装着手後に付け替えが発生していないか origin/main と依存 feature ブランチの migrations/ 番号帯を突合し、重複があれば付け替えて eval-log/renumber-receipt-feat-ai-analysis-screen-実施日.json(形式は eval-log/renumber-receipt-feat-settings-channel-link-20260924.json に準じる)に記録する</li><li>Consumed artifacts: P07 の受入結果</li><li>Write scope: web/, src/, migrations/</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test</li><li>検証: npx wrangler d1 migrations apply DB --local を空 DB で実行</li><li>受入: 振る舞い変更0件(P06 のテストが引き続き green)</li><li>受入: 空の D1 へ、その時点で確定しているマイグレーション番号(計画時点の暫定番号は0008〜0010)が依存 feature のマイグレーションに続く形で順に成功する</li><li>受入: 番号の重複検査を実行し、衝突がない、または衝突を付け替えて eval-log/renumber-receipt-feat-ai-analysis-screen-実施日.json に記録済みである</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 整理コミットを revert する</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P09</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-07-acceptance">← 前の仕様書</a><a class="pn" href="#task-phase-09-quality-assurance">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-09-quality-assurance" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-09-quality-assurance</h1><p class="spec-src">出典: <code>phase-09-quality-assurance.md</code></p><div class="spec-body"><h2>SYS-AIA-P09 セキュリティと品質の保証</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P09</li><li>phase_ref: P09</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p09, security, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: security</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P08</li><li>classification: confidence 0.95 / P09 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P09.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>依存脆弱性・静的解析・秘匿情報漏えい・iframeサンドボックスなどのセキュリティ/品質観点を検査し、high以上の指摘0件の状態にする。</p>
+<h3>背景</h3>
+<p>機微情報(個人トークン・依頼プロンプト)の取り扱いとHTMLレポートのXSS境界(sandbox iframe)は、確定仕様で明示された制約であり、リリース前に機械的検査で担保する必要がある。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P08</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: 主。脆弱性・秘匿情報・iframeサンドボックスの検査</li><li>Quality: 副。lint/型検査の実行</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/qa-report.md</li><li>Consumed artifacts: P08 の整理結果</li><li>Write scope: docs/feat-ai-analysis-screen/qa-report.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm lint</li><li>検証: npx tsc --noEmit</li><li>検証: pnpm audit --audit-level=high</li><li>受入: high 以上の脆弱性0件</li><li>受入: 個人トークン平文・依頼プロンプト内のトークン平文がリポジトリとログに現れない</li><li>受入: HTMLレポートの iframe に allow-scripts が付いていない</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: qa-report.md の是正事項を P05 へ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P10</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-08-refactoring-migration">← 前の仕様書</a><a class="pn" href="#task-phase-10-final-review">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-10-final-review" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-10-final-review</h1><p class="spec-src">出典: <code>phase-10-final-review.md</code></p><div class="spec-body"><h2>SYS-AIA-P10 最終レビュー</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P10</li><li>phase_ref: P10</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p10, quality, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P09</li><li>classification: confidence 0.95 / P10 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P10.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>依存feature(基盤テーブル所有feature・改善アクション所有feature・共通レイアウト所有feature)の責務範囲を侵していないことと、未解決レビュー指摘が0件であることを最終確認する。</p>
+<h3>背景</h3>
+<p>feature間の責務境界を越えた変更が紛れ込むと、依存feature側の実装と衝突するため、最終レビューで境界逸脱がないことを確認する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P09</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: 主。依存feature境界逸脱の有無とレビュー指摘の収束確認</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/final-review.md</li><li>Consumed artifacts: P09 の qa-report.md</li><li>Write scope: docs/feat-ai-analysis-screen/final-review.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: git diff の全ファイルを scope_in と対応付ける</li><li>受入: scope_out に当たる変更0件(feat-skill-analysis-reports本体・feat-web-screens-actions本体・feat-settings-channel-linkの範囲を侵していない)</li><li>受入: 未解決のレビュー指摘0件</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 指摘を該当 phase へ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P11, SYS-AIA-P12</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-09-quality-assurance">← 前の仕様書</a><a class="pn" href="#task-phase-11-evidence">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-11-evidence" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-11-evidence</h1><p class="spec-src">出典: <code>phase-11-evidence.md</code></p><div class="spec-body"><h2>SYS-AIA-P11 証跡の集約</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P11</li><li>phase_ref: P11</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p11, documentation, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: documentation</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P10</li><li>classification: confidence 0.95 / P11 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P11.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>acceptance 13項目それぞれに対応する実行証跡(テスト結果・スクリーンショット・ログ)を evidence/feat-ai-analysis-screen/ に集約し、索引を作る。</p>
+<h3>背景</h3>
+<p>完了判定の根拠を後から追跡できるように、受入項目ごとの実行証跡を1か所に集約する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P10</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: 主。acceptance 13項目の実行証跡集約</li><li>Operations: N/A: 本 phase の成果物は Operations の変更を含まない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>evidence/feat-ai-analysis-screen/index.json</li><li>evidence/feat-ai-analysis-screen/ 配下の証跡ファイル</li><li>Consumed artifacts: P07〜P10 の成果物</li><li>Write scope: evidence/feat-ai-analysis-screen/</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: index.json の全参照先ファイルが実在することを確認</li><li>受入: 受入13項目すべてに証跡がある</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: index.json を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P13</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-10-final-review">← 前の仕様書</a><a class="pn" href="#task-phase-12-documentation-operations">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-12-documentation-operations" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-12-documentation-operations</h1><p class="spec-src">出典: <code>phase-12-documentation-operations.md</code></p><div class="spec-body"><h2>SYS-AIA-P12 運用手順『AI分析の取消と再実行を扱う』とドキュメント</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P12</li><li>phase_ref: P12</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p12, operations, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: operations</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P10</li><li>classification: confidence 0.95 / P12 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P12.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>取消後の409調査・再実行・アーカイブ誤操作の復旧など運用時に必要な手順をrunbookとして整備し、README等の関連ドキュメントを更新する。</p>
+<h3>背景</h3>
+<p>取消・再実行・週次自動実行・アーカイブ操作は運用中に問い合わせが発生しやすい領域であり、対応手順を事前に文書化しておく必要がある。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P10</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: N/A: 本 phase の成果物は Infrastructure の変更を含まない</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: 副。README等の更新</li><li>Operations: 主。取消/再実行/アーカイブ復旧のrunbook整備</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: documentation</li><li>Compatibility/migration/backfill: N/A: 本 phase の成果物はスキーマ互換性に影響しない</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-ai-analysis-screen/runbook.md</li><li>README.md の更新</li><li>Consumed artifacts: P10 の final-review.md</li><li>Write scope: docs/feat-ai-analysis-screen/runbook.md, README.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: runbook の手順を preview 環境で1回通す</li><li>受入: 初見の担当者が runbook だけで取消後の409調査・再実行・アーカイブ誤操作の復旧を行える</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: ドキュメントを直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-AIA-P13</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-11-evidence">← 前の仕様書</a><a class="pn" href="#task-phase-13-release-deploy">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-13-release-deploy" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-13-release-deploy</h1><p class="spec-src">出典: <code>phase-13-release-deploy.md</code></p><div class="spec-body"><h2>SYS-AIA-P13 CI/CD とリリース</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-AIA-P13</li><li>phase_ref: P13</li><li>feature_package_id: feature-package/feat-ai-analysis-screen</li><li>parent_feature: feat-ai-analysis-screen</li><li>owners: daishiman / tags: p13, infrastructure, ai-analysis-screen / related_nodes: feat-ai-analysis-screen</li><li>workstream_kind: infrastructure</li><li>build_target_kind: application-code</li><li>depends_on: SYS-AIA-P11, SYS-AIA-P12</li><li>classification: confidence 0.95 / P13 phase slot への 1対1 写像 / tasks/feat-ai-analysis-screen/SYS-AIA-P13.md</li><li>tracker_binding_intent: beads</li><li>github_publication: local_only / project_aliases なし / labels なし / milestone なし</li><li>pr_completion_policy: linked_pr_merged_all</li><li>branch_policy: one-task-one-branch / worktree lease 必須 / default-branch reconciliation / assignment_owner=dev-graph-scheduler</li></ul>
+<h3>目的</h3>
+<p>追加マイグレーションの適用とWorkersデプロイをCIパイプラインに組み込み、mainへのpushでリリースが完了する状態にする。</p>
+<h3>背景</h3>
+<p>マイグレーションとデプロイの手動実行は取りこぼしのリスクがあるため、CIパイプラインに組み込み再現性を担保する。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-AIA-P11, SYS-AIA-P12</li><li>Required spec/architecture nodes: feat-ai-analysis-screen, arch-youtube-analytics-system</li><li>Entry gate: implementation_readiness=complete(readiness report: eval-log/plan-readiness-feat-ai-analysis-screen-20260924.json, completeness_verdict PASS)</li><li>Source pin: system-spec-harness v0.1.0 / run-system-spec-compile / assign-system-spec-completeness-evaluator</li><li>Repository context: github:daishiman/youtube-analytics / explicit-cli / .dev-graph/config.json</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>Frontend: N/A: 本 phase の成果物は Frontend の変更を含まない</li><li>Backend: N/A: 本 phase の成果物は Backend の変更を含まない</li><li>API: N/A: 本 phase の成果物は API の変更を含まない</li><li>Data: N/A: 本 phase の成果物は Data の変更を含まない</li><li>Infrastructure: 主。マイグレーション適用とWorkersデプロイのCI組込み</li><li>Security: N/A: 本 phase の成果物は Security の変更を含まない</li><li>Quality: N/A: 本 phase の成果物は Quality の変更を含まない</li><li>Documentation: N/A: 本 phase の成果物は Documentation の変更を含まない</li><li>Operations: 副。デプロイ後の確認手順</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture decisions: arch-youtube-analytics-system</li><li>Deploy unit/environment: application</li><li>Compatibility/migration/backfill: CI でのマイグレーション適用は既存分を含めて順に適用する。適用対象は P08 時点で確定したマイグレーション番号(計画時点の暫定番号は0008〜0010)とし、依存 feature(feat-skill-analysis-reports, feat-web-screens-actions)が作る analysis_requests / reports / actions のマイグレーションより後ろの番号であることを CI 実行前に確認する</li></ul>
+<h3>成果物</h3>
+<ul><li>.github/workflows/ の deploy定義</li><li>wrangler.toml の更新</li><li>Consumed artifacts: P11・P12 の成果物</li><li>Write scope: .github/workflows/, wrangler.toml</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>Publication mode: local_only</li><li>Project aliases / labels / milestone: N/A: GitHub 投影を行わない</li><li>PR completion policy: linked_pr_merged_all(linked PR が default branch へ merge されたとき完了)</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>個人トークンの検証・スキル連携のエクスポート/レポート取込本体と履歴射影本体・週次自動実行の設定(基盤feature)</li><li>改善アクション画面と改善アクション集約の状態遷移・詳細API(改善アクションfeature)</li><li>共通レイアウトと既存共通部品の作成・設定画面の機能(共通レイアウトfeature)</li><li>テナント別 OAuth クライアントの実装設計の見直し</li><li>アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)</li><li>画像の配色の採用と新しい色トークンの追加、全文検索索引の作成</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: Actions の実行ログで migrations apply と deploy の成功を確認</li><li>検証: CI で空 DB からの全マイグレーション適用と、既存 DB への差分マイグレーション適用の両方を実行し、いずれも成功する</li><li>受入: main への push で、P08 時点で確定したマイグレーション番号(計画時点の暫定番号は0008〜0010)の適用と deploy が完了する</li><li>受入: CI の migration 適用が、空 DB からの全件適用と既存 DB への差分適用の両方で通る</li><li>受入: PR で lint/test/E2E が必須チェックになっている</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: main へ merge された PR を CI が検知し、マイグレーション適用(本番)とデプロイを自動実行する</li><li>Rollback: 直前の Workers バージョンへ wrangler rollback し、マイグレーションは前方修正で戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: なし(package 内最終 task)</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/auth.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/maintenance-ops.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/analysis/dashboard-analysis-catalog.md</li><li>docs/screens/03-ai-analysis.png</li><li>features/feat-ai-analysis-screen.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-12-documentation-operations">← 前の仕様書</a><span></span></div></section></main>
+</div>
+<script>
+(function(){
+  function ids(){return Array.prototype.map.call(document.querySelectorAll('.spec-page'),function(s){return s.id;});}
+  function show(){
+    var h=(location.hash||'#index').slice(1); if(!document.getElementById(h)){h='index';}
+    document.querySelectorAll('.spec-page').forEach(function(s){s.hidden=(s.id!==h);});
+    document.querySelectorAll('.spec-nav a, .idx-group a').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href')==='#'+h);});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', show);
+  document.addEventListener('DOMContentLoaded', show); show();
+})();
+</script>
+</body></html>

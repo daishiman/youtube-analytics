@@ -1,8 +1,9 @@
-// React（Vite SPA・React Router）の入口（qa-061）。ナビの5画面は Shell（AppShell）配下。動画・AI分析・改善アクションは後続 feature で中身を作る
+// React（Vite SPA・React Router）の入口（qa-061）。ナビの5画面は Shell（AppShell）配下。動画・改善アクションは後続 feature で中身を作る
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ToastProvider } from "./components/Toast";
+import { AnalysisPage } from "./pages/AnalysisPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { InvitePage } from "./pages/InvitePage";
 import { LoginPage } from "./pages/LoginPage";
@@ -26,12 +27,7 @@ if (root) {
                 path="videos"
                 element={<PlaceholderPage title="動画" lead="動画ごとの指標を確認します" />}
               />
-              <Route
-                path="analysis"
-                element={
-                  <PlaceholderPage title="AI分析" lead="Claude が作った分析レポートを確認します" />
-                }
-              />
+              <Route path="analysis" element={<AnalysisPage />} />
               <Route
                 path="actions"
                 element={<PlaceholderPage title="改善アクション" lead="次に試す改善を管理します" />}

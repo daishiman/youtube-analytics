@@ -2,11 +2,11 @@
 
 > 本書の feature 境界は初回実装時点のもの。後続で収集・CSV取込を同じワークツリーに追加した。最新の実装範囲と残課題は `data-coverage-audit.md` を参照。
 
-最終更新: 2026-09-25。正本は `system-spec/`（qa-089〜qa-099）と `features/feat-dashboard-redesign.context.json`。本書はそれを実装単位（区画、API、テスト）へ対応付ける。
+最終更新: 2026-09-25。正本は `system-spec/`（qa-099〜qa-109）と `features/feat-dashboard-redesign.context.json`。本書はそれを実装単位（区画、API、テスト）へ対応付ける。
 
 ## 1. 目的
 
-`docs/screens/02-dashboard.png` の構成どおりにダッシュボードを作り直す。チャンネル全体と選んだ動画（既定は直近公開10本）の推移・前期比を切り替え、選んだ動画の寄与を全動画の構成比と並べて判断できるようにする。初期画面の問いは選択期間に合わせる。レイアウトは画像に合わせるが、配色は画像のティールを使わず、既存のインディゴ/マゼンタ（`web/styles.css` の CSS 変数）のままにする（qa-091）。
+`docs/screens/02-dashboard.png` の構成どおりにダッシュボードを作り直す。チャンネル全体と選んだ動画（既定は直近公開10本）の推移・前期比を切り替え、選んだ動画の寄与を全動画の構成比と並べて判断できるようにする。初期画面の問いは選択期間に合わせる。レイアウトは画像に合わせるが、配色は画像のティールを使わず、既存のインディゴ/マゼンタ（`web/styles.css` の CSS 変数）のままにする（qa-101）。
 
 ### 集計対象の契約（2026-09-25 再検証）
 
@@ -24,17 +24,17 @@
 
 | qa | 論点 | 決定 | 実装での扱い |
 |---|---|---|---|
-| qa-089 | 既存の仕様・実装との差分 | 仮画面（テナント名と役割だけ）を置き換える | `web/pages/DashboardPage.tsx` を全面的に書き換える |
-| qa-090 | 画像と週次売上ファネルの両立 | 初期表示は画像どおりにし、ファネル一式は「詳しく見る」へ移す（判定ロジックは残す） | `DetailsSection` のファネル区画、`GET /api/dashboard/funnel` |
-| qa-091 | 配色 | 既存のインディゴ/マゼンタ | 新しい色トークンは足さない |
-| qa-092 | 詳細仕様（ヘッダ、KPI、グラフ、表、空状態、API、セキュリティ） | プレビューどおりに承認 | 本書 3〜5 節 |
-| qa-093 | 集計の単位 | 対象セレクタ「チャンネル全体（既定）/動画を選ぶ」。動画を選んだときは合計を出し、推移に動画ごとの線を重ねる | `scope=channel\|videos`、`ScopeSelector` |
-| qa-094 | 動画の選び方 | 公開日の新しい順に直近10本を既定で選ぶ | `DEFAULT_SELECTION = 10` |
-| qa-095 | サムネイルの配信元 | 自サイト経由で配る。CSP の `img-src 'self' data:` は変えない | `GET /api/media/thumbnails/:video_id`、R2 と `media_assets` |
-| qa-096 | 本数の上限 | 上限なし（11本以上も選べる） | `video_ids` を json_each で1パラメータにバインドする |
-| qa-097 | 他テナントの動画 ID | 黙って除外し、自テナント分だけで 200 を返す | `requestedIds.filter(known.has)` |
-| qa-098 | サムネイルの取り直しと削除の予算 | 1通15件、1日3通まで。25日を超えたら取り直し、30日を超えたら削除。1,100本を超えるテナントは1,000本まで。削除は1実行12テナントまで | `src/usecases/thumbnails.ts` の定数 |
-| qa-099 | 期間切替の置き場所 | 共通ヘッダーに統一し、7日を足す（7d/28d/90d/1y/custom、既定は 28d、任意は最大365日）。ページ内に期間タブは置かない | `AppShell` の `PERIODS`、`src/domain/dashboard-period.ts` |
+| qa-099 | 既存の仕様・実装との差分 | 仮画面（テナント名と役割だけ）を置き換える | `web/pages/DashboardPage.tsx` を全面的に書き換える |
+| qa-100 | 画像と週次売上ファネルの両立 | 初期表示は画像どおりにし、ファネル一式は「詳しく見る」へ移す（判定ロジックは残す） | `DetailsSection` のファネル区画、`GET /api/dashboard/funnel` |
+| qa-101 | 配色 | 既存のインディゴ/マゼンタ | 新しい色トークンは足さない |
+| qa-102 | 詳細仕様（ヘッダ、KPI、グラフ、表、空状態、API、セキュリティ） | プレビューどおりに承認 | 本書 3〜5 節 |
+| qa-103 | 集計の単位 | 対象セレクタ「チャンネル全体（既定）/動画を選ぶ」。動画を選んだときは合計を出し、推移に動画ごとの線を重ねる | `scope=channel\|videos`、`ScopeSelector` |
+| qa-104 | 動画の選び方 | 公開日の新しい順に直近10本を既定で選ぶ | `DEFAULT_SELECTION = 10` |
+| qa-105 | サムネイルの配信元 | 自サイト経由で配る。CSP の `img-src 'self' data:` は変えない | `GET /api/media/thumbnails/:video_id`、R2 と `media_assets` |
+| qa-106 | 本数の上限 | 上限なし（11本以上も選べる） | `video_ids` を json_each で1パラメータにバインドする |
+| qa-107 | 他テナントの動画 ID | 黙って除外し、自テナント分だけで 200 を返す | `requestedIds.filter(known.has)` |
+| qa-108 | サムネイルの取り直しと削除の予算 | 1通15件、1日3通まで。25日を超えたら取り直し、30日を超えたら削除。1,100本を超えるテナントは1,000本まで。削除は1実行12テナントまで | `src/usecases/thumbnails.ts` の定数 |
+| qa-109 | 期間切替の置き場所 | 共通ヘッダーに統一し、7日を足す（7d/28d/90d/1y/custom、既定は 28d、任意は最大365日）。ページ内に期間タブは置かない | `AppShell` の `PERIODS`、`src/domain/dashboard-period.ts` |
 
 ## 3. 区画順の対応表（画像 → 実装）
 
@@ -65,19 +65,19 @@
 
 | # | 受入項目（要約） | 根拠 | 区画 / API | 検証方法 |
 |---|---|---|---|---|
-| AC1 | 画像と同じ区画順、既存配色 | qa-089〜092 | `DashboardPage` | E2E E1、スクリーンショット |
-| AC2 | 期間5種、既定 28d、400 の条件、対象を保つ | qa-099 | `resolvePeriod`、`AppShell` | 単体 domain、dashboard-api、E2E E2 |
-| AC3 | 動画選択は直近10本が既定、上限なし、合計と動画ごとの線 | qa-093/094/096 | `ScopeSelector`、`TrendCard` | 単体 dashboard-api、E2E E3 |
-| AC4 | 動画別の実績、並べ替え、構成比（上位+その他、切り口、形式、新旧、上位3本の占有率） | qa-092 | `VideoPerformance`、`buildComposition` | 単体 domain・dashboard-api、E2E E4 |
-| AC5 | KPI の出典バッジと M1 開示文、前期比を記号と色で出す | qa-092 | `KpiCards` | E2E E1 |
-| AC6 | ファネルは開いたときだけ取得し、従来の判定を出す | qa-090 | `DetailsSection`、`getFunnel` | 単体 funnel-api、E2E E5 |
-| AC7 | 空状態5種 | qa-092 | 各区画の空表示 | 単体 dashboard-api（notLinked、noCsv ほか） |
-| AC8 | 閲覧者には書込の操作を出さない。他テナントの ID は黙って除外する | qa-097 | `canEdit`、`requirePermission` | 単体 dashboard-api、E2E E6・E7 |
-| AC9 | Cache-Control、CSP、サムネイルの自サイト配信 | qa-095 | `dashboard-routes.ts` | 単体 thumbnails、E2E E1 |
+| AC1 | 画像と同じ区画順、既存配色 | qa-099〜102 | `DashboardPage` | E2E E1、スクリーンショット |
+| AC2 | 期間5種、既定 28d、400 の条件、対象を保つ | qa-109 | `resolvePeriod`、`AppShell` | 単体 domain、dashboard-api、E2E E2 |
+| AC3 | 動画選択は直近10本が既定、上限なし、合計と動画ごとの線 | qa-103/104/106 | `ScopeSelector`、`TrendCard` | 単体 dashboard-api、E2E E3 |
+| AC4 | 動画別の実績、並べ替え、構成比（上位+その他、切り口、形式、新旧、上位3本の占有率） | qa-102 | `VideoPerformance`、`buildComposition` | 単体 domain・dashboard-api、E2E E4 |
+| AC5 | KPI の出典バッジと M1 開示文、前期比を記号と色で出す | qa-102 | `KpiCards` | E2E E1 |
+| AC6 | ファネルは開いたときだけ取得し、従来の判定を出す | qa-100 | `DetailsSection`、`getFunnel` | 単体 funnel-api、E2E E5 |
+| AC7 | 空状態5種 | qa-102 | 各区画の空表示 | 単体 dashboard-api（notLinked、noCsv ほか） |
+| AC8 | 閲覧者には書込の操作を出さない。他テナントの ID は黙って除外する | qa-107 | `canEdit`、`requirePermission` | 単体 dashboard-api、E2E E6・E7 |
+| AC9 | Cache-Control、CSP、サムネイルの自サイト配信 | qa-105 | `dashboard-routes.ts` | 単体 thumbnails、E2E E1 |
 | AC10 | 360px で横スクロールなし、3サイズの E2E | frontend | `web/styles.css` | E2E E8、3プロジェクト |
-| AC11 | `video_ids` が101本以上でも 200 | qa-098 | `DashboardRepository`（json_each） | 単体 dashboard-api |
-| AC12 | thumbnail 通の subrequest が50件以内、取り直しの順序、30日で削除 | qa-098 | `enqueueThumbnailPasses`、`processThumbnailMessage`、`purgeExpiredThumbnails` | 単体 thumbnails |
-| AC13 | 1,100本を超えるテナントは1,000本まで | qa-098 | `enqueueThumbnailPasses` | 単体 thumbnails |
+| AC11 | `video_ids` が101本以上でも 200 | qa-108 | `DashboardRepository`（json_each） | 単体 dashboard-api |
+| AC12 | thumbnail 通の subrequest が50件以内、取り直しの順序、30日で削除 | qa-108 | `enqueueThumbnailPasses`、`processThumbnailMessage`、`purgeExpiredThumbnails` | 単体 thumbnails |
+| AC13 | 1,100本を超えるテナントは1,000本まで | qa-108 | `enqueueThumbnailPasses` | 単体 thumbnails |
 
 ## 6. 対象外
 

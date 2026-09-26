@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-ai-analysis-screen-r1",
+  "evaluated_digest": "sha256:ea8d1a8d3fcd5fb7c4343c8de669da97ebd43dec5da682ca1b8685ea7bf24855",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "FAIL",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec・workstream-inventory.json・task-graph.json・system-build-handoff.json 間で task_id(SYS-AIA-P01〜P13)・phase_ref・feature_package_id/parent_feature(feat-ai-analysis-screen)が一貫し、各 task のスコープ外一覧も goal-spec.scope_out(個人トークン検証・スキル本体/analysis_history射影本体・週次実行設定・改善アクション画面/actions状態遷移・共通レイアウト新設・OAuthクライアント見直し・アプリ内LLM/因果推論の停止・新色トークン)と完全一致しており、相互矛盾は検出しなかった。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-05-implementation.md#スコープ外",
+        "task-specs/phase-10-final-review.md#受入",
+        "goal-spec.json#scope_out"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "FAIL",
+      "summary": "P01..P13 exact-set は揃い placeholder も検出しないが、goal-spec の invisible_requirements_added が明記する『マイグレーション(0008〜0010の採番)』について、依存 feature である feat-skill-analysis-reports / feat-web-screens-actions がまだ未実装のまま同じ番号帯を必要とする可能性がある旨は goal-spec に明記されているにもかかわらず、13本の task-spec・workstream-inventory.json のどこにも採番の確定規則(実行時に migrations/ を再走査して次番号を取り直す、番号帯を feature 間で事前予約する、等)が書かれていない。P05は migrations/0008_analysis_requests_extension.sql 等を write_scope に固定値でハードコードし、P08は『空のD1へ0008〜0010のマイグレーションが順に成功する』ことしか検証せず、他 feature が先に0008番台を採番した場合の再採番手順・衝突検出手順が欠落している。これは goal-spec 自身が名指しした不可視要件の欠落であり、実装順序次第で CI のマイグレーション適用が壊れる実害を伴うため high finding とする。",
+      "evidence": [
+        "goal-spec.json#source_lineage.qa_refs",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-08-refactoring-migration.md#Verification and evidence",
+        "migrations/ (repo-root, 現存最大 0007)"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "feature-package.json の task_spec_paths/task_node_ids、workstream-inventory.json の task id/graph_node_registration.file_path(tasks/feat-ai-analysis-screen/SYS-AIA-Pxx.md)、task-graph.json の node id、system-build-handoff.json の execution_tasks が全て同一の13件・同一 phase_ref・同一 parent_feature/feature_package_id/repository_id(github:daishiman/youtube-analytics)で一致した。staging-manifest.json 記載の各ファイル sha256 を実ファイルと再計算し全17件が完全一致し、staging 改変や drift は検出しなかった。",
+      "evidence": [
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→…→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向き DAG で、循環・後方 edge・別 feature task 参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致し、feature 間依存(feat-skill-analysis-reports/feat-web-screens-actions/feat-settings-channel-link)は P01 の Entry gate 参照のみに留まり task へコピーされていない。",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/03ai分析",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-ai-analysis-screen-r1"
+      ],
+      "exit_code": 0,
+      "conditions": ["C1", "C2", "C3", "C4"],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:ea8d1a8d3fcd5fb7c4343c8de669da97ebd43dec5da682ca1b8685ea7bf24855\",\n  \"feature_package_id\": \"feature-package/feat-ai-analysis-screen\",\n  \"parent_feature\": \"feat-ai-analysis-screen\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "13b78ce18f6d0160649656445fe43205c93e8ca37d47db054b452d9c049655dc"
+    },
+    {
+      "path": "goal-spec.json",
+      "sha256": "3898702309b14d2a6c0af0d6e02cd12e783a2c0f3160dc460d520670e09015d2"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "8eb5313cdc6e52fb7e0fdc752297eeb8a421552375cab48d82492a9f9f31e076"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "b30a90118c12f12ff70d4a370ab38a323ba159785fa897a412e57f4984170bf4"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "fdb977484a74041e54604cb6c674581d97f0005b454a81ef282421ba9a0b7475"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "ad2b76b07a5976f54c6f078a258c53052d4513a0c6c1f59a9d890e3b41dc7532"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "402a40910d9fcc506245e9b8d03d1cadfb2990fe61779092020eae13d5727d07"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "2254a3cd641f71cc6a24650c5d43a2fca6d099eaaaa41bafc1fc28ba57a0381b"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "fb691a1993c92a3c0b2e705c398c8b1a9ad467cc0c1dfe378cca9934d27449ea"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "bf72c4565b7ca96f0905a1050849af78ff8102197c4d3fd628ac896cdc1206c2"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "a77bea412636015e6456b05213f740fdc2a2c1828573bf0a4c49e6e83e72869f"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "c3dfc1bc57dc73017efd18f96a5d6222e878ed7602e21d92f9811d58eb2f1953"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "8249b6e140c084506e170462373743f443032699b913f29e3da2c26c68a11afb"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "c38894ba64c8a2e4e38660dfb24893a958a23705e4184ed436ec9187fb0bd16a"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "fc693d5af0a939f7c55d131715651d652e5c1ce2fb11277d9af7c7f6aa3633c5"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "42304836b45be7676005e3c32cdda7b2dc11b563735e79ddb96d0a77d83382a8"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "c340c0c20a6400316b9e0ed9345f6499dd8e2691d0103c4408ced2e564ff8af5"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "7258077fd3f1ff726e470e8c00fab48557eb31e54b1eccd104b959bcda6cf137"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "46457e304ef3705d561297d9ab9d6ef3a3135468f0ce20c822763f82acbb4fc6"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:ea8d1a8d3fcd5fb7c4343c8de669da97ebd43dec5da682ca1b8685ea7bf24855)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "high",
+      "bucket": "completeness",
+      "observation": "migrations/0008_analysis_requests_extension.sql・0009_report_archives.sql・0010_actions_source_report.sql の番号が P05/P08 に固定値で書かれているが、同じ番号帯を必要とし得る依存 feature (feat-skill-analysis-reports, feat-web-screens-actions) がまだ実装前であり、どちらが先に0008番台を採番するかの確定規則・衝突検出手順が13本の task-spec のどこにも存在しない。goal-spec.json の invisible_requirements_added でマイグレーション追加自体は不可視要件として明記されているのに、番号帯の排他制御は要件化されていない。実装順序次第でマイグレーション番号が重複し、CI のマイグレーション適用(P13の受入)が失敗する具体的なリスクがある。",
+      "evidence": [
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-08-refactoring-migration.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#受入",
+        "goal-spec.json#screen_mock_grounding.invisible_requirements_added"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "completeness",
+      "observation": "goal-spec.json の invisible_requirements_added にある『実行状況のポーリング制御(待機中・実行中の行がある間だけ10秒ごとに再取得し、document.visibilityState=hidden の間は停止)』と scope_in の『幅900px未満の2カラム縦積み・表のカード化・下部バー固定』について、P04(test-design)の acceptance/verification にも他 phase にも、これらを個別に検証するテストケースへの言及が見当たらない。P04 acceptance は『受入13項目それぞれに少なくとも1つのテストケースがある』『390×844/820×1180/1440×900 のE2E』のみを明記しており、ポーリング停止条件と900px breakpoint 固有の表示切替は goal-spec の受入13項目に文言として現れないため、実装で見落としても機械的に検出できない可能性がある。",
+      "evidence": [
+        "goal-spec.json#screen_mock_grounding.invisible_requirements_added",
+        "goal-spec.json#scope_in",
+        "task-specs/phase-04-test-design.md#Verification and evidence"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "qa-092(取込先が選択中の依頼、未選択なら完了済み依頼を1件自動作成する暗黙の仕様)は goal-spec.scope_in には明記されているが、13本の task-spec の acceptance では『qa-089〜qa-092』という範囲参照でしかまとめて言及されておらず、qa-092固有の『未選択時に依頼を1件作る』分岐を単独でテスト対象と明示した記述は見当たらない。C2 を FAIL とするほどの欠落ではないが追跡性がやや弱い。",
+      "evidence": [
+        "goal-spec.json#scope_in",
+        "task-specs/phase-04-test-design.md#受入"
+      ]
+    }
+  ]
+}

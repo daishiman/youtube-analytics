@@ -1,0 +1,2 @@
+検出なし: 10ファイルを CAUSAL_PATTERNS 6件（src/domain/report-schema.ts）で検査しました
+exit=0

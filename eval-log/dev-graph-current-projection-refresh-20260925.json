@@ -1,0 +1,60 @@
+{
+  "status": "local_derived_projection_refreshed_formal_c14_gate_open",
+  "recorded_at": "2026-09-25T05:19:12+00:00",
+  "scope": [
+    "architecture/graph.json",
+    "eval-log/dev-graph-resync-required-20260922.json"
+  ],
+  "authority": {
+    "state_graph": ".dev-graph/state/graph.json",
+    "state_graph_revision": 14,
+    "state_graph_sha256": "067e101cd1528921774c7bce35535b83ef077fef6830b8a2b60b623e2e9826fb",
+    "confirmed_c02_receipt": "eval-log/dev-graph-spec-import-report-feat-ai-analysis-screen-20260924.json",
+    "confirmed_c02_receipt_sha256": "d3f0d0fe08336c5ef89f6d056a68f25407bac8b7e329755e188d5f998475f766",
+    "checked_nodes": [
+      {
+        "graph_node_id": "spec-youtube-analytics-system",
+        "file_path": "specs/youtube-analytics-system.md",
+        "sha256": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd"
+      },
+      {
+        "graph_node_id": "arch-youtube-analytics-system",
+        "file_path": "architecture/youtube-analytics-system.md",
+        "sha256": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b"
+      }
+    ]
+  },
+  "projection": {
+    "derived_graph_revision_before": 8,
+    "derived_graph_revision_after": 14,
+    "sha256_before": "8c0d88ad99cd87d31f001f5a0323e96bbe9e911550ab61e446452f009f5a4b56",
+    "sha256_after": "c9e322826d2d77dbbecb40963457cf2694b35bc074db9ab6d736b95c64e4575f",
+    "architecture_document_sha256": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b",
+    "node_count": 6,
+    "node_hashes_match_document": true
+  },
+  "gate_current_values": {
+    "source_sha256": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd",
+    "architecture_sha256": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b",
+    "gate_sha256_before": "24ca723733f54aa5749385f8bac4f354273b939d712be84b0d4c6ef196922534",
+    "gate_sha256_after": "18e89ab0c282ee809031837c88baaa66d122aeb4882e4f8d4e7d9b6a84021c4f",
+    "changed_keys_only": [
+      "current_source_digest",
+      "current_architecture_digest"
+    ]
+  },
+  "formal_c14": {
+    "status": "required",
+    "affected_features": [
+      "feat-csv-media-ingest",
+      "feat-skill-analysis-reports",
+      "feat-web-screens-actions"
+    ],
+    "current_feature_source_digests": {
+      "feat-csv-media-ingest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
+      "feat-skill-analysis-reports": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
+      "feat-web-screens-actions": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd"
+    },
+    "reason": "旧3 feature の source_lineage は現行 spec SHA と異なるため、正式 C14 再分解の完了を主張しない"
+  }
+}

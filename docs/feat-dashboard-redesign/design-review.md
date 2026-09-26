@@ -2,17 +2,17 @@
 
 > 本書は初回ダッシュボード設計時点の記録。後続で日次収集とサムネイル送信を追加した。現況は `data-coverage-audit.md` を参照。
 
-最終更新: 2026-09-25。テナント境界、キャッシュ、CSP、Cron と Queue の予算について、観点ごとに対策と判定、是正先を記録する。根拠章は security、backend、infrastructure（qa-095、qa-097、qa-098、qa-099）。
+最終更新: 2026-09-25。テナント境界、キャッシュ、CSP、Cron と Queue の予算について、観点ごとに対策と判定、是正先を記録する。根拠章は security、backend、infrastructure（qa-105、qa-107、qa-108、qa-109）。
 
 ## 観点 × 判定
 
 | # | 観点 | 対策（実装箇所） | 判定 | 是正先 |
 |---|---|---|---|---|
-| R1 | 他テナントの数値を読む | すべての SQL を `tenant_id` とセッションのテナントで絞る（`DashboardRepository` のコンストラクタが `TenantContext` を受け取る）。`video_ids` は自テナントの動画の一覧と突き合わせ、無いものは黙って除外する（qa-097） | 対策済み（単体・E2E E7） | — |
+| R1 | 他テナントの数値を読む | すべての SQL を `tenant_id` とセッションのテナントで絞る（`DashboardRepository` のコンストラクタが `TenantContext` を受け取る）。`video_ids` は自テナントの動画の一覧と突き合わせ、無いものは黙って除外する（qa-107） | 対策済み（単体・E2E E7） | — |
 | R2 | 動画 ID で他テナントの動画の有無を探る | 除外しても応答の形は変わらない。サムネイルは、他テナント、期限切れ、未保存、形式違反のどれでも同じ 404 | 対策済み（単体） | — |
 | R3 | 閲覧者が書き込む | ダッシュボードの3つの API はすべて読み取り（`tenant.read`）。画面は `canEdit`（`content.write`）が false なら CSVアップロードボタンと「…」メニューを出さない。actions の書込 API は feat-web-screens-actions の担当で、サーバ側で編集者以上を強制する | 対策済み（単体・E2E E6） | 書込 API は feat-web-screens-actions |
 | R4 | 利用者ごとの応答が共有キャッシュに残る | `/api/dashboard` と `/api/dashboard/funnel` は `private, no-store`、サムネイルは `private, max-age=3600`。`/api/*` の共通処理は `private` 以外を `no-store` で上書きする | 対策済み（単体） | — |
-| R5 | サムネイルのために CSP を緩める | 自サイト経由（`/api/media/thumbnails/:id`）で配るので、`img-src` は既存のまま（`'self' data:` と、前の feature で入れたチャンネルアイコン用の `yt3` ホスト）。`i.ytimg.com` は足していない（qa-095） | 対策済み（`security-headers.ts` と `public/_headers` に差分なし） | — |
+| R5 | サムネイルのために CSP を緩める | 自サイト経由（`/api/media/thumbnails/:id`）で配るので、`img-src` は既存のまま（`'self' data:` と、前の feature で入れたチャンネルアイコン用の `yt3` ホスト）。`i.ytimg.com` は足していない（qa-105） | 対策済み（`security-headers.ts` と `public/_headers` に差分なし） | — |
 | R6 | サムネイルの取得を踏み台にした SSRF | 取得先は https の `i*.ytimg.com` と `yt*.ggpht.com` だけ。リダイレクトは追わず、画像以外の Content-Type と 2MB 超は保存しない | 対策済み（単体） | — |
 | R7 | AI要約や動画タイトルによる XSS | React のテキスト描画だけを使い、`dangerouslySetInnerHTML` を使わない。ECharts のツールチップは既定の書式器（HTML を組み立てない） | 対策済み（コード確認） | — |
 | R8 | Workers Free の subrequest（1実行50件）を超える | thumbnail 通は1通15件に固定し、consumer は `max_batch_size = 1`。取得の fetch と R2 の put、D1 を足しても50件に収まる | 対策済み（単体「1通の件数は上限までに切り詰める」） | — |

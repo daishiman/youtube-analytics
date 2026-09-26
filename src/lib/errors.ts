@@ -1,15 +1,17 @@
 // エラー形式 {error:{code,message,hint}}（正本 backend 章 API Design Patterns）。一覧は docs/feat-platform-tenant-auth/requirements.md §4
+
 import type { ContentfulStatusCode } from "hono/utils/http-status";
+import { TENANT_LABEL } from "../domain/labels";
 
 export const ERRORS = {
   UNAUTHENTICATED: [401, "ログインが必要です", "ログイン画面からGoogleでログインしてください"],
   FORBIDDEN: [
     403,
     "この操作を行う権限がありません",
-    "ワークスペースのオーナーに権限の変更を依頼してください",
+    `${TENANT_LABEL}のオーナーに権限の変更を依頼してください`,
   ],
   CSRF_REJECTED: [403, "不正なリクエストです", "画面を再読み込みしてからやり直してください"],
-  NOT_FOUND: [404, "対象が見つかりません", "URLや選択中のワークスペースを確認してください"],
+  NOT_FOUND: [404, "対象が見つかりません", `URLや選択中の${TENANT_LABEL}を確認してください`],
   VALIDATION_FAILED: [400, "入力内容に誤りがあります", "入力内容を確認してください"],
   CONSENT_REQUIRED: [
     400,
@@ -31,11 +33,11 @@ export const ERRORS = {
   SIGNUP_CLOSED: [
     403,
     "現在新規の受付を停止しています",
-    "既存ワークスペースのオーナーから招待を受けてください",
+    `既存${TENANT_LABEL}のオーナーから招待を受けてください`,
   ],
   NO_TENANT: [
     403,
-    "所属しているワークスペースがありません",
+    `所属している${TENANT_LABEL}がありません`,
     "招待を受けるか、受付再開をお待ちください",
   ],
   INVITE_NOT_USABLE: [
@@ -50,18 +52,18 @@ export const ERRORS = {
   ],
   ALREADY_MEMBER: [
     409,
-    "すでにこのワークスペースのメンバーです",
-    "ワークスペース切替から選択してください",
+    `すでにこの${TENANT_LABEL}のメンバーです`,
+    `${TENANT_LABEL}切替から選択してください`,
   ],
   LAST_OWNER: [409, "最後のオーナーは外せません", "先に別のメンバーをオーナーにしてください"],
   CHANNEL_ALREADY_LINKED: [
     409,
-    "このチャンネルは別のワークスペースで連携済みです",
+    `このチャンネルは別の${TENANT_LABEL}で連携済みです`,
     "先に連携している側で連携解除してから、もう一度お試しください",
   ],
   CHANNEL_ALREADY_CONNECTED: [
     409,
-    "このワークスペースにはすでにチャンネルが連携されています",
+    `この${TENANT_LABEL}にはすでにチャンネルが連携されています`,
     "別のチャンネルに変えるときは、先に連携解除してください",
   ],
   CHANNEL_DELETION_PENDING: [
@@ -101,7 +103,7 @@ export const ERRORS = {
   ],
   GOOGLE_CLIENT_NOT_CONFIGURED: [
     409,
-    "このワークスペースには、Google Cloud の接続情報がまだ登録されていません",
+    `この${TENANT_LABEL}には、Google Cloud の接続情報がまだ登録されていません`,
     "オーナーが設定画面の「Google Cloud の接続情報」でクライアントIDとシークレットを登録してください",
   ],
   GOOGLE_CLIENT_REJECTED: [
@@ -123,7 +125,32 @@ export const ERRORS = {
   CONFIRM_MISMATCH: [
     400,
     "確認のために入力した名前が一致しません",
-    "ワークスペース名を正確に入力してください",
+    `${TENANT_LABEL}名を正確に入力してください`,
+  ],
+  REQUEST_STATE_CONFLICT: [
+    409,
+    "この依頼はすでに終わっているため更新できません",
+    "新しい依頼を作ってから、もう一度実行してください",
+  ],
+  REQUEST_CANCELED: [
+    409,
+    "この依頼は取消されました",
+    "AI分析画面で再実行するか、新しい依頼を作ってください",
+  ],
+  REPORT_VERSION_CONFLICT: [
+    409,
+    "レポートの版番号が最新ではありません",
+    "もう一度書き出し（export）からやり直してください",
+  ],
+  INVALID_REPORT_JSON: [
+    422,
+    "JSONの形式が正しくありません",
+    "Claude Code が出力した結果JSONをそのまま貼り付けてください",
+  ],
+  PAYLOAD_TOO_LARGE: [
+    413,
+    "送信するデータが大きすぎます",
+    "レポートや画像を小さくしてから、もう一度送ってください",
   ],
   INTERNAL: [500, "内部エラーが発生しました", "時間をおいて再度お試しください"],
 } as const satisfies Record<string, readonly [ContentfulStatusCode, string, string]>;
@@ -134,16 +161,24 @@ export class AppError extends Error {
   readonly code: ErrorCode;
   readonly hint: string;
   readonly status: ContentfulStatusCode;
+  /** 形式に追加する項目（例: INVALID_REPORT_JSON の line）。code/message/hint は上書きしない */
+  readonly extra: Record<string, unknown>;
 
-  constructor(code: ErrorCode, hint?: string) {
-    const [status, message, defaultHint] = ERRORS[code];
-    super(message);
+  constructor(
+    code: ErrorCode,
+    hint?: string,
+    extra: Record<string, unknown> = {},
+    message?: string,
+  ) {
+    const [status, defaultMessage, defaultHint] = ERRORS[code];
+    super(message ?? defaultMessage);
     this.code = code;
     this.status = status;
     this.hint = hint ?? defaultHint;
+    this.extra = extra;
   }
 
   toBody() {
-    return { error: { code: this.code, message: this.message, hint: this.hint } };
+    return { error: { ...this.extra, code: this.code, message: this.message, hint: this.hint } };
   }
 }

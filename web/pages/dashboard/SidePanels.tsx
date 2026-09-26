@@ -1,10 +1,10 @@
-// 右カラム: 最新AI分析と実施中の改善アクション（qa-091）。AI の文章はテキストとしてだけ描く（HTML として解釈しない）
+// 右カラム: 最新AI分析と実施中の改善アクション（qa-101）。AI の文章はテキストとしてだけ描く（HTML として解釈しない）
 import { Link } from "react-router";
 import type { DashboardResponse } from "../../api";
 import { SectionCard } from "../../components/SectionCard";
 import { StatusBadge } from "../../components/StatusBadge";
 import { formatDate } from "../../format";
-import { fmtMetric, slashDate } from "./format";
+import { fmtMetric } from "./format";
 
 // カードだけを見ても、上の選択で中身が変わると誤解しないように各カードで明示する
 const NOT_LINKED = "期間・動画の選択には連動しません。";
@@ -30,10 +30,19 @@ export function LatestReport({ data }: { data: DashboardResponse }) {
               </ol>
             </>
           )}
-          <p className="small muted">詳細画面は準備中です。</p>
+          <p className="small">
+            <Link to={`/analysis?report=${encodeURIComponent(report.reportId)}`}>
+              レポートの詳細を見る
+            </Link>
+          </p>
         </>
       ) : (
-        <EmptyNote title="まだAI分析のレポートがありません" body="AI分析の作成画面は準備中です。" />
+        <EmptyNote
+          title="まだAI分析のレポートがありません"
+          body="AI分析の画面から分析を依頼すると、ここに最新の結論が出ます。"
+          to="/analysis"
+          action="AI分析を開く"
+        />
       )}
     </SectionCard>
   );
@@ -62,11 +71,6 @@ export function ActiveActions({ data }: { data: DashboardResponse }) {
                     <strong>{fmtMetric(a.latestValue, a.unit)}</strong>
                   </p>
                 )}
-                {(a.startedAt || a.endsAt) && (
-                  <p className="small muted">
-                    {slashDate(a.startedAt)} 〜 {slashDate(a.endsAt)}
-                  </p>
-                )}
               </li>
             ))}
           </ul>
@@ -77,7 +81,7 @@ export function ActiveActions({ data }: { data: DashboardResponse }) {
   );
 }
 
-/** 空状態（何が無いか＋次の一手）。qa-091 の5種で共通の形 */
+/** 空状態（何が無いか＋次の一手）。qa-101 の5種で共通の形 */
 export function EmptyNote({
   title,
   body,

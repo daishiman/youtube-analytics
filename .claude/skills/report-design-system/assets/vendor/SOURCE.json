@@ -1,0 +1,18 @@
+{
+  "kit": "aidd-agent-kit",
+  "kit_version": "1.11.0",
+  "kit_commit": "b8399d4",
+  "files": [
+    {
+      "vendor": "hiraga-color-system.css",
+      "kit_path": "skills/jp-web-design/assets/hiraga/hiraga-color-system.css",
+      "color_version": "0.2",
+      "sha256": "b2ee7645c345c1b052035f1dd15bcd294424b19419b797fa84cb6ecd08f51463"
+    },
+    {
+      "vendor": "hiraga-components.css",
+      "kit_path": "skills/jp-web-design/assets/reference/styles.css",
+      "sha256": "319dcbdc6be0d88abe48a0de62918bba16cbdc3a22c837cf7e6fde809af76b49"
+    }
+  ]
+}

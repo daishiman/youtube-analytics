@@ -52,7 +52,7 @@ export type CleanupMessage =
   | { kind: "retention" }
   | { kind: "thumbnail-retention" }
   | { kind: "tenant-cleanup" };
-/** サムネイルの取り直し（1通15件まで・qa-098）。収集の通とは別のキューで送る */
+/** サムネイルの取り直し（1通15件まで・qa-108）。収集の通とは別のキューで送る */
 export type ThumbnailMessage = {
   kind: "thumbnail";
   tenantId: string;

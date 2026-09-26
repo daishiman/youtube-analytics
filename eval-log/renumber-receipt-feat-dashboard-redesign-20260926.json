@@ -1,0 +1,142 @@
+{
+  "receipt_kind": "id-renumber-for-merge",
+  "graph_node_id": "feat-dashboard-redesign",
+  "beads_id": "yta-1y6",
+  "recorded_at": "2026-09-26T04:56:33Z",
+  "merge": {
+    "ours": "9bb2c11",
+    "base": "a5f6741",
+    "main": "e122c27（PR #7 feat-ai-analysis-screen。feat-skill-analysis-reports を含む）"
+  },
+  "reason": "main が先に qa-089〜qa-098・appr-015・appr-016・migrations/0008〜0015 を AI分析(feat-skill-analysis-reports・feat-ai-analysis-screen)で使って merge 済み。公開済みの main の番号を正とし、本 feature 側(qa-089〜qa-103・appr-015/016・0008〜0021)を後ろへずらした",
+  "mapping": {
+    "qa": {
+      "qa-089": "qa-099",
+      "qa-090": "qa-100",
+      "qa-091": "qa-101",
+      "qa-092": "qa-102",
+      "qa-093": "qa-103",
+      "qa-094": "qa-104",
+      "qa-095": "qa-105",
+      "qa-096": "qa-106",
+      "qa-097": "qa-107",
+      "qa-098": "qa-108",
+      "qa-099": "qa-109",
+      "qa-100": "qa-110",
+      "qa-101": "qa-111",
+      "qa-102": "qa-112",
+      "qa-103": "qa-113"
+    },
+    "approval": {
+      "appr-015": "appr-017",
+      "appr-016": "appr-018"
+    },
+    "migrations": {
+      "0008_dashboard_media_assets.sql": "0016_dashboard_media_assets.sql",
+      "0009_video_content_types.sql": "0017_video_content_types.sql",
+      "0010_reporting_raw.sql": "0018_reporting_raw.sql",
+      "0011_analytics_raw.sql": "0019_analytics_raw.sql",
+      "0012_studio_csv.sql": "0020_studio_csv.sql",
+      "0013_reporting_reach_stage.sql": "0021_reporting_reach_stage.sql",
+      "0014_studio_csv_metric_provenance.sql": "0022_studio_csv_metric_provenance.sql",
+      "0015_collection_status.sql": "0023_collection_status.sql",
+      "0016_video_retention_provenance.sql": "0024_video_retention_provenance.sql",
+      "0017_collection_series_status.sql": "0025_collection_series_status.sql",
+      "0018_channel_metadata_freshness.sql": "0026_channel_metadata_freshness.sql",
+      "0019_caption_collection.sql": "0027_caption_collection.sql",
+      "0020_reporting_authorization_retention.sql": "0028_reporting_authorization_retention.sql",
+      "0021_tenant_deletion_gate.sql": "0029_tenant_deletion_gate.sql"
+    }
+  },
+  "merge_method": {
+    "system-spec/spec-state.json": "付け替え後の本 feature 側の qa_log/approval_log/targets/設計本文の差分を、main の spec-state に単一 writer(apply-spec-transition.py)で再生した。PROBLEMS 0",
+    "system-spec/fetched-references.json": "両側の record を target_id 単位で統合し build-fetched-references.py assemble で組み立て直した",
+    "system-spec/*.md": "統合後の spec-state から compile-spec-doc.py で再生成。本 feature 側の章頭の手書き注記(backend・database・frontend・infrastructure・security・ui-ux)は付け替えて戻した",
+    "specs/・architecture/・docs/・features/feat-web-screens-actions.*": "本 feature 側(:2)だけを付け替えてから base/main と 3-way し、残った衝突は文単位で解いた。main 側の qa-089〜qa-098 は main の別の質疑を指すので付け替えていない",
+    "tasks/feat-dashboard-redesign/**・docs/feat-dashboard-redesign/**・migrations/": "本 feature だけのファイルなので、付け替えを1回だけかけた(省略表記 qa-093/094/096 の2番目以降も含む)",
+    "eval-log/*-intermediate.jsonl": "main の行を残し、本 feature だけの行を付け替えて後ろへ足した",
+    "src/・tests/・web/": "main の reports/actions/report_archives/media_assets に合わせてダッシュボードの読み取りを直した(最新レポート=アーカイブ以外の最新版)"
+  },
+  "reopen_not_replayed": {
+    "note": "本 feature 側の reopen 10件は、統合時点で対象セルがすでに確定していたため writer で再実行していない。reopen 後に確定した内容(qa_log と設計本文)は統合済み。記録としてここに残す",
+    "entries": [
+      {
+        "category": "ui-ux",
+        "platform": "web",
+        "reason": "新機能『ダッシュボード刷新(docs/screens/02-dashboard.png)』: 初期表示を画像の構成へ戻し週次売上ファネルを『詳しく見る』へ移す決定(qa-100)と見えない追加仕様(qa-102)を反映するため",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:22:23Z"
+      },
+      {
+        "category": "frontend",
+        "platform": "web",
+        "reason": "新機能『ダッシュボード刷新(docs/screens/02-dashboard.png)』: ダッシュボード画面のコンポーネント・期間タブ・グラフ遅延読込・空状態を反映するため",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:22:23Z"
+      },
+      {
+        "category": "backend",
+        "platform": "web",
+        "reason": "新機能『ダッシュボード刷新(docs/screens/02-dashboard.png)』: GET /api/dashboard の range 契約・集約応答・ファネル遅延取得を反映するため",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:22:23Z"
+      },
+      {
+        "category": "security",
+        "platform": "web",
+        "reason": "新機能『ダッシュボード刷新(docs/screens/02-dashboard.png)』: サムネイル表示のための CSP img-src 追加・AI要約のテキスト描画・キャッシュ禁止を反映するため",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:22:23Z"
+      },
+      {
+        "category": "ui-ux",
+        "platform": "web",
+        "reason": "章に手書きで残る『週次売上ファネル契約』節(先頭4ブロック・既存PNGを正本にしない)が qa-100/qa-102 のダッシュボード刷新決定と矛盾するため、同節を『詳しく見る』移設へ改訂する",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:28:43Z"
+      },
+      {
+        "category": "frontend",
+        "platform": "web",
+        "reason": "章に手書きで残る『週次売上ファネル契約』節(先頭4ブロック・既存PNGを正本にしない)が qa-100/qa-102 のダッシュボード刷新決定と矛盾するため、同節を『詳しく見る』移設へ改訂する",
+        "from": "確定",
+        "reopened_at": "2026-09-24T08:28:43Z"
+      },
+      {
+        "category": "database",
+        "platform": "web",
+        "reason": "r6/r7 で追加した規則(video_ids の json_each 単一バインド、サムネイル30日規則、thumbnail 専用の通、約1,100本を超えた分の削除)が確定セルへ reopen を経ずに書き込まれ、公式制限から導いた事実として qa_log に記録されていないため、公式照合の記録(qa-108)を主根拠にして確定し直す",
+        "from": "確定",
+        "reopened_at": "2026-09-24T09:28:41Z"
+      },
+      {
+        "category": "security",
+        "platform": "web",
+        "reason": "r6/r7 で追加した規則(video_ids の json_each 単一バインド、サムネイル30日規則、thumbnail 専用の通、約1,100本を超えた分の削除)が確定セルへ reopen を経ずに書き込まれ、公式制限から導いた事実として qa_log に記録されていないため、公式照合の記録(qa-108)を主根拠にして確定し直す",
+        "from": "確定",
+        "reopened_at": "2026-09-24T09:28:41Z"
+      },
+      {
+        "category": "infrastructure",
+        "platform": "web",
+        "reason": "r6/r7 で追加した規則(video_ids の json_each 単一バインド、サムネイル30日規則、thumbnail 専用の通、約1,100本を超えた分の削除)が確定セルへ reopen を経ずに書き込まれ、公式制限から導いた事実として qa_log に記録されていないため、公式照合の記録(qa-108)を主根拠にして確定し直す",
+        "from": "確定",
+        "reopened_at": "2026-09-24T09:28:41Z"
+      },
+      {
+        "category": "backend",
+        "platform": "web",
+        "reason": "r6/r7 で追加した規則(video_ids の json_each 単一バインド、サムネイル30日規則、thumbnail 専用の通、約1,100本を超えた分の削除)が確定セルへ reopen を経ずに書き込まれ、公式制限から導いた事実として qa_log に記録されていないため、公式照合の記録(qa-108)を主根拠にして確定し直す",
+        "from": "確定",
+        "reopened_at": "2026-09-24T09:28:41Z"
+      }
+    ]
+  },
+  "related": "eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json",
+  "not_rewritten": [
+    ".dev-graph/published/**(digest 固定の公開 package)",
+    ".dev-graph/state/receipts/**・.dev-graph/handoffs/**",
+    "eval-log/** の過去の記録(completeness-report r8・r9 などは旧番号のまま)",
+    "Beads issue の本文"
+  ]
+}

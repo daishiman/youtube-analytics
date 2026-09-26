@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "staging": ".dev-graph/staging/sdp-feat-ai-analysis-screen-r1",
+  "destination": ".dev-graph/published/feature-package-feat-ai-analysis-screen",
+  "digest": "sha256:0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+  "feature_package_id": "feature-package/feat-ai-analysis-screen",
+  "receipt": ".dev-graph/published/feature-package-feat-ai-analysis-screen/atomic-promotion-receipt.json",
+  "completed_at": "2026-09-24T15:54:55Z"
+}

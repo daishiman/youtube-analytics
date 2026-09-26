@@ -1,28 +1,24 @@
 // ログイン後の全画面に共通の枠（サイドバー＋ヘッダー＋本文＋フッター）。qa-074・qa-075
 // 900px 未満はサイドバーのナビを画面下部のタブへ切り替える
+
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation, useSearchParams } from "react-router";
+import { NavLink, useLocation } from "react-router";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { type Me, ROLE_LABELS } from "../api";
 import { formatDateTime } from "../format";
+import { usePeriod } from "../period";
 import { Alert } from "./Alert";
 import { type IconName, NavIcon } from "./NavIcon";
+import { PeriodSelector } from "./PeriodSelector";
 import { SiteFooter } from "./SiteFooter";
 
 export const NAV_ITEMS: { to: string; label: string; icon: IconName; comingSoon?: boolean }[] = [
   { to: "/", label: "ダッシュボード", icon: "home" },
   { to: "/videos", label: "動画", icon: "video", comingSoon: true },
-  { to: "/analysis", label: "AI分析", icon: "chart", comingSoon: true },
+  { to: "/analysis", label: "AI分析", icon: "chart" },
   { to: "/actions", label: "改善アクション", icon: "bulb", comingSoon: true },
   { to: "/settings", label: "設定", icon: "gear" },
 ];
-
-export const PERIODS = [
-  { key: "7d", label: "7日" },
-  { key: "28d", label: "28日" },
-  { key: "90d", label: "90日" },
-  { key: "1y", label: "1年" },
-  { key: "custom", label: "任意" },
-] as const;
 
 export function screenName(pathname: string): string {
   const hit = NAV_ITEMS.find((item) =>
@@ -96,9 +92,9 @@ export function AppShell({
         </NavLink>
         {me.tenants.length > 0 && (
           <label className="field">
-            <span className="small muted">ワークスペース</span>
+            <span className="small muted">{TENANT_LABEL}</span>
             <select
-              aria-label="ワークスペース切替"
+              aria-label={`${TENANT_LABEL}切替`}
               value={me.currentTenant?.tenantId ?? ""}
               disabled={switchingTenant}
               onChange={(event) => void onSwitchTenant(event.target.value)}
@@ -135,21 +131,9 @@ export function AppShell({
   );
 }
 
-/** 既存のクエリ（scope・video_ids など）を残し、期間だけを差し替えたリンク先（qa-099） */
-export function periodHref(params: URLSearchParams, key: string): string {
-  const next = new URLSearchParams(params);
-  next.set("period", key);
-  if (key !== "custom") {
-    next.delete("from");
-    next.delete("to");
-  }
-  return `?${next.toString()}`;
-}
-
 function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
   const { pathname } = useLocation();
-  const [params] = useSearchParams();
-  const period = params.get("period") ?? "28d";
+  const { period, setPeriod } = usePeriod();
 
   return (
     <header className="app-header">
@@ -158,61 +142,10 @@ function AppHeader({ me, ...actions }: ShellActions & { me: Me }) {
         <span>基本日次の最終成功</span>
         <span>{formatDateTime(me.lastUpdatedAt)}</span>
       </p>
-      <nav className="period-tabs" aria-label="期間">
-        {PERIODS.map((p) => (
-          <Link
-            key={p.key}
-            to={periodHref(params, p.key)}
-            className={p.key === period ? "active" : undefined}
-            aria-current={p.key === period ? "true" : undefined}
-          >
-            {p.label}
-          </Link>
-        ))}
-      </nav>
-      {period === "custom" && <CustomRangeForm />}
+      {/* 期間は ?period= で全画面共有。ほかのクエリ（?request= など）は残す。 */}
+      <PeriodSelector variant="header" period={period} setPeriod={setPeriod} />
       <AccountMenu me={me} {...actions} />
     </header>
-  );
-}
-
-/** 任意期間の開始日・終了日（最大365日。範囲の検証は API が行い、400 の文言を画面に出す） */
-function CustomRangeForm() {
-  const [params, setParams] = useSearchParams();
-  const [from, setFrom] = useState(params.get("from") ?? "");
-  const [to, setTo] = useState(params.get("to") ?? "");
-
-  useEffect(() => {
-    setFrom(params.get("from") ?? "");
-    setTo(params.get("to") ?? "");
-  }, [params]);
-
-  return (
-    <form
-      className="custom-range"
-      aria-label="任意の期間"
-      onSubmit={(event) => {
-        event.preventDefault();
-        const next = new URLSearchParams(params);
-        next.set("period", "custom");
-        next.set("from", from);
-        next.set("to", to);
-        setParams(next);
-      }}
-    >
-      <label>
-        <span className="visually-hidden">開始日</span>
-        <input type="date" required value={from} onChange={(e) => setFrom(e.target.value)} />
-      </label>
-      <span aria-hidden="true">〜</span>
-      <label>
-        <span className="visually-hidden">終了日</span>
-        <input type="date" required value={to} onChange={(e) => setTo(e.target.value)} />
-      </label>
-      <button type="submit" className="button">
-        適用
-      </button>
-    </form>
   );
 }
 
@@ -259,11 +192,11 @@ function AccountMenu({ me, onLogout, onAddTenant, onLeaveTenant }: ShellActions 
         <div className="menu" role="menu" aria-label="アカウントメニュー">
           <p className="small muted menu-email">{me.user.email}</p>
           <button type="button" role="menuitem" onClick={pick(onAddTenant)}>
-            ワークスペースを追加
+            {TENANT_LABEL}を追加
           </button>
           {me.currentTenant && (
             <button type="button" role="menuitem" onClick={pick(onLeaveTenant)}>
-              このワークスペースから脱退
+              この{TENANT_LABEL}から脱退
             </button>
           )}
           <button type="button" role="menuitem" onClick={pick(() => void onLogout())}>

@@ -1,0 +1,79 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/03ai分析/system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。U1〜U9 は confirmed(appr-014)で、G1〜G5・O1〜O5・I1〜I10 はすべて serves でゴールにつながり、宙に浮いた参照はない。ただし意味層で2点の未反映がある(medium)。(1) qa-087(YouTube連携はテナントごとに自分の Google Cloud の OAuth クライアントを持ち込む)が U7 constraints の『他者提供には同意画面の検証が必要(利用者80人超で申請着手)・APIクォータ10,000 units/日』に反映されていない。(2) qa-089〜093 で AI 分析が Web 画面の依頼(A-xxxx)起点になったが、I4『/yt-analyze を実行すると…』・I5『launchd で週次に I4 を自動実行』・O2『反映までの手作業ステップ0』と、依頼のない launchd 実行との関係が決まっていない。",
+      "evidence": ["G-foundation exit0", "G-doc-sync exit0", "requirements_foundation.constraints[Google]", "requirements_foundation.concrete_intents I4/I5", "objectives O2.measure", "qa-087", "qa-093"]
+    },
+    "decision_guidance": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions 6件は、形の上ではどれも比較案、無料案、推奨理由、TCO/fit/security/operations/lock-in、user_decision を持っており、AI の推奨だけで確定した件もない。しかし D-auth は qa-087 の後も reopen も更新もされていない。qa-087 の回答自身が『D-auth の『ログインとYouTube連携を1回の同意で完結』と qa-021 の前提(クォータ・100人上限をアプリ共通で数える)は置き換わる』と宣言しているのに、D-auth には qa-087 の qa_ref も caveat もなく、推奨理由(『ログインを兼ねれば構成が最小』)・operations(『同意画面設定のみ』)・caveat(『80人を超えたら検証申請』)が古いまま残っている。そのため auth/backend/database/maintenance-ops などの『本章に効く確定意思決定』に、同じ章の確定内容(qa-087)と食い違う『1回の同意で完結』がそのまま載っている(high)。",
+      "evidence": ["decisions[D-auth].user_decision.qa_refs に qa-087 なし", "decisions[D-auth].recommendation.comparison_basis.operations", "auth.md:668 / backend.md:906 / database.md:718 / maintenance-ops.md:609", "qa-087.answer"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "C07(一次根拠)は PASS。validate-coverage-matrix は loop/--require-complete/--require-foundation の3モードとも exit0 で、48セル中 未収集0・対象外24(理由はすべて具体的)・確定24(qa_ref の宙浮き0)。category_aggregate の真理値表とも合い、6 platform 行も欠けていない。backend/database/frontend/security/ui-ux の web セルを qa-093 に付け替えた件も、qa_log と appr-015 に正しく接地している。C16 required-info も exit0 で、ungrounded_blocking_items は0。一方、sub-input の C06 は FAIL。軸4(トレーサビリティ・high): qa-093/appr-015 の一括承認文に、個別に質問していない実装判断(依頼作成 1分10件の429、取込 2,000,000 bytes 上限、iframe sandbox の設定、LIKE 検索で最新200版、SHA-256 照合、10秒ポーリング)が混ざっている。しかも qa-037 にあった『詳細はアシスタントが具体化』の免責文言がない。軸2(誘導・medium): qa-088 の『ワークスペース』はエージェントが1案だけ出して利用者が追認した。rubric は C06 の4軸が健全であることを PASS 条件に含むため、本観点は FAIL に寄せる。",
+      "evidence": ["G-matrix exit0 (--require-complete)", "C07 verdict=PASS", "C06 verdict=FAIL (軸2誘導 FAIL / 軸4トレーサビリティ FAIL)", "C16 required-info exit0"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層: 8章すべてに『上流指針(doctrine anchors)』表と『適用された設計知識』節がある。反映欄が『未記入』の行は0件。C13/C15 の knowledge/doctrine/required-info/cross はすべて exit0。意味層: 原則が確定セル要件に具体的に適用されていることを確認した。Clean Architecture は routes→usecases→repositories の内向き依存と adapter への閉じ込め、DDD は analysis-request 集約での一方向の状態遷移と、アクション登録が改善アクション集約だけを書くこと、API Design は {error:{code,message,hint}} の単一形式と 409 REQUEST_CANCELED・422 INVALID_REPORT_JSON、OWASP は他テナントを404・書込は content.write・sandbox iframe+CSP・Origin 検査、HIG/Information Design は4ブロック表示と 900px 未満での縦積み。infrastructure の card 0件は理由付きで確定している。軽微な点として、doctrine 表の反映欄は qa-093(AI分析画面)の適用をまだ引いていない(low)。",
+      "evidence": ["G-knowledge-graph exit0 (4 profile)", "backend.md 上流指針表 / 本章での適用", "security.md 上流指針表", "infrastructure.md 設計知識card 0件の理由記述"]
+    },
+    "doc_freshness": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層の validate-source-citation は exit0(29 target 全件に参照あり・必須フィールドを満たす・host 一致)。内容鮮度層では29件すべてを公式サイトで照合し直し、非公式 host は0件。ただし C08 は3件を挙げた。F1(high): youtube-analytics-api の summary にある『reports.query は youtube.readonly が必要』が、公式 reports.query の Authorization 節(2026-09-16更新)と合わない。公式に載っているのは yt-analytics.readonly/yt-analytics-monetary.readonly/youtube/youtubepartner の4つ。F2(medium): developer-policies の『III.D.2.3(7日以内削除)』は、現行版では III.D.2.1。F3(low): gemini-api の latest_checked_at が、公式ページの更新(2026-09-24)より古い。",
+      "evidence": ["G-citation exit0", "C08 verdict=FAIL", "fetched-references.json:71 youtube-analytics-api summary"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の prompts 18本すべてで、prompt-creator の validate-prompt.py と verify-completeness.py が exit0。評価器側の R1-score/R2-delegate は、L5 の成果状態・原子的な停止条件・固定手順を持たない動的な実行方式を備えている。",
+      "evidence": ["validate-prompt.py 18/18 exit0", "verify-completeness.py 18/18 exit0"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-citation", "name": "validate-source-citation (C08 実行)", "conditions": ["doc_freshness"], "exit_code": 0},
+    {"id": "G-prompt", "name": "validate-prompt.py + verify-completeness.py (18 prompts)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "decision_guidance", "observation": "D-auth が qa-087(テナントごとに OAuth クライアントを持ち込む)の後も更新されていない。推奨理由・operations・80人検証の caveat が古いままで、4章以上の『本章に効く確定意思決定』に『ログインとYouTube連携を1回の同意で完結』が残り、同じ章の qa-087 の確定内容と食い違っている。", "suggested_fix": "elicit(R4-reopen)で D-auth を reopen する。qa-087 を qa_refs に加え、recommendation/comparison_basis(operations・TCO=テナントの GCP 準備の手間)と caveats(検証とクォータはテナントのプロジェクト単位・アプリ共通クライアントはログイン専用)を更新してから compile で再投影する。", "evidence": ["decisions[D-auth]", "qa-087"]},
+    {"severity": "high", "bucket": "matrix_coverage/C06-traceability", "observation": "qa-093/appr-015 の一括承認文に、個別に質問していない実装判断(1分10件の429、2,000,000 bytes 上限、sandbox の設定、LIKE で最新200版、SHA-256 照合、10秒ポーリング)が含まれているのに、qa-037 型の『詳細はアシスタントが具体化』の免責がなく、provenance は『内容を見たうえでの承認』になっている(C06 の判定)。評価者の補足: プレビューに全文が出ていたことは記録されているので、承認がなかったわけではない。ただし承認の粒度を後から検証できない。", "suggested_fix": "elicit で qa-093 の provenance に『具体値はアシスタントが骨格から具体化』の旨を追記するか、セキュリティとレート制限の値(429 の閾値・サイズ上限・sandbox)だけを推奨表示なしの個別質問に切り出して確定し直す(qa-071〜073 の先例と同じ是正)。", "evidence": ["qa-093.provenance", "qa-037", "auth.md:399 の承認範囲縮小の先例"]},
+    {"severity": "high", "bucket": "doc_freshness", "observation": "fetched-references の youtube-analytics-api summary『reports.query は youtube.readonly が必要』が、公式 reports.query の Authorization 節と合わない(C08 F1)。評価者の補足: youtube.readonly は Data API 用にもともと要求しているので、スコープ設計そのものが壊れる可能性は低い。ただし出典の記述は誤っている。", "suggested_fix": "doc-fetch で reports.query の必要スコープを公式原文から取り直し、summary と、それを引いている auth.md などのスコープ根拠の文言を直す。", "evidence": ["fetched-references.json:71"]},
+    {"severity": "medium", "bucket": "foundation_trace", "observation": "U7 constraints の『OAuth 同意画面の検証(利用者80人超で申請着手)・APIクォータ10,000 units/日』に qa-087 が反映されていない。テナントごとのプロジェクトではクォータも検証もテナント単位になる。infrastructure 章のクォータ内訳にも qa-087 への言及がない(qa-087 の出現0件)。", "suggested_fix": "elicit(R0-foundation)で U7 constraints の改訂案をプレビューし、承認を取る。infrastructure の YouTube units 管理をテナントのプロジェクト単位に書き直す。", "evidence": ["requirements_foundation.constraints", "infrastructure.md qa-087 出現0件"]},
+    {"severity": "medium", "bucket": "foundation_trace", "observation": "AI分析が Web の依頼(A-xxxx)起点になったのに、I5(launchd による週次の自動実行)が依頼をどう作るか、または依頼なしで export/報告できるかが決まっていない。スキル側に依頼を作る API がなく、GET /api/skill/export?request_id= で request_id を省略したときの扱いも書かれていない。I4 の『/yt-analyze 実行』と O2 の『手作業ステップ0』も、プロンプトのコピー・貼り付けと JSON 取込という新しい流れに合わせて書き直されていない。", "suggested_fix": "elicit で『launchd 実行時の依頼の扱い(スキルトークンで依頼を作る/request_id を省略可にする)』を質問して確定し、I4/I5/O2 の文言を合わせる。", "evidence": ["concrete_intents I4/I5", "backend.md スキル連携API"]},
+    {"severity": "medium", "bucket": "doc_freshness", "observation": "developer-policies の条項番号 III.D.2.3 は、現行版では III.D.2.1(7日以内削除)に当たる(C08 F2)。", "suggested_fix": "doc-fetch で条項番号を取り直し、引用している章の本文を compile で直す。"},
+    {"severity": "medium", "bucket": "matrix_coverage/C06-leading", "observation": "qa-088 の利用者向けの語『ワークスペース』は、エージェントが1案だけ出して利用者が追認したもので、比べた候補が記録されていない(C06)。", "suggested_fix": "必要なら、2案以上を推奨表示なしで出して選び直してもらう。そうしない場合は、利用者が指定したという事実を provenance に明記する。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection", "observation": "8章の doctrine 表の反映欄に qa-093(AI分析画面)の適用が入っていない(analysis-request 集約・sandbox iframe などは確定内容と本章での適用にはある)。backend の『本章での適用』には、日次化の前の『次の毎時実行で拾い直し』が注記なしで残っている。", "suggested_fix": "compile の再投影のとき、doctrine_applications に qa-093 の適用を足し、古い毎時の記述に qa-049 で置き換わった旨の注記を付ける。"},
+    {"severity": "low", "bucket": "matrix_coverage/C06-leading", "observation": "qa-089〜092 は『2択(AI推奨表示あり)』だが、どちらが推奨だったかが qa_log に記録されていない。", "suggested_fix": "provenance に推奨した option と理由を残す。"},
+    {"severity": "low", "bucket": "doc_freshness", "observation": "gemini-api の latest_checked_at(2026-09-21)が、公式ページの更新(2026-09-24)より古い。内容の乖離はない。", "suggested_fix": "doc-fetch で確認時刻を取り直す。"},
+    {"severity": "info", "bucket": "matrix_coverage", "observation": "C07: 48セル中 未収集0・対象外24・確定24。qa-089〜093 と appr-015 による web セル5件の付け替えは、実体と合って接地している。"},
+    {"severity": "info", "bucket": "prompt_quality", "observation": "prompts 18本すべてで、prompt-creator の2つの validator が exit0。"}
+  ],
+  "gaps": [
+    "[elicit/R4-reopen] D-auth を reopen し、qa-087(テナントごとの OAuth クライアント)を推奨理由・operations・caveats・qa_refs に反映する → compile で各章の『本章に効く確定意思決定』を再投影する",
+    "[elicit/R0-foundation] U7 constraints(検証80人・クォータ10,000/日)を qa-087 に合わせて改訂し、承認を取る。I4/I5/O2 を依頼(A-xxxx)起点の流れに合わせる",
+    "[elicit] launchd の週次実行と analysis_requests の関係(依頼の作り方・request_id を省略できるか)を質問して確定する",
+    "[elicit] qa-093 の承認粒度を是正する(免責文言の追記、またはレート制限・サイズ上限・sandbox の個別確定)",
+    "[doc-fetch] youtube-analytics-api の必要スコープの記述と、developer-policies の条項番号を公式原文で直し、gemini-api の確認時刻を更新する",
+    "[compile] 上記を反映したあと、doctrine 表に qa-093 の適用を足し、backend の毎時の記述に注記を付けて再コンパイルする"
+  ]
+}

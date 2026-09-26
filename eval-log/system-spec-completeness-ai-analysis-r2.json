@@ -1,0 +1,74 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "/Users/dm/orca/workspaces/YouTube分析/03ai分析/system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation と validate-spec-doc-sync はどちらも exit0。r1 の medium 2件は解消した。U7 の Google 行は qa-097/appr-016 で改訂され、ログインはアプリ共通クライアント(機密スコープなし)、YouTube連携の検証要否とクォータ(10,000 units/日)はテナントのプロジェクト単位と明記された。I4 は依頼 A-xxxx → プロンプトのコピー → /yt-analyze → 自動送信または JSON 取込の流れに、I5 は qa-095(スキルが POST /api/skill/requests で依頼を作る)に合わせて書き直された。O2(手作業0)を据え置く理由(自動送信の経路では変わらない)も qa-097 に記録されている。infrastructure の本章適用にもテナントのプロジェクト単位のクォータ(qa-087)が入った。残りは、qa-087/qa-088 の実装設計が auth などの規範節に投影されていない点(medium・後述)と、maintenance-ops に qa-095/qa-087 の運用が入っていない点(low)。",
+      "evidence": ["requirements_foundation.constraints[Google]", "concrete_intents I4/I5", "approval_log appr-016", "qa-097", "design_applications.infrastructure"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "r1 の high(D-auth に qa-087 が未反映)は解消した。D-auth の user_decision.qa_refs に qa-087 が入った。recommendation の rationale・comparison_basis.operations/tco・caveats(検証とクォータはテナントのプロジェクト単位、アプリ共通クライアントはログイン専用なので qa-021 の80人超検証は適用しない、登録の変更・削除で要再連携)、options[0] の goal_fit・free_tier_limits・risks がすべて qa-087 に合わせて更新されている。latest_checked_at は 2026-09-24T14:45:59Z。各章の『本章に効く確定意思決定』も新しい goal_fit で再投影され、『1回の同意で完結』の記述は質疑録の引用以外に残っていない。6件の decision は比較案・無料案・推奨理由・TCO/fit/security/operations/lock-in・user_decision を持ち、AI の推奨だけで確定した件はない。",
+      "evidence": ["decisions[D-auth].recommendation", "decisions[D-auth].user_decision.qa_refs", "frontend.md『本章に効く確定意思決定』"]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "C07(一次根拠)は PASS。validate-coverage-matrix は loop/--require-complete/--require-foundation の3モードとも exit0 で、48セル中 未収集0・対象外22(理由はすべて具体的)・確定26、qa_ref の宙浮きは0。category_aggregate の真理値表とも合い、6 platform 行も欠けていない。C16 の required-info(--state 指定)は ungrounded_blocking_items が空で、block 項目6件はすべて確定セル→qa_ref→qa_log の鎖で接地している。reopen_log index 45-52 の corrections による補記も整合している。C06 の sub-input では、誘導質問・早期停止は PASS、聞き漏れ・トレーサビリティは条件付き。r1 の high(qa-093 の承認粒度)は qa-094 で『具体値はアシスタントが具体化し、値ごとの個別確認はしていない』と利用者の選択で明記され、各章の本章適用にも [注記 qa-094] が入った。後付けではあるが虚偽の承認ではないので、high から medium(受容したリスク)に下げた。qa-096 は推奨表示なしの3択で比較候補を記録し、r1 の誘導の指摘(qa-088)を実体として解消した。",
+      "evidence": ["G-matrix exit0", "G-foundation exit0", "C16 required-info ungrounded_blocking_items=[]", "qa-094", "qa-096", "C06 4軸: 聞き漏れ=条件付き/誘導=PASS/早期停止=PASS/トレース=条件付き"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "機械層: 8章すべてに上流指針(doctrine anchors)の表と『適用された設計知識』の節があり、C13/C14/C15 の knowledge/doctrine/required-info/cross はすべて exit0。意味層: 再確定した6章の本章適用に、qa-095 の設計(POST /api/skill/requests・created_via・閲覧者に降格したトークン発行者は403・画面作成と合算するレート制限・『自動』バッジ)と qa-096 の表示語の置換(表示名は1か所の定数から引く)が、集約とレイヤの境界を守って具体的に入っている。backend には r1 low の [注記 qa-049](毎時→日次)が付いた。残りは次の2点。(1) qa-087/qa-088 の実装設計(テナントの OAuth クライアント登録の保存先・シークレットの暗号化・登録 API・コールバック/更新/revoke でのクライアントの切り替え・設定画面の『Google Cloud の接続情報』と8手順ガイド)が、どの章の design_applications(本章での適用)にも投影されていない。これは medium。(2) doctrine 表の反映欄に qa-093 以降の適用がない(r1 から続く low)。",
+      "evidence": ["G-knowledge-graph exit0 (4 profile)", "design_applications.backend [注記 qa-049][注記 qa-094]", "design_applications.* に oauth_client/クライアントシークレット/接続情報 の語が0件", "migrations/0005_tenant_google_client.sql(実装側には存在)"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層の validate-source-citation は exit0(29 target と 29 reference が一致・必須フィールドを満たす・host 一致)。内容鮮度層では公式を照合し直し、欠落・非公式 host・世代落ち・確認時刻の欠落はいずれも0件。r1 の F1(high)は評価者側の誤りだった。reports.query の公式ページ冒頭の Important 注記に『API requests to this method now require access to the https://www.googleapis.com/auth/youtube.readonly scope.』があり、r1 は Authorization 節の表だけを見て見落としていた。原文を引用した summary は正しい。r1 の F2(medium)も評価者側の誤りだった。生 HTML の ol/li の入れ子を数えると III.D.2.c(Revocation).i が正しく、旧番号 III.D.2.3/III.D.2.1 は md に0件で、security.md の引用とも合っている。gemini-api など3件は 2026-09-24T14:48:15Z に取り直されていて、公式の Last updated 2026-09-24 とも一致する。",
+      "evidence": ["G-citation exit0 (C08)", "https://developers.google.com/youtube/analytics/reference/reports/query Important 注記", "https://developers.google.com/youtube/terms/developer-policies III.D.2.c.i", "https://ai.google.dev/gemini-api/docs/pricing Last updated 2026-09-24"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の prompts 18本すべてで、prompt-creator の validate-prompt.py --input と verify-completeness.py --input が exit0(失敗0件)。評価器の R1-score/R2-delegate は、L5 の成果状態・原子的な停止条件・固定手順を持たない実行方式を備えている。",
+      "evidence": ["G-prompt 18/18 exit0"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"},
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"},
+    {"id": "G-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["foundation_trace"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state (C07 実行)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "status ok / ungrounded_blocking_items: []"},
+    {"id": "G-citation", "name": "validate-source-citation (C08 実行)", "conditions": ["doc_freshness"], "exit_code": 0},
+    {"id": "G-prompt", "name": "validate-prompt.py --input + verify-completeness.py --input (18 prompts)", "conditions": ["prompt_quality"], "exit_code": 0}
+  ],
+  "findings": [
+    {"severity": "medium", "bucket": "design_knowledge_reflection/compile-projection", "observation": "qa-087(テナントごとの OAuth クライアント持ち込み)と qa-088 の準備手順ガイドの実装設計が、どの章の design_applications(本章での適用=規範節)にも入っていない。auth.web セルの qa_refs には qa-087 があるが、auth の本章適用には『どのクライアントで連携・更新・revoke するか』『クライアントシークレットの保存と暗号化』『登録の変更で要再連携』の記述がない。database にはクライアント登録を保存するテーブルがなく、backend には登録・削除の API がなく、ui-ux/frontend には設定画面の『Google Cloud の接続情報』フォームと8手順ガイドがない。要件自体は各章の質疑録(qa-087 の回答全文)と D-auth に残っていて、実装側には migrations/0005_tenant_google_client.sql がある。つまり規範節と実装が食い違っている。", "suggested_fix": "elicit(R4-reopen)で auth/database/security/backend/ui-ux/frontend の web セルを開き、qa-087/qa-088 の実装設計(0005 migration と実装に合わせた列・API・画面部品・暗号化・要再連携の遷移)を design_applications に追記して内容承認を取る。そのあと compile で再投影する。", "evidence": ["design_applications.auth(クライアント/シークレットの語が0件)", "matrix.auth.web.qa_refs に qa-087", "migrations/0005_tenant_google_client.sql"]},
+    {"severity": "medium", "bucket": "matrix_coverage/C06-missed-collection", "observation": "qa-094 は r1 の high(qa-093 の承認粒度)を『値ごとの個別確認はしていない』と明記する但し書きで処理した。利用者が AskUserQuestion で選んだ記録(basis=user-decision)なので虚偽ではない。ただし、429 の閾値(1分10件)・取込の上限 2,000,000 bytes・sandbox の属性・SHA-256 照合・10秒の再取得は、今も個別に確認されていない(受容したリスク。C06 の判定は条件付き)。", "suggested_fix": "実装の段階で、セキュリティとレート制限の値(429 の閾値・サイズ上限・sandbox の属性)に食い違いや運用上の問題が出たら、qa-071〜073 の先例にならって推奨表示なしの個別質問で確定し直す。今の時点で追加の差し戻しは要らない。", "evidence": ["qa-094", "design_applications.backend/security の [注記 qa-094]"]},
+    {"severity": "low", "bucket": "foundation_trace/maintenance-ops", "observation": "maintenance-ops の web セルは今回 reopen されておらず、本章適用に qa-095 の運用(launchd の /yt-analyze が POST /api/skill/requests で依頼を作る・個人トークンに content.write が要る・発行者が閲覧者に降格すると403で止まる)と qa-087 の運用(テナントのクライアントシークレットの更新や削除による要再連携の runbook・YouTube units をテナントのプロジェクト単位で監視)が入っていない。", "suggested_fix": "次の reopen のときに maintenance-ops.web へ、launchd 実行の前提(トークンの権限)と runbook の追加(テナントの OAuth クライアント差し替え)を加える。", "evidence": ["design_applications.maintenance-ops(qa-087/qa-095 の出現0件)"]},
+    {"severity": "low", "bucket": "design_knowledge_reflection", "observation": "8章の doctrine 表の反映欄に qa-093 以降(AI分析画面・qa-095〜097)の適用が入っていない(r1 から続く low)。", "suggested_fix": "compile の再投影のとき、doctrine_applications に analysis-request 集約・sandbox iframe・スキル依頼作成の認可などの適用を足す。"},
+    {"severity": "low", "bucket": "matrix_coverage/C06-traceability", "observation": "qa-089〜092 のどれが推奨案だったかは qa-094 の補足にまとめて書かれているだけで、qa-089〜092 の各エントリには入っていない。また、再確定した6つの web セルの qa_ref がすべて qa-097(U7/I4/I5 の改訂承認)になっていて、各セルの直接の根拠(database=qa-095、ui-ux/frontend=qa-096 など)との対応が弱い。宙浮きはなく、qa_refs と C16 の接地は取れている(C07/C06 の low)。", "suggested_fix": "C01 の単一 writer で、各 qa の provenance に推奨した option を足し、各セルの qa_ref を reopen の理由に最も近い qa に張り替える(または qa_ref の意味を『最終合意 qa』として明文化する)。"},
+    {"severity": "info", "bucket": "doc_freshness", "observation": "r1 の F1(youtube.readonly)と F2(条項番号)は評価者側の誤判定だったと C08 が公式原文で確認した。是正側の判断(原文を引用した summary・III.D.2.c.i)が正しい。r1 のこの2件は撤回する。"},
+    {"severity": "info", "bucket": "decision_guidance", "observation": "r1 の high(D-auth に qa-087 が未反映)と、foundation の medium2件(U7 と I4/I5・launchd 時の依頼の扱い)は、qa-095/qa-097/appr-016 と D-auth の更新で実体として解消した。"},
+    {"severity": "info", "bucket": "prompt_quality", "observation": "prompts 18本すべてで、prompt-creator の2つの validator(--input 指定)が exit0。"}
+  ],
+  "gaps": [
+    "[非ブロッキング/elicit R4-reopen→compile] qa-087/qa-088 の実装設計(クライアント登録の保存先・暗号化・登録API・クライアント切り替え・接続情報フォームと8手順ガイド)を、auth/database/security/backend/ui-ux/frontend の design_applications に投影する(medium)",
+    "[非ブロッキング/実装段階] qa-094 で受容した未確認の具体値(429 の閾値・サイズ上限・sandbox)に問題が出たら、推奨表示なしの個別質問で確定し直す(medium)",
+    "[非ブロッキング/elicit→compile] maintenance-ops に qa-095/qa-087 の運用を追記し、doctrine 表に qa-093 以降の適用を足し、qa_ref の特定性と qa-089〜092 の推奨記録を整える(low)"
+  ]
+}

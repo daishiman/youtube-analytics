@@ -1,4 +1,5 @@
 // テナント: 所属一覧・追加作成（MAX_TENANTS で受付停止）・選択テナントの切替・画面用の自分の情報
+import { TENANT_LABEL } from "../domain/labels";
 import { newId } from "../lib/crypto";
 import { AppError } from "../lib/errors";
 import { type Deps, iso, maxTenants, platform } from "./common";
@@ -20,7 +21,7 @@ export async function isSignupClosed(deps: Deps): Promise<boolean> {
 export async function createTenant(deps: Deps, session: CurrentSession, name: unknown) {
   const trimmed = typeof name === "string" ? name.trim() : "";
   if (trimmed.length < 1 || trimmed.length > 60) {
-    throw new AppError("VALIDATION_FAILED", "ワークスペース名は1〜60文字で入力してください");
+    throw new AppError("VALIDATION_FAILED", `${TENANT_LABEL}名は1〜60文字で入力してください`);
   }
   const repo = platform(deps);
   const tenantId = newId();

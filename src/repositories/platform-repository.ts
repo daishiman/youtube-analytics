@@ -1,4 +1,4 @@
-// テナントをまたぐ管理操作（ログイン・セッション・テナント作成・招待トークン照合）。
+// テナントをまたぐ管理操作（ログイン・セッション・テナント作成・招待トークンと個人トークンの照合）。
 // テナント内の読み書きは TenantScopedRepository を使い、ここに tenant_id を省いた業務クエリを足さない。
 import type { InvitableRole, Role } from "../domain/tenant-context";
 
@@ -40,6 +40,12 @@ export interface InviteLookupRow {
   accepted_at: string | null;
   revoked_at: string | null;
   tenant_name: string;
+}
+
+export interface SkillTokenOwnerRow {
+  tenant_id: string;
+  user_id: string;
+  role: Role;
 }
 
 export class PlatformRepository {
@@ -204,6 +210,29 @@ export class PlatformRepository {
       )
       .bind(sessionIdHash, now)
       .first<SessionRow>();
+  }
+
+  /**
+   * スキル API の個人トークンを token_hash で引く。失効していない・テナントが生きている・
+   * 発行者がまだメンバーであるものだけを受け、最終利用時刻を記録する。役割は tenant_members から読み直す
+   */
+  async authenticateSkillToken(tokenHash: string, now: string): Promise<SkillTokenOwnerRow | null> {
+    const row = await this.db
+      .prepare(
+        `SELECT st.tenant_id, st.token_id, st.user_id, tm.role
+           FROM skill_tokens st
+           JOIN tenant_members tm ON tm.tenant_id = st.tenant_id AND tm.user_id = st.user_id
+           JOIN tenants t ON t.tenant_id = st.tenant_id AND t.deleted_at IS NULL
+          WHERE st.token_hash = ?1 AND st.revoked_at IS NULL`,
+      )
+      .bind(tokenHash)
+      .first<SkillTokenOwnerRow & { token_id: string }>();
+    if (!row) return null;
+    await this.db
+      .prepare("UPDATE skill_tokens SET last_used_at = ?3 WHERE tenant_id = ?1 AND token_id = ?2")
+      .bind(row.tenant_id, row.token_id, now)
+      .run();
+    return { tenant_id: row.tenant_id, user_id: row.user_id, role: row.role };
   }
 
   async setSessionTenant(sessionIdHash: string, tenantId: string | null): Promise<void> {

@@ -26,7 +26,7 @@ test("ログイン画面: 同意するまで Google ログインは押せず、�
   await page.goto("/privacy");
   await expect(
     page.getByText(
-      "オーナーが招待したメンバーには、そのワークスペースのチャンネルのデータが表示されます。",
+      "オーナーが招待したメンバーには、そのチャンネル管理のチャンネルのデータが表示されます。",
     ),
   ).toBeVisible();
 });
@@ -59,9 +59,9 @@ test("閲覧者には書込ボタンが出ない", async ({ page }) => {
   await expect(page.getByRole("tablist", { name: "取込の種類" })).toHaveCount(0);
 });
 
-test("ワークスペースを切り替えると役割が変わる", async ({ page }) => {
+test("チャンネル管理を切り替えると役割が変わる", async ({ page }) => {
   await devLogin(page, "owner@example.com");
-  const select = page.getByLabel("ワークスペース切替");
+  const select = page.getByLabel("チャンネル管理切替");
   await select.selectOption({ label: "テストチャンネルA（オーナー）" });
   await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
   await select.selectOption({ label: "別チャンネルB（閲覧者）" });

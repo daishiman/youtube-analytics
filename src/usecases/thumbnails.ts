@@ -1,4 +1,4 @@
-// サムネイルの保存・配信・削除（qa-095・qa-098）。YouTube の画像は自サイト経由で配り、CSP img-src は 'self' data: のまま。
+// サムネイルの保存・配信・削除（qa-105・qa-108）。YouTube の画像は自サイト経由で配り、CSP img-src は 'self' data: のまま。
 // サムネイルは Analytics 以外の認可データ（YouTube API Developer Policies III.E.4）なので、25日で取り直し、
 // 30日を超えたものは配らず Cron 役割①で R2 と media_assets から消す
 import { jstToday } from "../domain/dashboard-period";
@@ -219,8 +219,8 @@ export async function processThumbnailMessage(
     await env.MEDIA.put(key, bytes, { httpMetadata: { contentType } });
     const written = await db
       .prepare(
-        `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at)
-         SELECT ?1, ?2, ?3, 'thumbnail', ?4, ?5, ?6, ?7, ?8
+        `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at, created_at)
+         SELECT ?1, ?2, ?3, 'thumbnail', ?4, ?5, ?6, ?7, ?8, ?8
           WHERE EXISTS (
             SELECT 1 FROM videos v JOIN channels c ON c.tenant_id = v.tenant_id
               AND c.channel_id = v.channel_id JOIN tenants t ON t.tenant_id = c.tenant_id

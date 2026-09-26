@@ -32,7 +32,7 @@ project_id: "feature-package-feat-dashboard-redesign"
 pull_request_linkages: []
 purpose: null
 related_nodes: ["feat-dashboard-redesign"]
-resource_scope: ["web/components/AppShell.tsx", "web/pages/DashboardPage.tsx", "web/pages/dashboard/", "web/components/", "web/api.ts", "web/styles.css", "src/http/dashboard-routes.ts", "src/http/app.ts", "src/usecases/dashboard*.ts", "src/usecases/thumbnails.ts", "src/repositories/dashboard-repository.ts", "src/lib/errors.ts", "src/index.ts", "src/env.ts", "migrations/0008_dashboard_media_assets.sql", "scripts/seed-local.sql", "wrangler.toml", "package.json", "pnpm-lock.yaml"]
+resource_scope: ["web/components/AppShell.tsx", "web/pages/DashboardPage.tsx", "web/pages/dashboard/", "web/components/", "web/api.ts", "web/styles.css", "src/http/dashboard-routes.ts", "src/http/app.ts", "src/usecases/dashboard*.ts", "src/usecases/thumbnails.ts", "src/repositories/dashboard-repository.ts", "src/lib/errors.ts", "src/index.ts", "src/env.ts", "migrations/0016_dashboard_media_assets.sql", "scripts/seed-local.sql", "wrangler.toml", "package.json", "pnpm-lock.yaml"]
 scope_in: []
 scope_out: []
 source_lineage: {"origin_kind": "system-dev-planner", "source_plugin": "system-dev-planner", "source_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/task-specs/phase-05-implementation.md", "source_version": "0.1.0", "source_digest": "8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d", "imported_at": "2026-09-24T15:08:34Z"}
@@ -61,11 +61,11 @@ updated_at: "2026-09-24T15:08:34Z"
 
 ## 目的
 
-DashboardPage を画像どおりに刷新し(対象セレクタ・KPI 4枚・日次推移・動画別の実績と構成比・最新AI分析・改善アクション・詳しく見る)、GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id を実装する。web/components/AppShell.tsx の PERIODS へ 7d を追加して 7d/28d/90d/1y/custom(省略時28d)にし、期間リンクは既存クエリ(scope/video_ids等)を保持して period だけ差し替えるよう修正する。ダッシュボードはページ内の期間タブを持たず ?period= を読むだけにする。migrations/0008_dashboard_media_assets.sql で videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets を system-spec database 章の列定義に沿って読み取りに必要な列だけ CREATE TABLE IF NOT EXISTS し、media_assets に fetched_at・source_url と (tenant_id, kind, fetched_at) 索引を追加する。thumbnail 通と Cron 役割①(30日超削除)を src/index.ts の scheduled ハンドラへ追加し、wrangler.toml に thumbnail 通用の Cron トリガーを登録する。scripts/seed-local.sql へダッシュボード用テストデータ(seed-tenant-a に動画12本・90日分の日次指標・レポート1版・アクション2件・週次ファネル)を追加し、ローカル画面確認を可能にする。
+DashboardPage を画像どおりに刷新し(対象セレクタ・KPI 4枚・日次推移・動画別の実績と構成比・最新AI分析・改善アクション・詳しく見る)、GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id を実装する。web/components/AppShell.tsx の PERIODS へ 7d を追加して 7d/28d/90d/1y/custom(省略時28d)にし、期間リンクは既存クエリ(scope/video_ids等)を保持して period だけ差し替えるよう修正する。ダッシュボードはページ内の期間タブを持たず ?period= を読むだけにする。migrations/0016_dashboard_media_assets.sql で videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets を system-spec database 章の列定義に沿って読み取りに必要な列だけ CREATE TABLE IF NOT EXISTS し、media_assets に fetched_at・source_url と (tenant_id, kind, fetched_at) 索引を追加する。thumbnail 通と Cron 役割①(30日超削除)を src/index.ts の scheduled ハンドラへ追加し、wrangler.toml に thumbnail 通用の Cron トリガーを登録する。scripts/seed-local.sql へダッシュボード用テストデータ(seed-tenant-a に動画12本・90日分の日次指標・レポート1版・アクション2件・週次ファネル)を追加し、ローカル画面確認を可能にする。
 
 ## 背景
 
-feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー `?period=` へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。
+feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-099〜qa-109 に根拠を持つ(qa-099〜qa-108 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-109 は期間切替を全画面共通の AppShell ヘッダー `?period=` へ統一する新規決定、appr-013 は appr-017 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0016_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。
 
 ## 前提条件
 
@@ -86,10 +86,10 @@ feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.pn
 - web/ のダッシュボード画面と共通コンポーネント(AppShell の PERIODS 拡張を含む)
 - src/http/ の集約API・ファネルAPI・サムネイルAPI ルートとミドルウェア
 - src/usecases/・src/repositories/ の読み取りユースケースとリポジトリ
-- migrations/0008_dashboard_media_assets.sql
+- migrations/0016_dashboard_media_assets.sql
 - scripts/seed-local.sql の追記(ローカル確認用テストデータ)
 - src/index.ts の scheduled ハンドラ追加分と wrangler.toml の Cron トリガー
-- Write scope: web/components/AppShell.tsx, web/pages/DashboardPage.tsx, web/pages/dashboard/, web/components/, web/api.ts, web/styles.css, src/http/dashboard-routes.ts, src/http/app.ts, src/usecases/dashboard*.ts, src/usecases/thumbnails.ts, src/repositories/dashboard-repository.ts, src/lib/errors.ts, src/index.ts, src/env.ts, migrations/0008_dashboard_media_assets.sql, scripts/seed-local.sql, wrangler.toml, package.json, pnpm-lock.yaml(echarts 追加)
+- Write scope: web/components/AppShell.tsx, web/pages/DashboardPage.tsx, web/pages/dashboard/, web/components/, web/api.ts, web/styles.css, src/http/dashboard-routes.ts, src/http/app.ts, src/usecases/dashboard*.ts, src/usecases/thumbnails.ts, src/repositories/dashboard-repository.ts, src/lib/errors.ts, src/index.ts, src/env.ts, migrations/0016_dashboard_media_assets.sql, scripts/seed-local.sql, wrangler.toml, package.json, pnpm-lock.yaml(echarts 追加)
 
 ## Tracker publication and completion
 
@@ -107,9 +107,9 @@ feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.pn
 - Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)
 - AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)
 - 動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)
-- 画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)
-- YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)
-- AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)
+- 画像のティール配色(qa-101 で既存インディゴ/マゼンタを維持と確定)
+- YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-105 で自サイト経由と確定)
+- AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-109)
 
 ## Verification and evidence
 

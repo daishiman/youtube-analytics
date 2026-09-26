@@ -13,7 +13,7 @@ import { chartColors } from "./chartColors";
 import { fmtShare, slashDate } from "./format";
 import { SourceBadge } from "./KpiCards";
 
-/** サムネイルは自サイト経由（qa-095）。未保存・読込失敗は頭文字の代替表示 */
+/** サムネイルは自サイト経由（qa-105）。未保存・読込失敗は頭文字の代替表示 */
 export function Thumbnail({
   video,
 }: {

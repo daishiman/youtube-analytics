@@ -1,6 +1,6 @@
 # ダッシュボード・分析解析カタログ（CSV起点）
 
-> **画面構成の履歴資料**: 本書の第3節と `docs/screens/prompts/02-dashboard.prompt.txt` は初期の週次ファネル案です。現在のダッシュボード画面・期間・集計対象は `docs/feat-dashboard-redesign/requirements.md` と `system-spec/ui-ux.md` の qa-089〜qa-099 を正本とします。M1 の計算式は本書第2節が定義しますが、現行の `video_daily_metrics` だけでは必要な総再生時間と動画長を保持していません。取込機能の実装時に列・算式をそろえる必要があります。
+> **画面構成の履歴資料**: 本書の第3節と `docs/screens/prompts/02-dashboard.prompt.txt` は初期の週次ファネル案です。現在のダッシュボード画面・期間・集計対象は `docs/feat-dashboard-redesign/requirements.md` と `system-spec/ui-ux.md` の qa-099〜qa-109 を正本とします。M1 の計算式は本書第2節が定義しますが、現行の `video_daily_metrics` だけでは必要な総再生時間と動画長を保持していません。取込機能の実装時に列・算式をそろえる必要があります。
 
 - 位置づけ: CSV 指標と AI 分析（Claude Code の report-design-system skill）で**あらかじめ決めておく内容**の正本。画面構成は上記の現行要件を優先する。
 - 基準データ: YouTube Studio「コンテンツ」エクスポート（`表データ.csv` / `グラフデータ.csv` / `合計.csv`）と、既存分析 `yt-report/2026-09-manju-youtube-start`（brief / results / ideas / analysis.mjs）。
@@ -166,5 +166,6 @@
 
 - 入力: 期間・動画・派生指標・切り口・週次事業ファネル・目標・（あれば）維持曲線・文字起こし・画像キー・コメント。
 - 履歴入力: 同一テナント・同一チャンネルの完了済み分析を新しい順に最大5版。結論・要因・対象ファネル段・改善アクション・baseline/result・下流結果・版番号だけを`analysis_history`として渡し、HTML本体は重複させない。0件は初回分析として正常。
-- 出力 JSON: `brief`（問い・仮説）/ `results`（5原因指標、結果指標、target_gap、改善候補・全指標目標達成・判定保留のいずれか）/ `history_review`（参照版、前回仮説の当否、施策効果、前回からの差分）/ `psych_findings`（考え・感情・行動・根拠・確信度）/ `ideas` / `actions`（対象ファネル段付き）/ `report_html`。
+- 出力 JSON: 問いと仮説、5原因指標と結果指標・target_gap と「改善候補・全指標目標達成・判定保留」のいずれか、履歴の振り返り（参照版、前回仮説の当否、施策効果、前回からの差分）、心理の読み解き（考え・感情・行動・根拠・確信度）、打ち手の案、改善アクション（対象ファネル段付き）、HTML レポートを含む。キーと型の正本はスキルの `compute.mjs`（buildReportJson）の実出力とし、`src/domain/report-schema.ts` の型と parseReport で検査する（合わなければ 422。見本は `tests/fixtures/skill-analysis-report.json`）。この節にはキーを写さない（2026-09-25 のユーザー決定）。
+- 生成: `/yt-analyze` はリポジトリ同梱の `.claude/skills/report-design-system` を無改変で使う。`report.mjs init` に書き出しデータを渡し、`brief.json`(問い・仮説と反証条件)と `analysis.mjs`(5原因指標・target_gap・前回版との差分・仮説判定の再計算)を記入して `report.mjs build` を通す。build 合格の単一HTMLを `report_html` に、`analysis.mjs` の計算結果から上記の出力 JSON を組み立てる。数値と判定を手入力しない。
 - 取込時に JSON を検証し、不正なら取込を拒否して理由を1行で表示する。

@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "sdp-feat-skill-analysis-reports-r1",
+  "feature_id": "feat-skill-analysis-reports",
+  "graph_node_id": "feat-skill-analysis-reports",
+  "artifact_kind": "feature",
+  "repository_id": "github:daishiman/youtube-analytics",
+  "purpose": "システム内で LLM を呼ばずに、各利用者の Claude Code 上で売上ファネルの目標差・下流結果・直近5版からの差分を分析し、その結果を版管理されたレポートとして取り込めるようにする",
+  "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、リポジトリ同梱の report-design-system スキルで数値と仮説判定をコード再現した、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
+  "scope_in": [
+    "(tenant_id,user_id)単位の個人トークン発行(平文1回表示・SHA-256 保存)と失効",
+    "analysis_requests(待機中→実行中→完了|失敗)と GET/POST /api/analysis-requests",
+    "GET /api/skill/export(行ごとの source 付与、M1〜M10 と週次診断のYouTube側入力はStudio CSV由来のみ、週次事業実績・目標・判定保留理由を含む)",
+    "同一tenant+channelの完了済み直近5版を結論・要因・対象ファネル段・action・baseline/result・下流結果・版番号に絞ったanalysis_historyとしてexport",
+    "5つの原因指標と結果指標を問う分析、負のtarget_gap最小を改善候補とし、全指標0以上なら候補なしと示す非因果的な出力",
+    "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード",
+    "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存",
+    "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較",
+    "Claude Code 用 /yt-analyze スキル: GET /api/skill/export の出力を入力データとして、リポジトリ同梱の .claude/skills/report-design-system を無改変で呼び、report.mjs init→brief.json と analysis.mjs の記入→report.mjs build を行う。build 合格の単一HTMLを report_html とし、catalog §6 の結果JSON(brief/results/history_review/psych_findings/ideas/actions)は analysis.mjs の計算結果から組み立てて POST /api/skill/reports へ送る",
+    "report-design-system の作法による分析記述: 5原因指標の actual/target/target_gap・結果指標・前回版との差分は analysis.mjs で再計算し、各要因で統計的事実と解釈を分け、仮説は反証条件付きで採用/棄却/判定保留を判定する(比較は Mann-Whitney・比率の信頼区間など同スキルの記述統計の範囲)",
+    "運営者 Mac の launchd 週次実行"
+  ],
+  "scope_out": [
+    "レポート閲覧画面と改善アクション画面(feat-web-screens-actions)",
+    "アプリ内 LLM 呼出し",
+    "因果推論・予測",
+    "トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)",
+    "AI分析画面向けの依頼取消・再実行・進捗段階・POST /api/skill/requests(週次自動実行の依頼作成)・アーカイブ版の履歴除外・画面からのJSON取込(feat-ai-analysis-screen)",
+    "report-design-system スキル本体の改変(更新は .claude/report-design-system.ORIGIN.md の手順で取込元から丸ごと差し替える)と、同スキル対象外の重回帰・機械学習・生存分析"
+  ],
+  "acceptance": [
+    "/yt-analyze 1回で依頼→書き出し→HTML と JSON の反映まで手作業0で完了する",
+    "分析結果に週次5段ファネル・下流結果・目標未達が最大の改善候補、全指標目標達成、または判定保留理由があり、因果を断定しない",
+    "同一tenant+channelの完了済み直近5版だけを履歴に使い、前回仮説の当否・施策効果・参照版番号を新規版へ保存する",
+    "履歴0件は初回分析として成功し、別tenant/channelの履歴は混ざらない",
+    "改善アクションの効果比較に対象ファネル段と下流結果が含まれる",
+    "同じ Idempotency-Key の二重送信で版が増えない",
+    "過去の版は更新されない",
+    "他テナントのトークンでは export できない",
+    "export の各行が source(api|studio_csv|business_csv)を持つ",
+    "/yt-analyze の report_html は .claude/skills/report-design-system の report.mjs build 合格物で、結果JSONの数値・target_gap・仮説判定は同じ分析フォルダの analysis.mjs を再実行した値と一致する",
+    "各要因が統計的事実と解釈を分けて持ち、仮説は反証条件と採用/棄却/判定保留の判定を持つ。相関や前後関係だけで原因を断定する文が0件",
+    "report-design-system は取込元と diff -r で一致する無改変のままで、YouTube 向けの差分は /yt-analyze と brief.json・analysis.mjs 側だけにある"
+  ],
+  "architecture_refs": [
+    "architecture/youtube-analytics-system.md",
+    "specs/youtube-analytics-system.md",
+    "system-spec/index.md",
+    "system-spec/00-requirements-definition.md",
+    "system-spec/backend.md",
+    "system-spec/security.md",
+    "system-spec/database.md",
+    "system-spec/maintenance-ops.md",
+    "docs/analysis/dashboard-analysis-catalog.md",
+    ".claude/skills/report-design-system/SKILL.md",
+    ".claude/report-design-system.ORIGIN.md"
+  ],
+  "invisible_requirements_grounding": {
+    "source": "system-spec-harness confirmed system-spec と docs/analysis/dashboard-analysis-catalog.md、.claude/skills/report-design-system の実ファイル行を grep/Read で接地確認した(この feature は画面を持たないため screen_mock_grounding の代わりに置く)",
+    "invisible_requirements_added": [
+      "個人トークンは平文を1回だけ表示しDBはハッシュ保存、失効可能(system-spec/auth.md L109 qa-021『Claude Code用個人トークン(平文は1回表示・DBはハッシュ)』、system-spec/database.md L783 の tenant_invites token_hash SHA-256 と同様の方式をスキルトークンにも適用)",
+      "他テナントのトークンでは export を拒否する(system-spec/00-requirements-definition.md L39 O4『テナント間のデータ越境と権限外の操作をなくす』、system-spec/backend.md L962 の TenantScopedRepository が tenant_id 無しのクエリを組めない設計方針)",
+      "export の各行に source(api|studio_csv|business_csv)を付与し、M1〜M10と週次診断のYouTube側入力はStudio CSV由来だけで計算する(system-spec/backend.md L962『/api/skill/export は行ごとに source を付け、M1〜M10 は CSV 由来の行からだけ計算して返す』、docs/analysis/dashboard-analysis-catalog.md L43)",
+      "直近5版のanalysis_historyは同一tenant+channelの完了済みだけを対象とし、別tenant/channelを混ぜない(system-spec/backend.md L952-953『同じtenant_id + channel_idの完了済みレポートを新しい順に最大5版返す…別テナント・別チャンネルの履歴は混ぜない』、system-spec/database.md L772)",
+      "履歴0件でも初回分析として成功する(system-spec/backend.md L953『履歴が0件でも初回分析として正常処理する』)",
+      "Idempotency-Keyで二重に版を作らない(system-spec/backend.md L962『POST /api/skill/reportsは request_id+版番号をIdempotency-Keyとして二重送信で版を増やさない』)",
+      "過去の版は追記のみ(UPDATEしない)で、history_versions_usedを保存する(system-spec/database.md L783『版は追記のみ(過去版を更新しない)を不変条件とする』、system-spec/backend.md L954『新しいレポートはhistory_versions_usedと…前回からの差分を持つ。過去版は更新しない』)",
+      "因果を断定しない非因果的出力とし、負のtarget_gap最小を改善候補、全指標0以上なら候補なしとする(system-spec/database.md L767『target_gap < 0の原因指標だけを候補にし…全指標が0以上なら全指標目標達成とし、候補を作らない。因果関係は表さない』、docs/analysis/dashboard-analysis-catalog.md L47)",
+      "report_htmlは.claude/skills/report-design-systemのreport.mjs build合格物である(.claude/skills/report-design-system/SKILL.md L18-24『init→build』build合格のHTMLを成果物として渡す、docs/analysis/dashboard-analysis-catalog.md L166)",
+      "結果JSONの数値・target_gap・仮説判定はanalysis.mjsを再実行した値と一致する(.claude/skills/report-design-system/SKILL.md L52『数値と仮説の判定はLLMが手入力せず、analysis.mjsで再現する』、docs/analysis/dashboard-analysis-catalog.md L166)",
+      "仮説には反証条件を持たせ、採用/棄却/判定保留を判定し、要因ごとに統計的事実と解釈を分離する(比較はMann-Whitney・比率の信頼区間など同スキルの記述統計の範囲)(docs/analysis/dashboard-analysis-catalog.md L106-121 §5.2 定量仮説テンプレート、L152-160 §5.5 レポートの構成、.claude/skills/report-design-system/scripts/stats.mjs L12-13 mannWhitney/rateCIの実装)",
+      "report-design-system本体は無改変で取込元とdiff -r一致を保ち、YouTube向け差分は/yt-analyzeとbrief.json・analysis.mjs側だけに置く(.claude/report-design-system.ORIGIN.md L6『取込方式: vendoring(無改変コピー)』L9『更新方法: 取込元とdiff -rで差分を確認し、無改変のまま丸ごと差し替える』)",
+      "運営者Macのlaunchdによる週次実行(system-spec/00-requirements-definition.md L84 I5『運営者はlaunchdで週次にI4を自動実行する。自動実行ではスキルが個人トークンで依頼を作ってから分析する(qa-095)』)",
+      "transcripts と media のスキル経由アップロード(system-spec/backend.md L962『POST /api/skill/transcripts(SRT/VTT/Whisper結果を時刻付きで保存)/ POST /api/skill/media(縮小画像をR2へ・キーをmedia_assetsへ)』)",
+      "analysis_requestsの状態遷移(待機中→実行中→完了|失敗)とPATCH /api/skill/requests/:id(system-spec/database.md L783 basic 11テーブルの analysis_requests(A-0001形式, 待機中|実行中|完了|失敗)、system-spec/backend.md L962『スキル連携API(個人トークン): PATCH /api/skill/requests/:id に progress・stage・status・error を受け』。取消状態はfeat-ai-analysis-screen側の差分でありscope_outで明記)",
+      "アプリ内でLLMを呼ばない(D-ai-engine=claude-code-skill)(system-spec/00-requirements-definition.md L70 U8制約『システム側はLLMを呼ばない(心理分析もClaude Code側で行う)』、L123 D-ai-engine『claude-code-skill:Claude Code上のreport-design-systemスキル』)"
+    ]
+  },
+  "value_section": {
+    "purpose_plain": "運営者や他のYouTubeクリエイターが、自分のClaude Code上でシステムに費用0円のまま週次の売上ファネル目標差・下流結果・過去の分析履歴を分析し、その結果を版管理されたレポートとしてシステムへ反映できるようにする機能です。アプリ内ではLLMを呼ばず、各利用者が自分のClaude Code契約の範囲でreport-design-systemスキルを実行し、その計算結果と単一HTMLレポートをアップロードします。",
+    "essential_problem": "YouTube Studioの数値だけでは、伸びた/落ちた要因と次の打ち手を根拠付きで出すのに手間がかかる。本feature は、システム側でLLM費用や運用負担を持たずに、各利用者のClaude Code上のコード実行(analysis.mjs)で数値・target_gap・仮説判定を再現可能な形で計算し、因果を断定しない非因果的な改善候補と週次診断結果を、版管理された追記専用のレポートとしてシステムに反映することで、『次に何をすべきか』を根拠付きで継続的に判断できる状態を作る。",
+    "what_users_can_do": [
+      "Claude Code上で /yt-analyze を実行し、GET /api/skill/export で取得した自分のテナントのデータと直近5版の分析履歴をもとに、週次5段ファネル・下流結果・改善候補を分析できる",
+      "report-design-system スキル(無改変)のreport.mjs init→analysis.mjs記入→report.mjs buildで、build合格の単一HTMLレポートと、その計算結果と一致する結果JSONを作れる",
+      "作った結果をPOST /api/skill/reportsでアップロードし、Idempotency-Keyにより同じ依頼への二重送信で版が増えないことを保証しながら、追記専用の新しい版としてシステムに反映できる",
+      "自分の個人トークンを平文で1回だけ確認し、以後はハッシュ保存されたトークンで安全にスキル連携APIを呼び続けられ、不要になれば失効できる",
+      "運営者は自分のMacのlaunchdで週次自動実行を設定し、手作業なしで毎週の分析を継続できる",
+      "改善アクションの対象ファネル段と同じ原因指標・下流結果を使って、過去の施策の効果を前後比較できる"
+    ]
+  },
+  "source_lineage": {
+    "feature_context": {
+      "path": "features/feat-skill-analysis-reports.context.json",
+      "handoff_path": ".dev-graph/handoffs/plan-input-feat-skill-analysis-reports.context.json",
+      "graph_node_id": "feat-skill-analysis-reports",
+      "feature_digest": "sha256:0e193dc8fff6e28e10938303df2f1567759bed90f46a16d073658679d9fc7b2b",
+      "updated_at": "2026-09-24T23:08:28Z"
+    },
+    "feature_definition": {
+      "path": "features/feat-skill-analysis-reports.md",
+      "confirmation_status": "confirmed",
+      "confirmation_evidence_ref": "eval-log/dev-graph-decompose-audit-feat-skill-analysis-reports-report-design-system-20260925.json",
+      "evaluated_digest": "sha256:514510cff3ebe47f93470df0ce57f8025042fa6a5296aa32eee8dac234c06525"
+    },
+    "system_spec_source": {
+      "plugin": "system-spec-harness",
+      "version": "0.1.14",
+      "compile_entrypoint": "run-system-spec-compile",
+      "completeness_entrypoint": "assign-system-spec-completeness-evaluator",
+      "source_digest": "sha256:6a6ae6e166e7edeb669acd7776a915ecb528d90a6c60a8125186c046af08fbac",
+      "readiness_report": "eval-log/plan-readiness-feat-skill-analysis-reports-20260925.json",
+      "readiness_status": "complete",
+      "completeness_report": "eval-log/system-spec-completeness-ai-analysis-r2.json",
+      "completeness_verdict": "PASS"
+    },
+    "qa_refs": [
+      "qa-021",
+      "qa-025",
+      "qa-026",
+      "qa-027",
+      "qa-029",
+      "qa-035",
+      "qa-037",
+      "qa-053",
+      "qa-054",
+      "qa-060",
+      "qa-083",
+      "qa-089",
+      "qa-090",
+      "qa-091",
+      "qa-092",
+      "qa-093",
+      "qa-094",
+      "qa-095",
+      "qa-096",
+      "qa-097",
+      "appr-015",
+      "appr-016"
+    ],
+    "dependency_note": "depends_on(feat-youtube-daily-collection, feat-csv-media-ingest)は dev-graph 所有のfeature間依存であり、本goal-specでは feature 分割や依存内容の複製を行わない。両依存feature が提供するテーブル・APIは、本featureの実行にとって『前提として存在する境界』として扱う(2026-09-25時点でfeat-csv-media-ingestは未計画)。",
+    "downstream_boundary_note": "scope_out[4] の差分(依頼取消・再実行・進捗段階・POST /api/skill/requests・アーカイブ版の履歴除外・画面からのJSON取込)は下流 feature feat-ai-analysis-screen(SYS-AIA-P01..P13 計画済み)が持つ。境界の正本は .dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json の scope_in/scope_out であり、本 package には取り込まない。",
+    "weekly_run_boundary_note": "launchd 週次実行(I5/qa-095)の分担: SAR は launchd の設定(plist・runner)と /yt-analyze 全体(.claude/skills/yt-analyze/ の排他 write_scope)を持ち、request_id 無し起動時に POST /api/skill/requests を呼んで依頼を作ってから export へ進むクライアント側分岐も SAR が実装する(AIA の write_scope に .claude/skills/yt-analyze/ が無いため)。POST /api/skill/requests のエンドポイント本体(個人トークン・created_via='skill'・content.write 喪失時403)は feat-ai-analysis-screen(SYS-AIA-P05 の src/)が持つ。dev-graph の機能依存は AIA→SAR の向きであり SAR→AIA の依存は追加しない。SAR ではクライアント分岐を backend.md の契約に基づくスタブで検証し、運営者 Mac での launchd 本番有効化は AIA のエンドポイント出荷後に行う運用前提とする(P12/P13)。"
+  },
+  "checklist_status": {
+    "graph_node_id_matches_feature_id": true,
+    "purpose_goal_scope_acceptance_non_empty": true,
+    "architecture_refs_resolve_in_caller_repo": true,
+    "system_spec_source_confirmed_or_pass": true,
+    "lineage_has_path_version_digest": true,
+    "no_feature_split_or_task_generation": true
+  },
+  "updated_at": "2026-09-24T23:08:28Z",
+  "generated_at": "2026-09-25T00:00:00Z"
+}

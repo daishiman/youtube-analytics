@@ -1,5 +1,5 @@
 // ダッシュボード刷新（feat-dashboard-redesign）の E2E。docs/feat-dashboard-redesign/test-design.md の E1〜E8 に対応する
-// seed（scripts/seed-local.sql）のテストチャンネルA（動画12本・90日分）を実 API で3サイズ回す。owner@ は他 spec がワークスペースを
+// seed（scripts/seed-local.sql）のテストチャンネルA（動画12本・90日分）を実 API で3サイズ回す。owner@ は他 spec がチャンネル管理を
 // 切り替えるので、テナントAだけに所属する editor@（編集者）と viewer@（閲覧者）を使い並列実行での干渉を避ける
 import { expect, type Page, test } from "@playwright/test";
 import { devLogin } from "./helpers";
@@ -35,7 +35,7 @@ test.describe("ダッシュボード", () => {
     await expect(page.locator(".header-updated")).toContainText("基本日次の最終成功");
     await expect(page.locator("#period-insight")).toContainText("観測された変化");
     await expect(page.locator("#period-insight")).toContainText("次に見る動画");
-    await expect(page.locator("#latest-report")).toContainText("直近4週の振り返り");
+    await expect(page.locator("#latest-report")).toContainText("8月の振り返り");
     await expect(page.locator("#active-actions .action-item")).toHaveCount(2);
     // 右カラムのカードは上の選択に連動しないことを、カード単体でも読めるようにする
     await expect(page.locator("#latest-report")).toContainText("期間・動画の選択には連動しません");
@@ -45,7 +45,10 @@ test.describe("ダッシュボード", () => {
   test("E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる", async ({ page }) => {
     await devLogin(page, "editor@example.com");
     await openDashboard(page, "?scope=videos&video_ids=seedvid02,seedvid04");
-    await page.getByRole("navigation", { name: "期間" }).getByRole("link", { name: "7日" }).click();
+    await page
+      .getByRole("navigation", { name: "期間" })
+      .getByRole("button", { name: "7日" })
+      .click();
     await expect(page).toHaveURL(/period=7d/);
     await expect(page).toHaveURL(/video_ids=seedvid02%2Cseedvid04|video_ids=seedvid02,seedvid04/);
     await expect(page.locator(".period-note")).toContainText("7日間");
@@ -64,7 +67,10 @@ test.describe("ダッシュボード", () => {
         },
       }),
     );
-    await page.getByRole("navigation", { name: "期間" }).getByRole("link", { name: "7日" }).click();
+    await page
+      .getByRole("navigation", { name: "期間" })
+      .getByRole("button", { name: "7日" })
+      .click();
     await expect(page).toHaveURL(/period=7d/);
     await expect(page.getByRole("alert")).toContainText("取得できません");
     await expect(page.locator(".dashboard-body")).toHaveCount(0);
@@ -112,14 +118,17 @@ test.describe("ダッシュボード", () => {
     await expect(page.locator("#period-insight a")).toHaveCount(0);
   });
 
-  test("分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す", async ({ page }) => {
+  test("分析とアクションの情報カード: 最新レポートは AI分析の詳細へつなぎ、アクションの編集は準備中と示す", async ({
+    page,
+  }) => {
     await devLogin(page, "editor@example.com");
     await openDashboard(page);
-    await expect(page.locator("#latest-report")).toContainText("詳細画面は準備中");
+    await expect(
+      page.locator("#latest-report a[href='/analysis?report=seed-report-2']"),
+    ).toBeVisible();
     await expect(page.locator("#active-actions")).toContainText("内容の編集と状態の更新は準備中");
-    await expect(page.locator("#latest-report a[href^='/analysis']")).toHaveCount(0);
     await expect(page.locator("#active-actions a[href^='/actions']")).toHaveCount(0);
-    await expect(page.locator("#active-actions .action-item")).toHaveCount(2);
+    await expect(page.locator("#active-actions .action-item")).toHaveCount(1);
   });
 
   test("E3 動画を選ぶ: 既定は直近10本、11本以上も選べる", async ({ page }) => {

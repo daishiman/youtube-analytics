@@ -42,7 +42,7 @@ function hasScopes(scopes: string): boolean {
 
 const allowedConnection = currentLinkFrom();
 
-/** ワークスペース境界と OAuth 連携世代を D1 で確認してから収集する。 */
+/** チャンネル管理（テナント）の境界と OAuth 連携世代を D1 で確認してから収集する。 */
 export class YoutubeCollectorRepository {
   constructor(private readonly db: D1Database) {}
 

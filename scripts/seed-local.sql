@@ -6,6 +6,23 @@
 --   テストチャンネルA = partial / 別チャンネルB = partial（owner@ は閲覧者なので「再連携」なし、other-owner@ は「再連携」あり）
 --   partial@example.com … 自分がオーナーの「一部許可チャンネルP」= partial（「再連携」ボタンあり）
 -- E2Eが作るdev:e2e-*も依存順に掃除し、反復実行でMAX_TENANTSへ近づかないようにする。
+-- AI分析（feat-skill-analysis-reports / feat-ai-analysis-screen）の表。tenants より先に消す（外部キー）
+-- reports 系は追記のみ（UPDATE を拒否するトリガ）だが DELETE は通る
+DELETE FROM report_archives WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM actions WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM comment_emotions WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM psych_findings WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM findings WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM reports WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+DELETE FROM analysis_requests WHERE tenant_id LIKE 'seed-%' OR tenant_id IN (
+  SELECT tenant_id FROM tenants WHERE created_by IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%'));
+
 DELETE FROM consent_records WHERE user_id IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%');
 DELETE FROM oauth_tokens WHERE user_id IN (SELECT user_id FROM users WHERE google_sub LIKE 'dev:e2e-%')
   OR tenant_id IN (
@@ -136,7 +153,7 @@ INSERT INTO audit_log (audit_id, tenant_id, user_id, action, detail, at) VALUES
   ('seed-audit-3', 'seed-tenant-a', 'seed-owner', 'token.issue', '{"tokenId":"seed-token-2"}', '2026-09-15T00:00:00.000Z');
 
 -- ===== ダッシュボード（feat-dashboard-redesign）のローカル確認用データ =====
--- テストチャンネルA（seed-tenant-a）に動画12本・直近90日の日次指標・CSV取込分・AI分析・改善アクション・週次ファネルを入れる。
+-- テストチャンネルA（seed-tenant-a）に動画12本・直近90日の日次指標・CSV取込分・週次ファネルを入れる。AI分析と改善アクションは下の AI分析画面用データ（本ファイル末尾）を共用する。
 -- 日付は SQLite の date('now', '-N days') で相対指定するので、いつ流しても直近のデータになる。
 INSERT INTO videos (tenant_id, video_id, channel_id, title, published_at, content_type, thumbnail_url, fetched_at) VALUES
   ('seed-tenant-a', 'seedvid01', 'UCseedChannelA000000000', 'CSVの文字化けを3分で直す方法', strftime('%Y-%m-%dT09:00:00.000Z','now','-2 days'), 'long', 'https://i.ytimg.com/vi/seedvid01/mqdefault.jpg', strftime('%Y-%m-%dT03:00:00.000Z','now','-0 days')),
@@ -1580,18 +1597,6 @@ INSERT INTO channel_daily_metrics (tenant_id, channel_id, date, views, engaged_v
   ('seed-tenant-a', 'UCseedChannelA000000000', date('now','-88 days'), 628, 502, 7536, 4.7, strftime('%Y-%m-%dT03:00:00.000Z','now','-2 days')),
   ('seed-tenant-a', 'UCseedChannelA000000000', date('now','-89 days'), 666, 532, 7992, 4.85, strftime('%Y-%m-%dT03:00:00.000Z','now','-2 days')),
   ('seed-tenant-a', 'UCseedChannelA000000000', date('now','-90 days'), 706, 564, 8472, 5.0, strftime('%Y-%m-%dT03:00:00.000Z','now','-2 days'));
-INSERT INTO reports (tenant_id, report_id, channel_id, version, title, conclusion, status, created_by, created_at) VALUES
-  ('seed-tenant-a', 'seed-report-1', 'UCseedChannelA000000000', 1, '8月の振り返り', '「つまずき解決型」の動画が視聴を引っ張っていました。', '完了', 'seed-owner', strftime('%Y-%m-%dT10:00:00.000Z','now','-30 days')),
-  ('seed-tenant-a', 'seed-report-2', 'UCseedChannelA000000000', 2, '直近4週の振り返り', '「つまずき解決型」の長尺が視聴の中心です。Shorts は表示回数は多いものの、長尺への移動は少なめでした。', '完了', 'seed-owner', strftime('%Y-%m-%dT10:00:00.000Z','now','-2 days'));
-INSERT INTO findings (tenant_id, finding_id, report_id, ordinal, claim) VALUES
-  ('seed-tenant-a', 'seed-finding-1', 'seed-report-2', 1, '「マクロを使わず毎月の集計を自動化する」が公開後も長く見られ続けています。'),
-  ('seed-tenant-a', 'seed-finding-2', 'seed-report-2', 2, 'タイトルに「直し方」が入った動画はクリック率が平均より高めです。'),
-  ('seed-tenant-a', 'seed-finding-3', 'seed-report-2', 3, 'Shorts から長尺への誘導はまだ少なく、説明欄のリンクを見直す余地があります。'),
-  ('seed-tenant-a', 'seed-finding-0', 'seed-report-1', 1, '（旧版）8月は公開本数が少なめでした。');
-INSERT INTO actions (tenant_id, action_id, channel_id, title, status, metric_label, baseline_value, latest_value, unit, started_at, ends_at, created_by, created_at) VALUES
-  ('seed-tenant-a', 'seed-action-1', 'UCseedChannelA000000000', 'サムネイルに「直し方」を大きく入れる', '実施中', 'クリック率', 4.2, 5.1, '%', date('now','-10 days'), date('now','+18 days'), 'seed-owner', strftime('%Y-%m-%dT10:00:00.000Z','now','-10 days')),
-  ('seed-tenant-a', 'seed-action-2', 'UCseedChannelA000000000', 'Shorts の説明欄に長尺へのリンクを置く', '効果測定中', '長尺への移動数', 120, 168, '回', date('now','-28 days'), date('now','-0 days'), 'seed-editor', strftime('%Y-%m-%dT10:00:00.000Z','now','-28 days')),
-  ('seed-tenant-a', 'seed-action-3', 'UCseedChannelA000000000', '（完了済み）投稿時間を 19 時にそろえる', '完了', NULL, NULL, NULL, NULL, date('now','-80 days'), date('now','-50 days'), 'seed-owner', strftime('%Y-%m-%dT10:00:00.000Z','now','-80 days'));
 INSERT INTO business_funnel_weekly (tenant_id, channel_id, week_start, route_label, route_visits, inquiries, closed_deals, revenue_jpy, imported_at, imported_by) VALUES
   ('seed-tenant-a', 'UCseedChannelA000000000', date('now','+9 hours','-6 days','weekday 1','-7 days'), 'LINE', 110, 13, 3, 450000, strftime('%Y-%m-%dT%H:%M:%fZ','now'), 'seed-owner'),
   ('seed-tenant-a', 'UCseedChannelA000000000', date('now','+9 hours','-6 days','weekday 1','-14 days'), 'LINE', 105, 13, 3, 450000, strftime('%Y-%m-%dT%H:%M:%fZ','now'), 'seed-owner'),
@@ -1612,3 +1617,88 @@ INSERT INTO funnel_targets (tenant_id, channel_id, metric_id, target_value, min_
   ('seed-tenant-a', 'UCseedChannelA000000000', 'weighted_retention_m1', 40, 100, '2020-01-06'),
   ('seed-tenant-a', 'UCseedChannelA000000000', 'lead_route_rate', 1, 100, '2020-01-06'),
   ('seed-tenant-a', 'UCseedChannelA000000000', 'inquiry_close_rate', 25, 5, '2020-01-06');
+
+-- AI分析画面（feat-ai-analysis-screen）の表示確認用。テナントAに5状態の依頼と2版のレポートを置く
+--   A-0001 完了（v1・web）/ A-0002 完了（v2・skill 自動）/ A-0003 失敗 / A-0004 実行中 / A-0005 待機中
+--   v1 のアクション a1 は改善アクションへ登録済み（チェックボックスが出ないことの確認用）
+--   結果 JSON（results / history_review）は正本 fixture（tests/fixtures/skill-analysis-report.json）と同じ形。
+--   v1 は初回分析（成約段は判定保留）、v2 は v1 を参照し候補が流入→維持へ変わる。
+--   parseReport を通ることは tests/analysis/history-review.test.ts で確かめる
+INSERT INTO analysis_requests (tenant_id, request_id, channel_id, period_start, period_end, instruction, status, progress,
+  stage, error, report_id, created_by, created_at, updated_at, started_at, finished_at, created_via) VALUES
+  ('seed-tenant-a', 'A-0001', 'UCseedChannelA000000000', '2026-07-01', '2026-07-28', '初回の全体診断をお願いします', '完了', 100, 3, NULL,
+   'seed-report-1', 'seed-owner', '2026-08-01T01:00:00.000Z', '2026-08-01T01:20:00.000Z', '2026-08-01T01:05:00.000Z', '2026-08-01T01:20:00.000Z', 'web'),
+  ('seed-tenant-a', 'A-0002', 'UCseedChannelA000000000', '2026-08-01', '2026-08-28', '', '完了', 100, 3, NULL,
+   'seed-report-2', 'seed-owner', '2026-09-01T01:00:00.000Z', '2026-09-01T01:25:00.000Z', '2026-09-01T01:00:00.000Z', '2026-09-01T01:25:00.000Z', 'skill'),
+  ('seed-tenant-a', 'A-0003', 'UCseedChannelA000000000', '2026-08-29', '2026-09-25', 'コメントの傾向を重点的に', '失敗', 40, 1,
+   'YouTube API の1日の上限に達しました。明日以降に再実行してください',
+   NULL, 'seed-editor', '2026-09-24T02:00:00.000Z', '2026-09-24T02:10:00.000Z', '2026-09-24T02:01:00.000Z', '2026-09-24T02:10:00.000Z', 'web'),
+  ('seed-tenant-a', 'A-0004', 'UCseedChannelA000000000', '2026-08-29', '2026-09-25', 'サムネイル変更の反応を見てください', '実行中', 60, 2, NULL,
+   NULL, 'seed-owner', '2026-09-25T00:30:00.000Z', '2026-09-25T00:40:00.000Z', '2026-09-25T00:31:00.000Z', NULL, 'web'),
+  ('seed-tenant-a', 'A-0005', 'UCseedChannelA000000000', '2026-06-27', '2026-09-25', '', '待機中', 0, 0, NULL,
+   NULL, 'seed-editor', '2026-09-25T01:00:00.000Z', '2026-09-25T01:00:00.000Z', NULL, NULL, 'web');
+
+INSERT INTO reports (tenant_id, report_id, channel_id, request_id, version, title, summary, conclusion, outcome,
+  candidate_stage, candidate_metric, period_start, period_end, brief_json, results_json, history_review_json,
+  ideas_json, actions_json, history_versions_used, report_html, idempotency_key, created_by, created_at) VALUES
+  ('seed-tenant-a', 'seed-report-1', 'UCseedChannelA000000000', 'A-0001', 1, '7月の全体診断',
+   '2026-07-20週の5原因指標のうち、目標との差が最も大きいのは流入段のクリック率（実績 3.80%・目標 5.00%・目標比 ▲24.0%）でした。成約段は問い合わせが少なく判定保留です。',
+   '次の一手は流入段（クリック率）の改善候補を試すことです。', '改善候補あり', '流入', 'ctr', '2026-07-01', '2026-07-28',
+   '{"question":"どの段を最初に改善すべきか"}',
+   '{"status":"改善候補あり","candidate":{"stage":"流入","metric":"ctr","target_gap":-0.24},"target_week":"2026-07-20","funnel":[{"metric":"impressions","label":"インプレッション","stage":"露出","unit":"回","actual":15200,"target":15000,"target_gap":0.0133,"pending_reason":null},{"metric":"ctr","label":"クリック率","stage":"流入","unit":"%","actual":3.8,"target":5,"target_gap":-0.24,"pending_reason":null},{"metric":"m1","label":"加重平均視聴率","stage":"維持","unit":"%","actual":33.9,"target":35,"target_gap":-0.0314,"pending_reason":null},{"metric":"lead_route_rate","label":"導線誘導率","stage":"導線","unit":"%","actual":1.9,"target":1.5,"target_gap":0.2667,"pending_reason":null},{"metric":"inquiry_close_rate","label":"問い合わせ→成約率（同週）","stage":"成約","unit":"%","actual":0,"target":25,"target_gap":null,"pending_reason":"サンプル不足（2 < 5）"}],"pending_reasons":[{"metric":"inquiry_close_rate","reason":"サンプル不足（2 < 5）"}],"downstream":{"inquiries":2,"closed_deals":0,"revenue_jpy":0,"subscribers":18},"weekly":[{"week":"2026-07-06","impressions":14000,"ctr":3.6,"m1":34.2,"lead_route_rate":1.8,"inquiry_close_rate":0.0,"views":504,"engaged_views":440,"route_visits":9,"inquiries":1,"closed_deals":0,"revenue_jpy":0,"subscribers":15},{"week":"2026-07-13","impressions":14600,"ctr":3.7,"m1":34.0,"lead_route_rate":1.85,"inquiry_close_rate":50.0,"views":540,"engaged_views":470,"route_visits":10,"inquiries":2,"closed_deals":1,"revenue_jpy":240000,"subscribers":17},{"week":"2026-07-20","impressions":15200,"ctr":3.8,"m1":33.9,"lead_route_rate":1.9,"inquiry_close_rate":0.0,"views":578,"engaged_views":505,"route_visits":11,"inquiries":2,"closed_deals":0,"revenue_jpy":0,"subscribers":18}]}',
+   '{"first_analysis":true,"versions_used":[],"previous_hypotheses":[],"action_effects":[],"changes":null}',
+   '[{"title":"流入段（クリック率）の改善案を1件選んで試す","stage":"流入","metric":"ctr","options":["タイトル案","サムネイル"]}]',
+   '[{"title":"サムネイルの文字量を減らす","stage":"流入","metric":"ctr","baseline_value":3.8,"target_value":5},{"title":"冒頭30秒で結論を言う","stage":"維持","metric":"m1","baseline_value":33.9,"target_value":35}]',
+   '[]', '<!doctype html><html lang="ja"><body><h1>7月の全体診断</h1><p>流入段（CTR）が最大の改善候補です。</p></body></html>',
+   'A-0001:v1', 'seed-owner', '2026-08-01T01:20:00.000Z'),
+  ('seed-tenant-a', 'seed-report-2', 'UCseedChannelA000000000', 'A-0002', 2, '8月の振り返り',
+   '2026-08-17週の5原因指標のうち、目標との差が最も大きいのは維持段の加重平均視聴率（実績 30.10%・目標 35.00%・目標比 ▲14.0%）でした。クリック率は前回の 3.80% から 4.40% に上がりましたが、施策との因果は判定していません。',
+   '次の一手は維持段（加重平均視聴率）の改善候補を試すことです。前回のクリック率の仮説は保留のままです。', '改善候補あり', '維持', 'm1', '2026-08-01', '2026-08-28',
+   '{"question":"前回の施策の効果はあったか"}',
+   '{"status":"改善候補あり","candidate":{"stage":"維持","metric":"m1","target_gap":-0.14},"target_week":"2026-08-17","funnel":[{"metric":"impressions","label":"インプレッション","stage":"露出","unit":"回","actual":13500,"target":15000,"target_gap":-0.1,"pending_reason":null},{"metric":"ctr","label":"クリック率","stage":"流入","unit":"%","actual":4.4,"target":5,"target_gap":-0.12,"pending_reason":null},{"metric":"m1","label":"加重平均視聴率","stage":"維持","unit":"%","actual":30.1,"target":35,"target_gap":-0.14,"pending_reason":null},{"metric":"lead_route_rate","label":"導線誘導率","stage":"導線","unit":"%","actual":1.6,"target":1.5,"target_gap":0.0667,"pending_reason":null},{"metric":"inquiry_close_rate","label":"問い合わせ→成約率（同週）","stage":"成約","unit":"%","actual":33.33,"target":25,"target_gap":0.3332,"pending_reason":null}],"pending_reasons":[],"downstream":{"inquiries":6,"closed_deals":2,"revenue_jpy":480000,"subscribers":22},"weekly":[{"week":"2026-08-03","impressions":12600,"ctr":4.1,"m1":31.0,"lead_route_rate":1.5,"inquiry_close_rate":33.33,"views":517,"engaged_views":450,"route_visits":8,"inquiries":3,"closed_deals":1,"revenue_jpy":240000,"subscribers":20},{"week":"2026-08-10","impressions":13100,"ctr":4.3,"m1":30.6,"lead_route_rate":1.55,"inquiry_close_rate":0.0,"views":563,"engaged_views":490,"route_visits":9,"inquiries":3,"closed_deals":0,"revenue_jpy":0,"subscribers":21},{"week":"2026-08-17","impressions":13500,"ctr":4.4,"m1":30.1,"lead_route_rate":1.6,"inquiry_close_rate":33.33,"views":594,"engaged_views":517,"route_visits":10,"inquiries":6,"closed_deals":2,"revenue_jpy":480000,"subscribers":22}]}',
+   '{"first_analysis":false,"versions_used":[1],"previous_hypotheses":[{"version":1,"hypothesis_id":"H1","title":"サムネイルの文字量を減らすと CTR が上がる","previous_verdict":"保留","current_verdict":"保留","review":"同じ反証条件で今回の期間を再判定"}],"action_effects":[{"action_id":"seed-action-1","title":"サムネイルの文字量を減らす","stage":"流入","metric":"ctr","baseline":3.8,"current":4.4,"delta":0.6,"week":"2026-08-17","downstream":{"inquiries":6,"closed_deals":2,"revenue_jpy":480000},"status":"効果測定中","report_id":"seed-report-1"}],"changes":{"compared_version":1,"previous_candidate":{"stage":"流入","metric":"ctr"},"current_candidate":{"stage":"維持","metric":"m1"},"same_candidate":false,"downstream_delta":{"inquiries":4,"closed_deals":2,"revenue_jpy":480000}}}',
+   '[]',
+   '[{"title":"冒頭30秒で結論を言う","stage":"維持","metric":"m1","baseline_value":30.1,"target_value":35},{"title":"概要欄に問い合わせ導線を置く","stage":"導線","metric":"lead_route_rate","baseline_value":1.6,"target_value":2}]',
+   '[1]', '<!doctype html><html lang="ja"><body><h1>8月の振り返り</h1><p>維持段（加重平均視聴率）が次の改善候補です。</p></body></html>',
+   'A-0002:v2', 'seed-owner', '2026-09-01T01:25:00.000Z');
+
+INSERT INTO findings (tenant_id, report_id, finding_no, kind, title, fact, interpretation, stage, metric, hypothesis_id, falsifier, verdict, evidence_json) VALUES
+  ('seed-tenant-a', 'seed-report-1', 1, 'factor', 'CTR が目標未達', 'CTR は 3.8%（目標 5.0%）', 'サムネイルの訴求が弱い可能性があります', '流入', 'ctr', NULL, NULL, NULL, '{}'),
+  ('seed-tenant-a', 'seed-report-1', 2, 'hypothesis', 'サムネイルの文字量を減らすと CTR が上がる', NULL, NULL, NULL, NULL, 'H1', '2週間で CTR が 0.3pt 以上上がらなければ棄却', '保留', '{}'),
+  ('seed-tenant-a', 'seed-report-2', 1, 'factor', '加重平均視聴率が目標未達', '加重平均視聴率は 30.10%（目標 35.00%）', '冒頭の前置きが長い可能性があります', '維持', 'm1', NULL, NULL, NULL, '{}'),
+  ('seed-tenant-a', 'seed-report-2', 2, 'factor', 'CTR は改善傾向', 'CTR は 3.8% → 4.4%', 'サムネイル変更と同時期ですが、因果は断定できません', '流入', 'ctr', NULL, NULL, NULL, '{}'),
+  ('seed-tenant-a', 'seed-report-2', 3, 'hypothesis', '冒頭30秒で結論を言うと加重平均視聴率が上がる', NULL, NULL, NULL, NULL, 'H2', '3本で加重平均視聴率が 3pt 以上上がらなければ棄却', '保留', '{}');
+
+INSERT INTO psych_findings (tenant_id, report_id, finding_no, layer, claim, evidence_json, counter_hypothesis, confidence) VALUES
+  ('seed-tenant-a', 'seed-report-1', 1, '感情', '視聴者は結論の速さを期待している', '[{"comment_id":"c1","quote":"早く結論が知りたい"}]', '単に動画が長いだけ', 0.6),
+  ('seed-tenant-a', 'seed-report-2', 1, '考え', '自分に関係ある話かを冒頭で判断している', '[{"comment_id":"c2","quote":"最初に対象者を言ってほしい"}]', '音量や画質が原因', 0.55),
+  ('seed-tenant-a', 'seed-report-2', 2, '行動', '関係ないと判断すると1分以内に離脱する', '[{"comment_id":"c3","quote":"途中で閉じちゃった"}]', NULL, 0.5);
+
+INSERT INTO comment_emotions (tenant_id, report_id, comment_id, emotion, intent) VALUES
+  ('seed-tenant-a', 'seed-report-1', 'c1', '期待', '質問'),
+  ('seed-tenant-a', 'seed-report-2', 'c2', '期待', '質問'),
+  ('seed-tenant-a', 'seed-report-2', 'c3', '悲しみ', '体験談'),
+  ('seed-tenant-a', 'seed-report-2', 'c4', '喜び', '共感');
+
+INSERT INTO actions (tenant_id, action_id, channel_id, report_id, title, stage, metric, baseline_value, target_value, result_value,
+  status, judgement, created_by, created_at, updated_at, source_report_id, source_key) VALUES
+  ('seed-tenant-a', 'seed-action-1', 'UCseedChannelA000000000', 'seed-report-1', 'サムネイルの文字量を減らす', '流入', 'ctr', 3.8, 5, NULL,
+   '効果測定中', NULL, 'seed-owner', '2026-08-02T00:00:00.000Z', '2026-08-20T00:00:00.000Z', 'seed-report-1', 'a1');
+
+-- AI分析の E2E 用。3サイズ（mobile/tablet/desktop）が並列で版番号を奪い合わないよう、サイズごとに独立したテナントを置く
+INSERT INTO users (user_id, google_sub, email, email_verified, created_at) VALUES
+  ('seed-analysis-mobile',  'dev:analysis-mobile@example.com',  'analysis-mobile@example.com',  1, '2026-09-01T00:00:00.000Z'),
+  ('seed-analysis-tablet',  'dev:analysis-tablet@example.com',  'analysis-tablet@example.com',  1, '2026-09-01T00:00:00.000Z'),
+  ('seed-analysis-desktop', 'dev:analysis-desktop@example.com', 'analysis-desktop@example.com', 1, '2026-09-01T00:00:00.000Z');
+INSERT INTO tenants (tenant_id, name, created_by, created_at, youtube_link_status) VALUES
+  ('seed-tenant-e2e-mobile',  'E2E分析mobile',  'seed-analysis-mobile',  '2026-09-01T00:00:00.000Z', 'linked'),
+  ('seed-tenant-e2e-tablet',  'E2E分析tablet',  'seed-analysis-tablet',  '2026-09-01T00:00:00.000Z', 'linked'),
+  ('seed-tenant-e2e-desktop', 'E2E分析desktop', 'seed-analysis-desktop', '2026-09-01T00:00:00.000Z', 'linked');
+INSERT INTO tenant_members (tenant_id, user_id, role, joined_at) VALUES
+  ('seed-tenant-e2e-mobile',  'seed-analysis-mobile',  'owner', '2026-09-01T00:00:00.000Z'),
+  ('seed-tenant-e2e-tablet',  'seed-analysis-tablet',  'owner', '2026-09-01T00:00:00.000Z'),
+  ('seed-tenant-e2e-desktop', 'seed-analysis-desktop', 'owner', '2026-09-01T00:00:00.000Z');
+INSERT INTO channels (tenant_id, channel_id, title, thumbnail_url, subscriber_count, status, connected_by, connected_at, last_collected_at) VALUES
+  ('seed-tenant-e2e-mobile',  'UCseedE2EMobile00000000',  'E2E分析mobile',  NULL, 100, '正常', 'seed-analysis-mobile',  '2026-09-01T00:00:00.000Z', NULL),
+  ('seed-tenant-e2e-tablet',  'UCseedE2ETablet00000000',  'E2E分析tablet',  NULL, 100, '正常', 'seed-analysis-tablet',  '2026-09-01T00:00:00.000Z', NULL),
+  ('seed-tenant-e2e-desktop', 'UCseedE2EDesktop0000000', 'E2E分析desktop', NULL, 100, '正常', 'seed-analysis-desktop', '2026-09-01T00:00:00.000Z', NULL);

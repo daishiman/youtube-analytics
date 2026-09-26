@@ -1,4 +1,4 @@
-// KPI 4枚（値・期間内の推移線・前期比・出典バッジ・M1 の開示文）。qa-091・qa-049〜qa-054
+// KPI 4枚（値・期間内の推移線・前期比・出典バッジ・M1 の開示文）。qa-101・qa-049〜qa-054
 import type { Kpi } from "../../api";
 import { fmtChange, fmtValue, TREND_WORD, trendOf } from "./format";
 

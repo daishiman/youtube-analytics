@@ -1,4 +1,4 @@
-// ECharts の描画枠。ライブラリは初回表示時に遅延読込し、最初の画面の JS を軽くする（frontend 章・qa-093）。
+// ECharts の描画枠。ライブラリは初回表示時に遅延読込し、最初の画面の JS を軽くする（frontend 章・qa-103）。
 // CSP は style-src 'self' のため、ツールチップは HTML ではなく canvas 内の richText で描く
 import type { EChartsCoreOption, EChartsType } from "echarts/core";
 import { useEffect, useRef, useState } from "react";

@@ -1,4 +1,4 @@
-// GET /api/dashboard/funnel?week=（qa-093。『詳しく見る』を開いたときだけ遅延取得する）。
+// GET /api/dashboard/funnel?week=（qa-103。『詳しく見る』を開いたときだけ遅延取得する）。
 // 判定は domain/funnel.ts の judgeFunnelWeek（database 章「週次売上ファネル追補」・qa-060）をそのまま使う。
 // 12週分を1回の batch で範囲取得し、週ごとの集計はメモリ上で行う
 import { addDays, isMonday, jstStartIso, jstToday, weekStartOf } from "../domain/dashboard-period";

@@ -2,6 +2,7 @@
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { AppError } from "../lib/errors";
+import { analysisRoutes } from "./analysis-requests-routes";
 import { analyticsRawRoutes } from "./analytics-raw-routes";
 import { apiRoutes } from "./api-routes";
 import { authRoutes } from "./auth-routes";
@@ -11,6 +12,7 @@ import { reportingRoutes } from "./reporting-routes";
 import { reportingSyncRoutes } from "./reporting-sync-routes";
 import { SECURITY_HEADERS } from "./security-headers";
 import { settingsRoutes } from "./settings-routes";
+import { skillRoutes } from "./skill-routes";
 
 export const app = new Hono<AppEnv>();
 
@@ -42,6 +44,8 @@ app.route("/api", dashboardRoutes);
 app.route("/api", reportingRoutes);
 app.route("/api", reportingSyncRoutes);
 app.route("/api", analyticsRawRoutes);
+app.route("/api", analysisRoutes);
+app.route("/api/skill", skillRoutes);
 
 app.notFound((c) => {
   const err = new AppError("NOT_FOUND");

@@ -114,29 +114,39 @@ export async function seedDashboard(opts: SeedOptions) {
     }
   }
   if (opts.report) {
+    // reports/findings/actions は main の AI分析（0009・0010）の列。r3 はアーカイブ済みなので最新から外れる
+    const report = (id: string, version: number, title: string, conclusion: string, at: string) =>
+      env.DB.prepare(
+        `INSERT INTO reports (tenant_id, report_id, channel_id, request_id, version, title, conclusion, outcome,
+           period_start, period_end, brief_json, results_json, history_review_json, report_html,
+           idempotency_key, created_by, created_at)
+         VALUES (?1, ?2, ?3, ?2, ?4, ?5, ?6, '判定保留', '2026-01-01', '2026-01-28', '{}', '{}', '{}', '', ?2, ?7, ?8)`,
+      ).bind(t, id, channelId, version, title, conclusion, opts.userId, at);
     stmts.push(
+      report("r1", 1, "古いレポート", "古い結論", "2026-01-01T00:00:00Z"),
+      report("r2", 2, "最新レポート", "<b>結論</b>です", "2026-02-01T00:00:00Z"),
+      report("r3", 3, "アーカイブしたレポート", "外す", "2026-03-01T00:00:00Z"),
       env.DB.prepare(
-        `INSERT INTO reports (tenant_id, report_id, channel_id, version, title, conclusion, status, created_at)
-         VALUES (?1, 'r1', ?2, 1, '古いレポート', '古い結論', '完了', '2026-01-01T00:00:00Z'),
-                (?1, 'r2', ?2, 2, '最新レポート', '<b>結論</b>です', '完了', '2026-02-01T00:00:00Z'),
-                (?1, 'r3', ?2, 3, '実行中のレポート', NULL, '実行中', '2026-03-01T00:00:00Z')`,
-      ).bind(t, channelId),
+        `INSERT INTO report_archives (tenant_id, report_id, archived_by, archived_at)
+         VALUES (?1, 'r3', ?2, '2026-03-02T00:00:00Z')`,
+      ).bind(t, opts.userId),
       env.DB.prepare(
-        `INSERT INTO findings (tenant_id, finding_id, report_id, ordinal, claim) VALUES
-           (?1, 'f1', 'r2', 1, '発見1'), (?1, 'f2', 'r2', 2, '発見2'),
-           (?1, 'f3', 'r2', 3, '発見3'), (?1, 'f4', 'r2', 4, '発見4')`,
+        `INSERT INTO findings (tenant_id, report_id, finding_no, kind, title) VALUES
+           (?1, 'r2', 1, 'factor', '発見1'), (?1, 'r2', 2, 'factor', '発見2'),
+           (?1, 'r2', 3, 'hypothesis', '発見3'), (?1, 'r2', 4, 'factor', '発見4')`,
       ).bind(t),
     );
   }
   if (opts.actions) {
     stmts.push(
       env.DB.prepare(
-        `INSERT INTO actions (tenant_id, action_id, channel_id, title, status, metric_label, baseline_value, latest_value, unit, started_at, ends_at, created_at)
-         VALUES (?1, 'a1', ?2, 'サムネの文字を大きく', '実施中', 'CTR', 4.0, 5.5, '%', '2026-01-01', '2026-02-01', ?3),
-                (?1, 'a2', ?2, '冒頭を短く', '効果測定中', 'M1', 30, 35, '%', '2026-01-01', '2026-02-01', ?3),
-                (?1, 'a3', ?2, '完了したもの', '完了', NULL, NULL, NULL, NULL, NULL, NULL, ?3),
-                (?1, 'a4', ?2, '未着手のもの', '未着手', NULL, NULL, NULL, NULL, NULL, NULL, ?3)`,
-      ).bind(t, channelId, now),
+        `INSERT INTO actions (tenant_id, action_id, channel_id, report_id, title, stage, metric, baseline_value,
+           result_value, status, created_by, created_at, updated_at)
+         VALUES (?1, 'a1', ?2, 'r2', 'サムネの文字を大きく', '流入', 'ctr', 4.0, 5.5, '実施中', ?3, ?4, ?4),
+                (?1, 'a2', ?2, 'r2', '冒頭を短く', '維持', 'm1', 30, 35, '効果測定中', ?3, ?4, ?4),
+                (?1, 'a3', ?2, 'r2', '完了したもの', '露出', 'impressions', NULL, NULL, '完了', ?3, ?4, ?4),
+                (?1, 'a4', ?2, 'r2', '未着手のもの', '露出', 'impressions', NULL, NULL, '未着手', ?3, ?4, ?4)`,
+      ).bind(t, channelId, opts.userId, now),
     );
   }
   // D1 の batch は1回あたりの文数に余裕を持たせて分割する

@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "76c7f8f0a1b84fb1b6290a016423a51c8513ef9d7480053fbc31c3f447fd8547",
-  "current_architecture_digest": "5ad3aa96e09f39fd774d69c54beedd4433a1abfe9234ebd2f7e671367997280b",
+  "current_source_digest": "22f7bc783e0a16d72eb8a304405fde06c7463a10a8bab113df66513ab737d4c9",
+  "current_architecture_digest": "49b1a6412c0344035c06dbbbaf5978c7dc20aa884338f1ae73ce51f13cc7b08f",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -18,6 +18,10 @@
   ],
   "unaffected_current_package": "feat-platform-tenant-auth",
   "gate": "上記3 featureのtask計画を生成する前にsystem-spec compile/evaluateとdev-graph compile/decomposeを実行し、architecture projection、source_lineage digest、state graphを正本から再生成する",
+  "boundary_audit": "docs/feat-ai-analysis-screen/c14-boundary-audit.md",
+  "boundary_audit_status": "旧3 featureと設定featureの担当先に4件の矛盾がある。隔離したC14 dry-runの初回は見落とし、4件を明示した再試行は修正案を出したが、正式な一括登録と公開済みpackageの再評価は未完了",
+  "tooling_blocker": "dev-graph 0.1.11 の C02 は既存13 task IDの内容差分を拒否し、既存featureのMarkdown/context/state graph/source lineageを一括更新する独立CLIもない。system-dev-planner 0.1.11 のC11は世代別公開先を使えるが、C02の検証付き原子的世代交代が必要",
+  "scope_decision_20260925": "利用者の選択により、今回の作業はこのワークツリーの監査まで。共有プラグインの改修と正式再同期ゲートの完了処理は行わない",
   "non_action": "digestを手作業で現在値へ置換しない。生成を実行していないのに同期済みと見せるため。",
   "digest_refresh_log": [
     {
@@ -33,7 +37,7 @@
     {
       "refreshed_at": "2026-09-25",
       "by_feature": "feat-dashboard-redesign",
-      "note": "qa-089〜qa-099 を system-spec の正規フロー（compile→dev-graph spec import、graph_revision 12）で正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+      "note": "qa-099〜qa-109 を system-spec の正規フロー（compile→dev-graph spec import、graph_revision 12）で正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
     },
     {
       "refreshed_at": "2026-09-25",
@@ -58,12 +62,17 @@
     {
       "refreshed_at": "2026-09-26",
       "by_feature": "feat-dashboard-redesign",
-      "note": "qa-100（MAX_TENANTS を100から75へ）を正規フロー（apply-spec-transition→compile-spec-doc）で正本へ適用し、specs の規模行と source_lineage（00-requirements-definition.md の digest）を更新したため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+      "note": "qa-110（MAX_TENANTS を100から75へ）を正規フロー（apply-spec-transition→compile-spec-doc）で正本へ適用し、specs の規模行と source_lineage（00-requirements-definition.md の digest）を更新したため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
     },
     {
       "refreshed_at": "2026-09-26",
       "by_feature": "feat-dashboard-redesign",
-      "note": "qa-100 の spec ノード更新(2026-09-26 に自作スクリプトで直接書き、graph_revision 据え置き・時刻手入力だった)を C02(run-dev-graph-node update)の手順でやり直し、graph_revision 12→13・imported_at を実時刻にした。specs の frontmatter が変わったため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+      "note": "qa-110 の spec ノード更新(2026-09-26 に自作スクリプトで直接書き、graph_revision 据え置き・時刻手入力だった)を C02(run-dev-graph-node update)の手順でやり直し、graph_revision 12→13・imported_at を実時刻にした。specs の frontmatter が変わったため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "main(PR #7 AI分析画面)を取り込み、本 feature 側の番号を qa-099〜qa-113 へずらして正本(system-spec)を統合・再生成した(eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json)。specs/architecture の本文と source_lineage が変わったため current digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
     }
   ]
 }

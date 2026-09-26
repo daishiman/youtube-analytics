@@ -1,0 +1,32 @@
+{
+ "skill": "run-dev-graph-requirements",
+ "feature_id": "feat-ai-analysis-screen",
+ "recorded_at": "2026-09-24T15:59:41Z",
+ "checklist": [
+  {
+   "item": "lineage closure 欠落0",
+   "status": "pass",
+   "evidence": "planner_input=features context の9フィールド写し(値一致)、spec/arch/依存 feature 全て confirmed"
+  },
+  {
+   "item": "C11 report と C02 saved state/digest 一致",
+   "status": "pass",
+   "evidence": "validate-graph-schema complete / 13 task evidence digest=sha256:0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894"
+  },
+  {
+   "item": "missing_sections 全件表示",
+   "status": "pass",
+   "evidence": "0件"
+  },
+  {
+   "item": "同一snapshot digestで requirements/handoff 生成",
+   "status": "pass",
+   "evidence": ".dev-graph/handoffs/requirements-handoff-feat-ai-analysis-screen.json"
+  },
+  {
+   "item": "実装code生成0",
+   "status": "pass",
+   "evidence": "md/json のみ"
+  }
+ ]
+}

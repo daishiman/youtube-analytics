@@ -1,8 +1,5 @@
 // 設定画面の API。対象テナントはセッションで選択中のテナントだけ（パスにテナント ID を取らない）
-import type { Context } from "hono";
 import { Hono } from "hono";
-import type { TenantContext } from "../domain/tenant-context";
-import { AppError } from "../lib/errors";
 import { previewCsvImport } from "../usecases/csv-preview";
 import { deleteGoogleClient, saveGoogleClient } from "../usecases/google-client";
 import { createImport, getStudioImportMapping, listImports } from "../usecases/imports";
@@ -18,18 +15,9 @@ import {
   startConnect,
   startReconnect,
 } from "../usecases/youtube";
-import { type AppEnv, readJson } from "./middleware";
+import { type AppEnv, readJson, requestOrigin, sessionTenant } from "./middleware";
 
 export const settingsRoutes = new Hono<AppEnv>();
-
-/** 選択中のテナントの TenantContext。未選択は NO_TENANT */
-export function sessionTenant(c: Context<AppEnv>): TenantContext {
-  const session = c.get("session");
-  if (!session.tenantId || !session.role) throw new AppError("NO_TENANT");
-  return { tenantId: session.tenantId, userId: session.userId, role: session.role };
-}
-
-const origin = (c: Context<AppEnv>) => new URL(c.req.url).origin;
 
 settingsRoutes.get("/settings", async (c) =>
   c.json(await getSettings(c.get("deps"), sessionTenant(c))),
@@ -43,11 +31,11 @@ settingsRoutes.get("/usage", async (c) => {
 // ---- YouTube 連携 ----
 
 settingsRoutes.post("/youtube/connect", async (c) =>
-  c.json(await startConnect(c.get("deps"), sessionTenant(c), origin(c))),
+  c.json(await startConnect(c.get("deps"), sessionTenant(c), requestOrigin(c))),
 );
 
 settingsRoutes.post("/youtube/reconnect", async (c) =>
-  c.json(await startReconnect(c.get("deps"), sessionTenant(c), origin(c))),
+  c.json(await startReconnect(c.get("deps"), sessionTenant(c), requestOrigin(c))),
 );
 
 settingsRoutes.get("/youtube/channel-candidates", async (c) =>
@@ -66,7 +54,9 @@ settingsRoutes.delete("/youtube/connection", async (c) => {
 
 settingsRoutes.put("/youtube/captions-auto", async (c) => {
   const body = await readJson(c);
-  return c.json(await setCaptionsAuto(c.get("deps"), sessionTenant(c), body.enabled, origin(c)));
+  return c.json(
+    await setCaptionsAuto(c.get("deps"), sessionTenant(c), body.enabled, requestOrigin(c)),
+  );
 });
 
 /** テナントの Google Cloud OAuth クライアント（qa-087・オーナーのみ）。シークレットは応答に含めない */
@@ -90,7 +80,7 @@ settingsRoutes.get("/oauth/callback", async (c) => {
     c.get("deps"),
     ctx,
     { code: c.req.query("code"), state: c.req.query("state"), error: c.req.query("error") },
-    origin(c),
+    requestOrigin(c),
   );
   return c.redirect(to, 302);
 });

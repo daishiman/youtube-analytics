@@ -1,4 +1,4 @@
-// サムネイルの配信・取り直し・削除（qa-095・qa-098）
+// サムネイルの配信・取り直し・削除（qa-105・qa-108）
 import { createMessageBatch, createScheduledController } from "cloudflare:test";
 import { env } from "cloudflare:workers";
 import { describe, expect, it, vi } from "vitest";
@@ -29,8 +29,8 @@ async function putThumbnail(
   const key = thumbnailKey(tenantId, vid);
   await env.MEDIA.put(key, PNG, { httpMetadata: { contentType: "image/png" } });
   await env.DB.prepare(
-    `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at)
-     VALUES (?1, ?2, ?3, 'thumbnail', ?4, 'image/png', 8, ?5, ?6)`,
+    `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at, created_at)
+     VALUES (?1, ?2, ?3, 'thumbnail', ?4, 'image/png', 8, ?5, ?6, ?6)`,
   )
     .bind(tenantId, `thumbnail:${vid}`, vid, key, url, fetchedAt.toISOString())
     .run();
@@ -190,9 +190,9 @@ describe("取り直しの送信（enqueueThumbnailPasses）", () => {
         .bind(owner.tenantId, total, channelId)
         .run();
       await env.DB.prepare(
-        `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, source_url, fetched_at)
-         SELECT tenant_id, 'thumbnail:' || video_id, video_id, 'thumbnail', 'k/' || video_id, thumbnail_url,
-                strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+        `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at, created_at)
+         SELECT tenant_id, 'thumbnail:' || video_id, video_id, 'thumbnail', 'k/' || video_id, 'image/jpeg', 8, thumbnail_url,
+                strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
            FROM videos WHERE tenant_id = ?1 ORDER BY published_at DESC LIMIT 1000`,
       )
         .bind(owner.tenantId)
@@ -405,10 +405,10 @@ describe("30日超の削除（Cron 役割①）", () => {
     const ids = Array.from({ length: 1001 }, (_, i) => `old${i}`);
     await env.DB.prepare(
       `INSERT INTO media_assets
-         (tenant_id, asset_id, video_id, kind, r2_key, source_url, fetched_at)
+         (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, source_url, fetched_at, created_at)
        SELECT ?1, 'thumbnail:' || j.value, j.value, 'thumbnail',
-              'tenants/' || ?1 || '/thumbnails/' || j.value,
-              'https://i.ytimg.com/vi/x/mqdefault.jpg', ?2
+              'tenants/' || ?1 || '/thumbnails/' || j.value, 'image/jpeg', 8,
+              'https://i.ytimg.com/vi/x/mqdefault.jpg', ?2, ?2
          FROM json_each(?3) j`,
     )
       .bind(tenantId, new Date(Date.now() - 40 * DAY).toISOString(), JSON.stringify(ids))

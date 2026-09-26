@@ -1,0 +1,66 @@
+{
+  "graph_node_id": "feat-ai-analysis-screen",
+  "artifact_kind": "feature",
+  "purpose": "利用者が AI分析画面から Claude Code への分析依頼を作って進み具合を追い、届いたレポートの根拠と版を確かめて、参考にしない版を外し、選んだ打ち手だけを改善アクションへ移せるようにする(資するゴール: G1, G2, G4)",
+  "goal": "docs/screens/03-ai-analysis.png の区画・配置・文言どおりに依頼・実行状況・レポートの3区画と選択中の依頼バーが既存CSS変数の配色で動き、取消・再実行・JSON取込・アーカイブ・選択アクション登録・週次自動実行の依頼作成がサーバ側の状態遷移と権限の制約付きで働き、利用者向けの語が『チャンネル管理』に揃っている",
+  "scope_in": [
+    "/analysis の AnalysisPage(PlaceholderPage を置換): 見出し『AI分析』・問い1行・説明1行・右上『AI分析の使い方』、①依頼 ②実行状況 ③レポート の3区画と画面下部の選択中の依頼バー(ID・依頼内容・進捗・『詳細を開く』)。区画・配置・文言は docs/screens/03-ai-analysis.png を正とし色は既存CSS変数だけ(qa-080)",
+    "①依頼: 分析対象期間(最新28日/90日/1年/任意。任意は DateRangePicker で最長1年・未来日不可、?period=custom&from=&to= をヘッダーと共有)、補足指示(最大1000字・文字数表示)、唯一の主ボタン『Claude Code用プロンプトをコピー』(依頼 A-xxxx 作成→GET /api/analysis-requests/:id/prompt→navigator.clipboard.writeText→Toast、失敗時は選択状態のテキスト欄で手動コピー)、『使用するデータ』表と『使用データを確認』モーダル(GET /api/analysis/data-summary)、『データは自動送信されません』注記",
+    "②実行状況: RequestStatusTable(ID・ステータス・対象期間・作成日時・ProgressBar・依頼内容・操作)。待機中/実行中=キャンセル(ConfirmDialog)、完了=詳細、失敗/取消=再実行、失敗は原因1行と対処1行、created_via='skill' の行に『自動』バッジ。待機中・実行中がある間だけ10秒ごとに再取得し visibilityState=hidden で停止",
+    "③レポート: ReportList(レポート名・要約の検索を300msデバウンス、『アーカイブを表示』切替、列は版・作成日時・レポート名・対象期間)と ResultImportPanel(JSON貼付・送信前の JSON.parse 行番号表示・『結果を取り込む』『クリア』)、ReportDetail(レポート名・版・最新版バッジ・作成日時・対象期間・作成元・ステータス、『アーカイブ』/『元に戻す』、要約の先頭に『前回からの変化』→週次5段ファネル→下流結果→改善候補/全指標目標達成/判定保留、タブ 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート、PsychBox・ActionChecklist・VersionHistory・VersionDiffModal、HTMLレポートは srcdoc の sandbox iframe で allow-scripts なし)",
+    "選択状態を URL に持つ(?request=A-xxxx、?report=<id>&v=<版>)再読込復元と、新しい共通部品 ProgressBar・DateRangePicker(AppShell の『任意』期間でも同じ部品を開く)",
+    "web/api.ts の分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)と {error:{code,message,hint}} の表示",
+    "画面用API: POST/GET /api/analysis-requests(最新20件・cursor)・GET /api/analysis-requests/:id・GET /api/analysis-requests/:id/prompt(トークン平文・他テナント情報を含めない)・POST /api/analysis-requests/:id/cancel・POST /api/analysis-requests/:id/retry・GET /api/analysis/data-summary?from=&to=",
+    "レポートAPI: GET /api/reports?q=&archived=0|1&cursor=(D1 LIKE・テナント内最新200版まで)・POST /api/reports/import(ingestReport を再利用、request_id 指定でその依頼を完了、未指定なら完了済み依頼を1件作る・qa-092、検証エラーは 422 INVALID_REPORT_JSON に line)・PUT/DELETE /api/reports/:id/archive・POST /api/reports/:id/actions({keys:[...]} の選択登録・同じ版の同じアクションは登録済みを返す・qa-091)",
+    "分析依頼集約の拡張: analysis_requests に 取消 状態・progress・stage・instruction・retry_of・report_id・canceled_at/by・created_via(web|skill|import)を追加するマイグレーション。一方向遷移 待機中→実行中→完了|失敗|取消 を集約内で検査し、終端からは動かさない(qa-089)",
+    "スキル連携APIの差分: PATCH /api/skill/requests/:id に progress・stage(1-3)・error を受け、取消済み依頼への PATCH と POST /api/skill/reports は 409 REQUEST_CANCELED。POST /api/skill/requests(個人トークン・期間と指示は任意で既定は最新28日・実行中・created_via='skill' で作成、発行者が content.write を失っていれば403・qa-095)のエンドポイント本体(呼出し元の /yt-analyze が request_id 無し起動時に依頼を自動作成するクライアント側分岐は feat-skill-analysis-reports が実装する)",
+    "report_archives(PK tenant_id,report_id・reports は追記のみを保つ)と、レポート一覧・analysis_history の直近5版をアーカイブ外の版だけから選ぶ変更(qa-090)",
+    "actions.source_report_id/source_key と UNIQUE(tenant_id,source_report_id,source_key) のマイグレーション、registerReportActions は改善アクション集約だけを書きレポート版は読むだけ",
+    "権限と保護: 書込(依頼作成・キャンセル・再実行・取込・アーカイブ・アクション登録)は content.write(owner/editor)のみで閲覧者は403かつボタン非表示、他テナントの依頼・レポートは404、セッション書込の Origin 検査、依頼作成は画面・スキル合算で1ユーザー1分10件(超過429)、取込JSONは 2,000,000 bytes 以下とカタログ§6スキーマ検証、各操作を audit_log に1行",
+    "利用者向けの語を『チャンネル管理』へ置換(qa-096 が qa-088 を置換): web/ の AppShell・CreateTenantForm・InvitePage・LoginPage・Shell・settings/*・YouTubeLinkBanner などと src/lib/errors.ts・src/usecases/* のエラーメッセージ・規約2ページの『ワークスペース』『テナント』表記。表示名は1か所の定数から引き、識別子・DB・開発者向け文書は tenant のまま",
+    "幅900px未満の2カラム縦積み・表のカード化・下部バーを下部タブの上に固定、Playwright 390×844 / 820×1180 / 1440×900 で依頼→コピー→取込→登録→比較→アーカイブの E2E"
+  ],
+  "scope_out": [
+    "個人トークンの検証・GET /api/skill/export・POST /api/skill/reports の ingestReport 本体と analysis_history の射影本体・launchd 週次実行の設定(feat-skill-analysis-reports。本 feature は取消・自動作成・アーカイブ除外の差分だけを持つ)",
+    "改善アクション画面と actions 集約の状態遷移・GET/PATCH /api/actions/:id(feat-web-screens-actions)",
+    "AppShell・既存共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Toast)の作成と設定画面の機能(feat-settings-channel-link)",
+    "テナント別 OAuth クライアント(qa-087)の実装設計の見直し(system-spec 側で追跡する r2 medium 指摘)",
+    "アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)",
+    "画像の配色の採用と新しい色トークンの追加、全文検索索引の作成"
+  ],
+  "acceptance": [
+    "03-ai-analysis.png の3区画と下部の選択中依頼バーが画像の配置・文言どおりに表示され、色指定が既存CSS変数以外0件",
+    "『Claude Code用プロンプトをコピー』で A-xxxx の依頼が待機中で作られ、プロンプトにトークン平文が含まれず、クリップボード失敗時は手動コピー欄が出る",
+    "任意期間は最長1年・未来日不可で、期間がヘッダーの ?period= と共有される",
+    "待機中・実行中の依頼をキャンセルすると取消になり、その後の PATCH /api/skill/requests/:id と POST /api/skill/reports が 409 REQUEST_CANCELED を返す",
+    "失敗・取消の依頼の再実行で同じ条件の新しい ID ができ retry_of が記録される。完了・失敗・取消の依頼は状態が動かない",
+    "貼付JSONは選択中の依頼に紐付いてその依頼が完了になり、未選択なら完了済み依頼が1件作られる。形式誤りは行番号付きの422で保存されない",
+    "アーカイブした版は一覧と次回の analysis_history から外れ『アーカイブを表示』で見え、元に戻せる。reports の行は変わらない",
+    "チェックしたアクションだけが改善アクションに登録され、初期は主対象1件だけにチェックがあり、同じ版の同じアクションの二重登録が0件",
+    "レポート詳細の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる。2つの版を選ぶと差分が並ぶ",
+    "POST /api/skill/requests で作られた依頼が実行状況に『自動』バッジ付きで並び、閲覧者に変わった発行者のトークンでは403になる",
+    "閲覧者には書込ボタンが出ずAPIは403、他テナントの依頼・レポートIDは404、依頼作成の11件目/分は429、各操作が audit_log に1件ずつ残る",
+    "利用者に見える画面・APIエラー・規約に『ワークスペース』『テナント』が0件で『チャンネル管理』に揃っている",
+    "390×844 / 820×1180 / 1440×900 で依頼→コピー→取込→登録→比較→アーカイブの E2E が通る"
+  ],
+  "architecture_refs": [
+    "architecture/youtube-analytics-system.md",
+    "specs/youtube-analytics-system.md",
+    "system-spec/index.md",
+    "system-spec/00-requirements-definition.md",
+    "system-spec/ui-ux.md",
+    "system-spec/frontend.md",
+    "system-spec/backend.md",
+    "system-spec/auth.md",
+    "system-spec/security.md",
+    "system-spec/database.md",
+    "docs/analysis/dashboard-analysis-catalog.md",
+    "docs/screens/03-ai-analysis.png"
+  ],
+  "updated_at": "2026-09-25T00:19:55Z",
+  "depends_on": [
+    "feat-skill-analysis-reports",
+    "feat-web-screens-actions",
+    "feat-settings-channel-link"
+  ]
+}

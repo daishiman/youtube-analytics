@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "nodes": [
+    {
+      "id": "SYS-AIA-P01",
+      "phase_ref": "P01",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": []
+    },
+    {
+      "id": "SYS-AIA-P02",
+      "phase_ref": "P02",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P01"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P03",
+      "phase_ref": "P03",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P02"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P04",
+      "phase_ref": "P04",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P03"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P05",
+      "phase_ref": "P05",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P04"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P06",
+      "phase_ref": "P06",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P05"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P07",
+      "phase_ref": "P07",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P06"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P08",
+      "phase_ref": "P08",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P07"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P09",
+      "phase_ref": "P09",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P08"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P10",
+      "phase_ref": "P10",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P09"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P11",
+      "phase_ref": "P11",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P12",
+      "phase_ref": "P12",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P13",
+      "phase_ref": "P13",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "depends_on": [
+        "SYS-AIA-P11",
+        "SYS-AIA-P12"
+      ]
+    }
+  ]
+}

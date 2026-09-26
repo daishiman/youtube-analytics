@@ -1,5 +1,7 @@
 // 設定画面「Claude Code連携トークン」区画。発行時の平文は1回だけ表示する
+
 import { type FormEvent, useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { api, type SkillToken } from "../../api";
 import { formatDate, formatDateTime } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -96,7 +98,7 @@ export function TokenSection({
     <SectionCard
       id="tokens"
       title="Claude Code連携トークン"
-      description={`Claude Code のスキルからこのワークスペースのデータを読むための鍵です。1人${tokenLimit}本まで発行できます。`}
+      description={`Claude Code のスキルからこの${TENANT_LABEL}のデータを読むための鍵です。1人${tokenLimit}本まで発行できます。`}
     >
       <DataTable
         caption="発行済みトークン"

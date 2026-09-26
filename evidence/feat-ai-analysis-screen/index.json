@@ -1,0 +1,347 @@
+{
+  "feature_id": "feat-ai-analysis-screen",
+  "feature_package_id": "feature-package/feat-ai-analysis-screen",
+  "task_id": "SYS-AIA-P11",
+  "generated_at": "2026-09-25",
+  "environment": "local (wrangler dev, http://localhost:8793, DEV_LOGIN=1)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、preview 環境と Actions の実行は未確認",
+  "quality_gates": {
+    "typecheck": {
+      "result": "pass",
+      "path": "evidence/feat-ai-analysis-screen/typecheck.txt"
+    },
+    "lint": {
+      "result": "pass (154 files)",
+      "path": "evidence/feat-ai-analysis-screen/lint.txt"
+    },
+    "unit_test": {
+      "result": "pass (35 files / 375 tests)",
+      "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt"
+    },
+    "e2e": {
+      "result": "pass (138 passed)",
+      "path": "evidence/feat-ai-analysis-screen/e2e-run.txt"
+    },
+    "wording": {
+      "result": "pass",
+      "path": "evidence/feat-ai-analysis-screen/wording-check.txt"
+    },
+    "css_vars": {
+      "result": "pass",
+      "path": "evidence/feat-ai-analysis-screen/css-vars-check.txt"
+    },
+    "migrations": {
+      "result": "pass",
+      "path": "evidence/feat-ai-analysis-screen/migrations-empty-db.txt"
+    }
+  },
+  "acceptance": [
+    {
+      "id": "AC1",
+      "criterion": "3区画と下部バーが画像どおり。色は既存 CSS 変数以外0件",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "主フロー"
+        },
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-ai-analysis-screen/css-vars-check.txt",
+          "note": "色の直書き0件"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-ai-analysis-screen/analysis-owner-desktop.png",
+          "note": "オーナー"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-ai-analysis-screen/analysis-owner-mobile.png",
+          "note": "モバイル"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-ai-analysis-screen/analysis-owner-tablet.png",
+          "note": "タブレット"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/e2e-run.txt",
+          "note": "3サイズ・138件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC2",
+      "criterion": "コピーで A-xxxx を待機中で作る。プロンプトにトークン平文なし。クリップボード失敗時は手動コピー欄",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/requests-screen.test.ts",
+          "note": "プロンプト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "クリップボード読取と手動コピー欄（writeText 失敗時）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/e2e-run.txt",
+          "note": "3サイズ・138件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC3",
+      "criterion": "任意期間は最長1年・未来日不可。?period= をヘッダーと共有",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/web-format.test.ts",
+          "note": "期間の境界"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "期間切替"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC4",
+      "criterion": "キャンセルで取消。PATCH と POST /api/skill/reports が 409 REQUEST_CANCELED",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/requests-screen.test.ts",
+          "note": "取消後の reports・PATCH がともに 409 REQUEST_CANCELED"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC5",
+      "criterion": "再実行で新しい ID と retry_of。終端は不変",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/requests-screen.test.ts",
+          "note": "再実行"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "取消→再実行"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC6",
+      "criterion": "取込は選択中の依頼を完了にし、未選択なら完了済み依頼を1件作る。形式誤りは行番号付き",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/reports-screen.test.ts",
+          "note": "取込"
+        },
+        {
+          "kind": "test",
+          "path": "tests/analysis/web-format.test.ts",
+          "note": "checkJson の行番号"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "壊れた JSON の行番号"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC7",
+      "criterion": "アーカイブは一覧と analysis_history から外れ、表示・戻しができる。reports の行は不変",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/reports-screen.test.ts",
+          "note": "アーカイブ"
+        },
+        {
+          "kind": "test",
+          "path": "tests/skill-analysis/skill-api.test.ts",
+          "note": "アーカイブした版は analysis_history から外れ、戻すと再び入る"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "アーカイブと元に戻す"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC8",
+      "criterion": "チェックしたアクションだけ登録。初期は主対象だけ。二重登録0件",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/analysis/reports-screen.test.ts",
+          "note": "アクション登録"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "登録済み"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC9",
+      "criterion": "詳細の先頭に『前回からの変化』、履歴0件は『初回分析』、2版比較",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "seed v2 の『前回からの変化』と参照版 v1、初回分析、比較ダイアログ"
+        },
+        {
+          "kind": "test",
+          "path": "tests/analysis/reports-screen.test.ts",
+          "note": "比較"
+        },
+        {
+          "kind": "screenshot",
+          "path": "evidence/feat-ai-analysis-screen/analysis-viewer-desktop.png",
+          "note": "閲覧者で v2 を表示"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/e2e-run.txt",
+          "note": "3サイズ・138件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC10",
+      "criterion": "skill 依頼に『自動』バッジ。閲覧者に降格した発行者のトークンは 403",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "A-0002 の『自動』バッジ"
+        },
+        {
+          "kind": "test",
+          "path": "tests/analysis/requests-screen.test.ts",
+          "note": "降格した editor のトークンで POST /api/skill/requests が 403"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC11",
+      "criterion": "閲覧者はボタン非表示・API 403、他チャンネル管理は 404、11件目は 429、監査ログ1件ずつ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "閲覧者"
+        },
+        {
+          "kind": "test",
+          "path": "tests/analysis/requests-screen.test.ts",
+          "note": "権限・429"
+        },
+        {
+          "kind": "test",
+          "path": "tests/analysis/reports-screen.test.ts",
+          "note": "他テナント"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/unit-test-run.txt",
+          "note": "35ファイル・375件成功"
+        }
+      ]
+    },
+    {
+      "id": "AC12",
+      "criterion": "『ワークスペース』『テナント』の表示0件。表示名は src/domain/labels.ts の TENANT_LABEL 1か所",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "check-log",
+          "path": "evidence/feat-ai-analysis-screen/wording-check.txt",
+          "note": "ビルド済み画面・規約・API 文言で0件"
+        },
+        {
+          "kind": "code",
+          "path": "src/domain/labels.ts",
+          "note": "表示名の定数"
+        }
+      ]
+    },
+    {
+      "id": "AC13",
+      "criterion": "3サイズの E2E",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/analysis.spec.ts",
+          "note": "3本×3サイズ"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-ai-analysis-screen/e2e-run.txt",
+          "note": "3サイズ・138件成功"
+        }
+      ]
+    }
+  ]
+}

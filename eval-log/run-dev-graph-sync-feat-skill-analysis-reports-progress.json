@@ -1,0 +1,42 @@
+{
+ "skill": "run-dev-graph-sync",
+ "recorded_at": "2026-09-25T00:47:01Z",
+ "output": "eval-log/sync-receipt-feat-skill-analysis-reports-20260925.json",
+ "checklist": [
+  {
+   "item": "全差分が3-way plan分類とsnapshot digestを持つ",
+   "status": "pass",
+   "evidence": "exports 13 issue / 13 edge, conflicts 0, sha256:c97e46dc2376…"
+  },
+  {
+   "item": "mutation authority が beads/C28 の一経路",
+   "status": "pass",
+   "evidence": "bd-bridge のみ・GitHub mutation 0・全 mutation が guard receipt 経由"
+  },
+  {
+   "item": "--dry-run の write 0",
+   "status": "pass",
+   "evidence": "create --dry-run は preview のみ"
+  },
+  {
+   "item": "双方変更は manual conflict",
+   "status": "pass",
+   "evidence": "該当 0 (新規投影のみ)"
+  },
+  {
+   "item": "close/delete は tombstone",
+   "status": "pass",
+   "evidence": "該当 0"
+  },
+  {
+   "item": "done は default-branch merge evidence のみ",
+   "status": "pass",
+   "evidence": "done_transitions 0 (全 node active)"
+  },
+  {
+   "item": "2回目 sync changes=0",
+   "status": "pass",
+   "evidence": "74 node 突合 changes=0"
+  }
+ ]
+}

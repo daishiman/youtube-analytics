@@ -1,5 +1,6 @@
 // 設定画面「データを削除」区画。名前で確定し、依頼直後に対象の利用を止める
 import { useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { api } from "../../api";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { SectionCard } from "../../components/SectionCard";
@@ -46,7 +47,7 @@ export function DeleteSection({
       id="delete"
       title="データを削除"
       tone="danger"
-      description="依頼後すぐにこのワークスペースを利用できなくし、保存した指標・レポート・画像を7日以内に削除します"
+      description={`依頼後すぐにこの${TENANT_LABEL}を利用できなくし、保存した指標・レポート・画像を7日以内に削除します`}
     >
       {deletion ? (
         <p className="alert">
@@ -65,7 +66,7 @@ export function DeleteSection({
           データを削除
         </button>
       ) : (
-        <p className="small muted">削除はワークスペースのオーナーが行います。</p>
+        <p className="small muted">削除は{TENANT_LABEL}のオーナーが行います。</p>
       )}
       <ConfirmDialog
         open={open}

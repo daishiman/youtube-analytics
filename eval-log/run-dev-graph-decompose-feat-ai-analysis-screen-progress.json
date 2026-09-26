@@ -1,0 +1,38 @@
+{
+ "skill": "run-dev-graph-decompose",
+ "feature_id": "feat-ai-analysis-screen",
+ "graph_revision": 10,
+ "recorded_at": "2026-09-24T15:14:40Z",
+ "checklist": [
+  {
+   "item": "macro result feature/architecture/depends_on only, cycle0, phase-task0",
+   "status": "pass",
+   "evidence": "eval-log/dev-graph-decompose-audit-feat-ai-analysis-screen-20260924.json"
+  },
+  {
+   "item": "draft/unconfirmed tracker publication 0",
+   "status": "pass",
+   "evidence": "監査前は draft、PASS+digest一致後に confirmed へ昇格。tracker 投影は sync verb で実施"
+  },
+  {
+   "item": "ready feature package exact-13",
+   "status": "handoff",
+   "evidence": "plan verb (--feature-id feat-ai-analysis-screen --feature-context features/feat-ai-analysis-screen.context.json)"
+  },
+  {
+   "item": "C02 local commit all-or-none / 重複0",
+   "status": "pass",
+   "evidence": "stage→監査→digest照合→一括apply、validate-graph-schema valid=true"
+  },
+  {
+   "item": "projection authority",
+   "status": "pass",
+   "evidence": "tracker_binding=beads のみ"
+  },
+  {
+   "item": "dry-run write 0",
+   "status": "n/a",
+   "evidence": "本実行"
+  }
+ ]
+}

@@ -1,4 +1,4 @@
-// 日次推移（今期=実線・前期=点線・公開日マーカー・動画選択時は動画ごとの線）。文字要約と表への切替を持つ（qa-091・qa-093）
+// 日次推移（今期=実線・前期=点線・公開日マーカー・動画選択時は動画ごとの線）。文字要約と表への切替を持つ（qa-101・qa-103）
 import type { EChartsCoreOption } from "echarts/core";
 import { useMemo, useState } from "react";
 import type { DashboardResponse } from "../../api";

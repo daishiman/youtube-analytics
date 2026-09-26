@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "status": "pass",
+  "validated_digest": "sha256:107638bce3396c4d2f470909b2aeeb215f552626a382217ada076387a7e7af67",
+  "feature_package_id": "feature-package/feat-ai-analysis-screen",
+  "parent_feature": "feat-ai-analysis-screen",
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "violations": []
+}

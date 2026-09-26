@@ -7,9 +7,9 @@ import {
 } from "../../src/adapters/google-youtube";
 import { READONLY_SCOPES } from "../../src/domain/google-scopes";
 import type { Bindings } from "../../src/env";
-import { call, type LoggedIn } from "../platform/helpers";
+import { call, type LoggedIn, type Owner } from "../platform/helpers";
 
-export type Owner = LoggedIn & { tenantId: string };
+export type { Owner };
 
 export interface FakeChannel {
   id: string;
