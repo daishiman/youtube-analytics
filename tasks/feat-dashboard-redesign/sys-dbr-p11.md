@@ -61,7 +61,7 @@ updated_at: "2026-09-24T15:08:34Z"
 
 ## 目的
 
-受入項目ごとのテスト結果・スクリーンショット・ヘッダ確認結果・subrequest 計測結果・migrations/0008の適用ログをindex.jsonにまとめる。
+受入項目ごとのテスト結果・スクリーンショット・ヘッダ確認結果・subrequest 計測結果・migrations/0016の適用ログをindex.jsonにまとめる。
 
 ## 背景
 

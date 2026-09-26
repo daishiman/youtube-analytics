@@ -17,10 +17,10 @@ template_id: "specification"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-merge-20260926.json", "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-qa114-20260926.json", "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb"}
 source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/00-requirements-definition.md", "source_version": "0.1.14", "source_digest": "339d23d7629612648af496f5f75947dd5e5f174c1c781a9cb0d7a87c46f6a601", "imported_at": "2026-09-26T04:56:33Z"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-26T04:56:33Z"
+updated_at: "2026-09-26T05:29:09Z"
 depends_on: []
 related_nodes: ["arch-youtube-analytics-system"]
 resource_scope: []
@@ -77,7 +77,7 @@ YouTubeチャンネルの実績データと週次の事業データを、再現�
 - 収集: Analytics API で直近7日を毎日取り直し、動画別は D-3 単日クエリで積み上げ、インプレッション・CTR は Reporting API(channel_reach_basic_a1)から取得する(backend.md / infrastructure.md)。
 - 取込: 表データ/グラフデータ/合計の3種Studio CSVを既存の判定規則で正規化する。週次事業CSVは `week_start`(JST月曜), `channel_id`, `route_label`(既定LINE), `route_visits`, `inquiries`, `closed_deals`, `revenue_jpy` を受け、nullと0を区別して tenant+channel+week 単位で冪等に上書きする。
 - 分析連携: /api/skill/export がYouTubeデータ、週次ファネル、目標、判定保留理由、同一テナント/チャンネルの完了済み直近5版の分析履歴パックを出典付きで書き出し、/api/skill/reports が前回仮説の当否・施策効果・ファネル段・改善候補・下流結果・参照版番号を含む版を追記だけで受ける。
-- 画面: ログイン/ダッシュボード/動画/AI分析/改善アクション/設定の6枚+静的ページ2枚(ui-ux.md)。ダッシュボードは docs/screens/02-dashboard.png を正本とし(qa-099〜102)、ヘッダ(データ収集の最終成功)・共通ヘッダーの期間(?period=7d/28d/90d/1y/任意・既定28日 qa-109)・対象セレクタ(チャンネル全体/動画。動画は既定で直近公開10本、件数上限なし qa-104/096)・KPI4枚・日次推移・構成比・動画別の実績・最新AI分析・実施中の改善アクション・『詳しく見る』(週次5段ファネル一式を移設)の順に並べる(ui-ux.md)。
+- 画面: ログイン/ダッシュボード/動画/AI分析/改善アクション/設定の6枚+静的ページ2枚(ui-ux.md)。ダッシュボードは docs/screens/02-dashboard.png を正本とし(qa-099〜102)、ヘッダ(データ収集の最終成功)・共通ヘッダーの期間(?period=7d/28d/90d/1y/任意・既定28日 qa-109)・対象セレクタ(チャンネル全体/動画。動画は既定で直近公開10本、件数上限なし qa-104/106)・KPI4枚・日次推移・構成比・動画別の実績・最新AI分析・実施中の改善アクション・『詳しく見る』(週次5段ファネル一式を移設)の順に並べる(ui-ux.md)。最新AI分析は AI分析(main)の reports のうちアーカイブされていない最大の版を出し『レポートの詳細を見る』で /analysis?report= へ移動する。改善アクションは actions の指標の基準値→結果値を出し、期間は出さない(qa-114)。
 - 管理: テナント・メンバー・招待、データ削除、無料枠メーター。
 - 設定画面(qa-074/qa-079): 順序は YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除。連携カードはチャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日 3:00 JST・qa-077)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。取込はCSV/字幕(SRT・VTT)/画像のタブ別ドロップ領域と履歴(最新20件・失敗理由)。トークンは名前必須・平文は発行時1回表示・1人5本まで(6本目は409・qa-083)・失効は確認付き。
 - AI分析画面(qa-089〜qa-093・docs/screens/03-ai-analysis.png を区画・配置・文言の正、色は既存CSS変数): ①依頼(期間 最新28日/90日/1年/任意〈最長1年・未来日不可〉、補足指示≤1000字、唯一の主ボタン『Claude Code用プロンプトをコピー』で依頼 A-xxxx を作成しプロンプトをコピー、『使用するデータ』件数表と内訳モーダル、『データは自動送信されません』注記) ②実行状況(ID・ステータス・対象期間・作成日時・進捗・依頼内容・操作。待機中/実行中=キャンセル、完了=詳細、失敗/取消=同条件で新IDの再実行。週次自動実行の依頼に『自動』バッジ・qa-095) ③レポート(一覧の検索とアーカイブ表示、『結果の取り込み』JSON貼付〈選択中の依頼へ紐付け、未選択なら完了済み依頼を1件作る・qa-092〉、詳細の先頭に『前回からの変化』→週次5段ファネル→下流結果→改善候補、タブ 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート、次に取るべきアクションのチェック選択登録〈初期は主対象のみ・二重登録なし・qa-091〉、版履歴と2版比較、アーカイブ/元に戻す〈アーカイブ版は一覧と analysis_history から外す・削除しない・qa-090〉)。下部に選択中の依頼バー。閲覧者は閲覧のみ。結果JSONの形は画像内の例でなく docs/analysis/dashboard-analysis-catalog.md §6 の正本に従う。

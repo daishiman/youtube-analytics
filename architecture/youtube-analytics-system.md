@@ -17,10 +17,10 @@ template_id: "architecture"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-merge-20260926.json", "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-qa114-20260926.json", "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb"}
 source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "imported_at": "2026-09-26T04:56:33Z"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-26T04:56:33Z"
+updated_at: "2026-09-26T05:29:09Z"
 depends_on: []
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
@@ -130,7 +130,7 @@ React + Vite + React Router の SPA を Workers の静的アセットで配信�
 
 ## Component and design-system boundaries
 
-グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボードは 02-dashboard.png を正本とし(qa-099〜108)、GET /api/dashboard(読取専用の集約・グラフ仕様 JSON)で KPI・日次推移・構成比・動画別実績を描き、週次ファネルは『詳しく見る』で GET /api/dashboard/funnel から遅延取得する。ECharts は遅延読込。サムネイルは R2 から自サイト経由で配り(CSP img-src は self)、thumbnail 専用の Queue 通で取り直し、30日超は Cron cleanup で削除する。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。AI分析画面は RequestPanel/DataSummaryCard/RequestStatusTable/ReportList/ResultImportPanel/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar で構成し、新しい共通部品 ProgressBar と DateRangePicker を components に追加する。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
+グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボードは 02-dashboard.png を正本とし(qa-099〜108)、GET /api/dashboard(読取専用の集約・グラフ仕様 JSON)で KPI・日次推移・構成比・動画別実績を描き、週次ファネルは『詳しく見る』で GET /api/dashboard/funnel から遅延取得する。ECharts は遅延読込。サムネイルは R2 から自サイト経由で配り(CSP img-src は self)、thumbnail 専用の Queue 通で取り直し、30日超は Cron cleanup で削除する。ダッシュボードの右列は AI分析が所有する reports/findings/actions を読むだけにし(アーカイブ外の最大版・状態が実施中/効果測定中のアクション)、サムネイルの出所必須は asset_id='thumbnail:'||video_id の行だけに trigger で課して /yt-analyze の画像と共存させる(qa-114)。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。AI分析画面は RequestPanel/DataSummaryCard/RequestStatusTable/ReportList/ResultImportPanel/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar で構成し、新しい共通部品 ProgressBar と DateRangePicker を components に追加する。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
 
 ## State and data flow
 

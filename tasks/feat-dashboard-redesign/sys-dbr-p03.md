@@ -61,7 +61,7 @@ updated_at: "2026-09-24T15:08:34Z"
 
 ## 目的
 
-P02 の設計を、テナント境界(qa-107)・閲覧者の読み取り専用・CSP不変・Cache-Control: private, no-store・Cloudflare Workers Free の subrequest 50・D1 bound parameters 100・period パラメータの400判定(qa-109)の観点でレビューし、他テナント/存在しない video_ids の黙示的除外、1,100本超テナントの1,000本上限、サムネイル未保存時の代替表示、migrations/0008 の CREATE TABLE IF NOT EXISTS が上流feature(feat-youtube-daily-collection等)の書込み経路を作っていないこと(読み取り専用境界の維持)の抜けを洗い出す。
+P02 の設計を、テナント境界(qa-107)・閲覧者の読み取り専用・CSP不変・Cache-Control: private, no-store・Cloudflare Workers Free の subrequest 50・D1 bound parameters 100・period パラメータの400判定(qa-109)の観点でレビューし、他テナント/存在しない video_ids の黙示的除外、1,100本超テナントの1,000本上限、サムネイル未保存時の代替表示、migrations/0016 の CREATE TABLE IF NOT EXISTS が上流feature(feat-youtube-daily-collection等)の書込み経路を作っていないこと(読み取り専用境界の維持)の抜けを洗い出す。
 
 ## 背景
 

@@ -1,0 +1,78 @@
+{
+  "receipt_kind": "spec-reflection-receipt",
+  "graph_node_id": "feat-dashboard-redesign",
+  "recorded_at": "2026-09-26T05:29:09Z",
+  "trigger": "main(PR #7 AI分析画面)統合後に、ダッシュボードの右列と media_assets の制約を main の表へ合わせた実装差分(merge 2a0fd94)",
+  "spec_impact": true,
+  "qa_added": [
+    {
+      "qa_id": "qa-114",
+      "basis": "observed-fact",
+      "answered_at": "2026-09-26T05:22:51Z",
+      "required_info_items": [
+        "data-persistence",
+        "domain-model"
+      ]
+    }
+  ],
+  "cells_citing": [
+    "backend.web",
+    "database.web",
+    "frontend.web",
+    "ui-ux.web"
+  ],
+  "changed_design_applications": [
+    "database",
+    "ui-ux"
+  ],
+  "writer": "system-spec-harness:run-system-spec-elicit/apply-spec-transition.py chunk",
+  "compiler": "system-spec-harness:run-system-spec-compile/compile-spec-doc.py compile",
+  "chapters_recompiled": [
+    {
+      "path": "system-spec/database.md",
+      "sha256": "92bc13f119ba2f5294443dcb6b334e131e8dc899902c06ba64bce5eb48e4dc00"
+    },
+    {
+      "path": "system-spec/ui-ux.md",
+      "sha256": "38276816bd7f84dfb594abb0cfea2f81007f9c08186cb4d19d655d78cc98d6e4"
+    },
+    {
+      "path": "system-spec/frontend.md",
+      "sha256": "2bca7cc39e4b41e0482fcccea91b377ca9c617ad5bac95baee8b5c35d275e039"
+    },
+    {
+      "path": "system-spec/backend.md",
+      "sha256": "e558a9045eb3acbf16b282ebd55e4456799a36632169bbc4a829c3450dde4267"
+    }
+  ],
+  "unchanged_sources": {
+    "system-spec/00-requirements-definition.md": "339d23d7629612648af496f5f75947dd5e5f174c1c781a9cb0d7a87c46f6a601",
+    "system-spec/index.md": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656"
+  },
+  "downstream_updated": [
+    "specs/youtube-analytics-system.md(ダッシュボード行に qa-114 と renumber 漏れ qa-104/096→qa-104/106 の修正)",
+    "architecture/youtube-analytics-system.md(右列の読取り範囲と thumbnail trigger に qa-114)",
+    "docs/feat-dashboard-redesign/architecture.md・design-review.md・runbook.md"
+  ],
+  "spec_state_sha256": "8a28f557a4f12cddb4d55780bab34d82d748571e2cc1584e2fa6fcef6d816c69",
+  "verdict": "PASS",
+  "verdict_scope": "決定論ゲートの再実行。意味評価(evaluator の再起動)は MVP のため行っていない",
+  "deterministic_gates": [
+    {
+      "command": "validate-coverage-matrix.py --matrix system-spec/spec-state.json --require-complete --require-basis --require-foundation",
+      "result": "exit0"
+    },
+    {
+      "command": "validate-source-citation.py --targets system-spec/spec-state.json --references system-spec/fetched-references.json",
+      "result": "exit0"
+    },
+    {
+      "command": "validate-knowledge-graph.py --profile required-info --state system-spec/spec-state.json",
+      "result": "exit0・ungrounded_blocking_items=[]"
+    }
+  ],
+  "inherited_evaluation": {
+    "evidence_ref": "eval-log/completeness-merge-20260926.json",
+    "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"
+  }
+}

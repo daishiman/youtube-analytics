@@ -2,7 +2,7 @@
 
 > 本書の上流 feature への引き継ぎは初回設計時点のもの。後続で収集・CSV取込を同じワークツリーに追加した。現況は `data-coverage-audit.md` を参照。
 
-最終更新: 2026-09-25。根拠章は ui-ux、frontend、backend、database、security、infrastructure（qa-099〜qa-109）。
+最終更新: 2026-09-26。根拠章は ui-ux、frontend、backend、database、security、infrastructure（qa-099〜qa-109）。
 
 ## 1. 画面の部品境界
 
@@ -14,7 +14,7 @@
 | 期間の判断 | `web/pages/dashboard/PeriodInsight.tsx` | 前期との変化と、次に日次推移を見る動画を表示する。前期が欠測なら変化率を保留し、動画候補は今期の値で判断する |
 | 日次推移 | `web/pages/dashboard/TrendCard.tsx`、`web/components/EChart.tsx`、`web/components/echarts-setup.ts` | ECharts を `import()` で遅延読込する。今期は実線、前期は点線、公開日にマーカーを付ける。選択動画の線は最大5本に絞り、指定した1本へ焦点を移せる。表では全件を見られる |
 | 動画別の実績 | `web/pages/dashboard/VideoPerformance.tsx` | 表（公開日順または視聴回数順）と構成比。CTRはReportingの最新日原値を表示し、期間未確定のStudio値へ推測で切り替えない。行を押すと、同じ期間を保ってダッシュボードの対象をその動画1本へ絞る。専用の動画画面は別 feature |
-| 右列 | `web/pages/dashboard/SidePanels.tsx` | 最新AI分析と改善アクションの要約を出す。詳細画面へのリンクと編集・状態更新メニューは後続 feature 依存で、現在は「準備中」と表示する |
+| 右列 | `web/pages/dashboard/SidePanels.tsx` | 最新AI分析と改善アクションの要約を出す。読むのは AI分析（main）が所有する `reports`・`findings`・`actions` で、最新AI分析はアーカイブされていない最大の版。「レポートの詳細を見る」で `/analysis?report=<id>` へ移る。アクションは基準値→結果値を出し期間は出さない。編集・状態更新は後続 feature 依存で「準備中」と表示する（qa-114） |
 | 詳しく見る | `web/pages/dashboard/DetailsSection.tsx` | 週次ファネル、データ品質、収集済み原値・利用可能なレポート種別。構成比の再掲はしない。開いたときに初めてファネルを取得する |
 | 共通の枠 | `web/components/AppShell.tsx`、`web/styles.css` | `PERIODS` に 7d を足し、期間切替では対象を保持する。ヘッダーとサイドバーをスクロール中も表示し、狭い画面では上下に重ならない高さを計測する |
 | API 呼び出し | `web/api.ts` | 共通 `api` 関数から集約APIと独立APIを呼ぶ。サムネイルは自サイトの URL を使う |
@@ -40,17 +40,17 @@
 
 ## 4. データモデル（`migrations/0016_dashboard_media_assets.sql`）
 
-ダッシュボードが読む表を、database 章の列定義に沿って先に作る。書き込む処理は上流 feature が作り、列が足りなければ `ALTER TABLE ADD COLUMN` で引き継ぐ（migration の先頭に注記した）。
+ダッシュボードが読む表を、database 章の列定義に沿って先に作る。書き込む処理は上流 feature が作り、列が足りなければ `ALTER TABLE ADD COLUMN` で引き継ぐ（migration の先頭に注記した）。main（AI分析、PR #7）の統合後は、`reports`・`findings`・`actions`・`media_assets` を main の 0009・0010・0012 が作り、本 migration はそれを読むだけにした（qa-114）。
 
-| 表 | 用途 |
-|---|---|
-| `videos`、`video_angles` | 動画の基本情報と切り口 |
-| `daily_metrics`、`channel_daily_metrics` | チャンネルの日次の値（KPI、推移） |
-| `video_metrics`、`video_daily_metrics`、`video_reach_daily` | 動画ごとの日次の値（選択時の合計、動画ごとの線、表、構成比） |
-| `reports`、`findings` | 最新AI分析と発見3件 |
-| `actions` | 実施中・効果測定中の改善アクション |
-| `media_assets` | サムネイル（`asset_id = 'thumbnail:<video_id>'`）。thumbnail 行は `source_url` と `fetched_at` が必須（CHECK 制約） |
-| `business_funnel_weekly`、`funnel_targets` | 週次の事業ファネルと目標 |
+| 表 | 作る migration | 用途 |
+|---|---|---|
+| `videos`、`video_angles` | 0016 | 動画の基本情報と切り口 |
+| `daily_metrics`、`channel_daily_metrics` | 0016 | チャンネルの日次の値（KPI、推移） |
+| `video_metrics`、`video_daily_metrics`、`video_reach_daily` | 0016 | 動画ごとの日次の値（選択時の合計、動画ごとの線、表、構成比） |
+| `reports`、`findings` | 0009（main） | 最新AI分析（`report_archives` にない最大の版）と発見3件 |
+| `actions` | 0010・0015（main） | 実施中・効果測定中の改善アクション（指標の基準値→結果値） |
+| `media_assets` | 0012（main）＋0016 で2列を追加 | サムネイル（`asset_id = 'thumbnail:<video_id>'`）。その行だけ `source_url` と `fetched_at` を必須にする。ALTER TABLE では CHECK を足せないので INSERT/UPDATE の trigger で守り、/yt-analyze が送る画像（asset_id は乱数）は対象外 |
+| `business_funnel_weekly`、`funnel_targets` | 0016 | 週次の事業ファネルと目標 |
 
 索引は主キーだけにした。D1 では索引の更新も書込行数に数えるため。例外は、取り直しと削除で使う `idx_media_assets_kind_fetched (tenant_id, kind, fetched_at)`。
 

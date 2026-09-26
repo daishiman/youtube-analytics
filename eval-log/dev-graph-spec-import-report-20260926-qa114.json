@@ -1,0 +1,32 @@
+{
+  "index": "system-spec/index.md",
+  "imported_nodes": [],
+  "evidence_updated_nodes": [
+    {
+      "graph_node_id": "spec-youtube-analytics-system",
+      "file_path": "specs/youtube-analytics-system.md",
+      "source_path": "system-spec/00-requirements-definition.md",
+      "source_digest": "339d23d7629612648af496f5f75947dd5e5f174c1c781a9cb0d7a87c46f6a601"
+    },
+    {
+      "graph_node_id": "arch-youtube-analytics-system",
+      "file_path": "architecture/youtube-analytics-system.md",
+      "source_path": "system-spec/index.md",
+      "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656"
+    }
+  ],
+  "unchanged_sources": "00-requirements-definition.md と index.md は qa-114 で変わっていないため source_lineage は据え置き",
+  "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb",
+  "evidence_ref": "eval-log/completeness-qa114-20260926.json",
+  "previous_evidence": {
+    "evidence_ref": "eval-log/completeness-merge-20260926.json",
+    "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"
+  },
+  "re_evaluation": "決定論ゲートのみ再実行(3件 exit0)。意味評価は MVP のため行っていない",
+  "graph_revision": 16,
+  "graph_digest": "e4a96a132efb1c73c610ddbe51cf6d22e05c70349c7c9e4874b7eff19044a8d8",
+  "updated_at": "2026-09-26T05:29:09Z",
+  "change_summary": "main 統合時に入ったダッシュボードの調整(右列は AI分析の reports/findings/actions を読むだけ、thumbnail の出所必須は trigger で課す)を qa-114 として spec・arch 本文へ反映した",
+  "previous_report": "eval-log/dev-graph-spec-import-report-20260926-qa100.json",
+  "c02_writer": "run-dev-graph-node update"
+}

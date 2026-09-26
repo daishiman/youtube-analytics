@@ -66,7 +66,7 @@ updated_at: "2026-09-24T14:45:00Z"
 - この期間の判断(前期との変化・次に見る動画。日次欠測時は前期比較を保留し、動画候補は今期の値で判断)
 - 日次推移グラフ(ECharts 遅延読込・今期実線/前期点線/公開日マーカー・文字要約と表切替)
 - 動画別の実績: 直近公開10本を既定表示・視聴回数順への並べ替え・行押下で同じ期間の単一動画ダッシュボードへ絞る・『表/構成比』切替(動画別上位+その他/切り口別/Shorts・長尺/新作・過去作と上位3本の占有率)
-- 最新AI分析カード(題名・版・結論・発見3つ。詳細画面は準備中)と実施中/効果測定中の改善アクションカード(指標の基準値→最新値・期間。編集・状態更新は準備中)
+- 最新AI分析カード(題名・版・結論・発見3つ。AI分析(main)の reports のうちアーカイブされていない最大の版を出し、『レポートの詳細を見る』で /analysis?report= へ移る)と実施中/効果測定中の改善アクションカード(指標の基準値→結果値。期間は出さない。編集・状態更新は準備中)(qa-114)
 - 『詳しく見る』区画: 週次ファネル(旧ダッシュボード先頭4ブロックの判定ロジックを維持)/データ品質/収集済み原値/利用可能なレポート種別。構成比は動画別の実績に一本化
 - 空状態5種(未連携・未収集・CSV未取込・レポート0件・アクション0件)と読込中・エラー表示(集約API失敗は画面上部、独立API失敗は該当区画に表示)
 - 読み取り専用の集約 API GET /api/dashboard?period=7d|28d|90d|1y|custom&from&to&scope=channel|videos&video_ids=(全画面共通の ?period= をそのまま受け、省略時 28d・custom は from/to 必須で最大365日、qa-109): KPI・推移のグラフ仕様 JSON・動画別の実績・構成比・最新AI分析要約・改善アクション・基本日次収集の最終成功時刻・空状態フラグを daily_metrics/video_metrics/reports/actions から tenant_id で絞って返す。入力検証失敗は 400。video_ids は件数上限なしのため JSON 配列1個を json_each で展開して1パラメータでバインドする(D1 bound parameters 最大100)
@@ -104,7 +104,7 @@ updated_at: "2026-09-24T14:45:00Z"
 
 - arch-youtube-analytics-system(architecture/youtube-analytics-system.md)
 - spec-youtube-analytics-system(specs/youtube-analytics-system.md)
-- 根拠章: system-spec/ui-ux.md, system-spec/frontend.md, system-spec/backend.md, system-spec/security.md, system-spec/database.md, system-spec/infrastructure.md(qa-099〜qa-109、評価 eval-log/completeness-report-20260924-r8.json。main 取込時の番号付け替えは eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)
+- 根拠章: system-spec/ui-ux.md, system-spec/frontend.md, system-spec/backend.md, system-spec/security.md, system-spec/database.md, system-spec/infrastructure.md(qa-099〜qa-109、評価 eval-log/completeness-report-20260924-r8.json。main 取込時の番号付け替えは eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json と eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json。AI分析画面(PR #7)統合後の右列の調整は qa-114、受領書 eval-log/completeness-qa114-20260926.json)
 - 画面正本: docs/screens/02-dashboard.png
 
 ## 機能間依存

@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "22f7bc783e0a16d72eb8a304405fde06c7463a10a8bab113df66513ab737d4c9",
-  "current_architecture_digest": "49b1a6412c0344035c06dbbbaf5978c7dc20aa884338f1ae73ce51f13cc7b08f",
+  "current_source_digest": "e8500ac122957a30219afdd9777ae7ed08fa5611ae391872d917d3073f9e6f1a",
+  "current_architecture_digest": "65e30195475496f82dc787474595b8ce959a149e6e488a64a6fcc7b4fd4d2ba9",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -73,6 +73,11 @@
       "refreshed_at": "2026-09-26",
       "by_feature": "feat-dashboard-redesign",
       "note": "main(PR #7 AI分析画面)を取り込み、本 feature 側の番号を qa-099〜qa-113 へずらして正本(system-spec)を統合・再生成した(eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json)。specs/architecture の本文と source_lineage が変わったため current digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "qa-114(main 統合後のダッシュボード右列と media_assets 制約の調整)を spec・arch 本文へ反映し、C02(run-dev-graph-node update)で confirmation_evidence を eval-log/completeness-qa114-20260926.json へ付け替え、graph_revision 15→16。両本文が変わったため current source digest と current architecture digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
     }
   ]
 }

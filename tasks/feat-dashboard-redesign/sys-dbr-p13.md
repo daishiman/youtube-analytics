@@ -61,7 +61,7 @@ updated_at: "2026-09-24T15:08:34Z"
 
 ## 目的
 
-PR の必須チェック(lint/test/e2e/dry-run)を通し、main への merge で D1 マイグレーション 0008 と deploy、thumbnail 通の Cron トリガー有効化を完了させる。
+PR の必須チェック(lint/test/e2e/dry-run)を通し、main への merge で D1 マイグレーション 0016〜0029 と deploy、thumbnail 通の Cron トリガー有効化を完了させる。
 
 ## 背景
 

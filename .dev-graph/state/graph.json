@@ -1,5 +1,5 @@
 {
-  "graph_revision": 15,
+  "graph_revision": 16,
   "nodes": [
     {
       "acceptance": [],
@@ -33,8 +33,8 @@
       },
       "confirmation_evidence": {
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-merge-20260926.json",
-        "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"
+        "evidence_ref": "eval-log/completeness-qa114-20260926.json",
+        "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -96,7 +96,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム 要件・機能仕様",
       "tracker_binding": "none",
-      "updated_at": "2026-09-26T04:56:33Z"
+      "updated_at": "2026-09-26T05:29:09Z"
     },
     {
       "acceptance": [],
@@ -134,8 +134,8 @@
       },
       "confirmation_evidence": {
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-merge-20260926.json",
-        "evaluated_digest": "426666e7dfbb82131b747f054c33621d37ce535b5b1cd16ea43b2b05db674805"
+        "evidence_ref": "eval-log/completeness-qa114-20260926.json",
+        "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -197,7 +197,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム アーキテクチャ",
       "tracker_binding": "none",
-      "updated_at": "2026-09-26T04:56:33Z"
+      "updated_at": "2026-09-26T05:29:09Z"
     },
     {
       "acceptance": [
