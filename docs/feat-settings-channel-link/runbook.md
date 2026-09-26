@@ -4,7 +4,7 @@
 
 ## 1. Google Cloud の追加設定（初回だけ）
 
-1. 「API とサービス」→「ライブラリ」で **YouTube Data API v3** と **YouTube Analytics API** を有効にする。
+1. 「API とサービス」→「ライブラリ」で **YouTube Data API v3**、**YouTube Analytics API**、**YouTube Reporting API** を有効にする。
 2. 「OAuth 同意画面」→「データアクセス」に、次のスコープを足す。
    - `https://www.googleapis.com/auth/youtube.readonly`
    - `https://www.googleapis.com/auth/yt-analytics.readonly`
@@ -15,7 +15,11 @@
 4. 「OAuth 同意画面」の公開ステータスを「本番環境」にする。「テスト」のままだと許可が7日で切れて、毎週「要再連携」になる。
 5. 表示されたクライアント ID とシークレットを、設定画面「YouTube連携」→「Google Cloud の接続情報」に登録する（オーナーのみ）。
 
-**qa-087 以降、1〜5 はテナントごとの作業**になった。各テナントのオーナーが自分の Google Cloud プロジェクトで行う（API の利用枠もそのプロジェクトのものを使う）。画面の「Google Cloud Console での準備手順」に同じ内容がある。アプリ共通のクライアント（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`）はログイン専用で、リダイレクト URI は `/api/auth/callback` のまま。
+**通常のテナントでは、1〜5 はテナントごとの作業**になった。各テナントのオーナーが自分の Google Cloud プロジェクトで行う（API の利用枠もそのプロジェクトのものを使う）。画面の「Google Cloud Console での準備手順」に同じ内容がある。アプリ共通のクライアント（`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`）はログインに使用する。
+
+### 指定テナントの事前設定済みクライアント
+
+`manjumoto.daishi@senpai-lab.com` が確認済みの作成者兼オーナーであり、`wrangler.toml` の `MANAGED_YOUTUBE_TENANT_ID` と一致するテナントだけは、既存のアプリ共通 Google OAuth クライアントを YouTube 連携にも使う。Google Cloud・Worker・画面で必要な設定と検証は **[docs/setup/youtube-managed-oauth.md](../setup/youtube-managed-oauth.md)** を正本とする。ほかのテナントは従来どおり各自のクライアントを登録する。
 
 ## 2. D1 のテーブルを増やす
 
@@ -45,19 +49,23 @@ Cloudflare の3項目（D1 の容量、R2 の容量、Workers のリクエスト
 
 ## 4. 字幕の自動取得（force-ssl）を公開する
 
-`youtube.force-ssl` は Google の機密スコープなので、一般公開の前に OAuth の検証が要る。検証が通るまでの設定は次のとおり。
+`youtube.force-ssl` は Google の機密スコープなので、一般公開の前に OAuth の検証が要る。日次収集後の字幕 Queue、R2 原本保存、テナント別の1日4本の上限管理、30日超の原本削除はローカルで実装・検証した。公開環境での実チャンネル検証が終わるまで `CAPTIONS_COLLECTION_READY` は設定せず、画面は「準備中」にする。既に ON のテナントだけは OFF にして追加許可を取り消せる。
+
+上限の「4本」は試行本数で、字幕取得分のAPI予算はPacific Timeの1日につきテナント当たり1,000 unitsまで。Google 公式の費用は [captions.list](https://developers.google.com/youtube/v3/docs/captions/list) が動画1件につき50 units、[captions.download](https://developers.google.com/youtube/v3/docs/captions/download) が字幕1件につき200 units。1試行で最大250 unitsを先に予約し、応答が不明でも同日のAPI呼出しを重複させない。4件を一覧・取得すると合計1,000 unitsを使う。
+
+本番の migration 0019〜0021 を適用し、実チャンネルで字幕取得・再試行・削除を検証した後に `CAPTIONS_COLLECTION_READY=1` を設定して次の公開範囲を適用する。
 
 | 状態 | 設定 | 画面 |
 |---|---|---|
-| 検証前（既定） | `FORCE_SSL_VERIFIED = "0"` | 運営テナントのオーナーだけトグルを操作できる。ほかのテナントは「準備中」 |
+| 実取得検証後・Googleの検証前 | `CAPTIONS_COLLECTION_READY = "1"`, `FORCE_SSL_VERIFIED = "0"` | 運営テナントのオーナーだけトグルを操作できる。ほかのテナントは「準備中」 |
 | 運営テナントで試す | `[vars] OPERATOR_TENANT_ID = "<運営テナントの tenant_id>"` | 同上 |
 | 検証後 | `FORCE_SSL_VERIFIED = "1"` | 全テナントのオーナーが操作できる |
 
 手順:
 
-1. Google Cloud コンソール →「OAuth 同意画面」→「検証センター」で、force-ssl を使う理由（「オーナーの動画の字幕を1日5本まで取得して分析する」）とデモ動画を提出する。
+1. Google Cloud コンソール →「OAuth 同意画面」→「検証センター」で、force-ssl を使う理由（「オーナーの動画の字幕を1日4本まで取得して分析する」）とデモ動画を提出する。
 2. 通るまでは運営テナントだけで試す。tenant_id は `pnpm wrangler d1 execute youtube-analytics-db --remote --command "SELECT tenant_id, name FROM tenants"` で確認する。
-3. 通ったら `wrangler.toml` を `FORCE_SSL_VERIFIED = "1"` にして PR → merge で公開する。
+3. 運営テナントで実取得とR2・D1保存、日次4試行の上限、30日超の削除を確認して `CAPTIONS_COLLECTION_READY=1` にする。Google の検証が通ったら `FORCE_SSL_VERIFIED = "1"` で全テナントへ公開する。
 4. 戻すとき（検証が取り消されたとき）は `"0"` に戻す。すでに ON のテナントは、字幕の取得が止まるだけで、連携は切れない。
 
 ## 5. チャンネルを変更する（オーナーから依頼されたとき）
@@ -78,7 +86,7 @@ pnpm wrangler d1 execute youtube-analytics-db --remote \
 
 ジョブは `channel-cleanup-queue` の専用 consumer（1通ずつ・同時実行1）で、失敗時は60秒間隔で最大10回再試行する。毎日03:00 JST（前日18:00 UTC）の Cron は cleanup 通を送り直す。予約直後の Queue 送信に失敗しても予約と連携解除は成立し、Cron が回収する。ローカルでは `curl 'http://localhost:8793/cdn-cgi/local/scheduled?format=json'` でCronを手動起動できる。
 
-期限監視では、`data_deletions` の `scope='channel' AND done_at IS NULL AND due_at <= 現在時刻` を確認する。期限が近い、または過ぎた予約は Workers Logs と Queue の失敗記録を確認し、再試行を妨げる R2/D1 障害を解消する。取込中の記録が残り続ける場合も調査する。テナント全削除と30日保持の自動化は別の縦切りで実装する。
+期限監視では、`data_deletions` の `scope IN ('channel', 'tenant') AND done_at IS NULL AND due_at <= 現在時刻` を確認する。期限が近い、または過ぎた予約は Workers Logs と Queue の失敗記録を確認し、再試行を妨げる R2/D1 障害を解消する。取込中の記録が残り続ける場合も調査する。テナント全削除も専用 cleanup 通で少量ずつ実行し、`done_at` 後のR2後着地を日次で再掃除する。
 
 ## 6. ローカルで画面をテストする
 
@@ -112,11 +120,11 @@ seed が入れるデータ（テストチャンネルA）: 連携済みチャン
    - **接続情報の登録**: クライアント ID に `123456789012-localtest.apps.googleusercontent.com`、シークレットに `GOCSPX-local-test-secret`（どちらも形式だけ正しいダミー）を入れて「登録」→「登録済み」になり、シークレットは「登録済み（表示しません）」と出る。「再連携」が押せるようになる。
    - 「再連携」を押すと Google の同意画面へ移る。ダミーのクライアントでは Google がエラーを出す（本物を試すときは、1 節で作ったクライアントを登録する）。戻るボタンで戻る。
    - 「変更」でクライアント ID を別の値にして保存すると、チャンネルが「要再連携」になる。「削除」でも同じ。確かめたあとは `pnpm db:seed:local` で戻す。
-5. **字幕トグル**: ON にすると、Google の追加同意の画面へ移る（同上）。
+5. **字幕トグル**: 実チャンネル検証前で公開フラグが未設定のため「準備中」となり、ON にできないことを確認する。
 6. **データ取込**: 種類を選び、ファイルをドロップするか選ぶ。拡張子の違うファイル（例: .txt を CSV で）は拒否される。履歴の `broken.csv` に失敗理由が出る。
 7. **トークン**: 「新しいトークンを発行」→ 名前が空だと発行できない →「テスト」と入れて発行 → 平文が1回だけ出る →「コピー」で「トークンをコピーしました。」→ 閉じると二度と出ない。一覧は3本になる。あと2本発行して5本にし、6本目を発行すると「トークンは1人5本まで発行できます」。不要なものは「失効」で消す。
 8. **無料枠**: 7項目を確認する。YouTube API・D1書込・字幕取得は「未取得」。seed の Cloudflare キャッシュでは R2 と Workers のリクエストが赤になり、テナント数は実数で表示される。
-9. **データを削除**: 「データを削除」→ テナント名を間違えると確定ボタンが押せない。**確定すると削除予約が入る**ので、確かめたあとは `pnpm db:seed:local` で戻す。
+9. **データを削除**: 「データを削除」→ テナント名を間違えると確定ボタンが押せない。**確定するとテナントは即時利用不可になり、Queueが全データを削除する**ので、ローカル確認後は `pnpm db:seed:local` で戻す。
 10. **連携解除**: 同じく、テナント名の入力で確定する。解除後は「旧チャンネルのデータ削除を依頼済み」が表示され、新規連携ボタンは出ない。Queue が削除して `done_at` を記録した後に新規連携できる。seed で戻す。
 11. **閲覧者**: アカウントメニューからログアウト → `viewer@example.com` で入る → 設定画面にメンバー区画と書込ボタンがない。
 12. **未連携のテナント**: `other-owner@example.com` で入る → 「YouTubeと連携」ボタン。字幕トグルは「準備中」で押せない（運営テナントではないため）。

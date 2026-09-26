@@ -80,10 +80,11 @@ describe("期間（ヘッダーと AI分析で共有）", () => {
   });
 
   it("未知の period は 28日へ戻す", () => {
-    expect(resolvePeriod(new URLSearchParams("period=7d"), today).key).toBe("28d");
+    expect(resolvePeriod(new URLSearchParams("period=14d"), today).key).toBe("28d");
   });
 
-  it("最新90日・1年", () => {
+  it("最新7日・90日・1年（7日は利用者の決定 qa-109）", () => {
+    expect(resolvePeriod(new URLSearchParams("period=7d"), today).start).toBe("2026-09-18");
     expect(resolvePeriod(new URLSearchParams("period=90d"), today).start).toBe("2026-06-27");
     expect(resolvePeriod(new URLSearchParams("period=1y"), today).start).toBe("2025-09-25");
   });

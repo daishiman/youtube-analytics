@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "status": "updated",
+  "operation": "package-generation-update",
+  "feature_package_id": "feature-package/feat-dashboard-redesign",
+  "parent_feature": "feat-dashboard-redesign",
+  "source_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "previous_source_digest": "sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a",
+  "expected_count": 13,
+  "applied_count": 13,
+  "node_ids": [
+    "SYS-DBR-P01",
+    "SYS-DBR-P02",
+    "SYS-DBR-P03",
+    "SYS-DBR-P04",
+    "SYS-DBR-P05",
+    "SYS-DBR-P06",
+    "SYS-DBR-P07",
+    "SYS-DBR-P08",
+    "SYS-DBR-P09",
+    "SYS-DBR-P10",
+    "SYS-DBR-P11",
+    "SYS-DBR-P12",
+    "SYS-DBR-P13"
+  ],
+  "graph_revision_before": 11,
+  "graph_revision_after": 12,
+  "graph_digest_after": "sha256:d9053e183bce9e373297d1903b47365bf948964f81fbdcee19d33b9c7ad7554a",
+  "output_path": ".dev-graph/state/graph.json",
+  "preserved_fields": [
+    "created_at",
+    "tracker_binding"
+  ],
+  "reason": "register-package は初回登録専用のため、r2 世代（qa-099 反映）を C02 の差分更新で反映",
+  "registered_at": "2026-09-24T15:09:29.578169Z"
+}

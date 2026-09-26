@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "status": "completed",
+  "staging": ".dev-graph/staging/sdp-feat-dashboard-redesign-r2",
+  "destination": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2",
+  "digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "feature_package_id": "feature-package/feat-dashboard-redesign",
+  "receipt": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/atomic-promotion-receipt.json",
+  "completed_at": "2026-09-24T15:08:34Z"
+}

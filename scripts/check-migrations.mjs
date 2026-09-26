@@ -1,7 +1,7 @@
 // D1 マイグレーションの適用検証（CI と手元の両方で使う。Cloudflare へは送らない）
 //   1. 空の local D1 へ migrations/ を全件適用する
 //   2. 既存 DB 相当（--base までを適用済み）へ残りの差分だけを適用する
-// 使い方: node scripts/check-migrations.mjs [--base 0007]
+// 使い方: node scripts/check-migrations.mjs [--base 0015]
 // 一時フォルダ（local D1 と一時設定）は、成功しても失敗しても最後に消す
 import { execFileSync } from "node:child_process";
 import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -10,8 +10,8 @@ import { join, resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const baseArg = process.argv.indexOf("--base");
-// 既定の 0007 は main にある最後の migration（このブランチは 0008 以降を足す）。意図して固定している
-const base = baseArg > 0 ? process.argv[baseArg + 1] : "0007";
+// 既定の 0015 は main にある最後の migration（このブランチは 0016 以降を足す）。意図して固定している
+const base = baseArg > 0 ? process.argv[baseArg + 1] : "0015";
 const all = readdirSync(join(root, "migrations"))
   .filter((f) => /^\d{4}_.+\.sql$/.test(f))
   .sort();

@@ -35,7 +35,7 @@ export interface Me {
   tenants: TenantSummary[];
   currentTenant: TenantSummary | null;
   signupClosed: boolean;
-  /** 最終更新（収集・CSV取込の新しい方）。ヘッダーに出す */
+  /** 最終収集時刻。収集前は null。ヘッダーに出す */
   lastUpdatedAt: string | null;
 }
 
@@ -65,7 +65,28 @@ export interface ImportRow {
   rows: number | null;
   status: "処理待ち" | "完了" | "失敗";
   error: string | null;
+  has_original: number;
+  mapped_columns: number | null;
+  unmapped_columns: number | null;
+  unresolved_rows: number | null;
+  period_status: "unknown" | "daily" | null;
   created_at: string;
+}
+
+export interface StudioImportMapping {
+  importId: string;
+  studioKind: "table" | "graph" | "total";
+  mappedColumns: number;
+  unmappedColumns: number;
+  unresolvedRows: number;
+  periodStatus: "unknown" | "daily";
+  columns: {
+    ordinal: number;
+    header: string;
+    mappingKey: string | null;
+    unit: string | null;
+    status: "mapped" | "unmapped";
+  }[];
 }
 
 export interface SkillToken {
@@ -88,6 +109,8 @@ export interface GoogleClientSummary {
   configured: boolean;
   clientId: string | null;
   updatedAt: string | null;
+  /** managed はサーバー側で接続情報を用意する対象テナント。通常テナントでは省略される */
+  source?: "managed";
 }
 
 /** GET /api/settings（画像の5カード分。メンバーは独立した API） */
@@ -104,8 +127,8 @@ export interface Settings {
       subscriberCount: number | null;
       connectedAt: string;
     } | null;
-    /** 表示用の文言（例「毎日 3:00 JST」）。日時ではない */
-    nextCollection: string | null;
+    /** 収集の稼働状況を表す文言。日時ではない */
+    collectionStatus: string | null;
     lastCollectedAt: string | null;
     lastCsvImportAt: string | null;
     scopes: string[];
@@ -225,7 +248,7 @@ export const REDIRECT_MESSAGES: Record<string, string> = {
 /** 連携の完了（/settings?done=KEY）の表示文言 */
 export const DONE_MESSAGES: Record<string, string> = {
   reconnected: "YouTubeと再連携しました。",
-  captions_on: "字幕の自動取得をONにしました。次回の毎日収集から新着動画の字幕を取得します。",
+  captions_on: "字幕の追加許可を保存しました。",
 };
 
 /** ログイン画面の文言。未知のコードは内容を出さず汎用の文言にする（qa-066） */
@@ -240,6 +263,26 @@ export const ROLE_LABELS: Record<Role, string> = {
   editor: "編集者",
   viewer: "閲覧者",
 };
+
+export type { FunnelMetricResult, PendingReason } from "../src/domain/funnel";
+// サーバの応答型をそのまま使う（画面側で再定義しない）。型だけなので画面の bundle には入らない
+export type {
+  AnalyticsRawResponse,
+  AnalyticsReportRowsPage as AnalyticsRawRowsPage,
+} from "../src/repositories/analytics-raw-repository";
+export type {
+  ReportingReportsResponse,
+  ReportingSyncSummary,
+} from "../src/repositories/reporting-repository";
+export type { CsvPreviewResponse } from "../src/usecases/csv-preview";
+export type {
+  DashboardResponse,
+  DashboardVideo,
+  Kpi,
+  ShareItem,
+} from "../src/usecases/dashboard";
+export type { FunnelResponse } from "../src/usecases/funnel";
+export type { ReportTypesResponse } from "../src/usecases/report-types";
 
 // ---- AI分析（feat-ai-analysis-screen）。/api/analysis-requests・/api/analysis/data-summary・/api/reports ----
 // 状態・作成経路・結果 JSON の型は src/domain（analysis.ts・report-schema.ts）が正本

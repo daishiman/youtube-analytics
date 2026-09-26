@@ -1,5 +1,5 @@
 ---
-acceptance: ["Cron 1回で対象テナント数+1通が collect-queue に入る", "1テナントの収集が1回の consumer 実行でサブリクエスト50件以内に収まる", "3回再試行しても失敗したテナントは collection_status=failed になり、翌日の実行で直近7日が埋まる", "保存した行は全て source=api と tenant_id を持つ", "API 由来の値から新しい指標を計算するコードが無い"]
+acceptance: ["Cron 1回で対象テナント数+1通が collect-queue に入る", "1テナントの収集が1回の consumer 実行でサブリクエスト50件以内に収まる", "3回再試行しても失敗したテナントは collection_status=failed になり、翌日の実行で直近7日が埋まる", "保存した行は全て source=api と tenant_id を持つ", "API 由来の値から新しい指標を計算するコードが無い", "後続の字幕収集実装はテナント別1日4本・字幕用1,000 unitsの永続的な上限を守り、完成まで字幕ONを準備中に保つ"]
 architecture_refs: ["arch-youtube-analytics-system"]
 artifact_kind: "feature"
 artifact_subtypes: []
@@ -33,8 +33,8 @@ pull_request_linkages: []
 purpose: "YouTube Analytics/Reporting/Data API の公式値をテナントごとに毎日自動で集め、分析とダッシュボードが常に最新の実績を使えるようにする"
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
-scope_in: ["owner による YouTube 読取連携(youtube.readonly yt-analytics.readonly, offline)と refresh token の AES-256-GCM 暗号化保存・連携解除の revoke(連携の入口と1チャンネル選択は feat-settings-channel-link)", "連携完了時の Reporting API jobs.create(channel_reach_basic_a1)と job_id 保存", "Cron `0 18 * * *` から collect-queue へ tenant ごとの collect 通と cleanup 1通を sendBatch", "consumer(max_batch_size=1)の collectTenantDaily: Analytics D-7〜D-1 再取得・動画別 D-3 単日・流入元・属性・維持率", "Reporting reports.list の差分取得と修正版の置換、Data API の動画一覧差分", "msg.retry(max_retries=3・600秒)と最終失敗時の collection_status=failed", "API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at"]
-scope_out: ["CSV 取込と派生指標(feat-csv-media-ingest)", "cleanup 通の処理内容(feat-retention-ops)", "収集結果の画面表示(feat-web-screens-actions)", "チャンネル候補の選択・変更フロー、字幕トグルと captions.download(youtube.force-ssl)の追加同意・1日5本の字幕取得(feat-settings-channel-link)"]
+scope_in: ["owner による YouTube 読取連携(youtube.readonly yt-analytics.readonly, offline)と refresh token の AES-256-GCM 暗号化保存・連携解除の revoke(連携の入口と1チャンネル選択は feat-settings-channel-link)", "連携完了時の Reporting API jobs.create(channel_reach_basic_a1)と job_id 保存", "Cron `0 18 * * *` から collect-queue へ tenant ごとの collect 通と cleanup 1通を sendBatch", "consumer(max_batch_size=1)の collectTenantDaily: Analytics D-7〜D-1 再取得・動画別 D-3 単日・流入元・属性・維持率", "Reporting reports.list の差分取得と修正版の置換、Data API の動画一覧差分", "msg.retry(max_retries=3・600秒)と最終失敗時の collection_status=failed", "API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at", "後続の収集実装で字幕の取得・保存とテナント別1日4本・字幕用1,000 unitsの永続予算管理を担当する。完成までは字幕ONを準備中に保つ"]
+scope_out: ["CSV 取込と派生指標(feat-csv-media-ingest)", "cleanup 通の処理内容(feat-retention-ops)", "収集結果の画面表示(feat-web-screens-actions)", "チャンネル候補の選択・変更フローと字幕トグル・youtube.force-ssl の追加同意(feat-settings-channel-link)"]
 source_lineage: {"origin_kind": "generated", "source_plugin": "dev-graph", "source_path": "specs/youtube-analytics-system.md", "source_version": "1.0.0", "source_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486", "imported_at": "2026-09-21T15:15:00Z"}
 start_date: null
 status: "active"
@@ -66,13 +66,14 @@ owner が YouTube を読取専用で連携すると、毎日 JST 3:00 の Cron �
 - Reporting reports.list の差分取得と修正版の置換、Data API の動画一覧差分
 - msg.retry(max_retries=3・600秒)と最終失敗時の collection_status=failed
 - API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at
+- 後続の収集実装で字幕の取得・保存とテナント別1日4本・字幕用1,000 unitsの永続予算管理を担当する。完成までは設定画面の字幕ONを準備中に保つ
 
 ### 含まない
 
 - CSV 取込と派生指標(feat-csv-media-ingest)
 - cleanup 通の処理内容(feat-retention-ops)
 - 収集結果の画面表示(feat-web-screens-actions)
-- チャンネル候補の選択・変更フロー、字幕トグルと captions.download(youtube.force-ssl)の追加同意・1日5本の字幕取得(feat-settings-channel-link)
+- チャンネル候補の選択・変更フローと字幕トグル・youtube.force-ssl の追加同意(feat-settings-channel-link)
 
 ## 受入
 
@@ -81,6 +82,7 @@ owner が YouTube を読取専用で連携すると、毎日 JST 3:00 の Cron �
 - 3回再試行しても失敗したテナントは collection_status=failed になり、翌日の実行で直近7日が埋まる
 - 保存した行は全て source=api と tenant_id を持つ
 - API 由来の値から新しい指標を計算するコードが無い
+- 後続の字幕収集実装では、captions.list 50 + captions.download 200 units/本を計上し、テナントごと1日4本・字幕用1,000 unitsの永続的な上限を守る。取得・保存と上限管理が完成するまで字幕ONは準備中とする
 
 ## アーキテクチャ参照
 

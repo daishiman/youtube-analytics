@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-dashboard-redesign-r2",
+  "evaluated_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec すべてで同一のスコープ外一覧(YouTube収集処理・CSV取込処理・AI分析レポート生成・動画/AI分析/改善アクション/設定画面本体とactions状態遷移API・画像ティール配色・i.ytimg.com直接表示とCSP拡張・AppShell/共通ヘッダーの土台と共通部品の新規実装)が feature の scope_out と完全一致しており、feature-package.json・workstream-inventory.json・task-graph.json・system-build-handoff.json 間でも矛盾を検出しなかった。system-spec の ui-ux/frontend/backend 章の qa-099 記述(期間切替を全画面共通 AppShell ヘッダーの ?period=7d|28d|90d|1y|custom に統一し既定28日・任意最大365日・ページ内期間タブなし)は全 task-spec の本文・受入欄と一致し、specs/architecture の youtube-analytics-system.md とも矛盾を検出しなかった。P05の実装対象(DashboardPage.tsx刷新・GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id・AppShellのPERIODSへ7d追加・migrations/0008_dashboard_media_assets.sql・Cron役割①)はscope_inの記述と一致し、scope_out(CSV取込・AI分析生成・他画面本体・AppShell土台の新規実装)へ踏み込んでいない。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-02-architecture.md#目的",
+        "task-specs/phase-03-design-review.md#Verification and evidence",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-13-release-deploy.md#スコープ外",
+        "workstream-inventory.json"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "feature 受入13項目(acc-01〜acc-13、features/feat-dashboard-redesign.context.json#acceptance と文言・件数一致)すべてが各 task の acceptance/verification に写像されている。特に qa-099 由来の期間切替統一(acc-02: 7日/28日/90日/1年/任意の5つ・既定28日・任意最大365日・期間リンクが既存クエリを保持・許可外period/366日以上/from>toで400)はP01(対応表に明記)/P02(APIの period 設計)/P03(400判定レビュー)/P04(実装前失敗テスト)/P05(AppShell PERIODSへ7d追加の実装)/P09(curlでの400確認)の全フェーズで一貫して扱われている。対象セレクタの上限なし(直近10本既定・外す/追加/入れ替え)・テナント境界の黙示的除外・video_ids 101本以上でも200(json_each単一バインド)・thumbnail通(1通15件・1日最大3通・Cron役割①30日超削除)・1,100本超テナントの1,000本上限・360px横スクロールなしとPlaywright3サイズも、scope_in・各task-specの受入/検証欄に明示的に現れており、漏れは検出しなかった。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#目的",
+        "task-specs/phase-02-architecture.md#Verification and evidence",
+        "task-specs/phase-03-design-review.md#Verification and evidence",
+        "task-specs/phase-04-test-design.md#目的",
+        "task-specs/phase-05-implementation.md#Verification and evidence",
+        "task-specs/phase-09-quality-assurance.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#Verification and evidence"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "task-specs/phase-01〜13、workstream-inventory.json、task-graph.json、system-build-handoff.json、feature-package.json の間で task_id(SYS-DBR-P01〜P13)、phase_ref、write_scope、depends_on が全ファイル一致している。feature_package_id・parent_feature も全ファイルで一致し、repository_id(github:daishiman/youtube-analytics)は system-build-handoff.json の identity・workstream-inventory.json の repo_context・.dev-graph/config.json と一致した。source_feature_digest(sha256:ea08f0145c002c8c1b5fd1af622abc4f862d907ea2c6d3c4e76ded225bd78ff0)は feature-package.json・system-build-handoff.json 双方に記載されている。write_scope に列挙された全パス(web/components/AppShell.tsx, web/pages/DashboardPage.tsx, web/api.ts, web/styles.css, src/http/dashboard-routes.ts, src/http/app.ts, src/usecases/thumbnails.ts, src/repositories/dashboard-repository.ts, src/lib/errors.ts, src/index.ts, src/env.ts, wrangler.toml, package.json, pnpm-lock.yaml, migrations/0008_dashboard_media_assets.sql)は実リポジトリに実在することを確認した(移行番号は eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json の mapping どおり 0004→0008 に繰り上がっており、migrations/0004_settings_channel_link.sql は別featureのファイルで衝突していない)。migrations/0008 は既に system-spec database章の列定義と一致する内容で存在し、business_funnel_weekly・funnel_targets を含む点も database 章と整合する。不整合は検出しなかった。",
+      "evidence": [
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→...→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向きDAGで、サイクルや package 外(SYS-DBR-以外)の task_id への依存参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致し、workstream-inventory.json の各 task の depends_on とも一致している。feature をまたぐ edge は task-graph 内には存在しない。GET /api/dashboard/funnel が読む business_funnel_weekly・funnel_targets テーブルは feat-csv-media-ingest が作成する対象であり、feature-package.json 側の feature 単位 depends_on(features/feat-dashboard-redesign.md)に正しく列挙されている。この依存は feature 間の実行順であり、13-task内部DAGへの越境edgeではないため C4 の評価対象(内部DAGの前向き性)には抵触しない。deterministic gate(validate-system-plan.py)も本 staging に対して exit0・violations 0 で一致した。",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "workstream-inventory.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/.codex/plugins/cache/harness-dev/system-dev-planner/0.1.11/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/02ダッシュボード",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-dashboard-redesign-r2"
+      ],
+      "exit_code": 0,
+      "conditions": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d\",\n  \"feature_package_id\": \"feature-package/feat-dashboard-redesign\",\n  \"parent_feature\": \"feat-dashboard-redesign\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}\n",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "9d048212771ab50ab3202df9019653a2f35966677fb8e2ebeb1eb267540a5dcc"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "6647b6514ecd99e26118b980384f9206aed9e64176ece03515cd0c4779e5680c"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "c722db9e9d3f0935dea47508bdadb593321f36c0e91ba0151adb855598022fd1"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "c83b3b51674e68f31ba1b777f2dc2ee7eac1278ccd836def7bb26329de35a6f5"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "e860c7e6fa7c503a897a15ce614c5afa0382dce7da65c10569312686f086b7df"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "7097d20657b1b4b3bc55a5603941a5a07092a3921abee1801d59e66e04b75ab2"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "498a2eaa99a579f6550ef5d173545d635536060bdc018cda2439fcc2ff72f7a4"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "9bfdf5821551c5bc2dcbc323784361f6078067be71ebcecfa4f7c2e9263056b4"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "554deb72490013ea7eba6397fb3cb11249b8a3d2d802d3635fa6df1928608616"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "da224a036c1d16d4a891fb78b3728c9be5957a3ae3870726a3e7a24db62ff4e9"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "5c8b99a45b8ea5cdb268c2bae1b527444efe8faf4851e45f7150a56b61a863b9"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "8c0794e560fb373b1d5f68564317fdf458227ee00e397ec96f77cf284805b3dc"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "ce6ffbd82e6a88874c6c51054f797edc4a642bc4c509d6178c28232c1dc8149c"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "78d9a34718ce25ea7a4a30f6b983297a47608b313c736c38e3ee59204c9dab88"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "243753fab32f6b061b00a1914f45264df17811f9f8fd34b54d3619581f4af72b"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "a090c56ce410bc050a4ef7fefb5d391ca1eb97785434cc39a5c41fffc0f472a7"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "7ae28514095dd98f5a5ff450d7528c849c62ef0ba0e4ccea8a05c9eefa8594d0"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "9c5c7ace27aab13a903720e4197322de4381680c906e5169145a50398e910b23"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:470f087447a0518d094f82d0b0ae9721de65c1f39a3838f73e0e768f89107a81)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "repository-boundary",
+      "observation": "P05 の write_scope に列挙された migrations/0008_dashboard_media_assets.sql・web/components/AppShell.tsx(PERIODSへの7d追加を含む)・src/http/dashboard-routes.ts・src/usecases/thumbnails.ts・src/repositories/dashboard-repository.ts は、本評価時点で実リポジトリ上に既に実体として存在しており(AppShell.tsx の PERIODS 配列には既に 7d が含まれている)、P05 が『これから作成する』という task-spec の記述と、リポジトリの現状(既に部分的に実装済み)との間に差がある。migrations/0008 は CREATE TABLE IF NOT EXISTS で構成されており冪等なため C3(依存関係整合)・C4(前向きDAG)上の矛盾には至らないが、P05 実行時に『新規追加』ではなく『既存実装との整合確認』から始める必要がある点は task-spec 本文に明記されておらず、実行順序の前提を見誤るリスクがわずかにある。",
+      "evidence": [
+        "task-specs/phase-05-implementation.md#成果物",
+        "workstream-inventory.json"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "各 task-spec の Verification/受入欄は『受入13項目それぞれに少なくとも1つのテストケースがある』のような集合的表現で書かれており、feature 受入13項目(acc-01〜acc-13)それぞれとの1対1の明示的な番号対応表は plan パッケージ内には存在しない(実際の対応表は P01 実行時に docs/feat-dashboard-redesign/requirements.md として作成される予定)。本評価では task-spec 本文の記述内容から13項目全てへの実質的な写像を個別に確認して C2 を PASS としたが、対応表そのものが plan 時点で未生成である点は監査可能性の観点で軽微な改善余地であり、r1 評価時から変わっていない。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#成果物",
+        "task-specs/phase-04-test-design.md#Verification and evidence"
+      ]
+    }
+  ]
+}

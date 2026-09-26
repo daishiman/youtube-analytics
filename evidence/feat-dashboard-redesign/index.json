@@ -1,0 +1,366 @@
+{
+  "feature_id": "feat-dashboard-redesign",
+  "feature_package_id": "feature-package/feat-dashboard-redesign",
+  "task_id": "SYS-DBR-P11",
+  "generated_at": "2026-09-25",
+  "environment": "local (wrangler dev, http://localhost:8791)",
+  "preview_verified": false,
+  "preview_note": "commit/push/deploy をしていないため、公開環境と Actions の実行は未確認。P13 は利用者の明示の指示を待つ。deploy 後に acceptance.md の公開環境の列を埋める",
+  "quality_gates": {
+    "typecheck": {
+      "result": "pass",
+      "path": "evidence/feat-dashboard-redesign/typecheck.txt"
+    },
+    "lint": {
+      "result": "pass (209 files checked, no fixes)",
+      "path": "evidence/feat-dashboard-redesign/lint.txt"
+    },
+    "check_repo": {
+      "result": "pass",
+      "path": "evidence/feat-dashboard-redesign/check-repo.txt"
+    },
+    "unit_test": {
+      "result": "pass (50 files / 447 tests; dashboard 5 files / 66 tests)",
+      "path": "evidence/feat-dashboard-redesign/unit-test-run.txt"
+    },
+    "e2e": {
+      "result": "204 passed / 0 failed (login A5 fixed via shared devLogin; 60/60 in e2e-login-a5-repeat.txt)",
+      "path": "evidence/feat-dashboard-redesign/e2e-run.txt"
+    },
+    "e2e_dashboard": {
+      "result": "pass (24 passed)",
+      "path": "evidence/feat-dashboard-redesign/e2e-dashboard-parallel.txt"
+    },
+    "migration_empty_db": {
+      "result": "pass (0001-0008)",
+      "path": "evidence/feat-dashboard-redesign/P08-migration-empty-db.txt"
+    },
+    "build_dry_run": {
+      "result": "pass",
+      "path": "evidence/feat-dashboard-redesign/build-dry-run.txt"
+    }
+  },
+  "acceptance": [
+    {
+      "id": "AC1",
+      "criterion": "docs/screens/02-dashboard.png と同じ区画順、既存のインディゴとマゼンタ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-desktop.png",
+          "note": "desktop"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-tablet.png",
+          "note": "tablet"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-mobile.png",
+          "note": "mobile"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-dashboard-redesign/e2e-dashboard-parallel.txt",
+          "note": "dashboard の24件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC2",
+      "criterion": "期間は共通ヘッダーの 7d/28d/90d/1y/custom。既定 28d、custom は最大365日、不正は 400。対象を保つ",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/domain.test.ts",
+          "note": "期間、構成比、ファネル判定"
+        },
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-dashboard-redesign/unit-test-run.txt",
+          "note": "33ファイル、298件すべて成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC3",
+      "criterion": "動画選択は直近10本が既定、上限なし。合計と動画ごとの線",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-videos-desktop.png",
+          "note": "動画選択"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC4",
+      "criterion": "動画別の実績と構成比",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/domain.test.ts",
+          "note": "期間、構成比、ファネル判定"
+        },
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC5",
+      "criterion": "KPI の出典バッジ、M1 の開示文、前期比の記号と色",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC6",
+      "criterion": "ファネルは開いたときだけ取得し、判定を維持",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/funnel-api.test.ts",
+          "note": "4件"
+        },
+        {
+          "kind": "test",
+          "path": "tests/dashboard/domain.test.ts",
+          "note": "期間、構成比、ファネル判定"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-details-desktop.png",
+          "note": "詳しく見る"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC7",
+      "criterion": "空状態5種",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC8",
+      "criterion": "閲覧者に書込の操作を出さない。他テナントの ID は黙って除外",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC9",
+      "criterion": "Cache-Control private、CSP を緩めない、サムネイルは自サイト経由",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/thumbnails.test.ts",
+          "note": "サムネイル配信、thumbnail 通、Cron 役割①"
+        },
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC10",
+      "criterion": "360px で横スクロールなし、3サイズの E2E",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "e2e/dashboard.spec.ts",
+          "note": "E1〜E8 × 3サイズ"
+        },
+        {
+          "kind": "screenshot",
+          "path": "docs/feat-dashboard-redesign/screenshots/dashboard-narrow360.png",
+          "note": "360px"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-dashboard-redesign/e2e-run.txt",
+          "note": "全体152件成功、既存 login A5 の1件失敗（flaky）"
+        },
+        {
+          "kind": "test-log",
+          "path": "evidence/feat-dashboard-redesign/e2e-login-flaky-recheck.txt",
+          "note": "login の再実行126件成功"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC11",
+      "criterion": "video_ids が101本以上でも 200",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/dashboard-api.test.ts",
+          "note": "GET /api/dashboard の結合テスト"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC12",
+      "criterion": "thumbnail 通の subrequest が50件以内、取り直しの順序、30日で削除",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/thumbnails.test.ts",
+          "note": "サムネイル配信、thumbnail 通、Cron 役割①"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    },
+    {
+      "id": "AC13",
+      "criterion": "1,100本を超えるテナントは1,000本まで",
+      "verdict_local": "pass",
+      "evidence": [
+        {
+          "kind": "test",
+          "path": "tests/dashboard/thumbnails.test.ts",
+          "note": "サムネイル配信、thumbnail 通、Cron 役割①"
+        },
+        {
+          "kind": "acceptance",
+          "path": "docs/feat-dashboard-redesign/acceptance.md",
+          "note": "受入判定（ローカル）"
+        }
+      ]
+    }
+  ]
+}

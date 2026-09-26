@@ -76,7 +76,7 @@ export async function getUsage(deps: Deps): Promise<UsageItem[]> {
       100_000,
       "回",
     ),
-    // 5本の上限はテナントごと。集計処理のない全体カウンタをこの上限と比較しない。
+    // 4本の上限はテナントごと。集計処理のない全体カウンタをこの上限と比較しない。
     item("captions", `字幕取得（本日・${TENANT_LABEL}ごと）`, null, CAPTION_DAILY_LIMIT, "本"),
     item("tenants", `${TENANT_LABEL}数`, tenants, maxTenants(deps.env), "件"),
   ];

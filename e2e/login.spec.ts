@@ -1,17 +1,9 @@
 // ログイン画面刷新（feat-login-redesign）の E2E。docs/feat-login-redesign/test-design.md の A1〜A9 に対応する
 // seed（scripts/seed-local.sql）の owner@ / partial@ と招待トークンを使う
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { CONSENT, devLogin } from "./helpers";
 
-const CONSENT = "プライバシーポリシーと利用規約に同意します";
 const INVITE = "local-invite-editor-0000000000000000000000000";
-
-async function devLogin(page: Page, email: string) {
-  await page.goto("/login");
-  await page.getByLabel(CONSENT).check();
-  await page.getByLabel("開発用ログインのメールアドレス").fill(email);
-  await page.getByRole("button", { name: "開発用ログイン" }).click();
-  await expect(page).not.toHaveURL(/\/login/);
-}
 
 test.describe("ログイン画面", () => {
   test("A1 画像どおりの順序で並び、Googleボタンは Light テーマ", async ({ page }) => {
@@ -208,13 +200,16 @@ test.describe("A5 YouTube 連携が未完了のときの案内", () => {
   });
 
   test("連携済みなら案内を出さない", async ({ page }) => {
+    // ログイン中の画面遷移で /api/me が破棄されると差し替えが空振りするため、ログインを終えてから差し替えて読み直す
+    await devLogin(page, "owner@example.com");
+    await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
     await page.route("**/api/me", async (route) => {
       const response = await route.fetch();
       const data = await response.json();
       if (data.currentTenant) data.currentTenant.youtubeLinkStatus = "linked";
       await route.fulfill({ response, json: data });
     });
-    await devLogin(page, "owner@example.com");
+    await page.reload();
     await expect(page.getByText("あなたの役割: オーナー")).toBeVisible();
     await expect(page.locator(".link-banner")).toHaveCount(0);
   });

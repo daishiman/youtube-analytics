@@ -1,0 +1,108 @@
+[WebServer] (node:43831) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:43832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44181) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+[WebServer] (node:44384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:44387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] ▲ [WARNING] Scheduled Workers are not automatically triggered during local development.
+[WebServer] 
+[WebServer]   To manually trigger a scheduled event, run:
+[WebServer]     curl "http://localhost:8899/cdn-cgi/local/scheduled"
+[WebServer]   For more details, see https://developers.cloudflare.com/workers/configuration/cron-triggers/#test-cron-triggers-locally
+[WebServer] 
+[WebServer] 
+
+
+Running 51 tests using 3 workers
+
+(node:44450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44449) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/51] [tablet] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[2/51] [desktop] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[3/51] [mobile] › e2e/dashboard.spec.ts:24:3 › ダッシュボード › E1 画像どおりの区画順で、KPI に出典バッジと前期比が出る
+[4/51] [mobile] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[5/51] [tablet] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[6/51] [desktop] › e2e/dashboard.spec.ts:49:3 › ダッシュボード › E2 共通ヘッダーの期間を切り替えると再計算され、対象の選択は保たれる
+[7/51] [mobile] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[8/51] [tablet] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[9/51] [desktop] › e2e/dashboard.spec.ts:60:3 › ダッシュボード › 期間切替の取得失敗では前の期間の実績を表示しない
+[10/51] [mobile] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+[11/51] [tablet] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+[12/51] [desktop] › e2e/dashboard.spec.ts:78:3 › ダッシュボード › 日次の欠測があると前期比較と動画候補を保留する
+[13/51] [mobile] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[14/51] [tablet] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[15/51] [desktop] › e2e/dashboard.spec.ts:91:3 › ダッシュボード › 分析とアクションの情報カードは残し、未完成の詳細操作を準備中と示す
+[16/51] [mobile] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[17/51] [tablet] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[18/51] [desktop] › e2e/dashboard.spec.ts:101:3 › ダッシュボード › E3 動画を選ぶ: 既定は直近10本、11本以上も選べる
+[19/51] [mobile] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[20/51] [tablet] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[21/51] [desktop] › e2e/dashboard.spec.ts:115:3 › ダッシュボード › E4 動画別の実績: 視聴回数順の並べ替えと構成比への切替
+[22/51] [mobile] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[23/51] [tablet] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[24/51] [desktop] › e2e/dashboard.spec.ts:132:3 › ダッシュボード › E11 動画行から期間を保って1本の分析・推移へ移る
+[25/51] [mobile] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[26/51] [desktop] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[27/51] [tablet] › e2e/dashboard.spec.ts:147:3 › ダッシュボード › E5 詳しく見るを開いたときだけファネルを取得する
+[28/51] [mobile] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[29/51] [desktop] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[30/51] [tablet] › e2e/dashboard.spec.ts:166:3 › ダッシュボード › E12 利用可能なレポート種別を検索し、未取込と区別する
+[31/51] [mobile] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[32/51] [desktop] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[33/51] [tablet] › e2e/dashboard.spec.ts:199:3 › ダッシュボード › E13 保存済みReporting原本の列名と取得リンクを確認する
+[34/51] [mobile] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[35/51] [desktop] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[36/51] [tablet] › e2e/dashboard.spec.ts:235:3 › ダッシュボード › E14 流入元の原データを列順とページ送りで確認する
+[37/51] [mobile] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[38/51] [mobile] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[39/51] [desktop] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[40/51] [tablet] › e2e/dashboard.spec.ts:289:3 › ダッシュボード › E6 閲覧者には CSVアップロードとアクションの…メニューが出ない
+[41/51] [mobile] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[42/51] [desktop] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[43/51] [tablet] › e2e/dashboard.spec.ts:296:3 › ダッシュボード › E7 他テナントや存在しない video_ids は黙って除外される
+[44/51] [mobile] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[45/51] [desktop] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[46/51] [tablet] › e2e/dashboard.spec.ts:303:3 › ダッシュボード › E8 横スクロールが出ず、操作ボタンは44px以上
+[47/51] [mobile] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[48/51] [desktop] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[49/51] [tablet] › e2e/dashboard.spec.ts:314:3 › ダッシュボード › E9 スクロール中もナビと共通ヘッダーが見え、本文に重ならない
+[50/51] [desktop] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+[51/51] [tablet] › e2e/dashboard.spec.ts:356:3 › ダッシュボード › E10 無効な動画IDだけなら既定10本へ戻さず選び直せる
+  51 passed (18.0s)

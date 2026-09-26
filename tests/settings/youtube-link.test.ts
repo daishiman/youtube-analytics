@@ -1,7 +1,7 @@
 // 受入 2・3・9: チャンネル選択（別テナント連携済みは 409）・同一チャンネルだけの再連携・解除→削除予約→再連携
 import { env } from "cloudflare:workers";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { SCOPE_FORCE_SSL } from "../../src/adapters/google-youtube";
+import { SCOPE_FORCE_SSL } from "../../src/domain/google-scopes";
 import { SettingsRepository } from "../../src/repositories/settings-repository";
 import { addMember, call, count, expectError, newOwner } from "../platform/helpers";
 import {
@@ -56,9 +56,15 @@ describe("YouTube チャンネルの紐付け", () => {
     expect(res.status).toBe(201);
 
     const settings = (await (await call("/api/settings", { cookie: owner.cookie })).json()) as {
-      youtube: { status: string; channel: { title: string }; scopes: string[] };
+      youtube: {
+        status: string;
+        channel: { title: string };
+        scopes: string[];
+        collectionStatus: string;
+      };
     };
     expect(settings.youtube.status).toBe("正常");
+    expect(settings.youtube.collectionStatus).toBe("チャンネル・動画日次を毎日3:00 JSTに収集");
     expect(settings.youtube.channel.title).toBe("チャンネルA");
     expect(settings.youtube.scopes).toEqual(["youtube.readonly", "yt-analytics.readonly"]);
 

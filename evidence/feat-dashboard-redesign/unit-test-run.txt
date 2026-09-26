@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /Users/dm/orca/workspaces/YouTube分析/02ダッシュボード
+
+
+ Test Files  50 passed (50)
+      Tests  447 passed (447)
+   Start at  07:21:38
+   Duration  14.82s (transform 4.38s, setup 42.43s, import 4.33s, tests 14.76s, environment 3ms)
+

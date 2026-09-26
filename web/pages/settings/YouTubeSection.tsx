@@ -3,11 +3,12 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { TENANT_LABEL } from "../../../src/domain/labels";
 import { ApiError, api, type ChannelCandidate, type Settings } from "../../api";
-import { formatDateTime } from "../../components/AppShell";
+import { Alert, Loading } from "../../components/Alert";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { SectionCard } from "../../components/SectionCard";
 import { type BadgeTone, StatusBadge } from "../../components/StatusBadge";
 import { useToast } from "../../components/Toast";
+import { fmtNumber, formatDateTime } from "../../format";
 import { errorText } from "../shell-context";
 import { GoogleClientPanel } from "./GoogleClientPanel";
 
@@ -26,8 +27,7 @@ const SCOPE_LABELS: Record<string, string> = {
 
 const scopeLabel = (scope: string) => SCOPE_LABELS[scope] ?? scope;
 
-const formatCount = (n: number | null) =>
-  n === null ? "非公開" : `${n.toLocaleString("ja-JP")}人`;
+const formatCount = (n: number | null) => (n === null ? "非公開" : `${fmtNumber(n)}人`);
 
 /** Google OAuth の画面へ移る（戻り先は /settings?done=… / ?select=channel / ?error=…） */
 async function goToGoogle(path: string, body?: unknown) {
@@ -75,7 +75,7 @@ export function YouTubeSection({
       window.location.assign(result.url);
       return;
     }
-    toast(enabled ? "字幕の自動取得をONにしました。" : "字幕の自動取得をOFFにしました。");
+    toast(enabled ? "字幕の追加許可を保存しました。" : "字幕の自動取得をOFFにしました。");
     await onChanged();
   }
 
@@ -90,11 +90,7 @@ export function YouTubeSection({
       title="YouTube連携"
       description="分析するYouTubeチャンネルを1つ連携します。許可は読み取り専用です。"
     >
-      {error && (
-        <p role="alert" className="alert">
-          {error}
-        </p>
-      )}
+      <Alert>{error}</Alert>
 
       <GoogleClientPanel
         client={youtube.googleClient}
@@ -127,8 +123,8 @@ export function YouTubeSection({
           </div>
           <dl className="facts">
             <div>
-              <dt>次回収集</dt>
-              <dd>{youtube.nextCollection ?? "—"}</dd>
+              <dt>収集状況</dt>
+              <dd>{youtube.collectionStatus ?? "—"}</dd>
             </div>
             <div>
               <dt>最終収集</dt>
@@ -153,8 +149,9 @@ export function YouTubeSection({
           </dl>
           {!clientReady ? (
             <p className="alert">
-              Google Cloud
-              の接続情報が未登録のため、再連携と字幕の設定ができません。上の欄から登録してください。
+              {youtube.googleClient.source === "managed"
+                ? "事前設定された接続情報を利用できないため、再連携と字幕の設定ができません。運用担当者に確認してください。"
+                : "Google Cloud の接続情報が未登録のため、再連携と字幕の設定ができません。上の欄から登録してください。"}
             </p>
           ) : (
             youtube.status === "要再連携" && (
@@ -166,7 +163,7 @@ export function YouTubeSection({
 
           <CaptionsSwitch
             captions={youtube.captions}
-            disabled={!canManage || busy || !clientReady}
+            disabled={!canManage || busy || (!clientReady && !youtube.captions.enabled)}
             onToggle={(next) => {
               if (next) void run(() => setCaptions(true));
               else setDialog("captions-off");
@@ -293,7 +290,7 @@ function CaptionsSwitch({
           role="switch"
           aria-checked={captions.enabled}
           checked={captions.enabled}
-          disabled={disabled || preparing}
+          disabled={disabled || (preparing && !captions.enabled)}
           onChange={(event) => onToggle(event.target.checked)}
         />
         <span className="switch-track" aria-hidden="true" />
@@ -301,8 +298,9 @@ function CaptionsSwitch({
       </label>
       {preparing && <span className="badge badge-neutral">準備中</span>}
       <p className="small muted">
-        追加の許可 youtube.force-ssl が必要・1日{captions.dailyLimit}本まで
-        {preparing && "（Googleの審査が終わるまでお待ちください）"}
+        追加の許可 youtube.force-ssl が必要・
+        {preparing ? "利用可能になった場合の上限" : "取得の上限"}：1日{captions.dailyLimit}本
+        {preparing && "（現在、字幕の収集機能は利用できません。設定済みの許可はOFFにできます）"}
       </p>
     </div>
   );
@@ -391,18 +389,12 @@ function ChannelPicker({
   }
 
   if (state.status === "loading") {
-    return (
-      <p className="muted" role="status">
-        チャンネルを読み込んでいます…
-      </p>
-    );
+    return <Loading>チャンネルを読み込み中…</Loading>;
   }
   if (state.status === "error") {
     return (
       <div>
-        <p role="alert" className="alert">
-          {state.message}
-        </p>
+        <Alert>{state.message}</Alert>
         <button type="button" className="button" onClick={onDone}>
           戻る
         </button>
@@ -438,11 +430,7 @@ function ChannelPicker({
           ))}
         </ul>
       </fieldset>
-      {error && (
-        <p role="alert" className="alert">
-          {error}
-        </p>
-      )}
+      <Alert>{error}</Alert>
       <div className="row">
         <button type="button" className="button" onClick={onDone} disabled={submitting}>
           キャンセル

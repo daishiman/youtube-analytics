@@ -1,4 +1,6 @@
 // 設定画面の一括取得と、テナントのデータ削除の受付
+
+import { COLLECTION_STATUS_TEXT } from "../domain/collection-status";
 import { can, requirePermission, type TenantContext } from "../domain/tenant-context";
 import { newId } from "../lib/crypto";
 import { AppError } from "../lib/errors";
@@ -6,11 +8,9 @@ import { addMs, type Deps, iso } from "./common";
 import { googleClientSummary } from "./google-client";
 import { IMPORT_HISTORY_LIMIT } from "./imports";
 import {
-  audit,
   CAPTION_DAILY_LIMIT,
   captionsAvailability,
   DELETION_GRACE_MS,
-  NEXT_COLLECTION_TEXT,
   settingsRepo,
 } from "./settings-common";
 import { TOKEN_LIMIT } from "./skill-tokens";
@@ -37,7 +37,7 @@ export async function getSettings(deps: Deps, ctx: TenantContext) {
     googleClient,
   ] = await Promise.all([
     repo.getTenant(),
-    repo.getChannel(),
+    repo.getChannel(deps.now),
     repo.getGrantedScopes(),
     repo.listImports(IMPORT_HISTORY_LIMIT),
     repo.lastCsvImportAt(),
@@ -67,7 +67,7 @@ export async function getSettings(deps: Deps, ctx: TenantContext) {
             connectedAt: channel.connected_at,
           }
         : null,
-      nextCollection: channel ? NEXT_COLLECTION_TEXT : null,
+      collectionStatus: channel ? COLLECTION_STATUS_TEXT : null,
       lastCollectedAt: channel?.last_collected_at ?? null,
       lastCsvImportAt,
       pendingDeletionDueAt: channelDeletion?.due_at ?? null,
@@ -102,10 +102,16 @@ export async function requestTenantDeletion(deps: Deps, ctx: TenantContext, conf
   const dueAt = iso(addMs(deps.now, DELETION_GRACE_MS));
   await repo.requestTenantDeletion({
     deletionId: newId(),
+    auditId: newId(),
     userId: ctx.userId,
     now: iso(deps.now),
     dueAt,
   });
-  await audit(deps, ctx, "tenant.delete");
+  // 予約は永続化済み。Queue に送れなくても日次 Cron が回収する。
+  try {
+    await deps.env.CLEANUP_QUEUE.send({ kind: "tenant-cleanup" });
+  } catch (cause) {
+    console.error("tenant cleanup enqueue failed", cause);
+  }
   return { dueAt };
 }

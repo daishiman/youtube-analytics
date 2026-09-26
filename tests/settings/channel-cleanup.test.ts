@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import type { Bindings } from "../../src/env";
 import { processPendingChannelDeletions } from "../../src/usecases/channel-cleanup";
+import { insertChannel } from "../helpers/channels";
 import { type LoggedIn, newOwner } from "../platform/helpers";
 
 const NOW = new Date("2026-09-24T00:00:00.000Z");
@@ -48,6 +49,118 @@ async function doneAt(id: string): Promise<string | null> {
   return row?.done_at ?? null;
 }
 
+const CHANNEL_DATA_TABLES = [
+  "video_angles",
+  "videos",
+  "daily_metrics",
+  "video_metrics",
+  "video_reach_daily",
+  "video_daily_metrics",
+  "channel_daily_metrics",
+  "reports",
+  "findings",
+  "actions",
+  "media_assets",
+  "business_funnel_weekly",
+  "funnel_targets",
+  "reporting_raw_reports",
+  "reporting_jobs",
+  "reporting_reach_stage",
+  "analytics_raw_rows",
+  "analytics_raw_reports",
+  "studio_csv_columns",
+  "studio_csv_unresolved_rows",
+  "video_period_metrics",
+  "studio_csv_imports",
+  "collection_series_status",
+] as const;
+
+async function addChannelData(owner: LoggedIn & { tenantId: string }) {
+  const t = owner.tenantId;
+  const channel = `UC_${t}`;
+  const video = `video_${t}`;
+  await env.DB.batch([
+    env.DB.prepare(
+      "INSERT INTO videos (tenant_id, video_id, channel_id, title, published_at, fetched_at) VALUES (?1, ?2, ?3, 'old', ?4, ?4)",
+    ).bind(t, video, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO video_angles (tenant_id, video_id, angle) VALUES (?1, ?2, '追加型')",
+    ).bind(t, video),
+    env.DB.prepare(
+      "INSERT INTO daily_metrics (tenant_id, channel_id, date, content_type, fetched_at) VALUES (?1, ?2, '2026-09-20', 'all', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO video_metrics (tenant_id, video_id, date, fetched_at) VALUES (?1, ?2, '2026-09-20', ?3)",
+    ).bind(t, video, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO video_reach_daily (tenant_id, video_id, date, fetched_at) VALUES (?1, ?2, '2026-09-20', ?3)",
+    ).bind(t, video, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO video_daily_metrics (tenant_id, video_id, date) VALUES (?1, ?2, '2026-09-20')",
+    ).bind(t, video),
+    env.DB.prepare(
+      "INSERT INTO channel_daily_metrics (tenant_id, channel_id, date) VALUES (?1, ?2, '2026-09-20')",
+    ).bind(t, channel),
+    env.DB.prepare(
+      `INSERT INTO reports (tenant_id, report_id, channel_id, request_id, version, title, conclusion, outcome,
+         period_start, period_end, brief_json, results_json, history_review_json, report_html, idempotency_key,
+         created_by, created_at)
+       VALUES (?1, 'old-report', ?2, 'old-request', 1, 'old', 'old', '判定保留', '2026-09-01', '2026-09-20',
+         '{}', '{}', '{}', '', 'old-report', 'old-user', ?3)`,
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO findings (tenant_id, report_id, finding_no, kind, title) VALUES (?1, 'old-report', 1, 'factor', 'old')",
+    ).bind(t),
+    env.DB.prepare(
+      `INSERT INTO actions (tenant_id, action_id, channel_id, report_id, title, stage, metric, status, created_by, created_at, updated_at)
+       VALUES (?1, 'old-action', ?2, 'old-report', 'old', '流入', 'ctr', '実施中', 'old-user', ?3, ?3)`,
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      `INSERT INTO media_assets (tenant_id, asset_id, video_id, kind, r2_key, content_type, bytes, created_at)
+       VALUES (?1, 'old-scene', ?2, 'scene', 'old-key', 'image/jpeg', 8, ?3)`,
+    ).bind(t, video, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO business_funnel_weekly (tenant_id, channel_id, week_start, imported_at) VALUES (?1, ?2, '2026-09-21', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO funnel_targets (tenant_id, channel_id, metric_id, effective_from) VALUES (?1, ?2, 'impressions', '2026-09-21')",
+    ).bind(t, channel),
+    env.DB.prepare(
+      "INSERT INTO reporting_jobs (tenant_id, channel_id, job_id, report_type_id, name, last_seen_at) VALUES (?1, ?2, 'old-job', 'channel_basic_a2', 'old', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO reporting_raw_reports (tenant_id, channel_id, report_type_id, job_id, report_id, start_time, end_time, create_time, header_json, row_count, byte_count, r2_key, status, stored_at) VALUES (?1, ?2, 'channel_basic_a2', 'old-job', 'old-report', ?3, ?3, ?3, '[]', 0, 0, 'old-key', 'stored', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO reporting_reach_stage (tenant_id, channel_id, report_id, date, video_id, video_thumbnail_impressions, video_thumbnail_impressions_ctr) VALUES (?1, ?2, 'old-report', '2026-09-20', ?3, 100, 5.2)",
+    ).bind(t, channel, video),
+    env.DB.prepare(
+      "INSERT INTO analytics_raw_reports (tenant_id, channel_id, report_key, connected_at, token_updated_at, period_start, period_end, availability, column_headers_json, row_count, fetched_at) VALUES (?1, ?2, 'traffic_daily', ?3, ?3, '2026-09-20', '2026-09-20', 'available', '[]', 1, ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO analytics_raw_rows (tenant_id, channel_id, report_key, row_key, ordinal, values_json) VALUES (?1, ?2, 'traffic_daily', 'one', 0, '[]')",
+    ).bind(t, channel),
+    env.DB.prepare(
+      "INSERT INTO studio_csv_imports (tenant_id, import_id, channel_id, studio_kind, mapped_columns, unmapped_columns, normalized_rows, unresolved_rows, period_status, imported_at) VALUES (?1, 'old-studio', ?2, 'table', 1, 1, 1, 1, 'unknown', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      "INSERT INTO studio_csv_columns (tenant_id, import_id, ordinal, header, status) VALUES (?1, 'old-studio', 0, 'unknown', 'unmapped')",
+    ).bind(t),
+    env.DB.prepare(
+      "INSERT INTO studio_csv_unresolved_rows (tenant_id, import_id, row_index, reason) VALUES (?1, 'old-studio', 0, 'old')",
+    ).bind(t),
+    env.DB.prepare(
+      "INSERT INTO video_period_metrics (tenant_id, import_id, row_index, channel_id, is_total, metrics_json, imported_at) VALUES (?1, 'old-studio', 0, ?2, 0, '{}', ?3)",
+    ).bind(t, channel, NOW.toISOString()),
+    env.DB.prepare(
+      `INSERT INTO collection_series_status
+       (tenant_id, kind, report_key, channel_id, connected_at, token_updated_at,
+        cycle_started_at, status, changed_at)
+       VALUES (?1, 'collect', '', ?2, ?3, ?3, ?3, 'ok', ?3)`,
+    ).bind(t, channel, NOW.toISOString()),
+  ]);
+}
+
 describe("チャンネル解除後の旧データ削除", () => {
   it("履歴・孤立R2・古いOAuth行を消し、他テナントとGoogle設定と監査履歴を保つ", async () => {
     const owner = await newOwner("cleanup-complete");
@@ -62,6 +175,8 @@ describe("チャンネル解除後の旧データ削除", () => {
     ]);
     await addImport(owner, key);
     await addImport(other, otherKey);
+    await addChannelData(owner);
+    await addChannelData(other);
     await env.DB.batch([
       env.DB.prepare(
         `INSERT INTO oauth_pending
@@ -96,16 +211,24 @@ describe("チャンネル解除後の旧データ削除", () => {
     expect(await env.MEDIA.get(key)).toBeNull();
     expect(await env.MEDIA.get(orphan)).toBeNull();
     expect(await env.MEDIA.get(otherKey)).not.toBeNull();
-    for (const table of ["imports", "oauth_pending", "channel_oauth_tokens", "channels"]) {
+    for (const table of [
+      "imports",
+      "oauth_pending",
+      "channel_oauth_tokens",
+      "channels",
+      ...CHANNEL_DATA_TABLES,
+    ]) {
       const row = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE tenant_id = ?1`)
         .bind(owner.tenantId)
         .first<{ n: number }>();
       expect(row?.n, table).toBe(0);
     }
-    const kept = await env.DB.prepare("SELECT COUNT(*) AS n FROM imports WHERE tenant_id = ?1")
-      .bind(other.tenantId)
-      .first<{ n: number }>();
-    expect(kept?.n).toBe(1);
+    for (const table of ["imports", ...CHANNEL_DATA_TABLES]) {
+      const kept = await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE tenant_id = ?1`)
+        .bind(other.tenantId)
+        .first<{ n: number }>();
+      expect(kept?.n, table).toBe(1);
+    }
     const google = await env.DB.prepare(
       "SELECT client_id FROM tenant_google_clients WHERE tenant_id = ?1",
     )
@@ -118,13 +241,13 @@ describe("チャンネル解除後の旧データ削除", () => {
     expect(audit?.n).toBe(1);
 
     // 古い cleanup 通が遅れて再配信されても、新チャンネルのデータは消えない。
-    await env.DB.prepare(
-      `INSERT INTO channels
-        (tenant_id, channel_id, title, status, connected_by, connected_at)
-       VALUES (?1, ?2, 'new channel', '正常', ?3, ?4)`,
-    )
-      .bind(owner.tenantId, `UC_new_${owner.tenantId}`, owner.userId, NOW.toISOString())
-      .run();
+    await insertChannel({
+      tenantId: owner.tenantId,
+      channelId: `UC_new_${owner.tenantId}`,
+      title: "new channel",
+      connectedBy: owner.userId,
+      connectedAt: NOW.toISOString(),
+    }).run();
     const newKey = `tenants/${owner.tenantId}/generations/g1/imports/new.csv`;
     await env.MEDIA.put(newKey, "new");
     await addImport(owner, newKey);
@@ -272,6 +395,34 @@ describe("チャンネル解除後の旧データ削除", () => {
       overdue: 0,
       remaining: false,
     });
+    expect(await doneAt(id)).toBe(NOW.toISOString());
+  });
+
+  it("日次指標が100行を超えるときも、全件削除まで完了にしない", async () => {
+    const owner = await newOwner("cleanup-metrics-bounded");
+    const id = await reserve(owner);
+    await env.DB.batch(
+      Array.from({ length: 101 }, (_, i) =>
+        env.DB.prepare(
+          "INSERT INTO daily_metrics (tenant_id, channel_id, date, content_type, fetched_at) VALUES (?1, ?2, ?3, 'all', ?4)",
+        ).bind(
+          owner.tenantId,
+          `UC_${owner.tenantId}`,
+          new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10),
+          NOW.toISOString(),
+        ),
+      ),
+    );
+
+    expect((await processPendingChannelDeletions(env, NOW)).completed).toBe(0);
+    expect(await doneAt(id)).toBeNull();
+    const remaining = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM daily_metrics WHERE tenant_id = ?1",
+    )
+      .bind(owner.tenantId)
+      .first<{ n: number }>();
+    expect(remaining?.n).toBe(1);
+    expect((await processPendingChannelDeletions(env, NOW)).completed).toBe(1);
     expect(await doneAt(id)).toBe(NOW.toISOString());
   });
 

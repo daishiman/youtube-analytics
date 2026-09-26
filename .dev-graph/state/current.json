@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "feature_package_id": "feature-package/feat-skill-analysis-reports",
-  "published_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports",
-  "published_digest": "sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
-  "receipt": ".dev-graph/published/feature-package-feat-skill-analysis-reports/atomic-promotion-receipt.json"
+  "feature_package_id": "feature-package/feat-dashboard-redesign",
+  "published_path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2",
+  "published_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+  "receipt": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/atomic-promotion-receipt.json"
 }

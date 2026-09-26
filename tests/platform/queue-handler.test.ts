@@ -6,10 +6,12 @@ import worker from "../../src/index";
 import wrangler from "../../wrangler.toml?raw";
 
 describe("チャンネル削除ジョブの起動", () => {
-  it("専用 Queue と日次 Cron を構成し、収集 Queue は独立させる", () => {
+  it("収集・削除・サムネイル Queue と日次 Cron を構成する", () => {
     expect(wrangler).toContain('binding = "COLLECT_QUEUE"');
     expect(wrangler).toContain('binding = "CLEANUP_QUEUE"');
     expect(wrangler).toContain('queue = "channel-cleanup-queue"');
+    expect(wrangler).toContain('queue = "collect-queue"');
+    expect(wrangler).toMatch(/queue = "collect-queue"[\s\S]*?max_retries = 3\s+retry_delay = 600/);
     expect(wrangler).toContain("max_concurrency = 1");
     expect(wrangler).toContain('crons = ["0 18 * * *"]');
     expect(worker.queue).toEqual(expect.any(Function));
@@ -29,7 +31,7 @@ describe("チャンネル削除ジョブの起動", () => {
     await expect(worker.queue(batch, env)).resolves.toBeUndefined();
   });
 
-  it("収集 Queue のメッセージを削除処理で成功扱いにしない", async () => {
+  it("収集 Queue の異種メッセージは成功扱いにしない", async () => {
     const batch = createMessageBatch<CleanupMessage>("collect-queue", [
       {
         id: crypto.randomUUID(),
@@ -38,7 +40,7 @@ describe("チャンネル削除ジョブの起動", () => {
         body: { kind: "cleanup" as const },
       },
     ]);
-    await expect(worker.queue(batch, env)).rejects.toThrow("Unexpected queue");
+    await expect(worker.queue(batch, env)).rejects.toThrow("Unexpected collect message");
   });
 
   it("Cron は専用 Queue に実行要求を送る", async () => {
@@ -46,6 +48,7 @@ describe("チャンネル削除ジョブの起動", () => {
     try {
       await worker.scheduled(createScheduledController({ cron: "0 18 * * *" }), env);
       expect(send).toHaveBeenCalledWith({ kind: "cleanup" });
+      expect(send).toHaveBeenCalledWith({ kind: "retention" });
     } finally {
       send.mockRestore();
     }

@@ -1,0 +1,253 @@
+{
+  "evaluator": {
+    "name": "assign-system-spec-completeness-evaluator",
+    "version": "0.1.0",
+    "context": "fork"
+  },
+  "spec_dir": "system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。requirements_foundation の11キーに値がある。qa-100 で U8 の規模が75テナントに更新され(00-requirements-definition.md:74)、その変更の承認も記録されている(:97)。I1→G1/G4 などのトレース自体は切れていない。ただし qa-087(テナントごとの Google Cloud OAuth クライアントを必須にする)が U9 I1(:80)に反映されておらず、連携の前にオーナーが自分の GCP プロジェクトを用意する前提が上位概念に無い。これは high の finding の一部として扱う。r3 から持ち越しの low(同意記録と製品名を上位概念に入れるか)は未着手のまま。",
+      "evidence": [
+        "G-foundation exit0",
+        "00-requirements-definition.md:74 (U8 規模=75・qa-100)",
+        "00-requirements-definition.md:80 (U9 I1 に GCP クライアント登録の前提が無い)"
+      ]
+    },
+    "decision_guidance": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions[] の6件は confirmed だが、D-auth が利用者の決定 qa-087 と矛盾している。qa-087 の answer は『D-auth の「ログインとYouTube連携を1回の同意で完結」と、クォータ・100人上限をアプリ共通で数える前提(qa-021)は、YouTube連携についてはテナントごとのプロジェクト単位に置き換わる』と明記している。それなのに D-auth の goal_fit・free_tier_limits・caveats は古いままで、qa_refs に qa-087 が無い。この古い文は00-requirements-definition.md:125 と、auth.md:690・database.md:703・backend.md:1045・security.md:937・infrastructure.md:734 に投影されている。qa-085(force-ssl は検証が通るまで運営者テナントだけ)も、アプリ共通クライアントの検証を前提にしたまま qa-087 と調整されていない。D-cron の comparison_basis.operations『Queues 1本(無料枠1万操作/日に対し約300回/日)』も古い(caveats と qa_refs は qa-100 の75に更新済み)。qa-100 の質問は、75連携にするとサムネイル取得の送信が1日5回まで落ちるという代償を示していない。",
+      "evidence": [
+        "spec-state decisions[D-auth].user_decision.qa_refs に qa-087 が無い",
+        "00-requirements-definition.md:125",
+        "decisions[D-cron].options[0].comparison_basis.operations",
+        "qa-087 answered_at 2026-09-24T07:28:46Z basis=user-decision",
+        "qa-085 answered_at 2026-09-24T00:33:05Z"
+      ]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "依頼者の指示で sub-agent は起動していない。C07 と C06 の検査項目は、評価者が単体で代わりに確かめた。決定論ゲート5本(loop / --require-complete / --require-basis / --require-foundation / required-info --state)はすべて exit0 で、blocking の6件はすべて grounded。しかし意味層のトレーサビリティが崩れている。auth・database・backend・frontend・maintenance-ops・security・ui-ux の7セルは qa-087 を裏付けとして持つが、qa-087・qa-088 は各章の『裏付け質疑』節に載っているだけで、規範節への適用は0件。tenant_google_clients は全章で0件、design_applications の記録(00:48)は qa-087(07:28)より前のまま。さらに ui-ux.md:1111 の利用者向け文言は qa-088(ワークスペース表記)と矛盾する。qa の記録にも崩れがある。qa-100 は、確定済みの qa-052 の値(100)を reopen なしで改訂した。qa-088 と qa-099 は required_info_items が無い。qa-098 の answer に壊れた範囲表記『qa-095〜082』がある(番号付け替えの取りこぼし)。qa-101 は observed-fact で provenance は正直だが、AI の設計選択を利用者の確認なしに正本化している。qa-102・qa-103 の provenance は正直。",
+      "evidence": [
+        "G-matrix-loop/G-matrix/G-matrix-basis/G-foundation/G-required-info-state exit0",
+        "auth.md:555・database.md:623・security.md:680 は『裏付け質疑: qa-087』節だけ",
+        "grep tenant_google_clients system-spec/*.md = 全章0件",
+        "ui-ux.md:1111 『テナント切替』『○○のテナントに招待されています』『招待されたテナントに参加します』",
+        "qa-098 answer 『qa-095〜082』",
+        "qa-100 answered_at 2026-09-25T22:27:42Z・reopen_log に対応する記録なし"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "FAIL",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(aggregate-completeness --knowledge-graph の4プロファイル)は exit0。ダッシュボード刷新(qa-089〜103)の設計適用は、コードと照合して一致した。対象は backend の src/domain/dashboard-period.ts:7-10,84-119、src/repositories/dashboard-repository.ts:139-142,205,217,400、src/adapters/google-analytics.ts:172、および ui-ux の web/pages/dashboard/SidePanels.tsx:10、web/components/AppShell.tsx:19-25,80、DashboardPage.tsx:180 など。しかし次の2点で、設計知識の適用が形だけになっている。(1) 新しい種類の秘密情報(テナントが登録する client_secret)に対して、security 章の Secrets Management・OWASP ASVS の適用が規範節に無い。暗号化保存・非返却・変更時の要再連携は Q&A 節にしか無い(high と同じ根本原因)。(2) infrastructure.md:753 の『1テナント1日最大45件なので、25日周期で約1,100本までは30日を超える前に取り直せる』は、qa-100 の予算では成り立たない。75連携では src/usecases/queue-budget.ts の thumbnailSendsPerDay が1日5回になり、全テナント合計で225件/日にとどまる(medium)。infrastructure.md:755 の『既存の見積もり(収集の通 約300回)』と『超えたテナントは翌日の実行へ持ち越す』も、757 の置換宣言とコード(src/index.ts:82-86 の60秒後の続き再送)に追従していない。",
+      "evidence": [
+        "G-knowledge-graph exit0",
+        "infrastructure.md:753",
+        "infrastructure.md:755",
+        "infrastructure.md:757",
+        "src/usecases/queue-budget.ts:17-26,40-45",
+        "src/usecases/thumbnails.ts:21-27,131-138",
+        "src/index.ts:82-86,179"
+      ]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "sub-agent は起動していない。C08 の二層監査は、評価者が単体で代わりに行った。形式層は validate-source-citation と validate-spec-doc-sync がともに exit0 で、37 target と37 reference が1対1に対応している(r8 は33)。r8 以降に加わった4 target は、main(設定画面ブランチ)の取り込みで入ったもの。この4件を WebFetch で公式ページと照らし合わせた。youtube-channels-list は『quota cost of 1 unit』・mine・managedByMe はコンテンツパートナー専用・Last updated 2026-09-14 で、記録と一致した。cloudflare-graphql-analytics は、Account > Account Analytics > Read・Apr 23, 2026 で一致した(記録にあるエンドポイント URL はこのページには無く、別ページ由来)。google-sensitive-scope-verification は、要件5点・3-5 business days・user cap・2026-08-19 で一致した。google-oauth-incremental-auth は、include_granted_scopes・prompt の3値・offline 時の refresh token が一致した。ただしページが長く、WebFetch の抜粋には revoke の部分取消の有無と Last updated 2026-09-14 が出てこなかったので、未確認とする。残りの33 target は、r8 から2日で r7・r8 で照合済みのため、再照合していない。low として、qa-088 の準備手順8つに対応する公式ページが target に無いこと、2つの target_id が同じ source_url を指すことを残す。",
+      "evidence": [
+        "G-source-citation exit0 (37/37)",
+        "G-spec-doc-sync exit0",
+        "WebFetch channels/list: 1 unit / Last updated 2026-09-14 UTC",
+        "WebFetch api-token-auth: Account Analytics Read / Apr 23, 2026",
+        "WebFetch sensitive-scope-verification: 3-5 business days / Last updated 2026-08-19 UTC",
+        "WebFetch oauth2/web-server: include_granted_scopes・prompt・offline 一致、revoke と更新日は抜粋に無く未確認"
+      ]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt で、prompt-creator の verify-completeness.py --input と validate-prompt.py --input を実行し、すべて exit0 だった。次の2件は plugin 側の問題として、報告だけにとどめる(r5〜r8 から変わっていない)。R0-foundation.md:41 の U4 は objectives を {id,text,measure} と定義していて serves を求めていない。apply-spec-transition.py には hearing_progress.completed_at を書く op が無い。",
+      "evidence": [
+        "G-prompt 18/18 exit0",
+        "skills/run-system-spec-elicit/prompts/R0-foundation.md:41",
+        "skills/run-system-spec-elicit/scripts/apply-spec-transition.py に completed_at 無し"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "G-matrix-loop",
+      "name": "validate-coverage-matrix (loop)",
+      "conditions": ["matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"]
+    },
+    {
+      "id": "G-matrix",
+      "name": "validate-coverage-matrix --require-complete",
+      "conditions": ["matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"]
+    },
+    {
+      "id": "G-matrix-basis",
+      "name": "validate-coverage-matrix --require-basis",
+      "conditions": ["matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"]
+    },
+    {
+      "id": "G-foundation",
+      "name": "validate-coverage-matrix --require-foundation",
+      "conditions": ["foundation_trace", "decision_guidance"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"]
+    },
+    {
+      "id": "G-knowledge-graph",
+      "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)",
+      "conditions": ["design_knowledge_reflection", "matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "4プロファイルすべて exit0",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"]
+    },
+    {
+      "id": "G-required-info-state",
+      "name": "validate-knowledge-graph --profile required-info --state",
+      "conditions": ["matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "status=ok, ungrounded_blocking_items=[] (9ドメイン・blocking 6件すべて grounded)",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-knowledge-graph.py", "--profile", "required-info", "--input", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/run-system-spec-elicit/references/required-info-catalog.json", "--state", "system-spec/spec-state.json"]
+    },
+    {
+      "id": "G-source-citation",
+      "name": "validate-source-citation",
+      "conditions": ["doc_freshness"],
+      "exit_code": 0,
+      "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす (37 target / 37 reference)",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-source-citation.py", "--targets", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--state", "system-spec/spec-state.json"]
+    },
+    {
+      "id": "G-spec-doc-sync",
+      "name": "validate-spec-doc-sync",
+      "conditions": ["doc_freshness"],
+      "exit_code": 0,
+      "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-spec-doc-sync.py", "--matrix", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--spec-root", "system-spec"]
+    },
+    {
+      "id": "G-prompt",
+      "name": "verify-completeness.py + validate-prompt.py (18 prompt)",
+      "conditions": ["prompt_quality"],
+      "exit_code": 0,
+      "stdout": "18/18 両方 exit0 (system-spec-harness/skills/*/prompts/*.md を1件ずつ --input に渡した)",
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/prompt-creator/skills/run-prompt-creator-7layer/scripts/verify-completeness.py", "--input", "<system-spec-harness/skills/*/prompts/*.md の各1件>", "&&", "python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/prompt-creator/skills/run-prompt-creator-7layer/scripts/validate-prompt.py", "--input", "<同じ1件>"]
+    }
+  ],
+  "findings": [
+    {
+      "severity": "high",
+      "bucket": "decision_guidance+matrix_coverage/qa-087・qa-088 の未反映と qa-085 との未調整(elicit+compile)",
+      "observation": "qa-087(2026-09-24T07:28:46Z・user-decision)は、YouTube連携の OAuth クライアントをテナントごとに必須で持ち込むと決めた。answer 自身が、D-auth の『1回の同意で完結』と、アプリ共通で数える100人上限(qa-021)の前提が置き換わると書いている。それでも仕様書には、次の6点が反映されていない。(1) decisions[D-auth] は、goal_fit『ログインとYouTube連携を1回の同意で完結』、free_tier_limits『未検証公開は累計100ユーザーまで』、caveats『80人で検証申請(qa-021)』『force-ssl は運営者だけ(qa-085)』のままで、qa_refs に qa-087 が無い。この文は 00-requirements-definition.md:125 と、auth.md:690・database.md:703・backend.md:1045・security.md:937・infrastructure.md:734 に投影されている。(2) qa-087 と qa-088 は、7章の『裏付け質疑』節にあるだけ。規範節への適用は0件で、tenant_google_clients は全章に0件。(3) qa-085(運営者テナントと FORCE_SSL_VERIFIED)は、アプリ共通クライアントの検証を前提にしている。force-ssl をテナント自身の GCP プロジェクトで使う qa-087 とは調整されていない。公式ページは、プロジェクトが別なら個別に検証が要るかを明記していない。(4) U9 I1(00-requirements-definition.md:80)に、GCP クライアントを登録するという前提が無い。(5) コードは仕様より先に実装しており、仕様に無い例外も持つ。実装は migrations/0005_tenant_google_client.sql と src/repositories/settings-repository.ts:264-297。例外は src/usecases/google-client.ts:15,30-35 と wrangler.toml:21 の MANAGED_YOUTUBE_TENANT_ID で、特定のテナントIDと、コード内の定数に書いた特定オーナーのメールアドレスが一致したときだけ、アプリ共通クライアントで連携する。src/usecases/login-consent.ts:15-21 の signup は、共通クライアントのまま youtube.readonly と yt-analytics.readonly を要求している。qa-087 のあとにログインで YouTube スコープを要求するかどうかは、仕様で決まっていない。(6) ui-ux.md:1111 の利用者向け文言(『テナント切替』『○○のテナントに招待されています』『招待されたテナントに参加します』『テナント名の入力』)は qa-088 と矛盾する。コードは web/pages/LoginPage.tsx:125 と web/components/AppShell.tsx:99 で、すでに『ワークスペース』に置き換わっている。",
+      "suggested_fix": "elicit で次を行う。D-auth を reopen し、goal_fit・free tier・caveats・qa_refs を qa-087 に合わせて評価し直す。次の3点を利用者に確認し、qa として記録する。(a) force-ssl の検証の主体、および FORCE_SSL_VERIFIED と OPERATOR_TENANT_ID の意味をどうするか(qa-085 と qa-087 の調整)。(b) signup のログインで YouTube スコープを要求し続けるか。(c) MANAGED_YOUTUBE_TENANT_ID の例外を認めるか。認めるなら、メールアドレスのコード直書きを設定値へ移すかも決める。compile で次を行う。auth・security・database・backend・frontend・ui-ux・maintenance-ops の規範節に、tenant_google_clients の扱い(TOKEN_ENC_KEY で暗号化して保存する、画面と API に返さない、変更と削除で要再連携にする、連携ボタンを無効にする条件)を適用する。ui-ux.md:1111 の利用者向け文言を『ワークスペース』に置き換える。U9 I1 と U8 を更新する。",
+      "evidence": [
+        "00-requirements-definition.md:80,125",
+        "auth.md:555,690",
+        "security.md:680,937",
+        "ui-ux.md:1111",
+        "src/usecases/google-client.ts:15,30-35",
+        "src/usecases/login-consent.ts:15-21",
+        "wrangler.toml:21",
+        "src/env.ts:36-41"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "design_knowledge_reflection+decision_guidance/サムネイル処理能力と qa-100 予算の不整合(elicit+compile)",
+      "observation": "infrastructure.md:753 は『1テナント1日最大45件なので、25日周期で約1,100本までは30日を超える前に取り直せる』と書いている。しかし qa-100 の上限75連携では、src/usecases/queue-budget.ts の計算で固定分が (75×34+100)×3=7,950 操作になる。安全予算8,000の残りは50なので、thumbnailSendsPerDay(75,3)=floor(50/9)=5 となり、1日の送信は全テナント合計で5回、最大225件(1テナント平均3件/日)にとどまる。上限の近くでは、30日以内に取り直せるのは1テナントあたり約90本だけ。残りは Cron 役割①で削除され、代替表示になる。送信枠を先に使ったテナントが毎日枠を取るかどうかは確かめていない。infrastructure.md:755 の『既存の見積もり(収集の通 約300回)』も古い。757 の置換宣言が挙げる3つの文にはこの文が入っていない。D-cron の comparison_basis.operations『約300回/日』も同じく古い。qa-100 の質問は超過と上限75だけを示し、この代償を利用者に示していない。",
+      "suggested_fix": "elicit で、75連携の近くでサムネイルの取り直しが追いつかないことを示し、受け入れるかどうかを確認する。対策の候補は、サムネイルの取り直し周期を延ばす、送信1回の件数や予算の配分を見直す、上限をさらに下げる、など。そのうえで compile で infrastructure.md:753・755 と D-cron の operations を、qa-100 の予算式に合わせて書き直す。",
+      "evidence": [
+        "infrastructure.md:753,755,757",
+        "src/usecases/queue-budget.ts:17-26,33-45",
+        "src/usecases/thumbnails.ts:21-27,131-138",
+        "wrangler.toml:17 MAX_TENANTS=75"
+      ]
+    },
+    {
+      "severity": "medium",
+      "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ・r8 から持ち越し)",
+      "observation": "R0-foundation.md:41 の U4 は、objectives を {id,text,measure} と定義していて serves を求めていない。apply-spec-transition.py に hearing_progress.completed_at を書く op も無い。r5〜r8 から変わっていない。仕様書側の問題ではない。",
+      "suggested_fix": "harness 側で修正する(本仕様書の差し戻しには入れない)。"
+    },
+    {
+      "severity": "low",
+      "bucket": "design_knowledge_reflection/章とコードの食い違い(compile)",
+      "observation": "infrastructure.md:755 は、サムネイルの削除について『1実行12テナントまで。超えたテナントは翌日の実行へ持ち越す』と書いている。一方、コードの src/index.ts:82-86 は、残り(remaining)があれば CLEANUP_QUEUE に60秒後の続きを再送する。src/usecases/thumbnails.ts の purge は remaining を返し、src/index.ts:179 で Cron から実行される。r8 の low『cleanup が詰まったときの逃げ道』は、コードでは解消したが、章に反映されていない。",
+      "suggested_fix": "infrastructure.md:755 を『超えた分は60秒後に続きの通を送って同じ日のうちに処理する(cleanup の通数は QUEUE_CLEANUP_MESSAGES_PER_DAY=100 の予備に含める)』に書き換える。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/字幕の上限4本の出所(elicit+compile)",
+      "observation": "字幕の1日上限は、qa-082 の answer では5本。2026-09-25T05:57:37Z の corrections で、『利用者の追加決定』として4本(captions.list 50 + download 200 units/本・1日1,000 units)に改められた。章の backend.md:1065 と ui-ux.md:1111 は『(2026-09-25現行訂正)』とだけ書いていて、qa の参照が無い。その追加決定には、独立した qa(質問・選択肢・answered_at)が無い。",
+      "suggested_fix": "章の記述を『(qa-082 corrections 2026-09-25)』に変える。利用者の追加決定であれば、独立した qa として記録し直す。"
+    },
+    {
+      "severity": "low",
+      "bucket": "compile/章の中の新旧記述の併存",
+      "observation": "backend.md:1065 の『YouTube API失敗は…次の毎時実行で拾い直し』は古い。収集は毎日1回(JST 3:00)に変わった。ui-ux.md:1111 の AppShell の期間切替は『28日/90日/1年/任意』のままで、1115(qa-099)が7日を足して5つに広げている。後ろの段落を読めば解釈できるが、1111 の側に置き換えの印が無い。",
+      "suggested_fix": "backend.md:1065 を『翌日の毎日収集で拾い直し』に直す。ui-ux.md:1111 の期間の列挙に7日を加えるか、qa-099 で置き換えたと明記する。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/qa の記録の不備(elicit)",
+      "observation": "(1) qa-098 の answer に『(利用者決定は qa-095〜082)』とある。qa-083→098 の番号付け替えで取りこぼした範囲表記で、正しくは qa-095〜097。(2) qa-088 と qa-099 に required_info_items が無い。(3) qa-100 は、確定済みの qa-052 の上限100を75に改訂した。それなのに reopen_log に対応する reopen が無く、セルは確定のまま qa_refs が足されただけ。(4) qa-102 は3問を1つの id にまとめている(同じ秒であることは開示されている)。answered_at は qa-103 と同じ 01:59:49Z。",
+      "suggested_fix": "qa-098 の範囲表記を訂正として記録する。qa-088 と qa-099 に required_info_items を付ける。qa-100 のような確定値の改訂は、reopen を経て記録する。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/AI の設計選択の正本化と basis の粒度(elicit・harness・r8 から持ち越し)",
+      "observation": "qa-101 は basis=observed-fact で、provenance『テストは実行していない。利用者の判断は含まない』は正直に書かれている。ただし qa-101 は、利用者に確認しないまま、AI の設計選択(個別線は最大5本、暫定の長尺視聴率、CTR が無いときの『—』、構成比の分母)を正本に入れている。qa-103 も AI の実装選択(all 限定、行数の式、下部タブの実測)を正本に入れているが、その旨と本番では未確認であることを明記している。r8 の『ブロック単位の basis が user-decision のままで、observed-fact の部分はインラインのタグでしか見分けられない』も残っている。",
+      "suggested_fix": "qa-101 の4つの設計選択のうち、利用者から見える挙動(最大5本、『—』の表示)は、次に利用者と確認するときの項目に入れる。basis を部分ごとに持てるようにする件は、harness 側の follow-up とする。"
+    },
+    {
+      "severity": "low",
+      "bucket": "持ち越し(r8 以前の low・残存)",
+      "observation": "(1) r8 の『1,000本の上限・8割を超える日は翌日・12テナント』の導出が、qa-098(旧 qa-083)の answer に書かれていない。(2) infrastructure.md:755 の『fetched_at が無い行(新しく見つかった動画)』は、database.md が fetched_at を必須にしていることと、書き方が食い違っている。(3) video_ids が URL の長さの上限を超えたときの扱いが、まだ決まっていない。(4) qa-096(旧 qa-081)が2つの論点を1問で聞いている。(5) qa-095〜097(旧 qa-080〜082)の answered_at が同じ秒になっている。(6) r3 からの4件。(7) wrangler の版番号が記録されていない。",
+      "suggested_fix": "(1) と (2) は compile で1文ずつ直す。(3) は backend・frontend に上限と超えたときの挙動を書く。そのほかは r8 の修正案のとおり。"
+    },
+    {
+      "severity": "low",
+      "bucket": "doc_freshness/対象一覧の欠落と重複(doc-fetch)",
+      "observation": "qa-088 は、Google Cloud を触ったことがない人向けの準備手順8つを画面に出すと決めた(API 3つの有効化、同意画面、公開ステータスを本番に、Web クライアントの作成とリダイレクト URI)。この手順に対応する公式ページが target に無い。google-oauth2 の『Testing は refresh token が7日で失効』が、公開ステータスの手順を一部裏付けるだけ。また、google-oauth-unverified-app と google-sensitive-scope-verification は、同じ source_url(sensitive-scope-verification)を指している。",
+      "suggested_fix": "doc-fetch で、Google Cloud の OAuth クライアント作成・同意画面の構成・API の有効化の公式ページを target に加える。手順の各段がそのページと一致しているか照合する。重複した target は、未検証アプリの利用者上限の出典(support.google.com/cloud/answer/7454865 など)を別に持つか、統合する。"
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点(良かった点)",
+      "observation": "決定論ゲートは9件すべて exit0 だった。書き終える直前に、spec-state.json(sha256 ab64634a…)を相手に、主要なゲートを再実行して確かめた。ダッシュボード刷新の backend と ui-ux の設計適用は、コードと一致した。backend 側で照合したのは、dashboard-period.ts・dashboard-repository.ts・google-analytics.ts:172・youtube-collector.ts:17・funnel.ts。ui-ux 側では、SidePanels.tsx:10、DetailsSection.tsx:122,166、AppShell.tsx:19-25,80、styles.css:965,968、DashboardPage.tsx:180 を照合した。qa-100 の置換段落(infrastructure.md:757)は、置き換える旧記述を名指しで挙げている。wrangler.toml:17 の MAX_TENANTS=75、queue-budget.ts の予算式、tests/platform/queue-budget.test.ts の検査の3つが一致している。qa-101 と qa-103 の provenance は、テスト未実行・本番未確認・利用者の判断を含まないことを正直に書いており、利用者の決定と AI の判断を取り違えていない。r8 以降の4 target は WebFetch で照合し、4件とも記録と一致した(1件は一部未確認)。依頼者の指示で sub-agent(C06/C07/C08)は起動しておらず、その検査項目は評価者が単体で代わりに確かめた。"
+    }
+  ],
+  "gaps": [
+    "[elicit] D-auth を reopen し、qa-087(テナントごとの OAuth クライアント)に合わせて goal_fit・free_tier_limits・caveats・qa_refs を評価し直す。qa-085 と qa-087 の調整(force-ssl の検証主体、FORCE_SSL_VERIFIED と OPERATOR_TENANT_ID の意味)、signup ログインで YouTube スコープを要求し続けるか、MANAGED_YOUTUBE_TENANT_ID の例外(特定オーナーのメールアドレスのコード直書きを含む)を認めるかを、利用者に確認して qa に記録する。",
+    "[compile] qa-087・qa-088 を規範節に適用する。対象は auth・security・database・backend・frontend・ui-ux・maintenance-ops で、tenant_google_clients の暗号化保存・非返却・変更時の要再連携・連携ボタンの前提条件を書く。U9 I1 と U8 を更新し、ui-ux.md:1111 の利用者向け文言を『ワークスペース』に置き換える。",
+    "[elicit+compile] 75連携の近くでサムネイルの取り直しが1日5回(225件)に落ちるという代償を利用者に示して、方針を確認する。そのうえで infrastructure.md:753・755 と D-cron の comparison_basis.operations を、qa-100 の予算式に合わせて書き直す。",
+    "[compile] infrastructure.md:755 の cleanup の『翌日へ持ち越す』を、コードの60秒後の続き再送に合わせる。backend.md:1065 の『毎時実行』と『(2026-09-25現行訂正)』の出所表記を直す。",
+    "[doc-fetch] qa-088 の準備手順8つに対応する Google Cloud の公式ページを target に加えて照合する。"
+  ]
+}

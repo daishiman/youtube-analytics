@@ -17,9 +17,9 @@ export function UsageSection({ usage }: { usage: UsageItem[] }) {
         ))}
       </div>
       <p className="small muted">
-        YouTube API の割当は各{TENANT_LABEL}の Google Cloud
-        プロジェクトごとです。正確な使用量と上限は Google Cloud Console で確認してください。D1
-        書込と字幕取得は計測機能の実装後に表示します。
+        YouTube API の割当は{TENANT_LABEL}の接続に使用する Google Cloud
+        プロジェクトごとです。正確な使用量と上限は、そのプロジェクトの Google Cloud Console
+        で確認してください。D1 書込と字幕取得は計測機能の実装後に表示します。
       </p>
       <p className="small muted">Cloudflare の値は1時間ごとに更新します。</p>
     </SectionCard>

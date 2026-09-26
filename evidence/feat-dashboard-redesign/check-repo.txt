@@ -1,0 +1,5 @@
+
+> youtube-analytics@ check:repo /Users/dm/orca/workspaces/YouTube分析/02ダッシュボード
+> python3 scripts/validate-repository-consistency.py
+
+repository consistency: OK

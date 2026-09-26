@@ -1,0 +1,32 @@
+{
+  "index": "system-spec/index.md",
+  "imported_nodes": [
+    {
+      "graph_node_id": "spec-youtube-analytics-system",
+      "artifact_kind": "specification",
+      "file_path": "specs/youtube-analytics-system.md",
+      "source_path": "system-spec/00-requirements-definition.md",
+      "source_digest": "bc1f7f1ae798c52877c539d679fdbfdae1889208d86a278291eb42bde1480549"
+    }
+  ],
+  "unchanged_nodes": [
+    {
+      "graph_node_id": "arch-youtube-analytics-system",
+      "source_path": "system-spec/index.md",
+      "reason": "index.md は qa-100・qa-101 で変わっていない"
+    }
+  ],
+  "source_version": "0.1.14",
+  "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908",
+  "evidence_ref": "eval-log/completeness-report-20260924-r8.json",
+  "confirmation_status": "confirmed",
+  "evaluation_status": "pass",
+  "readiness": "complete",
+  "re_evaluation": "未実施。confirmation_evidence は r8(qa-083 時点の completeness 評価)のままで、qa-084 以降の再評価はしていない",
+  "graph_revision": 13,
+  "graph_digest": "2d12e3c533b55ffb114158098be09f167bc539d7718c8909d5353b261c9aa579",
+  "imported_at": "2026-09-26T01:03:10Z",
+  "change_summary": "qa-100(MAX_TENANTS を100から75へ。U8 制約の変更で 00-requirements-definition.md の digest が 0243af…→bc1f7f…)の取込。2026-09-26 に自作スクリプトで直接書いた更新を C02 手順でやり直した。qa-101 は 00-requirements-definition.md を変えないため取込対象の変化はない",
+  "previous_report": "eval-log/dev-graph-spec-import-report-20260924-r2.json",
+  "c02_writer": "run-dev-graph-node update"
+}

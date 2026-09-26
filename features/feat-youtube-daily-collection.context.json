@@ -10,20 +10,22 @@
   "consumer(max_batch_size=1)の collectTenantDaily: Analytics D-7〜D-1 再取得・動画別 D-3 単日・流入元・属性・維持率",
   "Reporting reports.list の差分取得と修正版の置換、Data API の動画一覧差分",
   "msg.retry(max_retries=3・600秒)と最終失敗時の collection_status=failed",
-  "API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at"
+  "API 由来テーブル(daily_metrics, video_metrics, retention_points, comments ほか)への保存と fetched_at",
+  "後続の収集実装で字幕の取得・保存とテナント別1日4本・字幕用1,000 unitsの永続予算管理を担当する。完成までは字幕ONを準備中に保つ"
  ],
  "scope_out": [
   "CSV 取込と派生指標(feat-csv-media-ingest)",
   "cleanup 通の処理内容(feat-retention-ops)",
   "収集結果の画面表示(feat-web-screens-actions)",
-  "チャンネル候補の選択・変更フロー、字幕トグルと captions.download(youtube.force-ssl)の追加同意・1日5本の字幕取得(feat-settings-channel-link)"
+  "チャンネル候補の選択・変更フローと字幕トグル・youtube.force-ssl の追加同意(feat-settings-channel-link)"
  ],
  "acceptance": [
   "Cron 1回で対象テナント数+1通が collect-queue に入る",
   "1テナントの収集が1回の consumer 実行でサブリクエスト50件以内に収まる",
   "3回再試行しても失敗したテナントは collection_status=failed になり、翌日の実行で直近7日が埋まる",
   "保存した行は全て source=api と tenant_id を持つ",
-  "API 由来の値から新しい指標を計算するコードが無い"
+  "API 由来の値から新しい指標を計算するコードが無い",
+  "後続の字幕収集実装はテナント別1日4本・字幕用1,000 unitsの永続的な上限を守り、完成まで字幕ONを準備中に保つ"
  ],
  "architecture_refs": [
   "architecture/youtube-analytics-system.md",

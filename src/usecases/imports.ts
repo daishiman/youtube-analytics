@@ -1,9 +1,14 @@
-// データ取込（CSV・字幕・画像）の受付と履歴。ファイルは R2 に置いて「処理待ち」で記録し、解析は feat-csv-media-ingest が担う
+// データ取込。事業週次CSVと確認済みヘッダーのStudio CSVを同期正規化し、原本も保管する。
 
+import { isBusinessCsv, parseBusinessCsv } from "../domain/business-csv";
 import { IMPORT_RULES, type ImportKind } from "../domain/import-rules";
+import { detectStudioCsv, parseStudioCsv } from "../domain/studio-csv";
 import { requirePermission, type TenantContext } from "../domain/tenant-context";
 import { newId } from "../lib/crypto";
 import { AppError } from "../lib/errors";
+import { BusinessCsvRepository } from "../repositories/business-csv-repository";
+import { controlDb } from "../repositories/db";
+import { StudioCsvRepository } from "../repositories/studio-csv-repository";
 import { type Deps, iso } from "./common";
 import { settingsRepo } from "./settings-common";
 
@@ -24,7 +29,41 @@ function isKind(value: unknown): value is ImportKind {
 
 export async function listImports(deps: Deps, ctx: TenantContext) {
   requirePermission(ctx, "tenant.read");
-  return settingsRepo(deps, ctx).listImports(IMPORT_HISTORY_LIMIT);
+  const imports = await settingsRepo(deps, ctx).listImports(IMPORT_HISTORY_LIMIT);
+  const mappings = await new StudioCsvRepository(controlDb(deps.env), ctx).summaries(
+    imports.map((row) => row.import_id),
+  );
+  return imports.map((row) => {
+    const mapping = mappings.get(row.import_id);
+    return {
+      ...row,
+      mapped_columns: mapping?.mapped_columns ?? null,
+      unmapped_columns: mapping?.unmapped_columns ?? null,
+      unresolved_rows: mapping?.unresolved_rows ?? null,
+      period_status: mapping?.period_status ?? null,
+    };
+  });
+}
+
+export async function getStudioImportMapping(deps: Deps, ctx: TenantContext, importId: string) {
+  requirePermission(ctx, "tenant.read");
+  const mapping = await new StudioCsvRepository(controlDb(deps.env), ctx).mapping(importId);
+  if (!mapping) throw new AppError("NOT_FOUND");
+  return {
+    importId,
+    studioKind: mapping.summary.studio_kind,
+    mappedColumns: mapping.summary.mapped_columns,
+    unmappedColumns: mapping.summary.unmapped_columns,
+    unresolvedRows: mapping.summary.unresolved_rows,
+    periodStatus: mapping.summary.period_status,
+    columns: mapping.columns.map((column) => ({
+      ordinal: column.ordinal,
+      header: column.header,
+      mappingKey: column.mapping_key,
+      unit: column.unit,
+      status: column.status,
+    })),
+  };
 }
 
 /** 形式違反のファイルも「失敗」として履歴に残す（利用者が理由を確認できるように） */
@@ -71,6 +110,7 @@ export async function createImport(
   const r2Key = error
     ? null
     : `tenants/${ctx.tenantId}/generations/g${generation}/imports/${importId}/${fileName}`;
+  const fileBytes = r2Key ? await file.arrayBuffer() : null;
   const insert = () =>
     repo.insertImport({
       importId,
@@ -116,7 +156,7 @@ export async function createImport(
   }
 
   try {
-    await deps.env.MEDIA.put(r2Key, await file.arrayBuffer(), {
+    await deps.env.MEDIA.put(r2Key, fileBytes, {
       httpMetadata: { contentType: file.type || "application/octet-stream" },
     });
     if (!(await insert())) throw new AppError("IMPORT_DELETION_PENDING");
@@ -134,5 +174,103 @@ export async function createImport(
     throw cause;
   }
   await repo.finishImportUpload(importId);
+  if (kind === "csv" && fileBytes) {
+    let csv: string;
+    try {
+      csv = new TextDecoder("utf-8", { fatal: true }).decode(fileBytes);
+    } catch {
+      const studioKind = detectStudioCsv("", fileName);
+      if (fileName.toLowerCase() !== "business-funnel-weekly.csv" && !studioKind) {
+        return { importId, status: "処理待ち", error: null };
+      }
+      const reason = `${studioKind ? "Studio CSV" : "事業週次CSV"}をUTF-8で読み取れません。文字コードを確認してください`;
+      const parserRepo = studioKind
+        ? new StudioCsvRepository(controlDb(deps.env), ctx)
+        : new BusinessCsvRepository(controlDb(deps.env), ctx);
+      if (!(await parserRepo.fail({ importId, expectedGeneration: generation, reason }))) {
+        throw new AppError("IMPORT_DELETION_PENDING");
+      }
+      return { importId, status: "失敗", error: reason };
+    }
+    if (isBusinessCsv(csv, fileName)) {
+      const businessRepo = new BusinessCsvRepository(controlDb(deps.env), ctx);
+      try {
+        const channel = await repo.getChannel();
+        const parsed = parseBusinessCsv(csv, channel?.channel_id ?? null);
+        if (
+          !(await businessRepo.complete({
+            importId,
+            expectedGeneration: generation,
+            channelId: channel?.channel_id ?? "",
+            csv: parsed,
+            now: iso(deps.now),
+          }))
+        ) {
+          throw new AppError("IMPORT_DELETION_PENDING");
+        }
+        return {
+          importId,
+          status: "完了",
+          error: null,
+          rows: parsed.rows.length,
+          period: parsed.period,
+        };
+      } catch (cause) {
+        if (!(cause instanceof AppError) || cause.code !== "VALIDATION_FAILED") throw cause;
+        if (
+          !(await businessRepo.fail({
+            importId,
+            expectedGeneration: generation,
+            reason: cause.hint,
+          }))
+        ) {
+          throw new AppError("IMPORT_DELETION_PENDING");
+        }
+        return { importId, status: "失敗", error: cause.hint };
+      }
+    }
+    const studioKind = detectStudioCsv(csv, fileName);
+    if (studioKind) {
+      const studioRepo = new StudioCsvRepository(controlDb(deps.env), ctx);
+      try {
+        const channel = await repo.getChannel();
+        const parsed = parseStudioCsv(csv, studioKind, channel?.channel_id ?? null);
+        if (
+          !(await studioRepo.complete({
+            importId,
+            expectedGeneration: generation,
+            channelId: channel?.channel_id ?? "",
+            csv: parsed,
+            now: iso(deps.now),
+          }))
+        ) {
+          throw new AppError("IMPORT_DELETION_PENDING");
+        }
+        return {
+          importId,
+          status: "完了",
+          error: null,
+          rows: parsed.totalRows,
+          period: parsed.period,
+          mapped_columns: parsed.mappedColumns,
+          unmapped_columns: parsed.unmappedColumns,
+          unresolved_rows: parsed.unresolvedRows.length,
+          period_status: parsed.periodStatus,
+        };
+      } catch (cause) {
+        if (!(cause instanceof AppError) || cause.code !== "VALIDATION_FAILED") throw cause;
+        if (
+          !(await studioRepo.fail({
+            importId,
+            expectedGeneration: generation,
+            reason: cause.hint,
+          }))
+        ) {
+          throw new AppError("IMPORT_DELETION_PENDING");
+        }
+        return { importId, status: "失敗", error: cause.hint };
+      }
+    }
+  }
   return { importId, status: "処理待ち", error: null };
 }

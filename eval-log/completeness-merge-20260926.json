@@ -1,0 +1,20 @@
+{
+  "receipt_kind": "completeness-regate-after-merge",
+  "graph_node_id": "feat-dashboard-redesign",
+  "recorded_at": "2026-09-26T04:56:33Z",
+  "merge": {"ours": "9bb2c11", "base": "a5f6741", "main": "e122c27"},
+  "spec_dir": "system-spec",
+  "verdict": "PASS",
+  "verdict_scope": "決定論ゲートの再実行と、両側の既存評価の引き継ぎ。意味評価(evaluator の再起動)は MVP のため行っていない",
+  "deterministic_gates": [
+    {"command": "validate-coverage-matrix.py --matrix system-spec/spec-state.json --require-complete --require-basis --require-foundation", "result": "exit0"},
+    {"command": "validate-source-citation.py --targets system-spec/spec-state.json --references system-spec/fetched-references.json", "result": "exit0"},
+    {"command": "validate-knowledge-graph.py --profile required-info --state system-spec/spec-state.json", "result": "exit0・ungrounded_blocking_items=[]"}
+  ],
+  "inherited_evaluations": [
+    {"side": "ours", "evidence_ref": "eval-log/completeness-report-20260924-r8.json", "verdict": "PASS", "note": "ダッシュボード刷新(qa 番号は eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json で読み替える)"},
+    {"side": "ours", "evidence_ref": "eval-log/completeness-report-20260926-r9.json", "verdict": "FAIL", "note": "ダッシュボード部分は良好。FAIL の主因はダッシュボード以外の既存記録(残課題)"},
+    {"side": "main", "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json", "verdict": "PASS", "note": "AI分析画面(qa-089〜qa-098)"}
+  ],
+  "renumber_receipt": "eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json"
+}

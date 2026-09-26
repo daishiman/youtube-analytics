@@ -1,6 +1,7 @@
 // 受入 1・9: 設定画面の一括取得（役割ごとの表示権限）・Origin 不一致の書込拒否・データ削除の受付・最終更新
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
+import { insertChannel } from "../helpers/channels";
 import { addMember, call, expectError, login, newOwner, uniqueEmail } from "../platform/helpers";
 import { bodyFor, fill, SESSION_TENANT_ROUTES } from "../platform/routes";
 import { auditCount, tenantName } from "./helpers";
@@ -9,7 +10,7 @@ type Settings = {
   tenant: { tenantId: string; name: string };
   role: string;
   permissions: { manageSettings: boolean; writeContent: boolean; manageMembers: boolean };
-  youtube: { status: string; channel: unknown; nextCollection: string | null };
+  youtube: { status: string; channel: unknown; collectionStatus: string | null };
   imports: unknown[];
   tokens: unknown[];
   tokenLimit: number;
@@ -38,7 +39,7 @@ describe("GET /api/settings", () => {
       expect(s.role).toBe(role);
       expect(s.permissions).toEqual(expected[role]);
       expect(s.tenant.tenantId).toBe(owner.tenantId);
-      expect(s.youtube).toMatchObject({ status: "未連携", channel: null, nextCollection: null });
+      expect(s.youtube).toMatchObject({ status: "未連携", channel: null, collectionStatus: null });
       expect(s.tokenLimit).toBe(5);
       expect(Array.isArray(s.imports) && Array.isArray(s.tokens) && Array.isArray(s.usage)).toBe(
         true,
@@ -132,7 +133,7 @@ describe("Origin 不一致の書込は拒否", () => {
 });
 
 describe("データを削除（テナント）", () => {
-  it("テナント名の入力で受け付け、7日後の期限で予約・監査ログ1件・二重受付しない", async () => {
+  it("テナント名の入力で削除を予約し、直後に利用停止、7日以内の期限と監査を残す", async () => {
     const owner = await newOwner("set-del");
     await expectError(
       await call("/api/tenant/delete", {
@@ -160,11 +161,19 @@ describe("データを削除（テナント）", () => {
       cookie: owner.cookie,
       body: { confirmName: name },
     });
-    expect(((await again.json()) as { dueAt: string }).dueAt).toBe(dueAt);
+    await expectError(again, 403, "NO_TENANT");
     expect(await auditCount(owner.tenantId, "tenant.delete")).toBe(1);
-
-    const s = (await (await call("/api/settings", { cookie: owner.cookie })).json()) as Settings;
-    expect(s.deletion).toEqual({ dueAt });
+    const pending = await env.DB.prepare(
+      "SELECT done_at FROM data_deletions WHERE tenant_id = ?1 AND scope = 'tenant'",
+    )
+      .bind(owner.tenantId)
+      .first<{ done_at: string | null }>();
+    expect(pending?.done_at).toBeNull();
+    const disabled = await env.DB.prepare("SELECT deleted_at FROM tenants WHERE tenant_id = ?1")
+      .bind(owner.tenantId)
+      .first<{ deleted_at: string | null }>();
+    expect(disabled?.deleted_at).toBeTruthy();
+    await expectError(await call("/api/settings", { cookie: owner.cookie }), 403, "NO_TENANT");
   });
 });
 
@@ -175,17 +184,14 @@ describe("GET /api/me の最終更新", () => {
       lastUpdatedAt: string | null;
     };
     expect(me.lastUpdatedAt).toBeNull();
-    await env.DB.prepare(
-      `INSERT INTO channels (tenant_id, channel_id, title, status, connected_by, connected_at, last_collected_at)
-       VALUES (?1, ?2, 'テスト', '正常', ?4, ?3, ?3)`,
-    )
-      .bind(
-        owner.tenantId,
-        `UC_me_${owner.tenantId.slice(0, 8)}`,
-        "2026-09-20T18:00:00.000Z",
-        owner.userId,
-      )
-      .run();
+    await insertChannel({
+      tenantId: owner.tenantId,
+      channelId: `UC_me_${owner.tenantId.slice(0, 8)}`,
+      title: "テスト",
+      connectedBy: owner.userId,
+      connectedAt: "2026-09-20T18:00:00.000Z",
+      lastCollectedAt: "2026-09-20T18:00:00.000Z",
+    }).run();
     me = (await (await call("/api/me", { cookie: owner.cookie })).json()) as {
       lastUpdatedAt: string | null;
     };

@@ -8,9 +8,8 @@ import { SettingsRepository, UsageRepository } from "../repositories/settings-re
 import { type Deps, iso } from "./common";
 
 export const DELETION_GRACE_MS = 7 * 24 * 60 * 60 * 1000;
-/** 字幕の自動取得は1日5本まで（captions.download 200 units × 5 = 1,000 units・qa-082） */
-export const CAPTION_DAILY_LIMIT = 5;
-export const NEXT_COLLECTION_TEXT = "毎日 3:00 JST";
+/** 字幕の自動取得はテナントごと1日4本まで（list 50 + download 200 units/本、最大1,000 units）。 */
+export const CAPTION_DAILY_LIMIT = 4;
 
 export function settingsRepo(deps: Deps, ctx: Pick<TenantContext, "tenantId">) {
   return new SettingsRepository(controlDb(deps.env), ctx);
@@ -43,6 +42,8 @@ export type CaptionsAvailability = "available" | "preparing";
  * 検証後は FORCE_SSL_VERIFIED=1 で全テナントのオーナーへ開放する
  */
 export function captionsAvailability(env: Bindings, ctx: TenantContext): CaptionsAvailability {
+  // 運用フラグを明示的に有効化するまでは取得を約束しない。
+  if (env.CAPTIONS_COLLECTION_READY !== "1") return "preparing";
   if (env.FORCE_SSL_VERIFIED === "1") return "available";
   return env.OPERATOR_TENANT_ID && env.OPERATOR_TENANT_ID === ctx.tenantId && ctx.role === "owner"
     ? "available"

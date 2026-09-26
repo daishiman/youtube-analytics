@@ -290,8 +290,8 @@ describe("使用データの件数", () => {
     expect(body.period).toEqual({ start: "2026-08-01", end: "2026-08-28" });
     expect(body.counts.transcripts).toBe(1);
     expect(body.counts.sceneImages).toBe(0);
-    // 日次収集（daily_metrics）・コメントの表は依存 feature が作るまで無い
-    expect(body.counts.dailyMetrics).toBeNull();
+    // 日次収集の表（daily_metrics）は feat-dashboard-redesign の 0016 が作るので 0 件。コメントの表は依存 feature が作るまで無い
+    expect(body.counts.dailyMetrics).toBe(0);
     expect(body.counts.comments).toBeNull();
     expect(body.exportRows).toEqual({
       total: 3,

@@ -7,12 +7,6 @@ export const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 export const GOOGLE_REVOKE_URL = "https://oauth2.googleapis.com/revoke";
 export const YOUTUBE_CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels";
 
-export const SCOPE_YOUTUBE_READONLY = "https://www.googleapis.com/auth/youtube.readonly";
-export const SCOPE_ANALYTICS_READONLY = "https://www.googleapis.com/auth/yt-analytics.readonly";
-export const SCOPE_FORCE_SSL = "https://www.googleapis.com/auth/youtube.force-ssl";
-/** 連携の基本スコープ（読み取り専用）。字幕 ON のときだけ force-ssl を追加する */
-export const READONLY_SCOPES = [SCOPE_YOUTUBE_READONLY, SCOPE_ANALYTICS_READONLY];
-
 export function buildYoutubeAuthUrl(input: {
   clientId: string;
   redirectUri: string;
@@ -43,6 +37,84 @@ export interface GoogleTokens {
   accessToken: string;
   refreshToken: string | null;
   scopes: string[];
+}
+
+export class GoogleCollectionError extends Error {
+  constructor(
+    readonly retryable: boolean,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
+/** refresh token の実失効。通信障害や一時的な Google エラーとは区別する。 */
+export class GoogleRefreshTokenRevokedError extends GoogleCollectionError {
+  constructor() {
+    super(false, "Google refresh token revoked");
+  }
+}
+
+export function collectionHttpError(status: number, body: unknown): GoogleCollectionError {
+  const details = body && typeof body === "object" ? (body as { error?: unknown }).error : null;
+  const reasons =
+    details &&
+    typeof details === "object" &&
+    Array.isArray((details as { errors?: unknown }).errors)
+      ? (details as { errors: unknown[] }).errors
+          .map((item) =>
+            item && typeof item === "object" ? (item as { reason?: unknown }).reason : null,
+          )
+          .filter((reason): reason is string => typeof reason === "string")
+      : [];
+  const quota = reasons.some((reason) =>
+    ["quotaExceeded", "rateLimitExceeded", "userRateLimitExceeded"].includes(reason),
+  );
+  return new GoogleCollectionError(
+    status === 429 || status >= 500 || quota,
+    `Google collection HTTP ${status}${quota ? " quota" : ""}`,
+  );
+}
+
+/** 日次収集に使う短命 access token。refresh token 自体は保存済みの暗号文を復号して渡す。 */
+export async function refreshYoutubeAccessToken(input: {
+  refreshToken: string;
+  clientId: string;
+  clientSecret: string;
+}): Promise<string> {
+  let response: Response;
+  try {
+    response = await fetch(GOOGLE_TOKEN_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: input.refreshToken,
+        client_id: input.clientId,
+        client_secret: input.clientSecret,
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    throw new GoogleCollectionError(true, "Google token network failure");
+  }
+  const body = await response.json().catch(() => null);
+  if (
+    !response.ok &&
+    body &&
+    typeof body === "object" &&
+    (body as { error?: unknown }).error === "invalid_grant"
+  ) {
+    throw new GoogleRefreshTokenRevokedError();
+  }
+  if (!response.ok) throw collectionHttpError(response.status, body);
+  if (!body || typeof body !== "object") {
+    throw new GoogleCollectionError(true, "Google token response malformed");
+  }
+  const value = (body as Record<string, unknown>).access_token;
+  const token = typeof value === "string" ? value : "";
+  if (!token) throw new GoogleCollectionError(true, "Google token missing access_token");
+  return token;
 }
 
 export async function exchangeYoutubeCode(input: {

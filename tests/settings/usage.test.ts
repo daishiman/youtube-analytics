@@ -156,7 +156,7 @@ describe("表示範囲", () => {
     for (const u of usage) {
       expect(Object.keys(u).sort()).toEqual(["key", "label", "level", "limit", "unit", "used"]);
     }
-    expect(usage.find((u) => u.key === "captions")?.limit).toBe(5);
+    expect(usage.find((u) => u.key === "captions")?.limit).toBe(4);
   });
 
   it("計測できない値や全体カウンタを個別の上限と比較しない", async () => {
@@ -181,6 +181,6 @@ describe("表示範囲", () => {
       level: "unknown",
     });
     expect(u.d1_writes).toMatchObject({ used: null, limit: 100_000, level: "unknown" });
-    expect(u.captions).toMatchObject({ used: null, limit: 5, level: "unknown" });
+    expect(u.captions).toMatchObject({ used: null, limit: 4, level: "unknown" });
   });
 });

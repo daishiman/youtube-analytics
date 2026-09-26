@@ -1,0 +1,82 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。requirements_foundation の11キー(U1〜U9 と approval_ref・confirmed)に値があり、qa_log は qa-082 で止まっている。r7 で上位概念に手は入っていないので、r6 の判定を引き継ぐ。持ち越しの low『同意記録・再同意と製品名 Channel Insight を上位概念に入れるか』は未着手のまま。",
+      "evidence": ["G-foundation exit0", "qa_log 82件(最終 qa-082)・r6 から増えていない"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions[] の6件はすべて confirmed のまま。r7 で新しい決定は足していない。サムネイル専用の通など r7 で入った規則には、どれも『[公式制限からの導出]』のタグが付いている。『[利用者確定 qa-…]』を名乗っている箇所は無い(C07 が確認)。一方で、決まり方の記録(reopen と qa_log)が欠けている。この点は matrix_coverage の sub-input(C06)で扱う。",
+      "evidence": ["D-ai-engine/D-db/D-auth/D-cron/D-deploy/D-transcript すべて confirmed"]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートは5本とも exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state。blocking の6件はすべて grounded)。C07 の判定も loop_pass・final_ready とも PASS。48セルの内訳は確定26・対象外22・未収集0で、対象外理由の不備と qa_ref の dangling はどちらも0件。それでも sub-input の C06 が、早期停止とトレーサビリティの2軸を FAIL(medium)とした。hearing_progress.complete=true のあと、r6/r7 の規則が reopen を経ずに入っている。対象は database・security・infrastructure・backend の design_applications(recorded_at 2026-09-24T09:16:10Z)で、中身は公式制限から導いた規則(json_each・サムネイル30日・サムネイル専用の通・1,100本/25日・削除と代替表示)。reopen_log の最後は 08:28:43Z の ui-ux/frontend で、それより後の記録が無い。qa_log に basis=observed-fact の項目も無い。ブロック単位の basis は user-decision のまま。rubric はこの観点の PASS 条件に『C06 の4軸が健全』を含めているので、FAIL とする。",
+      "evidence": ["G-matrix-loop/G-matrix/G-matrix-basis/G-required-info-state exit0", "C07: loop_pass PASS / final_ready PASS", "C06: 聞き漏れ PASS・誘導 PASS(持ち越し low)・早期停止 FAIL・トレーサビリティ FAIL", "reopen_log 最終 2026-09-24T08:28:43Z(ui-ux/frontend)", "design_applications.{database,security,infrastructure,backend}.recorded_at=2026-09-24T09:16:10Z basis=user-decision"]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(aggregate-completeness --knowledge-graph の4プロファイル)は exit0。r6 の medium『サムネイルの取り直しが無料枠に収まらない』は、中身の面で解消した。infrastructure.md:581 の設計は、subrequest の数え方(fetch・R2・D1・Queues send/sendBatch)を前提にしている。thumbnail 通は1件あたり3件×15件=45件で、抽出の D1 を足しても46件なので、上限50に収まる。1日最大3通、fetched_at の古い順に処理し、容量は約1,100本/25日。超えた分は Cron 役割①で削除して代替表示にする。database.md:579 には media_assets.fetched_at・source_url と索引 (tenant_id, kind, fetched_at) を足した。backend.md:876 と security.md:775 もこれに合わせてある(III.E.4 の30日ルールを守る道筋が一貫した)。ui-ux.md:906 と frontend.md:805 には『未保存のときは代替表示』がすでにある。残りは low 3件。(1) infrastructure の『Queues の操作数 約300回/日』が thumbnail 通の分(最大 100テナント×3通×約3回=900回)を含んでいない。合計約1,200回で無料枠1万回には収まるが、記述が古い。(2) cleanup の通(1通=1実行で全テナント分)が R2 のサムネイルを消すときの subrequest 予算が書かれていない。(3) 削除して行が無くなった動画や fetched_at が null の動画を、取り直しの順番のどこに置くかが決まっていない(1,100本を超えたとき、削除と取り直しを繰り返すおそれがある)。",
+      "evidence": ["G-knowledge-graph exit0", "infrastructure.md:581", "database.md:579", "backend.md:876", "security.md:775", "ui-ux.md:906 / frontend.md:805 に代替表示あり"]
+    },
+    "doc_freshness": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層は、validate-source-citation(--targets に spec-state.json を指定)と validate-spec-doc-sync がともに exit0 で、32 target と 32 reference が1対1に対応している。内容鮮度層では、cloudflare-workers(2026-09-05・subrequest 50・Queues send/sendBatch を数える)、cloudflare-d1-limits(2026-04-21・10DB/500MB/bound parameters 100/SQL 100KB/1呼出し50クエリ)、cloudflare-queues、cloudflare-d1、wrangler(Last updated 2026-09-15・公式ページにも版番号は無い)がすべて公式の現行版と一致した。r6 の medium『wrangler が無い』は解消した。それでも C08 の総合判定は FAIL で、この集約でもそのまま採る。理由はタグと本文根拠の食い違いが2件あるため。(1) high: backend.md:876 は D1 limits の数値(bound parameters 100・SQL 100KB)を『[公式制限からの導出: cloudflare-d1 / …]』で引いており、pricing ページの target を指したまま(r6 medium の積み残し。infrastructure/database では直っている)。(2) medium: infrastructure.md:581 のサムネイル専用の通は、Queues の sendBatch と R2 put に頼っているのに、タグに cloudflare-queues・cloudflare-r2 が無い。",
+      "evidence": ["G-source-citation exit0 (32/32)", "G-spec-doc-sync exit0", "C08 内容鮮度: 数値・更新日の不一致0・非公式 host 0・欠落 target 0", "C08 意味照合: タグ不整合2件"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt は、verify-completeness.py --input と validate-prompt.py --input がすべて exit0 だった。R0-foundation.md:41 の U4 が objectives をまだ {id,text,measure} と定義している件と、hearing_progress.completed_at を書く op が無い件は plugin 側の問題として扱う(r5/r6 と同じく報告だけ)。",
+      "evidence": ["G-prompt 18/18 exit0", "R0-foundation.md:41"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"]},
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"]},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"]},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"]},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0, "stdout": "4プロファイルすべて exit0", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"]},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "status=ok, ungrounded_blocking_items=[] (blocking 6件すべて grounded)"},
+    {"id": "G-source-citation", "name": "validate-source-citation", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす (32 target / 32 reference)", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-source-citation.py", "--targets", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--state", "system-spec/spec-state.json"]},
+    {"id": "G-spec-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-spec-doc-sync.py", "--matrix", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--spec-root", "system-spec"]},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompt)", "conditions": ["prompt_quality"], "exit_code": 0, "stdout": "18/18 両方 exit0"}
+  ],
+  "findings": [
+    {"severity": "high", "bucket": "doc_freshness/出典タグの取り違え(C08・doc-fetch/compile)", "observation": "backend.md:876 の『[公式制限からの導出: cloudflare-d1 / youtube-api-developer-policies] D1 は1クエリあたり bound parameters 最大100、SQL 文は最大100KB』は、D1 の limits ページの数値を根拠にしている。それなのにタグは pricing ページの target である cloudflare-d1 を指している。r7 で cloudflare-d1-limits を足し、infrastructure.md:581 と database.md:579 のタグは切り替わったが、r6 の gaps で名指しした backend だけが古いタグのまま残っている。validate-source-citation はタグ文字列が参照一覧にあるかしか見ないため、このずれを機械では検出できない。", "suggested_fix": "backend.md:876 のタグを『cloudflare-d1-limits / youtube-api-developer-policies』に直す。正本 spec-state.json の design_applications.backend にある同じ文も、C03 の single writer 経由で合わせて直す。"},
+    {"severity": "medium", "bucket": "doc_freshness/タグの不足(C08・compile)", "observation": "infrastructure.md:581 のサムネイル専用の通は、Queues の sendBatch(1回で最大3通)・Queues の無料枠、R2 への put(Class A 枠)を前提に組み立てている。それなのにタグは youtube-api-developer-policies / cloudflare-workers / cloudflare-d1-limits だけで、cloudflare-queues と cloudflare-r2 が入っていない。", "suggested_fix": "infrastructure.md:581(と design_applications.infrastructure)のタグに cloudflare-queues と cloudflare-r2 を加える。"},
+    {"severity": "medium", "bucket": "matrix_coverage/ヒアリングの手続きと根拠の記録(C06・elicit)", "observation": "hearing_progress.complete=true のあとに、公式制限から導いた新しい規則が、確定済みカテゴリの design_applications へ直接書き込まれている(database・security・infrastructure・backend、recorded_at 2026-09-24T09:16:10Z)。規則は json_each、サムネイル30日、サムネイル専用の通(15件×3・1日3通・25日超を古い順・約1,100本)、超過分の削除と代替表示。reopen_log の最後の記録は 08:28:43Z(ui-ux/frontend)で、その後にこれら4カテゴリを reopen した記録が無い。qa_log に basis=observed-fact の項目も無い。ブロック単位の basis は user-decision のまま。本文にはタグで『公式制限からの導出』と書いてあるので、利用者の決定を名乗っているわけではない(C07 確認)。それでも、qa-035/048/062/067/074 では毎回 qa_log に記録してきた慣行から外れており、正本だけをたどってもこれらの規則の出どころと決まった時点に行き着かない。r6 の low が、規則の範囲が広がったことと reopen の抜けが加わって medium になった。", "suggested_fix": "elicit の R4-reopen で database/security/infrastructure/backend を開き直す。D1 limits・Workers の subrequest の数え方・III.E.4 の30日から導いたことを basis=observed-fact の qa_log 項目(出典 target と確認時刻つき)として記録し、design_applications の該当文と matrix の qa_refs からつなげたうえで確定し直す。"},
+    {"severity": "low", "bucket": "matrix_coverage/qa_refs の更新漏れ(C06・elicit)", "observation": "matrix.infrastructure.web.qa_refs は qa-059 で止まっている。ダッシュボード刷新(qa-077/qa-080/qa-082)とサムネイル専用の通への参照が無い。backend.web は qa-082 まで更新されている。", "suggested_fix": "infrastructure.web の qa_refs に qa-077/qa-080/qa-082 と、新しく作る observed-fact 項目を加える。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/Queues の操作数(compile)", "observation": "infrastructure の『Queues の操作数は1通あたり約3回で、100テナント+cleanupでも1日約300回』に、thumbnail 通の分(最大 100テナント×3通×約3回=約900回/日)が入っていない。合計でも約1,200回/日で無料枠1万回/日には収まるが、根拠の数値が実態に合っていない。", "suggested_fix": "操作数の見積もりを collect・cleanup・thumbnail の3種類で書き直す。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/cleanup の subrequest 予算(compile)", "observation": "Cron 役割①の削除対象に R2 の tenants/<tenant_id>/thumbnails/<video_id> を加えた。ところが cleanup の通は1通=1実行で全テナント分を処理するので、その1実行の subrequest 予算(D1 の抽出1回・R2 の delete(keys[]) 1回あたり最大1,000キー・D1 の削除)が書かれていない。テナントが増えたり削除件数が多かったりすると、上限50を超えるかどうかが読み取れない。", "suggested_fix": "cleanup の通の内訳を書く。R2 はキーの配列でまとめて消し、上限に近づいたら残りを翌日へ持ち越すかテナントごとの通に分ける。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/取り直しの順番の境界(compile)", "observation": "『fetched_at の古い順』とあるが、まだ保存していない動画や、削除されて行が無い動画(fetched_at が null)を順番のどこに置くかが決まっていない。1,100本を超えるテナントでは、削除→次の日に URL の変化として取り直す→また削除、を繰り返すおそれがある。", "suggested_fix": "null の扱い(先頭か末尾か)と、容量を超えたときに対象にする範囲(たとえば直近 N 本だけを取り直す)を1行で決める。"},
+    {"severity": "low", "bucket": "doc_freshness/wrangler の版(C08・任意)", "observation": "wrangler は公式ページに版番号が無いので、last_updated(2026-09-15)だけで記録している。形式の上では足りているが、デプロイの記述をどの版で確かめたかは追えない。", "suggested_fix": "(任意)npm の公式レジストリにある現行の latest の版を summary に書き添える。"},
+    {"severity": "low", "bucket": "持ち越し(r6・r5・r3 の low・未着手)", "observation": "(1) video_ids が URL の長さの上限を超えたときの扱いが決まっていない。(2) qa-081 が2つの論点を1問で聞いている。(3) qa-080〜082 の answered_at が同じ秒になっている。(4) r3 からの4件(qa-067 を外した理由、ログイン開始でサーバに状態を書かないという不変条件、qa-071 が自由回答から導いたものだという明記、同意記録と製品名を上位概念に入れるか)。r5 の『qa-077 の corrections に書かれていない』は、C06 の確認で解消していた。", "suggested_fix": "elicit/compile で順に片付ける。"},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)", "observation": "R0-foundation.md:41 の U4 は、objectives を {id,text,measure} と定義していて serves を求めていない。hearing_progress.completed_at を書く op も無い。r6 から変わっていない。", "suggested_fix": "harness 側で直す。この仕様書の差し戻しには含めない。"},
+    {"severity": "info", "bucket": "確認した観点(良かった点)", "observation": "決定論ゲートは9件すべて exit0 だった。r6 の medium は3件中2件が解消した。(1) wrangler を targets と fetched-references に加えた(公式の Last updated 2026-09-15 と一致)。(2) サムネイルの取り直しを、1実行 subrequest 50 の予算に収まる専用の通として設計し直した。45+1≤50 の計算、fetched_at・source_url・索引、Cron 役割①での R2 削除、代替表示が database・infrastructure・backend・security・ui-ux・frontend の各章で食い違っていない。cloudflare-d1-limits と cloudflare-workers の数値(subrequest の数え方を含む)は C08 が公式の現行版と照合し、一致した。", "suggested_fix": "なし"}
+  ],
+  "gaps": [
+    "[doc-fetch/compile・high] backend.md:876 と design_applications.backend の D1 limits のタグを cloudflare-d1 から cloudflare-d1-limits に替える",
+    "[compile・medium] infrastructure.md:581 のサムネイル専用の通のタグに cloudflare-queues と cloudflare-r2 を加える",
+    "[elicit・medium] R4-reopen で database/security/infrastructure/backend を開き直し、公式制限から導いた規則(D1 limits・subrequest の数え方・III.E.4 の30日・サムネイル専用の通)を basis=observed-fact の qa_log に記録してから確定し直す。matrix.infrastructure.web.qa_refs も更新する",
+    "[compile・low] Queues の操作数(thumbnail 通の分を足す)、cleanup の通の subrequest 予算、取り直しの順番で fetched_at が null の動画をどこに置くかと容量超過時の範囲を書き足す",
+    "[compile・low] video_ids が URL の長さの上限を超えたときの扱いを1行書く",
+    "[elicit/compile・low] 持ち越しの low(qa-081 の2つの論点・qa-080〜082 の同じ秒・r3 の4件)",
+    "[harness 修正・報告のみ] R0-foundation の objectives[].serves と、hearing_progress.completed_at を書く op"
+  ]
+}

@@ -111,7 +111,7 @@ pnpm dev                         # http://localhost:8791
 
 ### 6.1 MAX_TENANTS を変える
 
-1. `wrangler.toml` の `[vars] MAX_TENANTS` を変える（例: `"150"`）。
+1. `wrangler.toml` の `[vars] MAX_TENANTS` を変える（現在は `"75"`）。上げる場合は、Queue の無料枠（安全予算8,000操作/日）に収まるかを `tests/platform/queue-budget.test.ts` が検査するため、`pnpm test` が通る範囲に限る（1テナント1連携で約102操作/日）。
 2. PR → main へ merge → 自動でデプロイされる。
 3. 下げる場合、今あるテナントは消えない。新規の初回ログインとテナント追加だけが止まる（`SIGNUP_CLOSED`）。招待による参加は上限の対象外。
 

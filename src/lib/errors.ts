@@ -111,7 +111,11 @@ export const ERRORS = {
     "Googleが登録済みのクライアントIDまたはシークレットを受け付けませんでした",
     "設定画面の「Google Cloud の接続情報」で、Google Cloud Console の値を登録し直してください",
   ],
-  FEATURE_NOT_READY: [403, "この機能は準備中です", "Googleの審査が終わるまでお待ちください"],
+  FEATURE_NOT_READY: [
+    403,
+    "この機能は準備中です",
+    "字幕の収集機能とGoogleの審査が整うまでお待ちください",
+  ],
   TOKEN_LIMIT: [
     409,
     "トークンは1人5本まで発行できます",

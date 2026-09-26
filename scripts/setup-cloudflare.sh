@@ -37,7 +37,7 @@ queue_exists() {
   done
 }
 
-for QUEUE_NAME in "collect-queue" "channel-cleanup-queue"; do
+for QUEUE_NAME in "collect-queue" "channel-cleanup-queue" "thumbnail-queue"; do
   if queue_exists "$QUEUE_NAME"; then
     echo "Queue ${QUEUE_NAME}: 作成済み"
   else

@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "status": "ready",
+  "handoff_target": "task-graph",
+  "feature_id": "feat-dashboard-redesign",
+  "generated_at": "2026-09-24T15:51:38Z",
+  "graph_snapshot": {
+    "path": ".dev-graph/state/graph.json",
+    "graph_revision": 12,
+    "digest": "sha256:d9053e183bce9e373297d1903b47365bf948964f81fbdcee19d33b9c7ad7554a"
+  },
+  "requirements_document": {
+    "path": ".dev-graph/handoffs/requirements-feat-dashboard-redesign.md",
+    "digest": "sha256:7dd9d7e6edb88290b169da3705003e71038b8987981bf69658884cb9d416612f"
+  },
+  "package": {
+    "path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2",
+    "validated_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+    "promotion_receipt": {
+      "path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/atomic-promotion-receipt.json",
+      "digest": "sha256:f02169a121fd50697487f56c00bde7ac5b635192a41184bb636be9897873c722"
+    },
+    "system_build_handoff": {
+      "path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/system-build-handoff.json",
+      "digest": "sha256:c722db9e9d3f0935dea47508bdadb593321f36c0e91ba0151adb855598022fd1"
+    },
+    "registration_manifest": {
+      "path": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2/dev-graph-registration.json",
+      "digest": "sha256:127c52c945a650157228ed14ce0a3e20d95ed3d8ee689b846d45434730a84fa8"
+    }
+  },
+  "feature_context": {
+    "path": "features/feat-dashboard-redesign.context.json",
+    "digest": "sha256:ea08f0145c002c8c1b5fd1af622abc4f862d907ea2c6d3c4e76ded225bd78ff0"
+  },
+  "gates": {
+    "c11_graph_schema": "pass",
+    "c02_saved_state": "pass",
+    "validate_system_plan": "pass"
+  },
+  "missing_sections": [],
+  "self_generated_code_files": 0,
+  "note": "graph rev 12。SYS-DBR-P01..P13 登録済み・task md 13件実体化済み。P13 は利用者の明示指示まで保留"
+}

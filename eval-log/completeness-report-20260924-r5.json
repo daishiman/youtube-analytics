@@ -1,0 +1,268 @@
+{
+  "evaluator": {
+    "name": "assign-system-spec-completeness-evaluator",
+    "version": "0.1.0",
+    "context": "fork"
+  },
+  "spec_dir": "system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。U1〜U9 はすべて値があり、goal→objective→セル→章のつながりに dangling は無い。r4 の medium『U1 節に新旧2つの本質的目的が並ぶ』は解消した。00-requirements-definition.md の U1 節は正本 requirements_foundation.essential_purpose と同じ1段落だけになり、古い文言『目標差が最も大きい改善候補』は全章から消えている(grep 0件)。low の持ち越し『同意記録・再同意と製品名 Channel Insight を上位概念へ反映するか』は今回も未着手。",
+      "evidence": [
+        "G-foundation exit0",
+        "00-requirements-definition.md:14-16 U1 は1段落",
+        "grep『目標差が最も大きい改善候補』 全章 0件"
+      ]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions[] の6件はすべて confirmed で変わっていない。今回新しく決めた3件は推奨なしの個別質問で確定した。qa-080(サムネイルを YouTube から直接出すか、自サイト経由で出すか)は2択で、どちらの選択肢にも CSP への影響が対等に書かれている。qa-082(他テナントの ID を黙って除外するか、404 を返すか)も2択。qa-081 はアシスタントの解釈を利用者が一部否定した(上限なし)。どれも AI の推奨だけで決まったものではない。",
+      "evidence": [
+        "qa-080/qa-082 provenance『推奨を付けない選択肢提示』",
+        "qa-081 answer『上限は設けない』(解釈を否定)"
+      ]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。C07 は loop_pass・final_ready とも PASS。48セルのうち確定26・対象外22・未収集0で、qa_ref の dangling は0件。r4 の FAIL 原因だった『qa-077 の一括承認が CSP img-src の分かれ道まで束ねていた』件は解消した。qa-077 の corrections で承認範囲を狭め、その分かれ道を qa-080 と qa-082 に切り出して推奨なしで確定し、security.web と backend.web の qa_refs に入っている。sub-input の C06 は誘導質問の軸を FAIL とした。理由は、qa-077 に『動画別の実績 上位8本』が個別確認されないまま残っている、というもの。C05 が照合すると、表の既定表示は qa-081 で利用者が『最初は直近10本』と確かめており、分かれ道は利用者に聞いてある。残っているのは章の中の古い段落(ui-ux.md:904)で、これは compile の問題として design_knowledge_reflection に付けた。そのため C06 の medium は low に下げ、この観点の判定を覆す根拠にはしなかった。C06 のほかの3軸(聞き漏れ・早期停止・トレーサビリティ)は PASS。qa-063〜066 の時刻の矛盾は、追記型の訂正で解消した。hearing_progress.loop_count は 6 から 9 になった。run_chunk() は呼ぶたびに loop_count を 0 に戻すので(apply-spec-transition.py:1248)、値は呼び出し1回の中で処理した件数を表す。C07 がこれを実物で確認し、harness 側の制約と認めた。",
+      "evidence": [
+        "validate-coverage-matrix 4モード exit0",
+        "C07: 確定26/対象外22/未収集0・dangling 0",
+        "C06: 聞き漏れ PASS / 誘導 FAIL(medium→C05で low に補正、low 1) / 早期停止 PASS / トレーサビリティ PASS",
+        "ui-ux.md:906 動画別の実績『直近公開10本を既定表示』(qa-081)"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(knowledge/doctrine/required-info/cross)はすべて exit0。r4 の medium『doctrine_applications がダッシュボード刷新を反映していない』は解消した。security.security、ui-ux.presentation、frontend.application-architecture の3つは recorded_at が 2026-09-24T08:48:39Z で、次の内容が具体的に書かれている。OWASP: 列挙対策として黙って除外し 200 を返す / CSP img-src を広げず、閲覧者を追跡される面を増やさない / private, no-store / テキスト描画による XSS 対策。HIG: 問い→結論→推移→内訳→AI要約→アクション→『詳しく見る』の情報階層 / 記号と色の二重表現 / 空状態5種。Clean Architecture: 集計はサーバで行い、画面は仕様 JSON を描く薄い表示層にする / URL クエリを唯一の状態にする / 区画ごとのエラー境界。security 章の『除外または 404 相当』という二択も qa-082 で確定した(r4 の low は解消)。一方、意味層で新しく medium を2件見つけた。(1) video_ids の件数に上限が無いが、D1 は1クエリにバインドできるパラメータが最大100個(公式の制限表で確認)で、IN 句に展開する素直な実装は101本以上で壊れる。入力の上限を決めるか、実装方法(json_each で渡す、分割する)を規範に書く必要がある。(2) ui-ux.md:904 に、qa-029〜031 時代のダッシュボード定義(『最初に見えるのは4ブロックだけ』『動画別の表(上位8本)』『期間セレクタは上部固定』)が、刷新後の定義(906行)と並んで残っている。どちらが優先かの宣言も無い。",
+      "evidence": [
+        "G-knowledge-graph exit0",
+        "doctrine_applications.security.security / ui-ux.presentation / frontend.application-architecture recorded_at=2026-09-24T08:48:39Z",
+        "backend.md:876『video_ids は件数の上限を設けず』",
+        "https://developers.cloudflare.com/d1/platform/limits/ Maximum bound parameters per query = 100",
+        "ui-ux.md:904 と ui-ux.md:906 の動画別表の定義が食い違う"
+      ]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層は validate-source-citation と validate-spec-doc-sync がともに exit0 で、29 target と 29 reference が1対1に対応している。r4 の medium『ECharts・React・Vite・React Router が無い』は解消した。新しく加えた4つはどれも公式 host で、公式の現行版と一致した: ECharts 6.1.0(2026-05-18)/ React 19.3(2026-09-09)/ Vite 8.3 / React Router 8.4.0(2026-09-15)。Vite は公式ページに日付が無いので last_updated が空なのは妥当。既存の hono・ffmpeg・openai-whisper も抜き取って照合し、一致した。章の依存と突き合わせると、E2E の受入基盤として多くの章で名指しされている Playwright が targets に無い(medium)。ただし実行時の依存ではなくテスト用の道具なので、観点の判定は C08 の総合判定どおり PASS とした。",
+      "evidence": [
+        "G-source-citation exit0",
+        "G-spec-doc-sync exit0",
+        "C08 内容鮮度層: 新規4つ+抜き取り3つがすべて一致",
+        "Playwright: frontend.md:805 ほかで名指しされているが targets に無い"
+      ]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが verify-completeness.py --input と validate-prompt.py --input を exit0 で通った。R0-foundation.md:41 の U4 は objectives を {id,text,measure} と定義していて、serves がまだ無い。これは plugin 側の問題なので、前回と同じくこの仕様書への差し戻しには含めず、報告だけにする。",
+      "evidence": [
+        "verify-completeness.py 18/18 exit0",
+        "validate-prompt.py 18/18 exit0",
+        "R0-foundation.md:41 objectives [{id,text,measure}]"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "G-matrix-loop",
+      "name": "validate-coverage-matrix (loop)",
+      "conditions": [
+        "matrix_coverage"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json"
+      ]
+    },
+    {
+      "id": "G-matrix",
+      "name": "validate-coverage-matrix --require-complete",
+      "conditions": [
+        "matrix_coverage"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-complete"
+      ]
+    },
+    {
+      "id": "G-matrix-basis",
+      "name": "validate-coverage-matrix --require-basis",
+      "conditions": [
+        "matrix_coverage"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-basis"
+      ]
+    },
+    {
+      "id": "G-foundation",
+      "name": "validate-coverage-matrix --require-foundation",
+      "conditions": [
+        "foundation_trace",
+        "decision_guidance"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py",
+        "--matrix",
+        "system-spec/spec-state.json",
+        "--require-foundation"
+      ]
+    },
+    {
+      "id": "G-knowledge-graph",
+      "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)",
+      "conditions": [
+        "design_knowledge_reflection",
+        "matrix_coverage"
+      ],
+      "exit_code": 0,
+      "stdout": "4プロファイルすべて exit0",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py",
+        "--knowledge-graph"
+      ]
+    },
+    {
+      "id": "G-required-info-state",
+      "name": "validate-knowledge-graph --profile required-info --state (C07 実行)",
+      "conditions": [
+        "matrix_coverage"
+      ],
+      "exit_code": 0,
+      "stdout": "ungrounded_blocking_items=[] (blocking 6件すべて grounded)"
+    },
+    {
+      "id": "G-source-citation",
+      "name": "validate-source-citation (C08 実行)",
+      "conditions": [
+        "doc_freshness"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす (29 target / 29 reference)"
+    },
+    {
+      "id": "G-spec-doc-sync",
+      "name": "validate-spec-doc-sync (C08 実行)",
+      "conditions": [
+        "doc_freshness"
+      ],
+      "exit_code": 0,
+      "stdout": "OK: 正本の goal・根拠・出典が章へ投影されている"
+    },
+    {
+      "id": "G-prompt",
+      "name": "verify-completeness.py + validate-prompt.py (18 prompt)",
+      "conditions": [
+        "prompt_quality"
+      ],
+      "exit_code": 0,
+      "stdout": "18/18 両方 exit0 (prompt-creator/run-prompt-creator-7layer/scripts の検証器)"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "bucket": "design_knowledge_reflection/入力検証と D1 制限(OWASP・compile/elicit)",
+      "observation": "backend.md:876 と qa-081 で、video_ids の件数に上限を設けないと決まっている。しかし D1 は1クエリにバインドできるパラメータが最大100個(公式の制限表)で、SQL 文も最大100KB まで。IN (?,?,…) に展開する素直な実装は、101本以上を選ぶと失敗する。URL の長さの上限もある。security 章の『許可リストと形式で検証』には件数の扱いが書かれておらず、入力の上限を決めないのは OWASP の入力検証(資源の消費を抑える)の観点でも抜けている。",
+      "suggested_fix": "画面側は『上限なし』のままでよい。サーバ側の扱いを backend/security の規範に書く: (a) 『自テナントの動画数』を事実上の上限にし、それを超える ID は400にする、または除外する、(b) json_each で配列を1パラメータとして渡すか分割して問い合わせ、100を超えても壊れないようにする。利用者の意図(上限なし)に関わるので、必要なら推奨なしの1問で確かめる。"
+    },
+    {
+      "severity": "medium",
+      "bucket": "design_knowledge_reflection/章内の矛盾(compile)",
+      "observation": "ui-ux.md:904(qa-037 一括承認の段落)に、qa-029〜031 時代のダッシュボード定義が残っている: 『最初に見えるのは視覚的に読める4ブロックだけ』『③動画別の表(上位8本…)』『期間セレクタは上部固定』。すぐ後の906行にある刷新後の定義(対象セレクタ・動画別の実績=直近公開10本を既定表示・構成比切替 など)と食い違い、どちらが優先かの宣言も無い。C06 が『上位8本が一括承認に残っている』と指摘した件の実体はこれ。",
+      "suggested_fix": "design_applications.ui-ux のダッシュボードの記述を刷新後の定義に置き換える。または904行に『ダッシュボードの画面構成は刷新節(qa-075〜081)が優先する』と書き、reopen_log に理由を残して compile し直す。"
+    },
+    {
+      "severity": "medium",
+      "bucket": "doc_freshness/対象一覧の欠落(C08)",
+      "observation": "Playwright が、E2E の受入基盤(360/768/1280px の3サイズ)として frontend.md:805・ui-ux.md:59・backend.md:60・security.md:59 など多くの章で名指しされているが、targets[] にも fetched-references.json にも無い。validate-source-citation は targets に載っているものしか調べないので、素通りした。",
+      "suggested_fix": "doc-fetch で playwright(playwright.dev)を targets[] と fetched-references.json に加え、version と last_updated を記録する。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/誘導質問(C06・C05 補正)",
+      "observation": "C06 は『qa-077 に上位8本が個別確認されないまま残っている』として誘導質問の軸を medium で FAIL とした。C05 が照合すると、表の既定表示は qa-081 で利用者が『最初は直近10本』と確かめていた。残っているのは qa-077 の corrections がこの差し替えに触れていないことと、ui-ux 章の古い段落(上の medium)だけ。",
+      "suggested_fix": "qa-077 の corrections に『動画別の実績 上位8本は qa-081 で直近公開10本に置き換えた』と1行足す。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/多論点束ね(C06)",
+      "observation": "qa-081 は、解釈の2点(選べる本数の上限 / 表の既定表示)を1問にまとめて聞いている。利用者は論点ごとに違う答え方をしている(前者を否定し、後者を肯定)ので、実害は小さい。",
+      "suggested_fix": "今後の解釈確認は1問1論点にする。"
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/トレーサビリティ",
+      "observation": "qa-080・081・082 の3問は、provenance に『1問ずつ・回答直後に date -u で実測』と書かれているのに、answered_at がすべて同じ 2026-09-24T08:48:39Z だった。この時刻は corrections や doctrine の recorded_at とも同じなので、書き込んだ時刻の可能性がある。また security.web の reopen_log の理由は『CSP img-src 追加』のままで、qa-080 の結論(CSP は変えない)とずれている(履歴としては残してよい)。",
+      "suggested_fix": "同じ AskUserQuestion で同時に答えたのなら provenance をそう書き、実測でないなら『書込時刻』と明記する。"
+    },
+    {
+      "severity": "low",
+      "bucket": "design_knowledge_reflection/API 規約の保存期間",
+      "observation": "qa-080 で、サムネイルは R2 に保存した画像を配ると決まった。YouTube API Developer Policies III.E.4 では、指標以外の Authorized Data は30日以内に削除するか取り直す必要がある。ところが、R2 に置いたサムネイル画像そのもの(URL ではない)を取り直したり消したりする規則が database/security 章に書かれていない(URL は毎日取り直すと書かれている)。",
+      "suggested_fix": "毎日の収集で R2 のサムネイルを上書きする、または30日を過ぎたら消す規則を database/security の規範に1文足す。"
+    },
+    {
+      "severity": "low",
+      "bucket": "持ち越し(r3 low・未着手)",
+      "observation": "(1) database/backend で qa-067 を外した理由が書かれていない。(2) 『ログイン開始ではサーバに状態を書かない』という不変条件が無い。(3) qa-071 が自由回答からの導出であることが明記されていない。(4) 同意記録・再同意と製品名 Channel Insight が上位概念に入っていない。どれも依頼者の申告どおり未着手。",
+      "suggested_fix": "elicit/compile で個別に片付ける。"
+    },
+    {
+      "severity": "medium",
+      "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)",
+      "observation": "R0-foundation.md:41 の U4 は objectives を {id,text,measure} と定義していて、serves を求めていない。前回から直っていない。hearing_progress.completed_at を書く op が無いことも、harness 側の制約として同じ扱いにする。",
+      "suggested_fix": "plugin 側で R0-foundation と --require-foundation に objectives[].serves を加え、hearing_progress の完了時刻を書く op を足す(この仕様書への差し戻しには含めない)。"
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点(良かった点)",
+      "observation": "決定論ゲート9件はすべて exit0。r4 の medium 6件のうち仕様書側の5件は解消した: ECharts など4つの出典 / qa-077 の CSP の分かれ道 / qa-063〜066 の時刻 / U1 の重複 / doctrine がダッシュボード刷新を反映していない件。hearing_progress は harness 側の制約として扱う。サムネイルの配信経路(R2・テナント確認付き・private)、他テナント ID の扱い、選べる本数に上限を設けないことは、backend・security・frontend・ui-ux の規範節にそろって入っている。新しく加えた4つの出典は、公式の現行版と一致した。",
+      "suggested_fix": "—"
+    }
+  ],
+  "gaps": [
+    "[compile/elicit・medium] video_ids に上限を設けないことと、D1 の1クエリあたり最大100パラメータという制限の関係を解く(json_each で渡す、または自テナントの動画数を上限にする)。backend と security の規範に書く",
+    "[compile・medium] ui-ux.md:904 に残る古いダッシュボード定義(4ブロックだけ・上位8本・期間セレクタは上部固定)を、刷新節で置き換えるか、刷新節が優先すると宣言する",
+    "[doc-fetch・medium] Playwright を targets[] と fetched-references.json に加える",
+    "[elicit・low] qa-077 の corrections に『上位8本は qa-081 で直近10本に置き換えた』と足す / qa-080〜082 の answered_at の出所を provenance と一致させる",
+    "[compile・low] R2 に置くサムネイルを30日以内に取り直すか消す規則を、database/security の規範に書く",
+    "[compile/elicit・low] r3 から持ち越しの low 4件",
+    "[harness 修正・報告のみ] R0-foundation の objectives[].serves と、hearing_progress.completed_at を書く op"
+  ]
+}

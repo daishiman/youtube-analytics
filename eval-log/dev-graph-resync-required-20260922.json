@@ -4,8 +4,8 @@
   "reason": "qa-060の週次売上ファネル要件とpsc-001の分析履歴要件を正本へ適用したため、既存featureの生成時digestと現在のspec digestが異なる",
   "canonical_source": "specs/youtube-analytics-system.md",
   "generated_from_digest": "cd7db6eaf6be63b19ffc8bdd66d03c986abcc5473426f7762afc7dac9df8c486",
-  "current_source_digest": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd",
-  "current_architecture_digest": "7358e6603ff4f6cba737be8ed895cd27f85e5fd9aea78707d93aa4a9a27b3a4b",
+  "current_source_digest": "e8500ac122957a30219afdd9777ae7ed08fa5611ae391872d917d3073f9e6f1a",
+  "current_architecture_digest": "65e30195475496f82dc787474595b8ce959a149e6e488a64a6fcc7b4fd4d2ba9",
   "affected_features": [
     "feat-csv-media-ingest",
     "feat-skill-analysis-reports",
@@ -33,6 +33,51 @@
       "refreshed_at": "2026-09-24",
       "by_feature": "feat-settings-channel-link",
       "note": "main（feat-login-redesign）を取り込み、qa-074〜088 と qa-062〜073 を統合した正本へ current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    },
+    {
+      "refreshed_at": "2026-09-25",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "qa-099〜qa-109 を system-spec の正規フロー（compile→dev-graph spec import、graph_revision 12）で正本へ適用したため current digest を更新。affected_features の再同期要件はそのまま有効（generated_from_digest は変更しない）"
+    },
+    {
+      "refreshed_at": "2026-09-25",
+      "by_feature": "feat-settings-channel-link",
+      "note": "字幕予算の利用者追加決定（1,000 units枠で最大4本/日）を正本へ追補したため current digest を更新。過去のqa-082回答と generated_from_digest は維持し、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-25",
+      "by_feature": "feat-youtube-daily-collection",
+      "note": "字幕収集のローカル実装済み・公開フラグ未設定という状態を正本へ反映した current digest。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-25",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "重複整理のレビューで Queue 予算の記述（Compute and storage）を src/usecases/queue-budget.ts の見積もりに合わせたため current architecture digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "利用者確認により MAX_TENANTS を75へ下げたため、Risks・Compute and storage・Deployment の MAX_TENANTS の記述を更新し current architecture digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "qa-110（MAX_TENANTS を100から75へ）を正規フロー（apply-spec-transition→compile-spec-doc）で正本へ適用し、specs の規模行と source_lineage（00-requirements-definition.md の digest）を更新したため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "qa-110 の spec ノード更新(2026-09-26 に自作スクリプトで直接書き、graph_revision 据え置き・時刻手入力だった)を C02(run-dev-graph-node update)の手順でやり直し、graph_revision 12→13・imported_at を実時刻にした。specs の frontmatter が変わったため current source digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "main(PR #7 AI分析画面)を取り込み、本 feature 側の番号を qa-099〜qa-113 へずらして正本(system-spec)を統合・再生成した(eval-log/renumber-receipt-feat-dashboard-redesign-20260926.json)。specs/architecture の本文と source_lineage が変わったため current digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
+    },
+    {
+      "refreshed_at": "2026-09-26",
+      "by_feature": "feat-dashboard-redesign",
+      "note": "qa-114(main 統合後のダッシュボード右列と media_assets 制約の調整)を spec・arch 本文へ反映し、C02(run-dev-graph-node update)で confirmation_evidence を eval-log/completeness-qa114-20260926.json へ付け替え、graph_revision 15→16。両本文が変わったため current source digest と current architecture digest を更新。generated_from_digest は変更せず、affected_features の再同期要件も引き続き有効。"
     }
   ]
 }

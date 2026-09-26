@@ -1,0 +1,76 @@
+{
+  "evaluator": {"name": "assign-system-spec-completeness-evaluator", "version": "0.1.0", "context": "fork"},
+  "spec_dir": "system-spec",
+  "verdict": "PASS",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。requirements_foundation の11キーに値がある。r8 で上位概念の変更は無く、qa_log は qa-083 まで増えたが、qa-083 は公式照合の記録(observed-fact)で上位概念には触れていない。持ち越しの low『同意記録・再同意と製品名 Channel Insight を上位概念に入れるか』は未着手のまま。",
+      "evidence": ["G-foundation exit0", "qa_log 83件(最終 qa-083・basis=observed-fact)"]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions[] の6件はすべて confirmed で、r8 で新しい決定は無い。公式制限から導いた規則には、どれも『[公式制限からの導出 qa-083: …]』のタグが付いた。『[利用者確定 qa-…]』を名乗っている箇所は無い。ただし infrastructure.md:648 の『公開日の新しい順に1,000本だけ保存』『8割を超える日は翌日に回す』『1実行12テナントまで』は、制限値そのものではなく設計上の選択。それなのに qa-083 の answer に書かれていない(low)。",
+      "evidence": ["D-ai-engine/D-db/D-auth/D-cron/D-deploy/D-transcript すべて confirmed", "infrastructure.md:648"]
+    },
+    "matrix_coverage": {
+      "verdict": "PASS",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "依頼者の指示で sub-agent は起動していない。C07・C06 の検査項目は、評価者が単体で代わりに確かめた。決定論ゲートは5本とも exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state。blocking の6件はすべて grounded)。r7 の medium(C06 の早期停止とトレーサビリティ)は解消した。確かめた点は4つ。(1) reopen_log に database・security・infrastructure・backend の web セルの reopen(09:28:41Z)がある。(2) その後に qa-083(basis=observed-fact・公式照合・answered_at 09:28:44Z)がある。(3) さらに design_applications の記録(recorded_at 09:28:45Z)が続き、順序が守られている。(4) 4セルとも state=確定・qa_ref=qa-083 で、qa_refs に qa-083 が入った。matrix.infrastructure.web.qa_refs も qa-074/077/080/081/083 まで更新された。残りは low。ブロック単位の basis は user-decision のままで、observed-fact の部分はインラインのタグでしか見分けられない。infrastructure.md:648 の設計選択は qa-083 の answer に書かれていない。",
+      "evidence": [
+        "G-matrix-loop/G-matrix/G-matrix-basis/G-foundation/G-required-info-state exit0",
+        "reopen_log: database/security/infrastructure/backend web 2026-09-24T09:28:41Z",
+        "qa-083 basis=observed-fact answered_at 2026-09-24T09:28:44Z",
+        "design_applications.{database,security,infrastructure,backend}.recorded_at=2026-09-24T09:28:45Z",
+        "matrix.{database,security,infrastructure,backend}.web.qa_ref=qa-083"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(aggregate-completeness --knowledge-graph の4プロファイル)は exit0。r7 の low 3件は、infrastructure.md:648 で中身の面で解消した。(1) 取り直しの順番: 未保存の動画を最優先にし、次に URL が変わった動画、その後は fetched_at の古い順。1,100本を超えるテナントでは、新しい順の1,000本だけを保存の対象にする。25日×45本=1,125本の処理能力に余裕を残す値で、削除と取り直しの繰り返しを防げる。(2) Queues の操作数: 1テナントあたり最大9操作(3通×書き込み・読み取り・削除)を足すと、100テナントで約900回、合計約1,200回/日。公式の1日1万操作(64KB ごとの書き込み・読み取り・削除を数える)に収まり、8割を超える見込みの日は翌日に回す。(3) cleanup の予算: 1テナントあたり D1 の抽出・R2 delete(1回最大1,000キー)・D1 の削除の計3件。12テナント(36件)を上限とし、既存の削除処理の分に14件を残して、合計50件に収める。backend.md:888 の json_each による単一バインドと、security.md:787 の30日削除と入力を連結しない規則も、公式の制限と整合している。残りは low 2件。(a) database.md:591 は kind=thumbnail 行の fetched_at を必須にしている。infrastructure.md:648 の『fetched_at が無い行』は、実際には『まだ行が無い』ことを指しており、書き方が食い違っている。(b) 大規模な失敗が起きて、削除が必要なテナントが1日12を超えたとき、30日を超える保持が起きうる。この逃げ道(cleanup の通を複数送るなど)が書かれていない。",
+      "evidence": ["G-knowledge-graph exit0", "infrastructure.md:646", "infrastructure.md:648", "backend.md:888", "database.md:591", "security.md:787"]
+    },
+    "doc_freshness": {
+      "verdict": "PASS",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "sub-agent は起動していない。C08 の二層監査は、評価者が単体で代わりに行った。形式層は validate-source-citation と validate-spec-doc-sync がともに exit0 で、33 target と33 reference が1対1に対応している(cloudflare-r2-workers-api を追加)。r7 の high は解消した。backend.md:888 のタグは cloudflare-d1-limits になり、4章とも『cloudflare-d1 /』の誤ったタグは0件。r7 の medium も解消した。infrastructure.md:646 のタグに cloudflare-queues・cloudflare-r2・cloudflare-r2-workers-api が入った。内容鮮度は WebFetch で公式ページと照らし合わせた。R2 Workers API は『Up to 1000 keys may be deleted per call.』・Last updated 2026-07-31 で、記録と一致した。Queues の料金ページは Free 10,000 operations/day・64KB ごとの書き込み・読み取り・削除を数える・Last updated 2026-04-21 で、記録と一致した。cloudflare-d1-limits・cloudflare-workers・wrangler は r7 で一致を確かめており、その後に変わった兆候は無い。",
+      "evidence": ["G-source-citation exit0 (33/33)", "G-spec-doc-sync exit0", "WebFetch r2 workers-api-reference: 1000 keys / Jul 31, 2026", "WebFetch queues pricing: 10,000 ops/day / Apr 21, 2026"]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt で、prompt-creator の verify-completeness.py --input と validate-prompt.py --input を実行し、すべて exit0 だった。R0-foundation.md の U4 が objectives[].serves を求めていない件と、hearing_progress.completed_at を書く op が無い件は plugin 側の問題として、報告だけにとどめる(r5〜r7 から変わっていない)。",
+      "evidence": ["G-prompt 18/18 exit0"]
+    }
+  },
+  "gate_results": [
+    {"id": "G-matrix-loop", "name": "validate-coverage-matrix (loop)", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"]},
+    {"id": "G-matrix", "name": "validate-coverage-matrix --require-complete", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"]},
+    {"id": "G-matrix-basis", "name": "validate-coverage-matrix --require-basis", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"]},
+    {"id": "G-foundation", "name": "validate-coverage-matrix --require-foundation", "conditions": ["foundation_trace", "decision_guidance"], "exit_code": 0, "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"]},
+    {"id": "G-knowledge-graph", "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)", "conditions": ["design_knowledge_reflection", "matrix_coverage"], "exit_code": 0, "stdout": "4プロファイルすべて exit0", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"]},
+    {"id": "G-required-info-state", "name": "validate-knowledge-graph --profile required-info --state", "conditions": ["matrix_coverage"], "exit_code": 0, "stdout": "status=ok, ungrounded_blocking_items=[] (blocking 6件すべて grounded)", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-knowledge-graph.py", "--profile", "required-info", "--input", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/run-system-spec-elicit/references/required-info-catalog.json", "--state", "system-spec/spec-state.json"]},
+    {"id": "G-source-citation", "name": "validate-source-citation", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす (33 target / 33 reference)", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-source-citation.py", "--targets", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--state", "system-spec/spec-state.json"]},
+    {"id": "G-spec-doc-sync", "name": "validate-spec-doc-sync", "conditions": ["doc_freshness"], "exit_code": 0, "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている", "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-spec-doc-sync.py", "--matrix", "system-spec/spec-state.json", "--references", "system-spec/fetched-references.json", "--spec-root", "system-spec"]},
+    {"id": "G-prompt", "name": "verify-completeness.py + validate-prompt.py (18 prompt)", "conditions": ["prompt_quality"], "exit_code": 0, "stdout": "18/18 両方 exit0 (prompt-creator/skills/run-prompt-creator-7layer/scripts)"}
+  ],
+  "findings": [
+    {"severity": "low", "bucket": "decision_guidance/根拠の範囲(elicit/compile)", "observation": "infrastructure.md:648 の次の3つは、公式の制限値から一意には決まらない設計上の選択。(1) 1,100本を超えるテナントでは、公開日の新しい順に1,000本だけを保存し、古い動画は最初から代替表示にする。これは利用者から見える挙動。(2) Queues の操作数が8割を超える見込みの日は、thumbnail 通の送信を翌日に回す。(3) cleanup は1実行で12テナントまで。3つとも『[公式制限からの導出 qa-083]』のタグで書かれているが、qa-083 の answer には書かれていない。", "suggested_fix": "qa-083 の answer に、3つの値がどう導かれたか(1,125本の処理能力から余裕を残して1,000本、など)を書き足す。そのうえで、1,000本の上限は利用者から見える挙動なので、次に利用者と確認するときの項目に入れる。"},
+    {"severity": "low", "bucket": "matrix_coverage/ブロック単位の basis(elicit・harness)", "observation": "design_applications の database・security・infrastructure・backend は、ブロック単位の basis が user-decision のまま。observed-fact(qa-083)の部分は、インラインのタグでしか見分けられない。", "suggested_fix": "schema が1ブロックに1つの basis しか許さないなら、今のまま(インラインのタグで見分ける)でよい。部分ごとの basis を持てるようにする件は、harness 側の follow-up として扱う。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/書き方の食い違い(compile)", "observation": "database.md:591 は、kind=thumbnail 行の fetched_at を必須にしている。一方で infrastructure.md:648 は『fetched_at が無い行(新しく見つかった動画)を最優先』と書いている。実際に言いたいのは『media_assets の行がまだ無い動画』である。", "suggested_fix": "infrastructure.md:648 を『media_assets に kind=thumbnail の行がまだ無い動画を最優先』に書き換える。"},
+    {"severity": "low", "bucket": "design_knowledge_reflection/cleanup が詰まったときの逃げ道(compile)", "observation": "cleanup でサムネイルを削除するのは1実行で12テナントまで。超えた分は翌日に持ち越す。取得の失敗が大規模に続き、削除が必要なテナントが1日12を超えると、30日を超えて保持する日が出うる(III.E.4)。", "suggested_fix": "cleanup の通を、テナント数に応じて複数送れるようにする。たとえば12テナントごとに1通とし、sendBatch で送る。これを1行書き足す。"},
+    {"severity": "low", "bucket": "持ち越し(r7 以前の low・未着手)", "observation": "(1) video_ids が URL の長さの上限を超えたときの扱いが、まだ決まっていない(backend・frontend に記述が無い)。(2) qa-081 が2つの論点を1問で聞いている。(3) qa-080〜082 の answered_at が同じ秒になっている。(4) r3 からの4件(qa-067 を外した理由、ログイン開始でサーバに状態を書かないという不変条件、qa-071 が自由回答から導いたものだという明記、同意記録と製品名を上位概念に入れるか)。(5) wrangler の版番号が記録されていない(公式ページにも版番号は無い)。"},
+    {"severity": "medium", "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)", "observation": "R0-foundation の U4 は、objectives を {id,text,measure} と定義していて serves を求めていない。hearing_progress.completed_at を書く op も無い。r5〜r7 から変わっていない。仕様書側の問題ではない。", "suggested_fix": "harness 側で修正する(本仕様書の差し戻しには入れない)。"},
+    {"severity": "info", "bucket": "確認した観点(良かった点)", "observation": "決定論ゲートは9件すべて exit0 だった。r7 の指摘は、high 1件・medium 2件(harness 側を除く)・low 4件がすべて解消した。(1) backend のタグを cloudflare-d1-limits に替えた。(2) infrastructure のタグに queues・r2・r2-workers-api を加えた。(3) reopen→qa-083(observed-fact)→確定し直し、の順序を記録した。(4) infrastructure.web.qa_refs を更新した。(5) 取り直しの順番と1,000本の上限、Queues の操作数、R2 の一括削除と cleanup の予算を書き足した。R2 Workers API と Queues の料金は、WebFetch で公式ページと照らし合わせた。依頼者の指示で sub-agent(C06/C07/C08)は起動しておらず、その検査項目は評価者が単体で代わりに確かめた。"}
+  ],
+  "gaps": []
+}

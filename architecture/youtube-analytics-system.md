@@ -17,10 +17,10 @@ template_id: "architecture"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json", "evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094"}
-source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "imported_at": "2026-09-24T14:59:43Z"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-qa114-20260926.json", "evaluated_digest": "444186de6beaf9c517ce8c794b73e18a33249eacc6349e67db74e656c41d72fb"}
+source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "imported_at": "2026-09-26T04:56:33Z"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-24T14:59:43Z"
+updated_at: "2026-09-26T05:29:09Z"
 depends_on: []
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
@@ -47,7 +47,7 @@ completion_evidence: {"policy": "manual", "status": "not_applicable", "source": 
 implementation_readiness: {"status": "complete", "missing_sections": [], "checked_at": "2026-09-24T09:17:58Z"}
 ---
 
-正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-report-20260921-r6.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。qa-060の週次売上ファネルとpsc-001の分析履歴は手動追補済みで、生成lineageの正式再同期は`eval-log/dev-graph-resync-required-20260922.json`をgateとする。2026-09-24 の設定画面・チャンネル紐付け・共通レイアウト(qa-074〜qa-086)は正規フロー(evaluator r3 PASS)で取り込み、lineage を更新した。qa-087(テナントごとの Google Cloud OAuth クライアント)と qa-088(利用者向け表記『ワークスペース』・準備手順)も同じ経路で追補した。
+正本: system-spec/ (system-spec-harness 0.1.14・評価 eval-log/completeness-report-20260924-r8.json)。本ノードは要約と参照であり、詳細・根拠(qa_ref)は各章を正とする。qa-060の週次売上ファネルとpsc-001の分析履歴は手動追補済みで、生成lineageの正式再同期は`eval-log/dev-graph-resync-required-20260922.json`をgateとする。2026-09-24 の設定画面・チャンネル紐付け・共通レイアウト(qa-074〜qa-086)は正規フロー(evaluator r3 PASS)で取り込み、lineage を更新した。qa-087(テナントごとの Google Cloud OAuth クライアント)と qa-088(利用者向け表記『ワークスペース』・準備手順)も同じ経路で追補した。2026-09-24 にダッシュボード刷新(docs/screens/02-dashboard.png・qa-099〜qa-109/appr-017)を正規フロー(completeness r8 PASS)で取り込み、main(PR #6)取込時に番号を付け替え(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)、期間切替を共通ヘッダーの ?period= に統一した(qa-109)。
 
 # Architecture overview
 
@@ -111,7 +111,7 @@ GitHub Actions で PR 時 dry-run、main push で D1 migrations → deploy。ロ
 
 ## Risks and verification
 
-- 無料枠超過 → 無料枠メーターで70%黄・90%赤(qa-084)、MAX_TENANTS=100、字幕取得は1日5本=1,000units(qa-082)。
+- 無料枠超過 → 無料枠メーターで70%黄・90%赤(qa-084)、MAX_TENANTS=75(Queue 安全予算8,000操作/日に収まる連携数)、字幕取得は1日5本=1,000units(qa-082)。
 - force-ssl 未検証の警告画面と100アカウント上限 → 字幕トグル一般公開前に検証申請(qa-085)。
 - OAuth 未検証公開の100人上限 → 80人で検証申請。
 - Reporting レポートの60日失効 → CSV で補う runbook。
@@ -130,7 +130,7 @@ React + Vite + React Router の SPA を Workers の静的アセットで配信�
 
 ## Component and design-system boundaries
 
-グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。AI分析画面は RequestPanel/DataSummaryCard/RequestStatusTable/ReportList/ResultImportPanel/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar で構成し、新しい共通部品 ProgressBar と DateRangePicker を components に追加する。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
+グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボードは 02-dashboard.png を正本とし(qa-099〜108)、GET /api/dashboard(読取専用の集約・グラフ仕様 JSON)で KPI・日次推移・構成比・動画別実績を描き、週次ファネルは『詳しく見る』で GET /api/dashboard/funnel から遅延取得する。ECharts は遅延読込。サムネイルは R2 から自サイト経由で配り(CSP img-src は self)、thumbnail 専用の Queue 通で取り直し、30日超は Cron cleanup で削除する。ダッシュボードの右列は AI分析が所有する reports/findings/actions を読むだけにし(アーカイブ外の最大版・状態が実施中/効果測定中のアクション)、サムネイルの出所必須は asset_id='thumbnail:'||video_id の行だけに trigger で課して /yt-analyze の画像と共存させる(qa-114)。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。AI分析画面は RequestPanel/DataSummaryCard/RequestStatusTable/ReportList/ResultImportPanel/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar で構成し、新しい共通部品 ProgressBar と DateRangePicker を components に追加する。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
 
 ## State and data flow
 
@@ -186,11 +186,11 @@ Cloudflare アカウント1つ、Worker 1本(API・静的配信・Cron)、D1 1�
 
 ## Compute and storage
 
-Workers Free(サブリクエスト50件/実行、CPU 10ms を考慮し Reporting CSV は必要列だけ読む)。D1 無料上限(10個・1つ500MB・書込10万行/日)、R2 Standard 無料10GB-month。Queues は1日約300操作(無料1万/日)。
+Workers Free(サブリクエスト50件/実行、CPU 10ms を考慮し Reporting CSV は必要列だけ読む)。D1 無料上限(10個・1つ500MB・書込10万行/日)、R2 Standard 無料10GB-month。Queues は無料1万操作/日に対し安全予算8,000を `src/usecases/queue-budget.ts` で見積もる(有効連携1件あたり想定34通・約102操作。collect は動画1,000本までを想定。収まるのは75連携までのため MAX_TENANTS=75 とし、`tests/platform/queue-budget.test.ts` が wrangler.toml の値を検査する。thumbnail の送信回数は有効連携数から毎日決める)。
 
 ## IaC and delivery
 
-wrangler.toml(bindings、MAX_TENANTS=100、Cron、Queue producer 設定)。consumer 設定は処理と終端失敗契約を実装する日次収集 feature で同時に追加する。GitHub Actions で dry-run と migrations → deploy。
+wrangler.toml(bindings、MAX_TENANTS=75、Cron、Queue producer 設定)。consumer 設定は処理と終端失敗契約を実装する日次収集 feature で同時に追加する。GitHub Actions で dry-run と migrations → deploy。
 
 ## Secrets and access
 

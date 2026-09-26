@@ -161,7 +161,11 @@ describe("データ取込の受付", () => {
     const list = (await (await call("/api/imports", { cookie: owner.cookie })).json()) as {
       imports: ImportRow[];
     };
-    expect(list.imports[0]).toMatchObject({ file_name: "analytics.csv", status: "処理待ち" });
+    expect(list.imports[0]).toMatchObject({
+      file_name: "analytics.csv",
+      status: "処理待ち",
+      has_original: 1,
+    });
   });
 
   it("字幕（.vtt）・画像（.webp）も受け付ける", async () => {

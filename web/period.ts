@@ -1,4 +1,4 @@
-// 分析対象期間（ヘッダーと各画面で共有する ?period=28d|90d|1y|custom&from=&to=）。
+// 分析対象期間（ヘッダーと各画面で共有する ?period=7d|28d|90d|1y|custom&from=&to=）。
 // 範囲の決め方と検査はサーバと同じ src/domain/period.ts を使い、ここは URL との読み書きと表示だけを持つ
 import { useCallback } from "react";
 import { useSearchParams } from "react-router";
@@ -10,9 +10,10 @@ import {
   recentPeriod,
 } from "../src/domain/period";
 
-export type PeriodKey = "28d" | "90d" | "1y" | "custom";
+export type PeriodKey = "7d" | "28d" | "90d" | "1y" | "custom";
 
 export const PERIODS: { key: PeriodKey; label: string }[] = [
+  { key: "7d", label: "7日" },
   { key: "28d", label: "28日" },
   { key: "90d", label: "90日" },
   { key: "1y", label: "1年" },
@@ -20,6 +21,7 @@ export const PERIODS: { key: PeriodKey; label: string }[] = [
 ];
 
 const PRESET_DAYS: Record<Exclude<PeriodKey, "custom">, number> = {
+  "7d": 7,
   "28d": DEFAULT_PERIOD_DAYS,
   "90d": 90,
   "1y": 365,

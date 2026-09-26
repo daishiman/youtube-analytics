@@ -1,0 +1,20 @@
+{
+  "receipt_kind": "spec-import",
+  "verb": "node",
+  "operation": "update",
+  "recorded_at": "2026-09-26T01:03:10Z",
+  "graph_revision_before": 12,
+  "graph_revision": 13,
+  "updated_node_ids": [
+    "spec-youtube-analytics-system"
+  ],
+  "changed_paths": [
+    "$.graph_revision",
+    "$.nodes[0].source_lineage.imported_at",
+    "$.nodes[0].updated_at"
+  ],
+  "evaluated_digest": "e3d522ffa8fa72373e67a0f9b7f82d511a02021ae0bf940ab25c87f1ced71908",
+  "evidence_ref": "eval-log/completeness-report-20260924-r8.json",
+  "report": "eval-log/dev-graph-spec-import-report-20260926-qa100.json",
+  "graph_digest": "2d12e3c533b55ffb114158098be09f167bc539d7718c8909d5353b261c9aa579"
+}

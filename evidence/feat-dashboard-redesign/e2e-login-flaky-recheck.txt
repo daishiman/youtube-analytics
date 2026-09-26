@@ -1,0 +1,130 @@
+
+Running 126 tests using 1 worker
+
+[1/126] [mobile] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[2/126] [mobile] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[3/126] [mobile] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[4/126] [mobile] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[5/126] [mobile] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[6/126] [mobile] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[7/126] [mobile] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[8/126] [mobile] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[9/126] [mobile] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[10/126] [mobile] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[11/126] [mobile] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[12/126] [mobile] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[13/126] [mobile] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[14/126] [mobile] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[15/126] [mobile] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[16/126] [mobile] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[17/126] [mobile] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[18/126] [mobile] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[19/126] [mobile] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[20/126] [mobile] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[21/126] [mobile] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[22/126] [mobile] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[23/126] [mobile] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[24/126] [mobile] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[25/126] [mobile] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[26/126] [mobile] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[27/126] [mobile] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[28/126] [mobile] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[29/126] [mobile] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[30/126] [mobile] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[31/126] [mobile] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[32/126] [mobile] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[33/126] [mobile] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[34/126] [mobile] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[35/126] [mobile] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[36/126] [mobile] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[37/126] [mobile] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[38/126] [mobile] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[39/126] [mobile] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[40/126] [mobile] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[41/126] [mobile] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[42/126] [mobile] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[43/126] [tablet] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[44/126] [tablet] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[45/126] [tablet] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[46/126] [tablet] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[47/126] [tablet] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[48/126] [tablet] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[49/126] [tablet] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[50/126] [tablet] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[51/126] [tablet] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[52/126] [tablet] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[53/126] [tablet] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[54/126] [tablet] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[55/126] [tablet] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[56/126] [tablet] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[57/126] [tablet] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[58/126] [tablet] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[59/126] [tablet] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[60/126] [tablet] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[61/126] [tablet] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[62/126] [tablet] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[63/126] [tablet] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[64/126] [tablet] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[65/126] [tablet] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[66/126] [tablet] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[67/126] [tablet] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[68/126] [tablet] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[69/126] [tablet] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[70/126] [tablet] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[71/126] [tablet] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[72/126] [tablet] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[73/126] [tablet] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[74/126] [tablet] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[75/126] [tablet] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[76/126] [tablet] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[77/126] [tablet] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[78/126] [tablet] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[79/126] [tablet] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[80/126] [tablet] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[81/126] [tablet] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[82/126] [tablet] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[83/126] [tablet] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[84/126] [tablet] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[85/126] [desktop] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[86/126] [desktop] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[87/126] [desktop] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[88/126] [desktop] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[89/126] [desktop] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[90/126] [desktop] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[91/126] [desktop] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[92/126] [desktop] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[93/126] [desktop] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[94/126] [desktop] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[95/126] [desktop] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[96/126] [desktop] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[97/126] [desktop] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[98/126] [desktop] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[99/126] [desktop] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[100/126] [desktop] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[101/126] [desktop] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[102/126] [desktop] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[103/126] [desktop] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[104/126] [desktop] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[105/126] [desktop] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[106/126] [desktop] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[107/126] [desktop] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[108/126] [desktop] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[109/126] [desktop] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[110/126] [desktop] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[111/126] [desktop] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[112/126] [desktop] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+[113/126] [desktop] › e2e/login.spec.ts:17:3 › ログイン画面 › A1 画像どおりの順序で並び、Googleボタンは Light テーマ
+[114/126] [desktop] › e2e/login.spec.ts:46:3 › ログイン画面 › A2 権限一覧はサーバの設定から描く（新規3行・招待はメールだけ）
+[115/126] [desktop] › e2e/login.spec.ts:62:3 › ログイン画面 › A3 同意前は押せない理由を示し、押しても移動しない
+[116/126] [desktop] › e2e/login.spec.ts:74:3 › ログイン画面 › A4 規約が改定されたら再同意を求める
+[117/126] [desktop] › e2e/login.spec.ts:82:3 › ログイン画面 › A6 知らないエラーコードは中身を出さず汎用の文言にする
+[118/126] [desktop] › e2e/login.spec.ts:91:3 › ログイン画面 › 招待 URL に切り替えると旧設定と同意を即座に破棄する
+[119/126] [desktop] › e2e/login.spec.ts:124:3 › ログイン画面 › 設定の取得失敗時は理由を示してログインを無効にする
+[120/126] [desktop] › e2e/login.spec.ts:138:3 › ログイン画面 › A7 信頼表示3つと規約リンク、未検証アプリの案内を出す
+[121/126] [desktop] › e2e/login.spec.ts:152:3 › ログイン画面 › A8 幅360pxでも横スクロールしない
+[122/126] [desktop] › e2e/login.spec.ts:162:3 › ログイン画面 › A9 キーボードだけで同意して Google ボタンまで進める
+[123/126] [desktop] › e2e/login.spec.ts:179:3 › A5 YouTube 連携が未完了のときの案内 › 未連携のオーナーにも初回連携の案内を出す
+[124/126] [desktop] › e2e/login.spec.ts:188:3 › A5 YouTube 連携が未完了のときの案内 › オーナーには「再連携」を出す
+[125/126] [desktop] › e2e/login.spec.ts:198:3 › A5 YouTube 連携が未完了のときの案内 › 一部許可の閲覧者にはオーナーへの依頼だけを出す
+[126/126] [desktop] › e2e/login.spec.ts:210:3 › A5 YouTube 連携が未完了のときの案内 › 連携済みなら案内を出さない
+  126 passed (29.7s)

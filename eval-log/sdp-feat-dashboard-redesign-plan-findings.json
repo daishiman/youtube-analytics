@@ -1,0 +1,183 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-dashboard-redesign-r1",
+  "evaluated_digest": "sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "13本の task-spec すべてで同一のスコープ外一覧(YouTube収集処理・CSV取込処理・AI分析レポート生成・動画/AI分析/改善アクション/設定画面本体とactions状態遷移API・画像ティール配色・i.ytimg.com直接表示とCSP拡張)が feature の scope_out と完全一致しており、feature-package.json・workstream-inventory.json・task-graph.json・system-build-handoff.json 間でも矛盾を検出しなかった。system-spec の ui-ux/frontend/backend/security/database/infrastructure 各章および specs/architecture の youtube-analytics-system.md との矛盾も検出しなかった。P05の実装対象(web/pages/DashboardPage.tsx刷新・GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id・migrations/0004_dashboard_media_assets.sql・Cron役割①)は scope_in の記述と一致し、scope_out(CSV取込・AI分析生成・他画面本体)へ踏み込んでいない。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#スコープ外",
+        "task-specs/phase-02-architecture.md#目的",
+        "task-specs/phase-03-design-review.md#Verification and evidence",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-13-release-deploy.md#スコープ外",
+        "workstream-inventory.json"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "feature 受入13項目(acc-01〜acc-13)すべてが task の acceptance/verification に写像されている。(1)画像どおりの区画順・配色→P05/P13、(2)期間タブ既定7日/28日/任意91日400→P04/P05、(3)対象セレクタで直近10本既定・外す/追加/入れ替え・上限なし(qa-081)→scope_in/P04/P05、(4)動画別実績の構成比切替→P05、(5)KPI出典バッジ・M1開示・前期比二重表現→P05、(6)ファネルの遅延取得とactual/target/target_gap→P02/P03/P05、(7)空状態5種→scope_in/P04、(8)閲覧者読み取り専用・他テナント/存在しないvideo_idsの黙示的除外(qa-082)→P03/P04、(9)Cache-Control: private, no-store・CSP不変img-src'self' data:(qa-080)→P03/P09、(10)360px横スクロールなし・Playwright3サイズE2E→P04/P06、(11)video_ids 101本以上でも200(json_each単一バインドでD1 bound parameters 100回避)→P02/P04、(12)thumbnail通1通の subrequest 50件以内・URL変化とfetched_at25日超の古い順取り直し・30日超のCron役割①削除(qa-083)→P02/P03/P05/P09/P12、(13)1,100本超テナントは公開日新しい順1,000本のみ保存対象→P02/P03/P08。qa-074〜083の主要論点(対象セレクタ・直近10本・上限なし=qa-081、テナント境界の黙示的除外=qa-082、サムネイル再取得・削除の上限=qa-083、自サイト経由サムネイルとCSP不変=qa-080、ティール配色を採用しない=qa-076)は scope_in・scope_out・各task-specの受入/検証欄に明示的に現れており、漏れは検出しなかった。 (staging 外の features/feat-dashboard-redesign.context.json#acceptance と比較して受入13項目の文言・件数一致を確認したが、これは repo-local な参照事実であり evidence には staging 内artifactのみを列挙する)",
+      "evidence": [
+        "task-specs/phase-07-acceptance.md#Verification and evidence",
+        "task-specs/phase-02-architecture.md#Verification and evidence",
+        "task-specs/phase-03-design-review.md#Verification and evidence",
+        "task-specs/phase-04-test-design.md#目的",
+        "task-specs/phase-05-implementation.md#Verification and evidence",
+        "task-specs/phase-09-quality-assurance.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#Verification and evidence"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "task-specs/phase-01〜13、workstream-inventory.json、task-graph.json、system-build-handoff.json、feature-package.json の間で task_id(SYS-DBR-P01〜P13)、phase_ref(P01〜P13)、write_scope、depends_on が全ファイル一致している。feature_package_id(feature-package/feat-dashboard-redesign)・parent_feature(feat-dashboard-redesign)も全ファイルで一致し、repository_id(github:daishiman/youtube-analytics)は system-build-handoff.json の identity・workstream-inventory.json の repo_context.repo_identity・.dev-graph/config.json の repository_id と一致した。source_feature_digest(sha256:043c71cfe7d4cb34cbd388f564d91fba52eec9f6beead52128293e5eb3b00413)は feature-package.json・system-build-handoff.json 双方に記載されている。write_scope に列挙された既存コード path(web/pages/DashboardPage.tsx, web/pages/Shell.tsx, web/api.ts, web/styles.css, src/http/api-routes.ts, src/http/app.ts, src/http/middleware.ts, src/usecases/, src/repositories/, src/index.ts, wrangler.toml)はすべて実リポジトリに実在することを確認した。migrations/0004_dashboard_media_assets.sql は本 task(P05)で新規作成される成果物であり未実在は正常。src/http/security-headers.ts(CSP定義の正本)は書換対象に含まれておらず、これは『CSP不変(img-src 'self' data:)』の scope_in 記述と整合する。不整合は検出しなかった。 (repository_id の .dev-graph/config.json との一致、write_scope 記載パスの実リポジトリ上の実在、src/http/security-headers.ts が書換対象に含まれずCSP不変と整合する点は、いずれも staging 外の repo-local な事実確認であり、evidence には staging 内artifactのみを列挙する)",
+      "evidence": [
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.json は P01→P02→...→P10 の直線鎖のあと P10→{P11,P12}、{P11,P12}→P13 に分岐合流する前向きDAGで、サイクルや package 外(SYS-DBR-以外)の task_id への依存参照は検出しなかった。system-build-handoff.json の execution_tasks の depends_on も同一構造で一致し、workstream-inventory.json の各 task の depends_on とも一致している。feature をまたぐ edge は task-graph 内には存在しない。GET /api/dashboard/funnel が読む business_funnel_weekly・funnel_targets テーブルは feat-csv-media-ingest が作成する対象であり、feature-package.json 側の feature 単位 depends_on(features/feat-dashboard-redesign.md: feat-youtube-daily-collection, feat-csv-media-ingest, feat-skill-analysis-reports, feat-web-screens-actions, feat-login-redesign)に正しく列挙されている。この依存は feature 間の実行順であり、13-task内部DAGへの越境edgeではないため C4 の評価対象(内部DAGの前向き性)には抵触しない。 (feature 単位 depends_on の一覧は features/feat-dashboard-redesign.md に記載されており、これは staging 外の repo-local な事実確認であり、evidence には staging 内artifactと gate のみを列挙する)",
+      "evidence": [
+        "task-graph.json",
+        "system-build-handoff.json",
+        "workstream-inventory.json",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/02ダッシュボード",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-dashboard-redesign-r1"
+      ],
+      "exit_code": 0,
+      "conditions": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a\",\n  \"feature_package_id\": \"feature-package/feat-dashboard-redesign\",\n  \"parent_feature\": \"feat-dashboard-redesign\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "staging-manifest.json",
+      "sha256": "7324c6152f85d1b313ca76165d7c51573edae7dc0b64fc59333aa457abd0cc57"
+    },
+    {
+      "path": "feature-package.json",
+      "sha256": "5a8fba9ddeceaf440480de80333b9251f39a644be5c3e1b46fe69e32ae393fc4"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "763c852069fc447533080685ab41c527ba0af2ab66d36caf711261502ab13daa"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "c83b3b51674e68f31ba1b777f2dc2ee7eac1278ccd836def7bb26329de35a6f5"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "149b027c1211c1e4eea51a6f89b6cd1ab40116843e2f30e43c28e63208aa3d3b"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "37723bd14b37cde3b3b7714f95964d7c10beab03eb7b54adcdd5fe2a42147362"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "4880b4359e137f9b70adee63be12a88544c94f3f58ec7ab34ae94da84d9298b1"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "a535b9c31254af0c1e358378ce016a621db2044f7a10e58f88ab4dd0eeb9be50"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "d1e0232ab75bf25064495e0655d9a287ff93f641dede555b03cf2efabd29660d"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "f7f9c6e500e3b92c31dba51812bf72b494116b5659ab26d16e17ca335c42de0d"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "4d4831bdf2548dd2ff7ababbcb86cb6f56e458738b8b97443239635787817cf1"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "a7aa298c33a07b4374ca2fe05f2356c21578b3d90b6bc15c780835553b85310e"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "84993145e23a8677ce0751fa666782aef3dc63640c97ea666ca83ebb7df2cad3"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "e6d0ad18e67a5f968a58657eac7cfd610bc7583a4e078ebf65d9283f0e3ea887"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "871fccf4bce203291bb3b0ccb84659d0dd164c57bd55f02f998ee91e52f53ab0"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "6e0c3b8f439c970a6660f1407b45ae6e73486f4f596e2f0c9f9d11587e441188"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "46dc6735c960ce2ddcf0494c09c9ff2573345f3f968b3001f065d08b26772091"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "cbaea149e57b84dad3d8606e32ba4418b98a60ccd02fee2b8e11d3144da3e173"
+    }
+  ],
+  "staleness_rule": "本評価は staging-manifest.json の canonical_digest(sha256:eb1cc1aaf491eba7221dd044b910e1ada3fdea148c6a8b0b9ee0d928e1c1d40a)に対してのみ有効である。staging 配下のいずれかのファイルが変更され digest が再計算された場合、この plan-findings.json は無効(stale)とみなし、同一 digest で再評価するまで promotion に使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "cross-feature-dependency",
+      "observation": "GET /api/dashboard/funnel が読む business_funnel_weekly・funnel_targets テーブルは feat-csv-media-ingest が作成するもので、現行リポジトリの migrations/ にはまだ存在せず、その feature の dev-graph 上の status も active(未完了)である。feature 単位の depends_on には feat-csv-media-ingest が正しく列挙されており、13-task 内部DAGへの越境edgeも生じていないため C4 上は問題ないが、P02(構成設計)・P05(実装)・P07(受入確認)の各 task-spec 前提条件には『feat-csv-media-ingest が先行して merge されていること』が明示的な前置条件として再掲されていない。実行順序を dev-graph scheduler の feature 間依存だけに委ねる設計であり、矛盾ではないが、実装フェーズで該当テーブル未整備のまま着手されるリスクを task-spec 単体からは読み取れない点は軽微な改善余地である。",
+      "evidence": [
+        "features/feat-dashboard-redesign.md#depends_on",
+        "features/feat-csv-media-ingest.md#scope_in",
+        "task-specs/phase-02-architecture.md#前提条件",
+        "task-specs/phase-05-implementation.md#前提条件",
+        ".dev-graph/state/graph.json"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability",
+      "observation": "各 task-spec の Verification/受入欄は『受入13項目それぞれに少なくとも1つのテストケースがある』のような集合的表現で書かれており、feature 受入13項目(acc-01〜acc-13)それぞれとの1対1の明示的な番号対応表は plan パッケージ内には存在しない(実際の対応表は P01 実行時に docs/feat-dashboard-redesign/requirements.md として作成される予定)。本評価では task-spec 本文の記述内容から13項目全てへの実質的な写像を個別に確認して C2 を PASS としたが、対応表そのものが plan 時点で未生成である点は監査可能性の観点で軽微な改善余地である。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#成果物",
+        "task-specs/phase-04-test-design.md#Verification and evidence"
+      ]
+    }
+  ]
+}

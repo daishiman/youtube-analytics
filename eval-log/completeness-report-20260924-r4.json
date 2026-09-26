@@ -1,0 +1,244 @@
+{
+  "evaluator": {
+    "name": "assign-system-spec-completeness-evaluator",
+    "version": "0.1.0",
+    "context": "fork"
+  },
+  "spec_dir": "system-spec",
+  "verdict": "FAIL",
+  "aspects": {
+    "foundation_trace": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "--require-foundation は exit0。U1〜U9 はすべて値が入っていて、goal→objective→セル→章のつながりに dangling は無い。ただし 00-requirements-definition.md の U1 節に本質的目的が2段落並んでいる。1段落目は正本(requirements_foundation.essential_purpose『目標未達の最大候補』)と一致するが、2段落目は HEAD 時点の古い文言『目標差が最も大きい改善候補』で、compile が置き換えずに追記した(medium)。前回 low の『同意記録・再同意と製品名 Channel Insight を上位概念へ反映するか』は今回も手付かず(low 継続)。",
+      "evidence": [
+        "validate-coverage-matrix.py --require-foundation exit0",
+        "00-requirements-definition.md U1 節に段落が2つある(2段落目は git HEAD の旧文言)",
+        "requirements_foundation.essential_purpose は1段落目と一致",
+        "index.md / 00-requirements-definition.md に『Channel Insight』は0件"
+      ]
+    },
+    "decision_guidance": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "decisions[] の6件(D-ai-engine/D-db/D-auth/D-cron/D-deploy/D-transcript)はすべて confirmed で、前回から変わっていない。今回の設計判断(qa-075 画像を正本にしてファネルを統合 / qa-076 配色 / qa-078 対象セレクタ)は、どれも3択以上で聞いている。qa-076 では利用者が推奨ではない案(既存のインディゴ/マゼンタ)を選んでおり、AI の推奨だけで確定したものではない。グラフライブラリの選択(ECharts)は qa-061 で決まっている。",
+      "evidence": [
+        "validate-coverage-matrix.py --require-foundation exit0",
+        "qa-075/qa-076/qa-078 answer に『提示した他の案』が記録されている",
+        "qa-076: 推奨は画像のティール/ネイビーだったが、利用者はインディゴ/マゼンタを選んだ"
+      ]
+    },
+    "matrix_coverage": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-matrix-auditor",
+      "component": "C07",
+      "summary": "決定論ゲートはすべて exit0(loop / --require-complete / --require-basis / --require-foundation / C16 required-info --state、ungrounded_blocking_items=[])。C07 単体は loop_pass・final_ready とも PASS。ただし rubric の条件『C06 のヒアリング品質4軸が健全』を満たさない。C06 の誘導質問の軸は FAIL で、これは妥当と判断した。qa-077 は推奨付きのプレビュー一括承認で、ダッシュボード刷新の UI・API・セキュリティ(CSP img-src の追加、Cache-Control)をまとめて確定している。回答文にも『項目ごとの内容確認は行っていない一括承認』と書かれており、ui-ux/frontend/backend/security の4セルがこれを主根拠にしている。前回、同じ型の qa-070 は1問1論点に分けて聞き直したが、今回はその分解をしていない。前回の elicit 側の指摘(qa-063〜066 の provenance の矛盾、hearing_progress.completed_at の未記入、qa-071 の導出の未確認)は3周続けて直っていない。hearing_progress.loop_count は 8 から 6 に減っている。なお C06 は『hearing_progress が spec-state.json から消えた』として high を出したが、C05 が実測したところ {loop_count:6, next_question:null, complete:true} は存在していた。誤認なので high は採らず、実測できた退行(loop_count の減少と completed_at の未記入)を medium として記録する。",
+      "evidence": [
+        "validate-coverage-matrix.py (loop / --require-complete / --require-basis / --require-foundation) すべて exit0",
+        "C07: validate-knowledge-graph.py --profile required-info --state exit0、ungrounded_blocking_items=[]",
+        "C06 の軸別結果: 聞き漏れ PASS / 誘導質問 FAIL / 早期停止 INDETERMINATE(前提が誤り) / トレーサビリティ FAIL",
+        "qa_log[qa-077].answer『項目ごとの内容確認は行っていない一括承認』",
+        "approval_log[appr-013]",
+        "hearing_progress の実測値 = {loop_count:6, next_question:null, complete:true}(HEAD では loop_count:8)"
+      ]
+    },
+    "design_knowledge_reflection": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "C13〜C15 の機械層(knowledge/doctrine/required-info/cross)はすべて exit0。意味層でも、ダッシュボード刷新の規範節は上流の原則を確定セルに具体的に当てはめている。OWASP: テナント境界の強制と他テナント動画の存在を明かさない扱い / 外部由来文字列のテキスト描画 / range・from・to・video_ids の許可リスト検証と 400 / CSP は img-src に i.ytimg.com を足すだけ / Cache-Control: private, no-store。HIG: 1画面1主操作 / 空状態5種 / グラフの文字要約と表の切替 / 360px・44pt。Clean Architecture: 集計はサーバの仕様 JSON で行いクライアントでは集計しない / api client 経由 / 状態は URL クエリ。一方で、spec-state の doctrine_applications は recorded_at 00:48:35Z(qa-074 より前)のまま更新されていない。security の doctrine には CSP img-src の変更が無く、ui-ux の presentation にもダッシュボードの情報階層が無い(medium)。security 章の『除外または 404 相当』は、どちらにするかが決まっていない(low)。前回 low の『ログイン開始はサーバに状態を書かない』という不変条件も書かれていない(low 継続)。",
+      "evidence": [
+        "aggregate-completeness.py --knowledge-graph exit0(4プロファイルすべて exit0)",
+        "ui-ux.md:864 / frontend.md:751 / security.md:721 / backend.md:810 の規範節",
+        "doctrine_applications.*.recorded_at=2026-09-24T00:48:35Z に qa-074〜079 への言及が0件"
+      ]
+    },
+    "doc_freshness": {
+      "verdict": "FAIL",
+      "auditor": "system-spec-doc-freshness-auditor",
+      "component": "C08",
+      "summary": "形式層は通っている(validate-source-citation / validate-spec-doc-sync ともに exit0、25 target と 25 reference が1対1)。内容鮮度層で7つの target を公式サイトと照合し、すべて一致した(google-signin-branding / google-oauth-granular-consent / google-oauth-unverified-app / youtube-data-api / youtube-analytics-api / ffmpeg / hono)。ただし、ダッシュボードの中心になる依存 Apache ECharts が targets[] にも fetched-references.json にも無い。frontend/backend/ui-ux の各章は『グラフは Apache ECharts を唯一の描画ライブラリとし』と書いているのに、出典が無い。C05 の確認では、同じ qa-061 で採用した React / Vite / React Router も targets に入っていない。qa-061 のときからある欠落で、前回までの監査は見落としていた。",
+      "evidence": [
+        "validate-source-citation.py exit0",
+        "validate-spec-doc-sync.py exit0",
+        "fetched-references.json に 'echarts' は0件",
+        "spec-state.targets[] に ECharts / React / Vite は無い",
+        "frontend.md:16『グラフは Apache ECharts を唯一の描画ライブラリとし』"
+      ]
+    },
+    "prompt_quality": {
+      "verdict": "PASS",
+      "auditor": "assign-system-spec-completeness-evaluator",
+      "component": "C05",
+      "summary": "system-spec-harness の18 prompt すべてが verify-completeness.py --input と validate-prompt.py --input を exit0 で通った。R0-foundation.md の U4 は objectives を {id,text,measure} と定義していて、serves が無い。plugin 側ではまだ直っていない(最終更新 2026-09-08)。前回までと同じく、この仕様書への差し戻しには含めず報告だけにする。",
+      "evidence": [
+        "verify-completeness.py: 18/18 exit0",
+        "validate-prompt.py: 18/18 exit0",
+        "R0-foundation.md:41 objectives [{id,text,measure}]"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "G-matrix-loop",
+      "name": "validate-coverage-matrix (loop)",
+      "conditions": ["matrix_coverage"],
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop) を満たす"
+    },
+    {
+      "id": "G-matrix",
+      "name": "validate-coverage-matrix --require-complete",
+      "conditions": ["matrix_coverage"],
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-complete"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (final(未収集0)) を満たす"
+    },
+    {
+      "id": "G-matrix-basis",
+      "name": "validate-coverage-matrix --require-basis",
+      "conditions": ["matrix_coverage"],
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-basis"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+basis(根拠の性質宣言)) を満たす"
+    },
+    {
+      "id": "G-foundation",
+      "name": "validate-coverage-matrix --require-foundation",
+      "conditions": ["foundation_trace", "decision_guidance"],
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/scripts/validate-coverage-matrix.py", "--matrix", "system-spec/spec-state.json", "--require-foundation"],
+      "exit_code": 0,
+      "stdout": "OK: 収集マトリクス網羅性 (loop+foundation(上位概念トレース)) を満たす"
+    },
+    {
+      "id": "G-knowledge-graph",
+      "name": "validate-knowledge-graph (knowledge/doctrine/required-info/cross)",
+      "conditions": ["design_knowledge_reflection", "matrix_coverage"],
+      "command": ["python3", "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-spec-harness/skills/assign-system-spec-completeness-evaluator/scripts/aggregate-completeness.py", "--knowledge-graph"],
+      "exit_code": 0,
+      "stdout": "4プロファイルすべて exit0"
+    },
+    {
+      "id": "G-required-info-state",
+      "name": "validate-knowledge-graph --profile required-info --state (C07 実行)",
+      "conditions": ["matrix_coverage"],
+      "exit_code": 0,
+      "stdout": "ungrounded_blocking_items=[]"
+    },
+    {
+      "id": "G-source-citation",
+      "name": "validate-source-citation (C08 実行)",
+      "conditions": ["doc_freshness"],
+      "exit_code": 0,
+      "stdout": "OK: 出典記録が全件対応・必須フィールド充足・公式 host 一致を満たす"
+    },
+    {
+      "id": "G-spec-doc-sync",
+      "name": "validate-spec-doc-sync (C08 実行)",
+      "conditions": ["doc_freshness"],
+      "exit_code": 0,
+      "stdout": "OK: 正本 spec-state.json の goal・根拠・出典が章へ投影されている"
+    },
+    {
+      "id": "G-prompt",
+      "name": "verify-completeness.py + validate-prompt.py (18 prompt)",
+      "conditions": ["prompt_quality"],
+      "exit_code": 0,
+      "stdout": "18/18 両方 exit0"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "bucket": "doc_freshness/対象一覧の欠落(C08): Apache ECharts(と React/Vite/React Router)の公式出典が無い",
+      "observation": "ダッシュボード刷新の中心になるグラフ描画は、各章で『Apache ECharts を唯一の描画ライブラリとする』と決まっている(frontend.md:16・751、ui-ux.md:864)。しかし spec-state.targets[] にも fetched-references.json にも ECharts が無い。validate-source-citation は targets に載っているものしか調べないので、素通りしていた。qa-061 で一緒に採用した React / Vite / React Router も同じく targets に入っていない。",
+      "suggested_fix": "doc-fetch(C02 R1-identify→R2-fetch→R3-record)で、apache-echarts(echarts.apache.org)、react(react.dev)、vite(vite.dev)、react-router(reactrouter.com)を targets[] に加える。version と last_updated を公式から取って記録し、validate-source-citation.py を再実行する。",
+      "evidence": ["fetched-references.json に 'echarts' は0件", "spec-state.targets[] は25件で、ECharts/React/Vite は無い"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/誘導質問(C06・C07): qa-077 の推奨付き一括承認がセキュリティ判断までまとめている",
+      "observation": "qa-077 は推奨を明示したプレビューの一括承認で、回答文も『項目ごとの内容確認は行っていない一括承認』と認めている。これがダッシュボード刷新の ui-ux/frontend/backend/security の4セルの主根拠になっている。束ねた中身の多くは既存方針から自然に決まるもの(no-store、400 検証、閲覧者は読むだけ)だが、CSP img-src に https://i.ytimg.com を足すかどうかは本当の分かれ道で、サムネイルを R2 経由で自サイトから配るという代わりの案がありうる。この分かれ道を利用者に選ばせていない。前回は同じ型の qa-070 を qa-071〜073 に分けて聞き直した。『先に全文を見たい』という対抗の選択肢を出していることと、回答文で自ら一括承認だと明かしていることから、high ではなく medium とした。",
+      "suggested_fix": "elicit(R3-reask)で『サムネイルを i.ytimg.com から直接表示する(CSP を広げる)か、自サイト経由で配るか』を、推奨を付けずに1問で確かめる。回答を security/frontend セルの qa_refs と design_applications に個別に書き加え、qa-077 にその項目を承認範囲から外したことを corrections として記録する。",
+      "evidence": ["qa_log[qa-077].answer", "approval_log[appr-013]", "qa_log[qa-070].corrections(分けて聞き直した前例)"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/早期停止・トレーサビリティ(C05 実測・C06 の誤認を補正): hearing_progress の退行と completed_at の未記入が3周続いている",
+      "observation": "hearing_progress は {loop_count:6, next_question:null, complete:true} だった。HEAD では loop_count:8 だったので、ヒアリングを重ねたのに数が減っている。足し上げずに上書きした可能性が高い。completed_at は r2・r3・r4 と3周続けて入っていない。C06 は『hearing_progress がまるごと無い』として high を出したが、C05 が実測すると存在していたので、その high は誤認として採らない。",
+      "suggested_fix": "elicit(C01 の transition writer)で、loop_count をダッシュボード刷新の往復分まで足し上げた値に直し、completed_at に最後の回答(qa-079 の 2026-09-24T08:25:38Z)より後の実測時刻を書く。書込経路が loop_count を上書きしていないかも確かめる。",
+      "evidence": ["spec-state.hearing_progress(実測)", "git HEAD の hearing_progress.loop_count=8", "C06 の報告(トップレベルキー一覧から hearing_progress と doctrine_applications が抜けていた)"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "matrix_coverage/トレーサビリティ(C06・C07): qa-063〜066 の answered_at と provenance の矛盾(3周目)",
+      "observation": "qa-063〜066 の answered_at は 2026-09-24T00:04:42Z だが、provenance は今も『回答時刻は未計測で、記録書込時刻 00:05:04Z が上限値』のままで、食い違っている。r3 で指摘したが直っていない。",
+      "suggested_fix": "elicit で、qa-063〜066 の provenance を qa-071 と同じ書き方(『answered_at はトランスクリプトの tool_result 時刻。4問は1回の AskUserQuestion で同時に回答』)にそろえる。",
+      "evidence": ["qa_log[qa-063..066].provenance", "qa_log[qa-071].provenance"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "foundation_trace/compile の投影不良: 要件定義 U1 節に新旧2つの本質的目的が並んでいる",
+      "observation": "00-requirements-definition.md の U1 節に段落が2つある。1段落目は正本 requirements_foundation.essential_purpose(『目標未達の最大候補』)と同じだが、2段落目は HEAD 時点の古い文言(『目標差が最も大きい改善候補』)が残ったものだ。compile が置き換えずに追記しており、『憲法』に当たる章に似て非なる目的文が2つ並んでいる。validate-spec-doc-sync は正本の文があるかしか見ないので、この重複は検出されない。",
+      "suggested_fix": "compile(C03 R1-assemble/R2-render)で U1 節を正本から作り直し、古い段落を消す。確定章の生成物がすでにある節に追記しないよう、節単位で置き換える作りになっているかも確かめる。",
+      "evidence": ["00-requirements-definition.md の U1 節の段落2つ", "git diff で1段落目が追加されたこと"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "design_knowledge_reflection/doctrine_applications がダッシュボード刷新を反映していない",
+      "observation": "doctrine_applications(ui-ux/frontend/security)の recorded_at は 2026-09-24T00:48:35Z で、qa-074 より前のままだ。規範節と design_applications には、OWASP(テナント境界・テキスト描画・入力検証・no-store・CSP を最小限だけ広げる)と HIG(空状態・グラフの文字要約・360px/44pt)が具体的に当てはめられている。しかし concern ごとの doctrine の正本には、CSP img-src の変更も、ダッシュボードの情報階層(問い→KPI→推移→表→AI要約→アクション→詳しく見る)も入っていない。",
+      "suggested_fix": "elicit/compile で doctrine_applications.security.security に『[qa-077] ダッシュボードは CSP img-src に i.ytimg.com だけを追加し、集約応答は private, no-store』を、ui-ux.presentation にダッシュボードの情報階層を書き加え、recorded_at を更新する。",
+      "evidence": ["doctrine_applications.*.recorded_at=2026-09-24T00:48:35Z", "doctrine_applications に qa-074〜079 への言及が0件"]
+    },
+    {
+      "severity": "medium",
+      "bucket": "prompt_quality/harness-contract(plugin 側・報告のみ)",
+      "observation": "R0-foundation.md の U4 は objectives を {id,text,measure} と定義していて、serves を求めていない。前回から直っていない。",
+      "suggested_fix": "harness 側で R0-foundation と --require-foundation に objectives[].serves を加える。この仕様書への差し戻しには含めない。",
+      "evidence": ["R0-foundation.md:41"]
+    },
+    {
+      "severity": "low",
+      "bucket": "matrix_coverage/誘導の芽(C06): qa-079 のアシスタントによる解釈を利用者に確かめていない",
+      "observation": "qa-079 は利用者の直接指示『直近の10個を選択する』に、アシスタントが『上限10本・外す/入れ替え可・視聴回数順へ並べ替え可・表も直近公開10本を既定表示』という解釈を付け足して確定している。provenance には、解釈はアシスタントが書いたと明記されている。qa-071 と同じ型だが、中身は画面操作の細部にとどまる。",
+      "suggested_fix": "elicit で、解釈(特に表の既定を直近公開10本にして、画像の上位8本から変えること)を推奨なしの1問で確かめる。確かめない場合は、design_applications の見出しを『利用者確定』ではなく『利用者指示からの解釈 qa-079』にする。",
+      "evidence": ["qa_log[qa-079].answer/provenance"]
+    },
+    {
+      "severity": "low",
+      "bucket": "design_knowledge_reflection/security 規範節の二択が決まっていない",
+      "observation": "security.md:721 は、他テナントの video_ids を『存在を明かさず除外または 404 相当で扱う』としていて、どちらにするかを決めていない。実装とテストで振る舞いが分かれる。",
+      "suggested_fix": "compile/elicit でどちらか一方に決める(たとえば『黙って除外し、残りが0本なら 404』)。backend の API 契約と Playwright/API テスト値もそろえる。",
+      "evidence": ["security.md:721"]
+    },
+    {
+      "severity": "low",
+      "bucket": "持ち越し(r3 low・未着手)",
+      "observation": "(1) database/backend で qa-067 を外した理由が書かれておらず、見出しとも食い違っている。(2) 『ログイン開始はサーバに状態を書かない』という不変条件が security/auth 章に無い。(3) qa-071 の自由回答からの導出を利用者に確かめていない(design_applications の表現は中立になったが、provenance に導出だと書いていない)。(4) 同意記録・再同意と製品名 Channel Insight が上位概念に入っていない。",
+      "suggested_fix": "r3 の gaps と同じ。(1)(2) は compile、(3)(4) は elicit に戻す。",
+      "evidence": ["eval-log/completeness-report-20260924-r3.json の gaps", "C07 の是正状況の表"]
+    },
+    {
+      "severity": "info",
+      "bucket": "確認した観点(良かった点)",
+      "observation": "決定論ゲート9件はすべて exit0。ダッシュボード刷新の規範節は ui-ux/frontend/backend/security の4章にそろって入っている。以前の『週次売上ファネルUI契約(先頭4ブロック・PNG を正本にしない)』は、reopen_log に理由を残したうえで『詳しく見る』へ移され、矛盾は解けた。収集頻度(毎日 3:00)、状態名(効果測定中)、配色(インディゴ/マゼンタ)という、画像と確定仕様のずれ(qa-074 の(3)(5)(6))は、すべて確定仕様の側に合わせて規範節に書かれている。C08 が照合した7つの target は、公式の現行版と一致した。",
+      "suggested_fix": "なし",
+      "evidence": ["reopen_log(ui-ux/frontend 2026-09-24T08:28:43Z)", "ui-ux.md:864"]
+    }
+  ],
+  "gaps": [
+    "[doc-fetch・medium] Apache ECharts・React・Vite・React Router を targets[] と fetched-references.json に加え、公式の version と last_updated を記録する",
+    "[elicit・medium] qa-077 のうち CSP img-src の追加(i.ytimg.com から直接表示するか、自サイト経由で配るか)を推奨なしの1問で確かめ直し、qa-077 から外す",
+    "[elicit・medium] hearing_progress.loop_count を足し上げた値に直し、completed_at に実測時刻を書く(上書きしている書込経路も確かめる)",
+    "[elicit・medium] qa-063〜066 の provenance を answered_at の出所に合わせて書き直す(3周目)",
+    "[compile・medium] 00-requirements-definition.md の U1 節を正本から作り直し、古い重複段落を消す",
+    "[elicit/compile・medium] doctrine_applications の security と ui-ux.presentation にダッシュボード刷新(CSP img-src・no-store・情報階層)を書き加える",
+    "[elicit・low] qa-079 の解釈(上限10本・表の既定を直近公開10本に変更)を確かめるか、『解釈』と明記する",
+    "[compile・low] security 章の『除外または 404 相当』をどちらか一方に決める",
+    "[compile/elicit・low] r3 から持ち越しの low 4件(qa-067 を外した理由 / state をサーバに書かない不変条件 / qa-071 の導出の明記 / Channel Insight と同意記録の上位概念への反映)",
+    "[harness 修正・報告のみ] R0-foundation と --require-foundation に objectives[].serves を加える(この仕様書への差し戻しには含めない)"
+  ]
+}

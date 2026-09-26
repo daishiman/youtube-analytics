@@ -28,11 +28,11 @@ const settings = {
   youtube: {
     status: "未連携",
     channel: null,
-    nextCollection: null,
+    collectionStatus: null,
     lastCollectedAt: null,
     lastCsvImportAt: null,
     scopes: [],
-    captions: { enabled: false, availability: "preparing", dailyLimit: 5 },
+    captions: { enabled: false, availability: "preparing", dailyLimit: 4 },
     googleClient: { configured: false, clientId: null, updatedAt: null },
   },
   imports: [],
@@ -78,7 +78,9 @@ test.describe("Shell の回復可能な tenant context", () => {
     await expect(page.getByRole("alert")).toContainText("一時的に失敗しました");
     failing = false;
     await page.getByRole("button", { name: "再試行" }).click();
-    await expect(page.getByRole("heading", { name: "チャンネル管理A" })).toBeVisible();
+    await expect(page.getByRole("navigation", { name: "パンくず" })).toContainText(
+      "チャンネル管理A",
+    );
   });
 
   test("tenant 切替後に旧 tenant の遅延応答で members/invites を上書きしない", async ({ page }) => {

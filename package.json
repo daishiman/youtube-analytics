@@ -30,6 +30,7 @@
     "deploy": "pnpm build:web && wrangler deploy"
   },
   "dependencies": {
+    "echarts": "^6.1.0",
     "hono": "^4.13.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

@@ -6,13 +6,12 @@ import {
   type ChannelCandidate,
   exchangeYoutubeCode,
   listMyChannels,
-  READONLY_SCOPES,
   revokeGoogleToken,
-  SCOPE_FORCE_SSL,
 } from "../adapters/google-youtube";
+import { READONLY_SCOPES, SCOPE_FORCE_SSL } from "../domain/google-scopes";
 import { requirePermission, type TenantContext } from "../domain/tenant-context";
 import { decryptText, encryptText, newId, pkceChallenge, randomToken } from "../lib/crypto";
-import { AppError } from "../lib/errors";
+import { AppError, type ErrorCode } from "../lib/errors";
 import {
   ChannelDeletionPendingError,
   ChannelTakenError,
@@ -41,6 +40,12 @@ export function youtubeRedirectUri(origin: string): string {
 interface PendingToken {
   refreshToken: string | null;
   scopes: string[];
+}
+
+/** 追加同意で新しく発行された許可を保存しない場合は、Google 側でも破棄を試みる。 */
+async function rejectCaptionConsent(refreshToken: string | null, code: ErrorCode): Promise<never> {
+  if (refreshToken) await revokeGoogleToken(refreshToken);
+  throw new AppError(code);
 }
 
 async function requireChannelDeletionComplete(repo: SettingsRepository): Promise<void> {
@@ -122,6 +127,10 @@ export async function handleOAuthCallback(
       await repo.deletePending(pending.state);
       throw new AppError("SCOPE_NOT_GRANTED");
     }
+    if (pending.purpose === "captions" && captionsAvailability(deps.env, ctx) !== "available") {
+      await repo.deletePending(pending.state);
+      throw new AppError("FEATURE_NOT_READY");
+    }
 
     const client = await tenantOAuthClient(deps, ctx);
     const tokens = await exchangeYoutubeCode({
@@ -137,9 +146,23 @@ export async function handleOAuthCallback(
 
     if (pending.purpose === "captions") {
       await repo.deletePending(pending.state);
-      if (!tokens.scopes.includes(SCOPE_FORCE_SSL)) throw new AppError("SCOPE_NOT_GRANTED");
+      if (captionsAvailability(deps.env, ctx) !== "available") {
+        return await rejectCaptionConsent(tokens.refreshToken, "FEATURE_NOT_READY");
+      }
+      if (!tokens.scopes.includes(SCOPE_FORCE_SSL)) {
+        return await rejectCaptionConsent(tokens.refreshToken, "SCOPE_NOT_GRANTED");
+      }
+      if (!READONLY_SCOPES.every((scope) => tokens.scopes.includes(scope))) {
+        return await rejectCaptionConsent(tokens.refreshToken, "SCOPE_NOT_GRANTED");
+      }
+      // access token の追加許可だけでは日次収集に使う保存済み refresh token が更新されない。
+      if (!tokens.refreshToken) return await rejectCaptionConsent(null, "OAUTH_FAILED");
       const channel = await repo.getChannel();
-      if (!channel) throw new AppError("CHANNEL_NOT_CONNECTED");
+      if (!channel) return await rejectCaptionConsent(tokens.refreshToken, "CHANNEL_NOT_CONNECTED");
+      const candidates = await listMyChannels(tokens.accessToken);
+      if (!candidates.some((candidate) => candidate.channelId === channel.channel_id)) {
+        return await rejectCaptionConsent(tokens.refreshToken, "CHANNEL_MISMATCH");
+      }
       await repo.refreshConnection({
         channelId: channel.channel_id,
         refreshTokenEnc,
@@ -303,7 +326,10 @@ export async function setCaptionsAuto(
   if (typeof enabled !== "boolean") {
     throw new AppError("VALIDATION_FAILED", "enabled に true か false を指定してください");
   }
-  if (captionsAvailability(deps.env, ctx) !== "available") throw new AppError("FEATURE_NOT_READY");
+  // 準備中でも、以前 ON にしたテナントは許可を取り消せる。
+  if (enabled && captionsAvailability(deps.env, ctx) !== "available") {
+    throw new AppError("FEATURE_NOT_READY");
+  }
   const repo = settingsRepo(deps, ctx);
   const [tenant, channel, scopes] = await Promise.all([
     repo.getTenant(),
@@ -331,9 +357,15 @@ export async function setCaptionsAuto(
   }
 
   if (!current && !scopes.includes(SCOPE_FORCE_SSL)) return { captionsAuto: false, url: null };
+  // 再連携の準備は失効より先に行う。接続情報が無い場合も OFF 自体は完了させる。
+  let url: string | null = null;
+  try {
+    url = (await startOAuth(deps, ctx, "reconnect", READONLY_SCOPES, origin)).url;
+  } catch (err) {
+    if (!(err instanceof AppError && err.code === "GOOGLE_CLIENT_NOT_CONFIGURED")) throw err;
+  }
   await revokeStored(deps, ctx);
   await repo.dropTokenForReconnect();
   await audit(deps, ctx, "captions.off");
-  const { url } = await startOAuth(deps, ctx, "reconnect", READONLY_SCOPES, origin);
   return { captionsAuto: false, url };
 }

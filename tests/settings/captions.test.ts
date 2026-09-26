@@ -1,7 +1,7 @@
 // 受入 4: 字幕の自動取得トグル（ON で force-ssl を追加同意・OFF で失効して読み取り専用へ戻す・運営者以外は準備中）
 import { env } from "cloudflare:workers";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { READONLY_SCOPES, SCOPE_FORCE_SSL } from "../../src/adapters/google-youtube";
+import { READONLY_SCOPES, SCOPE_FORCE_SSL } from "../../src/domain/google-scopes";
 import { call, expectError, newOwner } from "../platform/helpers";
 import { auditCount, callback, fakeGoogle, linkChannel, type Owner } from "./helpers";
 
@@ -45,7 +45,7 @@ describe("字幕トグルの公開範囲（機能フラグ）", () => {
     expect(s.youtube.captions).toEqual({
       enabled: false,
       availability: "preparing",
-      dailyLimit: 5,
+      dailyLimit: 4,
     });
     await expectError(
       await toggle(owner, true, { OPERATOR_TENANT_ID: "someone-else" }),
@@ -64,14 +64,22 @@ describe("字幕トグルの公開範囲（機能フラグ）", () => {
   it("運営者テナントのオーナーは利用できる", async () => {
     const owner = await newOwner("cap-op");
     await linkNew(owner);
-    const op = { OPERATOR_TENANT_ID: owner.tenantId };
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
     expect((await settingsOf(owner, op)).youtube.captions.availability).toBe("available");
+  });
+
+  it("収集処理が未実装なら運営テナント・Google検証済みでも準備中", async () => {
+    const owner = await newOwner("cap-not-ready");
+    await linkNew(owner);
+    const flags = { OPERATOR_TENANT_ID: owner.tenantId, FORCE_SSL_VERIFIED: "1" };
+    expect((await settingsOf(owner, flags)).youtube.captions.availability).toBe("preparing");
+    await expectError(await toggle(owner, true, flags), 403, "FEATURE_NOT_READY");
   });
 
   it("FORCE_SSL_VERIFIED=1（Google 検証済み）なら全テナントのオーナーへ開放", async () => {
     const owner = await newOwner("cap-verified");
     await linkNew(owner);
-    const verified = { FORCE_SSL_VERIFIED: "1" };
+    const verified = { FORCE_SSL_VERIFIED: "1", CAPTIONS_COLLECTION_READY: "1" };
     expect((await settingsOf(owner, verified)).youtube.captions.availability).toBe("available");
     const res = await toggle(owner, true, verified);
     expect(res.status).toBe(200);
@@ -90,7 +98,10 @@ describe("字幕トグルの公開範囲（機能フラグ）", () => {
   it("未連携なら CHANNEL_NOT_CONNECTED", async () => {
     const owner = await newOwner("cap-none");
     await expectError(
-      await toggle(owner, true, { OPERATOR_TENANT_ID: owner.tenantId }),
+      await toggle(owner, true, {
+        OPERATOR_TENANT_ID: owner.tenantId,
+        CAPTIONS_COLLECTION_READY: "1",
+      }),
       409,
       "CHANNEL_NOT_CONNECTED",
     );
@@ -100,10 +111,10 @@ describe("字幕トグルの公開範囲（機能フラグ）", () => {
 describe("字幕 ON / OFF", () => {
   it("ON は追加の同意（include_granted_scopes + force-ssl）へ進み、戻ると ON・スコープ追加・監査1件", async () => {
     const owner = await newOwner("cap-on");
-    await linkNew(owner);
-    const op = { OPERATOR_TENANT_ID: owner.tenantId };
+    const linkedGoogle = await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
     vi.restoreAllMocks();
-    fakeGoogle({ scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL] });
+    fakeGoogle({ channels: linkedGoogle.channels, scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL] });
 
     const res = await toggle(owner, true, op);
     expect(res.status).toBe(200);
@@ -129,27 +140,89 @@ describe("字幕 ON / OFF", () => {
   it("同意画面で force-ssl が外されたら SCOPE_NOT_GRANTED で OFF のまま", async () => {
     const owner = await newOwner("cap-deny");
     await linkNew(owner);
-    const op = { OPERATOR_TENANT_ID: owner.tenantId };
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
     vi.restoreAllMocks();
-    fakeGoogle({ scopes: [...READONLY_SCOPES] });
+    const google = fakeGoogle({ scopes: [...READONLY_SCOPES] });
     const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
     const state = new URL(url).searchParams.get("state") ?? "";
     expect(await callback(owner, { code: "c", state }, op)).toBe(
       "/settings?error=SCOPE_NOT_GRANTED",
     );
+    expect(google.revoked).toEqual([google.refreshToken]);
     expect((await settingsOf(owner, op)).youtube.captions.enabled).toBe(false);
+  });
+
+  it("追加同意したアカウントが連携中のチャンネルを管理しなければトークンを保存しない", async () => {
+    const owner = await newOwner("cap-other-channel");
+    await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
+    vi.restoreAllMocks();
+    const google = fakeGoogle({
+      channels: [{ id: uniqueChannel() }],
+      scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL],
+    });
+    const before = await env.DB.prepare(
+      "SELECT refresh_token_enc, granted_scopes FROM channel_oauth_tokens WHERE tenant_id = ?1",
+    )
+      .bind(owner.tenantId)
+      .first<{ refresh_token_enc: string; granted_scopes: string }>();
+    const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
+    const state = new URL(url).searchParams.get("state") ?? "";
+    expect(await callback(owner, { code: "c", state }, op)).toBe(
+      "/settings?error=CHANNEL_MISMATCH",
+    );
+    expect(google.revoked).toEqual([google.refreshToken]);
+    const after = await env.DB.prepare(
+      "SELECT refresh_token_enc, granted_scopes FROM channel_oauth_tokens WHERE tenant_id = ?1",
+    )
+      .bind(owner.tenantId)
+      .first<{ refresh_token_enc: string; granted_scopes: string }>();
+    expect(after).toEqual(before);
+    expect((await settingsOf(owner, op)).youtube.captions.enabled).toBe(false);
+  });
+
+  it("追加同意で refresh token が得られなければ ON にしない", async () => {
+    const owner = await newOwner("cap-no-refresh");
+    const linkedGoogle = await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
+    vi.restoreAllMocks();
+    fakeGoogle({
+      channels: linkedGoogle.channels,
+      scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL],
+      refreshToken: null,
+    });
+    const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
+    const state = new URL(url).searchParams.get("state") ?? "";
+    expect(await callback(owner, { code: "c", state }, op)).toBe("/settings?error=OAUTH_FAILED");
+    expect((await settingsOf(owner, op)).youtube.captions.enabled).toBe(false);
+  });
+
+  it("追加同意中に公開ゲートを閉じたら戻りでもONにしない", async () => {
+    const owner = await newOwner("cap-gate-closed");
+    await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
+    const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
+    const state = new URL(url).searchParams.get("state") ?? "";
+    expect(
+      await callback(owner, { code: "c", state }, { OPERATOR_TENANT_ID: owner.tenantId }),
+    ).toBe("/settings?error=FEATURE_NOT_READY");
+    expect((await settingsOf(owner)).youtube.captions.enabled).toBe(false);
   });
 
   it("OFF は Google の許可を失効し、要再連携にして読み取り専用の再連携 URL を返す", async () => {
     const owner = await newOwner("cap-off");
-    await linkNew(owner);
-    const op = { OPERATOR_TENANT_ID: owner.tenantId };
+    const linkedGoogle = await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
     vi.restoreAllMocks();
-    const google = fakeGoogle({ scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL] });
+    const google = fakeGoogle({
+      channels: linkedGoogle.channels,
+      scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL],
+    });
     const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
     await callback(owner, { code: "c", state: new URL(url).searchParams.get("state") ?? "" }, op);
 
-    const res = await toggle(owner, false, op);
+    // 公開ゲートを閉じた後でも、既存の追加許可を取り消せる。
+    const res = await toggle(owner, false, { OPERATOR_TENANT_ID: owner.tenantId });
     expect(res.status).toBe(200);
     const body = (await res.json()) as { captionsAuto: boolean; url: string };
     expect(body.captionsAuto).toBe(false);
@@ -168,6 +241,30 @@ describe("字幕 ON / OFF", () => {
       .bind(owner.tenantId)
       .first<{ refresh_token_enc: string | null }>();
     expect(row?.refresh_token_enc).toBeNull();
+  });
+
+  it("既存ONでGoogle接続情報が無くてもOFFは成功し、再連携URLは返さない", async () => {
+    const owner = await newOwner("cap-off-no-client");
+    const linkedGoogle = await linkNew(owner);
+    const op = { OPERATOR_TENANT_ID: owner.tenantId, CAPTIONS_COLLECTION_READY: "1" };
+    vi.restoreAllMocks();
+    const google = fakeGoogle({
+      channels: linkedGoogle.channels,
+      scopes: [...READONLY_SCOPES, SCOPE_FORCE_SSL],
+    });
+    const { url } = (await (await toggle(owner, true, op)).json()) as { url: string };
+    await callback(owner, { code: "c", state: new URL(url).searchParams.get("state") ?? "" }, op);
+    await env.DB.prepare("DELETE FROM tenant_google_clients WHERE tenant_id = ?1")
+      .bind(owner.tenantId)
+      .run();
+
+    const res = await toggle(owner, false);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ captionsAuto: false, url: null });
+    expect(google.revoked).toEqual([google.refreshToken]);
+    const s = await settingsOf(owner);
+    expect(s.youtube.status).toBe("要再連携");
+    expect(s.youtube.captions.enabled).toBe(false);
   });
 
   it("OFF のまま OFF にしても失効・監査は起きない", async () => {

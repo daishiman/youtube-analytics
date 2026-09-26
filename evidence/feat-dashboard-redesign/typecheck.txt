@@ -1,0 +1,4 @@
+
+> youtube-analytics@ typecheck /Users/dm/orca/workspaces/YouTube分析/02ダッシュボード
+> tsc --noEmit
+

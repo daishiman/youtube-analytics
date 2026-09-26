@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>feature-package-feat-dashboard-redesign-r2 · タスク仕様書ブラウザ</title>
+<style>
+:root{--ink:#242330;--muted:#666477;--paper:#f6f3ec;--panel:#fffdf7;--line:#ded8cb;--navy:#26334a;--blue:#376b8c;--green:#27745c;--shadow:0 10px 30px rgba(45,42,50,.08)}
+*{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Noto Sans JP","Hiragino Sans",system-ui,sans-serif;font-size:16px;line-height:1.8}
+a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline} code{font-family:"SFMono-Regular",Consolas,monospace;font-size:.88em;background:#efeadf;padding:.05em .35em;border-radius:5px;overflow-wrap:anywhere}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:0;min-height:100vh}
+.spec-nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:var(--navy);color:#eef2f5;padding:20px 14px}
+.spec-nav a{display:block;color:#d7dde3;padding:5px 10px;border-radius:8px;font-size:.9rem;overflow-wrap:anywhere} .spec-nav a:hover{background:rgba(255,255,255,.08);text-decoration:none} .spec-nav a.active{background:var(--blue);color:#fff}
+.nav-home{font-weight:800;margin-bottom:10px} .nav-ext{color:#bfe3d3!important;font-weight:700} .nav-group{margin:14px 0} .nav-grp{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#9fb0bd;padding:0 10px;margin-bottom:4px}
+main{padding:34px clamp(18px,4vw,56px);width:min(920px,100%);margin:auto}
+.spec-page[hidden]{display:none} .spec-page:target{display:block}
+.spec-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px} .back{font-weight:700} .grp{font-size:.78rem;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+h1{font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.25;margin:.2em 0 .1em} .spec-src{color:var(--muted);font-size:.85rem;margin:.2em 0 1.2em} .lead{color:var(--muted);max-width:60ch}
+.spec-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:0 0 24px} .meta-pair{display:flex;gap:8px;font-size:.85rem;border-bottom:1px dotted var(--line);padding-bottom:5px} .meta-pair dt{color:var(--muted);font-weight:700;min-width:110px;margin:0} .meta-pair dd{margin:0;overflow-wrap:anywhere}
+.spec-body h2{font-size:1.4rem;margin:1.6em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--line)} .spec-body h3{font-size:1.15rem;margin:1.3em 0 .4em;color:var(--navy)} .spec-body h4{margin:1.1em 0 .3em}
+.spec-body ul,.spec-body ol{padding-left:1.4rem} .spec-body li{margin:.3em 0} .spec-body pre{background:#2a2735;color:#f3f1ea;padding:16px;border-radius:12px;overflow:auto;font-size:.82rem} .spec-body pre code{background:none;color:inherit;padding:0}
+.spec-body blockquote{border-left:4px solid var(--green);margin:1em 0;padding:.4em 1em;background:#eef4f1;color:#33463f;border-radius:0 10px 10px 0} .tbl{overflow:auto;margin:1em 0} .spec-body table{width:100%;border-collapse:collapse;font-size:.9rem} .spec-body th,.spec-body td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top} .spec-body th{background:var(--panel)} .spec-body hr{border:none;border-top:1px solid var(--line);margin:1.6em 0}
+.pn-row{display:flex;justify-content:space-between;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)} .pn{font-weight:700}
+.idx-group{margin:1.4em 0} .idx-group h2{font-size:1.1rem;border-bottom:2px solid var(--line);padding-bottom:.25em} .idx-group ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px} .idx-group li a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.spec-nav{position:static;height:auto;max-height:220px}}
+@media print{.spec-nav{display:none}.spec-page[hidden]{display:block!important}.pn-row,.spec-top .back{display:none}body{background:#fff}}
+</style></head>
+<body>
+<div class="layout">
+<nav class="spec-nav"><a class="nav-home" href="#index">🏠 一覧トップ</a><div class="nav-group"><span class="nav-grp">関連レポート</span><a class="nav-ext" href="plan-structure-report.html">📊 構造・依存レポート</a></div><div class="nav-group"><span class="nav-grp">タスク別仕様書</span><a href="#task-phase-01-requirements">phase-01-requirements</a><a href="#task-phase-02-architecture">phase-02-architecture</a><a href="#task-phase-03-design-review">phase-03-design-review</a><a href="#task-phase-04-test-design">phase-04-test-design</a><a href="#task-phase-05-implementation">phase-05-implementation</a><a href="#task-phase-06-test-run">phase-06-test-run</a><a href="#task-phase-07-acceptance">phase-07-acceptance</a><a href="#task-phase-08-refactoring-migration">phase-08-refactoring-migration</a><a href="#task-phase-09-quality-assurance">phase-09-quality-assurance</a><a href="#task-phase-10-final-review">phase-10-final-review</a><a href="#task-phase-11-evidence">phase-11-evidence</a><a href="#task-phase-12-documentation-operations">phase-12-documentation-operations</a><a href="#task-phase-13-release-deploy">phase-13-release-deploy</a></div></nav>
+<main><section class="spec-page spec-index" id="index" hidden><h1>feature-package-feat-dashboard-redesign-r2 · タスク仕様書ブラウザ</h1><p class="lead">各仕様書のタイトルをクリックすると本文へ移動します。ブラウザの「戻る」でこの一覧へ戻れます。左のサイドバーからも直接ジャンプできます。</p><div class="idx-group"><h2>タスク別仕様書</h2><ul><li><a href="#task-phase-01-requirements">phase-01-requirements</a></li><li><a href="#task-phase-02-architecture">phase-02-architecture</a></li><li><a href="#task-phase-03-design-review">phase-03-design-review</a></li><li><a href="#task-phase-04-test-design">phase-04-test-design</a></li><li><a href="#task-phase-05-implementation">phase-05-implementation</a></li><li><a href="#task-phase-06-test-run">phase-06-test-run</a></li><li><a href="#task-phase-07-acceptance">phase-07-acceptance</a></li><li><a href="#task-phase-08-refactoring-migration">phase-08-refactoring-migration</a></li><li><a href="#task-phase-09-quality-assurance">phase-09-quality-assurance</a></li><li><a href="#task-phase-10-final-review">phase-10-final-review</a></li><li><a href="#task-phase-11-evidence">phase-11-evidence</a></li><li><a href="#task-phase-12-documentation-operations">phase-12-documentation-operations</a></li><li><a href="#task-phase-13-release-deploy">phase-13-release-deploy</a></li></ul></div></section><section class="spec-page" id="task-phase-01-requirements" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-01-requirements</h1><p class="spec-src">出典: <code>phase-01-requirements.md</code></p><div class="spec-body"><h2>SYS-DBR-P01 ダッシュボード刷新の要件を実装単位へ確定</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P01</li><li>phase_ref: P01</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: documentation</li><li>build_target_kind: application-code</li><li>depends_on: なし</li></ul>
+<h3>目的</h3>
+<p>feature の受入13項目(acc-01〜acc-13)を qa-089〜qa-099 の根拠章と検証方法・担当 phase へ1対1で対応付け、画面正本 docs/screens/02-dashboard.png の区画順(ヘッダ・対象セレクタ・問い・KPI 4枚・日次推移・動画別の実績と構成比・最新AI分析・実施中の改善アクション・詳しく見る)と既存インディゴ/マゼンタ配色を確定する。期間は全画面共通の AppShell ヘッダーの <code>?period=</code> に統一し(qa-099)、ダッシュボード内にページ内の期間タブは置かないことを対応表に明記する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task なし(feature 内の最初の task)</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: documentation。実装コードは変更しない</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/requirements.md(受入対応表・区画順対応表・qa 番号対応表・?period= 統一の対応関係)</li><li>Write scope: docs/feat-dashboard-redesign/requirements.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: 対応表の行数が受入項目数13と一致することを確認</li><li>受入: 受入13項目すべてに根拠章(qa番号)と検証方法・担当phaseが1対1で対応している(acc-01〜acc-13)</li><li>受入: 画面の区画順・文言・配色が docs/screens/02-dashboard.png と system-spec ui-ux 章の記述どおりに列挙され、期間タブがページ内に存在しないことが明記されている(acc-02)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: requirements.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P02</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#index">← 前の仕様書</a><a class="pn" href="#task-phase-02-architecture">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-02-architecture" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-02-architecture</h1><p class="spec-src">出典: <code>phase-02-architecture.md</code></p><div class="spec-body"><h2>SYS-DBR-P02 集約API・ファネルAPI・サムネイルAPI・データモデルの構成設計</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P02</li><li>phase_ref: P02</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: backend</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P01</li></ul>
+<h3>目的</h3>
+<p>GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id の応答形、videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets からの読み取りクエリ、video_ids の json_each 単一バインド方式、migrations/0008_dashboard_media_assets.sql による読み取り専用テーブルの CREATE TABLE IF NOT EXISTS 設計(media_assets への fetched_at・source_url 列追加と (tenant_id, kind, fetched_at) 索引を含む)、thumbnail 通(1通15件・1日最大3通)と Cron 役割①(30日超の R2/media_assets 削除・1実行12テナントまで)の設計を確定する。GET /api/dashboard は全画面共通の AppShell ヘッダーが発行する <code>?period=7d|28d|90d|1y|custom&amp;from&amp;to</code> をそのまま受け取り、custom は from/to 必須・最大365日・from&lt;=to、不正は 400 とする設計をここで固定する。src/http・src/usecases・src/repositories・web/ のどこを変えるかの責務境界もここで確定する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P01</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: backend。副: data(D1 クエリ・マイグレーション)・security(テナント境界)・frontend(API 契約)</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/architecture.md(API 形・DB 変更・R2 アクセス・Cron 設計・既存実装との境界・上流feature引き継ぎ注記)</li><li>Write scope: docs/feat-dashboard-redesign/architecture.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: 設計書のAPI形とDB変更が system-spec の backend/database/infrastructure 章と一致することを突合</li><li>受入: GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id のリクエスト/応答形が database 章の videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets 列定義と一致する設計になっている(acc-02〜acc-06,acc-11〜acc-13)</li><li>受入: video_ids の json_each 単一バインド設計により D1 bound parameters 上限100を回避する方式が明記されている(acc-11)</li><li>受入: thumbnail 通(1通15件・1日最大3通)と Cron 役割①(30日超削除)の抽出条件・実行順・subrequest予算が明記されている(acc-12,acc-13)</li><li>受入: GET /api/dashboard の period パラメータが7d/28d/90d/1y/customを受け、custom の from/to必須・最大365日・from&lt;=to・不正時400の設計が明記されている(acc-02)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: architecture.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P03</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-01-requirements">← 前の仕様書</a><a class="pn" href="#task-phase-03-design-review">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-03-design-review" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-03-design-review</h1><p class="spec-src">出典: <code>phase-03-design-review.md</code></p><div class="spec-body"><h2>SYS-DBR-P03 テナント境界・キャッシュ・CSP・Cron予算の設計レビュー</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P03</li><li>phase_ref: P03</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: security</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P02</li></ul>
+<h3>目的</h3>
+<p>P02 の設計を、テナント境界(qa-097)・閲覧者の読み取り専用・CSP不変・Cache-Control: private, no-store・Cloudflare Workers Free の subrequest 50・D1 bound parameters 100・period パラメータの400判定(qa-099)の観点でレビューし、他テナント/存在しない video_ids の黙示的除外、1,100本超テナントの1,000本上限、サムネイル未保存時の代替表示、migrations/0008 の CREATE TABLE IF NOT EXISTS が上流feature(feat-youtube-daily-collection等)の書込み経路を作っていないこと(読み取り専用境界の維持)の抜けを洗い出す。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P02</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: security</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/design-review.md(観点・判定・根拠・是正先)</li><li>Write scope: docs/feat-dashboard-redesign/design-review.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: レビュー表の全行に判定と根拠がある</li><li>受入: 他テナント・存在しないvideo_idsを黙って除外し200を返す設計であることがレビューで確認されている(acc-08)</li><li>受入: Cache-Control: private, no-store とCSP不変(img-src &#x27;self&#x27; data:)がレビューで確認されている(acc-09)</li><li>受入: Cloudflare Workers Free の subrequest 50 と D1 bound parameters 100 の制約に抵触しない設計であることがレビューで確認されている(acc-11,acc-12)</li><li>受入: 許可外のperiod・任意期間366日以上・from&gt;toが400になる設計であることがレビューで確認されている(acc-02)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: design-review.md を直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P04</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-02-architecture">← 前の仕様書</a><a class="pn" href="#task-phase-04-test-design">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-04-test-design" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-04-test-design</h1><p class="spec-src">出典: <code>phase-04-test-design.md</code></p><div class="spec-body"><h2>SYS-DBR-P04 受入テストとPlaywright E2Eの設計</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P04</li><li>phase_ref: P04</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P03</li></ul>
+<h3>目的</h3>
+<p>受入項目ごとの単体・API テスト(vitest)と、Playwright 3サイズ(390×844・820×1180・1440×900)の E2E を先に書く。AppShell 共通ヘッダーの PERIODS に 7d が追加され 7d/28d/90d/1y/custom(省略時28d)になっていること、期間リンクが既存クエリ(scope/video_ids)を保持して period だけ差し替えること、任意期間366日以上・from&gt;toで400になること、対象セレクタの合計と重ね線、動画別実績の構成比切替、video_ids 101本以上での200応答、テナント境界の黙示的除外、空状態5種、360px 横スクロールなしを含める。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P03</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: quality</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: application</li></ul>
+<h3>成果物</h3>
+<ul><li>tests/dashboard/ の失敗するテスト</li><li>e2e/dashboard.spec.ts(390×844・820×1180・1440×900の3サイズ)</li><li>docs/feat-dashboard-redesign/test-design.md</li><li>Write scope: tests/dashboard/, e2e/dashboard.spec.ts, docs/feat-dashboard-redesign/test-design.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test と pnpm e2e でテストが列挙され、実装前は失敗することを確認</li><li>受入: 受入13項目それぞれに少なくとも1つのテストケースがある(acc-01〜acc-13)</li><li>受入: video_ids 101本以上を渡すテストと360px幅・Playwright 3サイズのE2Eが実装前に失敗するテストとして存在する(acc-10,acc-11)</li><li>受入: AppShell PERIODSの7d追加・期間リンクの既存クエリ保持・任意期間366日以上とfrom&gt;toの400が実装前に失敗するテストとして存在する(acc-02)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: tests/dashboard/ と e2e/dashboard.spec.ts の追加分を削除する</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P05</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-03-design-review">← 前の仕様書</a><a class="pn" href="#task-phase-05-implementation">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-05-implementation" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-05-implementation</h1><p class="spec-src">出典: <code>phase-05-implementation.md</code></p><div class="spec-body"><h2>SYS-DBR-P05 ダッシュボードUI・集約API・ファネルAPI・サムネイル配信・Cronの実装</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P05</li><li>phase_ref: P05</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: frontend</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P04</li></ul>
+<h3>目的</h3>
+<p>DashboardPage を画像どおりに刷新し(対象セレクタ・KPI 4枚・日次推移・動画別の実績と構成比・最新AI分析・改善アクション・詳しく見る)、GET /api/dashboard・GET /api/dashboard/funnel・GET /api/media/thumbnails/:video_id を実装する。web/components/AppShell.tsx の PERIODS へ 7d を追加して 7d/28d/90d/1y/custom(省略時28d)にし、期間リンクは既存クエリ(scope/video_ids等)を保持して period だけ差し替えるよう修正する。ダッシュボードはページ内の期間タブを持たず ?period= を読むだけにする。migrations/0008_dashboard_media_assets.sql で videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets を system-spec database 章の列定義に沿って読み取りに必要な列だけ CREATE TABLE IF NOT EXISTS し、media_assets に fetched_at・source_url と (tenant_id, kind, fetched_at) 索引を追加する。thumbnail 通と Cron 役割①(30日超削除)を src/index.ts の scheduled ハンドラへ追加し、wrangler.toml に thumbnail 通用の Cron トリガーを登録する。scripts/seed-local.sql へダッシュボード用テストデータ(seed-tenant-a に動画12本・90日分の日次指標・レポート1版・アクション2件・週次ファネル)を追加し、ローカル画面確認を可能にする。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P04</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: frontend。副: backend(API 実装)、data(マイグレーション・クエリ)、security(ヘッダ・テナント境界)、infrastructure(Cron)</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: application</li></ul>
+<h3>成果物</h3>
+<ul><li>web/ のダッシュボード画面と共通コンポーネント(AppShell の PERIODS 拡張を含む)</li><li>src/http/ の集約API・ファネルAPI・サムネイルAPI ルートとミドルウェア</li><li>src/usecases/・src/repositories/ の読み取りユースケースとリポジトリ</li><li>migrations/0008_dashboard_media_assets.sql</li><li>scripts/seed-local.sql の追記(ローカル確認用テストデータ)</li><li>src/index.ts の scheduled ハンドラ追加分と wrangler.toml の Cron トリガー</li><li>Write scope: web/components/AppShell.tsx, web/pages/DashboardPage.tsx, web/pages/dashboard/, web/components/, web/api.ts, web/styles.css, src/http/dashboard-routes.ts, src/http/app.ts, src/usecases/dashboard*.ts, src/usecases/thumbnails.ts, src/repositories/dashboard-repository.ts, src/lib/errors.ts, src/index.ts, src/env.ts, migrations/0008_dashboard_media_assets.sql, scripts/seed-local.sql, wrangler.toml, package.json, pnpm-lock.yaml(echarts 追加)</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test</li><li>検証: pnpm db:migrate:local</li><li>検証: pnpm typecheck</li><li>受入: 画面がdocs/screens/02-dashboard.pngどおりの区画順・既存インディゴ/マゼンタ配色で表示される(acc-01)</li><li>受入: 共通ヘッダーの期間が7日/28日/90日/1年/任意の5つになり、切り替えるとKPI・推移・前期比が同じ期間で再計算され、対象の選択と期間リンクの既存クエリが保たれる(acc-02)</li><li>受入: 対象セレクタ・KPI・日次推移・動画別実績・AI分析・改善アクション・詳しく見るがGET /api/dashboardの1回取得で描かれる(acc-03〜acc-07)</li><li>受入: P04のテストが実装により通過する(acc-01〜acc-13)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 機能ブランチのrevertとローカルD1の再作成</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P06</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-04-test-design">← 前の仕様書</a><a class="pn" href="#task-phase-06-test-run">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-06-test-run" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-06-test-run</h1><p class="spec-src">出典: <code>phase-06-test-run.md</code></p><div class="spec-body"><h2>SYS-DBR-P06 テスト実行と不具合修正</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P06</li><li>phase_ref: P06</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P05</li></ul>
+<h3>目的</h3>
+<p>単体・API・E2E を全件実行し、失敗を修正する。scripts/seed-local.sql のテストデータを使ったローカルD1でのdashboard表示確認を含める。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P05</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: quality</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: application</li></ul>
+<h3>成果物</h3>
+<ul><li>全テスト green の実行ログ</li><li>Write scope: tests/dashboard/, e2e/dashboard.spec.ts, web/, src/</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test</li><li>検証: pnpm e2e</li><li>受入: 失敗0件・スキップ0件(acc-01〜acc-13)</li><li>受入: Playwright 3サイズ(390×844・820×1180・1440×900)すべてでdashboard.spec.tsが通る(acc-10)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 修正コミットをrevertする</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P07</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-05-implementation">← 前の仕様書</a><a class="pn" href="#task-phase-07-acceptance">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-07-acceptance" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-07-acceptance</h1><p class="spec-src">出典: <code>phase-07-acceptance.md</code></p><div class="spec-body"><h2>SYS-DBR-P07 受入確認</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P07</li><li>phase_ref: P07</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P06</li></ul>
+<h3>目的</h3>
+<p>preview 環境と scripts/seed-local.sql のテストデータ(seed-tenant-a に動画12本・90日分の日次指標・レポート1版・アクション2件・週次ファネル)を投入したローカル環境で画像との見た目比較、共通ヘッダーの期間切替(7d/28d/90d/1y/custom)の実操作、対象セレクタの実操作、複数テナントでのテナント境界確認、サムネイル代替表示の確認を行う。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P06</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: quality</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/acceptance.md(受入項目ごとの結果とスクリーンショット参照)</li><li>Write scope: docs/feat-dashboard-redesign/acceptance.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: preview環境とscripts/seed-local.sqlを投入したローカル環境で手動確認と自動テストの両方を記録</li><li>受入: 受入13項目すべてが合格する(acc-01〜acc-13)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 不合格項目をP05へ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P08</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-06-test-run">← 前の仕様書</a><a class="pn" href="#task-phase-08-refactoring-migration">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-08-refactoring-migration" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-08-refactoring-migration</h1><p class="spec-src">出典: <code>phase-08-refactoring-migration.md</code></p><div class="spec-body"><h2>SYS-DBR-P08 重複ロジックの整理とマイグレーション健全性確認</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P08</li><li>phase_ref: P08</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: data</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P07</li></ul>
+<h3>目的</h3>
+<p>重複した集計クエリ・空状態文言の定義を1か所へ寄せ、migrations/0008_dashboard_media_assets.sql が空の D1 と scripts/seed-local.sql 投入済みの既存データのある D1 の両方で通ること、CREATE TABLE IF NOT EXISTS が上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)による将来の ALTER TABLE 列追加を妨げない設計であることを確認する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P07</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: data</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: application</li></ul>
+<h3>成果物</h3>
+<ul><li>整理コミット</li><li>Write scope: src/, web/, migrations/, scripts/seed-local.sql</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm test</li><li>検証: pnpm db:migrate:local を空DBとscripts/seed-local.sql投入済みDBの両方で実行</li><li>受入: 振る舞い変更0件(P06のテストが引き続きgreen)</li><li>受入: 空のD1と既存D1の両方へmigrations/0008_dashboard_media_assets.sqlが成功する(acc-12,acc-13)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 整理コミットをrevertする</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P09</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-07-acceptance">← 前の仕様書</a><a class="pn" href="#task-phase-09-quality-assurance">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-09-quality-assurance" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-09-quality-assurance</h1><p class="spec-src">出典: <code>phase-09-quality-assurance.md</code></p><div class="spec-body"><h2>SYS-DBR-P09 セキュリティ・アクセシビリティ・運用保証</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P09</li><li>phase_ref: P09</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: security</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P08</li></ul>
+<h3>目的</h3>
+<p>CSP と各ヘッダの実応答、Cache-Control: private, no-store、テナント境界、period パラメータの400判定(qa-099)、thumbnail 通の subrequest 件数、コントラストとタップ領域を確認する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P08</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: security。副: quality(アクセシビリティ)</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/qa-report.md</li><li>Write scope: docs/feat-dashboard-redesign/qa-report.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: pnpm lint</li><li>検証: pnpm typecheck</li><li>検証: pnpm audit --audit-level high</li><li>検証: curl -Iでヘッダを確認</li><li>検証: curl で不正なperiod・任意期間366日以上・from&gt;toを送り400を確認</li><li>受入: high以上の脆弱性0件</li><li>受入: GET /api/dashboardの応答にCache-Control: private, no-storeが付き、CSPのimg-srcが&#x27;self&#x27; data:のまま変わらないことを確認する(acc-09)</li><li>受入: thumbnail通1通のsubrequestが50件以内に収まることを確認する(acc-12)</li><li>受入: 360px幅と44ptタップ領域を満たすことを確認する(acc-10)</li><li>受入: 許可外のperiod・任意期間366日以上・from&gt;toが400になることを確認する(acc-02)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: qa-report.mdの是正事項をP05へ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P10</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-08-refactoring-migration">← 前の仕様書</a><a class="pn" href="#task-phase-10-final-review">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-10-final-review" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-10-final-review</h1><p class="spec-src">出典: <code>phase-10-final-review.md</code></p><div class="spec-body"><h2>SYS-DBR-P10 最終レビュー</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P10</li><li>phase_ref: P10</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: quality</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P09</li></ul>
+<h3>目的</h3>
+<p>差分全体を scope_in / scope_out と突合し、feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions・feat-settings-channel-link の範囲へはみ出していないか、migrations/0008_dashboard_media_assets.sql が読み取り専用境界(書込みAPIを作らない)を守っているかを確認する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P09</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: quality</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/final-review.md</li><li>Write scope: docs/feat-dashboard-redesign/final-review.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: git diffの全ファイルをscope_inと対応付ける</li><li>受入: scope_outに当たる変更0件</li><li>受入: 未解決のレビュー指摘0件</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: 指摘を該当phaseへ差し戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P11, SYS-DBR-P12</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-09-quality-assurance">← 前の仕様書</a><a class="pn" href="#task-phase-11-evidence">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-11-evidence" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-11-evidence</h1><p class="spec-src">出典: <code>phase-11-evidence.md</code></p><div class="spec-body"><h2>SYS-DBR-P11 証跡の集約</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P11</li><li>phase_ref: P11</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: documentation</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P10</li></ul>
+<h3>目的</h3>
+<p>受入項目ごとのテスト結果・スクリーンショット・ヘッダ確認結果・subrequest 計測結果・migrations/0008の適用ログをindex.jsonにまとめる。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P10</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: documentation</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>evidence/feat-dashboard-redesign/index.json と参照ファイル</li><li>Write scope: evidence/feat-dashboard-redesign/</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: index.jsonの全参照先ファイルが実在することを確認</li><li>受入: 受入13項目すべてに証跡がある(acc-01〜acc-13)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: index.jsonを直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P13</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-10-final-review">← 前の仕様書</a><a class="pn" href="#task-phase-12-documentation-operations">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-12-documentation-operations" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-12-documentation-operations</h1><p class="spec-src">出典: <code>phase-12-documentation-operations.md</code></p><div class="spec-body"><h2>SYS-DBR-P12 運用手順とドキュメント</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P12</li><li>phase_ref: P12</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: operations</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P10</li></ul>
+<h3>目的</h3>
+<p>thumbnail 通と Cron 役割①(30日超削除)の運用手順、1,100本超テナントの1,000本上限の運用上の扱い、scripts/seed-local.sql を使ったローカル確認手順、migrations/0008_dashboard_media_assets.sql の本番適用手順を runbook にまとめる。P13(本番D1マイグレーションとdeploy)は利用者の明示指示がない限り実行されない可能性がある旨を runbook に明記する。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P10</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: operations</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: documentation</li></ul>
+<h3>成果物</h3>
+<ul><li>docs/feat-dashboard-redesign/runbook.md</li><li>README.md の更新</li><li>Write scope: docs/feat-dashboard-redesign/runbook.md, README.md</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: runbookの手順をpreview環境で1回通す</li><li>受入: thumbnail通とCron役割①の運用手順がrunbookだけで実行できる(acc-12,acc-13)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge</li><li>Rollback: ドキュメントを直前版へ戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: SYS-DBR-P13</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-11-evidence">← 前の仕様書</a><a class="pn" href="#task-phase-13-release-deploy">次の仕様書 →</a></div></section><section class="spec-page" id="task-phase-13-release-deploy" hidden><div class="spec-top"><a class="back" href="#index">☰ 一覧へ戻る</a><span class="grp">タスク別仕様書</span></div><h1>phase-13-release-deploy</h1><p class="spec-src">出典: <code>phase-13-release-deploy.md</code></p><div class="spec-body"><h2>SYS-DBR-P13 リリースとデプロイ</h2>
+<h3>Machine-readable registration fields</h3>
+<ul><li>task_id: SYS-DBR-P13</li><li>phase_ref: P13</li><li>feature_package_id: feature-package/feat-dashboard-redesign</li><li>parent_feature: feat-dashboard-redesign</li><li>workstream_kind: infrastructure</li><li>build_target_kind: application-code</li><li>depends_on: SYS-DBR-P11, SYS-DBR-P12</li></ul>
+<h3>目的</h3>
+<p>PR の必須チェック(lint/test/e2e/dry-run)を通し、main への merge で D1 マイグレーション 0008 と deploy、thumbnail 通の Cron トリガー有効化を完了させる。</p>
+<h3>背景</h3>
+<p>feat-dashboard-redesign はダッシュボードを docs/screens/02-dashboard.png の構成どおりに刷新し、チャンネル全体と選んだ動画(既定は直近公開10本)それぞれの推移・前期比・構成比を1画面で比べられるようにして、利用者が『今週、何が効いたか』と次に打つ手をすぐ判断できるようにする feature で、確定仕様 system-spec の ui-ux/frontend/backend/security/database/infrastructure 章の qa-089〜qa-099 に根拠を持つ(qa-089〜qa-098 は id-renumber-for-merge receipt(eval-log/renumber-receipt-feat-dashboard-redesign-20260924.json)により旧 qa-074〜qa-083 から繰り上げ、qa-099 は期間切替を全画面共通の AppShell ヘッダー <code>?period=</code> へ統一する新規決定、appr-013 は appr-015 へ繰り上げ)。feat-settings-channel-link(AppShell・共通ヘッダー・PageHeader/SectionCard/StatusBadge/DataTable の土台)に依存し、本 feature はヘッダーの PERIODS に 7d を足すだけで土台は作り直さない。現状の web/pages/DashboardPage.tsx は仮画面であり、集約API・ファネルAPI・サムネイル配信API・daily_metrics/video_metrics/reports/actions の読み取りはまだ実装されていない。ダッシュボードが読む videos/daily_metrics/video_metrics/video_reach_daily/video_daily_metrics/reports/findings/actions/media_assets/business_funnel_weekly/funnel_targets は上流feature(feat-youtube-daily-collection・feat-csv-media-ingest・feat-skill-analysis-reports・feat-web-screens-actions)が未実装のため現リポジトリに存在せず、本featureのmigrations/0008_dashboard_media_assets.sqlでsystem-spec database章の列定義に沿って読み取りに必要な列だけをCREATE TABLE IF NOT EXISTSし、media_assetsにはfetched_at・source_urlと(tenant_id, kind, fetched_at)索引を持たせる。上流featureは後でこの表を引き継ぎALTERで列を足す想定で、本featureは書込み(収集・CSV取込・レポート生成・アクション状態遷移)を作らない。</p>
+<h3>前提条件</h3>
+<ul><li>先行 task: SYS-DBR-P11, SYS-DBR-P12</li><li>implementation_readiness: complete(completeness evaluator r8 PASS)</li></ul>
+<h3>Workstream applicability</h3>
+<ul><li>主: infrastructure</li></ul>
+<h3>Architecture and deploy unit</h3>
+<ul><li>Architecture: arch-youtube-analytics-system</li><li>Deploy unit: application</li></ul>
+<h3>成果物</h3>
+<ul><li>本番の D1 マイグレーション適用と deploy の実行記録</li><li>Write scope: .github/workflows/, wrangler.toml</li></ul>
+<h3>Tracker publication and completion</h3>
+<ul><li>Tracker binding intent: beads(prefix yta)</li><li>GitHub publication: local_only</li><li>完了: linked PR が default branch へ merge されたとき</li></ul>
+<h3>Branch and worktree execution</h3>
+<ul><li>1 task 1 branch。branch 名と worktree lease は dev-graph scheduler が割り当てる</li></ul>
+<h3>スコープ外</h3>
+<ul><li>YouTube データの収集処理と収集時刻の変更(feat-youtube-daily-collection。確定済みの毎日 JST 3:00 のまま)</li><li>Studio CSV・週次事業 CSV の取込処理(feat-csv-media-ingest。ダッシュボードは取込ボタンから既存の取込画面へ遷移するだけ)</li><li>AI 分析レポートの生成とアップロード(feat-skill-analysis-reports)</li><li>動画画面・AI分析画面・改善アクション画面・設定画面の本体と actions の状態遷移 API(feat-web-screens-actions)</li><li>画像のティール配色(qa-091 で既存インディゴ/マゼンタを維持と確定)</li><li>YouTube の画像ホスト(i.ytimg.com)からの直接表示と CSP の拡張(qa-095 で自サイト経由と確定)</li><li>AppShell・共通ヘッダーの土台と共通部品 PageHeader/SectionCard/StatusBadge/DataTable の新規実装(feat-settings-channel-link で確立済み。本 feature はヘッダーの PERIODS に 7d を足すだけ、qa-099)</li></ul>
+<h3>Verification and evidence</h3>
+<ul><li>検証: Actionsの実行ログでmigrations applyとdeployの成功を確認</li><li>受入: mainへのpushでD1マイグレーション(migrations/0008_dashboard_media_assets.sql)とdeployが完了する</li><li>受入: 本番のダッシュボードが画像どおりに表示される(acc-01)</li></ul>
+<h3>Rollout and rollback</h3>
+<ul><li>Rollout: 機能ブランチを PR で main へ merge。本 task は利用者の明示指示がない限り commit/push/PR作成/本番D1マイグレーション適用/本番deployを実行しない。利用者の go 指示が無い場合、この task はここで停止し、実行可能状態(PRの必須チェック通過まで)を保ったまま次の指示を待つ</li><li>Rollback: 直前のWorkersバージョンへwrangler rollbackし、マイグレーションは前方修正で戻す</li></ul>
+<h3>Handoff</h3>
+<ul><li>次の task: なし(feature 完了。dev-graph sync で feature の完了を反映)</li></ul>
+<h3>参照情報</h3>
+<ul><li>system-spec/index.md</li><li>system-spec/00-requirements-definition.md</li><li>system-spec/ui-ux.md</li><li>system-spec/frontend.md</li><li>system-spec/backend.md</li><li>system-spec/security.md</li><li>system-spec/database.md</li><li>system-spec/infrastructure.md</li><li>architecture/youtube-analytics-system.md</li><li>specs/youtube-analytics-system.md</li><li>docs/screens/02-dashboard.png</li><li>features/feat-dashboard-redesign.context.json</li></ul></div><div class="pn-row"><a class="pn" href="#task-phase-12-documentation-operations">← 前の仕様書</a><span></span></div></section></main>
+</div>
+<script>
+(function(){
+  function ids(){return Array.prototype.map.call(document.querySelectorAll('.spec-page'),function(s){return s.id;});}
+  function show(){
+    var h=(location.hash||'#index').slice(1); if(!document.getElementById(h)){h='index';}
+    document.querySelectorAll('.spec-page').forEach(function(s){s.hidden=(s.id!==h);});
+    document.querySelectorAll('.spec-nav a, .idx-group a').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href')==='#'+h);});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', show);
+  document.addEventListener('DOMContentLoaded', show); show();
+})();
+</script>
+</body></html>

@@ -1,0 +1,23 @@
+{
+ "validator": "system-dev-planner/validate-system-plan.py",
+ "staging": ".dev-graph/published/feature-package-feat-dashboard-redesign-r2",
+ "status": "pass",
+ "validated_digest": "sha256:8753a49bb769c2bee8d85a0f15d801e6f97b49ed86837558895cbe090f08ab1d",
+ "phase_refs": [
+  "P01",
+  "P02",
+  "P03",
+  "P04",
+  "P05",
+  "P06",
+  "P07",
+  "P08",
+  "P09",
+  "P10",
+  "P11",
+  "P12",
+  "P13"
+ ],
+ "violations": [],
+ "checked_at": "2026-09-24T15:51:38Z"
+}
