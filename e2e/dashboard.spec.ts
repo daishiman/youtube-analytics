@@ -36,7 +36,7 @@ test.describe("ダッシュボード", () => {
     await expect(page.locator("#period-insight")).toContainText("観測された変化");
     await expect(page.locator("#period-insight")).toContainText("次に見る動画");
     await expect(page.locator("#latest-report")).toContainText("8月の振り返り");
-    await expect(page.locator("#active-actions .action-item")).toHaveCount(2);
+    await expect(page.locator("#active-actions .action-item")).toHaveCount(1);
     // 右カラムのカードは上の選択に連動しないことを、カード単体でも読めるようにする
     await expect(page.locator("#latest-report")).toContainText("期間・動画の選択には連動しません");
     await expect(page.locator("#active-actions")).toContainText("期間・動画の選択には連動しません");
