@@ -15,7 +15,7 @@ serves_goals: [G1, G3, G4, G2]
 
 | プラットフォーム | 状態 | 根拠 |
 |---|---|---|
-| Web (web) | 確定 | 確定質疑: qa-079。裏付け質疑 (`qa_refs`): `qa-058`, `qa-002`, `qa-005`, `qa-009`, `qa-014`, `qa-018`, `qa-015`, `qa-037`, `qa-033`, `qa-035`, `qa-038`, `qa-039`, `qa-040`, `qa-026`, `qa-042`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-041`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-054`, `qa-055`, `qa-056`, `qa-057`, `qa-059`, `qa-074`, `qa-075`, `qa-076`, `qa-077`, `qa-078`, `qa-082`, `qa-084` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G3, G4 |
+| Web (web) | 確定 | 確定質疑: qa-097。裏付け質疑 (`qa_refs`): `qa-058`, `qa-002`, `qa-005`, `qa-009`, `qa-014`, `qa-018`, `qa-015`, `qa-037`, `qa-033`, `qa-035`, `qa-038`, `qa-039`, `qa-040`, `qa-026`, `qa-042`, `qa-043`, `qa-044`, `qa-045`, `qa-046`, `qa-047`, `qa-041`, `qa-048`, `qa-049`, `qa-050`, `qa-051`, `qa-052`, `qa-053`, `qa-054`, `qa-055`, `qa-056`, `qa-057`, `qa-059`, `qa-074`, `qa-075`, `qa-076`, `qa-077`, `qa-078`, `qa-082`, `qa-084`, `qa-087` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G1, G3, G4 |
 | モバイル (mobile) | 対象外 | 理由: mobile: ストア配信や端末向け配信基盤を用意せず、同じWorkerがスマホ・タブレットにも配信する(qa-036で中立に再確認) |
 | タブレット (tablet) | 対象外 | 理由: tablet: ストア配信や端末向け配信基盤を用意せず、同じWorkerがスマホ・タブレットにも配信する(qa-036で中立に再確認) |
 | デスクトップ (Windows) (desktop-windows) | 確定 | 確定質疑: qa-015。裏付け質疑 (`qa_refs`): `qa-018`, `qa-037`, `qa-038`, `qa-046`, `qa-056`, `qa-059` — 本章の「確定内容 (質疑録)」へ接地根拠として併記。資するゴール: G2, G3 |
@@ -49,22 +49,17 @@ serves_goals: [G1, G3, G4, G2]
 
 - 資するゴール: G1, G3, G4
 
-#### 主たる接地根拠: `qa-079`
+#### 主たる接地根拠: `qa-097`
 
 **問**
 
-設定画面・チャンネル紐付け・共通レイアウトの詳細設計(画面に見えないバックエンド/DB/セキュリティ/運用を含む)をこの内容で確定してよいか
+要件定義書の制約(U7 の Google 行)と具体的にやりたいこと I4/I5 を、qa-087(テナントごとの OAuth クライアント)と AI分析画面の新しい流れ(qa-093・qa-095)に合わせて改訂する案を承認するか
 
 **答**
 
-この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [共通レイアウト] AppShell=Sidebar(ロゴ・テナント切替・ナビ5項目、900px未満は下部タブ)+Header(画面名・最終更新=収集/取込の新しい方・期間28日/90日/1年/任意を?period=で全画面共有・アバターメニュー)+main+Footer(3バッジ『OAuthは読み取り専用(字幕ON時は字幕のみ追加許可)』『データは利用者ごとに分離』『無料枠で運用』+プライバシーポリシー|利用規約。ログイン・静的ページも同じFooter)。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone(+ファイル選択ボタン)/ConfirmDialog(危険操作は名前入力)/Toast/デザイントークン。[設定画面] 順序 YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ・既存qa-041〜)→無料枠の使用状況→データを削除。連携カード=アイコン・チャンネル名・登録者数(表示のみ)・状態(正常/要再連携/未連携)・次回収集(毎日3:00 JST)・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。チャンネル選択=OAuth(prompt=select_account consent)→channels.list mine=true→1つ選択→確定。ブランドアカウントはGoogleのアカウント選択で選ぶ旨を案内。同じチャンネルが別テナントに連携済みなら拒否。再連携は同じチャンネルのみ、変更は連携解除から。字幕ON=追加同意→新着動画の字幕を毎日収集で取得(1日上限10本=2000units)、OFF=revoke→読み取り専用で再連携。取込=タブ別DropZoneと履歴(ファイル名/期間/行数/取込日時/状態+失敗理由・最新20件)。トークン=名前必須・平文は発行時1回表示・1人5本まで・失効は確認付き。無料枠=YouTube Data API units/D1書込/D1容量/R2容量/Workersリクエスト+テナント数、80%黄/95%赤。[バックエンド] GET /api/settings, POST /api/youtube/connect, GET /api/oauth/callback, GET /api/youtube/channel-candidates, POST /api/youtube/channel, POST /api/youtube/reconnect, DELETE /api/youtube/connection, PUT /api/youtube/captions-auto, GET/POST /api/imports, GET/POST/DELETE /api/skill-tokens, GET /api/usage, POST /api/tenant/delete。[DB] channels(UNIQUE tenant_id・UNIQUE channel_id・status)/oauth_pending(10分・暗号化)/oauth_tokens.granted_scopes/tenants.captions_auto/skill_tokens.name/imports(kind統合)/usage_counters/usage_snapshots/audit_log。[セキュリティ] 連携・解除・字幕・削除はオーナーのみ/force-sslはcaptions.downloadだけ/CF_ANALYTICS_TOKEN(Account Analytics Read)はWorkers Secrets/Origin検査/トークン発行のレート制限/監査ログ。[インフラ・運用] Cronは増やさない(無料枠の外部値は画面表示時に1時間キャッシュ)/runbook『チャンネルを変更する』を追加
+この内容で承認(改訂案をプレビュー表示)。U7: ログインはアプリ共通の OAuth クライアント(openid/email/profile のみ・機密スコープなし)。YouTube連携は各テナントが自分の Google Cloud プロジェクトの OAuth クライアントを登録して行い(qa-087)、同意画面の検証要否と API クォータ(10,000 units/日)はそのプロジェクト単位で数える。I4: AI分析画面で依頼 A-xxxx を作り、コピーしたプロンプトを Claude Code に貼り付けて実行する(/yt-analyze)。結果は自動送信、または画面へ JSON を貼り付けて取り込む。I5: qa-095 の回答に合わせて、自動実行ではスキルが依頼を作ってから分析すると書き直す。O2(スキル実行から反映まで手作業0)は、自動送信の経路では変わらないため改訂しない。提示した他の案: 修正してから承認
 
-> **訂正あり** — 直上の答は凍結された記録であり、後から次の訂正が入っている。
-> 本文中の記述と食い違う場合は、訂正側が正である。
->
-> - `2026-09-24T00:52:00Z` — 承認内容のうち2つの値は、その後の個別確認で置き換えた。(1) 字幕自動取得の『1日上限10本=2000units』→ qa-082 で『1日5本=1,000units』。(2) 無料枠バーの『80%黄/95%赤』→ qa-084 で『70%黄/90%赤』。現行の規範は qa-082/qa-084 の値で、qa-079 のその他の承認内容は変更なし。qa-081(別テナント連携の拒否)・qa-083(トークン1人5本)は qa-079 の値を個別に確認したもので変更なし。qa-085(force-ssl の検証を字幕トグル公開前に申請)は qa-079 に含まれない新しい論点。主根拠(qa_ref)を qa-079 のまま残すのは、10カテゴリにまたがる詳細設計の承認がこの一件で、個別確認の qa-081〜085 は qa_refs に追加して項目単位の根拠にしているため
-
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:09:29Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。改訂案の全文をプレビューで提示 / 回答時刻: 2026-09-24T14:45:59Z)
 
 #### 裏付け質疑: `qa-058`
 
@@ -539,6 +534,18 @@ docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カ�
 
 - (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 個別選択(AI推奨表示あり・qa-079一括承認の項目分割の再質問)。回答直後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T00:31:35Z)
 
+#### 裏付け質疑: `qa-087`
+
+**問**
+
+YouTube連携(チャンネル紐付け)で使う Google Cloud の OAuth クライアントを、アプリ共通の1つにするか、テナントごとに利用者が自分の Google Cloud プロジェクトのものを持ち込むか(利用者ごとに API の使用先=プロジェクト・クォータ・同意画面が異なるため)
+
+**答**
+
+テナントごとに必須で持ち込む。オーナーが設定画面で自分の Google Cloud プロジェクトの OAuth クライアントID とクライアントシークレットを登録するまで『連携』ボタンは押せない。チャンネル連携・コールバック・トークン交換・更新・revoke・字幕の追加同意は、そのテナントのクライアントで行う。Googleログイン自体はテナントが決まる前なのでアプリ共通のクライアントのまま。シークレットは TOKEN_ENC_KEY で暗号化して保存し、画面・APIには返さない。登録の変更・削除は既存の連携トークンを無効にするため『要再連携』にする。これにより D-auth の『ログインとYouTube連携を1回の同意で完結』と、クォータ・100人上限をアプリ共通で数える前提(qa-021)は、YouTube連携についてはテナントごとのプロジェクト単位に置き換わる。提示した他の案: アプリ共通のクライアントのまま(推奨)/ 任意で持ち込み(未登録なら共通を使う)
+
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 出所: AskUserQuestion 択一(AI推奨表示あり)。利用者の発話『テナントごとに各ユーザーごとで設定できるように…ユーザーごとによってこのAPI使う先が違う』を受けた質問。回答後に date -u で実測した時刻(選択時刻の上限値) / 回答時刻: 2026-09-24T07:28:46Z)
+
 ### デスクトップ (Windows) (desktop-windows)
 
 - 資するゴール: G2, G3
@@ -648,8 +655,8 @@ docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カ�
 - **I1**: Googleでログインし、OAuth後に自分のYouTubeチャンネルを1つ選んで読取専用で連携する(1テナント1チャンネル。変更は連携解除→旧データを7日以内に削除→再連携)。字幕の自動取得を希望する人だけ force-ssl を追加で許可する(qa-075/qa-076/qa-085・qa-086で更新)
 - **I2**: YouTube Studio CSV(表データ/グラフデータ/合計)と週次事業CSVを手動取込し、出典付きで保存する。YouTube派生指標M1〜M10はStudio CSV由来だけで計算する。事業CSVと同一週Studio CSVから導線誘導率=route_visits/views×100、問い合わせ→成約率=closed_deals/inquiries×100を計算し、週次5段階原因指標と結果指標をダッシュボードに分けて表示する
 - **I3**: Cronで毎日1回、Analytics API(日別指標・動画別・流入元・視聴者属性・維持率)とReporting API(インプレッション・CTR)から取得し、出典(API)付きで保存する
-- **I4**: Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする
-- **I5**: 運営者はlaunchdで週次にI4を自動実行する。一般利用者は手動実行
+- **I4**: AI分析画面で依頼A-xxxxを作り、コピーしたプロンプトをClaude Codeに貼り付けて /yt-analyze を実行する。スキルはシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作る。結果は自動送信、または画面へJSONを貼り付けて取り込む(qa-093・qa-097)
+- **I5**: 運営者はlaunchdで週次にI4を自動実行する。自動実行ではスキルが個人トークンで依頼を作ってから分析する(qa-095)。一般利用者は画面から依頼して手動実行する
 - **I6**: 改善アクションを対象ファネル段付きで未着手/実施中/効果測定中/完了として管理し、次回レポートで対象原因指標と売上・成約数等の下流結果を前後比較する
 - **I7**: Gemini API無料枠・YouTube API・Cloudflare・GitHubの無料範囲と設定手順を文書化する
 - **I9**: 字幕・画像・コメント・維持曲線を取り込み、Claude Codeで人の考え・感情・行動を推定した心理分析レポートを作る
@@ -665,7 +672,7 @@ docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カ�
   - 目的適合: 画像をレポート画面で見られるため心理分析(サムネ訴求・離脱場面)の根拠提示に適合しG1/G2/G4を満たす
 - **D-auth**: Web画面のログインとYouTube連携の認証をどうするか
   - 採択: Google OAuth一本(同意画面を本番公開・未検証) (`google-oauth-published`)
-  - 目的適合: 新規登録(オーナー)はログインとYouTube連携を1回の同意で完結し、部分許可でもログインは通して後から再連携できる(qa-065)。招待メンバーはメールだけを要求する(qa-064)。G1/G4に適合
+  - 目的適合: ログインはアプリ共通クライアントでメールだけを要求し(qa-064)、YouTube連携はテナントが登録した自分のGoogle CloudプロジェクトのOAuthクライアントで別の同意として行う(qa-087)。部分許可でもログインは通して後から再連携できる(qa-065)。G1/G4に適合
 - **D-cron**: YouTubeデータの定期収集をどこで動かすか
   - 採択: Cloudflare Cron Triggers (`cf-cron`)
   - 目的適合: D1と同じ基盤で全利用者分を収集しG1に適合
@@ -682,9 +689,9 @@ docs/screens/05-settings.png の通りに設定画面を作る(YouTube連携カ�
 
 ### 本章での適用
 
-[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-018/qa-026] Cloudflare Workers(Free)1本にAPI・静的配信・Cronを同居、D1バインディングとR2バケット(Standard、無料10GB-month・Class A 100万/月・Class B 1,000万/月)を追加。収集Cron(qa-049で毎日に変更。詳細は末尾の[毎日収集]節)。YouTube Data API 10,000 units/日の内訳: 動画一覧は差分取得、commentThreads.listは1 unit/回、captions.downloadは200 units/本で追加同意者のみ・1日上限を設定値で管理。設計知識card 0件の理由: resource-mapにインフラ(サーバレス基盤の容量設計)向けcardが無く、該当観点は doctrine anchor(Google SREの信頼性・運用)で扱うため。[qa-033/qa-035 に伴う追加] Cron Triggersをもう1本 `0 18 * * *`(毎日UTC18:00=JST3:00)追加する。役割は①fetched_atが30日を超えた指標以外のAPIデータの削除 ②『データを削除』/連携解除で失敗した削除の再試行 ③30日を超えてtoken更新に失敗した利用者の指標削除。削除依頼は受付時に即時実行し、失敗しても翌日3:00から毎日再試行するため、7日以内の削除(III.E.4.g)を最大6回の再試行で満たす。収集も同じ `0 18 * * *` に統合するため(qa-058)Cron Triggerは1本(Workers Freeのアカウント上限5本の範囲内)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] D1は1つのまま(binding名 DB)。R2は1バケットで tenants/<tenant_id>/ のプレフィックスで分ける。テナントを別DBへ移すときは新しいD1を作ってbindingを追加し、tenants.db_binding を切り替える(無料プランのD1上限10個・1つ500MB、2026-04-21更新の公式Limitsで確認)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 収集を週1回から毎日1回に変える(qa-049)。起動は毎日JST 3:00の1回だけ(qa-058): Cron Trigger `0 18 * * *`(Cron TriggersはUTCで動くため UTC 18:00=JST 3:00 と書く)。この Cron は既存の削除処理と同じ時刻なので1本に統合し、Cron Trigger は計1本(Free上限5本の範囲内)。Cron の実行では重い処理をせず、D1 から対象テナント(オーナー連携済み→古い順、上限 MAX_TENANTS=100・qa-052)を読み、Cloudflare Queues の collect-queue へテナントごとに1通(collect)と削除処理の1通(cleanup)を sendBatch で入れるだけにする。consumer は max_batch_size=1 とし、1通=1回の実行(Queues は1バッチを1回の consumer 実行として届ける)で1テナントを処理するため、1テナント約16件のサブリクエストが1実行の上限50件に収まる。失敗した通は msg.retry() で再試行(max_retries=3・retry_delay=600秒)し、最後の試行でも失敗したら tenants.collection_status=failed を書く(翌日の収集が直近7日を取り直すので欠けは埋まる)。Queues の操作数は1通あたり書込・読取・削除の約3回で、100テナント+cleanupでも1日約300回(無料枠1万回/日の範囲内)。メッセージの保持は24時間。1テナントの1日の呼出し: トークン更新1 / Analytics reports.query 5(チャンネル日次 D-7〜D-1・動画別の単日 D-3・流入元 D-7〜D-1・視聴者属性・新しい動画のShorts判定) / 維持率 最大2本(公開28日以内の動画を順番に) / Reporting reports.list 1+新しいレポートのダウンロード / Data API playlistItems.list・videos.list 2〜4 / D1 batch 1〜2。Reporting の CSV は gzip を要求せず平文で受け、date・video_id・impressions・ctr の列だけを読む(CPU 10ms 対策)。channel_basic_a3 などの大きいレポートは使わない。Google Cloud で YouTube Reporting API を有効化する。テナント上限は wrangler.toml の MAX_TENANTS=100(qa-052)。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] Cron は増やさない(Cron Trigger は1本のまま)。字幕の自動取得は毎日の収集の中で新着動画の字幕を1日5本(1,000 units)まで取り、残りは翌日へ持ち越す(qa-082)。YouTube Data API 10,000 units/日の消費を usage_counters で数える。無料枠の Cloudflare 側の値(Workers リクエスト・D1 書込/容量・R2 容量)は設定画面を開いたときに Cloudflare GraphQL Analytics API から取り、usage_snapshots に1時間キャッシュする(qa-078)。そのための CF_ANALYTICS_TOKEN(Account Analytics Read)を Workers Secrets に追加する。
+[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-018/qa-026] Cloudflare Workers(Free)1本にAPI・静的配信・Cronを同居、D1バインディングとR2バケット(Standard、無料10GB-month・Class A 100万/月・Class B 1,000万/月)を追加。収集Cron(qa-049で毎日に変更。詳細は末尾の[毎日収集]節)。YouTube Data API 10,000 units/日の内訳: 動画一覧は差分取得、commentThreads.listは1 unit/回、captions.downloadは200 units/本で追加同意者のみ・1日上限を設定値で管理。設計知識card 0件の理由: resource-mapにインフラ(サーバレス基盤の容量設計)向けcardが無く、該当観点は doctrine anchor(Google SREの信頼性・運用)で扱うため。[qa-033/qa-035 に伴う追加] Cron Triggersをもう1本 `0 18 * * *`(毎日UTC18:00=JST3:00)追加する。役割は①fetched_atが30日を超えた指標以外のAPIデータの削除 ②『データを削除』/連携解除で失敗した削除の再試行 ③30日を超えてtoken更新に失敗した利用者の指標削除。削除依頼は受付時に即時実行し、失敗しても翌日3:00から毎日再試行するため、7日以内の削除(III.E.4.g)を最大6回の再試行で満たす。収集も同じ `0 18 * * *` に統合するため(qa-058)Cron Triggerは1本(Workers Freeのアカウント上限5本の範囲内)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] D1は1つのまま(binding名 DB)。R2は1バケットで tenants/<tenant_id>/ のプレフィックスで分ける。テナントを別DBへ移すときは新しいD1を作ってbindingを追加し、tenants.db_binding を切り替える(無料プランのD1上限10個・1つ500MB、2026-04-21更新の公式Limitsで確認)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 収集を週1回から毎日1回に変える(qa-049)。起動は毎日JST 3:00の1回だけ(qa-058): Cron Trigger `0 18 * * *`(Cron TriggersはUTCで動くため UTC 18:00=JST 3:00 と書く)。この Cron は既存の削除処理と同じ時刻なので1本に統合し、Cron Trigger は計1本(Free上限5本の範囲内)。Cron の実行では重い処理をせず、D1 から対象テナント(オーナー連携済み→古い順、上限 MAX_TENANTS=100・qa-052)を読み、Cloudflare Queues の collect-queue へテナントごとに1通(collect)と削除処理の1通(cleanup)を sendBatch で入れるだけにする。consumer は max_batch_size=1 とし、1通=1回の実行(Queues は1バッチを1回の consumer 実行として届ける)で1テナントを処理するため、1テナント約16件のサブリクエストが1実行の上限50件に収まる。失敗した通は msg.retry() で再試行(max_retries=3・retry_delay=600秒)し、最後の試行でも失敗したら tenants.collection_status=failed を書く(翌日の収集が直近7日を取り直すので欠けは埋まる)。Queues の操作数は1通あたり書込・読取・削除の約3回で、100テナント+cleanupでも1日約300回(無料枠1万回/日の範囲内)。メッセージの保持は24時間。1テナントの1日の呼出し: トークン更新1 / Analytics reports.query 5(チャンネル日次 D-7〜D-1・動画別の単日 D-3・流入元 D-7〜D-1・視聴者属性・新しい動画のShorts判定) / 維持率 最大2本(公開28日以内の動画を順番に) / Reporting reports.list 1+新しいレポートのダウンロード / Data API playlistItems.list・videos.list 2〜4 / D1 batch 1〜2。Reporting の CSV は gzip を要求せず平文で受け、date・video_id・impressions・ctr の列だけを読む(CPU 10ms 対策)。channel_basic_a3 などの大きいレポートは使わない。Google Cloud で YouTube Reporting API を有効化する。テナント上限は wrangler.toml の MAX_TENANTS=100(qa-052)。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] Cron は増やさない(Cron Trigger は1本のまま)。字幕の自動取得は毎日の収集の中で新着動画の字幕を1日5本(1,000 units)まで取り、残りは翌日へ持ち越す(qa-082)。YouTube Data API 10,000 units/日の消費を usage_counters で数える。無料枠の Cloudflare 側の値(Workers リクエスト・D1 書込/容量・R2 容量)は設定画面を開いたときに Cloudflare GraphQL Analytics API から取り、usage_snapshots に1時間キャッシュする(qa-078)。そのための CF_ANALYTICS_TOKEN(Account Analytics Read)を Workers Secrets に追加する。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] YouTube Data API 10,000 units/日・Analytics/Reporting API の割当と同意画面の検証要否は、各テナントが登録した Google Cloud プロジェクト単位で数える(qa-087)。usage_counters の YouTube units はテナント単位で数え、アプリ共通の合計では判定しない。アプリ共通の OAuth クライアントはログイン(openid/email/profile)専用で機密スコープを持たない。
 
-- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-24T00:35:04Z)
+- (根拠の性質: 利用者が代替案を見たうえで明示選択した決定 / 記録時刻: 2026-09-24T14:45:59Z)
 
 - `ref-system-design-knowledge/references/resource-map.yaml` (本章へ引く card は 0 件。未着手ではなく、上の適用記述で0 件である理由を述べた上での確定である)
 

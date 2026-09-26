@@ -17,10 +17,10 @@ template_id: "architecture"
 template_version: "1.0.0"
 confirmation_status: "confirmed"
 evaluation_status: "pass"
-confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/completeness-findings-20260924-r4.json", "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100"}
-source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "imported_at": "2026-09-24T09:17:58Z"}
+confirmation_evidence: {"evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator", "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json", "evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094"}
+source_lineage: {"origin_kind": "system-spec-harness", "source_plugin": "system-spec-harness", "source_path": "system-spec/index.md", "source_version": "0.1.14", "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656", "imported_at": "2026-09-24T14:59:43Z"}
 created_at: "2026-09-21T14:36:15Z"
-updated_at: "2026-09-24T09:17:58Z"
+updated_at: "2026-09-24T14:59:43Z"
 depends_on: []
 related_nodes: ["spec-youtube-analytics-system"]
 resource_scope: []
@@ -51,7 +51,7 @@ implementation_readiness: {"status": "complete", "missing_sections": [], "checke
 
 # Architecture overview
 
-Cloudflare Workers(Free)1本に Hono の REST API・React SPA の静的配信・Cron を同居させ、D1(構造化データ)と R2(画像)を持つ。日次収集の完成形では Queue consumer も同じ Worker に置くが、現在の `feat-platform-tenant-auth` は producer binding と空の scheduled 入口だけを先行配置し、consumer は未構成である。AI分析はシステム内で行わず、各利用者の PC の Claude Code が /api/skill/* 経由でデータを取り出し、report-design-system で作った HTML と結果JSONを反映する。
+Cloudflare Workers(Free)1本に Hono の REST API・React SPA の静的配信・Cron を同居させ、D1(構造化データ)と R2(画像)を持つ。日次収集の完成形では Queue consumer も同じ Worker に置くが、現在の `feat-platform-tenant-auth` は producer binding と空の scheduled 入口だけを先行配置し、consumer は未構成である。AI分析はシステム内で行わず、AI分析画面で作った依頼 A-xxxx(または launchd 週次実行でスキルが作る依頼・qa-095)を起点に、各利用者の PC の Claude Code が /api/skill/* 経由でデータを取り出し、report-design-system で作った HTML と結果JSONを自動送信または画面へ貼り付けて取り込む(qa-089〜qa-093)。
 
 ## Context and drivers
 
@@ -94,14 +94,15 @@ frontend / backend / infrastructure / data / security の5 subtype を下に記�
 - D-cron: 毎日 JST 3:00 の Cron 1本 + Queues fan-out(qa-058/appr-010)を日次収集の目標構成とする。Cron 自体は投入だけに限り、1テナント=1 consumer 実行でサブリクエスト上限を守る。現在の platform feature は producer-only で、この処理を実装しない。
 - 保存先: D1 + R2(qa-026)。1 D1 を tenant_id で行分離し、将来は tenants.db_binding で別DBへ移せる。
 - AI実行: Claude Code 側(システムは LLM を呼ばない)。
-- 集約: 「レポート版」(追記のみ)と「改善アクション」(一方向遷移)の2集約。
+- 集約: 「レポート版」(追記のみ)と「改善アクション」(一方向遷移)に「分析依頼」(待機中→実行中→完了|失敗|取消の一方向・qa-089)を加えた3集約。アクション登録は改善アクション集約だけを書き、レポート版は読むだけ(qa-091)。
+- アーカイブ(qa-090): reports を更新せず report_archives の別表で持ち、一覧と analysis_history はアーカイブ外の版だけを読む。
 - 週次診断: 5原因指標と結果指標を分離し、負のtarget_gapが最小の1段だけを改善候補にする。全指標目標達成時は候補を作らず、因果を断定しない。
 - 履歴: 同一tenant+channelの完了済み直近5版を既存レポートから射影し、HTML本体を重複保存しない。
 - チャンネル紐付け: 1テナント1チャンネル(channels の UNIQUE tenant_id / UNIQUE channel_id)。OAuth後に channels.list mine=true から選び、別テナント連携済みは409、変更は解除→旧データ7日以内削除→再連携(qa-075/qa-081)。
 - 段階的認可(D-auth): 既定は読み取り専用。字幕自動取得を ON にした人だけ force-ssl を追加同意し captions.download にだけ使う。sensitive scope の検証が通るまで運営者のみ操作可(qa-076/qa-085)。
 - 共通レイアウト: 全画面を AppShell(Sidebar+Header+main+Footer)で包み、ログイン・静的ページも同じ Footer を使う。色は既存CSS変数のみ(qa-079/qa-080)。
 - YouTube連携の OAuth クライアント(qa-087): テナントごとに必須で持ち込む(tenant_google_clients・シークレットは TOKEN_ENC_KEY で暗号化)。ログインはアプリ共通クライアントのまま。クォータと OAuth 未検証公開の100人上限は、YouTube連携についてはテナントの Google Cloud プロジェクト単位になる。
-- 利用者向けの語(qa-088): 画面・APIエラー・規約では『ワークスペース』。識別子と開発者向け文書は tenant のまま。
+- 利用者向けの語(qa-096 が qa-088 を置換): 画面・メール文面・APIエラー・規約では『チャンネル管理』。表示名は1か所の定数から引き、識別子と開発者向け文書は tenant のまま。
 - 無料枠の外部値: Cron を増やさず、設定画面の表示時に GraphQL Analytics API を読み1時間キャッシュする(qa-078/qa-079)。
 
 ## Delivery, migration and rollback
@@ -125,15 +126,15 @@ React + Vite + React Router の SPA を Workers の静的アセットで配信�
 
 ## Routes, screens and navigation
 
-ルートは6画面(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)+静的ページ2枚(プライバシーポリシー・利用規約)。サイドバー上部にテナント切替。幅900px未満では下部タブ5項目。全ルートを AppShell(Sidebar・Header・Footer)で包み、期間は ?period= で全画面共有する。設定画面は YouTube連携→データ取込→連携トークン→メンバー→無料枠の使用状況→データを削除の順(docs/screens/05-settings.png を区画・配置・文言の正とする)。
+ルートは6画面(ログイン/ダッシュボード/動画/AI分析/改善アクション/設定)+静的ページ2枚(プライバシーポリシー・利用規約)。サイドバー上部にテナント切替。幅900px未満では下部タブ5項目。全ルートを AppShell(Sidebar・Header・Footer)で包み、期間は ?period= で全画面共有する。設定画面は YouTube連携→データ取込→連携トークン→メンバー→無料枠の使用状況→データを削除の順(docs/screens/05-settings.png を区画・配置・文言の正とする)。/analysis は AnalysisPage(依頼・実行状況・レポートの3区画+下部の選択中依頼バー。docs/screens/03-ai-analysis.png を正)で PlaceholderPage を置き換え、選択中の依頼は ?request=A-xxxx、レポートは ?report=<id>&v=<版>、任意期間は ?period=custom&from=&to= で URL に持つ。
 
 ## Component and design-system boundaries
 
-グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
+グラフは ECharts を採用する（qa-061）。必要な表現は折れ線・横棒・行内の横棒・小さな推移線を中心とし、出典バッジと M1〜M10 開示文は共通コンポーネントにして値の表示と必ず一緒に出す。ダッシュボード先頭は結果、5原因指標、改善候補または全指標目標達成、12週推移+データ品質の4ブロック。AI分析は前回からの変化を先に示す。共通部品 PageHeader/SectionCard/StatusBadge/DataTable(狭幅でカード化)/UsageBar/DropZone/ConfirmDialog(危険操作は名前入力)/Toast を全画面で使い回す。AI分析画面は RequestPanel/DataSummaryCard/RequestStatusTable/ReportList/ResultImportPanel/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar で構成し、新しい共通部品 ProgressBar と DateRangePicker を components に追加する。色は web/styles.css の :root CSS変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、新色も同じ :root に追加して部品に色コードを書かない(qa-080)。
 
 ## State and data flow
 
-選択中テナントはセッションで持ち、切替時に画面を再取得する。指標はAPIから受け取り、ブラウザ側で再計算しない。
+選択中テナントはセッションで持ち、切替時に画面を再取得する。指標はAPIから受け取り、ブラウザ側で再計算しない。実行中・待機中の依頼がある間だけ実行状況を10秒ごとに再取得し、タブ非表示中は止める。クリップボード失敗時は選択状態のテキスト欄で手動コピーに切り替える。貼付JSONは送信前に JSON.parse で行番号を出し、最終判定はサーバに従う。
 
 ## Backend integration
 
@@ -145,7 +146,7 @@ React + Vite + React Router の SPA を Workers の静的アセットで配信�
 
 ## Frontend verification
 
-Playwright 390×844 / 820×1180 / 1440×900 で主要操作の E2E。閲覧者403・他テナント404・招待の別アカウント拒否・開示文・両バッジ・上限到達を含める。
+Playwright 390×844 / 820×1180 / 1440×900 で主要操作の E2E。閲覧者403・他テナント404・招待の別アカウント拒否・開示文・両バッジ・上限到達、AI分析の依頼→コピー→取込→登録→比較→アーカイブを含める。
 
 # Backend architecture
 
@@ -155,11 +156,11 @@ Hono v4 on Workers。usecase と集約を1対1で対応させる(DDD)。
 
 ## Domain and module boundaries
 
-集約は「レポート版」(reports+findings+psych_findings+comment_emotions)と「改善アクション」(actions)。collector(collectTenantDaily)、ingest(Studio CSV・週次事業CSV・字幕・画像)、tenant 管理、metrics/ を分ける。設定画面向けに youtube-connection(OAuth・チャンネル選択・再連携・解除・字幕トグル)、skill-tokens、usage(カウンタ+GraphQL Analytics キャッシュ)、audit を追加する。
+集約は「レポート版」(reports+findings+psych_findings+comment_emotions)と「改善アクション」(actions)と「分析依頼」(analysis_requests)。AI分析の usecase は createAnalysisRequest/cancelAnalysisRequest/retryAnalysisRequest/getAnalysisPrompt/getDataSummary/importReport/archiveReport/registerReportActions に分ける(importReport は POST /api/skill/reports と同じ ingestReport を使う)。collector(collectTenantDaily)、ingest(Studio CSV・週次事業CSV・字幕・画像)、tenant 管理、metrics/ を分ける。設定画面向けに youtube-connection(OAuth・チャンネル選択・再連携・解除・字幕トグル)、skill-tokens、usage(カウンタ+GraphQL Analytics キャッシュ)、audit を追加する。
 
 ## API and service contracts
 
-画面用REST、テナントAPI、/api/skill/*(X-Skill-Api-Version ヘッダ)。`GET /api/skill/export`は週次ファネルと同一tenant+channelの直近5版の履歴射影を返し、`POST /api/skill/reports`は`history_versions_used`を持つ。設定画面用に /api/settings, /api/youtube/*(google-client・connect・channel-candidates・channel・reconnect・connection・captions-auto), /api/oauth/callback, /api/imports, /api/skill-tokens, /api/usage, /api/tenant/delete を置く。詳細は specs/youtube-analytics-system.md の API契約。
+画面用REST、テナントAPI、/api/skill/*(X-Skill-Api-Version ヘッダ)。`GET /api/skill/export`は週次ファネルと同一tenant+channelの直近5版の履歴射影を返し、`POST /api/skill/reports`は`history_versions_used`を持つ。設定画面用に /api/settings, /api/youtube/*(google-client・connect・channel-candidates・channel・reconnect・connection・captions-auto), /api/oauth/callback, /api/imports, /api/skill-tokens, /api/usage, /api/tenant/delete を置く。AI分析画面用に /api/analysis-requests(/:id, /prompt, /cancel, /retry)・/api/analysis/data-summary・/api/reports(import・archive・actions)を、launchd 週次実行用に POST /api/skill/requests を置き、取消済み依頼への PATCH /api/skill/requests/:id と POST /api/skill/reports は 409 REQUEST_CANCELED を返す。詳細は specs/youtube-analytics-system.md の API契約。
 
 ## Data and transaction behavior
 
@@ -211,11 +212,11 @@ Queue の再試行と翌日の直近7日取り直し。削除は即時実行+毎
 
 ## Logical and physical model
 
-全業務テーブルの主キー・索引の先頭に tenant_id。daily_metrics は PK (tenant_id, channel_id, date, content_type)。`business_funnel_weekly`はPK(tenant_id, channel_id, week_start)、`funnel_targets`はPK(tenant_id, channel_id, metric_id, effective_from)。出典ごとに表を分ける。設定画面の追加分: channels(UNIQUE tenant_id・UNIQUE channel_id・status)、oauth_pending(10分・暗号化)、oauth_tokens.granted_scopes、tenants.captions_auto、skill_tokens.name、imports、usage_counters、usage_snapshots、audit_log。画像は R2 の tenants/{tenant_id}/ 配下で、キーを media_assets に保存。
+全業務テーブルの主キー・索引の先頭に tenant_id。daily_metrics は PK (tenant_id, channel_id, date, content_type)。`business_funnel_weekly`はPK(tenant_id, channel_id, week_start)、`funnel_targets`はPK(tenant_id, channel_id, metric_id, effective_from)。出典ごとに表を分ける。AI分析画面の追加分: analysis_requests(status に取消・progress・stage・retry_of・created_via)、report_archives、actions.source_report_id/source_key の UNIQUE。設定画面の追加分: channels(UNIQUE tenant_id・UNIQUE channel_id・status)、oauth_pending(10分・暗号化)、oauth_tokens.granted_scopes、tenants.captions_auto、skill_tokens.name、imports、usage_counters、usage_snapshots、audit_log。画像は R2 の tenants/{tenant_id}/ 配下で、キーを media_assets に保存。
 
 ## Access and consistency
 
-TenantScopedRepository 経由のみ。レポート版は追記のみ。分析履歴はreports/findings/actionsから同一tenant+channelの完了済み直近5版だけを射影し、新規版に`history_versions_used`を保存する。D1 batch で1テナント分の収集結果を書く。
+TenantScopedRepository 経由のみ。レポート版は追記のみ。分析履歴はreports/findings/actionsから同一tenant+channelの完了済みでアーカイブされていない直近5版だけを射影し(qa-090)、新規版に`history_versions_used`を保存する。D1 batch で1テナント分の収集結果を書く。
 
 ## Lifecycle and governance
 
@@ -237,7 +238,7 @@ M1=16.97% 固定値テスト、空欄と0の区別、`source=api|studio_csv|busi
 
 ## Identity and authorization
 
-Google OAuth + PKCE、セッションCookie、個人トークン(SHA-256 保存)。役割の権限表(owner/editor/viewer)を usecase 入口で検査。最後の owner は外せない。連携・解除・字幕トグル・データ削除はオーナーのみ。連携トークンは1人5本まで(qa-083)で発行にレート制限を掛ける。状態変更APIは Origin を検査する。
+Google OAuth + PKCE、セッションCookie、個人トークン(SHA-256 保存)。役割の権限表(owner/editor/viewer)を usecase 入口で検査。最後の owner は外せない。連携・解除・字幕トグル・データ削除はオーナーのみ。連携トークンは1人5本まで(qa-083)で発行にレート制限を掛ける。AI分析の書込は content.write(owner/editor)のみ、分析依頼の作成は画面・スキル合算で1ユーザー1分10件(qa-093・具体値は qa-094 の但し書き)。状態変更APIは Origin を検査する。
 
 ## Data and secret protection
 
@@ -249,7 +250,7 @@ refresh token は AES-256-GCM(Web Crypto)で暗号化。鍵は Workers Secrets �
 
 ## Detection and response
 
-Workers Logs、収集失敗の collection_status、削除の再試行。連携解除時は Google revoke を呼びトークンを削除。字幕トグルOFF時も force-ssl を含むトークンを revoke する。設定・連携・トークン・削除の操作は audit_log に残す。
+Workers Logs、収集失敗の collection_status、削除の再試行。連携解除時は Google revoke を呼びトークンを削除。字幕トグルOFF時も force-ssl を含むトークンを revoke する。設定・連携・トークン・削除の操作と、AI分析の依頼・取込・取消・アーカイブ・アクション登録は audit_log に残す。
 
 ## Security verification
 

@@ -1,0 +1,1002 @@
+{
+  "api_version": 1,
+  "generated_at": "2026-09-01T00:30:00.000Z",
+  "request": {
+    "request_id": "A-0001",
+    "period_start": "2026-08-03",
+    "period_end": "2026-08-30",
+    "instruction": "週次ファネルの改善候補を確認したい",
+    "status": "実行中"
+  },
+  "channel": {
+    "channel_id": "UC_fixture_channel",
+    "title": "フィクスチャチャンネル"
+  },
+  "next_version": 2,
+  "idempotency_key": "A-0001:v2",
+  "rows": [
+    {
+      "source": "api",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 577
+    },
+    {
+      "source": "api",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 677
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-03",
+      "video_id": null,
+      "metric": "closed_deals",
+      "value": 2
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-03",
+      "video_id": null,
+      "metric": "inquiries",
+      "value": 6
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-03",
+      "video_id": null,
+      "metric": "revenue_jpy",
+      "value": 480000
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-03",
+      "video_id": null,
+      "metric": "route_visits",
+      "value": 26
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "ctr",
+      "value": 4.6
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "duration_sec",
+      "value": 720
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "engaged_views",
+      "value": 470
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "impressions",
+      "value": 6200
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "publish_days",
+      "value": 60
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "subscribers",
+      "value": 12
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "unique_reach",
+      "value": 9100
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "unique_viewers",
+      "value": 500
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 540
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_a",
+      "metric": "watch_hours",
+      "value": 26.1
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "ctr",
+      "value": 4.9
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "duration_sec",
+      "value": 960
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "engaged_views",
+      "value": 560
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "impressions",
+      "value": 7400
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "publish_days",
+      "value": 30
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "subscribers",
+      "value": 15
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "unique_reach",
+      "value": 10400
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "unique_viewers",
+      "value": 600
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 640
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-03",
+      "video_id": "v_long_b",
+      "metric": "watch_hours",
+      "value": 55.3
+    },
+    {
+      "source": "api",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 557
+    },
+    {
+      "source": "api",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 697
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-10",
+      "video_id": null,
+      "metric": "closed_deals",
+      "value": 2
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-10",
+      "video_id": null,
+      "metric": "inquiries",
+      "value": 7
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-10",
+      "video_id": null,
+      "metric": "revenue_jpy",
+      "value": 500000
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-10",
+      "video_id": null,
+      "metric": "route_visits",
+      "value": 28
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "ctr",
+      "value": 4.5
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "duration_sec",
+      "value": 720
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "engaged_views",
+      "value": 455
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "impressions",
+      "value": 6000
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "publish_days",
+      "value": 60
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "subscribers",
+      "value": 10
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "unique_reach",
+      "value": 8900
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "unique_viewers",
+      "value": 480
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 520
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_a",
+      "metric": "watch_hours",
+      "value": 25
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "ctr",
+      "value": 4.8
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "duration_sec",
+      "value": 960
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "engaged_views",
+      "value": 575
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "impressions",
+      "value": 7700
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "publish_days",
+      "value": 30
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "subscribers",
+      "value": 16
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "unique_reach",
+      "value": 10800
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "unique_viewers",
+      "value": 615
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 660
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-10",
+      "video_id": "v_long_b",
+      "metric": "watch_hours",
+      "value": 57
+    },
+    {
+      "source": "api",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 542
+    },
+    {
+      "source": "api",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 687
+    },
+    {
+      "source": "api",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "views",
+      "value": 397
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-17",
+      "video_id": null,
+      "metric": "closed_deals",
+      "value": 3
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-17",
+      "video_id": null,
+      "metric": "inquiries",
+      "value": 8
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-17",
+      "video_id": null,
+      "metric": "revenue_jpy",
+      "value": 720000
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-17",
+      "video_id": null,
+      "metric": "route_visits",
+      "value": 29
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "ctr",
+      "value": 4.4
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "duration_sec",
+      "value": 720
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "engaged_views",
+      "value": 440
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "impressions",
+      "value": 5900
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "publish_days",
+      "value": 60
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "subscribers",
+      "value": 9
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "unique_reach",
+      "value": 8700
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "unique_viewers",
+      "value": 470
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 505
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_a",
+      "metric": "watch_hours",
+      "value": 24.3
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "ctr",
+      "value": 4.6
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "duration_sec",
+      "value": 960
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "engaged_views",
+      "value": 565
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "impressions",
+      "value": 7600
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "publish_days",
+      "value": 30
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "subscribers",
+      "value": 14
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "unique_reach",
+      "value": 10700
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "unique_viewers",
+      "value": 605
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 650
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_b",
+      "metric": "watch_hours",
+      "value": 55.1
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "ctr",
+      "value": 4.9
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "duration_sec",
+      "value": 840
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "engaged_views",
+      "value": 318
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "impressions",
+      "value": 4100
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "publish_days",
+      "value": 12
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "subscribers",
+      "value": 7
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "unique_reach",
+      "value": 6000
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "unique_viewers",
+      "value": 330
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "views",
+      "value": 360
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-17",
+      "video_id": "v_long_c",
+      "metric": "watch_hours",
+      "value": 26.9
+    },
+    {
+      "source": "api",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 527
+    },
+    {
+      "source": "api",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 647
+    },
+    {
+      "source": "api",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "views",
+      "value": 417
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-24",
+      "video_id": null,
+      "metric": "closed_deals",
+      "value": 2
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-24",
+      "video_id": null,
+      "metric": "inquiries",
+      "value": 8
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-24",
+      "video_id": null,
+      "metric": "revenue_jpy",
+      "value": 470000
+    },
+    {
+      "source": "business_csv",
+      "period": "2026-08-24",
+      "video_id": null,
+      "metric": "route_visits",
+      "value": 30
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "ctr",
+      "value": 4.2
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "duration_sec",
+      "value": 720
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "engaged_views",
+      "value": 430
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "impressions",
+      "value": 5800
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "publish_days",
+      "value": 60
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "subscribers",
+      "value": 8
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "unique_reach",
+      "value": 8600
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "unique_viewers",
+      "value": 455
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "views",
+      "value": 490
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_a",
+      "metric": "watch_hours",
+      "value": 23.2
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "ctr",
+      "value": 4.3
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "duration_sec",
+      "value": 960
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "engaged_views",
+      "value": 530
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "impressions",
+      "value": 7300
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "publish_days",
+      "value": 30
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "subscribers",
+      "value": 12
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "unique_reach",
+      "value": 10300
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "unique_viewers",
+      "value": 570
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "views",
+      "value": 610
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_b",
+      "metric": "watch_hours",
+      "value": 51
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "ctr",
+      "value": 4
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "duration_sec",
+      "value": 840
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "engaged_views",
+      "value": 330
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "impressions",
+      "value": 4600
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "publish_days",
+      "value": 12
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "subscribers",
+      "value": 6
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "unique_reach",
+      "value": 6500
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "unique_viewers",
+      "value": 350
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "views",
+      "value": 380
+    },
+    {
+      "source": "studio_csv",
+      "period": "2026-08-24",
+      "video_id": "v_long_c",
+      "metric": "watch_hours",
+      "value": 27.5
+    }
+  ],
+  "targets": [
+    {
+      "metric_id": "impressions",
+      "effective_from": "2026-07-01",
+      "target_value": 15000,
+      "min_sample": 1000
+    },
+    {
+      "metric_id": "ctr",
+      "effective_from": "2026-07-01",
+      "target_value": 5,
+      "min_sample": 1000
+    },
+    {
+      "metric_id": "m1",
+      "effective_from": "2026-07-01",
+      "target_value": 35,
+      "min_sample": 100
+    },
+    {
+      "metric_id": "lead_route_rate",
+      "effective_from": "2026-07-01",
+      "target_value": 1.5,
+      "min_sample": 500
+    },
+    {
+      "metric_id": "inquiry_close_rate",
+      "effective_from": "2026-07-01",
+      "target_value": 25,
+      "min_sample": 3
+    }
+  ],
+  "analysis_history": [
+    {
+      "version": 1,
+      "report_id": "r_fixture_v1",
+      "request_id": "A-0000",
+      "analyzed_at": "2026-08-03T01:00:00.000Z",
+      "period": {
+        "start": "2026-07-06",
+        "end": "2026-08-02"
+      },
+      "conclusion": "流入段（CTR）が目標との差が最も大きい改善候補でした。",
+      "outcome": "改善候補あり",
+      "candidate": {
+        "stage": "流入",
+        "metric": "ctr"
+      },
+      "factors": [
+        {
+          "title": "クリック率が目標未達",
+          "stage": "流入",
+          "metric": "ctr"
+        }
+      ],
+      "hypotheses": [
+        {
+          "hypothesis_id": "H1",
+          "title": "最大の改善候補の指標は、判定できた週の半分以上で目標を下回っている",
+          "verdict": "保留"
+        },
+        {
+          "hypothesis_id": "H2",
+          "title": "最大の改善候補の未達は、対象週だけの一時的な下振れである",
+          "verdict": "保留"
+        }
+      ],
+      "actions": [
+        {
+          "action_id": "act_fixture_1",
+          "title": "サムネイルの文字量を減らす",
+          "stage": "流入",
+          "metric": "ctr",
+          "baseline": 4.4,
+          "result": null,
+          "status": "効果測定中",
+          "judgement": null
+        }
+      ],
+      "downstream": {
+        "inquiries": 6,
+        "closed_deals": 2,
+        "revenue_jpy": 450000,
+        "subscribers": 30
+      }
+    }
+  ],
+  "action_effects": [
+    {
+      "action_id": "act_fixture_1",
+      "report_id": "r_fixture_v1",
+      "title": "サムネイルの文字量を減らす",
+      "stage": "流入",
+      "metric": "ctr",
+      "baseline_value": 4.4,
+      "target_value": 5,
+      "result_value": null,
+      "status": "効果測定中",
+      "created_at": "2026-08-03T01:05:00.000Z"
+    }
+  ]
+}

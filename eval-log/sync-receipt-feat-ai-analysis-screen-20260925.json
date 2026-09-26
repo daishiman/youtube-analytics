@@ -1,0 +1,50 @@
+{
+ "generated_at": "2026-09-24T23:03:49Z",
+ "binding": "beads",
+ "authority": "C28 bd-bridge only (GitHub mutation 0)",
+ "workspace_id": "bdw_fed24357d2d6746d79913637",
+ "feature_id": "feat-ai-analysis-screen",
+ "plan": {
+  "imports": 0,
+  "exports": {
+   "created_issues": 14,
+   "created_edges": 15
+  },
+  "conflicts": 0,
+  "tombstones": 0,
+  "pending_retry": 0,
+  "done_transitions": 0
+ },
+ "mutations": [
+  {
+   "op": "create projection",
+   "authorization": ".artifact-delivery/external-mutation/authorization-74498b55*",
+   "result": "epic yta-c0a + yta-c0a.1..13, 機能内 blocks edge 12, parity 13/13 confirmed"
+  },
+  {
+   "op": "dep-add yta-c0a→yta-ufd",
+   "authorization": ".artifact-delivery/external-mutation/authorization-a4e39e3b*",
+   "result": "added"
+  },
+  {
+   "op": "dep-add yta-c0a→yta-7o5",
+   "authorization": ".artifact-delivery/external-mutation/authorization-a1905be1d2f44b1ea17d931c45c16e78.json",
+   "result": "added"
+  },
+  {
+   "op": "dep-add yta-c0a→yta-rh8",
+   "authorization": ".artifact-delivery/external-mutation/authorization-90e03d9fd9984172b72f285dbeab38aa.json",
+   "result": "added"
+  }
+ ],
+ "second_pass": {
+  "method": "graph depends_on と bd show の blocks edge / issue 実在を14 node 突合 (read-only)",
+  "changes": 0
+ },
+ "snapshot": {
+  "path": ".dev-graph/state/beads/sync-snapshot.json",
+  "graph_revision": 11,
+  "nodes": 61,
+  "digest": "sha256:e466864dcb2ff1c6754aa8c6b8e33f0f7458a7e8b59627aee37b869081c09096"
+ }
+}

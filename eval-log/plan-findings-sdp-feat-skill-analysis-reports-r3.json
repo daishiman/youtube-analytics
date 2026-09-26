@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0.0",
+  "plan_dir": ".dev-graph/staging/sdp-feat-skill-analysis-reports-r1",
+  "evaluated_digest": "sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+  "evaluator": {
+    "name": "assign-system-dev-plan-evaluator",
+    "version": "1.0.0",
+    "context": "fork"
+  },
+  "verdict": "PASS",
+  "conditions": {
+    "C1": {
+      "id": "C1",
+      "status": "PASS",
+      "summary": "r2のhigh finding(I5/qa-095が要求する『スキルが依頼を作ってから分析する』経路の実装先がSAR・AIAいずれにも存在しない)は解消した。goal-spec.json#source_lineage.weekly_run_boundary_noteが新設され、launchd週次実行の分担を『SARは.claude/skills/yt-analyze/を排他write_scopeとして持ち、request_id無し起動時に個人トークンでPOST /api/skill/requestsを呼んで依頼を作成してからexportへ進むクライアント側分岐もSARが実装する。エンドポイント本体(個人トークン検証・created_via=\\'skill\\'・content.write喪失時403)はfeat-ai-analysis-screen(SYS-AIA-P05のsrc/)が持つ』と明記した。P01(要求仕様の対応表)・P02(呼出し契約の設計)・P03(呼出しが正しくAIAのエンドポイントへ向かう設計のレビュー)・P05(.claude/skills/yt-analyze/のrequest_id無し起動分岐の実装、AIAのエンドポイント本体はSARのsrc/に作らないことの明記)・P08/P12/P13(運用前提・release-condition)まで、全phaseでこの分担が一貫した文言で維持されている。AIA側(.dev-graph/published/feature-package-feat-ai-analysis-screen、manifest外の参考資料)の goal-spec.json #scope_in にはPOST /api/skill/requestsのエンドポイント本体(個人トークン・created_via=\\'skill\\'・content.write喪失時403)が明記され、SYS-AIA-P05の成果物(src/http/ の分析関連ルート、src/usecases/ の分析関連usecase)がこれを実装する前提と矛盾しない。SAR・AIA両方のwrite_scopeを比較しても、.claude/skills/yt-analyze/はSARのみが持ち、AIAのwrite_scope(web/, src/, migrations/, public/privacy.html, public/terms.html)には含まれず、二重実装や排他矛盾は検出しなかった。",
+      "evidence": [
+        "task-specs/phase-01-requirements.md#目的",
+        "task-specs/phase-02-architecture.md#目的",
+        "task-specs/phase-03-design-review.md#Verification and evidence",
+        "task-specs/phase-05-implementation.md#成果物",
+        "task-specs/phase-08-refactoring-migration.md#背景",
+        "task-specs/phase-12-documentation-operations.md#目的",
+        "workstream-inventory.json",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C2": {
+      "id": "C2",
+      "status": "PASS",
+      "summary": "P01..P13 exact-setが揃い(gate:deterministic-validation)、必須sectionは非空でplaceholderは検出しなかった。acceptance 12項目とP04/P06/P07の検証手段は同一12行の対応表で1対1に対応しており、特に#10(analysis.mjs再実行との数値一致、verify-analysis-reproducibility.mjs)・#11(因果断定文0件、check-report.mjsのCAUSAL_HEDGE/E21/E08とcheck-no-causal-language.mjs)・#12(diff -rで無改変、check-rds-unmodified.mjs)はスクリプト名・判定基準まで一致している。r2のhigh findingだった『request_id無し起動時の依頼自動作成』は、SAR側(/yt-analyzeのクライアント分岐・P05)とAIA側(エンドポイント本体・SYS-AIA-P05)の両方に実装単位として写像された。P04のテストにはtests/skill-analysis/fixtures/skill-requests-stub-server.mjsを使い、AIAのエンドポイントが無くてもクライアント分岐を検証できる設計があり、見えない要件の実装漏れは検出しなかった。認証境界(セッション+content.writeの/api/analysis-requestsとBearer個人トークンの/api/skill/*)はP01・P02・P03で明示的に分離され、混同する経路が存在しないことをレビュー項目としている。",
+      "evidence": [
+        "task-specs/phase-04-test-design.md#Verification and evidence(#1,#10,#11,#12行)",
+        "task-specs/phase-06-test-run.md",
+        "task-specs/phase-07-acceptance.md",
+        "task-specs/phase-01-requirements.md#背景",
+        "task-specs/phase-02-architecture.md#Verification and evidence",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C3": {
+      "id": "C3",
+      "status": "PASS",
+      "summary": "feature-package.json/workstream-inventory.json/task-graph.json/system-build-handoff.jsonは全て同一13件・同一phase_ref・同一feature_package_id(feature-package/feat-skill-analysis-reports)/parent_feature(feat-skill-analysis-reports)/repository_id(github:daishiman/youtube-analytics)で一致した。staging-manifest.json記載のfiles 17件全てのsha256を実ファイルから再計算し、記載値と完全一致した(本評価が独自に再計算した値)。validate-system-plan.pyのvalidated_digest(sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906)はstaging-manifest.json#canonical_digestおよび依頼書記載の期待digestと完全一致する。P05/P08のmigrations暫定番号(0011〜0015)と確定規則(『実装着手時にorigin/mainと依存feature作業ブランチのmigrations/を再走査し最大番号+1から連番で採番し直し、renumberの記録を残す』)は両phaseで一言一句同じ文言のまま維持されている。skill_tokensはsrc/usecases/skill-tokens.tsとmigrations/0001_platform.sqlの既存実装を再利用する設計のままで、二重実装は見当たらない。report-design-systemはP01〜P13のいずれのWrite scopeにも含まれず、write_scope外に保たれている。",
+      "evidence": [
+        "staging-manifest.json",
+        "feature-package.json",
+        "workstream-inventory.json",
+        "task-graph.json",
+        "system-build-handoff.json",
+        "task-specs/phase-05-implementation.md#Architecture and deploy unit",
+        "task-specs/phase-08-refactoring-migration.md#Architecture and deploy unit",
+        "gate:deterministic-validation"
+      ]
+    },
+    "C4": {
+      "id": "C4",
+      "status": "PASS",
+      "summary": "task-graph.jsonのnode/edgeはP01→P02→…→P10→{P11,P12}→P13の前向きDAGで、機械的な循環・後方edge・cross-feature task参照は検出しなかった(gate:deterministic-validation)。r2のC4 FAILは『launchd週次実行の成立に不可欠な依頼自動作成の依存先がどの package のDAG/lineageにも実在しない』ことが理由だったが、今回はgoal-spec.json#source_lineage.weekly_run_boundary_noteが機能依存の分担と方向(『dev-graphの機能依存はAIA→SARの向きであり、SAR→AIAの依存は追加しない』)を明記し、P13でも『feature間のDAG上の依存edgeは追加しない(AIAが既にSARへ依存しているため逆方向のedgeは循環を生む)』と一貫して説明している。dependency_note自体はfeat-youtube-daily-collection/feat-csv-media-ingestのみを前提境界として挙げたままだが、weekly_run_boundary_noteという別フィールドでfeat-ai-analysis-screenへの機能依存(本番launchd有効化の運用前提)が明示され、r2 lowで指摘した機能依存の未接地は実質的に解消した。P12のrunbook受入項目も『本番launchctl bootstrap有効化はAIAのエンドポイント出荷後の運用前提条件であること(DAG上のdepends_onではなく運用手順上の前提として)』を明記しており、宣言と実装計画が一致する。",
+      "evidence": [
+        "task-graph.json",
+        "task-specs/phase-05-implementation.md#背景",
+        "task-specs/phase-08-refactoring-migration.md#背景",
+        "task-specs/phase-12-documentation-operations.md#Verification and evidence",
+        "task-specs/phase-13-release-deploy.md#背景",
+        "gate:deterministic-validation"
+      ]
+    }
+  },
+  "gate_results": [
+    {
+      "id": "deterministic-validation",
+      "name": "validate-system-plan",
+      "command": [
+        "python3",
+        "/Users/dm/dev/dev/個人開発/harness/marketplaces/local/plugins/system-dev-planner/scripts/validate-system-plan.py",
+        "--repo-root",
+        "/Users/dm/orca/workspaces/YouTube分析/03ai分析",
+        "--staging",
+        ".dev-graph/staging/sdp-feat-skill-analysis-reports-r1"
+      ],
+      "exit_code": 0,
+      "conditions": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "stdout": "{\n  \"schema_version\": \"1.0.0\",\n  \"status\": \"pass\",\n  \"validated_digest\": \"sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906\",\n  \"feature_package_id\": \"feature-package/feat-skill-analysis-reports\",\n  \"parent_feature\": \"feat-skill-analysis-reports\",\n  \"phase_refs\": [\n    \"P01\",\n    \"P02\",\n    \"P03\",\n    \"P04\",\n    \"P05\",\n    \"P06\",\n    \"P07\",\n    \"P08\",\n    \"P09\",\n    \"P10\",\n    \"P11\",\n    \"P12\",\n    \"P13\"\n  ],\n  \"violations\": []\n}",
+      "stderr": ""
+    }
+  ],
+  "evaluated_inputs": [
+    {
+      "path": "feature-package.json",
+      "sha256": "16c0e332c7ff71cecb2837fbe70c13aca2b2f16067c98844cc2715f533de9054"
+    },
+    {
+      "path": "system-build-handoff.json",
+      "sha256": "058c3d1f78c7afa1bbf62d0b5d3ec43e9ff35d7a3c3b199838894a3cf9e1ba0b"
+    },
+    {
+      "path": "task-graph.json",
+      "sha256": "e895ba9c3230e33939cfc98b17fd2f25b10a59ca9dd490490ea107ddabeae87a"
+    },
+    {
+      "path": "task-specs/phase-01-requirements.md",
+      "sha256": "077694b551dc788de5f3d41d7017054eab8b45c82a5dd665edc16d7a8d957276"
+    },
+    {
+      "path": "task-specs/phase-02-architecture.md",
+      "sha256": "dd1dc941975138361f07f8456a2247c38aa685d3652554633354af9b0bce9147"
+    },
+    {
+      "path": "task-specs/phase-03-design-review.md",
+      "sha256": "2e3254a7ff1a7e06a6cb0d2b9d1d1a64b86828d3c1a3bd19b51f828acf0da604"
+    },
+    {
+      "path": "task-specs/phase-04-test-design.md",
+      "sha256": "d585a7db3597d89488b284c2c2ea97aa969bb8bce2114ad5ed2210e4c71c756d"
+    },
+    {
+      "path": "task-specs/phase-05-implementation.md",
+      "sha256": "24367644b2005d7418f56d9f3fd0b5a08951025c1b692b695ef9e96592ad7fae"
+    },
+    {
+      "path": "task-specs/phase-06-test-run.md",
+      "sha256": "ab09e4401b7619fde85f85ced38aa6af74ad1937c4dad89d89d37d4abe124505"
+    },
+    {
+      "path": "task-specs/phase-07-acceptance.md",
+      "sha256": "82bce167c61c30519494731bab8115e51307e5e37a2554de4c32b1144e802bbd"
+    },
+    {
+      "path": "task-specs/phase-08-refactoring-migration.md",
+      "sha256": "bd14acdab1048e018638cf655259ffa3a5918c658dfbdc1da3fd40f5460caa3f"
+    },
+    {
+      "path": "task-specs/phase-09-quality-assurance.md",
+      "sha256": "8f16ba2a00a6d51634d0e5f3bfcc98e3e9b53299603be27d711e2f305f21f92c"
+    },
+    {
+      "path": "task-specs/phase-10-final-review.md",
+      "sha256": "2385f28f6f50ff7b62bcf50a48de16a2c9bfe33c1434a6e5b3409117191bb779"
+    },
+    {
+      "path": "task-specs/phase-11-evidence.md",
+      "sha256": "c8d66feeae262ae972e5a369ff43ddb9f545817b15178b77a3708c333d4d3003"
+    },
+    {
+      "path": "task-specs/phase-12-documentation-operations.md",
+      "sha256": "7e089488f58a83135dff2fd1492050aba3912351ab125f35e79e9fb6e2b00f59"
+    },
+    {
+      "path": "task-specs/phase-13-release-deploy.md",
+      "sha256": "02cc478be54a1384567d50ad90211ef0d403601552b8516cff8e88cad0ad26aa"
+    },
+    {
+      "path": "workstream-inventory.json",
+      "sha256": "03febd6a30beda43fd73bcf9aea07c072e23fa5f40cd0cef3c4e437c80db825e"
+    },
+    {
+      "path": "staging-manifest.json",
+      "sha256": "08b2f673c7791ac7b4bd1e6959e88caaeab6fd3be72d5d718acf36c41f987a4a"
+    }
+  ],
+  "staleness_rule": "本評価はstaging-manifest.jsonのcanonical_digest(sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906)に対してのみ有効である。staging配下のいずれかのファイルが変更されdigestが再計算された場合、このplan-findings.jsonは無効(stale)とみなし、同一digestで再評価するまでpromotionに使用してはならない。",
+  "findings": [
+    {
+      "severity": "low",
+      "bucket": "cross-package-scope-wording-ambiguity",
+      "observation": "下流の.dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#scope_inの1項目が『スキル連携APIの差分: …POST /api/skill/requests(…)と /yt-analyze の request_id 無し起動時の依頼自動作成』という文言で、AIAの担当範囲として『/yt-analyzeの…依頼自動作成』を挙げている。本feature(SAR)のgoal-spec.json#source_lineage.weekly_run_boundary_noteは『.claude/skills/yt-analyze/の排他write_scopeと、request_id無し起動時のクライアント側分岐はSARが実装する』と明記しており、AIA側のwrite_scope(web/, src/, migrations/, public/privacy.html, public/terms.html)にも.claude/skills/yt-analyze/は実際には含まれず、AIAのtask-specs(phase-05等)にも/yt-analyzeの実装は現れない。したがって実際のwrite_scope・成果物レベルでは二重実装や排他矛盾は生じていないが、AIAのgoal-spec.jsonの自然文だけを読むと『/yt-analyzeの依頼自動作成』をAIA自身が実装するように読める余地があり、将来の読者が実装境界を誤解するリスクがある。次回AIA側の改訂時にscope_inの当該文言を『POST /api/skill/requestsのエンドポイント本体(呼出し元の/yt-analyzeはfeat-skill-analysis-reportsが実装する)』のように明確化することを推奨する。",
+      "evidence": [
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json#scope_in",
+        "goal-spec.json#source_lineage.weekly_run_boundary_note",
+        ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md#Write scope",
+        "task-specs/phase-05-implementation.md#Write scope"
+      ]
+    },
+    {
+      "severity": "low",
+      "bucket": "traceability-dependency-declaration",
+      "observation": "goal-spec.json#source_lineage.dependency_noteは従来どおりfeat-youtube-daily-collectionとfeat-csv-media-ingestのみを前提境界として挙げており、r2 lowが指摘したfeat-ai-analysis-screenへの機能依存はこのフィールド自体には追記されていない。今回新設されたweekly_run_boundary_noteが実質的に同じ情報(機能依存の内容・方向・運用前提)をより詳しく記載しているため実害はないが、依存関係の宣言が2つのフィールド(dependency_noteとweekly_run_boundary_note)に分散しており、将来dependency_noteだけを見た読者がfeat-ai-analysis-screenへの機能依存を見落とす可能性が残る。dependency_noteの本文か直後に『weekly_run_boundary_noteを参照』という一文を追加するか、機能依存の対象featureをdependency_note自体にも列挙することを推奨する。",
+      "evidence": [
+        "goal-spec.json#source_lineage.dependency_note",
+        "goal-spec.json#source_lineage.weekly_run_boundary_note"
+      ]
+    }
+  ]
+}

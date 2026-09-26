@@ -1,0 +1,22 @@
+{
+  "receipt_kind": "id-renumber-for-merge",
+  "graph_node_id": "feat-ai-analysis-screen",
+  "beads_id": "yta-c0a",
+  "recorded_at": "2026-09-25T02:30:00Z",
+  "reason": "計画時（tasks/feat-ai-analysis-screen）の暫定番号 0008〜0010 は、先に実装した feat-skill-analysis-reports が 0008〜0012 で使った。AIA の変更は SAR の表（analysis_requests・reports・actions）を前提にするため、その後ろの 0013〜0015 へ振り直した",
+  "mapping": {
+    "migrations": {
+      "0008_analysis_requests_extension.sql": "0013_analysis_requests_extension.sql",
+      "0009_report_archives.sql": "0014_report_archives.sql",
+      "0010_actions_source_report.sql": "0015_actions_source_report.sql"
+    }
+  },
+  "related": "eval-log/renumber-receipt-feat-skill-analysis-reports-20260925.json",
+  "not_rewritten": [
+    ".dev-graph/published/**（digest 固定の公開 package）",
+    ".dev-graph/state/receipts/**・.dev-graph/handoffs/**",
+    "tasks/**（計画時の暫定番号のまま。本 receipt の mapping で読み替える）",
+    "eval-log/** の過去の記録",
+    "Beads issue の本文"
+  ]
+}

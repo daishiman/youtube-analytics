@@ -1,6 +1,8 @@
 // 「YouTube連携」区画の先頭: テナントの Google Cloud OAuth クライアント（qa-087）。
 // 連携の OAuth はこのクライアントで行う（ログインはアプリ共通のまま）。シークレットは送るだけで、画面には戻らない
+
 import { type FormEvent, useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { api, type GoogleClientSummary } from "../../api";
 import { formatDateTime } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -202,7 +204,7 @@ export function GoogleClientPanel({
         </div>
       ) : (
         !client.configured && (
-          <p className="small muted">接続情報はワークスペースのオーナーが登録します。</p>
+          <p className="small muted">接続情報は{TENANT_LABEL}のオーナーが登録します。</p>
         )
       )}
 

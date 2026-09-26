@@ -1,4 +1,5 @@
 // YouTube の連携が未完了のときの案内。連携操作はオーナーだけが行える
+import { TENANT_LABEL } from "../../src/domain/labels";
 import type { TenantSummary } from "../api";
 
 export function YouTubeLinkBanner({ tenant }: { tenant: TenantSummary }) {
@@ -16,8 +17,8 @@ export function YouTubeLinkBanner({ tenant }: { tenant: TenantSummary }) {
               ? "YouTube の読み取り連携がまだありません。「連携する」から許可してください。"
               : "YouTube の読み取り連携を完了できていません。「再連携」からやり直してください。"
             : status === "none"
-              ? "ワークスペースのオーナーに YouTube の連携を依頼してください。"
-              : "ワークスペースのオーナーに YouTube の再連携を依頼してください。"}
+              ? `${TENANT_LABEL}のオーナーに YouTube の連携を依頼してください。`
+              : `${TENANT_LABEL}のオーナーに YouTube の再連携を依頼してください。`}
         </p>
       </div>
       {tenant.role === "owner" && (

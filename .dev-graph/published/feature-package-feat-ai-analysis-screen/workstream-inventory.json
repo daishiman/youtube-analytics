@@ -1,0 +1,1173 @@
+{
+  "schema_version": "1.0.0",
+  "feature_package_id": "feature-package/feat-ai-analysis-screen",
+  "parent_feature": "feat-ai-analysis-screen",
+  "repo_context": {
+    "config_path": ".dev-graph/config.json",
+    "repo_identity": "github:daishiman/youtube-analytics",
+    "root_resolution_source": "explicit-cli"
+  },
+  "source_lineage": {
+    "source_plugin": "system-spec-harness",
+    "source_version": "0.1.0",
+    "compile_entrypoint": "run-system-spec-compile",
+    "completeness_entrypoint": "assign-system-spec-completeness-evaluator",
+    "source_paths": [
+      "system-spec/index.md",
+      "system-spec/00-requirements-definition.md",
+      "system-spec/ui-ux.md",
+      "system-spec/frontend.md",
+      "system-spec/backend.md",
+      "system-spec/auth.md",
+      "system-spec/security.md",
+      "system-spec/database.md",
+      "system-spec/maintenance-ops.md"
+    ],
+    "confirmed": true
+  },
+  "tasks": [
+    {
+      "id": "SYS-AIA-P01",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "AI分析画面の要件を実装単位へ確定",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p01",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P01",
+      "depends_on": [],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/requirements.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P01 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "features/feat-ai-analysis-screen.md の scope_in 14項目と acceptance 13項目のすべてに、requirements.md 上で根拠章・区画/API・検証方法が1対1で対応している",
+        "qa-089〜qa-097・appr-015・appr-016 の裏付け質疑がそれぞれどの受入項目の根拠かを requirements.md の対応表に明記している",
+        "docs/analysis/dashboard-analysis-catalog.md §6 の JSON 形(brief/results/history_review/psych_findings/ideas/actions/report_html)を取込先の正本として requirements.md に固定している"
+      ],
+      "verification": [
+        "requirements.md の対応表の行数が scope_in14件+acceptance13件=27件と一致することを目視確認する",
+        "requirements.md 内の qa-番号参照がすべて system-spec/00-requirements-definition.md・backend.md・ui-ux.md に実在することを grep で確認する"
+      ],
+      "rollback": "requirements.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P01",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P01"
+      }
+    },
+    {
+      "id": "SYS-AIA-P02",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "AnalysisPage・分析API・DB拡張の設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p02",
+        "api",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "api",
+      "build_target_kind": "application-code",
+      "phase_ref": "P02",
+      "depends_on": [
+        "SYS-AIA-P01"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/architecture.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P02 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "全 API(画面用・レポート用・スキル連携差分)が TenantContext 必須の設計になっており、他テナントの依頼・レポートIDが404になる設計を持つ",
+        "analysis_requests の一方向遷移(待機中→実行中→完了|失敗|取消)と終端不変(qa-089)を集約内不変条件として設計している",
+        "ProgressBar・DateRangePicker の共通部品化と URL 状態(?request=、?report=&v=、?period=custom&from=&to=)の設計がある",
+        "共通部品の色指定が既存 CSS 変数名だけで記述されている(qa-080)"
+      ],
+      "verification": [
+        "architecture.md の API 一覧が scope_in の画面用API・レポートAPI・スキル連携API差分と過不足なく一致することを確認する"
+      ],
+      "rollback": "architecture.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P02",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P02"
+      },
+      "secondary_workstreams": [
+        "frontend",
+        "data",
+        "backend",
+        "security"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P03",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "取消・409・権限境界・監査ログの設計レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p03",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P03",
+      "depends_on": [
+        "SYS-AIA-P02"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/design-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P03 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "取消済み依頼への PATCH /api/skill/requests/:id と POST /api/skill/reports が409 REQUEST_CANCELEDになる設計をレビューで確認している(qa-089)",
+        "content.write(owner/editor)以外の書込403・他テナント404・Origin検査・1ユーザー1分10件の429・取込2,000,000 bytes上限・各操作のaudit_log記録の設計に high の是正事項が0件、またはP05の実装範囲へ取り込み済みである",
+        "POST /api/skill/requests の発行者が content.write を失った場合に403になる設計をレビューしている(qa-095)"
+      ],
+      "verification": [
+        "design-review.md のレビュー表の全行に判定と根拠がある"
+      ],
+      "rollback": "design-review.md を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P03",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P03"
+      },
+      "secondary_workstreams": [
+        "api"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P04",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "受入テスト・状態遷移テスト・3サイズE2Eの設計",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p04",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P04",
+      "depends_on": [
+        "SYS-AIA-P03"
+      ],
+      "write_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "docs/feat-ai-analysis-screen/test-design.md"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P04 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入13項目それぞれに少なくとも1つのテストケースがある",
+        "analysis_requests の一方向遷移・終端不変・409 REQUEST_CANCELED・429・422 INVALID_REPORT_JSON・UNIQUE(tenant_id,source_report_id,source_key)二重登録防止の各テストケースが揃っている(qa-089〜qa-091)",
+        "qa-092(取込先の request_id 未指定時の挙動)を独立したテストケースとして検証する。request_id 指定時はその依頼が完了になること、未指定時は完了済み依頼が1件作られ created_via='import' になることの両方をそれぞれ検証する",
+        "ポーリングの開始・停止を個別のテストケースとして検証する。待機中・実行中の行が0件なら停止すること、document.visibilityState=hidden の間は停止すること、visible に戻ると再開すること、取得間隔が10秒であることをそれぞれ検証する",
+        "幅900px未満の表示切替を個別のテストケースとして検証する。2カラムが縦に積まれること、表がカードになること、下部バーが下部タブの上に固定されることを、それぞれ390×844と820×1180の両サイズで検証する",
+        "Playwright の390×844/820×1180/1440×900の3サイズで依頼→コピー→取込→登録→比較→アーカイブのE2Eシナリオが定義されている"
+      ],
+      "verification": [
+        "pnpm test でテストが列挙され、実装前は失敗する"
+      ],
+      "rollback": "tests/analysis/ と e2e/analysis.spec.ts の追加分を削除する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P04",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P04"
+      },
+      "secondary_workstreams": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P05",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "AnalysisPage・分析/レポートAPI・DB拡張・表示語置換の実装",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p05",
+        "frontend",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "frontend",
+      "build_target_kind": "application-code",
+      "phase_ref": "P05",
+      "depends_on": [
+        "SYS-AIA-P04"
+      ],
+      "write_scope": [
+        "web/",
+        "src/",
+        "migrations/",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P05 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "P04 のテストがすべて通る",
+        "ページ固有の色指定が既存 CSS 変数以外0件である(qa-080)",
+        "利用者に見える画面・APIエラー・規約2ページに『ワークスペース』『テナント』が0件で『チャンネル管理』に揃っている(qa-096)"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local",
+        "pnpm exec playwright test e2e/analysis.spec.ts"
+      ],
+      "rollback": "機能ブランチの revert とローカル D1 の再作成",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P05",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P05"
+      },
+      "secondary_workstreams": [
+        "backend",
+        "api",
+        "data",
+        "security"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P06",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "テスト実行と不具合修正",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p06",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P06",
+      "depends_on": [
+        "SYS-AIA-P05"
+      ],
+      "write_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "src/",
+        "web/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P06 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "失敗0件・スキップ0件(P04のポーリング開始/停止テスト・900px未満の表示切替テスト・qa-092の単独テストケースを含む)",
+        "同じ版の同じアクションの二重登録0件(qa-091)、アーカイブ済み版のanalysis_history混入0件(qa-090)、request_id未指定取込での完了済み依頼1件作成・created_via='import'の実データ成立(qa-092)"
+      ],
+      "verification": [
+        "pnpm test -- --reporter=verbose",
+        "pnpm exec playwright test e2e/analysis.spec.ts"
+      ],
+      "rollback": "修正コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P06",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P06"
+      },
+      "secondary_workstreams": [
+        "frontend",
+        "backend"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P07",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "受入確認",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p07",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P07",
+      "depends_on": [
+        "SYS-AIA-P06"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/acceptance.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P07 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入13項目すべてが合格",
+        "goal-spec の invisible_requirements_added にあるポーリングの開始・停止条件(待機中・実行中0件で停止、hidden で停止、visible 復帰で再開、10秒間隔)と、幅900px未満の表示切替(2カラム縦積み・表のカード化・下部バー固定)が、preview 環境の手動確認で個別に合格している"
+      ],
+      "verification": [
+        "preview 環境で手動確認と自動テストの両方を記録"
+      ],
+      "rollback": "不合格項目を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P07",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P07"
+      }
+    },
+    {
+      "id": "SYS-AIA-P08",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "共通化の整理とマイグレーション整理",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p08",
+        "data",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "data",
+      "build_target_kind": "application-code",
+      "phase_ref": "P08",
+      "depends_on": [
+        "SYS-AIA-P07"
+      ],
+      "write_scope": [
+        "web/",
+        "src/",
+        "migrations/"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P08 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "振る舞い変更0件(P06 のテストが引き続き green)",
+        "空の D1 へ、その時点で確定しているマイグレーション番号(計画時点の暫定番号は0008〜0010)が依存 feature のマイグレーションに続く形で順に成功する",
+        "番号の重複検査を実行し、衝突がない、または衝突を付け替えて eval-log/renumber-receipt-feat-ai-analysis-screen-実施日.json に記録済みである"
+      ],
+      "verification": [
+        "pnpm test",
+        "npx wrangler d1 migrations apply DB --local を空 DB で実行"
+      ],
+      "rollback": "整理コミットを revert する",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P08",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P08"
+      },
+      "secondary_workstreams": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P09",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "セキュリティと品質の保証",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p09",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "security",
+      "build_target_kind": "application-code",
+      "phase_ref": "P09",
+      "depends_on": [
+        "SYS-AIA-P08"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/qa-report.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P09 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "high 以上の脆弱性0件",
+        "個人トークン平文・依頼プロンプト内のトークン平文がリポジトリとログに現れない",
+        "HTMLレポートの iframe に allow-scripts が付いていない"
+      ],
+      "verification": [
+        "pnpm lint",
+        "npx tsc --noEmit",
+        "pnpm audit --audit-level=high"
+      ],
+      "rollback": "qa-report.md の是正事項を P05 へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P09",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P09"
+      },
+      "secondary_workstreams": [
+        "quality"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P10",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "最終レビュー",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p10",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "quality",
+      "build_target_kind": "application-code",
+      "phase_ref": "P10",
+      "depends_on": [
+        "SYS-AIA-P09"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/final-review.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P10 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "scope_out に当たる変更0件(feat-skill-analysis-reports本体・feat-web-screens-actions本体・feat-settings-channel-linkの範囲を侵していない)",
+        "未解決のレビュー指摘0件"
+      ],
+      "verification": [
+        "git diff の全ファイルを scope_in と対応付ける"
+      ],
+      "rollback": "指摘を該当 phase へ差し戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P10",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P10"
+      }
+    },
+    {
+      "id": "SYS-AIA-P11",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "証跡の集約",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p11",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "documentation",
+      "build_target_kind": "application-code",
+      "phase_ref": "P11",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "write_scope": [
+        "evidence/feat-ai-analysis-screen/"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P11 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "受入13項目すべてに証跡がある"
+      ],
+      "verification": [
+        "index.json の全参照先ファイルが実在することを確認"
+      ],
+      "rollback": "index.json を直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P11",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P11"
+      }
+    },
+    {
+      "id": "SYS-AIA-P12",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "運用手順『AI分析の取消と再実行を扱う』とドキュメント",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p12",
+        "operations",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "operations",
+      "build_target_kind": "application-code",
+      "phase_ref": "P12",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "write_scope": [
+        "docs/feat-ai-analysis-screen/runbook.md",
+        "README.md"
+      ],
+      "deploy_unit": "documentation",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P12 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "初見の担当者が runbook だけで取消後の409調査・再実行・アーカイブ誤操作の復旧を行える"
+      ],
+      "verification": [
+        "runbook の手順を preview 環境で1回通す"
+      ],
+      "rollback": "ドキュメントを直前版へ戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P12",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P12"
+      },
+      "secondary_workstreams": [
+        "documentation"
+      ]
+    },
+    {
+      "id": "SYS-AIA-P13",
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "parent_feature": "feat-ai-analysis-screen",
+      "title": "CI/CD とリリース",
+      "owners": [
+        "daishiman"
+      ],
+      "tags": [
+        "p13",
+        "infrastructure",
+        "ai-analysis-screen"
+      ],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "workstream_kind": "infrastructure",
+      "build_target_kind": "application-code",
+      "phase_ref": "P13",
+      "depends_on": [
+        "SYS-AIA-P11",
+        "SYS-AIA-P12"
+      ],
+      "write_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "deploy_unit": "application",
+      "source_lineage": [
+        "system-spec/index.md",
+        "system-spec/00-requirements-definition.md",
+        "system-spec/ui-ux.md",
+        "system-spec/frontend.md",
+        "system-spec/backend.md",
+        "system-spec/auth.md",
+        "system-spec/security.md",
+        "system-spec/database.md",
+        "system-spec/maintenance-ops.md"
+      ],
+      "classification": {
+        "confidence": 0.95,
+        "reason": "P13 phase slot への 1対1 写像",
+        "candidates": [
+          {
+            "artifact_kind": "task",
+            "confidence": 0.95,
+            "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md"
+          }
+        ]
+      },
+      "tracker_binding_intent": "beads",
+      "github_publication": {
+        "mode": "local_only",
+        "project_aliases": [],
+        "labels": [],
+        "milestone": null
+      },
+      "pr_completion_policy": "linked_pr_merged_all",
+      "branch_policy": {
+        "strategy": "one-task-one-branch",
+        "worktree_lease_required": true,
+        "completion_projection": "default-branch-reconciliation",
+        "assignment_owner": "dev-graph-scheduler"
+      },
+      "acceptance": [
+        "main への push で、P08 時点で確定したマイグレーション番号(計画時点の暫定番号は0008〜0010)の適用と deploy が完了する",
+        "CI の migration 適用が、空 DB からの全件適用と既存 DB への差分適用の両方で通る",
+        "PR で lint/test/E2E が必須チェックになっている"
+      ],
+      "verification": [
+        "Actions の実行ログで migrations apply と deploy の成功を確認",
+        "CI で空 DB からの全マイグレーション適用と、既存 DB への差分マイグレーション適用の両方を実行し、いずれも成功する"
+      ],
+      "rollback": "直前の Workers バージョンへ wrangler rollback し、マイグレーションは前方修正で戻す",
+      "implementation_readiness": {
+        "status": "complete",
+        "missing_sections": [],
+        "checked_at": "2026-09-25T00:30:00Z"
+      },
+      "graph_node_registration": {
+        "graph_node_id": "SYS-AIA-P13",
+        "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md",
+        "parent_feature": "feat-ai-analysis-screen",
+        "feature_package_id": "feature-package/feat-ai-analysis-screen",
+        "phase_ref": "P13"
+      },
+      "secondary_workstreams": [
+        "operations"
+      ]
+    }
+  ]
+}

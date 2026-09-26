@@ -1,0 +1,47 @@
+{
+ "recorded_at": "2026-09-25T00:32:09Z",
+ "kind": "plan-findings-disposition",
+ "graph_revision": 14,
+ "decision": {
+  "option": "B: 補遺として記録(published package は immutable のまま再生成しない)",
+  "decided_by": "user (AskUserQuestion 回答)",
+  "reason": "promote-system-plan.py は既存 published 世代への再 promote を fail-closed、register-package.py は登録済み node の差替え経路を持たないため。low 2件はいずれも文言/lineage 注記で P01..P13 の write_scope・DAG・acceptance に影響しない"
+ },
+ "source_findings": {
+  "path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json",
+  "digest": "sha256:95f2b5b8a88ab876d064f9be3e966b0d9999ff909ffb8a365ff3f083d7dc5c84"
+ },
+ "dispositions": [
+  {
+   "finding": "low#1 cross-package-scope-wording-ambiguity",
+   "disposition": "resolved-upstream",
+   "resolution": "feature node feat-ai-analysis-screen の scope_in を『POST /api/skill/requests のエンドポイント本体(呼出し元の /yt-analyze が request_id 無し起動時に依頼を自動作成するクライアント側分岐は feat-skill-analysis-reports が実装する)』へ明確化 (graph rev 14、監査 PASS)",
+   "evidence": [
+    "eval-log/dev-graph-decompose-audit-feat-ai-analysis-screen-scope-wording-20260925.json",
+    "features/feat-ai-analysis-screen.md"
+   ],
+   "residual": {
+    "path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/goal-spec.json",
+    "digest": "sha256:2650f8c039726f2d4c589245dbae9224e1d1bcc1436e4bcee655a486b2180b86",
+    "note": "published goal-spec#scope_in は旧文言のまま(immutable)。feature_digest 束縛は旧 feature を指す。境界の正本は graph の feature node と SAR goal-spec#source_lineage.weekly_run_boundary_note。AIA 実装者は本補遺を参照する"
+   }
+  },
+  {
+   "finding": "low#2 traceability-dependency-declaration",
+   "disposition": "accepted-with-addendum",
+   "resolution": "feat-skill-analysis-reports の機能上の関係の補遺: POST /api/skill/requests のエンドポイント本体は feat-ai-analysis-screen(SYS-AIA-P05)が提供し、SAR の launchd 本番有効化はその出荷後に行う。dev-graph の depends_on は AIA→SAR の向きのみで SAR→AIA は追加しない。詳細は SAR goal-spec#source_lineage.weekly_run_boundary_note",
+   "evidence": [
+    ".dev-graph/published/feature-package-feat-skill-analysis-reports/goal-spec.json#source_lineage.weekly_run_boundary_note",
+    ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-12-documentation-operations.md"
+   ],
+   "residual": {
+    "path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/goal-spec.json",
+    "digest": "sha256:6ec6783556bb3abe15b21cac13e0bec38ab224722c991fe3232742de893942ab",
+    "note": "dependency_note 本文は未変更(immutable)。本補遺を dependency_note の追記とみなす"
+   }
+  }
+ ],
+ "follow_up": [
+  "plugin 側に published package の正規 supersede 経路(新世代 promote・旧 node superseded・receipt 連鎖)を追加する検討 (本 repo 外)"
+ ]
+}

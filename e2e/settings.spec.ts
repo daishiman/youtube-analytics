@@ -5,12 +5,12 @@ import { FOOTER_BADGES } from "../web/components/SiteFooter";
 type Role = "owner" | "editor" | "viewer";
 
 const user = { userId: "user-self", email: "self@example.com" };
-const tenant = (role: Role) => ({ tenantId: "tenant-a", name: "ワークスペースA", role });
+const tenant = (role: Role) => ({ tenantId: "tenant-a", name: "チャンネル管理A", role });
 
 function settings(role: Role, overrides: Record<string, unknown> = {}) {
   const owner = role === "owner";
   return {
-    tenant: { tenantId: "tenant-a", name: "ワークスペースA" },
+    tenant: { tenantId: "tenant-a", name: "チャンネル管理A" },
     role,
     permissions: { manageSettings: owner, writeContent: role !== "viewer", manageMembers: owner },
     youtube: {
@@ -86,7 +86,7 @@ function settings(role: Role, overrides: Record<string, unknown> = {}) {
       { key: "r2_storage", label: "R2 容量", used: 9.5, limit: 10, unit: "GB", level: "danger" },
       {
         key: "captions",
-        label: "字幕取得（本日・ワークスペースごと）",
+        label: "字幕取得（本日・チャンネル管理ごと）",
         used: null,
         limit: 5,
         unit: "本",
@@ -140,7 +140,7 @@ test("オーナー: メンバー管理を加えた6区画が指定順に並ぶ",
     "YouTube連携",
     "データ取込",
     "Claude Code連携トークン",
-    "メンバー（ワークスペースA）",
+    "メンバー（チャンネル管理A）",
     "無料枠の使用状況",
     "データを削除",
   ]);
@@ -247,14 +247,14 @@ test("無料枠は 70% で黄・90% で赤、YouTube のプロジェクト別使
   await expect(page.getByText("Cloudflare の値は1時間ごとに更新します。")).toBeVisible();
 });
 
-test("字幕の自動取得: 運営ワークスペース以外は準備中で押せない", async ({ page }) => {
+test("字幕の自動取得: 運営チャンネル管理以外は準備中で押せない", async ({ page }) => {
   await mockApp(page, "owner");
   await page.goto("/settings");
   await expect(page.getByRole("switch", { name: "字幕を自動取得する" })).toBeDisabled();
   await expect(page.locator("#youtube").getByText("準備中")).toBeVisible();
 });
 
-test("チャンネル選択: 別ワークスペースで連携済みのチャンネルは 409 を表示する", async ({
+test("チャンネル選択: 別チャンネル管理で連携済みのチャンネルは 409 を表示する", async ({
   page,
 }) => {
   await mockApp(page, "owner", {
@@ -287,7 +287,7 @@ test("チャンネル選択: 別ワークスペースで連携済みのチャン
       status: 409,
       json: apiError(
         "CHANNEL_ALREADY_LINKED",
-        "このチャンネルは別のワークスペースで連携済みです",
+        "このチャンネルは別のチャンネル管理で連携済みです",
         "先に連携している側で連携解除してから、もう一度お試しください",
       ),
     }),
@@ -295,10 +295,10 @@ test("チャンネル選択: 別ワークスペースで連携済みのチャン
   await page.goto("/settings?select=channel");
   await expect(page).toHaveURL(/\/settings$/);
   const picker = page.getByRole("group", { name: "連携するチャンネルを選んでください" });
-  await expect(picker.getByText("別のワークスペースで連携済み")).toBeVisible();
+  await expect(picker.getByText("別のチャンネル管理で連携済み")).toBeVisible();
   await picker.getByLabel(/他で連携済みのチャンネル/).check();
   await page.getByRole("button", { name: "このチャンネルを連携" }).click();
-  await expect(page.getByRole("alert")).toContainText("別のワークスペースで連携済みです");
+  await expect(page.getByRole("alert")).toContainText("別のチャンネル管理で連携済みです");
 });
 
 test("トークン: 6本目は 409、発行時の平文は1回だけ表示する", async ({ page }) => {
@@ -425,19 +425,19 @@ test("Google Cloud の接続情報: 閲覧者には登録欄・変更ボタン�
   await mockApp(page, "viewer", { youtube: { ...base.youtube, googleClient: NO_CLIENT } });
   await page.goto("/settings");
   const section = page.locator("#youtube");
-  await expect(section.getByText("接続情報はワークスペースのオーナーが登録します。")).toBeVisible();
+  await expect(section.getByText("接続情報はチャンネル管理のオーナーが登録します。")).toBeVisible();
   await expect(section.getByLabel("クライアントID")).toHaveCount(0);
   await expect(section.getByRole("button", { name: "変更" })).toHaveCount(0);
 });
 
-test("連携解除はワークスペース名の入力で確定する", async ({ page }) => {
+test("連携解除はチャンネル管理名の入力で確定する", async ({ page }) => {
   await mockApp(page, "owner");
   await page.goto("/settings");
   await page.getByRole("button", { name: "連携解除" }).click();
   const dialog = page.getByRole("dialog", { name: "YouTube連携を解除" });
   const confirm = dialog.getByRole("button", { name: "連携解除" });
   await expect(confirm).toBeDisabled();
-  await dialog.getByLabel("確認のための名前").fill("ワークスペースA");
+  await dialog.getByLabel("確認のための名前").fill("チャンネル管理A");
   await expect(confirm).toBeEnabled();
   await dialog.getByRole("button", { name: "キャンセル" }).click();
   await expect(dialog).toHaveCount(0);

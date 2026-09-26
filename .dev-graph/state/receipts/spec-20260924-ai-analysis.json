@@ -1,0 +1,14 @@
+{
+  "receipt_kind": "spec-import",
+  "verb": "spec",
+  "recorded_at": "2026-09-24T14:59:43Z",
+  "graph_revision": 9,
+  "imported_node_ids": [
+    "spec-youtube-analytics-system",
+    "arch-youtube-analytics-system"
+  ],
+  "evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094",
+  "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json",
+  "report": "eval-log/dev-graph-spec-import-report-feat-ai-analysis-screen-20260924.json",
+  "graph_digest": "b9b51917998193406f70db7d240efeb8781ab65c851e7dd04736f02bba5bd516"
+}

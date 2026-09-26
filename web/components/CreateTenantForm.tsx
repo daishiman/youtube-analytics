@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import { TENANT_LABEL } from "../../src/domain/labels";
 import { api } from "../api";
 import { errorText } from "../pages/shell-context";
 
@@ -25,11 +26,11 @@ export function CreateTenantForm({ onCreated }: { onCreated: () => Promise<void>
         maxLength={60}
         value={name}
         onChange={(event) => setName(event.target.value)}
-        placeholder="ワークスペース名（1〜60文字）"
-        aria-label="新しいワークスペース名"
+        placeholder={`${TENANT_LABEL}名（1〜60文字）`}
+        aria-label={`新しい${TENANT_LABEL}名`}
       />
       <button type="submit" className="button primary">
-        ワークスペースを作成
+        {TENANT_LABEL}を作成
       </button>
       {error && (
         <p role="alert" className="alert">

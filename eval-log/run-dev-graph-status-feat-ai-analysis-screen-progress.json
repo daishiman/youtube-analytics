@@ -1,0 +1,32 @@
+{
+ "skill": "run-dev-graph-status",
+ "recorded_at": "2026-09-24T16:05:45Z",
+ "output": "eval-log/dev-graph-status-feat-ai-analysis-screen-20260925.json",
+ "checklist": [
+  {
+   "item": "許可filterとtag mode のみ",
+   "status": "pass",
+   "evidence": "graph_node_id / parent_feature+artifact_kind / parent_feature+status (全AND)"
+  },
+  {
+   "item": "validate-graph-schema exit0・root外0・dangling0",
+   "status": "pass",
+   "evidence": "exit=0 valid=True violations=0 dangling=0 outside=0"
+  },
+  {
+   "item": "report が graph snapshot と一致",
+   "status": "pass",
+   "evidence": "feature 1 + AIA 13 confirmed/pass/complete, rev 11"
+  },
+  {
+   "item": "該当なしは空 result 成功",
+   "status": "pass",
+   "evidence": "empty_probe 0件"
+  },
+  {
+   "item": "digest 不変・外部write0",
+   "status": "pass",
+   "evidence": "digest_before==digest_after"
+  }
+ ]
+}

@@ -1,0 +1,120 @@
+{
+ "generated_at": "2026-09-24T16:04:12Z",
+ "graph_revision": 11,
+ "binding": "beads",
+ "authoritative": {
+  "assignment_hints": [
+   {
+    "claim_command": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>",
+    "graph_node_id": "SYS-PTA-P01",
+    "suggested_branch": "devgraph/SYS-PTA-P01"
+   }
+  ],
+  "batches": {
+   "features": [
+    [
+     "feat-platform-tenant-auth"
+    ]
+   ],
+   "tasks": [
+    [
+     "SYS-PTA-P01"
+    ]
+   ]
+  },
+  "conflicts": [],
+  "ready_set": {
+   "features": [
+    "feat-platform-tenant-auth"
+   ],
+   "tasks": [
+    "SYS-PTA-P01"
+   ]
+  },
+  "ready_source": "bd-bridge",
+  "unmapped": []
+ },
+ "self_reference": {
+  "assignment_hints": [
+   {
+    "claim_command": "/dev-graph worktree claim SYS-AIA-P01 --branch devgraph/SYS-AIA-P01 --session-id <session>",
+    "graph_node_id": "SYS-AIA-P01",
+    "suggested_branch": "devgraph/SYS-AIA-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim SYS-LRD-P01 --branch devgraph/SYS-LRD-P01 --session-id <session>",
+    "graph_node_id": "SYS-LRD-P01",
+    "suggested_branch": "devgraph/SYS-LRD-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim SYS-PTA-P01 --branch devgraph/SYS-PTA-P01 --session-id <session>",
+    "graph_node_id": "SYS-PTA-P01",
+    "suggested_branch": "devgraph/SYS-PTA-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim SYS-SCL-P01 --branch devgraph/SYS-SCL-P01 --session-id <session>",
+    "graph_node_id": "SYS-SCL-P01",
+    "suggested_branch": "devgraph/SYS-SCL-P01"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim arch-youtube-analytics-system --branch devgraph/arch-youtube-analytics-system --session-id <session>",
+    "graph_node_id": "arch-youtube-analytics-system",
+    "suggested_branch": "devgraph/arch-youtube-analytics-system"
+   },
+   {
+    "claim_command": "/dev-graph worktree claim spec-youtube-analytics-system --branch devgraph/spec-youtube-analytics-system --session-id <session>",
+    "graph_node_id": "spec-youtube-analytics-system",
+    "suggested_branch": "devgraph/spec-youtube-analytics-system"
+   }
+  ],
+  "batches": {
+   "features": [
+    [
+     "feat-platform-tenant-auth"
+    ]
+   ],
+   "tasks": [
+    [
+     "SYS-AIA-P01",
+     "SYS-LRD-P01",
+     "SYS-PTA-P01",
+     "SYS-SCL-P01",
+     "arch-youtube-analytics-system",
+     "spec-youtube-analytics-system"
+    ]
+   ]
+  },
+  "conflicts": [],
+  "ready_set": {
+   "features": [
+    "feat-platform-tenant-auth"
+   ],
+   "tasks": [
+    "SYS-AIA-P01",
+    "SYS-LRD-P01",
+    "SYS-PTA-P01",
+    "SYS-SCL-P01",
+    "arch-youtube-analytics-system",
+    "spec-youtube-analytics-system"
+   ]
+  },
+  "ready_source": "self",
+  "unmapped": []
+ },
+ "leases": {
+  "path": "<git-common-dir>/dev-graph/leases.json",
+  "active": 0
+ },
+ "note": "beads binding の推薦は bd-bridge (parity confirmed, manifest=.dev-graph/state/beads/sync-snapshot.json rev 8) の結果のみ。SYS-AIA-* / feat-ai-analysis-screen は Beads 未投影 (sync 前) かつ親 feature の depends_on 未完了のため推薦外",
+ "verifier": {
+  "agent": "dev-graph:dev-graph-parallel-safety-verifier",
+  "verdict": "PASS",
+  "findings": [
+   {
+    "id": "F1",
+    "severity": "medium",
+    "summary": "self readiness が parent_feature の depends_on 未達を子 task へ伝播しない (SYS-AIA-P01 等が self で ready 化)。前回から継続する既知ギャップ。beads binding の推薦には影響なし"
+   }
+  ]
+ }
+}

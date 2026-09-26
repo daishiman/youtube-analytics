@@ -1,5 +1,7 @@
 // 設定画面「YouTube連携」区画。未連携 → OAuth → チャンネル選択 → 連携済み（再連携・連携解除・字幕の自動取得）
+
 import { type FormEvent, useEffect, useState } from "react";
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import { ApiError, api, type ChannelCandidate, type Settings } from "../../api";
 import { formatDateTime } from "../../components/AppShell";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -220,7 +222,7 @@ export function YouTubeSection({
               )}
             </>
           ) : (
-            <p className="small muted">連携はワークスペースのオーナーが行います。</p>
+            <p className="small muted">連携は{TENANT_LABEL}のオーナーが行います。</p>
           )}
         </div>
       )}
@@ -429,7 +431,7 @@ function ChannelPicker({
                   <span className="small muted">登録者数 {formatCount(c.subscriberCount)}</span>
                 </span>
                 {c.linkedElsewhere && (
-                  <StatusBadge tone="warn">別のワークスペースで連携済み</StatusBadge>
+                  <StatusBadge tone="warn">別の{TENANT_LABEL}で連携済み</StatusBadge>
                 )}
               </label>
             </li>

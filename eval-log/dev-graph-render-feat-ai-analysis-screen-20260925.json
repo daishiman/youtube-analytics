@@ -1,0 +1,21 @@
+{
+ "generated_at": "2026-09-24T23:04:45Z",
+ "graph_revision": 11,
+ "out": ".dev-graph/render/index.html",
+ "checks": {
+  "input_sha256": "89f262432942723401d47d0b1cef174e25c9f91b4a90b2597c9feff49ae824c7",
+  "output_sha256": "b2fdbcc531547c8a4491533e7b71e82b4b934eeddf12435674e0b9fccaf94320",
+  "nodes": 63,
+  "edges": 67,
+  "aia_tasks": 13,
+  "external_refs": 0,
+  "has_svg": true,
+  "inline_script": true,
+  "aia_in_html": true,
+  "aia_progress_0_13": true
+ },
+ "browser_trial": {
+  "tool": "headless Chrome --screenshot",
+  "screenshot": "scratchpad:render.png"
+ }
+}

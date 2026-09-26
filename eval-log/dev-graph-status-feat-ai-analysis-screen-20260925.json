@@ -1,0 +1,438 @@
+{
+ "generated_at": "2026-09-24T16:05:45Z",
+ "graph_revision": 11,
+ "graph_digest": "sha256:89f262432942723401d47d0b1cef174e25c9f91b4a90b2597c9feff49ae824c7",
+ "validation": {
+  "exit": 0,
+  "valid": true,
+  "violations": 0
+ },
+ "dangling": [],
+ "outside_root_file_path": [],
+ "queries": {
+  "feature": {
+   "filters": {
+    "graph_node_id": "feat-ai-analysis-screen"
+   },
+   "tag_match": "n/a"
+  },
+  "package_tasks": {
+   "filters": {
+    "parent_feature": "feat-ai-analysis-screen",
+    "artifact_kind": "task"
+   },
+   "tag_match": "n/a"
+  },
+  "empty_probe": {
+   "filters": {
+    "parent_feature": "feat-ai-analysis-screen",
+    "status": "done"
+   },
+   "tag_match": "n/a"
+  }
+ },
+ "counts": {
+  "feature": 1,
+  "package_tasks": 13,
+  "empty_probe": 0
+ },
+ "results": {
+  "feature": [
+   {
+    "graph_node_id": "feat-ai-analysis-screen",
+    "artifact_kind": "feature",
+    "project_id": "youtube-analytics",
+    "domain": "youtube-analytics",
+    "tags": [
+     "feature",
+     "youtube-analytics"
+    ],
+    "file_path": "features/feat-ai-analysis-screen.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "feat-skill-analysis-reports",
+     "feat-web-screens-actions",
+     "feat-settings-channel-link"
+    ],
+    "parent_feature": null,
+    "feature_package_id": null,
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [],
+    "file_exists": true
+   }
+  ],
+  "package_tasks": [
+   {
+    "graph_node_id": "SYS-AIA-P01",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "documentation",
+    "tags": [
+     "p01",
+     "documentation",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P02"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P02",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "api",
+    "tags": [
+     "p02",
+     "api",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P01"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P03"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P03",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "security",
+    "tags": [
+     "p03",
+     "security",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P02"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P04"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P04",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "quality",
+    "tags": [
+     "p04",
+     "quality",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P03"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P05"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P05",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "frontend",
+    "tags": [
+     "p05",
+     "frontend",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P04"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P06"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P06",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "quality",
+    "tags": [
+     "p06",
+     "quality",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P05"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P07"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P07",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "quality",
+    "tags": [
+     "p07",
+     "quality",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P06"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P08"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P08",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "data",
+    "tags": [
+     "p08",
+     "data",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P07"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P09"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P09",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "security",
+    "tags": [
+     "p09",
+     "security",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P08"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P10"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P10",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "quality",
+    "tags": [
+     "p10",
+     "quality",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P09"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P11",
+     "SYS-AIA-P12"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P11",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "documentation",
+    "tags": [
+     "p11",
+     "documentation",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P10"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P13"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P12",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "operations",
+    "tags": [
+     "p12",
+     "operations",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P10"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [
+     "SYS-AIA-P13"
+    ],
+    "file_exists": true
+   },
+   {
+    "graph_node_id": "SYS-AIA-P13",
+    "artifact_kind": "task",
+    "project_id": "feature-package-feat-ai-analysis-screen",
+    "domain": "infrastructure",
+    "tags": [
+     "p13",
+     "infrastructure",
+     "ai-analysis-screen"
+    ],
+    "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md",
+    "status": "active",
+    "closed_at": null,
+    "depends_on": [
+     "SYS-AIA-P11",
+     "SYS-AIA-P12"
+    ],
+    "parent_feature": "feat-ai-analysis-screen",
+    "feature_package_id": "feature-package/feat-ai-analysis-screen",
+    "tracker_binding": "beads",
+    "linkage": null,
+    "confirmation_status": "confirmed",
+    "evaluation_status": "pass",
+    "implementation_readiness": "complete",
+    "dependents": [],
+    "file_exists": true
+   }
+  ],
+  "empty_probe": []
+ },
+ "digest_before": "2ebd12b3b43a3c39824c766f35a3f55c43d856a3710eafc460a8f851eec22b02",
+ "digest_after": "2ebd12b3b43a3c39824c766f35a3f55c43d856a3710eafc460a8f851eec22b02",
+ "external_commands": []
+}

@@ -2,11 +2,13 @@
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { AppError } from "../lib/errors";
+import { analysisRoutes } from "./analysis-requests-routes";
 import { apiRoutes } from "./api-routes";
 import { authRoutes } from "./auth-routes";
 import { type AppEnv, authGate, csrfGuard, depsMiddleware } from "./middleware";
 import { SECURITY_HEADERS } from "./security-headers";
 import { settingsRoutes } from "./settings-routes";
+import { skillRoutes } from "./skill-routes";
 
 export const app = new Hono<AppEnv>();
 
@@ -31,6 +33,8 @@ app.get("/api/health", async (c) => {
 app.route("/api/auth", authRoutes);
 app.route("/api", apiRoutes);
 app.route("/api", settingsRoutes);
+app.route("/api", analysisRoutes);
+app.route("/api/skill", skillRoutes);
 
 app.notFound((c) => {
   const err = new AppError("NOT_FOUND");

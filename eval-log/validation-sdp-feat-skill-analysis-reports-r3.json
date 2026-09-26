@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "status": "pass",
+  "validated_digest": "sha256:819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+  "feature_package_id": "feature-package/feat-skill-analysis-reports",
+  "parent_feature": "feat-skill-analysis-reports",
+  "phase_refs": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13"
+  ],
+  "violations": []
+}

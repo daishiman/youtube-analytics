@@ -1,4 +1,5 @@
 // 設定画面「無料枠の使用状況」区画。Cloudflare の使用量はアカウント全体
+import { TENANT_LABEL } from "../../../src/domain/labels";
 import type { UsageItem } from "../../api";
 import { SectionCard } from "../../components/SectionCard";
 import { UsageBar } from "../../components/UsageBar";
@@ -16,7 +17,7 @@ export function UsageSection({ usage }: { usage: UsageItem[] }) {
         ))}
       </div>
       <p className="small muted">
-        YouTube API の割当は各ワークスペースの Google Cloud
+        YouTube API の割当は各{TENANT_LABEL}の Google Cloud
         プロジェクトごとです。正確な使用量と上限は Google Cloud Console で確認してください。D1
         書込と字幕取得は計測機能の実装後に表示します。
       </p>

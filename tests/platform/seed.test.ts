@@ -21,7 +21,7 @@ describe("ローカル seed", () => {
     await runSeed();
     expect(
       await count("SELECT COUNT(*) AS n FROM tenant_members WHERE tenant_id LIKE 'seed-%'"),
-    ).toBe(6);
+    ).toBe(9); // テスト用6件 + AI分析 E2E の画面サイズ別テナント3件
     // トークンを持たない seed は、付与スコープがそろっていても partial
     const status = await env.DB.prepare(
       "SELECT tenant_id, youtube_link_status AS s FROM tenants WHERE tenant_id LIKE 'seed-%' ORDER BY tenant_id",
@@ -29,6 +29,10 @@ describe("ローカル seed", () => {
     expect(status.results.map((r) => [r.tenant_id, r.s])).toEqual([
       ["seed-tenant-a", "partial"],
       ["seed-tenant-b", "partial"],
+      // AI分析 E2E 用は結果取込（連携済みが前提）を通すため linked。YouTube は呼ばない
+      ["seed-tenant-e2e-desktop", "linked"],
+      ["seed-tenant-e2e-mobile", "linked"],
+      ["seed-tenant-e2e-tablet", "linked"],
       ["seed-tenant-p", "partial"],
     ]);
     expect(

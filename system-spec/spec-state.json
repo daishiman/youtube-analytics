@@ -46,7 +46,7 @@
     "database": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G1",
           "G2",
@@ -97,7 +97,15 @@
           "qa-086",
           "qa-082",
           "qa-084",
-          "qa-087"
+          "qa-087",
+          "qa-079",
+          "qa-089",
+          "qa-090",
+          "qa-091",
+          "qa-092",
+          "qa-093",
+          "qa-094",
+          "qa-095"
         ]
       },
       "mobile": {
@@ -237,7 +245,7 @@
     "ui-ux": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G2",
           "G4",
@@ -301,7 +309,15 @@
           "qa-084",
           "qa-085",
           "qa-087",
-          "qa-088"
+          "qa-088",
+          "qa-079",
+          "qa-089",
+          "qa-090",
+          "qa-091",
+          "qa-092",
+          "qa-093",
+          "qa-095",
+          "qa-096"
         ]
       },
       "mobile": {
@@ -363,7 +379,7 @@
     "security": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G4"
         ],
@@ -416,7 +432,16 @@
           "qa-085",
           "qa-082",
           "qa-084",
-          "qa-087"
+          "qa-087",
+          "qa-079",
+          "qa-089",
+          "qa-090",
+          "qa-091",
+          "qa-092",
+          "qa-093",
+          "qa-094",
+          "qa-095",
+          "qa-098"
         ]
       },
       "mobile": {
@@ -478,7 +503,7 @@
     "infrastructure": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G1",
           "G3",
@@ -523,7 +548,9 @@
           "qa-077",
           "qa-078",
           "qa-082",
-          "qa-084"
+          "qa-084",
+          "qa-087",
+          "qa-097"
         ]
       },
       "mobile": {
@@ -588,7 +615,7 @@
     "backend": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G1",
           "G2",
@@ -645,7 +672,17 @@
           "qa-082",
           "qa-083",
           "qa-084",
-          "qa-087"
+          "qa-087",
+          "qa-079",
+          "qa-089",
+          "qa-090",
+          "qa-091",
+          "qa-092",
+          "qa-093",
+          "qa-094",
+          "qa-095",
+          "qa-097",
+          "qa-098"
         ]
       },
       "mobile": {
@@ -718,7 +755,7 @@
     "frontend": {
       "web": {
         "state": "確定",
-        "qa_ref": "qa-079",
+        "qa_ref": "qa-097",
         "serves_goals": [
           "G2",
           "G4",
@@ -779,7 +816,15 @@
           "qa-084",
           "qa-082",
           "qa-087",
-          "qa-088"
+          "qa-088",
+          "qa-079",
+          "qa-089",
+          "qa-090",
+          "qa-091",
+          "qa-092",
+          "qa-093",
+          "qa-095",
+          "qa-096"
         ]
       },
       "mobile": {
@@ -2014,6 +2059,136 @@
       "provenance": "利用者の発話『テナントっていう記述方法、一般ユーザーには伝わりにくいので、もっとわかりやすく記述しておいてほしいです』と、初めての人向け Google Cloud 準備手順の依頼を受けた決定。語の選定(ワークスペース)はエージェントが提示し、利用者が確認のうえ commit/PR を指示した。記録時刻は date -u の実測値(決定時刻の上限値)",
       "basis": "user-decision",
       "answered_at": "2026-09-24T09:16:24Z"
+    },
+    {
+      "id": "qa-089",
+      "question": "AI分析画面(03-ai-analysis.png)の『実行中』の依頼をキャンセルしたとき、どう扱うか(Claude Code は利用者の PC で動くため、Web から処理そのものは止められない)",
+      "answer": "取消状態にし以後の送信を拒否する。analysis_requests の状態に『取消』を加え、待機中・実行中のどちらからでも取り消せる。取消後に Claude Code から届く進捗・結果は409で受け付けず、Claude Code 側は次の送信時に『取消されました』と表示して止まる。提示した他の案: 待機中だけ取り消せる",
+      "provenance": "AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:28:20Z",
+      "required_info_items": [
+        "api-contract",
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-090",
+      "question": "アーカイブしたレポートを、次の分析に渡す『直近5版の履歴(analysis_history)』に含めるか",
+      "answer": "履歴から外す。アーカイブは参考にしたくない版をレポート一覧と analysis_history から外す手段とし、削除はしない。『アーカイブを表示』で見られ、元に戻すこともできる。提示した他の案: 一覧から隠すだけで履歴には含める",
+      "provenance": "AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:28:20Z",
+      "required_info_items": [
+        "data-persistence",
+        "domain-model",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-091",
+      "question": "レポートの『改善アクションに登録』は、どのアクションを登録するか",
+      "answer": "選んだものを登録する。次に取るべきアクションの各行にチェックを付けられ、初期状態は主対象の1件だけにチェックが入る。同じ版の同じアクションは二重登録しない。提示した他の案: 全件まとめて登録",
+      "provenance": "AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:28:20Z",
+      "required_info_items": [
+        "api-contract",
+        "domain-model",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-092",
+      "question": "Web 画面の『結果の取り込み』に JSON を貼り付けたとき、どの依頼に紐付けるか",
+      "answer": "選択中の依頼に紐付ける。下部バーで選んでいる依頼(A-xxxx)の結果として取り込み、その依頼を『完了』にする。依頼を選んでいなければ、取込と同時に完了済みの依頼を1件作る。提示した他の案: 依頼に紐付けず独立の版として取り込む",
+      "provenance": "AskUserQuestion 2択(AI推奨表示あり)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:28:20Z",
+      "required_info_items": [
+        "api-contract",
+        "data-persistence",
+        "domain-model"
+      ]
+    },
+    {
+      "id": "qa-093",
+      "question": "AI分析画面(docs/screens/03-ai-analysis.png)の詳細設計(画面に見えないバックエンド/DB/セキュリティを含む)をこの内容で確定してよいか",
+      "answer": "この内容で承認(詳細設計をプレビュー表示)。提示した他の案: 修正してから承認。承認内容: [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析画面は docs/screens/03-ai-analysis.png の区画・配置・文言を正とする(色は既存の CSS 変数・qa-080)。結果JSONの形は画像内の例(summary/findings/actions)ではなく docs/analysis/dashboard-analysis-catalog.md §6 の正本(brief/results/history_review/psych_findings/ideas/actions/report_html)に従う。冒頭は見出し『AI分析』・問い『AIに分析を依頼し、根拠と版を確認しますか?』・説明1行・右上に『AI分析の使い方』リンク。①依頼: 分析対象期間(最新28日/90日/1年/任意。任意は開始日・終了日を選び最長1年・未来日不可)と期間の表示、補足指示(最大1000字・文字数表示)、この画面で唯一の主ボタン『Claude Code用プロンプトをコピー』(押すと依頼 A-xxxx を作りプロンプトを生成してクリップボードへコピーし Toast で知らせる)。右に『使用するデータ』表(対象期間・日別指標・動画・字幕・場面画像・コメント・CSV取込の件数)と副ボタン『使用データを確認』(内訳モーダル)。注記『データは自動送信されません。コピーしたプロンプトをClaude Codeに貼り付けて実行してください』。②実行状況: 表の列は ID・ステータス・対象期間・作成日時・進捗(バーと%)・依頼内容・操作。状態は 待機中/実行中/完了/失敗/取消(qa-089)で、操作は 待機中・実行中=キャンセル(確認付き)/完了=詳細/失敗・取消=再実行(同じ条件で新しいIDを作る)。失敗は原因1行と対処1行を詳細に出す。③レポート: 左にレポート一覧(検索=レポート名・要約、『アーカイブを表示』、列は版・作成日時・レポート名・対象期間)と『結果の取り込み』(JSON貼付欄・構文/スキーマの誤りを『JSONの形式が正しくありません N行目』と対処1行で表示・副ボタン『結果を取り込む』と『クリア』。取込先は選択中の依頼で、未選択なら完了済みの依頼を1件作る・qa-092)。右にレポート詳細(レポート名・版・最新版バッジ・作成日時・対象期間・作成元・ステータス、右上に『アーカイブ』/『元に戻す』)。要約の先頭に『前回からの変化』(参照した直近版・前回仮説の当否・施策効果・変化した原因指標。履歴0件は『初回分析』)→週次5段ファネル→下流結果→目標未達が最大の改善候補(または全指標目標達成/判定保留)を置き、因果を断定しない。タブは 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート。要約タブに主な発見(番号付き3件)、『視聴者心理(推定)』の小枠(考え→感情→行動を1行ずつ・推定バッジ・確信度%)、次に取るべきアクション(主対象1件を先頭。各行にチェック、初期は主対象だけチェック・qa-091)と副ボタン『改善アクションに登録』(登録済みの行は『登録済み』表示)、レポートの版履歴(v3/v2/v1)と副ボタン『2つの版を比較』(2版を選び差分を並べて表示)。アーカイブした版は一覧から消え『アーカイブを表示』で見え、次の分析の履歴にも使わない(qa-090)。画面下部に選択中の依頼バー(ID・依頼内容・進捗バー・%・『詳細を開く』)を常に表示する。閲覧者には コピー/キャンセル/再実行/取込/アーカイブ/アクション登録 のボタンを出さず、一覧・詳細・比較の閲覧だけにする。幅900px未満では2カラムを縦積みにし、表はカード化、下部バーは下部タブの上に固定する。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] /analysis を AnalysisPage(web/pages)として実装し、PlaceholderPage を置き換える。構成部品は RequestPanel(期間セグメント・任意期間の DateRangePicker・補足指示・コピー)/DataSummaryCard(+DataSummaryModal)/RequestStatusTable(DataTable を使い進捗は ProgressBar)/ReportList(検索入力は300msデバウンス・アーカイブ切替)/ResultImportPanel(貼付欄とエラー表示)/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar。共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Modal/Toast)を再利用し、新しい共通部品として ProgressBar と DateRangePicker を components に追加する。期間はヘッダーの ?period= と共有し、任意期間は ?period=custom&from=&to= で持ち、AppShell の『任意』でも同じ DateRangePicker を開く。選択中の依頼は ?request=A-xxxx、選択中のレポートは ?report=<id>&v=<版> で URL に持ち、再読込でも復元する。実行中または待機中の依頼がある間だけ GET /api/analysis-requests を10秒ごとに再取得し、document.visibilityState が hidden の間は止める。クリップボードは navigator.clipboard.writeText を使い、失敗時はプロンプトを選択状態のテキスト欄で表示して手動コピーに切り替える。JSON の構文チェックは送信前にブラウザでも行い(JSON.parse の位置から行番号を出す)、最終判定はサーバの検証結果に従う。HTMLレポートは sandbox 属性付き iframe(srcdoc・allow-scripts なし)で表示する。web/api.ts に分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)を追加し、エラーは既存の {error:{code,message,hint}} 形式を表示する。Playwright で 390×844 / 820×1180 / 1440×900 の3サイズに依頼→コピー→取込→登録→比較→アーカイブの E2E を追加する。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] 画面用API(セッション・content.write は owner/editor): POST /api/analysis-requests(period_start/period_end/instruction。A-xxxx を採番し待機中で作る) / GET /api/analysis-requests(最新20件・cursor) / GET /api/analysis-requests/:id / GET /api/analysis-requests/:id/prompt(Claude Code用プロンプト本文: 依頼ID・期間・補足指示・export の取得手順と送信先を含み、トークン平文は含めない) / POST /api/analysis-requests/:id/cancel(待機中・実行中→取消・qa-089) / POST /api/analysis-requests/:id/retry(失敗・取消の依頼と同じ条件で新しい依頼を作り retry_of を記録) / GET /api/analysis/data-summary?from=&to=(日別指標行数・動画本数・字幕本数・場面画像枚数・コメント件数・CSV取込件数と内訳)。レポート: GET /api/reports?q=&archived=0|1&cursor= / GET /api/reports/:id(?version=) / GET /api/reports/diff?a=&b= / POST /api/reports/import(貼付JSONを POST /api/skill/reports と同じ ingestReport で取り込む。request_id 指定時はその依頼を完了にし、未指定なら完了済みの依頼を1件作る・qa-092。検証エラーは 422 で {code:'INVALID_REPORT_JSON', line, message, hint}) / PUT・DELETE /api/reports/:id/archive(アーカイブ・元に戻す。qa-090) / POST /api/reports/:id/actions({keys:[...]} で選んだアクションだけを改善アクションとして登録。同じ版の同じアクションは登録済みを返し二重に作らない・qa-091)。スキル連携API(個人トークン): PATCH /api/skill/requests/:id に progress(0-100)・stage(1:データ取得/2:分析・HTML生成/3:反映)・status・error を受け、取消済みの依頼への PATCH と POST /api/skill/reports は 409 REQUEST_CANCELED を返す(Claude Code 側は『取消されました』を表示して止まる)。状態遷移は analysis-request 集約内で 待機中→実行中→完了|失敗|取消 の一方向だけを許し、完了・失敗・取消からは動かさない(再実行は新しい依頼)。analysis_history の直近5版はアーカイブされた版を除いて選ぶ(qa-090)。usecase は createAnalysisRequest/cancelAnalysisRequest/retryAnalysisRequest/getAnalysisPrompt/getDataSummary/importReport/archiveReport/registerReportActions に分け、アクション登録は『改善アクション』集約だけを書き、レポート版は読むだけにする。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] analysis_requests(tenant_id, request_id 'A-0001' 形式・テナント内連番, channel_id, period_start, period_end, instruction(≤1000字), status 待機中|実行中|完了|失敗|取消, progress 0-100, stage 0-3, error, retry_of, report_id, created_by, created_at, started_at, finished_at, canceled_at, canceled_by。PK tenant_id,request_id)。取消は qa-089 で追加した終端状態で、終端からは更新しない。report_archives(tenant_id, report_id, archived_by, archived_at。PK tenant_id,report_id)を別表で持ち、reports は追記のみの不変条件を保つ(アーカイブ解除は行の削除)。レポート一覧と analysis_history は report_archives に無い版だけを読む(qa-090)。actions に source_report_id と source_key(レポート JSON の actions 内の位置から作るキー)を加え、UNIQUE(tenant_id, source_report_id, source_key) で同じ版の同じアクションの二重登録を DB でも防ぐ(qa-091)。レポート名と要約の検索は D1 の LIKE(テナント内・最新200版まで)で行い、全文検索索引は作らない(書込行数の節約)。取込・取消・アーカイブ・アクション登録は既存の audit_log に1行ずつ残す。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析の全APIは TenantContext 必須で、他テナントの依頼・レポートIDは存在しないものとして404を返す。書込系(依頼作成・キャンセル・再実行・取込・アーカイブ・アクション登録)は content.write(owner/editor)だけに許し、閲覧者は403。セッション側の書込は既存の Origin 検査を通す。取込JSONは 2,000,000 bytes 以下・スキーマ検証(カタログ§6)を通ったものだけを保存し、report_html は保存時に加工せず、表示は sandbox 属性付き iframe(allow-scripts・allow-same-origin を付けない)と CSP で隔離する。プロンプトには個人トークンの平文や他テナントの情報を含めず、Claude Code は利用者が設定画面で発行したトークンを使う。スキル連携APIは Bearer トークンを SHA-256 で照合し、依頼が同じテナントのものであることを確かめ、取消済みの依頼への送信は 409 で拒否する(qa-089)。依頼作成は1ユーザー1分あたり10件まで(超過は429)とし、依頼・取込・取消・アーカイブ・アクション登録は audit_log に残す。",
+      "provenance": "AskUserQuestion 2択(詳細設計をプレビュー表示・推奨表示なし)。内容を見たうえでの承認。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:30:59Z",
+      "required_info_items": [
+        "api-contract",
+        "auth-model",
+        "data-persistence",
+        "domain-model",
+        "frontend-arch",
+        "information-priority",
+        "product-goal",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-094",
+      "question": "qa-093/appr-015 の一括承認に含まれる具体値(依頼作成 1ユーザー1分10件で429、取込 2,000,000 bytes 上限、sandbox の属性、LIKE 検索は最新200版まで、10秒ごとの再取得、SHA-256 照合)の承認の扱いをどうするか",
+      "answer": "但し書きを追記する。qa-093 の骨格は qa-089〜qa-092 で利用者が選択肢から選んだ範囲であり、上記の具体値はアシスタントが骨格から具体化したもの。利用者はプレビューで全文を見て一括承認したが、値ごとの個別確認は行っていない。実装で食い違いが見つかれば、その値だけを個別に見直す。補足: qa-089〜qa-092 はいずれも2択で、推奨表示(Recommended)を付けた案は採用された案(取消状態で以後の送信を拒否/履歴から外す/選んだものを登録/選択中の依頼に紐付ける)であり、推奨理由は各案の説明文(状態の一貫性・履歴の汚染防止・二重登録防止・依頼との対応維持)として提示した。提示した他の案: 値を個別に確認し直す",
+      "provenance": "AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:45:59Z",
+      "required_info_items": [
+        "api-contract",
+        "security-posture"
+      ]
+    },
+    {
+      "id": "qa-095",
+      "question": "launchd の週次自動実行(I5)では Web 画面で依頼 A-xxxx を作らずに Claude Code が動く。このとき依頼をどう扱うか",
+      "answer": "スキル側で依頼を自動作成する。POST /api/skill/requests を追加し、個人トークンで依頼を『実行中』として作る(作成元=自動)。実行状況の表に週次分も並び、取消・進捗・履歴の仕組みをそのまま使う。/yt-analyze は依頼IDなしで起動されたときこの API で依頼を作ってから export を呼び、export の request_id は必須のままとする。提示した他の案: 依頼なしで実行可(request_id を省略可にする)",
+      "provenance": "AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。推奨表示なしの2択",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:45:59Z",
+      "required_info_items": [
+        "api-contract",
+        "domain-model"
+      ]
+    },
+    {
+      "id": "qa-096",
+      "question": "qa-088 で利用者に見せる語を『ワークスペース』にしたが比べた候補が記録されていない。利用者に見せる語をどれにするか(候補: ワークスペース/チーム/チャンネル管理)",
+      "answer": "チャンネル管理。画面・メール文面・APIのエラーメッセージ・利用規約・プライバシーポリシーで『テナント』『ワークスペース』を使わず『チャンネル管理』と表記する(1テナント1チャンネルのため)。qa-088 の表記の決定をこれで置き換える。コード識別子・DB・開発者向け文書は tenant/テナントのまま。qa-088 のうち Google Cloud 準備手順の部分は変えない。提示した他の案: ワークスペース(現状維持)/チーム",
+      "provenance": "AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。推奨表示なしの3択",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:45:59Z",
+      "required_info_items": [
+        "context-of-use",
+        "information-priority"
+      ]
+    },
+    {
+      "id": "qa-097",
+      "question": "要件定義書の制約(U7 の Google 行)と具体的にやりたいこと I4/I5 を、qa-087(テナントごとの OAuth クライアント)と AI分析画面の新しい流れ(qa-093・qa-095)に合わせて改訂する案を承認するか",
+      "answer": "この内容で承認(改訂案をプレビュー表示)。U7: ログインはアプリ共通の OAuth クライアント(openid/email/profile のみ・機密スコープなし)。YouTube連携は各テナントが自分の Google Cloud プロジェクトの OAuth クライアントを登録して行い(qa-087)、同意画面の検証要否と API クォータ(10,000 units/日)はそのプロジェクト単位で数える。I4: AI分析画面で依頼 A-xxxx を作り、コピーしたプロンプトを Claude Code に貼り付けて実行する(/yt-analyze)。結果は自動送信、または画面へ JSON を貼り付けて取り込む。I5: qa-095 の回答に合わせて、自動実行ではスキルが依頼を作ってから分析すると書き直す。O2(スキル実行から反映まで手作業0)は、自動送信の経路では変わらないため改訂しない。提示した他の案: 修正してから承認",
+      "provenance": "AskUserQuestion 択一(評価 r1 の差し戻しに対する確認)。回答直後に date -u で実測した時刻(選択時刻の上限値)。改訂案の全文をプレビューで提示",
+      "basis": "user-decision",
+      "answered_at": "2026-09-24T14:45:59Z",
+      "required_info_items": [
+        "context-of-use",
+        "product-goal"
+      ]
+    },
+    {
+      "id": "qa-098",
+      "question": "実装で見つかった仕様との食い違い2点をどう扱うか: (1) 結果JSON(results / history_review)の形の正本と取込時の検査、(2) 画面取込の本文上限 2,000,000 bytes(report_html 単体の上限と同じ値)とスキル送信の上限 3.5MB の食い違い(qa-094 の但し書きの対象値)",
+      "answer": "(1) 実出力を正本＋取込で検査: スキルの compute.mjs(buildReportJson)の出力の形を src/domain/report-schema.ts に型で定め、取込時に parseReport で最低限の形を検査し、合わない JSON は 422 にする。画面は実出力の形だけを読み、別名キーは吸収しない。提示した他の案: 実出力を正本・検査は今のまま/画面の形を正本にする。(2) 取込本文の上限をスキルに合わせる: 画面取込の本文上限をスキル送信と同じ 3,500,000 bytes にそろえ、定数を1か所にする。report_html 単体の上限 2,000,000 bytes は変えない。qa-094 の但し書き『実装で食い違いが見つかれば、その値だけを個別に見直す』に当たる見直し。提示した他の案: 選ばない(2,000,000 bytes のまま)",
+      "provenance": "AskUserQuestion(elegant-review 中の確認。(1)は3択の択一で推奨表示(Recommended)付きの案を選択、(2)は複数選択の1項目で推奨表示なし)。時刻は会話記録の回答受領時刻 2026-09-25T07:23:56.839Z を秒で切り捨てた値",
+      "basis": "user-decision",
+      "answered_at": "2026-09-25T07:23:56Z",
+      "required_info_items": [
+        "api-contract",
+        "security-posture"
+      ]
     }
   ],
   "approval_log": [
@@ -2072,6 +2247,14 @@
     {
       "id": "appr-014",
       "note": "qa-086: U9 I1 を qa-075/qa-076/qa-085 に合わせて更新することを利用者が承認(U1-U9 の他項目は appr-011 のまま)"
+    },
+    {
+      "id": "appr-015",
+      "note": "qa-093: AI分析画面(03-ai-analysis.png)・依頼の取消/再実行・レポートのアーカイブ/検索/取込/アクション登録の詳細設計を、プレビューで内容を見たうえで利用者が承認"
+    },
+    {
+      "id": "appr-016",
+      "note": "qa-097: 要件定義書 U7(Google 行)・I4・I5 の改訂案をプレビューで見たうえで利用者が承認"
     }
   ],
   "reopen_log": [
@@ -2402,6 +2585,140 @@
       "reason": "編集上の reopen (確定内容の変更なし・利用者承認 2026-09-24)。qa-086〜080 の再コンパイルで、qa-061 を現行技術決定として示す投影 (Web 行の注記・React + Vite + React Router・qa-024/qa-031 の置換明示) が compiler 管轄節から消えたため、compiler が保持する管轄外の追補節 (To-Be / Delta 内) として再投影する。直後に同じ qa-079・serves_goals・qa_refs で再確定する。新しい回答は取らない",
       "from": "確定",
       "reopened_at": "2026-09-24T07:16:04Z"
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "利用者の追加指示(AI分析画面モック docs/screens/03-ai-analysis.png の通りに UI/UX・フロント・バックエンド・セキュリティを反映し、画面に見えない裏側の機能も含めて改善)により、AI分析画面の依頼・実行状況(進捗%・キャンセル・再実行)・レポート(検索・アーカイブ・結果JSON取込の行番号付きエラー・改善アクション登録・版比較)・下部の選択中バー・任意期間の日付入力の確定内容が変わるため取り直す。主根拠は reopen 後に取る内容承認",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:27:01Z"
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "利用者の追加指示(AI分析画面モック docs/screens/03-ai-analysis.png の通りに UI/UX・フロント・バックエンド・セキュリティを反映し、画面に見えない裏側の機能も含めて改善)により、AI分析画面の依頼・実行状況(進捗%・キャンセル・再実行)・レポート(検索・アーカイブ・結果JSON取込の行番号付きエラー・改善アクション登録・版比較)・下部の選択中バー・任意期間の日付入力の確定内容が変わるため取り直す。主根拠は reopen 後に取る内容承認",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:27:01Z"
+    },
+    {
+      "category": "backend",
+      "platform": "web",
+      "reason": "利用者の追加指示(AI分析画面モック docs/screens/03-ai-analysis.png の通りに UI/UX・フロント・バックエンド・セキュリティを反映し、画面に見えない裏側の機能も含めて改善)により、AI分析画面の依頼・実行状況(進捗%・キャンセル・再実行)・レポート(検索・アーカイブ・結果JSON取込の行番号付きエラー・改善アクション登録・版比較)・下部の選択中バー・任意期間の日付入力の確定内容が変わるため取り直す。主根拠は reopen 後に取る内容承認",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:27:01Z"
+    },
+    {
+      "category": "database",
+      "platform": "web",
+      "reason": "利用者の追加指示(AI分析画面モック docs/screens/03-ai-analysis.png の通りに UI/UX・フロント・バックエンド・セキュリティを反映し、画面に見えない裏側の機能も含めて改善)により、AI分析画面の依頼・実行状況(進捗%・キャンセル・再実行)・レポート(検索・アーカイブ・結果JSON取込の行番号付きエラー・改善アクション登録・版比較)・下部の選択中バー・任意期間の日付入力の確定内容が変わるため取り直す。主根拠は reopen 後に取る内容承認",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:27:01Z"
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "利用者の追加指示(AI分析画面モック docs/screens/03-ai-analysis.png の通りに UI/UX・フロント・バックエンド・セキュリティを反映し、画面に見えない裏側の機能も含めて改善)により、AI分析画面の依頼・実行状況(進捗%・キャンセル・再実行)・レポート(検索・アーカイブ・結果JSON取込の行番号付きエラー・改善アクション登録・版比較)・下部の選択中バー・任意期間の日付入力の確定内容が変わるため取り直す。主根拠は reopen 後に取る内容承認",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:27:01Z"
+    },
+    {
+      "category": "backend",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-095(週次自動実行の依頼作成API)と qa-049 注記・qa-094 但し書きの反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。turn ファイル作成(14:47:16Z)直後に実施し、その後の curl 時刻 14:48:15Z より前。実時刻は 14:47:16Z〜14:48:15Z の間"
+        }
+      ]
+    },
+    {
+      "category": "database",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-095(analysis_requests.created_via)の反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。実時刻は 14:47:16Z〜14:48:15Z の間(index 45 と同じ一括実行)"
+        }
+      ]
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-095(スキル依頼作成の認可)と qa-094 但し書きの反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。実時刻は 14:47:16Z〜14:48:15Z の間(index 45 と同じ一括実行)"
+        }
+      ]
+    },
+    {
+      "category": "infrastructure",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-087/qa-097(クォータ・検証をテナントのプロジェクト単位に)の反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。実時刻は 14:47:16Z〜14:48:15Z の間(index 45 と同じ一括実行)"
+        }
+      ]
+    },
+    {
+      "category": "ui-ux",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-096(表示語をチャンネル管理に)と qa-095(自動バッジ)の反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。実時刻は 14:47:16Z〜14:48:15Z の間(index 45 と同じ一括実行)"
+        }
+      ]
+    },
+    {
+      "category": "frontend",
+      "platform": "web",
+      "reason": "completeness 評価 r1 の差し戻し: qa-096(表示語の置換)と qa-095(自動バッジ)の反映",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:48:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:48:00Z は実測でなく見積もり値。実時刻は 14:47:16Z〜14:48:15Z の間(index 45 と同じ一括実行)"
+        }
+      ]
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "出典訂正: YouTube API Developer Policies の条項番号 III.D.2.3 を公式原文表記 III.D.2.c.i へ訂正(評価 r1 の doc_freshness 指摘への是正)",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:52:00Z",
+      "corrections": [
+        {
+          "recovered_at": "2026-09-24T14:50:29Z",
+          "note": "reopened_at=14:52:00Z は未来時刻の誤記。実施は date -u 実測 14:50:18Z の直後で 14:50:29Z 以前(observed はその上限値)。同じ turn の design_applications.security.recorded_at=14:52:00Z も同じ誤りのため、次の reopen で実測時刻に置き直す",
+          "observed_reopened_at": "2026-09-24T14:50:29Z"
+        }
+      ]
+    },
+    {
+      "category": "security",
+      "platform": "web",
+      "reason": "reopen_log index 51 の未来時刻誤記に伴い design_applications.security.recorded_at を実測時刻へ置き直すための再オープン(本文は変更しない)",
+      "from": "確定",
+      "reopened_at": "2026-09-24T14:51:10Z"
     }
   ],
   "category_aggregate": {
@@ -2648,7 +2965,7 @@
       "費用: 完全無料(Cloudflare Free/Google Cloud無料/GitHub無料枠)。有料tierへの自動移行をしない",
       "技術: Cloudflare Workers + D1 + R2(画像保存・qa-026)をAIDDキット標準として採用。秘密情報はwrangler secretのみ(INV-1)",
       "AI実行: Claude Codeは各利用者のPCで各自のプランを使う。システム側はLLMを呼ばない(心理分析もClaude Code側で行う)",
-      "Google: YouTube読取スコープは機密スコープのため、他者提供(本番公開)にはOAuth同意画面の検証が必要(利用者80人超で申請着手)。APIクォータ10,000 units/日",
+      "Google: ログインはアプリ共通のOAuthクライアント(openid/email/profile のみ・機密スコープなし)。YouTube連携は各テナントが自分のGoogle CloudプロジェクトのOAuthクライアントを登録して行い(qa-087)、同意画面の検証要否とAPIクォータ(10,000 units/日)はそのプロジェクト単位で数える(qa-097)",
       "心理分析は推定であり、根拠データ・反証条件・確信度を必ず付ける。因果推論・予測・機械学習は行わない",
       "規約: APIで取得したデータから派生指標を作らない(YouTube API Developer Policies III.E.4)。派生指標はCSV由来のデータだけで計算し、公式の値でない旨を画面に明示する",
       "規模: D1無料枠(書込10万行/日)に収めるため、テナント数の上限を100とする(上限到達時は新規テナントを作らない)"
@@ -2679,14 +2996,14 @@
       },
       {
         "id": "I4",
-        "text": "Claude Codeで /yt-analyze を実行するとシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作りシステムへアップロードする",
+        "text": "AI分析画面で依頼A-xxxxを作り、コピーしたプロンプトをClaude Codeに貼り付けて /yt-analyze を実行する。スキルはシステムからYouTubeデータ、週次事業ファネル、同一テナント・同一チャンネルの直近5回の分析履歴パックを取得し、report-design-systemで前回仮説の当否・施策効果・目標未達の最大候補・次の打ち手・下流結果を含む差分分析HTMLを作る。結果は自動送信、または画面へJSONを貼り付けて取り込む(qa-093・qa-097)",
         "serves": [
           "G2"
         ]
       },
       {
         "id": "I5",
-        "text": "運営者はlaunchdで週次にI4を自動実行する。一般利用者は手動実行",
+        "text": "運営者はlaunchdで週次にI4を自動実行する。自動実行ではスキルが個人トークンで依頼を作ってから分析する(qa-095)。一般利用者は画面から依頼して手動実行する",
         "serves": [
           "G2"
         ]
@@ -2730,7 +3047,7 @@
       }
     ],
     "confirmed": true,
-    "approval_ref": "appr-014"
+    "approval_ref": "appr-016"
   },
   "decisions": [
     {
@@ -3001,20 +3318,21 @@
             "amount": 0,
             "currency": "USD",
             "billing_period": "month",
-            "tco": "0円。100人超で検証申請の工数が発生"
+            "tco": "0円。テナントごとにGoogle Cloudプロジェクトの準備工数(初回のみ)が発生"
           },
-          "free_tier_limits": "未検証公開は累計100ユーザーまで(警告画面あり)、refresh tokenはアカウント×クライアントで100本",
-          "goal_fit": "新規登録(オーナー)はログインとYouTube連携を1回の同意で完結し、部分許可でもログインは通して後から再連携できる(qa-065)。招待メンバーはメールだけを要求する(qa-064)。G1/G4に適合",
+          "free_tier_limits": "未検証公開は累計100ユーザーまで(警告画面あり)、refresh tokenはアカウント×クライアントで100本。YouTube連携分はテナントごとのプロジェクトで数える(qa-087)",
+          "goal_fit": "ログインはアプリ共通クライアントでメールだけを要求し(qa-064)、YouTube連携はテナントが登録した自分のGoogle CloudプロジェクトのOAuthクライアントで別の同意として行う(qa-087)。部分許可でもログインは通して後から再連携できる(qa-065)。G1/G4に適合",
           "security_fit": "既定は読取専用スコープ(youtube.readonly/yt-analytics.readonly)。字幕トグルONのオーナーだけ youtube.force-ssl(sensitive scope)を追加同意し、OFFで revoke(qa-076)。restricted scope 非該当",
           "pros": [
-            "ログイン1回で完結",
-            "7日失効を回避"
+            "アプリ共通クライアントはログイン専用で機密スコープを持たない",
+            "7日失効を回避",
+            "クォータと検証がテナントのプロジェクトに分かれる"
           ],
           "cons": [
             "未検証の警告画面が出る"
           ],
           "risks": [
-            "100人超で検証必須"
+            "テナントがGoogle Cloudの準備(8手順・qa-088)をしないと連携できない"
           ],
           "lock_in": "中(Google)",
           "ops_burden": "低",
@@ -3086,25 +3404,26 @@
       ],
       "recommendation": {
         "option_id": "google-oauth-published",
-        "rationale": "YouTube連携にOAuthが必須で、ログインを兼ねれば構成が最小、公開状態なら7日失効も避けられる",
+        "rationale": "YouTube連携にOAuthが必須。ログインはアプリ共通クライアントで最小構成にし、YouTube連携は各テナントのクライアントで行うことでクォータ・検証・100人上限をテナント単位に分け、公開状態で7日失効も避ける(qa-087)",
         "comparison_basis": {
           "goal_fit": "G1の継続収集とG4の分離を両立",
-          "tco": "0円",
+          "tco": "0円(テナント側の初回準備工数あり)",
           "security": "既定は読取専用スコープ+暗号化保存。force-ssl は字幕トグルON時だけ段階的認可で追加し OFF で revoke(qa-076)",
-          "operations": "同意画面設定のみ",
+          "operations": "アプリ共通の同意画面設定に加え、各テナントが自分のGoogle Cloudプロジェクトで同意画面とクライアントを用意する(準備手順は設定画面に表示・qa-088)",
           "lock_in": "Googleアカウント前提"
         },
         "caveats": [
-          "未検証アプリの警告画面が出る",
+          "未検証アプリの警告画面が出る(各テナントのプロジェクトごと)",
           "youtube.readonlyのsensitive区分はCloud Consoleで要確認",
-          "利用者が80人を超えた時点でOAuth検証申請に着手する(qa-021で確定・判断者=運営者)",
+          "検証申請とAPIクォータはテナントのGoogle Cloudプロジェクト単位。アプリ共通クライアントはログイン専用で機密スコープを持たないため、qa-021 の『80人超で検証申請』はアプリ共通クライアントには適用しない(qa-087)",
+          "テナントのクライアント登録を変更・削除すると既存の連携トークンは無効になり『要再連携』になる(qa-087)",
           "同意画面で利用者がYouTube権限のチェックを外せる(部分許可)。付与スコープをサーバで確認し、YouTube機能だけを止めて再連携を促す(qa-065)",
           "Sign in with Google ボタンは Google ブランド規定の Light/Dark/Neutral に限られ、デザイン正本の主操作色を使えない(qa-067)",
           "字幕トグルON時だけ include_granted_scopes で youtube.force-ssl を追加し、OFFで revoke→readonly で再連携する(qa-076)",
           "force-ssl は sensitive scope。字幕トグルの一般公開前に検証を申請し(3〜5営業日・デモ動画・ドメイン確認・同一ドメインのプライバシーポリシー)、通るまでは運営者だけが使う(qa-085)"
         ],
         "confidence": "medium",
-        "latest_checked_at": "2026-09-24T00:07:34Z"
+        "latest_checked_at": "2026-09-24T14:45:59Z"
       },
       "serves_goals": [
         "G1",
@@ -3123,7 +3442,8 @@
           "qa-067",
           "qa-073",
           "qa-076",
-          "qa-085"
+          "qa-085",
+          "qa-087"
         ]
       }
     },
@@ -3454,8 +3774,8 @@
   "knowledge_candidates": [],
   "design_applications": {
     "database": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-020] 保存先はD1(構造化データ)+R2(画像)(qa-026でD1のみから変更)。基本11テーブル: users / channels / oauth_tokens / daily_metrics(PK tenant_id,channel_id,date) / video_metrics / csv_imports / analysis_requests(A-0001形式, 待機中|実行中|完了|失敗) / reports(版管理, html≤2,000,000 bytes) / findings / actions(未着手|実施中|効果測定中|完了, 判定 効果あり|不明|効果なし) / skill_tokens。[qa-025/026/027/029の機能決定に伴う追加テーブル(列はAI設計)] video_period_metrics(表データ.csvの21列を期間付きで保存。空欄=null・0=実測0を区別) / video_daily_metrics(グラフデータ.csv) / channel_daily_metrics(合計.csv) / video_angles(切り口: つまずき解決型|是非・意見型|追加型, 確定者) / retention_points(video_id, elapsed_ratio, audience_watch_ratio, relative_retention) / transcripts(video_id, source srt|vtt|whisper|captions_api, start_ms, end_ms, text) / media_assets(video_id, kind thumbnail|scene|screenshot, at_ms, r2_key, width, height, bytes) / comments(comment_id, video_id, published_at, text, like_count) / comment_emotions(comment_id, emotion Plutchik8種, intent 質問|共感|反論|体験談, report_id) / psych_findings(report_id, layer 考え|感情|行動, claim, evidence_json, counter_hypothesis, confidence)。全業務テーブルにtenant_id(操作した人のuser_idも保持)。設計知識(DDD)の適用: 集約は『レポート版(reports+findings+psych_findings+comment_emotions)』と『改善アクション(actions)』の2つに分け、版は追記のみ(過去版を更新しない)を不変条件とする。actionsの状態遷移は 未着手→実施中→効果測定中→完了 の一方向のみ許し、完了時に判定(効果あり/不明/効果なし)とbaseline/resultを必須にする。video_anglesは利用者確定後に再分析で上書きしない。[qa-035] 指標以外のAPIデータを持つ行(videosのタイトル等・comments・APIで取った字幕)にfetched_atを持たせ、30日超の行を掃除できるようにする。レポート版にはコメント本文を持たず、comment_idで参照する。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 追加テーブル: tenants(tenant_id, name, db_binding 既定'DB', created_by, created_at, deleted_at) / tenant_members(tenant_id, user_id, role owner|editor|viewer, joined_at, PK tenant_id,user_id) / tenant_invites(invite_id, tenant_id, email, role editor|viewer, token_hash SHA-256, expires_at 発行+7日, accepted_at, revoked_at, created_by)。既存の全業務テーブル(channels〜psych_findings・skill_tokens・oauth_tokens)にtenant_idを持たせ、主キーと索引の先頭をtenant_idにする(daily_metrics は PK tenant_id,channel_id,date)。user_idは『操作した人』の記録として残す(reports/actions/csv_importsの作成者)。R2キーは tenants/<tenant_id>/… で分ける。将来の分割: tenants.db_binding から参照先D1を決める解決関数を1か所だけに置く(既定は全テナント同じDB)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典で表を分ける(qa-054): API由来=daily_metrics(PK tenant_id,channel_id,date,content_type。content_typeはcreatorContentType)・video_metrics(PK tenant_id,video_id,date。単日指定の動画別クエリを毎日積み上げる)・traffic_source_daily(PK tenant_id,date,source_type)・audience_demographics(PK tenant_id,snapshot_date,age_group,gender)・video_reach_daily(PK tenant_id,video_id,date。video_thumbnail_impressions と video_thumbnail_impressions_ctr をAPIの値のまま保存し、CTRを自前計算しない・report_id と fetched_at を持つ)。CSV由来=既存の video_period_metrics / video_daily_metrics / channel_daily_metrics(csv_import_id を持つ)。同じ日・同じ指標でも上書きせず両方残す。派生指標M1〜M10はCSV由来の表だけから計算する(qa-053)。書込量の抑制: upsert前に値を比べ、変わった行だけ書く。索引は主キーのみ(索引の更新も書込行数に数えるため)。tenants に reporting_job_id と reporting_created_after、last_collected_date を追加。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] consent_records(id TEXT PK, user_id TEXT NOT NULL REFERENCES users, terms_version TEXT NOT NULL, privacy_version TEXT NOT NULL, consented_at TEXT NOT NULL, source TEXT NOT NULL CHECK(source IN ('login','reconsent')))。追記のみで更新しない。利用者の現在の同意は user_id ごとに consented_at が最大の行。索引は (user_id, consented_at) を1つだけ加える(ログインのたびに再同意の要否を引くため)。ログイン試行の回数を数えるテーブルは作らない(qa-071)。tenants に youtube_link_status TEXT NOT NULL DEFAULT 'none' CHECK(youtube_link_status IN ('none','partial','linked')) を追加。oauth_tokens.scope は付与された実スコープ(スペース区切り)を保存する(既存列の意味を『要求』ではなく『付与』と明確にする)。アカウント削除時は consent_records も削除する。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] channels(tenant_id UNIQUE・channel_id UNIQUE・title・thumbnail_url・subscriber_count(表示のみ)・status=正常/要再連携/未連携・connected_at)で1テナント1チャンネルを表す(qa-075)。channel_id の UNIQUE で同じチャンネルの別テナント連携を DB でも拒否する(qa-081)。oauth_pending(state・PKCE verifier・候補チャンネル一覧を暗号化・有効10分)で OAuth 後のチャンネル選択を保持し、確定時に削除する。oauth_tokens.granted_scopes に付与スコープを保存し、字幕トグルは tenants.captions_auto(既定0)に持つ(qa-076)。skill_tokens に name(必須)を追加し、発行はユーザーごとに5本まで(qa-083)。CSV・字幕・画像の取込履歴は imports(kind・file_name・period・rows・status・error・created_at)へ統合し、設定画面は最新20件を読む。無料枠は usage_counters(日付×種類の自前カウンタ: YouTube units・字幕取得本数)と usage_snapshots(Cloudflare GraphQL の取得値の1時間キャッシュ)に分ける(qa-078)。連携・解除・字幕切替・トークン発行/失効・削除は audit_log(tenant_id・user_id・action・at)に残す。チャンネル変更は連携解除で旧チャンネルの行を7日以内に削除してから新チャンネルを連携する(qa-075/qa-086)。",
-      "recorded_at": "2026-09-24T00:48:35Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-020] 保存先はD1(構造化データ)+R2(画像)(qa-026でD1のみから変更)。基本11テーブル: users / channels / oauth_tokens / daily_metrics(PK tenant_id,channel_id,date) / video_metrics / csv_imports / analysis_requests(A-0001形式, 待機中|実行中|完了|失敗) / reports(版管理, html≤2,000,000 bytes) / findings / actions(未着手|実施中|効果測定中|完了, 判定 効果あり|不明|効果なし) / skill_tokens。[qa-025/026/027/029の機能決定に伴う追加テーブル(列はAI設計)] video_period_metrics(表データ.csvの21列を期間付きで保存。空欄=null・0=実測0を区別) / video_daily_metrics(グラフデータ.csv) / channel_daily_metrics(合計.csv) / video_angles(切り口: つまずき解決型|是非・意見型|追加型, 確定者) / retention_points(video_id, elapsed_ratio, audience_watch_ratio, relative_retention) / transcripts(video_id, source srt|vtt|whisper|captions_api, start_ms, end_ms, text) / media_assets(video_id, kind thumbnail|scene|screenshot, at_ms, r2_key, width, height, bytes) / comments(comment_id, video_id, published_at, text, like_count) / comment_emotions(comment_id, emotion Plutchik8種, intent 質問|共感|反論|体験談, report_id) / psych_findings(report_id, layer 考え|感情|行動, claim, evidence_json, counter_hypothesis, confidence)。全業務テーブルにtenant_id(操作した人のuser_idも保持)。設計知識(DDD)の適用: 集約は『レポート版(reports+findings+psych_findings+comment_emotions)』と『改善アクション(actions)』の2つに分け、版は追記のみ(過去版を更新しない)を不変条件とする。actionsの状態遷移は 未着手→実施中→効果測定中→完了 の一方向のみ許し、完了時に判定(効果あり/不明/効果なし)とbaseline/resultを必須にする。video_anglesは利用者確定後に再分析で上書きしない。[qa-035] 指標以外のAPIデータを持つ行(videosのタイトル等・comments・APIで取った字幕)にfetched_atを持たせ、30日超の行を掃除できるようにする。レポート版にはコメント本文を持たず、comment_idで参照する。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 追加テーブル: tenants(tenant_id, name, db_binding 既定'DB', created_by, created_at, deleted_at) / tenant_members(tenant_id, user_id, role owner|editor|viewer, joined_at, PK tenant_id,user_id) / tenant_invites(invite_id, tenant_id, email, role editor|viewer, token_hash SHA-256, expires_at 発行+7日, accepted_at, revoked_at, created_by)。既存の全業務テーブル(channels〜psych_findings・skill_tokens・oauth_tokens)にtenant_idを持たせ、主キーと索引の先頭をtenant_idにする(daily_metrics は PK tenant_id,channel_id,date)。user_idは『操作した人』の記録として残す(reports/actions/csv_importsの作成者)。R2キーは tenants/<tenant_id>/… で分ける。将来の分割: tenants.db_binding から参照先D1を決める解決関数を1か所だけに置く(既定は全テナント同じDB)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典で表を分ける(qa-054): API由来=daily_metrics(PK tenant_id,channel_id,date,content_type。content_typeはcreatorContentType)・video_metrics(PK tenant_id,video_id,date。単日指定の動画別クエリを毎日積み上げる)・traffic_source_daily(PK tenant_id,date,source_type)・audience_demographics(PK tenant_id,snapshot_date,age_group,gender)・video_reach_daily(PK tenant_id,video_id,date。video_thumbnail_impressions と video_thumbnail_impressions_ctr をAPIの値のまま保存し、CTRを自前計算しない・report_id と fetched_at を持つ)。CSV由来=既存の video_period_metrics / video_daily_metrics / channel_daily_metrics(csv_import_id を持つ)。同じ日・同じ指標でも上書きせず両方残す。派生指標M1〜M10はCSV由来の表だけから計算する(qa-053)。書込量の抑制: upsert前に値を比べ、変わった行だけ書く。索引は主キーのみ(索引の更新も書込行数に数えるため)。tenants に reporting_job_id と reporting_created_after、last_collected_date を追加。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] consent_records(id TEXT PK, user_id TEXT NOT NULL REFERENCES users, terms_version TEXT NOT NULL, privacy_version TEXT NOT NULL, consented_at TEXT NOT NULL, source TEXT NOT NULL CHECK(source IN ('login','reconsent')))。追記のみで更新しない。利用者の現在の同意は user_id ごとに consented_at が最大の行。索引は (user_id, consented_at) を1つだけ加える(ログインのたびに再同意の要否を引くため)。ログイン試行の回数を数えるテーブルは作らない(qa-071)。tenants に youtube_link_status TEXT NOT NULL DEFAULT 'none' CHECK(youtube_link_status IN ('none','partial','linked')) を追加。oauth_tokens.scope は付与された実スコープ(スペース区切り)を保存する(既存列の意味を『要求』ではなく『付与』と明確にする)。アカウント削除時は consent_records も削除する。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] channels(tenant_id UNIQUE・channel_id UNIQUE・title・thumbnail_url・subscriber_count(表示のみ)・status=正常/要再連携/未連携・connected_at)で1テナント1チャンネルを表す(qa-075)。channel_id の UNIQUE で同じチャンネルの別テナント連携を DB でも拒否する(qa-081)。oauth_pending(state・PKCE verifier・候補チャンネル一覧を暗号化・有効10分)で OAuth 後のチャンネル選択を保持し、確定時に削除する。oauth_tokens.granted_scopes に付与スコープを保存し、字幕トグルは tenants.captions_auto(既定0)に持つ(qa-076)。skill_tokens に name(必須)を追加し、発行はユーザーごとに5本まで(qa-083)。CSV・字幕・画像の取込履歴は imports(kind・file_name・period・rows・status・error・created_at)へ統合し、設定画面は最新20件を読む。無料枠は usage_counters(日付×種類の自前カウンタ: YouTube units・字幕取得本数)と usage_snapshots(Cloudflare GraphQL の取得値の1時間キャッシュ)に分ける(qa-078)。連携・解除・字幕切替・トークン発行/失効・削除は audit_log(tenant_id・user_id・action・at)に残す。チャンネル変更は連携解除で旧チャンネルの行を7日以内に削除してから新チャンネルを連携する(qa-075/qa-086)。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] analysis_requests(tenant_id, request_id 'A-0001' 形式・テナント内連番, channel_id, period_start, period_end, instruction(≤1000字), status 待機中|実行中|完了|失敗|取消, progress 0-100, stage 0-3, error, retry_of, report_id, created_by, created_at, started_at, finished_at, canceled_at, canceled_by。PK tenant_id,request_id)。取消は qa-089 で追加した終端状態で、終端からは更新しない。report_archives(tenant_id, report_id, archived_by, archived_at。PK tenant_id,report_id)を別表で持ち、reports は追記のみの不変条件を保つ(アーカイブ解除は行の削除)。レポート一覧と analysis_history は report_archives に無い版だけを読む(qa-090)。actions に source_report_id と source_key(レポート JSON の actions 内の位置から作るキー)を加え、UNIQUE(tenant_id, source_report_id, source_key) で同じ版の同じアクションの二重登録を DB でも防ぐ(qa-091)。レポート名と要約の検索は D1 の LIKE(テナント内・最新200版まで)で行い、全文検索索引は作らない(書込行数の節約)。取込・取消・アーカイブ・アクション登録は既存の audit_log に1行ずつ残す。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] analysis_requests に created_via('web'|'skill'|'import')を加える。skill で作る依頼の created_by はトークン発行者の user_id、import は取込した利用者(qa-092)。",
+      "recorded_at": "2026-09-24T14:45:59Z",
       "basis": "user-decision"
     },
     "auth": {
@@ -3464,28 +3784,28 @@
       "basis": "user-decision"
     },
     "ui-ux": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-011/qa-016/qa-030] 画面は6つ: ①ログイン ②ダッシュボード ③動画(qa-030で追加) ④AI分析(依頼/実行状況/レポートの3区画) ⑤改善アクション ⑥設定。加えてメニュー外の静的ページ2枚(プライバシーポリシー・利用規約)。各画面の冒頭に問いを1行、結論→要因→打ち手の順。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする(色は画像に従わず既存の CSS 変数・qa-080。05-settings.png の次回収集の文言は『毎日 3:00 JST』・qa-077)。[qa-029 委任により定義・qa-030/qa-031で表示を確定] ダッシュボードはdocs/analysis/dashboard-analysis-catalog.mdの9区画を持ち、最初に見えるのは視覚的に読める4ブロックだけ: ①KPIカード4枚(視聴回数・総再生時間・加重平均視聴率M1・登録者増。各カードに期間内の小さな推移線と前期比) ②日次推移の折れ線グラフ(合計.csvのエンゲージビュー。前期間を点線、動画公開日にマーカー) ③動画別の表(上位8本: タイトル・切り口バッジ・視聴回数・M1を行内の横棒・CTR。値には出典バッジを付ける。行を押すと動画画面) ④右カラムに最新AI分析の要約(結論1行+主な発見3つ)と実施中アクション。期間セレクタは上部固定。『詳しく見る』を開くと、ファネル(段ごとの横棒と転換率)・切り口別比較(横棒)・視聴者の形(M4/M8の横棒)・Shorts枠(小さな表)・データ品質バッジを表示する。数字だけのカードや文章だけの区画を作らず、比較はグラフ、個別の値は表で見せる。[qa-030] 動画画面は左に動画一覧(公開日・切り口・M1・集計中バッジ)、右に選択動画の詳細(問い『この動画で視聴者は何を考え、どこで離れたか』→切り口の確定→維持曲線と急落点→心理(考え→感情→行動・推定バッジ)→コメント感情→場面画像と文字起こし(折りたたみ))。ダッシュボードの動画表の行からも開く。[qa-030] 静的ページはログイン画面とフッターからリンクし、ログイン前に同意を求める(YouTube API Developer Policies III.A.2)。[qa-027] AI分析レポートに『視聴者心理』区画(考え→感情→行動、推定である旨・根拠データ・確信度・反対仮説)と『コメント感情』区画(8基本感情の構成比と代表コメント)と『離脱場面』区画(維持曲線上の急落点×その時刻の文字起こし・場面画像)を追加。[qa-019] デスクトップはCLI体験: [1/3] データ取得中…(A-0004) → [2/3] 分析・HTML生成中… → [3/3] 反映完了 → レポートURL。失敗時は原因1行+対処1行。静的ページ2枚(プライバシーポリシー・利用規約)は文章だけのページなので画面モック(docs/screens/*.png)の対象外とし、本文は公開前に別途用意する。[qa-036] スマホ・タブレットもWebで全操作できる: 幅360px以上で6画面の全操作(CSV・字幕・画像の取込、分析依頼とプロンプトのコピー、結果JSONの取込、アクション更新、設定)を行える。幅900px未満ではサイドバーを下部タブ(5項目)に、表を縦積みカードに切り替え、取込はドラッグ&ドロップに加えてファイル選択ボタンを置く。タップ領域は44pt以上(Apple HIG)。グラフは横スクロールさせず、幅に合わせて目盛りを間引く。Claude Code によるAI分析の実行だけはPC側で行う(スマホではプロンプトのコピーと結果の取込まで)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 画面は6枚のまま。サイドバー上部にテナント切替(所属が1つなら名前の表示だけ)。設定画面に『メンバー』欄(一覧・役割変更・招待リンク発行と取消・削除。オーナーだけに表示)。招待リンクを開くとログイン画面に『○○のテナントに招待されています』を表示する。閲覧者には取込・分析依頼・アクション更新のボタンを出さない。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 画面は6枚のまま。値の横に出典バッジ(API/CSV)を付ける。KPIカードの視聴回数・総再生時間・登録者増は API の公式値(バッジ API)、M1 は CSV 由来(バッジ CSV)。動画別の表の CTR は Reporting API の値(バッジ API)を使い、無い期間は CSV の値(バッジ CSV)。M1〜M10 を表示する区画には『CSVの取込データから計算した値で、YouTube公式の数値ではありません』を常に表示する(III.E.4 の開示義務)。ユニーク視聴者数は CSV にだけあるため CSV バッジで表示する。最後の収集日時と最後のCSV取込日時を設定画面に表示する(催促通知は出さない・qa-055)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] ログイン画面は docs/screens/01-login.png の構成と文言に従い、色・ロゴ・背景は共通デザイン正本に従う(qa-063)。中央カードに上から、テキストロゴ『Channel Insight』(製品全体の名前・qa-068) → 見出し『YouTubeの実績から、次の一手を。』 → 説明『Googleアカウントでログインすると、YouTube Analyticsの読み取り連携も同時に行います』 → 権限一覧3行(YouTubeチャンネル情報の閲覧/YouTube Analyticsレポートの閲覧/メールアドレス。各行に『読み取り専用』バッジ。一覧は /api/auth/config の応答) → 同意チェック『プライバシーポリシーと利用規約に同意します』(2語はそれぞれ /privacy と /terms へのリンク) → 『Googleでログイン』ボタン(Google ブランド規定の Light テーマ固定: 白地・枠#747775・文字#1F1F1F・標準Gロゴ。カード幅いっぱい・高さ44pt以上。qa-067) → 未検証アプリの案内『このアプリはGoogleの検証前です。確認画面で「詳細」→「移動」を選んでください』(文言は画像由来 qa-062) → 『Googleのプライバシーポリシー』リンク(https://policies.google.com/privacy)。カードの下のフッターに信頼表示3つ(OAuthは読み取り専用/データは利用者ごとに分離/無料枠で運用。qa-069)と『プライバシーポリシー | 利用規約』リンクを置く。招待リンク経由では、説明を『招待されたテナントに参加します。読み取るのはメールアドレスだけです』に、権限一覧を『メールアドレス』1行に切り替え、既存の『○○のテナントに招待されています』を見出しの上に出す(qa-064)。同意前はボタンを押せない状態にし、直下に『同意にチェックすると押せます』を出す。エラーはカード上部に1つだけ日本語で出す。部分許可のときは、ダッシュボードの先頭と設定の連携欄に『YouTube 連携が未完了です』と『再連携』ボタン(オーナーのみ)を出す。製品名『Channel Insight』は全6画面のサイドバーのロゴ・ブラウザタブのタイトル・規約2ページにも揃える(qa-068)。アクセシビリティ: 360px幅で横スクロールなし、タップ領域44pt以上、Tabの順序は見た目の順、フォーカスリングはマゼンタ、文字と背景のコントラスト4.5:1以上。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 設定画面は docs/screens/05-settings.png の区画・配置・文言を正とし(色は既存の CSS 変数・qa-080、次回収集の文言は『毎日 3:00 JST』・qa-077)、YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除の順に並べる(qa-074/qa-079)。連携カードはチャンネルアイコン・名前・登録者数(表示のみ)・状態バッジ(正常/要再連携/未連携)・次回収集・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。字幕トグルの説明に『1日5本まで』(qa-082)と、検証前は『準備中』(qa-085)を出す。トークン欄は名前必須・平文は発行時1回だけ表示・1人5本まで(6本目は既存トークンの失効を案内・qa-083)。無料枠バーは70%で黄・90%で赤(qa-084)で、テナント別の値は出さず合計だけ(qa-078)。危険操作(連携解除・データ削除)は ConfirmDialog でテナント名の入力を求める。全画面共通の AppShell(サイドバー・ヘッダー・フッター)で、ヘッダーに画面名・最終更新・期間切替(28日/90日/1年/任意を ?period= で全画面共有)・アバターメニュー、フッターに3バッジと規約リンクを置く(ログイン・静的ページも同じフッター・qa-074)。",
-      "recorded_at": "2026-09-24T00:48:35Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-011/qa-016/qa-030] 画面は6つ: ①ログイン ②ダッシュボード ③動画(qa-030で追加) ④AI分析(依頼/実行状況/レポートの3区画) ⑤改善アクション ⑥設定。加えてメニュー外の静的ページ2枚(プライバシーポリシー・利用規約)。各画面の冒頭に問いを1行、結論→要因→打ち手の順。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする(色は画像に従わず既存の CSS 変数・qa-080。05-settings.png の次回収集の文言は『毎日 3:00 JST』・qa-077)。[qa-029 委任により定義・qa-030/qa-031で表示を確定] ダッシュボードはdocs/analysis/dashboard-analysis-catalog.mdの9区画を持ち、最初に見えるのは視覚的に読める4ブロックだけ: ①KPIカード4枚(視聴回数・総再生時間・加重平均視聴率M1・登録者増。各カードに期間内の小さな推移線と前期比) ②日次推移の折れ線グラフ(合計.csvのエンゲージビュー。前期間を点線、動画公開日にマーカー) ③動画別の表(上位8本: タイトル・切り口バッジ・視聴回数・M1を行内の横棒・CTR。値には出典バッジを付ける。行を押すと動画画面) ④右カラムに最新AI分析の要約(結論1行+主な発見3つ)と実施中アクション。期間セレクタは上部固定。『詳しく見る』を開くと、ファネル(段ごとの横棒と転換率)・切り口別比較(横棒)・視聴者の形(M4/M8の横棒)・Shorts枠(小さな表)・データ品質バッジを表示する。数字だけのカードや文章だけの区画を作らず、比較はグラフ、個別の値は表で見せる。[qa-030] 動画画面は左に動画一覧(公開日・切り口・M1・集計中バッジ)、右に選択動画の詳細(問い『この動画で視聴者は何を考え、どこで離れたか』→切り口の確定→維持曲線と急落点→心理(考え→感情→行動・推定バッジ)→コメント感情→場面画像と文字起こし(折りたたみ))。ダッシュボードの動画表の行からも開く。[qa-030] 静的ページはログイン画面とフッターからリンクし、ログイン前に同意を求める(YouTube API Developer Policies III.A.2)。[qa-027] AI分析レポートに『視聴者心理』区画(考え→感情→行動、推定である旨・根拠データ・確信度・反対仮説)と『コメント感情』区画(8基本感情の構成比と代表コメント)と『離脱場面』区画(維持曲線上の急落点×その時刻の文字起こし・場面画像)を追加。[qa-019] デスクトップはCLI体験: [1/3] データ取得中…(A-0004) → [2/3] 分析・HTML生成中… → [3/3] 反映完了 → レポートURL。失敗時は原因1行+対処1行。静的ページ2枚(プライバシーポリシー・利用規約)は文章だけのページなので画面モック(docs/screens/*.png)の対象外とし、本文は公開前に別途用意する。[qa-036] スマホ・タブレットもWebで全操作できる: 幅360px以上で6画面の全操作(CSV・字幕・画像の取込、分析依頼とプロンプトのコピー、結果JSONの取込、アクション更新、設定)を行える。幅900px未満ではサイドバーを下部タブ(5項目)に、表を縦積みカードに切り替え、取込はドラッグ&ドロップに加えてファイル選択ボタンを置く。タップ領域は44pt以上(Apple HIG)。グラフは横スクロールさせず、幅に合わせて目盛りを間引く。Claude Code によるAI分析の実行だけはPC側で行う(スマホではプロンプトのコピーと結果の取込まで)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 画面は6枚のまま。サイドバー上部にテナント切替(所属が1つなら名前の表示だけ)。設定画面に『メンバー』欄(一覧・役割変更・招待リンク発行と取消・削除。オーナーだけに表示)。招待リンクを開くとログイン画面に『○○のテナントに招待されています』を表示する。閲覧者には取込・分析依頼・アクション更新のボタンを出さない。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 画面は6枚のまま。値の横に出典バッジ(API/CSV)を付ける。KPIカードの視聴回数・総再生時間・登録者増は API の公式値(バッジ API)、M1 は CSV 由来(バッジ CSV)。動画別の表の CTR は Reporting API の値(バッジ API)を使い、無い期間は CSV の値(バッジ CSV)。M1〜M10 を表示する区画には『CSVの取込データから計算した値で、YouTube公式の数値ではありません』を常に表示する(III.E.4 の開示義務)。ユニーク視聴者数は CSV にだけあるため CSV バッジで表示する。最後の収集日時と最後のCSV取込日時を設定画面に表示する(催促通知は出さない・qa-055)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] ログイン画面は docs/screens/01-login.png の構成と文言に従い、色・ロゴ・背景は共通デザイン正本に従う(qa-063)。中央カードに上から、テキストロゴ『Channel Insight』(製品全体の名前・qa-068) → 見出し『YouTubeの実績から、次の一手を。』 → 説明『Googleアカウントでログインすると、YouTube Analyticsの読み取り連携も同時に行います』 → 権限一覧3行(YouTubeチャンネル情報の閲覧/YouTube Analyticsレポートの閲覧/メールアドレス。各行に『読み取り専用』バッジ。一覧は /api/auth/config の応答) → 同意チェック『プライバシーポリシーと利用規約に同意します』(2語はそれぞれ /privacy と /terms へのリンク) → 『Googleでログイン』ボタン(Google ブランド規定の Light テーマ固定: 白地・枠#747775・文字#1F1F1F・標準Gロゴ。カード幅いっぱい・高さ44pt以上。qa-067) → 未検証アプリの案内『このアプリはGoogleの検証前です。確認画面で「詳細」→「移動」を選んでください』(文言は画像由来 qa-062) → 『Googleのプライバシーポリシー』リンク(https://policies.google.com/privacy)。カードの下のフッターに信頼表示3つ(OAuthは読み取り専用/データは利用者ごとに分離/無料枠で運用。qa-069)と『プライバシーポリシー | 利用規約』リンクを置く。招待リンク経由では、説明を『招待されたテナントに参加します。読み取るのはメールアドレスだけです』に、権限一覧を『メールアドレス』1行に切り替え、既存の『○○のテナントに招待されています』を見出しの上に出す(qa-064)。同意前はボタンを押せない状態にし、直下に『同意にチェックすると押せます』を出す。エラーはカード上部に1つだけ日本語で出す。部分許可のときは、ダッシュボードの先頭と設定の連携欄に『YouTube 連携が未完了です』と『再連携』ボタン(オーナーのみ)を出す。製品名『Channel Insight』は全6画面のサイドバーのロゴ・ブラウザタブのタイトル・規約2ページにも揃える(qa-068)。アクセシビリティ: 360px幅で横スクロールなし、タップ領域44pt以上、Tabの順序は見た目の順、フォーカスリングはマゼンタ、文字と背景のコントラスト4.5:1以上。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 設定画面は docs/screens/05-settings.png の区画・配置・文言を正とし(色は既存の CSS 変数・qa-080、次回収集の文言は『毎日 3:00 JST』・qa-077)、YouTube連携→データ取込→Claude Code連携トークン→メンバー(オーナーのみ)→無料枠の使用状況→データを削除の順に並べる(qa-074/qa-079)。連携カードはチャンネルアイコン・名前・登録者数(表示のみ)・状態バッジ(正常/要再連携/未連携)・次回収集・最終収集/最終CSV取込・付与スコープ・字幕自動取得トグル・再連携・連携解除。字幕トグルの説明に『1日5本まで』(qa-082)と、検証前は『準備中』(qa-085)を出す。トークン欄は名前必須・平文は発行時1回だけ表示・1人5本まで(6本目は既存トークンの失効を案内・qa-083)。無料枠バーは70%で黄・90%で赤(qa-084)で、テナント別の値は出さず合計だけ(qa-078)。危険操作(連携解除・データ削除)は ConfirmDialog でテナント名の入力を求める。全画面共通の AppShell(サイドバー・ヘッダー・フッター)で、ヘッダーに画面名・最終更新・期間切替(28日/90日/1年/任意を ?period= で全画面共有)・アバターメニュー、フッターに3バッジと規約リンクを置く(ログイン・静的ページも同じフッター・qa-074)。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析画面は docs/screens/03-ai-analysis.png の区画・配置・文言を正とする(色は既存の CSS 変数・qa-080)。結果JSONの形は画像内の例(summary/findings/actions)ではなく docs/analysis/dashboard-analysis-catalog.md §6 の正本(brief/results/history_review/psych_findings/ideas/actions/report_html)に従う。冒頭は見出し『AI分析』・問い『AIに分析を依頼し、根拠と版を確認しますか?』・説明1行・右上に『AI分析の使い方』リンク。①依頼: 分析対象期間(最新28日/90日/1年/任意。任意は開始日・終了日を選び最長1年・未来日不可)と期間の表示、補足指示(最大1000字・文字数表示)、この画面で唯一の主ボタン『Claude Code用プロンプトをコピー』(押すと依頼 A-xxxx を作りプロンプトを生成してクリップボードへコピーし Toast で知らせる)。右に『使用するデータ』表(対象期間・日別指標・動画・字幕・場面画像・コメント・CSV取込の件数)と副ボタン『使用データを確認』(内訳モーダル)。注記『データは自動送信されません。コピーしたプロンプトをClaude Codeに貼り付けて実行してください』。②実行状況: 表の列は ID・ステータス・対象期間・作成日時・進捗(バーと%)・依頼内容・操作。状態は 待機中/実行中/完了/失敗/取消(qa-089)で、操作は 待機中・実行中=キャンセル(確認付き)/完了=詳細/失敗・取消=再実行(同じ条件で新しいIDを作る)。失敗は原因1行と対処1行を詳細に出す。③レポート: 左にレポート一覧(検索=レポート名・要約、『アーカイブを表示』、列は版・作成日時・レポート名・対象期間)と『結果の取り込み』(JSON貼付欄・構文/スキーマの誤りを『JSONの形式が正しくありません N行目』と対処1行で表示・副ボタン『結果を取り込む』と『クリア』。取込先は選択中の依頼で、未選択なら完了済みの依頼を1件作る・qa-092)。右にレポート詳細(レポート名・版・最新版バッジ・作成日時・対象期間・作成元・ステータス、右上に『アーカイブ』/『元に戻す』)。要約の先頭に『前回からの変化』(参照した直近版・前回仮説の当否・施策効果・変化した原因指標。履歴0件は『初回分析』)→週次5段ファネル→下流結果→目標未達が最大の改善候補(または全指標目標達成/判定保留)を置き、因果を断定しない。タブは 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート。要約タブに主な発見(番号付き3件)、『視聴者心理(推定)』の小枠(考え→感情→行動を1行ずつ・推定バッジ・確信度%)、次に取るべきアクション(主対象1件を先頭。各行にチェック、初期は主対象だけチェック・qa-091)と副ボタン『改善アクションに登録』(登録済みの行は『登録済み』表示)、レポートの版履歴(v3/v2/v1)と副ボタン『2つの版を比較』(2版を選び差分を並べて表示)。アーカイブした版は一覧から消え『アーカイブを表示』で見え、次の分析の履歴にも使わない(qa-090)。画面下部に選択中の依頼バー(ID・依頼内容・進捗バー・%・『詳細を開く』)を常に表示する。閲覧者には コピー/キャンセル/再実行/取込/アーカイブ/アクション登録 のボタンを出さず、一覧・詳細・比較の閲覧だけにする。幅900px未満では2カラムを縦積みにし、表はカード化、下部バーは下部タブの上に固定する。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] 利用者に見せる語は『チャンネル管理』とし、qa-088 の『ワークスペース』表記を置き換える(画面・メール文面・APIのエラーメッセージ・利用規約・プライバシーポリシー。例: 『チャンネル管理を作成』『チャンネル管理を切り替え』『このチャンネル管理のメンバー』)。コード識別子・DB・開発者向け文書は tenant/テナントのまま。AI分析画面の実行状況の表では、週次自動実行で作られた依頼に『自動』バッジを付ける(qa-095)。",
+      "recorded_at": "2026-09-24T14:45:59Z",
       "basis": "user-decision"
     },
     "security": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-022] refresh tokenはAES-256-GCM(Web Crypto)で暗号化しD1へ、鍵TOKEN_ENC_KEYとGOOGLE_CLIENT_SECRETはWorkers Secretsのみ。user_idはセッション/トークンから導出し全クエリをWHERE user_id=?で絞る(パラメータのuser_idを信用しない)。レポートHTMLはallow-scriptsなしのsandbox iframe+CSP default-src 'none'; style-src 'unsafe-inline'; img-src data:。結果JSONは形式・サイズ検証後に保存。YouTube書込スコープは既定で要求しない。連携解除時はGoogle revokeを呼びトークン削除。[qa-025/026の機能決定に伴う追加] R2の画像キーは user_id/ 接頭辞で分離し、画像は署名付き短期URLかWorker経由でのみ返す(公開バケットにしない)。force-ssl追加同意はcaptions.downloadにだけ使い、他の書込系APIを呼ばないことをコードレビューとテストで確認する。コメント本文は第三者の個人情報を含み得るため、利用者本人のレポート内でのみ表示し外部送信しない。[qa-030 YouTube API Developer Policies III.A.2/III.D.2.3/III.E.4.g] プライバシーポリシー(Google Privacy Policyへのリンクを含む)への同意をログイン前に求める。設定の『データを削除』と連携解除のどちらでも、その利用者のD1行・R2画像を7日以内に削除する(削除は受付時に即時実行し、失敗分は毎日3:00 JSTのCron `0 18 * * *` で再試行)。[qa-035 YouTube API Developer Policies III.E.4] 保持期間: 分析指標(daily_metrics/video_metrics/video_*_metrics/retention_points)は毎日の収集でrefresh tokenの有効性を確かめられている間だけ保持する(30日を超えて更新に失敗した利用者は指標も削除)。指標以外のAPIデータ(videosのタイトル・説明・サムネイルURL、comments本文、APIで取った字幕)は各行にfetched_atを持ち、毎日の収集で再取得する。fetched_atが30日を超えた行は毎日1回のCron掃除で削除する。レポートにはコメント本文を複製せずcomment_idだけを持たせ、表示時にcommentsから引く(期限切れは『(保存期間を過ぎたため非表示)』)。手元の動画から切り出した場面画像と手元の字幕ファイルは利用者自身のデータでAPIデータではないため、この30日規定の対象外とする。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 認可: 全APIでtenant_idはセッション(またはスキル用トークン)からだけ導き、tenant_membersで役割を確かめる。画面でボタンを隠すだけにしない。権限表: owner=全操作+YouTube連携+招待+役割変更+テナント削除 / editor=CSV・字幕・画像の取込、分析依頼、結果の取込、アクション更新 / viewer=閲覧のみ。脅威の追加: 『招待リンクの流出』(ハッシュ保存・7日・1回限り・メール一致・取消可で対策)、『権限昇格』(役割変更はオーナーだけ、最後のオーナーは外せない)。削除: オーナーの『データを削除』はテナント全体を7日以内に削除し、メンバーは『このテナントから抜ける』。アカウント削除時は、オーナーであるテナントを削除し、他テナントの所属を外す。プライバシーポリシーに『オーナーが招待したメンバーにチャンネルのデータが表示される』ことを書く。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 規約 III.E.4 への対応: API由来の値から新しい指標を計算しない(比率・スコア・合算・CTRの再計算を含む)。派生指標M1〜M10・統計分析はCSV由来の表だけで行う。/yt-analyze への書き出しでも行ごとに source(api/csv)を付け、スキル側は source=api の行を新しい指標の計算に使わない。コメントは件数・割合の感情指標を作らず、comment_id を引用した定性的な解釈にとどめる(comment_emotions の件数・割合の列を廃止)。画面の自動操作による Studio からの取得は行わない(YouTube利用規約の自動アクセス禁止・qa-055)。保持期間の確認は毎日の収集で行う(30日ごとの認可確認を満たす)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] CSP は自サイトと Google 認証(accounts.google.com への遷移)だけを許可し、他サイトへの埋め込みも禁止する(qa-072)。ログイン画面を含むSPA本体の応答ヘッダを、Workers 静的アセットの _headers と API の共通 middleware で付与する: Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' https://accounts.google.com; frame-ancestors 'none'。加えて X-Content-Type-Options: nosniff、Referrer-Policy: strict-origin-when-cross-origin、Permissions-Policy: camera=(), microphone=(), geolocation=()。レポートHTMLの sandbox iframe の配信は既存方針のまま別ヘッダとし、本CSPは SPA 本体に適用する。ログイン開始の試行回数制限はアプリ側では設けない(qa-071: 利用者が『費用が最も少なく、利用者に負担がかからない』ことを基準に選択)。濫用への防御は Cloudflare の標準防御、Google 側の保護、state/PKCE に任せ、IP は保存しない。OAuth失敗・state不一致・スコープ不足などは既知コードだけを画面へ渡し、Google の error_description や内部例外を画面とURLに出さない。同意の記録(consent_records)はアカウント削除時に他のデータと一緒に削除する。未検証アプリ画面を出すアプリは新規利用者が累計100人まで(google-oauth-unverified-app)で、既存の『80人で検証申請』を維持する。画面の『詳細→移動』の案内文は画像由来の文言(qa-062)であり、公式出典の記述ではない。信頼表示3つ(qa-069)に対応して、プライバシーポリシーに『読み取り専用のスコープだけを要求する』『データはテナントごとに分離する』『無料枠で運用し、有料化するときは事前に告知する』を書き、表示と規約を一致させる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 権限表に追加: YouTube連携・連携解除・字幕トグル・データ削除はオーナーだけ(qa-079)。同じチャンネルの別テナント連携を拒否し、他人のチャンネルのデータを別テナントから見られる経路を作らない(qa-081)。スコープは既定 readonly のみで、youtube.force-ssl は字幕トグルONのオーナーだけが追加同意し captions.download 以外に使わない。OFFで revoke(qa-076)。force-ssl は sensitive scope のため検証前は運営者だけに限る(qa-085)。Claude Code連携トークンは1人5本まで・発行にレート制限をかける(qa-083)。CF_ANALYTICS_TOKEN(Account Analytics Read のみ)は Workers Secrets に置き、画面へは合計値だけ返す(qa-078)。状態を変える API は Origin ヘッダを検査する。連携・解除・字幕切替・トークン発行/失効・削除を audit_log に残す。oauth_pending は暗号化し10分で失効する。",
-      "recorded_at": "2026-09-24T00:48:35Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-022] refresh tokenはAES-256-GCM(Web Crypto)で暗号化しD1へ、鍵TOKEN_ENC_KEYとGOOGLE_CLIENT_SECRETはWorkers Secretsのみ。user_idはセッション/トークンから導出し全クエリをWHERE user_id=?で絞る(パラメータのuser_idを信用しない)。レポートHTMLはallow-scriptsなしのsandbox iframe+CSP default-src 'none'; style-src 'unsafe-inline'; img-src data:。結果JSONは形式・サイズ検証後に保存。YouTube書込スコープは既定で要求しない。連携解除時はGoogle revokeを呼びトークン削除。[qa-025/026の機能決定に伴う追加] R2の画像キーは user_id/ 接頭辞で分離し、画像は署名付き短期URLかWorker経由でのみ返す(公開バケットにしない)。force-ssl追加同意はcaptions.downloadにだけ使い、他の書込系APIを呼ばないことをコードレビューとテストで確認する。コメント本文は第三者の個人情報を含み得るため、利用者本人のレポート内でのみ表示し外部送信しない。[qa-030 YouTube API Developer Policies III.A.2/III.D.2.c.i/III.E.4.g] プライバシーポリシー(Google Privacy Policyへのリンクを含む)への同意をログイン前に求める。設定の『データを削除』と連携解除のどちらでも、その利用者のD1行・R2画像を7日以内に削除する(削除は受付時に即時実行し、失敗分は毎日3:00 JSTのCron `0 18 * * *` で再試行)。[qa-035 YouTube API Developer Policies III.E.4] 保持期間: 分析指標(daily_metrics/video_metrics/video_*_metrics/retention_points)は毎日の収集でrefresh tokenの有効性を確かめられている間だけ保持する(30日を超えて更新に失敗した利用者は指標も削除)。指標以外のAPIデータ(videosのタイトル・説明・サムネイルURL、comments本文、APIで取った字幕)は各行にfetched_atを持ち、毎日の収集で再取得する。fetched_atが30日を超えた行は毎日1回のCron掃除で削除する。レポートにはコメント本文を複製せずcomment_idだけを持たせ、表示時にcommentsから引く(期限切れは『(保存期間を過ぎたため非表示)』)。手元の動画から切り出した場面画像と手元の字幕ファイルは利用者自身のデータでAPIデータではないため、この30日規定の対象外とする。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 認可: 全APIでtenant_idはセッション(またはスキル用トークン)からだけ導き、tenant_membersで役割を確かめる。画面でボタンを隠すだけにしない。権限表: owner=全操作+YouTube連携+招待+役割変更+テナント削除 / editor=CSV・字幕・画像の取込、分析依頼、結果の取込、アクション更新 / viewer=閲覧のみ。脅威の追加: 『招待リンクの流出』(ハッシュ保存・7日・1回限り・メール一致・取消可で対策)、『権限昇格』(役割変更はオーナーだけ、最後のオーナーは外せない)。削除: オーナーの『データを削除』はテナント全体を7日以内に削除し、メンバーは『このテナントから抜ける』。アカウント削除時は、オーナーであるテナントを削除し、他テナントの所属を外す。プライバシーポリシーに『オーナーが招待したメンバーにチャンネルのデータが表示される』ことを書く。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 規約 III.E.4 への対応: API由来の値から新しい指標を計算しない(比率・スコア・合算・CTRの再計算を含む)。派生指標M1〜M10・統計分析はCSV由来の表だけで行う。/yt-analyze への書き出しでも行ごとに source(api/csv)を付け、スキル側は source=api の行を新しい指標の計算に使わない。コメントは件数・割合の感情指標を作らず、comment_id を引用した定性的な解釈にとどめる(comment_emotions の件数・割合の列を廃止)。画面の自動操作による Studio からの取得は行わない(YouTube利用規約の自動アクセス禁止・qa-055)。保持期間の確認は毎日の収集で行う(30日ごとの認可確認を満たす)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] CSP は自サイトと Google 認証(accounts.google.com への遷移)だけを許可し、他サイトへの埋め込みも禁止する(qa-072)。ログイン画面を含むSPA本体の応答ヘッダを、Workers 静的アセットの _headers と API の共通 middleware で付与する: Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self' https://accounts.google.com; frame-ancestors 'none'。加えて X-Content-Type-Options: nosniff、Referrer-Policy: strict-origin-when-cross-origin、Permissions-Policy: camera=(), microphone=(), geolocation=()。レポートHTMLの sandbox iframe の配信は既存方針のまま別ヘッダとし、本CSPは SPA 本体に適用する。ログイン開始の試行回数制限はアプリ側では設けない(qa-071: 利用者が『費用が最も少なく、利用者に負担がかからない』ことを基準に選択)。濫用への防御は Cloudflare の標準防御、Google 側の保護、state/PKCE に任せ、IP は保存しない。OAuth失敗・state不一致・スコープ不足などは既知コードだけを画面へ渡し、Google の error_description や内部例外を画面とURLに出さない。同意の記録(consent_records)はアカウント削除時に他のデータと一緒に削除する。未検証アプリ画面を出すアプリは新規利用者が累計100人まで(google-oauth-unverified-app)で、既存の『80人で検証申請』を維持する。画面の『詳細→移動』の案内文は画像由来の文言(qa-062)であり、公式出典の記述ではない。信頼表示3つ(qa-069)に対応して、プライバシーポリシーに『読み取り専用のスコープだけを要求する』『データはテナントごとに分離する』『無料枠で運用し、有料化するときは事前に告知する』を書き、表示と規約を一致させる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 権限表に追加: YouTube連携・連携解除・字幕トグル・データ削除はオーナーだけ(qa-079)。同じチャンネルの別テナント連携を拒否し、他人のチャンネルのデータを別テナントから見られる経路を作らない(qa-081)。スコープは既定 readonly のみで、youtube.force-ssl は字幕トグルONのオーナーだけが追加同意し captions.download 以外に使わない。OFFで revoke(qa-076)。force-ssl は sensitive scope のため検証前は運営者だけに限る(qa-085)。Claude Code連携トークンは1人5本まで・発行にレート制限をかける(qa-083)。CF_ANALYTICS_TOKEN(Account Analytics Read のみ)は Workers Secrets に置き、画面へは合計値だけ返す(qa-078)。状態を変える API は Origin ヘッダを検査する。連携・解除・字幕切替・トークン発行/失効・削除を audit_log に残す。oauth_pending は暗号化し10分で失効する。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] AI分析の全APIは TenantContext 必須で、他テナントの依頼・レポートIDは存在しないものとして404を返す。書込系(依頼作成・キャンセル・再実行・取込・アーカイブ・アクション登録)は content.write(owner/editor)だけに許し、閲覧者は403。セッション側の書込は既存の Origin 検査を通す。取込JSONは 3,500,000 bytes 以下(qa-098。report_html 単体は 2,000,000 bytes 以下)・スキーマ検証(parseReport。正本はスキルの buildReportJson の実出力で、合わなければ 422。qa-098)を通ったものだけを保存し、report_html は保存時に加工せず、表示は sandbox 属性付き iframe(allow-scripts・allow-same-origin を付けない)と CSP で隔離する。プロンプトには個人トークンの平文や他テナントの情報を含めず、Claude Code は利用者が設定画面で発行したトークンを使う。スキル連携APIは Bearer トークンを SHA-256 で照合し、依頼が同じテナントのものであることを確かめ、取消済みの依頼への送信は 409 で拒否する(qa-089)。依頼作成は1ユーザー1分あたり10件まで(超過は429)とし、依頼・取込・取消・アーカイブ・アクション登録は audit_log に残す。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] POST /api/skill/requests は Bearer トークン(SHA-256 照合)のテナントにだけ依頼を作り、トークン発行者が content.write を持たない(閲覧者に変わった)場合は403にする。作成は audit_log に残す。[注記 qa-094] 回数制限・サイズ上限・sandbox の具体値はアシスタントが具体化した値で、個別確認はしていない。 [見直し qa-098] サイズ上限は実装でスキル送信(3.5MB)と画面取込(2MB)の食い違いが見つかったため、利用者の選択で 3,500,000 bytes にそろえた(定数は1か所)。 [出典訂正 2026-09-24] 認可取消後7暦日以内の削除の条項番号を公式原文の表記(III.D.2.c(Revocation).i)に訂正した。",
+      "recorded_at": "2026-09-25T22:23:01Z",
       "basis": "user-decision"
     },
     "infrastructure": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-018/qa-026] Cloudflare Workers(Free)1本にAPI・静的配信・Cronを同居、D1バインディングとR2バケット(Standard、無料10GB-month・Class A 100万/月・Class B 1,000万/月)を追加。収集Cron(qa-049で毎日に変更。詳細は末尾の[毎日収集]節)。YouTube Data API 10,000 units/日の内訳: 動画一覧は差分取得、commentThreads.listは1 unit/回、captions.downloadは200 units/本で追加同意者のみ・1日上限を設定値で管理。設計知識card 0件の理由: resource-mapにインフラ(サーバレス基盤の容量設計)向けcardが無く、該当観点は doctrine anchor(Google SREの信頼性・運用)で扱うため。[qa-033/qa-035 に伴う追加] Cron Triggersをもう1本 `0 18 * * *`(毎日UTC18:00=JST3:00)追加する。役割は①fetched_atが30日を超えた指標以外のAPIデータの削除 ②『データを削除』/連携解除で失敗した削除の再試行 ③30日を超えてtoken更新に失敗した利用者の指標削除。削除依頼は受付時に即時実行し、失敗しても翌日3:00から毎日再試行するため、7日以内の削除(III.E.4.g)を最大6回の再試行で満たす。収集も同じ `0 18 * * *` に統合するため(qa-058)Cron Triggerは1本(Workers Freeのアカウント上限5本の範囲内)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] D1は1つのまま(binding名 DB)。R2は1バケットで tenants/<tenant_id>/ のプレフィックスで分ける。テナントを別DBへ移すときは新しいD1を作ってbindingを追加し、tenants.db_binding を切り替える(無料プランのD1上限10個・1つ500MB、2026-04-21更新の公式Limitsで確認)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 収集を週1回から毎日1回に変える(qa-049)。起動は毎日JST 3:00の1回だけ(qa-058): Cron Trigger `0 18 * * *`(Cron TriggersはUTCで動くため UTC 18:00=JST 3:00 と書く)。この Cron は既存の削除処理と同じ時刻なので1本に統合し、Cron Trigger は計1本(Free上限5本の範囲内)。Cron の実行では重い処理をせず、D1 から対象テナント(オーナー連携済み→古い順、上限 MAX_TENANTS=100・qa-052)を読み、Cloudflare Queues の collect-queue へテナントごとに1通(collect)と削除処理の1通(cleanup)を sendBatch で入れるだけにする。consumer は max_batch_size=1 とし、1通=1回の実行(Queues は1バッチを1回の consumer 実行として届ける)で1テナントを処理するため、1テナント約16件のサブリクエストが1実行の上限50件に収まる。失敗した通は msg.retry() で再試行(max_retries=3・retry_delay=600秒)し、最後の試行でも失敗したら tenants.collection_status=failed を書く(翌日の収集が直近7日を取り直すので欠けは埋まる)。Queues の操作数は1通あたり書込・読取・削除の約3回で、100テナント+cleanupでも1日約300回(無料枠1万回/日の範囲内)。メッセージの保持は24時間。1テナントの1日の呼出し: トークン更新1 / Analytics reports.query 5(チャンネル日次 D-7〜D-1・動画別の単日 D-3・流入元 D-7〜D-1・視聴者属性・新しい動画のShorts判定) / 維持率 最大2本(公開28日以内の動画を順番に) / Reporting reports.list 1+新しいレポートのダウンロード / Data API playlistItems.list・videos.list 2〜4 / D1 batch 1〜2。Reporting の CSV は gzip を要求せず平文で受け、date・video_id・impressions・ctr の列だけを読む(CPU 10ms 対策)。channel_basic_a3 などの大きいレポートは使わない。Google Cloud で YouTube Reporting API を有効化する。テナント上限は wrangler.toml の MAX_TENANTS=100(qa-052)。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] Cron は増やさない(Cron Trigger は1本のまま)。字幕の自動取得は毎日の収集の中で新着動画の字幕を1日5本(1,000 units)まで取り、残りは翌日へ持ち越す(qa-082)。YouTube Data API 10,000 units/日の消費を usage_counters で数える。無料枠の Cloudflare 側の値(Workers リクエスト・D1 書込/容量・R2 容量)は設定画面を開いたときに Cloudflare GraphQL Analytics API から取り、usage_snapshots に1時間キャッシュする(qa-078)。そのための CF_ANALYTICS_TOKEN(Account Analytics Read)を Workers Secrets に追加する。",
-      "recorded_at": "2026-09-24T00:35:04Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-014/qa-018/qa-026] Cloudflare Workers(Free)1本にAPI・静的配信・Cronを同居、D1バインディングとR2バケット(Standard、無料10GB-month・Class A 100万/月・Class B 1,000万/月)を追加。収集Cron(qa-049で毎日に変更。詳細は末尾の[毎日収集]節)。YouTube Data API 10,000 units/日の内訳: 動画一覧は差分取得、commentThreads.listは1 unit/回、captions.downloadは200 units/本で追加同意者のみ・1日上限を設定値で管理。設計知識card 0件の理由: resource-mapにインフラ(サーバレス基盤の容量設計)向けcardが無く、該当観点は doctrine anchor(Google SREの信頼性・運用)で扱うため。[qa-033/qa-035 に伴う追加] Cron Triggersをもう1本 `0 18 * * *`(毎日UTC18:00=JST3:00)追加する。役割は①fetched_atが30日を超えた指標以外のAPIデータの削除 ②『データを削除』/連携解除で失敗した削除の再試行 ③30日を超えてtoken更新に失敗した利用者の指標削除。削除依頼は受付時に即時実行し、失敗しても翌日3:00から毎日再試行するため、7日以内の削除(III.E.4.g)を最大6回の再試行で満たす。収集も同じ `0 18 * * *` に統合するため(qa-058)Cron Triggerは1本(Workers Freeのアカウント上限5本の範囲内)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] D1は1つのまま(binding名 DB)。R2は1バケットで tenants/<tenant_id>/ のプレフィックスで分ける。テナントを別DBへ移すときは新しいD1を作ってbindingを追加し、tenants.db_binding を切り替える(無料プランのD1上限10個・1つ500MB、2026-04-21更新の公式Limitsで確認)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 収集を週1回から毎日1回に変える(qa-049)。起動は毎日JST 3:00の1回だけ(qa-058): Cron Trigger `0 18 * * *`(Cron TriggersはUTCで動くため UTC 18:00=JST 3:00 と書く)。この Cron は既存の削除処理と同じ時刻なので1本に統合し、Cron Trigger は計1本(Free上限5本の範囲内)。Cron の実行では重い処理をせず、D1 から対象テナント(オーナー連携済み→古い順、上限 MAX_TENANTS=100・qa-052)を読み、Cloudflare Queues の collect-queue へテナントごとに1通(collect)と削除処理の1通(cleanup)を sendBatch で入れるだけにする。consumer は max_batch_size=1 とし、1通=1回の実行(Queues は1バッチを1回の consumer 実行として届ける)で1テナントを処理するため、1テナント約16件のサブリクエストが1実行の上限50件に収まる。失敗した通は msg.retry() で再試行(max_retries=3・retry_delay=600秒)し、最後の試行でも失敗したら tenants.collection_status=failed を書く(翌日の収集が直近7日を取り直すので欠けは埋まる)。Queues の操作数は1通あたり書込・読取・削除の約3回で、100テナント+cleanupでも1日約300回(無料枠1万回/日の範囲内)。メッセージの保持は24時間。1テナントの1日の呼出し: トークン更新1 / Analytics reports.query 5(チャンネル日次 D-7〜D-1・動画別の単日 D-3・流入元 D-7〜D-1・視聴者属性・新しい動画のShorts判定) / 維持率 最大2本(公開28日以内の動画を順番に) / Reporting reports.list 1+新しいレポートのダウンロード / Data API playlistItems.list・videos.list 2〜4 / D1 batch 1〜2。Reporting の CSV は gzip を要求せず平文で受け、date・video_id・impressions・ctr の列だけを読む(CPU 10ms 対策)。channel_basic_a3 などの大きいレポートは使わない。Google Cloud で YouTube Reporting API を有効化する。テナント上限は wrangler.toml の MAX_TENANTS=100(qa-052)。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] Cron は増やさない(Cron Trigger は1本のまま)。字幕の自動取得は毎日の収集の中で新着動画の字幕を1日5本(1,000 units)まで取り、残りは翌日へ持ち越す(qa-082)。YouTube Data API 10,000 units/日の消費を usage_counters で数える。無料枠の Cloudflare 側の値(Workers リクエスト・D1 書込/容量・R2 容量)は設定画面を開いたときに Cloudflare GraphQL Analytics API から取り、usage_snapshots に1時間キャッシュする(qa-078)。そのための CF_ANALYTICS_TOKEN(Account Analytics Read)を Workers Secrets に追加する。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] YouTube Data API 10,000 units/日・Analytics/Reporting API の割当と同意画面の検証要否は、各テナントが登録した Google Cloud プロジェクト単位で数える(qa-087)。usage_counters の YouTube units はテナント単位で数え、アプリ共通の合計では判定しない。アプリ共通の OAuth クライアントはログイン(openid/email/profile)専用で機密スコープを持たない。",
+      "recorded_at": "2026-09-24T14:45:59Z",
       "basis": "user-decision"
     },
     "backend": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-023] Hono v4 on Workers。画面用REST: GET /api/me, GET /api/dashboard?period=, POST /api/csv, GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff?a=&b=), GET/PATCH /api/actions/:id。スキル連携API(個人トークン): GET /api/skill/export?request_id= / PATCH /api/skill/requests/:id / POST /api/skill/reports。YouTube API失敗は指数バックオフ最大3回→次の毎時実行で拾い直し。[qa-025/026/027/029の機能決定に伴う追加(エンドポイント名はAI設計)] POST /api/skill/transcripts(SRT/VTT/Whisper結果を時刻付きで保存) / POST /api/skill/media(縮小画像をR2へ・キーをmedia_assetsへ) / exportに維持曲線・コメント・字幕・画像キー・派生指標M1〜M10を含める / POST /api/skill/reportsの受理JSONにpsych_findings・comment_emotions・ideasを追加。CSV取込はカタログの判定規則(Shorts判定・空欄と0の区別・集計遅延・合計行の別保存)で正規化する。[qa-030の画面追加に伴う追加(エンドポイント名はAI設計)] GET /api/videos(一覧) / GET /api/videos/:id(維持曲線・心理・コメント感情・場面画像キー・文字起こし) / PUT /api/videos/:id/angle(切り口の確定) / DELETE /api/me/data(全データ削除)。設計知識(API Design Patterns)の適用: エラーは {error:{code,message,hint}} の単一形式、POST /api/skill/reportsは request_id+版番号をIdempotency-Keyとして二重送信で版を増やさない、一覧はcursorページング、スキル連携APIは /api/skill/ 配下で版番号をヘッダ(X-Skill-Api-Version)で明示する。設計知識(DDD)の適用: usecaseと集約を1対1で対応させる。ingestReportは『レポート版』集約の新しい版を追記だけで作り、updateActionは『改善アクション』集約の状態遷移(未着手→実施中→効果測定中→完了の一方向)を集約内で検査する。ほかのusecaseが2つの集約を1トランザクションで同時に書き換えることはしない。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 全usecaseの入力に TenantContext(tenant_id, user_id, role) を必須にし、repository は tenant_id 無しのクエリを組めない形(TenantScopedRepository)にする。役割の確認は usecase の入口で1回行う。追加API: GET/POST /api/tenants / POST /api/session/tenant(切替) / POST /api/tenants/:id/invites / DELETE /api/tenants/:id/invites/:inviteId / POST /api/invites/accept / PATCH・DELETE /api/tenants/:id/members/:userId / POST /api/tenants/:id/leave。収集Cronは毎日(qa-049、末尾の[毎日収集]節)。取得元はYouTube API・CSV・字幕/画像ファイルの3系統をテナント単位で受ける(qa-043)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] collector usecase を日次に変える: 1テナントの処理を1関数(collectTenantDaily)にまとめ、Analytics はD-7〜D-1を取り直し、動画別は startDate=endDate=D-3 の単日クエリ(maxResults 200, sort -views)で積み上げる。Reporting は reports.list(createdAfter=前回値)で新しいレポートだけを取り、同じ startTime/endTime の修正版が来たらその期間の行を置き換える。レポートは60日で取れなくなるため、60日以上収集できなかった期間は CSV 取込で補う。テナント作成API(初回ログイン時)は MAX_TENANTS に達していたら作成せず『現在新規の受付を停止しています』を返す(招待でのメンバー追加は上限の対象外)。/api/skill/export は行ごとに source を付け、M1〜M10 は CSV 由来の行からだけ計算して返す。収集は毎日JST 3:00の Cron が Queues にテナントごとの通を入れ、consumer が1通=1テナントで collectTenantDaily を呼ぶ(qa-058)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] auth-routes に GET /api/auth/config を追加し、{devLogin, mode: signup|invite, scopes:[{id,label,readOnly:true}], termsVersion, privacyVersion, inviteTenantName?} を返す。scopes は SCOPE_SETS から生成し(表示用ラベルも同じ定義に持つ)、画面の表示と要求スコープの一致をサーバ側で保証する。規約の版は定数 LEGAL_VERSIONS として持ち、規約ページの表示と共有する。callback の順序: トークン応答の scope を検証 → oauth_tokens.scope へ保存 → youtube_link_status を linked/partial に更新 → consent_records へ追記 → セッション確立。招待モードでは oauth_tokens を作らない(招待メンバーは YouTube 連携しない)。GET /api/auth/youtube/connect はオーナーのみ(それ以外は403)。ログイン試行の回数制限は持たない(qa-071)ため、回数を数える処理と掃除用の Cron 処理は追加しない。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 設定API: GET /api/settings(連携・取込・トークン・メンバー・無料枠を1回で返す) / POST /api/youtube/connect / GET /api/oauth/callback / GET /api/youtube/channel-candidates / POST /api/youtube/channel(選択確定。channel_id が別テナントに連携済みなら409・qa-081) / POST /api/youtube/reconnect(同じチャンネルのみ・違えば409・qa-075) / DELETE /api/youtube/connection(revoke+旧データ削除を7日以内に予約) / PUT /api/youtube/captions-auto(ON=追加同意URLを返す・OFF=revoke→readonly再連携。検証前は運営者以外403・qa-085) / GET・POST /api/imports / GET・POST・DELETE /api/skill-tokens(6本目は409・qa-083) / GET /api/usage(合計値と閾値70%/90%の状態・qa-084) / POST /api/tenant/delete。全てサーバでオーナー/役割を確かめ、状態を変えるものは audit_log に書く。collectTenantDaily に captions ステップを加え、captions_auto=1 のテナントだけ新着動画の字幕を1日5本まで取得する(qa-082)。",
-      "recorded_at": "2026-09-24T00:48:35Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-023] Hono v4 on Workers。画面用REST: GET /api/me, GET /api/dashboard?period=, POST /api/csv, GET/POST /api/analysis-requests, GET /api/reports(/:id, ?version=, /diff?a=&b=), GET/PATCH /api/actions/:id。スキル連携API(個人トークン): GET /api/skill/export?request_id= / PATCH /api/skill/requests/:id / POST /api/skill/reports。YouTube API失敗は指数バックオフ最大3回→次の毎時実行で拾い直し。[qa-025/026/027/029の機能決定に伴う追加(エンドポイント名はAI設計)] POST /api/skill/transcripts(SRT/VTT/Whisper結果を時刻付きで保存) / POST /api/skill/media(縮小画像をR2へ・キーをmedia_assetsへ) / exportに維持曲線・コメント・字幕・画像キー・派生指標M1〜M10を含める / POST /api/skill/reportsの受理JSONにpsych_findings・comment_emotions・ideasを追加。CSV取込はカタログの判定規則(Shorts判定・空欄と0の区別・集計遅延・合計行の別保存)で正規化する。[qa-030の画面追加に伴う追加(エンドポイント名はAI設計)] GET /api/videos(一覧) / GET /api/videos/:id(維持曲線・心理・コメント感情・場面画像キー・文字起こし) / PUT /api/videos/:id/angle(切り口の確定) / DELETE /api/me/data(全データ削除)。設計知識(API Design Patterns)の適用: エラーは {error:{code,message,hint}} の単一形式、POST /api/skill/reportsは request_id+版番号をIdempotency-Keyとして二重送信で版を増やさない、一覧はcursorページング、スキル連携APIは /api/skill/ 配下で版番号をヘッダ(X-Skill-Api-Version)で明示する。設計知識(DDD)の適用: usecaseと集約を1対1で対応させる。ingestReportは『レポート版』集約の新しい版を追記だけで作り、updateActionは『改善アクション』集約の状態遷移(未着手→実施中→効果測定中→完了の一方向)を集約内で検査する。ほかのusecaseが2つの集約を1トランザクションで同時に書き換えることはしない。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 全usecaseの入力に TenantContext(tenant_id, user_id, role) を必須にし、repository は tenant_id 無しのクエリを組めない形(TenantScopedRepository)にする。役割の確認は usecase の入口で1回行う。追加API: GET/POST /api/tenants / POST /api/session/tenant(切替) / POST /api/tenants/:id/invites / DELETE /api/tenants/:id/invites/:inviteId / POST /api/invites/accept / PATCH・DELETE /api/tenants/:id/members/:userId / POST /api/tenants/:id/leave。収集Cronは毎日(qa-049、末尾の[毎日収集]節)。取得元はYouTube API・CSV・字幕/画像ファイルの3系統をテナント単位で受ける(qa-043)。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] collector usecase を日次に変える: 1テナントの処理を1関数(collectTenantDaily)にまとめ、Analytics はD-7〜D-1を取り直し、動画別は startDate=endDate=D-3 の単日クエリ(maxResults 200, sort -views)で積み上げる。Reporting は reports.list(createdAfter=前回値)で新しいレポートだけを取り、同じ startTime/endTime の修正版が来たらその期間の行を置き換える。レポートは60日で取れなくなるため、60日以上収集できなかった期間は CSV 取込で補う。テナント作成API(初回ログイン時)は MAX_TENANTS に達していたら作成せず『現在新規の受付を停止しています』を返す(招待でのメンバー追加は上限の対象外)。/api/skill/export は行ごとに source を付け、M1〜M10 は CSV 由来の行からだけ計算して返す。収集は毎日JST 3:00の Cron が Queues にテナントごとの通を入れ、consumer が1通=1テナントで collectTenantDaily を呼ぶ(qa-058)。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] auth-routes に GET /api/auth/config を追加し、{devLogin, mode: signup|invite, scopes:[{id,label,readOnly:true}], termsVersion, privacyVersion, inviteTenantName?} を返す。scopes は SCOPE_SETS から生成し(表示用ラベルも同じ定義に持つ)、画面の表示と要求スコープの一致をサーバ側で保証する。規約の版は定数 LEGAL_VERSIONS として持ち、規約ページの表示と共有する。callback の順序: トークン応答の scope を検証 → oauth_tokens.scope へ保存 → youtube_link_status を linked/partial に更新 → consent_records へ追記 → セッション確立。招待モードでは oauth_tokens を作らない(招待メンバーは YouTube 連携しない)。GET /api/auth/youtube/connect はオーナーのみ(それ以外は403)。ログイン試行の回数制限は持たない(qa-071)ため、回数を数える処理と掃除用の Cron 処理は追加しない。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 設定API: GET /api/settings(連携・取込・トークン・メンバー・無料枠を1回で返す) / POST /api/youtube/connect / GET /api/oauth/callback / GET /api/youtube/channel-candidates / POST /api/youtube/channel(選択確定。channel_id が別テナントに連携済みなら409・qa-081) / POST /api/youtube/reconnect(同じチャンネルのみ・違えば409・qa-075) / DELETE /api/youtube/connection(revoke+旧データ削除を7日以内に予約) / PUT /api/youtube/captions-auto(ON=追加同意URLを返す・OFF=revoke→readonly再連携。検証前は運営者以外403・qa-085) / GET・POST /api/imports / GET・POST・DELETE /api/skill-tokens(6本目は409・qa-083) / GET /api/usage(合計値と閾値70%/90%の状態・qa-084) / POST /api/tenant/delete。全てサーバでオーナー/役割を確かめ、状態を変えるものは audit_log に書く。collectTenantDaily に captions ステップを加え、captions_auto=1 のテナントだけ新着動画の字幕を1日5本まで取得する(qa-082)。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] 画面用API(セッション・content.write は owner/editor): POST /api/analysis-requests(period_start/period_end/instruction。A-xxxx を採番し待機中で作る) / GET /api/analysis-requests(最新20件・cursor) / GET /api/analysis-requests/:id / GET /api/analysis-requests/:id/prompt(Claude Code用プロンプト本文: 依頼ID・期間・補足指示・export の取得手順と送信先を含み、トークン平文は含めない) / POST /api/analysis-requests/:id/cancel(待機中・実行中→取消・qa-089) / POST /api/analysis-requests/:id/retry(失敗・取消の依頼と同じ条件で新しい依頼を作り retry_of を記録) / GET /api/analysis/data-summary?from=&to=(日別指標行数・動画本数・字幕本数・場面画像枚数・コメント件数・CSV取込件数と内訳)。レポート: GET /api/reports?q=&archived=0|1&cursor= / GET /api/reports/:id(?version=) / GET /api/reports/diff?a=&b= / POST /api/reports/import(貼付JSONを POST /api/skill/reports と同じ ingestReport で取り込む。request_id 指定時はその依頼を完了にし、未指定なら完了済みの依頼を1件作る・qa-092。検証エラーは 422 で {code:'INVALID_REPORT_JSON', line, message, hint}) / PUT・DELETE /api/reports/:id/archive(アーカイブ・元に戻す。qa-090) / POST /api/reports/:id/actions({keys:[...]} で選んだアクションだけを改善アクションとして登録。同じ版の同じアクションは登録済みを返し二重に作らない・qa-091)。スキル連携API(個人トークン): PATCH /api/skill/requests/:id に progress(0-100)・stage(1:データ取得/2:分析・HTML生成/3:反映)・status・error を受け、取消済みの依頼への PATCH と POST /api/skill/reports は 409 REQUEST_CANCELED を返す(Claude Code 側は『取消されました』を表示して止まる)。状態遷移は analysis-request 集約内で 待機中→実行中→完了|失敗|取消 の一方向だけを許し、完了・失敗・取消からは動かさない(再実行は新しい依頼)。analysis_history の直近5版はアーカイブされた版を除いて選ぶ(qa-090)。usecase は createAnalysisRequest/cancelAnalysisRequest/retryAnalysisRequest/getAnalysisPrompt/getDataSummary/importReport/archiveReport/registerReportActions に分け、アクション登録は『改善アクション』集約だけを書き、レポート版は読むだけにする。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] 週次自動実行(launchd)用に POST /api/skill/requests(個人トークン。period_start/period_end/instruction は任意で既定は最新28日)を追加し、依頼を『実行中』・created_via='skill' で作って A-xxxx を返す。/yt-analyze は request_id 無しで起動されたときこの API で依頼を作ってから GET /api/skill/export?request_id= を呼ぶ(export の request_id は必須のまま)。依頼作成の回数制限は画面からの作成と合算する。[注記 qa-049] 冒頭の『次の毎時実行で拾い直し』は qa-049 の日次化により『翌日の日次収集で拾い直し』に置き換わっている。[注記 qa-094] AI分析画面節の具体値(1分10件・取込 2,000,000 bytes(qa-098 で 3,500,000 bytes に変更)・最新200版・10秒)はアシスタントが骨格から具体化したもので、値ごとの個別確認はしていない。 [見直し qa-098] 取込本文の上限はスキル送信(POST /api/skill/reports)と画面取込で共通の 3,500,000 bytes とし、report_html 単体の上限 2,000,000 bytes とは別に持つ。結果 JSON(results / history_review)の形の正本はスキルの buildReportJson の実出力とし、取込時に parseReport で検査して合わなければ 422 を返す。",
+      "recorded_at": "2026-09-25T22:23:01Z",
       "basis": "user-decision"
     },
     "frontend": {
-      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-024→qa-061] Workersの静的アセットとして配信するVite+React(React Router)のSPA(ルートは6画面+静的ページ2枚のみ・qa-030)。Next.js は採用しない(管理画面のみでSSR/SEO不要・Workers無料枠と OpenNext の制約・API/Cron/Queue は Hono 側・qa-061)。グラフは Apache ECharts を唯一の描画ライブラリとし、サーバが返すグラフ仕様JSON(図の型・系列・軸・データ)を汎用のグラフ部品1つで描画する。図の種類は仕様JSONの追加だけで増やせる(qa-061 が qa-031 の4種限定を置換。最初に見える区画の折れ線・横棒・行内の横棒・小さな推移線は既定の図として維持)。スマホ幅ではサイドバーを下部タブに切替え、全操作をできるようにする(qa-036)。レポートHTMLはsandbox iframeで本体DOMと分離。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする。ただし色は画像に従わず既存の CSS 変数(qa-080)、05-settings.png の次回収集の文言は『毎日 3:00 JST』(qa-077)とする。[qa-029/qa-027] ダッシュボードの9区画とAI分析の心理・感情・離脱場面区画はカタログの派生指標定義(M1〜M10)をAPIから受け取り表示するだけとし、ブラウザ側で指標を再計算しない(計算式の二重化を防ぐ)。場面画像はR2の短期URLを遅延読込する。端末幅での確認は Playwright の 390×844(スマホ)・820×1180(タブレット)・1440×900(PC)の3サイズで主要操作のE2Eを回す(qa-036)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 選択中のテナントはセッションで持ち、切替時は画面を再取得する。役割に応じてボタンを出し分ける(サーバ側でも拒否する)。E2Eに『閲覧者の書込が403』『他テナントのIDを指定すると404』『招待リンクを別アカウントで開くと参加できない』を加える。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典バッジ(API/CSV)と M1〜M10 区画の開示文は共通コンポーネントにし、値の表示と必ず一緒に出す(付け忘れを防ぐ)。E2Eに『M1区画に開示文がある』『API と CSV の値が同じ日にあると両方バッジ付きで出る』『上限到達時に新規テナントが作れない』を加える。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] web/pages/LoginPage.tsx を刷新する。権限一覧と規約版は表示時に GET /api/auth/config から api client 経由で取得し、画面に権限を直書きしない(表示と要求スコープの一致・qa-066)。取得に失敗したらボタンを押せない状態にし、再読込を促す。ボタンは button 要素で aria-disabled と aria-describedby(理由文)を持ち、同意したら consent=1・terms_version・privacy_version をクエリに付けて /api/auth/login へ遷移する。招待トークンがあれば invite を付け、config も ?invite= 付きで取得する(招待モード)。/login?error=CODE は web/api.ts の REDIRECT_MESSAGES にある既知コードだけを日本語で role=alert 表示し、未知コードは『ログインできませんでした。もう一度お試しください』に統一する。追加コード: CONSENT_OUTDATED『利用規約またはプライバシーポリシーが更新されました。内容を確認して、もう一度同意してください』。背景装飾とロゴマーク画像は置かない。Google の G ロゴは公式配布の SVG をそのまま静的アセットとして同梱する。権限行の読み取り専用バッジは行内で描画する。共通コンポーネント: TrustFooter(React製ログイン画面で使用)、YouTubeLinkBanner(ダッシュボード・設定)。静的な規約2ページは public/legal.css を共有する。E2E(Playwright 390×844・820×1180・1440×900): 新規モードで3権限と3バッジが出る / 招待モードではメールだけ / 同意前はボタンが押せず理由が出る / error=CONSENT_OUTDATED と未知コードの表示 / 部分許可後にダッシュボードへ再連携バナーが出る / 360px幅で横スクロールが出ない / キーボードだけでチェックからボタンまで操作できる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 置換関係: qa-024(素の TypeScript・画像由来の配色)は qa-061(React+Vite SPA)と qa-080(既存 CSS 変数の配色)が、qa-031(図4種限定)は qa-061 が置換した。qa-024・qa-031 は当時の選択記録で、現行の規範ではない。共通化: AppShell(Sidebar/Header/main/Footer)を全ルートの親レイアウトにし、ログイン・静的ページも同じ Footer を使う(qa-074)。共通部品 PageHeader・SectionCard・StatusBadge・DataTable(900px未満でカード化)・UsageBar(70%黄/90%赤・qa-084)・DropZone(+ファイル選択ボタン)・ConfirmDialog(危険操作は名前入力)・Toast を components/ に置き、画面は組み合わせるだけにする。色は web/styles.css の CSS 変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、部品に色コードを直書きしない(qa-080)。期間は ?period= で全画面共有する。E2E に『別テナント連携済みチャンネルの選択で409を表示』『6本目のトークン発行でエラー表示』『検証前は運営者以外の字幕トグルが準備中』を加える。",
-      "recorded_at": "2026-09-24T00:48:35Z",
+      "text": "[承認 qa-037/appr-005・一括承認] 骨格は各[利用者確定 qa-…]で利用者が選択肢から選んだ範囲。列名・エンドポイント名・集約と不変条件・テスト値・保持と削除のCronなどの詳細はアシスタントが骨格から詳しくしたもので、利用者は qa-037 の3択(このまま承認/未承認のまま進める/先に内容を見たい)から『このまま承認』を選び、一括で承認した。項目ごとの内容確認は行っていないため、実装で食い違いが見つかれば個別に見直す。承認範囲の明細は qa-038。[利用者確定 qa-015/qa-024→qa-061] Workersの静的アセットとして配信するVite+React(React Router)のSPA(ルートは6画面+静的ページ2枚のみ・qa-030)。Next.js は採用しない(管理画面のみでSSR/SEO不要・Workers無料枠と OpenNext の制約・API/Cron/Queue は Hono 側・qa-061)。グラフは Apache ECharts を唯一の描画ライブラリとし、サーバが返すグラフ仕様JSON(図の型・系列・軸・データ)を汎用のグラフ部品1つで描画する。図の種類は仕様JSONの追加だけで増やせる(qa-061 が qa-031 の4種限定を置換。最初に見える区画の折れ線・横棒・行内の横棒・小さな推移線は既定の図として維持)。スマホ幅ではサイドバーを下部タブに切替え、全操作をできるようにする(qa-036)。レポートHTMLはsandbox iframeで本体DOMと分離。画面モックはdocs/screens/*.pngを区画・配置・文言の正とする。ただし色は画像に従わず既存の CSS 変数(qa-080)、05-settings.png の次回収集の文言は『毎日 3:00 JST』(qa-077)とする。[qa-029/qa-027] ダッシュボードの9区画とAI分析の心理・感情・離脱場面区画はカタログの派生指標定義(M1〜M10)をAPIから受け取り表示するだけとし、ブラウザ側で指標を再計算しない(計算式の二重化を防ぐ)。場面画像はR2の短期URLを遅延読込する。端末幅での確認は Playwright の 390×844(スマホ)・820×1180(タブレット)・1440×900(PC)の3サイズで主要操作のE2Eを回す(qa-036)。[利用者確定 qa-041〜qa-045・内容承認 qa-046/appr-007 マルチテナント] 選択中のテナントはセッションで持ち、切替時は画面を再取得する。役割に応じてボタンを出し分ける(サーバ側でも拒否する)。E2Eに『閲覧者の書込が403』『他テナントのIDを指定すると404』『招待リンクを別アカウントで開くと参加できない』を加える。[利用者確定 qa-049〜qa-055・qa-058・調査 qa-048・内容承認 qa-056/appr-009・qa-059/appr-010 毎日収集] 出典バッジ(API/CSV)と M1〜M10 区画の開示文は共通コンポーネントにし、値の表示と必ず一緒に出す(付け忘れを防ぐ)。E2Eに『M1区画に開示文がある』『API と CSV の値が同じ日にあると両方バッジ付きで出る』『上限到達時に新規テナントが作れない』を加える。 [利用者確定 qa-062〜qa-069・qa-071〜qa-073・観測 qa-062/qa-067・内容承認 qa-070/appr-012 ログイン刷新。試行回数制限・CSP・規約改定時の再同意は qa-070 の承認範囲から外し、qa-071〜qa-073 の個別回答で確定] web/pages/LoginPage.tsx を刷新する。権限一覧と規約版は表示時に GET /api/auth/config から api client 経由で取得し、画面に権限を直書きしない(表示と要求スコープの一致・qa-066)。取得に失敗したらボタンを押せない状態にし、再読込を促す。ボタンは button 要素で aria-disabled と aria-describedby(理由文)を持ち、同意したら consent=1・terms_version・privacy_version をクエリに付けて /api/auth/login へ遷移する。招待トークンがあれば invite を付け、config も ?invite= 付きで取得する(招待モード)。/login?error=CODE は web/api.ts の REDIRECT_MESSAGES にある既知コードだけを日本語で role=alert 表示し、未知コードは『ログインできませんでした。もう一度お試しください』に統一する。追加コード: CONSENT_OUTDATED『利用規約またはプライバシーポリシーが更新されました。内容を確認して、もう一度同意してください』。背景装飾とロゴマーク画像は置かない。Google の G ロゴは公式配布の SVG をそのまま静的アセットとして同梱する。権限行の読み取り専用バッジは行内で描画する。共通コンポーネント: TrustFooter(React製ログイン画面で使用)、YouTubeLinkBanner(ダッシュボード・設定)。静的な規約2ページは public/legal.css を共有する。E2E(Playwright 390×844・820×1180・1440×900): 新規モードで3権限と3バッジが出る / 招待モードではメールだけ / 同意前はボタンが押せず理由が出る / error=CONSENT_OUTDATED と未知コードの表示 / 部分許可後にダッシュボードへ再連携バナーが出る / 360px幅で横スクロールが出ない / キーボードだけでチェックからボタンまで操作できる。[利用者確定 qa-074〜qa-078・qa-080〜qa-086・内容承認 qa-079/appr-013・I1更新 qa-086/appr-014 設定画面・チャンネル紐付け・共通レイアウト] 置換関係: qa-024(素の TypeScript・画像由来の配色)は qa-061(React+Vite SPA)と qa-080(既存 CSS 変数の配色)が、qa-031(図4種限定)は qa-061 が置換した。qa-024・qa-031 は当時の選択記録で、現行の規範ではない。共通化: AppShell(Sidebar/Header/main/Footer)を全ルートの親レイアウトにし、ログイン・静的ページも同じ Footer を使う(qa-074)。共通部品 PageHeader・SectionCard・StatusBadge・DataTable(900px未満でカード化)・UsageBar(70%黄/90%赤・qa-084)・DropZone(+ファイル選択ボタン)・ConfirmDialog(危険操作は名前入力)・Toast を components/ に置き、画面は組み合わせるだけにする。色は web/styles.css の CSS 変数(--bg/--card/--text/--muted/--line/--primary/--danger/--alert-bg とダーク配色)だけを参照し、部品に色コードを直書きしない(qa-080)。期間は ?period= で全画面共有する。E2E に『別テナント連携済みチャンネルの選択で409を表示』『6本目のトークン発行でエラー表示』『検証前は運営者以外の字幕トグルが準備中』を加える。 [利用者確定 qa-089〜qa-092・内容承認 qa-093/appr-015 AI分析画面] /analysis を AnalysisPage(web/pages)として実装し、PlaceholderPage を置き換える。構成部品は RequestPanel(期間セグメント・任意期間の DateRangePicker・補足指示・コピー)/DataSummaryCard(+DataSummaryModal)/RequestStatusTable(DataTable を使い進捗は ProgressBar)/ReportList(検索入力は300msデバウンス・アーカイブ切替)/ResultImportPanel(貼付欄とエラー表示)/ReportDetail(タブ6つ・PsychBox・ActionChecklist・VersionHistory・VersionDiffModal)/SelectionBar。共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Modal/Toast)を再利用し、新しい共通部品として ProgressBar と DateRangePicker を components に追加する。期間はヘッダーの ?period= と共有し、任意期間は ?period=custom&from=&to= で持ち、AppShell の『任意』でも同じ DateRangePicker を開く。選択中の依頼は ?request=A-xxxx、選択中のレポートは ?report=<id>&v=<版> で URL に持ち、再読込でも復元する。実行中または待機中の依頼がある間だけ GET /api/analysis-requests を10秒ごとに再取得し、document.visibilityState が hidden の間は止める。クリップボードは navigator.clipboard.writeText を使い、失敗時はプロンプトを選択状態のテキスト欄で表示して手動コピーに切り替える。JSON の構文チェックは送信前にブラウザでも行い(JSON.parse の位置から行番号を出す)、最終判定はサーバの検証結果に従う。HTMLレポートは sandbox 属性付き iframe(srcdoc・allow-scripts なし)で表示する。web/api.ts に分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)を追加し、エラーは既存の {error:{code,message,hint}} 形式を表示する。Playwright で 390×844 / 820×1180 / 1440×900 の3サイズに依頼→コピー→取込→登録→比較→アーカイブの E2E を追加する。 [利用者確定 qa-095・qa-096・内容承認 qa-097/appr-016・但し書き qa-094 評価r1是正] web/ 配下の利用者向け文言(AppShell・CreateTenantForm・InvitePage・LoginPage・Shell・settings/*・YouTubeLinkBanner など)とサーバのエラーメッセージ(src/lib/errors.ts・src/usecases/*)の『ワークスペース』を『チャンネル管理』へ置き換え、表示名は1か所の定数から引く(qa-096)。RequestStatusTable は created_via='skill' の行に『自動』バッジを出す(qa-095)。",
+      "recorded_at": "2026-09-24T14:45:59Z",
       "basis": "user-decision"
     },
     "maintenance-ops": {
@@ -3495,7 +3815,7 @@
     }
   },
   "hearing_progress": {
-    "loop_count": 8,
+    "loop_count": 1,
     "next_question": null,
     "complete": true
   },

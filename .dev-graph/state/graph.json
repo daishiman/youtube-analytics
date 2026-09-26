@@ -1,5 +1,5 @@
 {
-  "graph_revision": 8,
+  "graph_revision": 14,
   "nodes": [
     {
       "acceptance": [],
@@ -32,9 +32,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100",
+        "evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-findings-20260924-r4.json"
+        "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -54,7 +54,7 @@
       "goal": null,
       "graph_node_id": "spec-youtube-analytics-system",
       "implementation_readiness": {
-        "checked_at": "2026-09-24T09:17:58Z",
+        "checked_at": "2026-09-24T14:59:43Z",
         "missing_sections": [],
         "status": "complete"
       },
@@ -76,9 +76,9 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-24T09:17:58Z",
+        "imported_at": "2026-09-24T14:59:43Z",
         "origin_kind": "system-spec-harness",
-        "source_digest": "3cce8b44a7a66f5daca0a87a309c14bb4ec4a2ed40f448de71332d4ed077cac0",
+        "source_digest": "d0e8b68964d98aac2d55a96769477c2c986198bb0ce0c281eef1855a10f7d768",
         "source_path": "system-spec/00-requirements-definition.md",
         "source_plugin": "system-spec-harness",
         "source_version": "0.1.14"
@@ -96,7 +96,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム 要件・機能仕様",
       "tracker_binding": "none",
-      "updated_at": "2026-09-24T09:17:58Z"
+      "updated_at": "2026-09-24T14:59:43Z"
     },
     {
       "acceptance": [],
@@ -133,9 +133,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "67ad6caea0081a4c30c88d04f0e360b3107cb964cce5e1b73fadd784d3c7b100",
+        "evaluated_digest": "4263d007f0f38086860edfa266115d93e374481082a865d12d234d5376c32094",
         "evaluator": "system-spec-harness:assign-system-spec-completeness-evaluator",
-        "evidence_ref": "eval-log/completeness-findings-20260924-r4.json"
+        "evidence_ref": "eval-log/system-spec-completeness-ai-analysis-r2.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T14:36:15Z",
@@ -155,7 +155,7 @@
       "goal": null,
       "graph_node_id": "arch-youtube-analytics-system",
       "implementation_readiness": {
-        "checked_at": "2026-09-24T09:17:58Z",
+        "checked_at": "2026-09-24T14:59:43Z",
         "missing_sections": [],
         "status": "complete"
       },
@@ -177,7 +177,7 @@
       "scope_in": [],
       "scope_out": [],
       "source_lineage": {
-        "imported_at": "2026-09-24T09:17:58Z",
+        "imported_at": "2026-09-24T14:59:43Z",
         "origin_kind": "system-spec-harness",
         "source_digest": "09d2b54c176a3694b50a722d975ac4097d544a319ba9dd21381d3f6aac4ec656",
         "source_path": "system-spec/index.md",
@@ -197,7 +197,7 @@
       "template_version": "1.0.0",
       "title": "YouTube分析システム アーキテクチャ",
       "tracker_binding": "none",
-      "updated_at": "2026-09-24T09:17:58Z"
+      "updated_at": "2026-09-24T14:59:43Z"
     },
     {
       "acceptance": [
@@ -533,12 +533,12 @@
         "取込画面の UI と imports 履歴 API(GET/POST /api/imports)(feat-settings-channel-link)"
       ],
       "source_lineage": {
+        "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_plugin": "dev-graph",
-        "source_path": "specs/youtube-analytics-system.md",
-        "source_version": "1.0.0",
         "source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
-        "imported_at": "2026-09-21T15:15:00Z"
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
       },
       "start_date": null,
       "status": "active",
@@ -563,7 +563,10 @@
         "同じ Idempotency-Key の二重送信で版が増えない",
         "過去の版は更新されない",
         "他テナントのトークンでは export できない",
-        "export の各行が source(api|studio_csv|business_csv)を持つ"
+        "export の各行が source(api|studio_csv|business_csv)を持つ",
+        "/yt-analyze の report_html は .claude/skills/report-design-system の report.mjs build 合格物で、結果JSONの数値・target_gap・仮説判定は同じ分析フォルダの analysis.mjs を再実行した値と一致する",
+        "各要因が統計的事実と解釈を分けて持ち、仮説は反証条件と採用/棄却/判定保留の判定を持つ。相関や前後関係だけで原因を断定する文が0件",
+        "report-design-system は取込元と diff -r で一致する無改変のままで、YouTube 向けの差分は /yt-analyze と brief.json・analysis.mjs 側だけにある"
       ],
       "architecture_refs": [
         "arch-youtube-analytics-system"
@@ -594,9 +597,9 @@
         "status": "not_applicable"
       },
       "confirmation_evidence": {
-        "evaluated_digest": "1757c7940b6cf27b414bb8c540cbdd3f4a7ac1804f767deb1c086d2e026dbfa8",
-        "evaluator": "dev-graph:local-targeted-projection-audit",
-        "evidence_ref": "eval-log/dev-graph-targeted-resync-audit-20260924.json"
+        "evaluated_digest": "514510cff3ebe47f93470df0ce57f8025042fa6a5296aa32eee8dac234c06525",
+        "evaluator": "dev-graph:dev-graph-integrity-auditor",
+        "evidence_ref": "eval-log/dev-graph-decompose-audit-feat-skill-analysis-reports-report-design-system-20260925.json"
       },
       "confirmation_status": "confirmed",
       "created_at": "2026-09-21T15:15:00Z",
@@ -616,7 +619,7 @@
         "mode": "local_only",
         "project_aliases": []
       },
-      "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
+      "goal": "Claude Code で /yt-analyze を1回実行すると、週次5段ファネル・下流結果・直近5版の分析履歴を書き出し、リポジトリ同梱の report-design-system スキルで数値と仮説判定をコード再現した、前回仮説と施策効果を踏まえた改善候補を因果断定せず示すHTMLと結果JSONが新しい版として反映される",
       "graph_node_id": "feat-skill-analysis-reports",
       "implementation_readiness": {
         "checked_at": "2026-09-21T15:15:00Z",
@@ -647,21 +650,25 @@
         "PATCH /api/skill/requests/:id, POST /api/skill/reports(Idempotency-Key)、transcripts/media のスキル経由アップロード",
         "レポート版集約(reports, findings, psych_findings, comment_emotions)の追記のみの保存と版比較、history_versions_usedの保存",
         "改善アクションの対象ファネル段と同じ原因指標・下流結果による効果比較",
-        "Claude Code 用 /yt-analyze スキルと運営者 Mac の launchd 週次実行"
+        "Claude Code 用 /yt-analyze スキル: GET /api/skill/export の出力を入力データとして、リポジトリ同梱の .claude/skills/report-design-system を無改変で呼び、report.mjs init→brief.json と analysis.mjs の記入→report.mjs build を行う。build 合格の単一HTMLを report_html とし、catalog §6 の結果JSON(brief/results/history_review/psych_findings/ideas/actions)は analysis.mjs の計算結果から組み立てて POST /api/skill/reports へ送る",
+        "report-design-system の作法による分析記述: 5原因指標の actual/target/target_gap・結果指標・前回版との差分は analysis.mjs で再計算し、各要因で統計的事実と解釈を分け、仮説は反証条件付きで採用/棄却/判定保留を判定する(比較は Mann-Whitney・比率の信頼区間など同スキルの記述統計の範囲)",
+        "運営者 Mac の launchd 週次実行"
       ],
       "scope_out": [
         "レポート閲覧画面と改善アクション画面(feat-web-screens-actions)",
         "アプリ内 LLM 呼出し",
         "因果推論・予測",
-        "トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)"
+        "トークン管理画面・トークン名・1人5本上限・GET/POST/DELETE /api/skill-tokens(feat-settings-channel-link)",
+        "AI分析画面向けの依頼取消・再実行・進捗段階・POST /api/skill/requests(週次自動実行の依頼作成)・アーカイブ版の履歴除外・画面からのJSON取込(feat-ai-analysis-screen)",
+        "report-design-system スキル本体の改変(更新は .claude/report-design-system.ORIGIN.md の手順で取込元から丸ごと差し替える)と、同スキル対象外の重回帰・機械学習・生存分析"
       ],
       "source_lineage": {
+        "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_plugin": "dev-graph",
-        "source_path": "specs/youtube-analytics-system.md",
-        "source_version": "1.0.0",
         "source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
-        "imported_at": "2026-09-21T15:15:00Z"
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
       },
       "start_date": null,
       "status": "active",
@@ -674,7 +681,7 @@
       "template_version": "1.0.0",
       "title": "Claude Code連携とAI分析レポート",
       "tracker_binding": "beads",
-      "updated_at": "2026-09-24T01:00:12Z"
+      "updated_at": "2026-09-24T23:08:28Z"
     },
     {
       "acceptance": [
@@ -682,7 +689,6 @@
         "ダッシュボード先頭4ブロックが結果サマリー/週次5段ファネル/目標未達が最大の改善候補または全指標目標達成/12週推移+データ品質の順である",
         "登録者数は参考の結果指標で、動画別実績は動画画面または詳細にある",
         "原因指標にactual/target/target_gapまたは判定保留理由が表示され、改善候補を因果断定しない",
-        "AI分析の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる",
         "M1 区画に開示文が常に出る",
         "同じ日の API と CSV の値が両方のバッジ付きで並ぶ",
         "閲覧者には書込ボタンが出ず、APIも 403 を返す",
@@ -768,7 +774,6 @@
         "ダッシュボード先頭4ブロック: 結果サマリー(売上・成約数・登録者数は参考)、週次5段ファネル、目標未達が最大の改善候補+次アクション(または全指標目標達成)、12週推移+データ品質",
         "原因指標のactual/target/target_gap・判定保留理由・非因果の説明、出典バッジと M1〜M10 開示文の共通コンポーネント",
         "動画別実績を置く動画画面(維持曲線・心理・コメント・場面画像と文字起こし)と切り口の確定",
-        "AI分析画面(依頼/実行状況/前回からの変化/週次ファネル/下流結果を含むレポートの sandbox iframe 表示と版比較)",
         "actions 集約(対象ファネル段・一方向遷移・完了時の判定と baseline/result・同じ原因指標と下流結果の比較)と GET/PATCH /api/actions/:id",
         "幅900px未満の下部タブ・カード化と Playwright 3サイズ E2E"
       ],
@@ -776,15 +781,16 @@
         "収集・取込・スキル連携のサーバ処理(各 feature)",
         "データ削除と無料枠メーターのサーバ処理(feat-retention-ops)",
         "専用アプリ",
-        "設定画面・共通レイアウト(AppShell/Header/Footer)・共通部品・テナント切替(feat-settings-channel-link)"
+        "設定画面・共通レイアウト(AppShell/Header/Footer)・共通部品・テナント切替(feat-settings-channel-link)",
+        "AI分析画面の3区画・取消/再実行・JSON取込・アーカイブ・選択アクション登録・レポート詳細と版比較(feat-ai-analysis-screen)"
       ],
       "source_lineage": {
+        "imported_at": "2026-09-21T15:15:00Z",
         "origin_kind": "generated",
-        "source_plugin": "dev-graph",
-        "source_path": "specs/youtube-analytics-system.md",
-        "source_version": "1.0.0",
         "source_digest": "19954f1cfbacc93ead9eb481c6189a8ceffa3fbfad47013dd7545cf16881febd",
-        "imported_at": "2026-09-21T15:15:00Z"
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
       },
       "start_date": null,
       "status": "active",
@@ -797,7 +803,7 @@
       "template_version": "1.0.0",
       "title": "6画面のWeb UIと改善アクション管理",
       "tracker_binding": "beads",
-      "updated_at": "2026-09-24T01:00:12Z"
+      "updated_at": "2026-09-24T15:12:01Z"
     },
     {
       "acceptance": [
@@ -4606,6 +4612,2426 @@
       "title": "CI/CD とリリース",
       "tracker_binding": "beads",
       "updated_at": "2026-09-24T01:20:21Z"
+    },
+    {
+      "acceptance": [
+        "03-ai-analysis.png の3区画と下部の選択中依頼バーが画像の配置・文言どおりに表示され、色指定が既存CSS変数以外0件",
+        "『Claude Code用プロンプトをコピー』で A-xxxx の依頼が待機中で作られ、プロンプトにトークン平文が含まれず、クリップボード失敗時は手動コピー欄が出る",
+        "任意期間は最長1年・未来日不可で、期間がヘッダーの ?period= と共有される",
+        "待機中・実行中の依頼をキャンセルすると取消になり、その後の PATCH /api/skill/requests/:id と POST /api/skill/reports が 409 REQUEST_CANCELED を返す",
+        "失敗・取消の依頼の再実行で同じ条件の新しい ID ができ retry_of が記録される。完了・失敗・取消の依頼は状態が動かない",
+        "貼付JSONは選択中の依頼に紐付いてその依頼が完了になり、未選択なら完了済み依頼が1件作られる。形式誤りは行番号付きの422で保存されない",
+        "アーカイブした版は一覧と次回の analysis_history から外れ『アーカイブを表示』で見え、元に戻せる。reports の行は変わらない",
+        "チェックしたアクションだけが改善アクションに登録され、初期は主対象1件だけにチェックがあり、同じ版の同じアクションの二重登録が0件",
+        "レポート詳細の先頭に参照した直近版・前回仮説の当否・施策効果が表示され、履歴0件は初回分析になる。2つの版を選ぶと差分が並ぶ",
+        "POST /api/skill/requests で作られた依頼が実行状況に『自動』バッジ付きで並び、閲覧者に変わった発行者のトークンでは403になる",
+        "閲覧者には書込ボタンが出ずAPIは403、他テナントの依頼・レポートIDは404、依頼作成の11件目/分は429、各操作が audit_log に1件ずつ残る",
+        "利用者に見える画面・APIエラー・規約に『ワークスペース』『テナント』が0件で『チャンネル管理』に揃っている",
+        "390×844 / 820×1180 / 1440×900 で依頼→コピー→取込→登録→比較→アーカイブの E2E が通る"
+      ],
+      "architecture_refs": [
+        "arch-youtube-analytics-system"
+      ],
+      "artifact_kind": "feature",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "feature",
+          "candidate_path": "features/feat-ai-analysis-screen.md",
+          "confidence": 0.95
+        },
+        {
+          "artifact_kind": "issue",
+          "candidate_path": "issues/feat-ai-analysis-screen.md",
+          "confidence": 0.2
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "C14 macro 分解で確定仕様から導出した機能単位(purpose/goal/scope/acceptance を持つ)。phase task 粒度ではない",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "manual",
+        "reconciled_at": null,
+        "source": null,
+        "status": "not_applicable"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "06489dabdcfa3ccf364a90f3343d8f89452b6591295ffd437cade7e79194b871",
+        "evaluator": "dev-graph:dev-graph-integrity-auditor",
+        "evidence_ref": "eval-log/dev-graph-decompose-audit-feat-ai-analysis-screen-scope-wording-20260925.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:12:01Z",
+      "depends_on": [
+        "feat-skill-analysis-reports",
+        "feat-web-screens-actions",
+        "feat-settings-channel-link"
+      ],
+      "domain": "youtube-analytics",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": null,
+      "file_path": "features/feat-ai-analysis-screen.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "goal": "docs/screens/03-ai-analysis.png の区画・配置・文言どおりに依頼・実行状況・レポートの3区画と選択中の依頼バーが既存CSS変数の配色で動き、取消・再実行・JSON取込・アーカイブ・選択アクション登録・週次自動実行の依頼作成がサーバ側の状態遷移と権限の制約付きで働き、利用者向けの語が『チャンネル管理』に揃っている",
+      "graph_node_id": "feat-ai-analysis-screen",
+      "implementation_readiness": {
+        "checked_at": "2026-09-24T15:12:01Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": null,
+      "phase_ref": null,
+      "priority": null,
+      "project_id": "youtube-analytics",
+      "pull_request_linkages": [],
+      "purpose": "利用者が AI分析画面から Claude Code への分析依頼を作って進み具合を追い、届いたレポートの根拠と版を確かめて、参考にしない版を外し、選んだ打ち手だけを改善アクションへ移せるようにする(資するゴール: G1, G2, G4)",
+      "related_nodes": [
+        "spec-youtube-analytics-system"
+      ],
+      "resource_scope": [],
+      "scope_in": [
+        "/analysis の AnalysisPage(PlaceholderPage を置換): 見出し『AI分析』・問い1行・説明1行・右上『AI分析の使い方』、①依頼 ②実行状況 ③レポート の3区画と画面下部の選択中の依頼バー(ID・依頼内容・進捗・『詳細を開く』)。区画・配置・文言は docs/screens/03-ai-analysis.png を正とし色は既存CSS変数だけ(qa-080)",
+        "①依頼: 分析対象期間(最新28日/90日/1年/任意。任意は DateRangePicker で最長1年・未来日不可、?period=custom&from=&to= をヘッダーと共有)、補足指示(最大1000字・文字数表示)、唯一の主ボタン『Claude Code用プロンプトをコピー』(依頼 A-xxxx 作成→GET /api/analysis-requests/:id/prompt→navigator.clipboard.writeText→Toast、失敗時は選択状態のテキスト欄で手動コピー)、『使用するデータ』表と『使用データを確認』モーダル(GET /api/analysis/data-summary)、『データは自動送信されません』注記",
+        "②実行状況: RequestStatusTable(ID・ステータス・対象期間・作成日時・ProgressBar・依頼内容・操作)。待機中/実行中=キャンセル(ConfirmDialog)、完了=詳細、失敗/取消=再実行、失敗は原因1行と対処1行、created_via='skill' の行に『自動』バッジ。待機中・実行中がある間だけ10秒ごとに再取得し visibilityState=hidden で停止",
+        "③レポート: ReportList(レポート名・要約の検索を300msデバウンス、『アーカイブを表示』切替、列は版・作成日時・レポート名・対象期間)と ResultImportPanel(JSON貼付・送信前の JSON.parse 行番号表示・『結果を取り込む』『クリア』)、ReportDetail(レポート名・版・最新版バッジ・作成日時・対象期間・作成元・ステータス、『アーカイブ』/『元に戻す』、要約の先頭に『前回からの変化』→週次5段ファネル→下流結果→改善候補/全指標目標達成/判定保留、タブ 要約/視聴者心理/コメント感情/離脱場面/根拠データ/HTMLレポート、PsychBox・ActionChecklist・VersionHistory・VersionDiffModal、HTMLレポートは srcdoc の sandbox iframe で allow-scripts なし)",
+        "選択状態を URL に持つ(?request=A-xxxx、?report=<id>&v=<版>)再読込復元と、新しい共通部品 ProgressBar・DateRangePicker(AppShell の『任意』期間でも同じ部品を開く)",
+        "web/api.ts の分析用クライアント(createRequest/listRequests/cancel/retry/getPrompt/getDataSummary/listReports/getReport/diff/importResult/archive/unarchive/registerActions)と {error:{code,message,hint}} の表示",
+        "画面用API: POST/GET /api/analysis-requests(最新20件・cursor)・GET /api/analysis-requests/:id・GET /api/analysis-requests/:id/prompt(トークン平文・他テナント情報を含めない)・POST /api/analysis-requests/:id/cancel・POST /api/analysis-requests/:id/retry・GET /api/analysis/data-summary?from=&to=",
+        "レポートAPI: GET /api/reports?q=&archived=0|1&cursor=(D1 LIKE・テナント内最新200版まで)・POST /api/reports/import(ingestReport を再利用、request_id 指定でその依頼を完了、未指定なら完了済み依頼を1件作る・qa-092、検証エラーは 422 INVALID_REPORT_JSON に line)・PUT/DELETE /api/reports/:id/archive・POST /api/reports/:id/actions({keys:[...]} の選択登録・同じ版の同じアクションは登録済みを返す・qa-091)",
+        "分析依頼集約の拡張: analysis_requests に 取消 状態・progress・stage・instruction・retry_of・report_id・canceled_at/by・created_via(web|skill|import)を追加するマイグレーション。一方向遷移 待機中→実行中→完了|失敗|取消 を集約内で検査し、終端からは動かさない(qa-089)",
+        "スキル連携APIの差分: PATCH /api/skill/requests/:id に progress・stage(1-3)・error を受け、取消済み依頼への PATCH と POST /api/skill/reports は 409 REQUEST_CANCELED。POST /api/skill/requests(個人トークン・期間と指示は任意で既定は最新28日・実行中・created_via='skill' で作成、発行者が content.write を失っていれば403・qa-095)のエンドポイント本体(呼出し元の /yt-analyze が request_id 無し起動時に依頼を自動作成するクライアント側分岐は feat-skill-analysis-reports が実装する)",
+        "report_archives(PK tenant_id,report_id・reports は追記のみを保つ)と、レポート一覧・analysis_history の直近5版をアーカイブ外の版だけから選ぶ変更(qa-090)",
+        "actions.source_report_id/source_key と UNIQUE(tenant_id,source_report_id,source_key) のマイグレーション、registerReportActions は改善アクション集約だけを書きレポート版は読むだけ",
+        "権限と保護: 書込(依頼作成・キャンセル・再実行・取込・アーカイブ・アクション登録)は content.write(owner/editor)のみで閲覧者は403かつボタン非表示、他テナントの依頼・レポートは404、セッション書込の Origin 検査、依頼作成は画面・スキル合算で1ユーザー1分10件(超過429)、取込JSONは 2,000,000 bytes 以下とカタログ§6スキーマ検証、各操作を audit_log に1行",
+        "利用者向けの語を『チャンネル管理』へ置換(qa-096 が qa-088 を置換): web/ の AppShell・CreateTenantForm・InvitePage・LoginPage・Shell・settings/*・YouTubeLinkBanner などと src/lib/errors.ts・src/usecases/* のエラーメッセージ・規約2ページの『ワークスペース』『テナント』表記。表示名は1か所の定数から引き、識別子・DB・開発者向け文書は tenant のまま",
+        "幅900px未満の2カラム縦積み・表のカード化・下部バーを下部タブの上に固定、Playwright 390×844 / 820×1180 / 1440×900 で依頼→コピー→取込→登録→比較→アーカイブの E2E"
+      ],
+      "scope_out": [
+        "個人トークンの検証・GET /api/skill/export・POST /api/skill/reports の ingestReport 本体と analysis_history の射影本体・launchd 週次実行の設定(feat-skill-analysis-reports。本 feature は取消・自動作成・アーカイブ除外の差分だけを持つ)",
+        "改善アクション画面と actions 集約の状態遷移・GET/PATCH /api/actions/:id(feat-web-screens-actions)",
+        "AppShell・既存共通部品(PageHeader/SectionCard/StatusBadge/DataTable/ConfirmDialog/Toast)の作成と設定画面の機能(feat-settings-channel-link)",
+        "テナント別 OAuth クライアント(qa-087)の実装設計の見直し(system-spec 側で追跡する r2 medium 指摘)",
+        "アプリ内 LLM 呼出し・因果推論・Web からの Claude Code 実行の停止(取消は以後の送信拒否だけ)",
+        "画像の配色の採用と新しい色トークンの追加、全文検索索引の作成"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:12:01Z",
+        "origin_kind": "generated",
+        "source_digest": "4510a55312a28c7c6b05afc8ac33d6ca0c7392475d295d0bcf2d2d397de68fbd",
+        "source_path": "specs/youtube-analytics-system.md",
+        "source_plugin": "dev-graph",
+        "source_version": "1.0.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "feature",
+        "youtube-analytics"
+      ],
+      "target_date": null,
+      "template_id": "feature",
+      "template_version": "1.0.0",
+      "title": "AI分析画面(依頼・実行状況・レポート管理)と週次自動実行の依頼作成",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:19:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P01.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P01",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P01",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/requirements.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-01-requirements.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p01",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "AI分析画面の要件を実装単位へ確定",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P01"
+      ],
+      "domain": "api",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P02.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P02",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P02",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/architecture.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-02-architecture.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p02",
+        "api",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "AnalysisPage・分析API・DB拡張の設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P02"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P03.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P03",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P03",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/design-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-03-design-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p03",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "取消・409・権限境界・監査ログの設計レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P03"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P04.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P04",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P04",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "docs/feat-ai-analysis-screen/test-design.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-04-test-design.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p04",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入テスト・状態遷移テスト・3サイズE2Eの設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P04"
+      ],
+      "domain": "frontend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P05.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P05",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P05",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/",
+        "public/privacy.html",
+        "public/terms.html"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-05-implementation.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p05",
+        "frontend",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "AnalysisPage・分析/レポートAPI・DB拡張・表示語置換の実装",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P05"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P06.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P06",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P06",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "tests/analysis/",
+        "e2e/analysis.spec.ts",
+        "src/",
+        "web/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-06-test-run.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p06",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テスト実行と不具合修正",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P06"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P07.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P07",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P07",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/acceptance.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-07-acceptance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p07",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入確認",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P07"
+      ],
+      "domain": "data",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P08.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P08",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P08",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "web/",
+        "src/",
+        "migrations/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-08-refactoring-migration.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p08",
+        "data",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "共通化の整理とマイグレーション整理",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P08"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P09.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P09",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P09",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/qa-report.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-09-quality-assurance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p09",
+        "security",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "セキュリティと品質の保証",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P09"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P10.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P10",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P10",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/final-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-10-final-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p10",
+        "quality",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "最終レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P11.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P11",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P11",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "evidence/feat-ai-analysis-screen/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-11-evidence.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p11",
+        "documentation",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "証跡の集約",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P10"
+      ],
+      "domain": "operations",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P12.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P12",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P12",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        "docs/feat-ai-analysis-screen/runbook.md",
+        "README.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-12-documentation-operations.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p12",
+        "operations",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "運用手順『AI分析の取消と再実行を扱う』とドキュメント",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-ai-analysis-screen/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-24T15:54:55Z",
+      "depends_on": [
+        "SYS-AIA-P11",
+        "SYS-AIA-P12"
+      ],
+      "domain": "infrastructure",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-ai-analysis-screen",
+      "file_path": "tasks/feat-ai-analysis-screen/SYS-AIA-P13.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-AIA-P13",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-ai-analysis-screen",
+      "phase_ref": "P13",
+      "priority": null,
+      "project_id": "feature-package-feat-ai-analysis-screen",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-ai-analysis-screen"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-24T15:54:55Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "0c0bad66583d733a2d8f79c4587656e2ba5a4bc0f03093cb72b4ccdb68b12894",
+        "source_path": ".dev-graph/published/feature-package-feat-ai-analysis-screen/task-specs/phase-13-release-deploy.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p13",
+        "infrastructure",
+        "ai-analysis-screen"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "CI/CD とリリース",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-24T15:54:55Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P01 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P01.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P01",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P01",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/requirements.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-01-requirements.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p01",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "個人トークン認証・分析依頼・スキル連携API・履歴・レポート版・launchd週次実行の要件を実装単位へ確定",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P02 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P01"
+      ],
+      "domain": "api",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P02.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P02",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P02",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/architecture.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-02-architecture.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p02",
+        "api",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "個人トークンBearer認証・分析依頼・スキル連携API・DBスキーマの設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P03 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P02"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P03.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P03",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P03",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/design-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-03-design-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p03",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テナント境界・トークン失効・二重送信防止・非因果出力の設計レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P04 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P03"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P04.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P04",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P04",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "tests/skill-analysis/",
+        "tests/fixtures/skill-analysis-sample/",
+        "scripts/skill-analysis/",
+        "docs/feat-skill-analysis-reports/test-design.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-04-test-design.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p04",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入12項目・履歴境界・再現性・因果断定検知のテスト設計",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P05 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P04"
+      ],
+      "domain": "backend",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P05.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P05",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P05",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/(追加する5本。ファイル名と番号は成果物節の確定規則で決め、計画時点の暫定番号は0011〜0015)",
+        ".claude/skills/yt-analyze/",
+        "ops/launchd/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-05-implementation.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p05",
+        "backend",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "Bearer認証・分析依頼/スキル連携API・DB新規テーブル・/yt-analyzeスキル・launchd週次実行の実装",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P06 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P05"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P06.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P06",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P06",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "tests/skill-analysis/",
+        "scripts/skill-analysis/",
+        "src/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-06-test-run.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p06",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "テスト実行と不具合修正",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P07 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P06"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P07.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P07",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P07",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/acceptance.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-07-acceptance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p07",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "受入確認",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P08 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P07"
+      ],
+      "domain": "data",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P08.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P08",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P08",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "src/",
+        "migrations/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-08-refactoring-migration.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p08",
+        "data",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "共通化の整理とマイグレーション整理",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P09 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P08"
+      ],
+      "domain": "security",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P09.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P09",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P09",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/qa-report.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-09-quality-assurance.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p09",
+        "security",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "セキュリティと品質の保証",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P10 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P09"
+      ],
+      "domain": "quality",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P10.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P10",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P10",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/final-review.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-10-final-review.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p10",
+        "quality",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "最終レビュー",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P11 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "domain": "documentation",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P11.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P11",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P11",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "evidence/feat-skill-analysis-reports/"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-11-evidence.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p11",
+        "documentation",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "証跡の集約",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P12 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P10"
+      ],
+      "domain": "operations",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P12.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P12",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P12",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        "docs/feat-skill-analysis-reports/runbook.md",
+        "README.md"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-12-documentation-operations.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p12",
+        "operations",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "運用手順『launchd週次実行の監視と障害対応』とドキュメント",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
+    },
+    {
+      "artifact_kind": "task",
+      "artifact_subtypes": [],
+      "beads_linkage": null,
+      "classification_candidates": [
+        {
+          "artifact_kind": "task",
+          "candidate_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md",
+          "confidence": 0.95
+        }
+      ],
+      "classification_confidence": 0.95,
+      "classification_reason": "P13 phase slot への 1対1 写像",
+      "completion_evidence": {
+        "completed_at": null,
+        "evidence_refs": [],
+        "policy": "linked_pr_merged_all",
+        "reconciled_at": null,
+        "source": null,
+        "status": "in_progress"
+      },
+      "confirmation_evidence": {
+        "evaluated_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "evaluator": "system-dev-plan-evaluator",
+        "evidence_ref": ".dev-graph/published/feature-package-feat-skill-analysis-reports/plan-findings.json"
+      },
+      "confirmation_status": "confirmed",
+      "created_at": "2026-09-25T00:09:44Z",
+      "depends_on": [
+        "SYS-SAR-P11",
+        "SYS-SAR-P12"
+      ],
+      "domain": "infrastructure",
+      "evaluation_status": "pass",
+      "execution_contexts": [],
+      "feature_package_id": "feature-package/feat-skill-analysis-reports",
+      "file_path": "tasks/feat-skill-analysis-reports/SYS-SAR-P13.md",
+      "github_project_linkages": [],
+      "github_publication": {
+        "labels": [],
+        "milestone": null,
+        "mode": "local_only",
+        "project_aliases": []
+      },
+      "graph_node_id": "SYS-SAR-P13",
+      "implementation_readiness": {
+        "checked_at": "2026-09-25T00:30:00Z",
+        "missing_sections": [],
+        "status": "complete"
+      },
+      "issue_linkage": null,
+      "iteration": null,
+      "owners": [
+        "daishiman"
+      ],
+      "parent_feature": "feat-skill-analysis-reports",
+      "phase_ref": "P13",
+      "priority": null,
+      "project_id": "feature-package-feat-skill-analysis-reports",
+      "pull_request_linkages": [],
+      "related_nodes": [
+        "feat-skill-analysis-reports"
+      ],
+      "resource_scope": [
+        ".github/workflows/",
+        "wrangler.toml"
+      ],
+      "source_lineage": {
+        "imported_at": "2026-09-25T00:09:44Z",
+        "origin_kind": "system-dev-planner",
+        "source_digest": "819fd838968d7f4a28f27b5ca133ed1a22d992549cd029677062b253c4372906",
+        "source_path": ".dev-graph/published/feature-package-feat-skill-analysis-reports/task-specs/phase-13-release-deploy.md",
+        "source_plugin": "system-dev-planner",
+        "source_version": "0.1.0"
+      },
+      "start_date": null,
+      "status": "active",
+      "tags": [
+        "p13",
+        "infrastructure",
+        "skill-analysis-reports"
+      ],
+      "target_date": null,
+      "template_id": "task",
+      "template_version": "1.0.0",
+      "title": "CI/CD とリリース",
+      "tracker_binding": "beads",
+      "updated_at": "2026-09-25T00:09:44Z"
     }
   ],
   "repository_id": "github:daishiman/youtube-analytics",
