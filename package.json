@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "echarts": "^6.1.0",
-    "hono": "^4.13.8",
+    "hono": "^4.13.11",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router": "^8.4.0"
